@@ -12,6 +12,7 @@ static HMODULE                   g_realDDraw;
 static DirectDrawCreate_t        real_DirectDrawCreate;
 static DirectDrawCreateClipper_t real_DirectDrawCreateClipper;
 
+// Thanks Claude for this part. 
 // Other system DLLs import from "ddraw.dll" and Windows gives them this module,
 // so we must export every name the real one has. Each unused one is a stub: jmp *pointer.
 // A jmp leaves the stack and arguments untouched, so any signature works.
@@ -54,11 +55,55 @@ static BOOL load_real_ddraw(void)
     return real_DirectDrawCreate && real_DirectDrawCreateClipper;
 }
 
+
+// Repeat the og GDI call find current regio bbp
+static BOOL desktop_deeper_than_16bpp(void)
+{
+    HDC dc = GetDC(NULL);
+    int bpp;
+
+    if (!dc)
+        return FALSE;
+    bpp = GetDeviceCaps(dc, BITSPIXEL);
+    ReleaseDC(NULL, dc);
+    return bpp > 16;
+}
+
+// Silently force 16bpp compat layer and relaunch the process. 
+static BOOL relaunch_in_16bpp(void)
+{
+    char exe[MAX_PATH];
+    char env[64];
+    STARTUPINFOA si;
+    PROCESS_INFORMATION pi;
+
+    if (GetEnvironmentVariableA("SQZ_PROXY_RESTARTED", env, sizeof env) > 0)
+        return FALSE;
+    if (!SetEnvironmentVariableA("SQZ_PROXY_RESTARTED", "1"))
+        return FALSE;
+    // ^ Disgusting part just to kill a looped trigger
+    //////////////
+    if (!desktop_deeper_than_16bpp())
+        return FALSE;
+    if (!GetModuleFileNameA(NULL, exe, MAX_PATH) || !SetEnvironmentVariableA("__COMPAT_LAYER", "16BITCOLOR"))
+        return FALSE;
+
+    memset(&si, 0, sizeof si);
+    si.cb = sizeof si;
+    if (!CreateProcessA(exe, GetCommandLineA(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+        return FALSE;   // could not restart, carry on in the current process
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    return TRUE;
+}
+
 BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID reserved)
 {
-    (void)reserved; // Skips warnings 
+    (void)reserved; // Skips warnings
 
     if (reason == DLL_PROCESS_ATTACH) {
+        if (relaunch_in_16bpp())
+            TerminateProcess(GetCurrentProcess(), 0);   // not ExitProcess: no DLL detach under the loader lock
         DisableThreadLibraryCalls(inst);
         if (!load_real_ddraw())
             return FALSE;
@@ -74,7 +119,8 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID reserved)
 // DDCAPS.dwZBufferBitDepths is 0, which is what modern ddraw.dll reports for this legacy field.
 // We hook IDirectDraw::GetCaps and report a 16-bit z-buffer, the game's own first choice.
 
-// Verify vtable and struct offsets at compile time
+// Used DX7 headers to gather offsets
+// TODO remove superficial validation after we're done here
 _Static_assert(offsetof(IDirectDrawVtbl, GetCaps) == 0x2c, "GetCaps vtable offset");
 _Static_assert(offsetof(DDCAPS, dwZBufferBitDepths) == 0x38, "dwZBufferBitDepths offset");
 
@@ -99,16 +145,16 @@ static HRESULT WINAPI my_GetCaps(LPDIRECTDRAW self, LPDDCAPS driverCaps, LPDDCAP
 }
 
 // All IDirectDraw objects from the real ddraw.dll share one vtable, so we patch it once
-static void hook_getcaps(LPDIRECTDRAW dd)
+static void hook_getcaps(LPDIRECTDRAW renderer)
 {
     void **slot;
     DWORD oldProtect;
 
-    if (!dd || InterlockedCompareExchange(&g_getCapsHooked, 1, 0) != 0)
+    if (!renderer || InterlockedCompareExchange(&g_getCapsHooked, 1, 0) != 0)
         return;
 
     // Address of the GetCaps entry in the vtable (vtable + 0x2c)
-    slot = (void **)&dd->lpVtbl->GetCaps;
+    slot = (void **)&renderer->lpVtbl->GetCaps;
 
     // The vtable is read-only, make it writable for the swap
     if (!VirtualProtect(slot, sizeof(void *), PAGE_READWRITE, &oldProtect)) {
