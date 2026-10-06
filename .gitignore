@@ -1,0 +1,20 @@
+# Built binaries (never commit these)
+*.dll
+*.exe
+*.obj
+*.o
+*.lib
+*.a
+
+# Build output
+build/
+
+# Game files and exported decompilation are copyrighted: keep them out
+SqueezilsGameFiles/
+Exported/
+
+# Ghidra project databases
+*.gpr
+*.rep/
+*.lock
+*.lock~
