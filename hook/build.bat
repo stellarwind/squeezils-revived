@@ -1,0 +1,10 @@
+@echo off
+rem Build sqzhook.dll. Needs 32-bit MinGW-w64 on PATH and the DirectX 7 SDK headers (set DX7_INCLUDE).
+rem Usage: build.bat   then copy sqzhook.dll next to SQZ.EXE (together with the proxy ddraw.dll).
+setlocal
+if "%DX7_INCLUDE%"=="" (echo Set DX7_INCLUDE to the DirectX 7 SDK include folder & exit /b 1)
+cd /d "%~dp0"
+g++ -m32 -std=c++17 -O1 -shared -static -s -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -fpermissive ^
+  -I..\src -I"%DX7_INCLUDE%" ^
+  -DDirectDrawCreate=Hook_DirectDrawCreate -DDirectDrawCreateClipper=Hook_DirectDrawCreateClipper -DDirect3DRMCreate=Hook_Direct3DRMCreate ^
+  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp -lwinmm -ldxguid -lgdi32 -luser32
