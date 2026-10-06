@@ -12,7 +12,7 @@ static HMODULE                   g_realDDraw;
 static DirectDrawCreate_t        real_DirectDrawCreate;
 static DirectDrawCreateClipper_t real_DirectDrawCreateClipper;
 
-// Other system DLLs (e.g. D3DIM.DLL) import from "ddraw.dll" and Windows gives them this module,
+// Other system DLLs import from "ddraw.dll" and Windows gives them this module,
 // so we must export every name the real one has. Each unused one is a stub: jmp *pointer.
 // A jmp leaves the stack and arguments untouched, so any signature works.
 
@@ -29,7 +29,8 @@ static DirectDrawCreateClipper_t real_DirectDrawCreateClipper;
     __asm__(".text\n.globl _" #n "\n_" #n ":\n\tjmp *_p_" #n "\n");
 FORWARDED(DECLARE_STUB)
 
-// Load the real ddraw.dll by full path (a bare name would find this file again)
+// Load the real ddraw.dll by full path
+// This limits us to Windwos 10+. Should go away after a full decomp. 
 
 static BOOL load_real_ddraw(void)
 {
@@ -53,11 +54,9 @@ static BOOL load_real_ddraw(void)
     return real_DirectDrawCreate && real_DirectDrawCreateClipper;
 }
 
-// One-time setup only, this runs under the loader lock so keep it light
-
 BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID reserved)
 {
-    (void)reserved;
+    (void)reserved; // Skips warnings 
 
     if (reason == DLL_PROCESS_ATTACH) {
         DisableThreadLibraryCalls(inst);
@@ -71,7 +70,7 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID reserved)
 }
 
 // The GetCaps fix:
-// SQZ.EXE (FUN_00475c10) fails with "This display does not support a depth buffer" when
+// SQZ.EXE fails with "This display does not support a depth buffer" when
 // DDCAPS.dwZBufferBitDepths is 0, which is what modern ddraw.dll reports for this legacy field.
 // We hook IDirectDraw::GetCaps and report a 16-bit z-buffer, the game's own first choice.
 
@@ -85,10 +84,7 @@ static volatile LONG g_getCapsHooked;
 
 static void fix_caps(LPDDCAPS caps)
 {
-    // Only touch the field if the caller's struct is big enough to contain it
-    if (caps && caps->dwSize >= offsetof(DDCAPS, dwZBufferBitDepths) + sizeof(DWORD)
-             && caps->dwZBufferBitDepths == 0)
-        caps->dwZBufferBitDepths = DDBD_16;
+    caps->dwZBufferBitDepths = DDBD_16;
 }
 
 static HRESULT WINAPI my_GetCaps(LPDIRECTDRAW self, LPDDCAPS driverCaps, LPDDCAPS helCaps)
