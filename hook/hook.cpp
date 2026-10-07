@@ -14,6 +14,7 @@
 #include "Image.h"
 #include "Bitmap.h"
 #include "GameString.h"
+#include "IniReader.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -61,6 +62,8 @@ void  SqgError(const char *format, ...)    // the original is printf style; form
     ((void (__cdecl *)(const char *, ...))0x473710)("%s", buf);
 }
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
+const char *IniFind(void *file, const char *section, const char *key) { return ((const char *(__attribute__((thiscall)) *)(void *, const char *, const char *))0x442ee0)(file, section, key); }
+void *IniOpen(const char *path) { return ((void *(__cdecl *)(const char *))0x442fa0)(path); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -817,6 +820,66 @@ static int h_streq(const String *a, const String *b) { HEAVY_LOG(H_streq); retur
 static int (*o_strcmp)(const String *, const String *);
 static int h_strcmp(const String *a, const String *b) { HEAVY_LOG(H_strcmp); return StringCompare(a, b); }
 
+// ---- IniReader (settings cursor; "ini") ----------------------------------------------------------------------------------
+// The lookups are pure reads of the cached parsed file, so each also runs the original and compares.
+static Hook H_inictor, H_inictor2, H_inidtor, H_iniget, H_iniint, H_inifloats, H_inifloat, H_iniset, H_inidir, H_inipath, H_iniparse;
+
+static void *(THISCALL *o_inictor)(IniReader *);
+static void *THISCALL h_inictor(IniReader *r) { HEAVY_LOG(H_inictor); new (r) IniReader(); return r; }
+static void *(THISCALL *o_inictor2)(IniReader *, const char *);
+static void *THISCALL h_inictor2(IniReader *r, const char *f) { HEAVY_LOG(H_inictor2); new (r) IniReader(f); return r; }
+static void (__fastcall *o_inidtor)(IniReader *);
+static void __fastcall h_inidtor(IniReader *r) { HEAVY_LOG(H_inidtor); r->~IniReader(); }
+static const char *(THISCALL *o_iniget)(const IniReader *, const char *);
+static const char *THISCALL h_iniget(const IniReader *r, const char *key)
+{
+    HEAVY_LOG(H_iniget);
+    const char *a = o_iniget(r, key), *b = r->GetString(key);
+    if (a != b) { H_iniget.mismatches++; Log("MISMATCH GetString %s orig=%p ours=%p", key, a, b); }
+    return b;
+}
+static int (THISCALL *o_iniint)(const IniReader *, const char *, int);
+static int THISCALL h_iniint(const IniReader *r, const char *key, int def)
+{
+    HEAVY_LOG(H_iniint);
+    int a = o_iniint(r, key, def), b = r->GetInt(key, def);
+    if (a != b) { H_iniint.mismatches++; Log("MISMATCH GetInt %s orig=%d ours=%d", key, a, b); }
+    return b;
+}
+static int (THISCALL *o_inifloats)(const IniReader *, const char *, float *);
+static int THISCALL h_inifloats(const IniReader *r, const char *key, float *out)
+{
+    HEAVY_LOG(H_inifloats);
+    float tmp[3] = { 0, 0, 0 };
+    int a = o_inifloats(r, key, tmp), b = r->GetFloats(key, out);
+    if (a != b || (b && memcmp(tmp, out, sizeof tmp) != 0)) { H_inifloats.mismatches++; Log("MISMATCH GetFloats %s orig=%d ours=%d", key, a, b); }
+    return b;
+}
+static float (THISCALL *o_inifloat)(const IniReader *, const char *, float);
+static float THISCALL h_inifloat(const IniReader *r, const char *key, float def)
+{
+    HEAVY_LOG(H_inifloat);
+    float a = o_inifloat(r, key, def), b = r->GetFloat(key, def);
+    if (memcmp(&a, &b, 4) != 0) { H_inifloat.mismatches++; Log("MISMATCH GetFloat %s orig=%g ours=%g", key, a, b); }
+    return b;
+}
+static void (THISCALL *o_iniset)(IniReader *, const char *);
+static void THISCALL h_iniset(IniReader *r, const char *name) { HEAVY_LOG(H_iniset); r->SetSection(name); }
+static String *(THISCALL *o_inidir)(const IniReader *, String *);
+static String *THISCALL h_inidir(const IniReader *r, String *result) { HEAVY_LOG(H_inidir); return r->GetDirectory(result); }
+static const char *(__fastcall *o_inipath)(const IniReader *);
+static const char *__fastcall h_inipath(const IniReader *r) { HEAVY_LOG(H_inipath); return r->GetPath(); }
+static int (__stdcall *o_iniparse)(const char *, float *, const char **);
+static int __stdcall h_iniparse(const char *s, float *out, const char **end)
+{
+    HEAVY_LOG(H_iniparse);
+    float tmp[3]; const char *e1 = NULL, *e2 = NULL;
+    int a = o_iniparse(s, tmp, &e1), b = IniParseFloats(s, out, &e2);
+    if (a != b || memcmp(tmp, out, sizeof tmp) != 0 || e1 != e2) { H_iniparse.mismatches++; Log("MISMATCH IniParseFloats \"%s\"", s); }
+    if (end) *end = e2;
+    return b;
+}
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -831,7 +894,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_imgload, &H_imgrow,
                            &H_bmpctor, &H_bmpdtor, &H_bmpcopy, &H_bmprect, &H_bmpsized, &H_bmpcreate, &H_bmpcapture, &H_bmpdrawsurf, &H_bmpdrawat, &H_bmpdrawbmp, &H_bmpload,
                            &H_strctor, &H_strcstr, &H_strcopy, &H_strrelease, &H_strunique, &H_strc_str, &H_strreserve, &H_strrepctor, &H_strassign, &H_strset,
-                           &H_strfloat, &H_strless, &H_streq, &H_strcmp };
+                           &H_strfloat, &H_strless, &H_streq, &H_strcmp,
+                           &H_inictor, &H_inictor2, &H_inidtor, &H_iniget, &H_iniint, &H_inifloats, &H_inifloat, &H_iniset, &H_inidir, &H_inipath, &H_iniparse };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -959,6 +1023,17 @@ static void Setup()
     H_strless = { "StringLess", 0x4386f0, 9, "8b4c2408e837feffff", (void *)h_strless, (void **)&o_strless, false, 0, 0, "str", 5 };
     H_streq = { "StringEqual", 0x438720, 9, "8b4c2408e807feffff", (void *)h_streq, (void **)&o_streq, false, 0, 0, "str", 5 };
     H_strcmp = { "StringCompare", 0x438750, 9, "8b4c2408e8d7fdffff", (void *)h_strcmp, (void **)&o_strcmp, false, 0, 0, "str", 5 };
+    H_inictor = { "IniReader::IniReader()", 0x443120, 5, "5356578bd9", (void *)h_inictor, (void **)&o_inictor, false, 0, 0, "ini", 0 };
+    H_inictor2 = { "IniReader::IniReader(file)", 0x4431b0, 5, "5356578bd9", (void *)h_inictor2, (void **)&o_inictor2, false, 0, 0, "ini", 0 };
+    H_inidtor = { "IniReader::~IniReader", 0x443240, 5, "568b018bf1", (void *)h_inidtor, (void **)&o_inidtor, false, 0, 0, "ini", 0 };
+    H_iniget = { "IniReader::GetString", 0x443290, 7, "8b4424048b5104", (void *)h_iniget, (void **)&o_iniget, false, 0, 0, "ini", 0 };
+    H_iniint = { "IniReader::GetInt", 0x4432b0, 7, "8b4424048b5104", (void *)h_iniint, (void **)&o_iniint, false, 0, 0, "ini", 0 };
+    H_inifloats = { "IniReader::GetFloats", 0x4432e0, 5, "8b44240456", (void *)h_inifloats, (void **)&o_inifloats, false, 0, 0, "ini", 0 };
+    H_inifloat = { "IniReader::GetFloat", 0x443310, 7, "8b44240483ec04", (void *)h_inifloat, (void **)&o_inifloat, false, 0, 0, "ini", 0 };
+    H_iniset = { "IniReader::SetSection", 0x443370, 9, "568bd157b9ffffffff", (void *)h_iniset, (void **)&o_iniset, false, 0, 0, "ini", 0 };
+    H_inidir = { "IniReader::GetDirectory", 0x4433a0, 7, "64a10000000055", (void *)h_inidir, (void **)&o_inidir, false, 0, 0, "ini", 0 };
+    H_inipath = { "IniReader::GetPath", 0x443460, 5, "8b01c3cccc", (void *)h_inipath, (void **)&o_inipath, false, 0, 0, "ini", 0 };
+    H_iniparse = { "IniParseFloats", 0x443590, 5, "53565733db", (void *)h_iniparse, (void **)&o_iniparse, false, 0, 0, "ini", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
