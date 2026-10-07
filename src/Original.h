@@ -35,6 +35,10 @@ Scene    *GetScene();                      // the global at 0x4c75e0
 typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *name);
 SqgTextureLookupFn SqgGetTextureLookup();  // the pointer stored at 0x4c0f84 (NULL until the game sets it)
 
+// ---- data ----
+// The shared empty string (one NUL byte) the String class hands out for an unset string and copies into new reps.
+static const char *const kEmptyString = (const char *)0x4b9488;
+
 // ---- vtables ----
 // The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
 static void *const kBitmapVtable = (void *)0x4a1060;
