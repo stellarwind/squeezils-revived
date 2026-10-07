@@ -113,15 +113,11 @@ void *GetPanel();                                                     // @004206
 
 int   RegionScreenLoad(void *regionScreen);                              // @00414c10 the panel's region screen widget: load its pictures (0 on failure)
 
-void  GoodieListCtor(void *list);                                    // @004156c0 the goodie list widget's constructor and destructor
-void  GoodieListDtor(void *list);                                    // @004156d0
 void  RegionScreenCtor(void *regionScreen);                           // @00414380 the panel's region screen widget (compass and region list)
 void  RegionScreenInit(void *regionScreen);                           // @00414490 its set-up
 void  RegionScreenDtor(void *regionScreen);                           // @004143c0
 struct Panel;
 void  PanelLoadFonts(Panel *panel);                                   // @0042e7a0 reads the message font settings and makes the font (PanelText.cpp)
-int   GoodieListInit(void *list, int x, int y);                          // @00415750 the status bar's goodie list widget: set up at (x, y)
-int   GoodieListLoad(void *list);                                     // @00415b40 load its pictures
 
 BOOL  GoodieCount(const char *name, int *count);                        // the player's count of a goodie by name (SpitNutGoodie ...); FALSE when there is no player
 void  StoreSetting(const char *name, void *data, int size);           // the global settings store (object at 0x4c7060, virtual slot 0): remember a value

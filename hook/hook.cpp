@@ -21,6 +21,7 @@
 #include "NutCounter.h"
 #include "Panel.h"
 #include "StatusBar.h"
+#include "GoodieList.h"
 #include "QuestItems.h"
 #include "QuestPanel.h"
 #include "SqgModel.h"
@@ -134,13 +135,9 @@ float *PlayerMatrix()
 }
 void RegionScreenSetCompass(void *r, float angle, float roll) { ((void (__attribute__((thiscall)) *)(void *, float, float))0x414fb0)(r, angle, roll); }
 int RegionScreenLoad(void *r) { return ((int (__attribute__((thiscall)) *)(void *))0x414c10)(r); }
-void GoodieListCtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156c0)(l); }
-void GoodieListDtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156d0)(l); }
 void RegionScreenCtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414380)(r); }
 void RegionScreenInit(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414490)(r); }
 void RegionScreenDtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x4143c0)(r); }
-int GoodieListInit(void *l, int x, int y) { return ((int (__attribute__((thiscall)) *)(void *, int, int))0x415750)(l, x, y); }
-int GoodieListLoad(void *l) { return ((int (__attribute__((thiscall)) *)(void *))0x415b40)(l); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -1316,6 +1313,26 @@ static void THISCALL h_rtext(Renderer *r, HFONT f, int x, int y, const char *t) 
 static void (__fastcall *o_qifree)(QuestItems *);
 static void __fastcall h_qifree(QuestItems *k) { HEAVY_LOG(H_qifree); k->FreeCombined(); }
 
+// ---- GoodieList (the goodie pictures in the status bar; replace only, "goodies") ----------------------------------------------
+static Hook H_glctor, H_gldtor, H_glinit, H_glload, H_gldraw;
+static void *(__fastcall *o_glctor)(GoodieList *);
+static void *__fastcall h_glctor(GoodieList *g) { HEAVY_LOG(H_glctor); new (g) GoodieList(); return g; }
+static void (__fastcall *o_gldtor)(GoodieList *);
+static void __fastcall h_gldtor(GoodieList *g) { HEAVY_LOG(H_gldtor); g->~GoodieList(); }
+static int (THISCALL *o_glinit)(GoodieList *, int, int);
+static int THISCALL h_glinit(GoodieList *g, int x, int y) { HEAVY_LOG(H_glinit); return g->Init(x, y); }
+static int (__fastcall *o_glload)(GoodieList *);
+static int __fastcall h_glload(GoodieList *g) { HEAVY_LOG(H_glload); return g->Load(); }
+// the name is a String passed by value (4 bytes); the callee releases it
+static void (THISCALL *o_gldraw)(GoodieList *, int, StringRep *, Bitmap *);
+static void THISCALL h_gldraw(GoodieList *g, int frame, StringRep *rep, Bitmap *panel)
+{
+    HEAVY_LOG(H_gldraw);
+    String name;
+    name.rep = rep;
+    g->Draw(frame, name, panel);
+}
+
 // ---- QuestItems (the collectable key pieces and the stone they form; replace only, "quest") --------------------------------------------------
 static Hook H_qictor, H_qidtor, H_qiinit, H_qicomb, H_qikeys;
 static void *(__fastcall *o_qictor)(QuestItems *);
@@ -1352,6 +1369,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
                            &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood,
+                           &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
 static char g_replaceList[2048];
@@ -1537,6 +1555,11 @@ static void Setup()
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
     H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
     H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
+    H_glctor = { "GoodieList::GoodieList", 0x4156c0, 5, "33c0894120", (void *)h_glctor, (void **)&o_glctor, false, 0, 0, "goodies", 0 };
+    H_gldtor = { "GoodieList::~GoodieList", 0x4156d0, 5, "53568b4120", (void *)h_gldtor, (void **)&o_gldtor, false, 0, 0, "goodies", 0 };
+    H_glinit = { "GoodieList::Init", 0x415750, 7, "64a10000000055", (void *)h_glinit, (void **)&o_glinit, false, 0, 0, "goodies", 0 };
+    H_glload = { "GoodieList::Load", 0x415b40, 6, "81ec30010000", (void *)h_glload, (void **)&o_glload, false, 0, 0, "goodies", 0 };
+    H_gldraw = { "GoodieList::Draw", 0x415d50, 7, "64a10000000055", (void *)h_gldraw, (void **)&o_gldraw, false, 0, 0, "goodies", 0 };
     H_sbupd = { "StatusBar::Update", 0x42ed70, 6, "83ec08535657", (void *)h_sbupd, (void **)&o_sbupd, false, 0, 0, "status", 0 };
     H_sbface = { "StatusBar::UpdateFace", 0x42ee90, 5, "8b44240856", (void *)h_sbface, (void **)&o_sbface, false, 0, 0, "status", 0 };
     H_sbamo = { "StatusBar::UpdateAmo", 0x42eec0, 5, "566a008bf1", (void *)h_sbamo, (void **)&o_sbamo, false, 0, 0, "status", 0 };

@@ -5,6 +5,7 @@
 #pragma once
 #include "NutCounter.h"
 #include "MoodFace.h"
+#include "GoodieList.h"
 
 struct StatusBar {
     NutCounter amo;            // 0x000 [Interface] AmoNut: one number (the nuts the player can spit)
@@ -14,7 +15,7 @@ struct StatusBar {
     int        foodA;          // 0x060 (0)
     int        foodB;          // 0x064
     int        foodC;          // 0x068 (-1)
-    char       goodies[0x30];  // 0x06c the goodie list widget (original code)
+    GoodieList goodies;        // 0x06c the row of goodie pictures
     MoodFace   face;           // 0x09c
     int        goodieStep;     // 0x364 step of the goodie list's animation (0 after a reset)
     int        goodieSteps;    // 0x368 steps in one round
