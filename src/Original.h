@@ -85,9 +85,19 @@ template<> struct OriginalVtables<IniFileTable>                    { enum : unsi
 
 IniFileTable *GetIniFiles();               // the global at 0x4c7738: every ini file parsed so far, by path (built by the game's startup code)
 
+// ---- the running game ----
+void *GetCurrentSimulation();                         // @00420690 the global at 0x4badbc: the simulation (place or region) being run
+const char *GetPlaceName(int index);                  // @00420680 + 0041e8c0 the game's list of place folder names
+void *DynamicCast(void *obj, const void *from, const void *to);   // @0048f060 __RTDynamicCast with RTTI type descriptors
+static const void *const kLocationSimulationType = (const void *)0x4ba1d0;   // .?AVLocationSimulation
+static const void *const kPlaceSimulationType    = (const void *)0x4bae38;   // .?AVPlaceSimulation
+static const void *const kRegionSimulationType   = (const void *)0x4ba370;   // .?AVRegionSimulation
+
 // ---- vtables ----
 // The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
 static void *const kBitmapVtable = (void *)0x4a1060;
+// The vtable of Splash (Splash.h): slot 0 SetProgress, slot 1 Step.
+static void *const kSplashVtable = (void *)0x49ed34;
 
 // ---- callbacks ----
 // The window hook's callback (0x476630): the registry in ListenerTable holds it so the original window code can reach the
