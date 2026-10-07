@@ -1,8 +1,8 @@
-// KeyIcons: see KeyIcons.h.
+// QuestItems: see QuestItems.h.
 #include <string.h>
 #include <stdlib.h>
 #include <new>
-#include "KeyIcons.h"
+#include "QuestItems.h"
 #include "IniReader.h"
 #include "Renderer.h"
 #include "Original.h"
@@ -21,7 +21,7 @@ static void FreeBitmap(Bitmap *b)
     }
 }
 
-KeyIcons::KeyIcons()
+QuestItems::QuestItems()
 {
     combined = NULL;
     left = NULL;
@@ -29,7 +29,7 @@ KeyIcons::KeyIcons()
     right = NULL;
 }
 
-KeyIcons::~KeyIcons()
+QuestItems::~QuestItems()
 {
     FreeBitmap(combined);
     FreeBitmap(left);
@@ -37,7 +37,7 @@ KeyIcons::~KeyIcons()
     FreeBitmap(right);
 }
 
-BOOL KeyIcons::LoadCombined(int)
+BOOL QuestItems::LoadCombined(int)
 {
     char dir[100], path[100];
     strcpy(dir, kGameDirectory);
@@ -48,7 +48,7 @@ BOOL KeyIcons::LoadCombined(int)
     return FALSE;
 }
 
-BOOL KeyIcons::Init(int a, int b, int index)
+BOOL QuestItems::Init(int a, int b, int index)
 {
     char iniPath[100];
     strcpy(iniPath, GetPlaceName(index));
@@ -68,9 +68,9 @@ BOOL KeyIcons::Init(int a, int b, int index)
     return FALSE;
 }
 
-BOOL KeyIcons::LoadKeys()
+BOOL QuestItems::LoadKeys()
 {
-    if (*kKeyIconsLoaded)
+    if (*kQuestItemsLoaded)
         return TRUE;
     char iniPath[100];
     strcpy(iniPath, GetPlaceName(1));
@@ -102,6 +102,6 @@ BOOL KeyIcons::LoadKeys()
     right = NewBitmap();
     if (!right->Load(path)) return FALSE;
 
-    *kKeyIconsLoaded = 1;
+    *kQuestItemsLoaded = 1;
     return TRUE;
 }
