@@ -120,9 +120,17 @@ void StoreSetting(const char *name, void *data, int size)
     void *fn = (*(void ***)store)[0];
     ((void (__attribute__((thiscall)) *)(void *, String *, void *, int))fn)(store, &s, data, size);
 }
-void GoodiesUpdate(void *statusBar, int force, int *event, Bitmap *panel)
+BOOL CurrentGoodieName(String *name)
 {
-    ((void (__attribute__((thiscall)) *)(void *, int, int *, Bitmap *))0x42f050)(statusBar, force, event, panel);
+    void *soul = GetPlayerSoul();
+    if (!soul)
+        return FALSE;
+    void *inv = ((void *(__attribute__((thiscall)) *)(void *))(*(void ***)soul)[0x48 / 4])(soul);
+    if (!inv)
+        return FALSE;
+    void *table = *(void **)((char *)inv + 4);
+    *name = *(String *)((char *)table + 8);
+    return TRUE;
 }
 int QuestPanelLoad(void *q) { return ((int (__attribute__((thiscall)) *)(void *))0x42f660)(q); }
 void QuestPanelDraw(void *q, int force, int key) { ((int (__attribute__((thiscall)) *)(void *, int, int))0x42f690)(q, force, key); }
@@ -1286,9 +1294,16 @@ static int THISCALL h_sbface(StatusBar *s, int f, Bitmap *p) { HEAVY_LOG(H_sbfac
 static int (THISCALL *o_sbamo)(StatusBar *, int);
 static int THISCALL h_sbamo(StatusBar *s, int f) { HEAVY_LOG(H_sbamo); return s->UpdateAmo(f); }
 static void (THISCALL *o_sbfoodb)(StatusBar *, int);
-static void THISCALL h_sbfoodb(StatusBar *s, int v) { HEAVY_LOG(H_sbfoodb); s->SetFoodB(v); }
+static void THISCALL h_sbfoodgoal(StatusBar *s, int v) { HEAVY_LOG(H_sbfoodb); s->SetFoodGoal(v); }
 static int (THISCALL *o_sbfood)(StatusBar *, int);
 static int THISCALL h_sbfood(StatusBar *s, int f) { HEAVY_LOG(H_sbfood); return s->UpdateFood(f); }
+static Hook H_sbgood, H_sbround, H_pngoodie;
+static int (THISCALL *o_sbgood)(StatusBar *, int, int *, Bitmap *);
+static int THISCALL h_sbgood(StatusBar *s, int f, int *e, Bitmap *p) { HEAVY_LOG(H_sbgood); return s->UpdateGoodies(f, e, p); }
+static void (THISCALL *o_sbround)(StatusBar *, int, float);
+static void THISCALL h_sbround(StatusBar *s, int n, float sec) { HEAVY_LOG(H_sbround); s->SetRound(n, sec); }
+static void (THISCALL *o_pngoodie)(Panel *, int, float);
+static void THISCALL h_pngoodie(Panel *p, int n, float sec) { HEAVY_LOG(H_pngoodie); p->StartGoodieAnimation(n, sec); }
 static Hook H_pnld, H_pnsq, H_pnss, H_pninv, H_pnupd, H_pnbg, H_pnmsg, H_pnnote, H_pncomp, H_rtext, H_qifree;
 static int (__fastcall *o_pnld)(Panel *);
 static int __fastcall h_pnld(Panel *p) { HEAVY_LOG(H_pnld); return p->Load(); }
@@ -1368,7 +1383,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
-                           &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood,
+                           &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood, &H_sbgood, &H_sbround, &H_pngoodie,
                            &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
@@ -1563,8 +1578,11 @@ static void Setup()
     H_sbupd = { "StatusBar::Update", 0x42ed70, 6, "83ec08535657", (void *)h_sbupd, (void **)&o_sbupd, false, 0, 0, "status", 0 };
     H_sbface = { "StatusBar::UpdateFace", 0x42ee90, 5, "8b44240856", (void *)h_sbface, (void **)&o_sbface, false, 0, 0, "status", 0 };
     H_sbamo = { "StatusBar::UpdateAmo", 0x42eec0, 5, "566a008bf1", (void *)h_sbamo, (void **)&o_sbamo, false, 0, 0, "status", 0 };
-    H_sbfoodb = { "StatusBar::SetFoodB", 0x42ef40, 7, "8b442404894164", (void *)h_sbfoodb, (void **)&o_sbfoodb, false, 0, 0, "status", 0 };
+    H_sbfoodb = { "StatusBar::SetFoodGoal", 0x42ef40, 7, "8b442404894164", (void *)h_sbfoodgoal, (void **)&o_sbfoodb, false, 0, 0, "status", 0 };
     H_sbfood = { "StatusBar::UpdateFood", 0x42ef50, 7, "64a10000000055", (void *)h_sbfood, (void **)&o_sbfood, false, 0, 0, "status", 0 };
+    H_sbgood = { "StatusBar::UpdateGoodies", 0x42f050, 7, "64a10000000055", (void *)h_sbgood, (void **)&o_sbgood, false, 0, 0, "status", 0 };
+    H_sbround = { "StatusBar::SetRound", 0x42f200, 10, "d9442408d80d3cde4900", (void *)h_sbround, (void **)&o_sbround, false, 0, 0, "status", 0 };
+    H_pngoodie = { "Panel::StartGoodieAnimation", 0x42e6f0, 8, "8b4424088b542404", (void *)h_pngoodie, (void **)&o_pngoodie, false, 0, 0, "panel", 0 };
     H_pnld = { "Panel::Load", 0x42d9f0, 8, "568bf1e8080b0000", (void *)h_pnld, (void **)&o_pnld, false, 0, 0, "panel", 4 };
     H_pnsq = { "Panel::ShowQuest", 0x42da60, 6, "53568b74240c", (void *)h_pnsq, (void **)&o_pnsq, false, 0, 0, "panel", 0 };
     H_pnss = { "Panel::ShowStatus", 0x42dac0, 5, "8b44240456", (void *)h_pnss, (void **)&o_pnss, false, 0, 0, "panel", 0 };

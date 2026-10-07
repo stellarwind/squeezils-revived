@@ -9,12 +9,12 @@
 
 struct StatusBar {
     NutCounter amo;            // 0x000 [Interface] AmoNut: one number (the nuts the player can spit)
-    int        amoA;           // 0x02c (0)
-    int        amoB;           // 0x030 (-1)
+    int        amoCount;           // 0x02c the player's spit nut count (SpitNutGoodie), read each frame
+    int        amoShown;           // 0x030 the count last drawn (-1 until the first draw)
     NutCounter food;           // 0x034 [Interface] FoodNut: two numbers
-    int        foodA;          // 0x060 (0)
-    int        foodB;          // 0x064
-    int        foodC;          // 0x068 (-1)
+    int        foodCount;          // 0x060 the food nuts eaten so far (FoodNutGoodie), read each frame
+    int        foodGoal;           // 0x064 the second number on the food counter: probably the nuts needed to finish (FoodNutsToFinish); set by Panel::ShowStatus
+    int        foodShown;          // 0x068 the count last drawn (-1 until the first draw)
     GoodieList goodies;        // 0x06c the row of goodie pictures
     MoodFace   face;           // 0x09c
     int        goodieStep;     // 0x364 step of the goodie list's animation (0 after a reset)
@@ -37,7 +37,9 @@ struct StatusBar {
     BOOL Update(int force, int *event, Bitmap *panel);   // @42ed70 once a frame: face, goodies, nut counts, then the dead / won message
     int  UpdateFace(int force, Bitmap *panel);           // @42ee90 draw the face, remember its state
     BOOL UpdateAmo(int force);                           // @42eec0 redraw the spit nut count when it changed (or force); 1 when it changed
-    void SetFoodB(int value);                            // @42ef40 the second number of the food counter
+    void SetFoodGoal(int value);                         // @42ef40 set the second number of the food counter
     BOOL UpdateFood(int force);                          // @42ef50 same for the food nuts; also stores PlayerFoodNuts in the settings
+    BOOL UpdateGoodies(int force, int *event, Bitmap *panel);   // @42f050 redraw the goodie when the player's current one changed, or step its two frame animation
+    void SetRound(int steps, float seconds);             // @42f200 start a goodie animation: this many steps over this many seconds
 };
 static_assert(sizeof(StatusBar) == 0x38c, "StatusBar layout");
