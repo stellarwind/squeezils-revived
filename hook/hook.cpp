@@ -15,6 +15,7 @@
 #include "Bitmap.h"
 #include "GameString.h"
 #include "IniReader.h"
+#include "Splash.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -72,6 +73,9 @@ void  GameLog(const char *format, ...)     // printf style like SqgError: format
     ((void (__cdecl *)(const char *, ...))0x419290)("%s", buf);
 }
 IniFileTable *GetIniFiles() { return (IniFileTable *)0x4c7738; }
+void *GetCurrentSimulation() { return *(void **)0x4badbc; }
+const char *GetPlaceName(int index) { return ((const char *(__attribute__((thiscall)) *)(void *, int))0x41e8c0)(*(void **)0x4badb8, index); }
+void *DynamicCast(void *obj, const void *from, const void *to) { return ((void *(__cdecl *)(void *, int, const void *, const void *, int))0x48f060)(obj, 0, from, to, 0); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -1087,6 +1091,34 @@ static void SetupContainers()
     C(H_ip_parseints, "IniReader::ParseIntList",   0x4435f0, 6, "64a100000000", (void *)h_ip_parseints, "inip");
 }
 
+// ---- Splash (the load screen; replace only, "splash") ---------------------------------------------------------------------
+static Hook H_spctor, H_spdtor, H_spload, H_spfile, H_spshow, H_sphide, H_spshown, H_sppump, H_spflush, H_spstep, H_spprog, H_spreset;
+
+static void *(THISCALL *o_spctor)(Splash *);
+static void *THISCALL h_spctor(Splash *s) { HEAVY_LOG(H_spctor); new (s) Splash(); return s; }
+static void (__fastcall *o_spdtor)(Splash *);
+static void __fastcall h_spdtor(Splash *s) { HEAVY_LOG(H_spdtor); s->~Splash(); }
+static int (THISCALL *o_spload)(Splash *, int);
+static int THISCALL h_spload(Splash *s, int w) { HEAVY_LOG(H_spload); return s->Load(w); }
+static void (THISCALL *o_spfile)(Splash *, int);
+static void THISCALL h_spfile(Splash *s, int w) { HEAVY_LOG(H_spfile); s->SetFile(w); }
+static void (__fastcall *o_spshow)(Splash *);
+static void __fastcall h_spshow(Splash *s) { HEAVY_LOG(H_spshow); s->Show(); }
+static void (__fastcall *o_sphide)(Splash *);
+static void __fastcall h_sphide(Splash *s) { HEAVY_LOG(H_sphide); s->Hide(); }
+static int (__fastcall *o_spshown)(Splash *);
+static int __fastcall h_spshown(Splash *s) { HEAVY_LOG(H_spshown); return s->IsShown(); }
+static void (__fastcall *o_sppump)(Splash *);
+static void __fastcall h_sppump(Splash *s) { HEAVY_LOG(H_sppump); s->Pump(); }
+static void (__fastcall *o_spflush)(Splash *);
+static void __fastcall h_spflush(Splash *s) { HEAVY_LOG(H_spflush); s->Flush(); }
+static void (__fastcall *o_spstep)(Splash *);
+static void __fastcall h_spstep(Splash *s) { HEAVY_LOG(H_spstep); s->Step(); }
+static void (THISCALL *o_spprog)(Splash *, float);
+static void THISCALL h_spprog(Splash *s, float p) { HEAVY_LOG(H_spprog); s->SetProgress(p); }
+static void (__fastcall *o_spreset)(Splash *);
+static void __fastcall h_spreset(Splash *s) { HEAVY_LOG(H_spreset); s->Reset(); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -1102,7 +1134,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_bmpctor, &H_bmpdtor, &H_bmpcopy, &H_bmprect, &H_bmpsized, &H_bmpcreate, &H_bmpcapture, &H_bmpdrawsurf, &H_bmpdrawat, &H_bmpdrawbmp, &H_bmpload,
                            &H_strctor, &H_strcstr, &H_strcopy, &H_strrelease, &H_strunique, &H_strc_str, &H_strreserve, &H_strrepctor, &H_strassign, &H_strset,
                            &H_strfloat, &H_strless, &H_streq, &H_strcmp,
-                           &H_inictor, &H_inictor2, &H_inidtor, &H_iniget, &H_iniint, &H_inifloats, &H_inifloat, &H_iniset, &H_inidir, &H_inipath, &H_iniparse };
+                           &H_inictor, &H_inictor2, &H_inidtor, &H_iniget, &H_iniint, &H_inifloats, &H_inifloat, &H_iniset, &H_inidir, &H_inipath, &H_iniparse,
+                           &H_spctor, &H_spdtor, &H_spload, &H_spfile, &H_spshow, &H_sphide, &H_spshown, &H_sppump, &H_spflush, &H_spstep, &H_spprog, &H_spreset };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1241,6 +1274,18 @@ static void Setup()
     H_inidir = { "IniReader::GetDirectory", 0x4433a0, 7, "64a10000000055", (void *)h_inidir, (void **)&o_inidir, false, 0, 0, "ini", 0 };
     H_inipath = { "IniReader::GetPath", 0x443460, 5, "8b01c3cccc", (void *)h_inipath, (void **)&o_inipath, false, 0, 0, "ini", 0 };
     H_iniparse = { "IniParseFloats", 0x443590, 5, "53565733db", (void *)h_iniparse, (void **)&o_iniparse, false, 0, 0, "ini", 0 };
+    H_spctor = { "Splash::Splash", 0x44e900, 7, "64a10000000055", (void *)h_spctor, (void **)&o_spctor, false, 0, 0, "splash", 0 };
+    H_spdtor = { "Splash::~Splash", 0x44e9e0, 5, "56578b7104", (void *)h_spdtor, (void **)&o_spdtor, false, 0, 0, "splash", 0 };
+    H_spload = { "Splash::Load", 0x44ea30, 7, "64a10000000055", (void *)h_spload, (void **)&o_spload, false, 0, 0, "splash", 0 };
+    H_spfile = { "Splash::SetFile", 0x44eb20, 7, "64a10000000055", (void *)h_spfile, (void **)&o_spfile, false, 0, 0, "splash", 0 };
+    H_spshow = { "Splash::Show", 0x44edd0, 5, "83ec0833c0", (void *)h_spshow, (void **)&o_spshow, false, 0, 0, "splash", 0 };
+    H_sphide = { "Splash::Hide", 0x44ee40, 5, "56578b4108", (void *)h_sphide, (void **)&o_sphide, false, 0, 0, "splash", 0 };
+    H_spshown = { "Splash::IsShown", 0x44eea0, 5, "8b411cc3cc", (void *)h_spshown, (void **)&o_spshown, false, 0, 0, "splash", 0 };
+    H_sppump = { "Splash::Pump", 0x44eeb0, 8, "83ec1ca1dc754c00", (void *)h_sppump, (void **)&o_sppump, false, 0, 0, "splash", 0 };
+    H_spflush = { "Splash::Flush", 0x44ef00, 6, "5356578b590c", (void *)h_spflush, (void **)&o_spflush, false, 0, 0, "splash", 0 };
+    H_spstep = { "Splash::Step", 0x44ef30, 5, "83ec0c5356", (void *)h_spstep, (void **)&o_spstep, false, 0, 0, "splash", 0 };
+    H_spprog = { "Splash::SetProgress", 0x44f010, 5, "83ec045657", (void *)h_spprog, (void **)&o_spprog, false, 0, 0, "splash", 0 };
+    H_spreset = { "Splash::Reset", 0x44f080, 7, "c7410c00000000", (void *)h_spreset, (void **)&o_spreset, false, 0, 0, "splash", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

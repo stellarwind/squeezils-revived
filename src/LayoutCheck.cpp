@@ -76,3 +76,9 @@ static_assert(offsetof(IniValueTable, keys) == 0x04 && offsetof(IniValueTable, v
               sizeof(IniValueTable) == 0x30, "BufferObjectTable layout");
 static_assert(offsetof(IniFileTable, keys) == 0x04 && offsetof(IniFileTable, values) == 0x18 && sizeof(IniFileTable) == 0x28, "Table layout");
 static_assert(offsetof(IniFileSection, order) == 0x30 && sizeof(IniFileSection) == 0x44 && sizeof(IniFileCache) == 0x28, "ini file layout");
+
+// Splash
+#include "Splash.h"
+static_assert(offsetof(Splash, picture) == 0x04 && offsetof(Splash, bar) == 0x08 && offsetof(Splash, step) == 0x0c && offsetof(Splash, steps) == 0x10 &&
+              offsetof(Splash, barX) == 0x14 && offsetof(Splash, shown) == 0x1c && offsetof(Splash, file) == 0x20 &&
+              offsetof(Splash, which) == 0x5c && offsetof(Splash, target) == 0x60, "Splash fields");
