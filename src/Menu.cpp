@@ -109,9 +109,9 @@ void Menu::SetActions()
         switch (i) {
         case 0: items[i].action = ActionStart; break;
         case 1: items[i].action = ActionLoadGame; break;
-        case 2: items[i].action = ActionAbout; break;
-        case 3: items[i].action = ActionHelpContents; break;
-        case 4: items[i].action = ActionHelpMore; break;
+        case 2: items[i].action = ActionOptions; break;
+        case 3: items[i].action = ActionHelp; break;
+        case 4: items[i].action = ActionCredits; break;
         case 5: items[i].action = ActionQuit; break;
         }
     }
@@ -263,19 +263,19 @@ int __cdecl Menu::ActionLoadGame()
     return 0;
 }
 
-int __cdecl Menu::ActionAbout()
+int __cdecl Menu::ActionOptions()
 {
     DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(129), GetMainWindow(), (DLGPROC)kAboutDialogProc, 0);
     return 0;
 }
 
-int __cdecl Menu::ActionHelpContents()
+int __cdecl Menu::ActionHelp()
 {
     WinHelpA(GetRenderer()->hwnd, ".\\help\\sqz.hlp", HELP_CONTEXT, 1);
     return 0;
 }
 
-int __cdecl Menu::ActionHelpMore()
+int __cdecl Menu::ActionCredits()
 {
     WinHelpA(GetRenderer()->hwnd, ".\\help\\sqz.hlp", HELP_CONTEXT, 2);
     return 0;

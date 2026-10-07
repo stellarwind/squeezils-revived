@@ -183,7 +183,16 @@ BOOL Bitmap::ReadRetry(HANDLE file, void *buffer, DWORD size, const char *path)
 // @004739d0  Loads an 8 bit Windows bitmap into a new surface of this object (made with the virtual CreateSurface) in the
 // display's pixel format, with the colour key set to black. Returns the surface, or NULL after reporting the problem. The
 // file is expected to be laid out as header, palette, pixels back to back (the offset to the pixels is not used).
+void (*BitmapLoadTrace)(const char *path, int ok) = NULL;
+
 LPDIRECTDRAWSURFACE Bitmap::Load(const char *path)
+{
+    LPDIRECTDRAWSURFACE s = LoadFile(path);
+    if (BitmapLoadTrace) BitmapLoadTrace(path, s != NULL);
+    return s;
+}
+
+LPDIRECTDRAWSURFACE Bitmap::LoadFile(const char *path)
 {
     // open (CreateFile gives INVALID_HANDLE_VALUE, not 0, for a missing file, so the dialog below never shows; the first
     // ReadFile then fails instead)

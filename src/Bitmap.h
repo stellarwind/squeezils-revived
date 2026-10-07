@@ -8,6 +8,9 @@
 #pragma once
 #include "Renderer.h"
 
+// Optional debugging hook: called with the path and whether it loaded, for every Bitmap::Load (set by the hook DLL).
+extern void (*BitmapLoadTrace)(const char *path, int ok);
+
 class Bitmap {
 public:
     // virtual slots
@@ -34,6 +37,7 @@ public:
     // not virtual
     BOOL CaptureFrom(LPDIRECTDRAWSURFACE src, int x, int y);        // 0x473e80 copies the w x h area at (x, y) of src into this
     LPDIRECTDRAWSURFACE Load(const char *path);                     // 0x4739d0 loads an 8 bit .bmp, converts it to the display format
+    LPDIRECTDRAWSURFACE LoadFile(const char *path);                 // the loading itself; Load reports the result to BitmapLoadTrace when one is set
 
     void **vtbl;                    // 0x00
     DDSURFACEDESC desc;             // 0x04 scratch for CreateSurface

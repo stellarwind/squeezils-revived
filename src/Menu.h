@@ -2,7 +2,7 @@
 // action when clicked or chosen with Enter. Reconstructed from SQZ.EXE 0x405e90-0x406c20 (RTTI class Menu, vtable 0x49d28c,
 // allocated by the application at 0x43a840, 0x190 bytes). The items come from the [Interface] section: MenuItems is the
 // count, Menu_<n> names the picture (<name>.bmp normal, <name>2.bmp highlighted) and Menu_<n>Key the key that chooses it.
-// The six actions are Start, Load Game, the about box, two help pages and the quit question. Reading the keyboard (the key
+// the six actions are Start, Load Game, Options, Help, Credits and the quit question. Reading the keyboard (the key
 // name -> code table) and the window itself stay in original code.
 #pragma once
 #include <windows.h>
@@ -39,9 +39,9 @@ public:
     // the actions (the dialogs' window procedures are still original code)
     static int __cdecl ActionStart();             // @406950 returns 2
     static int __cdecl ActionLoadGame();          // @406760 pick a saved game and load it
-    static int __cdecl ActionAbout();             // @406730
-    static int __cdecl ActionHelpContents();      // @406670 WinHelp topic 1
-    static int __cdecl ActionHelpMore();          // @406690 WinHelp topic 2
+    static int __cdecl ActionOptions();          // @406730 the options dialog (and its sub dialogs)
+    static int __cdecl ActionHelp();             // @406670 WinHelp topic 1
+    static int __cdecl ActionCredits();          // @406690 WinHelp topic 2 (the credits)
     static int __cdecl ActionQuit();              // @406920 the quit question; 1 when answered yes
 
     void **vtbl;                  // 0x000 0x49d28c

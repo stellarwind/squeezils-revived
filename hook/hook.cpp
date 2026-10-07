@@ -21,6 +21,7 @@
 #include "NutCounter.h"
 #include "Panel.h"
 #include "StatusBar.h"
+#include "KeyIcons.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -813,6 +814,7 @@ static BOOL (THISCALL *o_bmpdrawbmp)(Bitmap *, Bitmap *, int, int, int, int);
 static BOOL THISCALL h_bmpdrawbmp(Bitmap *b, Bitmap *d, int x, int y, int sx, int sy)
 { HEAVY_LOG(H_bmpdrawbmp); return b->DrawToBitmap(d, x, y, sx, sy); }
 static LPDIRECTDRAWSURFACE (THISCALL *o_bmpload)(Bitmap *, const char *);
+static void BitmapTrace(const char *path, int ok) { Log("bmp load: %s -> %s", path, ok ? "ok" : "FAILED"); }
 static LPDIRECTDRAWSURFACE THISCALL h_bmpload(Bitmap *b, const char *path) { HEAVY_LOG(H_bmpload); return b->Load(path); }
 
 // ---- String (reference counted game string; replace only, "str") -----------------------------------------------------------
@@ -1146,7 +1148,7 @@ static void __fastcall h_spreset(Splash *s) { HEAVY_LOG(H_spreset); s->Reset(); 
 
 // ---- Menu (the main menu; replace only, "menu") -----------------------------------------------------------------------------
 static Hook H_mnctor, H_mndtor, H_mnload, H_mnacts, H_mnbmp, H_mnanchor, H_mnlayout, H_mndraw, H_mnsel, H_mnmove, H_mnhit, H_mnmsg,
-            H_mnstart, H_mnloadgame, H_mnabout, H_mnhelp1, H_mnhelp2, H_mnquit;
+            H_mnstart, H_mnloadgame, H_mnoptions, H_mnhelp, H_mncredits, H_mnquit;
 
 static void *(THISCALL *o_mnctor)(Menu *);
 static void *THISCALL h_mnctor(Menu *m) { HEAVY_LOG(H_mnctor); new (m) Menu(); return m; }
@@ -1176,12 +1178,12 @@ static int (__cdecl *o_mnstart)();
 static int __cdecl h_mnstart() { HEAVY_LOG(H_mnstart); return Menu::ActionStart(); }
 static int (__cdecl *o_mnloadgame)();
 static int __cdecl h_mnloadgame() { HEAVY_LOG(H_mnloadgame); return Menu::ActionLoadGame(); }
-static int (__cdecl *o_mnabout)();
-static int __cdecl h_mnabout() { HEAVY_LOG(H_mnabout); return Menu::ActionAbout(); }
-static int (__cdecl *o_mnhelp1)();
-static int __cdecl h_mnhelp1() { HEAVY_LOG(H_mnhelp1); return Menu::ActionHelpContents(); }
-static int (__cdecl *o_mnhelp2)();
-static int __cdecl h_mnhelp2() { HEAVY_LOG(H_mnhelp2); return Menu::ActionHelpMore(); }
+static int (__cdecl *o_mnoptions)();
+static int __cdecl h_mnoptions() { HEAVY_LOG(H_mnoptions); return Menu::ActionOptions(); }
+static int (__cdecl *o_mnhelp)();
+static int __cdecl h_mnhelp() { HEAVY_LOG(H_mnhelp); return Menu::ActionHelp(); }
+static int (__cdecl *o_mncredits)();
+static int __cdecl h_mncredits() { HEAVY_LOG(H_mncredits); return Menu::ActionCredits(); }
 static int (__cdecl *o_mnquit)();
 static int __cdecl h_mnquit() { HEAVY_LOG(H_mnquit); return Menu::ActionQuit(); }
 
@@ -1229,6 +1231,19 @@ static int __fastcall h_sbinit(StatusBar *s) { HEAVY_LOG(H_sbinit); return s->In
 static int (__fastcall *o_sbload)(StatusBar *);
 static int __fastcall h_sbload(StatusBar *s) { HEAVY_LOG(H_sbload); return s->LoadAll(); }
 
+// ---- KeyIcons (the control key pictures in the panel; replace only, "keys") --------------------------------------------------
+static Hook H_kictor, H_kidtor, H_kiinit, H_kicomb, H_kikeys;
+static void *(__fastcall *o_kictor)(KeyIcons *);
+static void *__fastcall h_kictor(KeyIcons *k) { HEAVY_LOG(H_kictor); new (k) KeyIcons(); return k; }
+static void (__fastcall *o_kidtor)(KeyIcons *);
+static void __fastcall h_kidtor(KeyIcons *k) { HEAVY_LOG(H_kidtor); k->~KeyIcons(); }
+static int (THISCALL *o_kiinit)(KeyIcons *, int, int, int);
+static int THISCALL h_kiinit(KeyIcons *k, int a, int b, int i) { HEAVY_LOG(H_kiinit); return k->Init(a, b, i); }
+static int (THISCALL *o_kicomb)(KeyIcons *, int);
+static int THISCALL h_kicomb(KeyIcons *k, int i) { HEAVY_LOG(H_kicomb); return k->LoadCombined(i); }
+static int (__fastcall *o_kikeys)(KeyIcons *);
+static int __fastcall h_kikeys(KeyIcons *k) { HEAVY_LOG(H_kikeys); return k->LoadKeys(); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -1247,11 +1262,12 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_inictor, &H_inictor2, &H_inidtor, &H_iniget, &H_iniint, &H_inifloats, &H_inifloat, &H_iniset, &H_inidir, &H_inipath, &H_iniparse,
                            &H_spctor, &H_spdtor, &H_spload, &H_spfile, &H_spshow, &H_sphide, &H_spshown, &H_sppump, &H_spflush, &H_spstep, &H_spprog, &H_spreset,
                            &H_mnctor, &H_mndtor, &H_mnload, &H_mnacts, &H_mnbmp, &H_mnanchor, &H_mnlayout, &H_mndraw, &H_mnsel, &H_mnmove, &H_mnhit, &H_mnmsg,
-                           &H_mnstart, &H_mnloadgame, &H_mnabout, &H_mnhelp1, &H_mnhelp2, &H_mnquit,
+                           &H_mnstart, &H_mnloadgame, &H_mnoptions, &H_mnhelp, &H_mncredits, &H_mnquit,
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload,
-                           &H_sbinit, &H_sbload };
+                           &H_sbinit, &H_sbload,
+                           &H_kictor, &H_kidtor, &H_kiinit, &H_kicomb, &H_kikeys };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1416,9 +1432,9 @@ static void Setup()
     H_mnmsg = { "Menu::OnMessage", 0x406420, 7, "83ec0c8b442410", (void *)h_mnmsg, (void **)&o_mnmsg, false, 0, 0, "menu", 0 };
     H_mnstart = { "Menu::ActionStart", 0x406950, 5, "b802000000", (void *)h_mnstart, (void **)&o_mnstart, false, 0, 0, "menu", 0 };
     H_mnloadgame = { "Menu::ActionLoadGame", 0x406760, 6, "81ecc8000000", (void *)h_mnloadgame, (void **)&o_mnloadgame, false, 0, 0, "menu", 0 };
-    H_mnabout = { "Menu::ActionAbout", 0x406730, 6, "53a1cc734c00", (void *)h_mnabout, (void **)&o_mnabout, false, 0, 0, "menu", 0 };
-    H_mnhelp1 = { "Menu::ActionHelpContents", 0x406670, 6, "53a1dc754c00", (void *)h_mnhelp1, (void **)&o_mnhelp1, false, 0, 0, "menu", 0 };
-    H_mnhelp2 = { "Menu::ActionHelpMore", 0x406690, 6, "53a1dc754c00", (void *)h_mnhelp2, (void **)&o_mnhelp2, false, 0, 0, "menu", 0 };
+    H_mnoptions = { "Menu::ActionOptions", 0x406730, 6, "53a1cc734c00", (void *)h_mnoptions, (void **)&o_mnoptions, false, 0, 0, "menu", 0 };
+    H_mnhelp = { "Menu::ActionHelp", 0x406670, 6, "53a1dc754c00", (void *)h_mnhelp, (void **)&o_mnhelp, false, 0, 0, "menu", 0 };
+    H_mncredits = { "Menu::ActionCredits", 0x406690, 6, "53a1dc754c00", (void *)h_mncredits, (void **)&o_mncredits, false, 0, 0, "menu", 0 };
     H_mnquit = { "Menu::ActionQuit", 0x406920, 6, "53a1cc734c00", (void *)h_mnquit, (void **)&o_mnquit, false, 0, 0, "menu", 0 };
     H_fcctor = { "MoodFace::MoodFace", 0x405430, 6, "53ba0a000000", (void *)h_fcctor, (void **)&o_fcctor, false, 0, 0, "face", 0 };
     H_fcdtor = { "MoodFace::~MoodFace", 0x405490, 7, "83ec08894c2400", (void *)h_fcdtor, (void **)&o_fcdtor, false, 0, 0, "face", 0 };
@@ -1435,6 +1451,11 @@ static void Setup()
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
     H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
     H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
+    H_kictor = { "KeyIcons::KeyIcons", 0x42fc30, 7, "33c08901894118", (void *)h_kictor, (void **)&o_kictor, false, 0, 0, "keys", 0 };
+    H_kidtor = { "KeyIcons::~KeyIcons", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_kidtor, (void **)&o_kidtor, false, 0, 0, "keys", 5 };
+    H_kiinit = { "KeyIcons::Init", 0x430150, 7, "64a10000000055", (void *)h_kiinit, (void **)&o_kiinit, false, 0, 0, "keys", 0 };
+    H_kicomb = { "KeyIcons::LoadCombined", 0x430360, 6, "81ecc8000000", (void *)h_kicomb, (void **)&o_kicomb, false, 0, 0, "keys", 0 };
+    H_kikeys = { "KeyIcons::LoadKeys", 0x42fca0, 7, "64a10000000055", (void *)h_kikeys, (void **)&o_kikeys, false, 0, 0, "keys", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
@@ -1530,6 +1551,7 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         if (!GetEnvironmentVariableA("SQZ_REPLACE", g_replaceList, sizeof g_replaceList))
             strcpy(g_replaceList, cfgReplace);
         Log("SQZ_REPLACE=%s", g_replaceList);
+        BitmapLoadTrace = BitmapTrace;
         g_enumCompare = strstr(g_replaceList, "enumcmp") != NULL;
         g_qdmCompare = strstr(g_replaceList, "qdmcmp") != NULL;
         g_skyCompare = strstr(g_replaceList, "skycmp") != NULL;
