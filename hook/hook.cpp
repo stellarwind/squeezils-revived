@@ -13,6 +13,7 @@
 #include "Sky.h"
 #include "Image.h"
 #include "Bitmap.h"
+#include "GameString.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -773,6 +774,49 @@ static BOOL THISCALL h_bmpdrawbmp(Bitmap *b, Bitmap *d, int x, int y, int sx, in
 static LPDIRECTDRAWSURFACE (THISCALL *o_bmpload)(Bitmap *, const char *);
 static LPDIRECTDRAWSURFACE THISCALL h_bmpload(Bitmap *b, const char *path) { HEAVY_LOG(H_bmpload); return b->Load(path); }
 
+// ---- String (reference counted game string; replace only, "str") -----------------------------------------------------------
+// ToFloat also runs the original on the same text and compares, since atof is the one call here that is not plain pointer work.
+static Hook H_strctor, H_strcstr, H_strcopy, H_strrelease, H_strunique, H_strc_str, H_strreserve, H_strrepctor, H_strassign, H_strset,
+            H_strfloat, H_strless, H_streq, H_strcmp;
+
+static void *(THISCALL *o_strctor)(String *);
+static void *THISCALL h_strctor(String *s) { HEAVY_LOG(H_strctor); s->rep = NULL; return s; }
+static void *(THISCALL *o_strcstr)(String *, const char *);
+static void *THISCALL h_strcstr(String *s, const char *c) { HEAVY_LOG(H_strcstr); new (s) String(c); return s; }
+static void *(THISCALL *o_strcopy)(String *, const String *);
+static void *THISCALL h_strcopy(String *s, const String *o) { HEAVY_LOG(H_strcopy); new (s) String(*o); return s; }
+static void (__fastcall *o_strrelease)(String *);
+static void __fastcall h_strrelease(String *s) { HEAVY_LOG(H_strrelease); s->Release(); }
+static void (__fastcall *o_strunique)(String *);
+static void __fastcall h_strunique(String *s) { HEAVY_LOG(H_strunique); s->MakeUnique(); }
+static const char *(__fastcall *o_strc_str)(const String *);
+static const char *__fastcall h_strc_str(const String *s) { HEAVY_LOG(H_strc_str); return s->c_str(); }
+static int (THISCALL *o_strreserve)(StringRep *, unsigned);
+static int THISCALL h_strreserve(StringRep *r, unsigned n) { HEAVY_LOG(H_strreserve); return r->Reserve(n); }
+static void *(__fastcall *o_strrepctor)(StringRep *);
+static void *__fastcall h_strrepctor(StringRep *r) { HEAVY_LOG(H_strrepctor); new (r) StringRep(); return r; }
+static char *(THISCALL *o_strassign)(String *, const char *, int);
+static char *THISCALL h_strassign(String *s, const char *c, int n) { HEAVY_LOG(H_strassign); return s->Assign(c, n); }
+static void *(THISCALL *o_strset)(String *, const String *);
+static void *THISCALL h_strset(String *s, const String *o) { HEAVY_LOG(H_strset); *s = *o; return s; }
+static int (THISCALL *o_strfloat)(const String *, float *);
+static int THISCALL h_strfloat(const String *s, float *out)
+{
+    HEAVY_LOG(H_strfloat);
+    float on = 0, mine = 0;
+    int ro = o_strfloat(s, &on);
+    int rm = s->ToFloat(&mine);
+    if (ro != rm || memcmp(&on, &mine, 4) != 0) { H_strfloat.mismatches++; Log("MISMATCH ToFloat \"%s\" orig=%d,%g ours=%d,%g", s->c_str(), ro, on, rm, mine); }
+    *out = mine;
+    return rm;
+}
+static int (*o_strless)(const String *, const String *);
+static int h_strless(const String *a, const String *b) { HEAVY_LOG(H_strless); return StringLess(a, b); }
+static int (*o_streq)(const String *, const String *);
+static int h_streq(const String *a, const String *b) { HEAVY_LOG(H_streq); return StringEqual(a, b); }
+static int (*o_strcmp)(const String *, const String *);
+static int h_strcmp(const String *a, const String *b) { HEAVY_LOG(H_strcmp); return StringCompare(a, b); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -785,7 +829,9 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad,
                            &H_skyinit, &H_skyshut, &H_skyface, &H_skyout, &H_skyview, &H_skyorigin, &H_skyfov, &H_skydraw, &H_skyresize, &H_skymode, &H_skyrot, &H_skymul,
                            &H_imgload, &H_imgrow,
-                           &H_bmpctor, &H_bmpdtor, &H_bmpcopy, &H_bmprect, &H_bmpsized, &H_bmpcreate, &H_bmpcapture, &H_bmpdrawsurf, &H_bmpdrawat, &H_bmpdrawbmp, &H_bmpload };
+                           &H_bmpctor, &H_bmpdtor, &H_bmpcopy, &H_bmprect, &H_bmpsized, &H_bmpcreate, &H_bmpcapture, &H_bmpdrawsurf, &H_bmpdrawat, &H_bmpdrawbmp, &H_bmpload,
+                           &H_strctor, &H_strcstr, &H_strcopy, &H_strrelease, &H_strunique, &H_strc_str, &H_strreserve, &H_strrepctor, &H_strassign, &H_strset,
+                           &H_strfloat, &H_strless, &H_streq, &H_strcmp };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -899,6 +945,20 @@ static void Setup()
     H_bmpdrawat = { "Bitmap::DrawToSurfaceAt", 0x474020, 6, "81ec88000000", (void *)h_bmpdrawat, (void **)&o_bmpdrawat, false, 0, 0, "bmp", 0 };
     H_bmpdrawbmp = { "Bitmap::DrawToBitmap", 0x474130, 6, "81ec84000000", (void *)h_bmpdrawbmp, (void **)&o_bmpdrawbmp, false, 0, 0, "bmp", 0 };
     H_bmpload = { "Bitmap::Load", 0x4739d0, 6, "81ece4030000", (void *)h_bmpload, (void **)&o_bmpload, false, 0, 0, "bmp", 0 };
+    H_strctor = { "String::String()", 0x438370, 8, "8bc1c70100000000", (void *)h_strctor, (void **)&o_strctor, false, 0, 0, "str", 0 };
+    H_strcstr = { "String::String(const char*)", 0x438380, 5, "8b54240456", (void *)h_strcstr, (void **)&o_strcstr, false, 0, 0, "str", 0 };
+    H_strcopy = { "String::String(const String&)", 0x4383b0, 6, "8b4424048b00", (void *)h_strcopy, (void **)&o_strcopy, false, 0, 0, "str", 0 };
+    H_strrelease = { "String::Release", 0x4384f0, 6, "56578b018bf9", (void *)h_strrelease, (void **)&o_strrelease, false, 0, 0, "str", 0 };
+    H_strunique = { "String::MakeUnique", 0x4383e0, 7, "64a10000000055", (void *)h_strunique, (void **)&o_strunique, false, 0, 0, "str", 0 };
+    H_strc_str = { "String::c_str", 0x438530, 6, "8b0185c07506", (void *)h_strc_str, (void **)&o_strc_str, false, 0, 0, "str", 0 };
+    H_strreserve = { "StringRep::Reserve", 0x438540, 5, "8b44240453", (void *)h_strreserve, (void **)&o_strreserve, false, 0, 0, "str", 0 };
+    H_strrepctor = { "StringRep::StringRep", 0x4385c0, 8, "5356c70100000000", (void *)h_strrepctor, (void **)&o_strrepctor, false, 0, 0, "str", 0 };
+    H_strassign = { "String::Assign", 0x438620, 5, "5356578bf1", (void *)h_strassign, (void **)&o_strassign, false, 0, 0, "str", 0 };
+    H_strset = { "String::operator=", 0x438670, 8, "56578bf98b74240c", (void *)h_strset, (void **)&o_strset, false, 0, 0, "str", 0 };
+    H_strfloat = { "String::ToFloat", 0x4386a0, 7, "568b018bf18b08", (void *)h_strfloat, (void **)&o_strfloat, false, 0, 0, "str", 0 };
+    H_strless = { "StringLess", 0x4386f0, 9, "8b4c2408e837feffff", (void *)h_strless, (void **)&o_strless, false, 0, 0, "str", 5 };
+    H_streq = { "StringEqual", 0x438720, 9, "8b4c2408e807feffff", (void *)h_streq, (void **)&o_streq, false, 0, 0, "str", 5 };
+    H_strcmp = { "StringCompare", 0x438750, 9, "8b4c2408e8d7fdffff", (void *)h_strcmp, (void **)&o_strcmp, false, 0, 0, "str", 5 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

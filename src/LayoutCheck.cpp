@@ -60,3 +60,8 @@ static_assert(sizeof(SqgModel) == 0x2c, "SqgModel size");
 static_assert(offsetof(Bitmap, desc) == 0x04 && offsetof(Bitmap, renderer) == 0x70 && offsetof(Bitmap, surface) == 0x74 &&
               offsetof(Bitmap, width) == 0x78 && offsetof(Bitmap, height) == 0x7c, "Bitmap fields");
 static_assert(sizeof(Bitmap) == 0x80, "Bitmap size");
+
+// String
+#include "GameString.h"
+static_assert(offsetof(StringRep, cap) == 0x4 && offsetof(StringRep, refs) == 0x8 && sizeof(StringRep) == 0xc, "StringRep layout");
+static_assert(sizeof(String) == 4, "String size");
