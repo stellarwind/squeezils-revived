@@ -98,3 +98,7 @@ static_assert(offsetof(MoodFace, x) == 0x284 && offsetof(MoodFace, canvas) == 0x
 // NutCounter
 #include "NutCounter.h"
 static_assert(offsetof(NutCounter, x) == 0x08 && offsetof(NutCounter, file) == 0x10 && offsetof(NutCounter, lastValue) == 0x24 && offsetof(NutCounter, mode) == 0x28, "NutCounter fields");
+
+// Panel (partial)
+#include "Panel.h"
+static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) == 0x460 && offsetof(Panel, backgroundFile) == 0x464 && offsetof(Panel, regionScreen) == 0x480, "Panel fields");
