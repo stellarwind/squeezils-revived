@@ -6,8 +6,8 @@
 #pragma once
 
 struct WarpFace {            // 0x48 bytes, handed to the software renderer as is (field meaning not fully known)
-    int   extentA;           // 0x00 first size value returned by the image loader
-    int   extentB;           // 0x04 second size value returned by the image loader
+    int   extentA;           // 0x00 image height (second size value returned by the image loader)
+    int   extentB;           // 0x04 image width (first size value returned by the image loader)
     float zero08, zero0c;    // 0x08, 0x0c  0
     float one;               // 0x10        1.0
     float halfA, halfB;      // 0x14, 0x18  extentA / 2, extentB / 2
