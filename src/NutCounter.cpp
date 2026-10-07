@@ -2,6 +2,7 @@
 #include <string.h>
 #include <new>
 #include "NutCounter.h"
+#include "Panel.h"
 #include "MoodFace.h"
 #include "IniReader.h"
 #include "Renderer.h"
@@ -10,7 +11,7 @@
 // the panel's ten digit pictures, 0 to 9
 static Bitmap **Digits()
 {
-    return (Bitmap **)((char *)GetPanel() + 0x428);
+    return ((Panel *)GetPanel())->digits;
 }
 
 NutCounter::NutCounter()
@@ -85,7 +86,7 @@ void NutCounter::Draw(int value, int value2)
 {
     lastValue = value;
     if (!icon->CopyFrom(original))
-        GameError("could not copy");
+        GameLog("could not copy");
     int w = icon->GetWidth(), h = icon->GetHeight();
     if (mode == 1) {
         DrawNumber(value, w / 2, h / 2 - h / 4);
