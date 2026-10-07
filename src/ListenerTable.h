@@ -11,6 +11,6 @@ struct ListenerTable {
     int  FindFreeSlot() const;                    // @478130 first entry with callback == NULL, or -1
     BOOL Contains(void *callback, void *context) const;   // @477f20
     BOOL Add(void *callback, void *context);      // @477ef0 returns FALSE when the table is full
-    void Remove(void *callback, void *context);  // @477f60 clears the entry and shifts later ones down
+    void Remove(void *callback, void *context);  // @477f60 clears the entry and shifts later ones down (the last slot keeps a stale copy of its old contents)
 };
 static_assert(sizeof(ListenerTable) == 0x80, "ListenerTable layout");

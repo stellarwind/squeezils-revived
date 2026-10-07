@@ -2,7 +2,7 @@
 
 Hand-translated from the original game binary, function by function, with real names and the original data layout.
 It is not byte-identical to the original; the goal is source that behaves the same and recompiles into something very similar.
-Every function here has been verified inside the real, unmodified game with `hook/` (see below).
+Every function here has been verified inside the real, unmodified game with `hook/` (see below), except the ones listed under "Not verified in play".
 
 ## Contents
 - `Renderer.h/.cpp`: DirectDraw + Direct3D Retained Mode setup (display modes, windowing, device selection, surfaces, palettes, frames, viewport).
@@ -15,12 +15,16 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Gif.h/.cpp`: the game's GIF reader (header, global palette, LZW decoder) giving palette indices.
 - `Image.h/.cpp`: `ImageLoad` (GIF to pixels in the display format, rows padded to 4 bytes) and `ImageConvertRow` (palette indices to 8/16/24/32 bit through the colour masks). Used by Texture and Warp.
 - `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
-- `LayoutCheck.cpp`: compile-time asserts that `Renderer` has the original field offsets and size (0x9cc). Also checks `Scene` (0x1c bytes).
+- `LayoutCheck.cpp`: compile-time asserts that the structs have the original field offsets and sizes (`Renderer` 0x9cc, `Scene`, `Warp`, `WarpFace`, `BodyPart`/`AnimatedBody`/`BodyPose`, the `Sqg` structs, `DisplayFormat`).
 
-## Not reconstructed yet
+## Not reconstructed
 - The sky renderer's modes 0 and 2 (the game only uses mode 1) and its least-squares table.
-- `Scene::SetQuality` and `Warp::Resize` never ran in a normal session, so they are unverified.
-- `CheckDesktopDepth`, the `Error`/`FatalError` boxes' guessed title/strings and a few trivial setters are untested.
+- The original binary is still used for everything else: the game logic, and the modules still reach each other through the original addresses
+  (for example `Warp` calls the sky library and image loader there). The hook redirects those calls to our code.
+
+## Not verified in play
+- `Scene::SetQuality`, `Warp::Resize` and `SkyRenderer::Resize` never ran in a normal session (checked against the disassembly only).
+- `CheckDesktopDepth` and a few trivial setters are untested. The windowed 8 bit palette paths need an 8 bit desktop.
 
 ## Syntax check
 Needs the DirectX 7 SDK headers (not included; set `DX7_INCLUDE`):

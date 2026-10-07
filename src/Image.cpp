@@ -15,7 +15,8 @@ static int LowZeroBits(unsigned mask)
     return n;
 }
 
-// 255 / (largest value a channel can hold); at least 1 so a narrow or empty mask cannot divide by zero
+// 255 / (largest value a channel can hold). An empty mask gives 1 (the original never returns from that case); a channel
+// wider than 8 bits still divides by zero, as in the original.
 static unsigned ChannelDivisor(unsigned mask, int shift)
 {
     unsigned max = mask >> shift;

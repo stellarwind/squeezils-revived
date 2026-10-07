@@ -48,6 +48,8 @@ IDirect3DRMTexture *CreateTextureFromGif(const char *path, const float *transpar
     img->green_mask = fmt[3];
     img->blue_mask  = fmt[4];
     img->alpha_mask = fmt[5];
+    // the unpadded row size: ImageLoad pads each row to 4 bytes, which only matches when width * bytes per pixel is a multiple of
+    // 4 (true for every texture the game ships; the original does the same)
     img->bytes_per_line = ((fmt[0] + ((fmt[0] >> 31) & 7)) >> 3) * width;
     img->width = width;
     img->height = height;
@@ -79,6 +81,7 @@ IDirect3DRMTexture *CreateTextureFromGif(const char *path, const float *transpar
             pal[0] = (unsigned char)r;
             pal[1] = (unsigned char)g;
             pal[2] = (unsigned char)b;
+            // (swaps the two colours as 8 bit indices even on a 16 bit display, as the original does)
             unsigned char *px = (unsigned char *)img->buffer1;
             for (int i = 0; i < img->width * img->height; i++) {
                 if (px[i] == 0)

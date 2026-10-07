@@ -12,7 +12,8 @@
 //    differences, one texel read per output pixel (DrawRow). The output is 8 or 16 bit; there is no 32 bit path.
 //
 // Not reconstructed: the other two modes (SetMode 0 and 2: a whole-image resampler and a cylindrical projection) and the
-// least-squares coefficient table the first of them used. The game always selects mode 1, so none of that runs.
+// least-squares coefficient table the first of them used. The game always selects mode 1, so none of that runs. (In the
+// original, Draw sends mode 2 through the same row walker as mode 1; only mode 2's SetView projection is missing here.)
 #pragma once
 #include <stddef.h>
 #include "Warp.h"

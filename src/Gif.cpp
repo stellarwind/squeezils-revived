@@ -152,7 +152,7 @@ void Lzw::Run(int rowWidth)
             *sp++ = (unsigned char)firstChar;
         }
         int steps = 0;
-        while (firstFree <= c && steps++ < 4096) {       // walk the string back to its first pixel
+        while (firstFree <= c && steps++ < 4096) {       // walk the string back to its first pixel (the step limit is ours: it only stops a corrupt table from looping)
             *sp++ = suffix[c];
             c = prefix[c];
         }

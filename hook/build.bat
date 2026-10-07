@@ -4,7 +4,7 @@ rem Usage: build.bat   then copy sqzhook.dll next to SQZ.EXE (together with the 
 setlocal
 if "%DX7_INCLUDE%"=="" (echo Set DX7_INCLUDE to the DirectX 7 SDK include folder & exit /b 1)
 cd /d "%~dp0"
-g++ -m32 -std=c++17 -O1 -shared -static -s -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -fpermissive ^
+g++ -m32 -std=c++17 -O1 -shared -static -s -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion ^
   -I..\src -I"%DX7_INCLUDE%" ^
   -DDirectDrawCreate=Hook_DirectDrawCreate -DDirectDrawCreateClipper=Hook_DirectDrawCreateClipper -DDirect3DRMCreate=Hook_Direct3DRMCreate -DD3DRMCreateColorRGB=Hook_D3DRMCreateColorRGB ^
-  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp ..\src\Scene.cpp ..\src\Warp.cpp ..\src\SqgModel.cpp ..\src\Texture.cpp ..\src\BBodyPart.cpp ..srcSky.cpp ..srcGif.cpp ..srcImage.cpp -lwinmm -ldxguid -lgdi32 -luser32
+  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp ..\src\Scene.cpp ..\src\Warp.cpp ..\src\SqgModel.cpp ..\src\Texture.cpp ..\src\BodyPart.cpp ..\src\Sky.cpp ..\src\Gif.cpp ..\src\Image.cpp -lwinmm -ldxguid -lgdi32 -luser32

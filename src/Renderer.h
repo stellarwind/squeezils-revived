@@ -1,6 +1,6 @@
 // Renderer: DirectDraw + Direct3D Retained Mode (v1 interfaces) setup for Squeezils.
 // Reconstructed from SQZ.EXE 0x474230-0x476a00. Names are ours; field offsets are the original ones.
-// Not a byte-exact reconstruction. See Renderer.cpp for per-function notes ("TODO(opus)" = unresolved).
+// Not a byte-exact reconstruction. See Renderer.cpp for per-function notes (unresolved items are marked in the comments).
 #pragma once
 
 #define DIRECTDRAW_VERSION 0x0300
@@ -44,8 +44,8 @@ public:
     void  SetTextureColors(int colors);           // 0x475060
     void  SetTextureShades(int shades);           // 0x475080
 
-    void  Error(const char *fmt, ...);            // 0x4754c0 (info box)
-    void  FatalError(const char *fmt, ...);       // 0x475510 (error box)
+    int   Error(const char *fmt, ...);             // 0x4754c0 (info box), returns the MessageBox result
+    int   FatalError(const char *fmt, ...);        // 0x475510 (error box, Retry/Cancel), returns IDRETRY or IDCANCEL
 
     // Original code names this EnumDeviceCallback; it is the D3D device enumeration driver (0x475ad0).
     BOOL  EnumerateDevices();

@@ -29,7 +29,7 @@ public:
     ~Warp();                                              // 0x478cb0 (shuts the renderer down, frees the face images)
     int  Init(int height, int width, float fov, char flag);   // 0x478ce0 (thiscall, 4 stack args). Returns 1 on success
     void SetOutput(void *bits);                           // 0x478da0 where the next frame is drawn, with the pixel depth of the display
-    void Resize(int width, int height);                   // 0x478dc0
+    void Resize(int width, int height);                   // 0x478dc0 (note: Init takes height first, this takes width first)
     void Update(const float *m);                          // 0x478e10 draws the sky for the 4x4 camera matrix m
     int  Load(const char *prefix, unsigned char *palette, const int *pixelFormat);   // 0x479090 loads <prefix>nz.gif ... py.gif
 

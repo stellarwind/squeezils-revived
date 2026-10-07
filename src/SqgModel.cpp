@@ -7,7 +7,7 @@
 
 // The game's allocator, error reporter and texture lookup, still the original code:
 extern void *SqgAlloc(size_t size);                      // function pointer stored at 0x4c0f78 (the game's malloc)
-extern void  SqgError(const char *message);              // @00473710
+extern void  SqgError(const char *format, ...);              // @00473710
 typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *name);
 extern SqgTextureLookupFn SqgGetTextureLookup();         // pointer stored at 0x4c0f84, NULL until the game sets it
 extern void *Operator_New(size_t size);                  // @0048ea00
@@ -28,45 +28,45 @@ BOOL SqgModel::Load(const char *path, int mirror)
 
     char header[20];
     fread(header, sizeof kHeader, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read file header"); fclose(f); return FALSE; }
-    if (strcmp(header, kHeader) != 0) { SqgError("File header is wrong for SQG file %s"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read file header\n"); fclose(f); return FALSE; }
+    if (strcmp(header, kHeader) != 0) { SqgError("File header is wrong for SQG file %s", path); fclose(f); return FALSE; }
 
     fread(&textureCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read texture count"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read texture count\n"); fclose(f); return FALSE; }
     if (textureCount > 0) {
         textureNames = (char **)SqgAlloc(textureCount * 4);
         for (int i = 0; i < textureCount; i++) {
             size_t len;
             fread(&len, 4, 1, f);
-            if (!ReadOk(f)) { SqgError("Can't read texture name length"); fclose(f); return FALSE; }
+            if (!ReadOk(f)) { SqgError("Can't read texture name length\n"); fclose(f); return FALSE; }
             textureNames[i] = (char *)SqgAlloc(len);
             fread(textureNames[i], len, 1, f);
-            if (!ReadOk(f)) { SqgError("Can't read texture name %d"); fclose(f); return FALSE; }
+            if (!ReadOk(f)) { SqgError("Can't read texture name %d\n", i); fclose(f); return FALSE; }
         }
     }
 
     fread(&vertexCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read vertex count"); fclose(f); return FALSE; }
-    if (vertexCount < 1) { SqgError("Vertex count is <= 0"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read vertex count\n"); fclose(f); return FALSE; }
+    if (vertexCount < 1) { SqgError("Vertex count is <= 0\n"); fclose(f); return FALSE; }
     vertices = (D3DRMVERTEX *)SqgAlloc(vertexCount * sizeof(D3DRMVERTEX));
     fread(vertices, sizeof(D3DRMVERTEX), vertexCount, f);
-    if (!ReadOk(f)) { SqgError("Can't read vertices"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read vertices\n"); fclose(f); return FALSE; }
 
     fread(&faceCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read index count"); fclose(f); return FALSE; }
-    if (faceCount < 1) { SqgError("Face count is <= 0"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read index count\n"); fclose(f); return FALSE; }
+    if (faceCount < 1) { SqgError("Face count is <= 0\n"); fclose(f); return FALSE; }
     fread(&indexCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read index count"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read index count\n"); fclose(f); return FALSE; }
     indices = (int *)SqgAlloc(indexCount * 4);
     fread(indices, 4, indexCount, f);
-    if (!ReadOk(f)) { SqgError("Can't read vertex indices"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read vertex indices\n"); fclose(f); return FALSE; }
 
     fread(&groupCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read group count"); fclose(f); return FALSE; }
-    if (groupCount < 1) { SqgError("Triangle count is <= 0"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read group count\n"); fclose(f); return FALSE; }
+    if (groupCount < 1) { SqgError("Triangle count is <= 0\n"); fclose(f); return FALSE; }
     groups = (SqgGroup *)SqgAlloc(groupCount * sizeof(SqgGroup));
     fread(groups, sizeof(SqgGroup), groupCount, f);
-    if (!ReadOk(f)) { SqgError("Can't read groups"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read groups\n"); fclose(f); return FALSE; }
 
     if (mirror) {
         // reverse the vertex order of every face list and flip X
@@ -85,7 +85,7 @@ BOOL SqgModel::Load(const char *path, int mirror)
     }
 
     fread(&deltaListCount, 4, 1, f);
-    if (!ReadOk(f)) { SqgError("Can't read delta list count"); fclose(f); return FALSE; }
+    if (!ReadOk(f)) { SqgError("Can't read delta list count\n"); fclose(f); return FALSE; }
     if (deltaListCount == 0) {
         fclose(f);
         return TRUE;
@@ -95,11 +95,11 @@ BOOL SqgModel::Load(const char *path, int mirror)
     for (int i = 0; i < deltaListCount; i++) {
         int n;
         fread(&n, 4, 1, f);
-        if (!ReadOk(f)) { SqgError("Can't read delta count for delta list %d"); fclose(f); return FALSE; }
+        if (!ReadOk(f)) { SqgError("Can't read delta count for delta list %d\n", i); fclose(f); return FALSE; }
         deltaLists[i].count = n;
         deltaLists[i].deltas = (SqgDelta *)SqgAlloc(n * sizeof(SqgDelta));
         fread(deltaLists[i].deltas, sizeof(SqgDelta), n, f);
-        if (!ReadOk(f)) { SqgError("Can't read deltas for delta list %d"); fclose(f); return FALSE; }
+        if (!ReadOk(f)) { SqgError("Can't read deltas for delta list %d\n", i); fclose(f); return FALSE; }
         if (mirror)
             for (int k = 0; k < n; k++)
                 deltaLists[i].deltas[k].dx = -deltaLists[i].deltas[k].dx;

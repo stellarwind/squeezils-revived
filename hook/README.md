@@ -10,6 +10,6 @@ Both settings can also be given as `mode=` and `replace=` lines in a `sqzhook.cf
 
 Lessons baked into the engine and checks:
 - Decompilers often show `void` for functions that return a value in EAX; check the callers (hook wrappers pass the original's return through).
-- A detour must not steal bytes that are a branch target (loop back-edge); `check_hooks.sh` scans for that and tiny functions are copied whole.
+- A detour must not steal bytes that are a branch target (loop back-edge); `check_hooks.sh` scans for that (it only looks at branches within 0x400 bytes after each hooked address, and needs `objdump -d -M intel SQZ.EXE` saved as `/tmp/sqz.dis`) and tiny functions are copied whole. The id `all` enables every heavy hook.
 
 Build (32-bit MinGW-w64, DirectX 7 SDK headers via `DX7_INCLUDE`): see `build.bat`.
