@@ -7,4 +7,4 @@ cd /d "%~dp0"
 g++ -m32 -std=c++17 -O1 -shared -static -s -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion ^
   -I..\src -I"%DX7_INCLUDE%" ^
   -DDirectDrawCreate=Hook_DirectDrawCreate -DDirectDrawCreateClipper=Hook_DirectDrawCreateClipper -DDirect3DRMCreate=Hook_Direct3DRMCreate -DD3DRMCreateColorRGB=Hook_D3DRMCreateColorRGB ^
-  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp ..\src\Scene.cpp ..\src\Warp.cpp ..\src\SqgModel.cpp ..\src\Texture.cpp ..\src\BodyPart.cpp ..\src\Sky.cpp ..\src\Gif.cpp ..\src\Image.cpp ..\src\Bitmap.cpp ..\src\GameString.cpp ..\src\IniReader.cpp ..\src\IniFile.cpp ..\src\Splash.cpp ..\src\Menu.cpp -lwinmm -ldxguid -lgdi32 -luser32
+  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp ..\src\Scene.cpp ..\src\Warp.cpp ..\src\SqgModel.cpp ..\src\Texture.cpp ..\src\BodyPart.cpp ..\src\Sky.cpp ..\src\Gif.cpp ..\src\Image.cpp ..\src\Bitmap.cpp ..\src\GameString.cpp ..\src\IniReader.cpp ..\src\IniFile.cpp ..\src\Splash.cpp ..\src\Menu.cpp ..\src\MoodFace.cpp -lwinmm -ldxguid -lgdi32 -luser32

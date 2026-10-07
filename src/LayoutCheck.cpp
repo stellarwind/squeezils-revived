@@ -88,3 +88,9 @@ static_assert(offsetof(Splash, picture) == 0x04 && offsetof(Splash, bar) == 0x08
 static_assert(offsetof(Menu, itemCount) == 0x04 && offsetof(Menu, left) == 0x08 && offsetof(Menu, itemHeight) == 0x10 &&
               offsetof(Menu, items) == 0x18 && offsetof(Menu, anchorX) == 0x180 && offsetof(Menu, arg1) == 0x18c, "Menu fields");
 static_assert(offsetof(Menu::Item, action) == 0x18 && offsetof(Menu::Item, highlighted) == 0x20, "Menu::Item fields");
+
+// MoodFace
+#include "MoodFace.h"
+static_assert(offsetof(MoodFace, x) == 0x284 && offsetof(MoodFace, canvas) == 0x2a0 && offsetof(MoodFace, width) == 0x2a8 &&
+              offsetof(MoodFace, lastMood) == 0x2b0 && offsetof(MoodFace, animationCount) == 0x2b4 && offsetof(MoodFace, frame) == 0x2b8 &&
+              offsetof(MoodFace, lastTick) == 0x2c0 && offsetof(MoodFace, frameMs) == 0x2c4, "MoodFace fields");
