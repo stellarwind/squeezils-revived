@@ -73,12 +73,12 @@ DWORD GetColorKeyValue(LPDIRECTDRAWSURFACE surf, COLORREF color)
 }
 
 // @00474310
-void SetSourceColorKey(LPDIRECTDRAWSURFACE surf, COLORREF color)
+HRESULT SetSourceColorKey(LPDIRECTDRAWSURFACE surf, COLORREF color)
 {
     DDCOLORKEY key;
     key.dwColorSpaceLowValue  = GetColorKeyValue(surf, color);
     key.dwColorSpaceHighValue = key.dwColorSpaceLowValue;
-    surf->SetColorKey(DDCKEY_SRCBLT, &key);
+    return surf->SetColorKey(DDCKEY_SRCBLT, &key);
 }
 
 // ---- construction -------------------------------------------------------------------------

@@ -35,6 +35,10 @@ Scene    *GetScene();                      // the global at 0x4c75e0
 typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *name);
 SqgTextureLookupFn SqgGetTextureLookup();  // the pointer stored at 0x4c0f84 (NULL until the game sets it)
 
+// ---- vtables ----
+// The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
+static void *const kBitmapVtable = (void *)0x4a1060;
+
 // ---- callbacks ----
 // The window hook's callback (0x476630): the registry in ListenerTable holds it so the original window code can reach the
 // Renderer. It is original code that has not been reconstructed.
