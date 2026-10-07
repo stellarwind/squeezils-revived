@@ -112,3 +112,9 @@ static_assert(offsetof(StatusBar, food) == 0x34 && offsetof(StatusBar, foodC) ==
 #include "QuestItems.h"
 static_assert(offsetof(QuestItems, combinedFile) == 0x04 && offsetof(QuestItems, left) == 0x18 && offsetof(QuestItems, leftFile) == 0x1c && offsetof(QuestItems, middle) == 0x30 &&
               offsetof(QuestItems, right) == 0x48 && offsetof(QuestItems, rightFile) == 0x4c, "QuestItems fields");
+
+// Panel (whole object)
+static_assert(offsetof(Panel, status) == 0x08 && offsetof(Panel, quest) == 0x394 && offsetof(Panel, verticalChange) == 0x5c0 && offsetof(Panel, vec604) == 0x604 &&
+              offsetof(Panel, field610) == 0x610 && offsetof(Panel, font) == 0x618 && offsetof(Panel, messageFont) == 0x630 && offsetof(Panel, pad694) == 0x694, "Panel fields 2");
+#include "QuestPanel.h"
+static_assert(offsetof(QuestPanel, places) == 0x68, "QuestPanel fields");

@@ -22,6 +22,7 @@
 #include "Panel.h"
 #include "StatusBar.h"
 #include "QuestItems.h"
+#include "QuestPanel.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -100,6 +101,12 @@ int SoulMood(void *soul)
 }
 void *GetPanel() { return *(void **)0x4badb0; }
 int RegionScreenLoad(void *r) { return ((int (__attribute__((thiscall)) *)(void *))0x414c10)(r); }
+void GoodieListCtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156c0)(l); }
+void GoodieListDtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156d0)(l); }
+void RegionScreenCtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414380)(r); }
+void RegionScreenInit(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414490)(r); }
+void RegionScreenDtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x4143c0)(r); }
+void PanelLoadFonts(Panel *p) { ((void (__attribute__((thiscall)) *)(void *))0x42e7a0)(p); }
 int GoodieListInit(void *l, int x, int y) { return ((int (__attribute__((thiscall)) *)(void *, int, int))0x415750)(l, x, y); }
 int GoodieListLoad(void *l) { return ((int (__attribute__((thiscall)) *)(void *))0x415b40)(l); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
@@ -1220,7 +1227,19 @@ static void (THISCALL *o_ncnum)(NutCounter *, int, int, int);
 static void THISCALL h_ncnum(NutCounter *n, int v, int x, int y) { HEAVY_LOG(H_ncnum); n->DrawNumber(v, x, y); }
 
 // ---- Panel (the in-game panel; the parts reconstructed so far; replace only, "panel") -------------------------------------------
-static Hook H_pnload;
+static Hook H_pnload, H_pnctor, H_pndtor, H_sbctor, H_sbdtor, H_qpctor, H_qpdtor;
+static void *(__fastcall *o_pnctor)(Panel *);
+static void *__fastcall h_pnctor(Panel *p) { HEAVY_LOG(H_pnctor); new (p) Panel(); return p; }
+static void (__fastcall *o_pndtor)(Panel *);
+static void __fastcall h_pndtor(Panel *p) { HEAVY_LOG(H_pndtor); p->~Panel(); }
+static void *(__fastcall *o_sbctor)(StatusBar *);
+static void *__fastcall h_sbctor(StatusBar *s) { HEAVY_LOG(H_sbctor); new (s) StatusBar(); return s; }
+static void (__fastcall *o_sbdtor)(StatusBar *);
+static void __fastcall h_sbdtor(StatusBar *s) { HEAVY_LOG(H_sbdtor); s->~StatusBar(); }
+static void *(__fastcall *o_qpctor)(QuestPanel *);
+static void *__fastcall h_qpctor(QuestPanel *q) { HEAVY_LOG(H_qpctor); new (q) QuestPanel(); return q; }
+static void (__fastcall *o_qpdtor)(QuestPanel *);
+static void __fastcall h_qpdtor(QuestPanel *q) { HEAVY_LOG(H_qpdtor); q->~QuestPanel(); }
 static int (__fastcall *o_pnload)(Panel *);
 static int __fastcall h_pnload(Panel *p) { HEAVY_LOG(H_pnload); return p->LoadBitmaps(); }
 
@@ -1265,7 +1284,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mnstart, &H_mnloadgame, &H_mnoptions, &H_mnhelp, &H_mncredits, &H_mnquit,
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
-                           &H_pnload,
+                           &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
                            &H_sbinit, &H_sbload,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
 static char g_replaceList[2048];
@@ -1456,6 +1475,12 @@ static void Setup()
     H_qiinit = { "QuestItems::Init", 0x430150, 7, "64a10000000055", (void *)h_qiinit, (void **)&o_qiinit, false, 0, 0, "quest", 0 };
     H_qicomb = { "QuestItems::LoadCombined", 0x430360, 6, "81ecc8000000", (void *)h_qicomb, (void **)&o_qicomb, false, 0, 0, "quest", 0 };
     H_qikeys = { "QuestItems::LoadKeys", 0x42fca0, 7, "64a10000000055", (void *)h_qikeys, (void **)&o_qikeys, false, 0, 0, "quest", 0 };
+    H_pnctor = { "Panel::Panel", 0x42d5f0, 7, "64a10000000055", (void *)h_pnctor, (void **)&o_pnctor, false, 0, 0, "panel", 0 };
+    H_pndtor = { "Panel::~Panel", 0x42d880, 7, "64a10000000055", (void *)h_pndtor, (void **)&o_pndtor, false, 0, 0, "panel", 0 };
+    H_sbctor = { "StatusBar::StatusBar", 0x42ea70, 7, "64a10000000055", (void *)h_sbctor, (void **)&o_sbctor, false, 0, 0, "status", 0 };
+    H_sbdtor = { "StatusBar::~StatusBar", 0x42eb40, 7, "64a10000000055", (void *)h_sbdtor, (void **)&o_sbdtor, false, 0, 0, "status", 0 };
+    H_qpctor = { "QuestPanel::QuestPanel", 0x42f580, 7, "64a10000000055", (void *)h_qpctor, (void **)&o_qpctor, false, 0, 0, "quest", 0 };
+    H_qpdtor = { "QuestPanel::~QuestPanel", 0x42f5f0, 7, "64a10000000055", (void *)h_qpdtor, (void **)&o_qpdtor, false, 0, 0, "quest", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
