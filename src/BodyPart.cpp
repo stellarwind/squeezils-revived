@@ -1,9 +1,8 @@
 // BodyPart: see BodyPart.h. Reconstructed from SQZ.EXE 0x41d900-0x41d9ce.
 #include "BodyPart.h"
 #include "Scene.h"
+#include "Original.h"
 
-extern Scene    *GetScene();       // the global at 0x4c75e0
-extern Renderer *GetRenderer();    // the global at 0x4c75dc
 
 typedef float *(__attribute__((thiscall)) *WeightDataFn)(WeightArray *);
 

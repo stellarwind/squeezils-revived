@@ -4,10 +4,10 @@
 // them in a float. The long double / (float) casts below follow the original's rounding points so the texel positions
 // come out the same.
 #include "Sky.h"
+#include "Original.h"
 #include <math.h>
 #include <string.h>
 
-extern void NumericError();      // @0041eb80 the game's "number out of range" reporter (called with the offending value, ignores it)
 
 SkyRenderer g_sky;
 

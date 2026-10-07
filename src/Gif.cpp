@@ -1,13 +1,12 @@
 // GIF reader: see Gif.h. Reconstructed from SQZ.EXE 0x479290-0x479a4f (the original keeps all state in globals and reads
 // through the C runtime's FILE buffer; here the state lives in a small decoder object and the file through fgetc).
 #include "Gif.h"
+#include "Original.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <vector>
 
-extern void *Lib_Malloc(size_t n);     // @004904c0 the game's malloc
-extern void  Lib_Free(void *p);        // @00490540
 
 namespace {
 

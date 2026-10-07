@@ -15,12 +15,12 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Gif.h/.cpp`: the game's GIF reader (header, global palette, LZW decoder) giving palette indices.
 - `Image.h/.cpp`: `ImageLoad` (GIF to pixels in the display format, rows padded to 4 bytes) and `ImageConvertRow` (palette indices to 8/16/24/32 bit through the colour masks). Used by Texture and Warp.
 - `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
+- `Original.h`: the boundary with the original binary. Every function or global the code above still takes from `SQZ.EXE` (allocators, the error reporters, the renderer and scene globals, the window callback) is declared there, with its address. Nothing else in `src/` refers to the original, so that list is what a standalone build would still have to provide. The modules call each other directly (`Warp` and `Scene` drive `SkyRenderer`, `Texture` and `Warp` use `ImageLoad`).
 - `LayoutCheck.cpp`: compile-time asserts that the structs have the original field offsets and sizes (`Renderer` 0x9cc, `Scene`, `Warp`, `WarpFace`, `BodyPart`/`AnimatedBody`/`BodyPose`, the `Sqg` structs, `DisplayFormat`).
 
 ## Not reconstructed
 - The sky renderer's modes 0 and 2 (the game only uses mode 1) and its least-squares table.
-- The original binary is still used for everything else: the game logic, and the modules still reach each other through the original addresses
-  (for example `Warp` calls the sky library and image loader there). The hook redirects those calls to our code.
+- The original binary is still used for everything else: the game logic, which calls into this code through the original addresses (the hook redirects those calls).
 
 ## Not verified in play
 - `Scene::SetQuality`, `Warp::Resize` and `SkyRenderer::Resize` never ran in a normal session (checked against the disassembly only).
