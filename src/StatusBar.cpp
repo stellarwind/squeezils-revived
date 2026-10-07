@@ -21,7 +21,7 @@ BOOL StatusBar::Init()
     food.Init("FoodNut", 510, 10, 1);
     foodA = 0;
     foodC = -1;
-    if (!GoodieListInit(goodies, 410, 20))
+    if (!goodies.Init(410, 20))
         return FALSE;
     if (!face.Load(150, 14))
         return FALSE;
@@ -36,7 +36,7 @@ BOOL StatusBar::LoadAll()
 {
     amo.Load();
     food.Load();
-    GoodieListLoad(goodies);
+    goodies.Load();
     IniReader ini;
     ini.SetSection("Interface");
     char dir[100];
@@ -72,7 +72,6 @@ static void FreeBitmap(Bitmap *b)
 
 StatusBar::StatusBar()
 {
-    GoodieListCtor(goodies);
     foodB = 0;
     goodieStep = goodieSteps = goodieInterval = goodieFlip = faceState = 0;
     goodieTick = 0;
@@ -82,7 +81,6 @@ StatusBar::~StatusBar()
 {
     FreeBitmap(deadMessage);
     FreeBitmap(wonMessage);
-    GoodieListDtor(goodies);
 }
 
 int StatusBar::UpdateFace(int force, Bitmap *panel)

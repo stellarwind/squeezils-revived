@@ -120,3 +120,6 @@ static_assert(offsetof(Panel, status) == 0x08 && offsetof(Panel, quest) == 0x394
 static_assert(offsetof(QuestPanel, places) == 0x68, "QuestPanel fields");
 static_assert(offsetof(Panel, mode) == 0x450 && offsetof(Panel, event) == 0x614 && offsetof(Panel, fontHeight) == 0x61c &&
               offsetof(Panel, messageLines) == 0x62c && offsetof(Panel, vec5ec) == 0x5ec && offsetof(Panel, vec604) == 0x604, "Panel fields 3");
+#include "GoodieList.h"
+static_assert(offsetof(GoodieList, entries) == 0x1c && offsetof(GoodieList, canvas) == 0x24 && offsetof(GoodieList, height) == 0x2c &&
+              offsetof(GoodieEntry, id) == 0x14 && offsetof(GoodieEntry, section) == 0x18 && offsetof(GoodieEntry, frame1) == 0x30, "GoodieList fields");
