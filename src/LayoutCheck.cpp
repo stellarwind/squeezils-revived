@@ -1,5 +1,6 @@
 // Compile-time check that the reconstructed Renderer layout matches the original offsets.
 #include "Renderer.h"
+#include "Scene.h"
 #include <stddef.h>
 #define CHECK(f, off) static_assert(offsetof(Renderer, f) == off, "Renderer::" #f " offset")
 CHECK(savedWidth, 0x00); CHECK(fullscreen, 0x0c); CHECK(displayState, 0x10); CHECK(windowObj, 0x14);
@@ -16,3 +17,10 @@ static_assert(D3DRMRENDER_GOURAUD == 0x89, "gouraud constant");
 static_assert(sizeof(DDSURFACEDESC) == 0x6c && sizeof(DDCAPS) == 0x13c, "DD struct sizes");
 static_assert(offsetof(D3DDEVICEDESC, dwDeviceRenderBitDepth) == 0x9c, "device desc render depth offset");
 static_assert(offsetof(D3DDEVICEDESC, dcmColorModel) == 8, "device desc color model offset");
+
+// Scene
+static_assert(offsetof(Scene, renderer) == 0x00 && offsetof(Scene, warpSurface) == 0x04 &&
+              offsetof(Scene, lightsFrame) == 0x08 && offsetof(Scene, sceneChild) == 0x0c &&
+              offsetof(Scene, warp) == 0x10 && offsetof(Scene, warpWidth) == 0x14 &&
+              offsetof(Scene, warpHeight) == 0x18, "Scene field offsets");
+static_assert(sizeof(Scene) == 0x1c, "Scene size");

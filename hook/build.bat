@@ -6,5 +6,5 @@ if "%DX7_INCLUDE%"=="" (echo Set DX7_INCLUDE to the DirectX 7 SDK include folder
 cd /d "%~dp0"
 g++ -m32 -std=c++17 -O1 -shared -static -s -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -fpermissive ^
   -I..\src -I"%DX7_INCLUDE%" ^
-  -DDirectDrawCreate=Hook_DirectDrawCreate -DDirectDrawCreateClipper=Hook_DirectDrawCreateClipper -DDirect3DRMCreate=Hook_Direct3DRMCreate ^
-  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp -lwinmm -ldxguid -lgdi32 -luser32
+  -DDirectDrawCreate=Hook_DirectDrawCreate -DDirectDrawCreateClipper=Hook_DirectDrawCreateClipper -DDirect3DRMCreate=Hook_Direct3DRMCreate -DD3DRMCreateColorRGB=Hook_D3DRMCreateColorRGB ^
+  -o sqzhook.dll hook.cpp ..\src\Renderer.cpp ..\src\ListenerTable.cpp ..\src\Scene.cpp -lwinmm -ldxguid -lgdi32 -luser32
