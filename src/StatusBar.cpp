@@ -60,3 +60,25 @@ BOOL StatusBar::LoadAll()
     }
     return TRUE;
 }
+
+static void FreeBitmap(Bitmap *b)
+{
+    if (b) {
+        b->~Bitmap();
+        Operator_Delete(b);
+    }
+}
+
+StatusBar::StatusBar()
+{
+    GoodieListCtor(goodies);
+    foodB = 0;
+    memset(pad364, 0, sizeof pad364);
+}
+
+StatusBar::~StatusBar()
+{
+    FreeBitmap(deadMessage);
+    FreeBitmap(wonMessage);
+    GoodieListDtor(goodies);
+}

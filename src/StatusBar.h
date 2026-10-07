@@ -22,6 +22,9 @@ struct StatusBar {
     int        messageX;       // 0x384 where the messages go (405)
     int        messageY;       // 0x388 (12)
 
+    StatusBar();               // @42ea70 builds the counters, goodie list and face
+    ~StatusBar();              // @42eb40 frees the dead and won pictures, then the widgets
+
     BOOL Init();               // @42ec10 place and set up the widgets, load all their pictures
     BOOL LoadAll();            // @42f2c0 load the counters', goodie list's, dead and won pictures
 };
