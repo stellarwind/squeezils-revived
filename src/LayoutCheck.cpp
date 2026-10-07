@@ -105,7 +105,7 @@ static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) ==
 
 // StatusBar
 #include "StatusBar.h"
-static_assert(offsetof(StatusBar, food) == 0x34 && offsetof(StatusBar, foodC) == 0x68 && offsetof(StatusBar, goodies) == 0x6c && offsetof(StatusBar, face) == 0x9c &&
+static_assert(offsetof(StatusBar, food) == 0x34 && offsetof(StatusBar, foodShown) == 0x68 && offsetof(StatusBar, goodies) == 0x6c && offsetof(StatusBar, face) == 0x9c &&
               offsetof(StatusBar, deadMessage) == 0x37c && offsetof(StatusBar, messageY) == 0x388 && offsetof(StatusBar, goodieStep) == 0x364 && offsetof(StatusBar, faceState) == 0x378, "StatusBar fields");
 
 // QuestItems
@@ -114,12 +114,12 @@ static_assert(offsetof(QuestItems, combinedFile) == 0x04 && offsetof(QuestItems,
               offsetof(QuestItems, right) == 0x48 && offsetof(QuestItems, rightFile) == 0x4c, "QuestItems fields");
 
 // Panel (whole object)
-static_assert(offsetof(Panel, status) == 0x08 && offsetof(Panel, quest) == 0x394 && offsetof(Panel, verticalChange) == 0x5c0 && offsetof(Panel, vec604) == 0x604 &&
-              offsetof(Panel, field610) == 0x610 && offsetof(Panel, font) == 0x618 && offsetof(Panel, message) == 0x630 && offsetof(Panel, note) == 0x694, "Panel fields 2");
+static_assert(offsetof(Panel, status) == 0x08 && offsetof(Panel, quest) == 0x394 && offsetof(Panel, verticalChange) == 0x5c0 && offsetof(Panel, prevRow2) == 0x604 &&
+              offsetof(Panel, fullTurn) == 0x610 && offsetof(Panel, font) == 0x618 && offsetof(Panel, message) == 0x630 && offsetof(Panel, note) == 0x694, "Panel fields 2");
 #include "QuestPanel.h"
 static_assert(offsetof(QuestPanel, places) == 0x68, "QuestPanel fields");
 static_assert(offsetof(Panel, mode) == 0x450 && offsetof(Panel, event) == 0x614 && offsetof(Panel, fontHeight) == 0x61c &&
-              offsetof(Panel, messageLines) == 0x62c && offsetof(Panel, vec5ec) == 0x5ec && offsetof(Panel, vec604) == 0x604, "Panel fields 3");
+              offsetof(Panel, messageLines) == 0x62c && offsetof(Panel, prevRow0) == 0x5ec && offsetof(Panel, prevRow2) == 0x604, "Panel fields 3");
 #include "GoodieList.h"
 static_assert(offsetof(GoodieList, entries) == 0x1c && offsetof(GoodieList, canvas) == 0x24 && offsetof(GoodieList, height) == 0x2c &&
               offsetof(GoodieEntry, id) == 0x14 && offsetof(GoodieEntry, section) == 0x18 && offsetof(GoodieEntry, frame1) == 0x30, "GoodieList fields");

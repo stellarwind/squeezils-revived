@@ -68,9 +68,9 @@ Panel::Panel()
         digits[i] = NewBitmap();
     }
     GetScreenOrigin(&originX, &originY);
-    vec604.x = vec604.y = vec604.z = -5.0f;
-    field610 = FloatFromBits(0x40c90fd0);
-    field5bc = 0.01f;
+    prevRow2.x = prevRow2.y = prevRow2.z = -5.0f;
+    fullTurn = FloatFromBits(0x40c90fd0);
+    turnThreshold = 0.01f;
     IniReader ini;
     ini.SetSection("Compass");
     verticalChange = ini.GetFloat("VerticalChange", 1.0f);
@@ -133,10 +133,10 @@ void Panel::ShowQuest(int key)
     ClearNote();
 }
 
-void Panel::ShowStatus(int foodB)
+void Panel::ShowStatus(int foodGoal)
 {
     mode = 0;
-    status.SetFoodB(foodB);
+    status.SetFoodGoal(foodGoal);
     dirty = 1;
     ClearMessage();
     ClearNote();
@@ -182,4 +182,10 @@ BOOL Panel::Update(int force)
             DrawMessage(message);
     }
     return TRUE;
+}
+
+void Panel::StartGoodieAnimation(int steps, float seconds)
+{
+    event = 1;
+    status.SetRound(steps, seconds);
 }

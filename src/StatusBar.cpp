@@ -1,5 +1,7 @@
 // StatusBar: see StatusBar.h.
 #include <string.h>
+#include <windows.h>
+#include <mmsystem.h>
 #include <new>
 #include "StatusBar.h"
 #include "Panel.h"
@@ -16,11 +18,11 @@ static Bitmap *NewBitmap()
 BOOL StatusBar::Init()
 {
     amo.Init("AmoNut", 25, 20, 0);
-    amoA = 0;
-    amoB = -1;
+    amoCount = 0;
+    amoShown = -1;
     food.Init("FoodNut", 510, 10, 1);
-    foodA = 0;
-    foodC = -1;
+    foodCount = 0;
+    foodShown = -1;
     if (!goodies.Init(410, 20))
         return FALSE;
     if (!face.Load(150, 14))
@@ -72,7 +74,7 @@ static void FreeBitmap(Bitmap *b)
 
 StatusBar::StatusBar()
 {
-    foodB = 0;
+    foodGoal = 0;
     goodieStep = goodieSteps = goodieInterval = goodieFlip = faceState = 0;
     goodieTick = 0;
 }
@@ -91,37 +93,37 @@ int StatusBar::UpdateFace(int force, Bitmap *panel)
 
 BOOL StatusBar::UpdateAmo(int force)
 {
-    if (!GoodieCount("SpitNutGoodie", &amoA))
+    if (!GoodieCount("SpitNutGoodie", &amoCount))
         return FALSE;
-    if (force || amoA != amoB)
-        amo.Draw(amoA, 0);
-    BOOL changed = amoB != amoA;
-    amoB = amoA;
+    if (force || amoCount != amoShown)
+        amo.Draw(amoCount, 0);
+    BOOL changed = amoShown != amoCount;
+    amoShown = amoCount;
     return changed;
 }
 
-void StatusBar::SetFoodB(int value)
+void StatusBar::SetFoodGoal(int value)
 {
-    foodB = value;
+    foodGoal = value;
 }
 
 BOOL StatusBar::UpdateFood(int force)
 {
-    if (!GoodieCount("FoodNutGoodie", &foodA))
+    if (!GoodieCount("FoodNutGoodie", &foodCount))
         return FALSE;
-    if (force || foodA != foodC) {
-        food.Draw(foodA, foodB);
-        StoreSetting("PlayerFoodNuts", &foodA, -1);
+    if (force || foodCount != foodShown) {
+        food.Draw(foodCount, foodGoal);
+        StoreSetting("PlayerFoodNuts", &foodCount, -1);
     }
-    BOOL changed = foodC != foodA;
-    foodC = foodA;
+    BOOL changed = foodShown != foodCount;
+    foodShown = foodCount;
     return changed;
 }
 
 BOOL StatusBar::Update(int force, int *event, Bitmap *panel)
 {
     UpdateFace(force, panel);
-    GoodiesUpdate(this, force, event, panel);
+    UpdateGoodies(force, event, panel);
     UpdateAmo(force);
     UpdateFood(force);
     if (!faceState) {
@@ -139,6 +141,46 @@ BOOL StatusBar::Update(int force, int *event, Bitmap *panel)
         deadMessage->DrawToSurfaceAt(screen, messageX + x, messageY + y, 0, 0, 1);
     } else {
         wonMessage->DrawToSurfaceAt(screen, messageX + x, messageY + y, 0, 0, 1);
+    }
+    return TRUE;
+}
+
+void StatusBar::SetRound(int steps, float seconds)
+{
+    goodieSteps = steps;
+    goodieStep = 0;
+    goodieInterval = (int)((double)seconds * 1000.0);
+}
+
+BOOL StatusBar::UpdateGoodies(int force, int *event, Bitmap *panel)
+{
+    BOOL due = FALSE;
+    DWORD now = 0;
+    if (*event == 1) {
+        now = timeGetTime();
+        if (now - goodieTick > (unsigned)goodieInterval)
+            due = TRUE;
+    }
+    static String lastName(kEmptyString);               // the goodie shown last time
+    String current;
+    if (!CurrentGoodieName(&current))
+        return FALSE;
+    if (StringCompare(&current, &lastName))
+        force = 1;
+    lastName = current;
+    if (force || due) {
+        goodies.Draw(goodieFlip, current, panel);
+        if (due) {
+            goodieFlip = goodieFlip == 0;
+            goodieStep++;
+            if (goodieSteps <= goodieStep) {                // the round is over
+                goodieStep = 0;
+                goodieTick = 0;
+                goodieFlip = 0;
+                *event = 0;
+            }
+            goodieTick = now;
+        }
     }
     return TRUE;
 }

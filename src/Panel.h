@@ -25,12 +25,16 @@ struct Panel {
     int        backgroundX;        // 0x478 where the panel picture sits, from the screen origin
     int        backgroundY;        // 0x47c
     char       regionScreen[0x13c];// 0x480 the region screen widget (original code) starts here; the rest of this area is not mapped yet
-    float      field5bc;           // 0x5bc 0.01
+    float      turnThreshold;      // 0x5bc 0.01: the smallest change of heading (radians) the compass bothers to follow
     float      verticalChange;     // 0x5c0 [Compass] VerticalChange (default 1.0)
     float      verticalThreshold;  // 0x5c4 [Compass] VerticalThreshold (default 0.1)
-    Float3     vec5c8, vec5d4, vec5e0, vec5ec, vec5f8;   // 0x5c8 compass working vectors (their constructors do nothing)
-    Float3     vec604;             // 0x604 (-5, -5, -5)
-    float      field610;           // 0x610 6.283185 (a full turn)
+    Float3     row0;               // 0x5c8 the player's matrix, first row (the heading comes from its z and the third row's z)
+    Float3     position;           // 0x5d4 the matrix's position row (only its height is used)
+    Float3     row2;               // 0x5e0 the matrix, third row
+    Float3     prevRow0;           // 0x5ec last frame's copies of the three rows (written, never read back)
+    Float3     prevPosition;       // 0x5f8
+    Float3     prevRow2;           // 0x604 (-5, -5, -5 at construction)
+    float      fullTurn;           // 0x610 6.283185, a full turn in radians (added to a negative heading)
     int        event;              // 0x614 set by the goodie list while an animation runs (1), cleared when it ends
     HFONT      font;               // 0x618 the message font made by the font set-up (deleted with the panel), 0 until then
     int        fontHeight;         // 0x61c line height the font was made for (pixels), used to space the lines
@@ -48,11 +52,12 @@ struct Panel {
     BOOL Update(int force);        // @42db10 once a frame: redraw what changed (everything when force or dirty)
     BOOL DrawBackground();         // @42dc50 put the panel picture on the screen and remember where the screen starts
     void ShowQuest(int key);       // @42da60 switch to the quest items of place key
-    void ShowStatus(int foodB);    // @42dac0 switch to the status bar
+    void ShowStatus(int foodGoal);    // @42dac0 switch to the status bar; foodGoal is the second food number
     void Invalidate() { dirty = 1; }   // @42db00
     void ClearMessage() { message[0] = 0; }   // @42dd00
     void ClearNote() { note[0] = 0; }         // @42dcd0
     void ClearEvent() { event = 0; }         // @42ea60
+    void StartGoodieAnimation(int steps, float seconds);   // @42e6f0 the goodie list animates for a while (the event flag is set until it ends)
     void UpdateCompass(int force);             // @42e2b0 turn the compass to the player's heading, with the up and down roll animation (PanelCompass.cpp)
     BOOL DrawMessage(const char *text);        // @42dd30 word-wrapped text in the message area, over the cleaned panel picture
     BOOL DrawNote(const char *text);           // @42e0e0 the short note

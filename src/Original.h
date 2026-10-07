@@ -122,7 +122,8 @@ void  PanelLoadFonts(Panel *panel);                                   // @0042e7
 BOOL  GoodieCount(const char *name, int *count);                        // the player's count of a goodie by name (SpitNutGoodie ...); FALSE when there is no player
 void  StoreSetting(const char *name, void *data, int size);           // the global settings store (object at 0x4c7060, virtual slot 0): remember a value
 class Bitmap;
-void  GoodiesUpdate(void *statusBar, int force, int *event, Bitmap *panel);   // @0042f050 the goodie list's per-frame update
+class String;
+BOOL  CurrentGoodieName(String *name);                              // the goodie the player has selected, from the player's inventory table (+8); FALSE when there is no player
 static int *const kMessageShown = (int *)0x4bbea4;                    // set while the dead / won message is on screen
 
 static int *const kQuestItemsLoaded = (int *)0x4bc01c;                      // set once the left/middle/right key pictures are loaded
