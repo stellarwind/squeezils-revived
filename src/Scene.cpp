@@ -27,7 +27,7 @@ Scene::~Scene()
     if (warp) { Warp_Destroy(warp); Operator_Delete(warp); warp = NULL; }
 }
 
-// @004767a0  (UNVERIFIED: not reached at runtime in normal play, only the warp backdrop calls it)
+// @004767a0
 // (Re)creates the warp surface when the render size changed. The warp is rendered at half resolution.
 BOOL Scene::EnsureWarpSurface()
 {

@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "ListenerTable.h"
 #include "Scene.h"
+#include "Warp.h"
 #undef private
 #include <stdio.h>
 #include <stdarg.h>
@@ -31,10 +32,22 @@ static void Log(const char *fmt, ...)
 // ---- functions the reconstructed code needs from the original binary ----------------------
 const char *HResultToString(HRESULT hr) { return ((const char *(__cdecl *)(int))0x478430)((int)hr); }
 int  PrepareForDialog()                         { return 0; }
-// Warp backdrop (not reconstructed) and CRT helpers used by Scene
-void Warp_Destroy(void *w)            { ((void (__attribute__((thiscall)) *)(void *))0x478cb0)(w); }
-void Warp_Resize(void *w, int a, int b) { ((void (__attribute__((thiscall)) *)(void *, int, int))0x478dc0)(w, a, b); }
-void Warp_Render(void *w, void *bits) { ((void (__attribute__((thiscall)) *)(void *, void *))0x478da0)(w, bits); }
+// CRT helpers used by Scene
+// Warp software-renderer library and helpers: still the original code, called by address (all cdecl)
+unsigned char Lib_Init(int a, int b, unsigned char m) { return ((unsigned char (__cdecl *)(int, int, unsigned char))0x48bb30)(a, b, m); }
+unsigned char Lib_Shutdown()                           { return ((unsigned char (__cdecl *)())0x48bba0)(); }
+int  Lib_SetFace(void *p, const WarpFace *f)          { return ((int (__cdecl *)(void *, const WarpFace *))0x48bbc0)(p, f); }
+int  Lib_SetOutput(void *bits, int depth)             { return ((int (__cdecl *)(void *, int))0x48bd30)(bits, depth); }
+int  Lib_Render(const float *m3)                      { return ((int (__cdecl *)(const float *))0x48bd60)(m3); }
+int  Lib_SetOrigin(float x, float y, float z)         { return ((int (__cdecl *)(float, float, float))0x48c620)(x, y, z); }
+int  Lib_SetFov(float x, float y)                     { return ((int (__cdecl *)(float, float))0x48c680)(x, y); }
+int  Lib_Resize(int h, int w)                         { return ((int (__cdecl *)(int, int))0x48c830)(h, w); }
+int  Lib_SetFlag(char f)                              { return ((int (__cdecl *)(char))0x48c870)(f); }
+void Lib_RotationMatrix(float *o, int axis, float a)  { ((void (__cdecl *)(float *, int, float))0x48d7a0)(o, axis, a); }
+void Lib_MatrixMultiply(float *o, const float *a, const float *b) { ((void (__cdecl *)(float *, const float *, const float *))0x48d860)(o, a, b); }
+void Lib_Free(void *p)                                { ((void (__cdecl *)(void *))0x490540)(p); }
+int  Image_Load(const char *path, const int *fmt, void *u, int *outB, int *outA, void **pixels, unsigned char *pal)
+{ return ((int (__cdecl *)(const char *, const int *, void *, int *, int *, void **, unsigned char *))0x477cc0)(path, fmt, u, outB, outA, pixels, pal); }
 void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 
@@ -334,6 +347,7 @@ typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int,
 static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
 static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
 static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
+static Hook H_wctor, H_wdtor, H_winit, H_woutput, H_wresize, H_wupdate, H_wload;
 static bool g_qdmCompare;
 static int (__fastcall *o_qdm)(Renderer *);
 static int __fastcall h_qdm(Renderer *r)
@@ -368,7 +382,8 @@ static int (__attribute__((thiscall)) *o_sinit)(Scene *, Renderer *);
 static int __attribute__((thiscall)) h_sinit(Scene *s, Renderer *r) { HEAVY_LOG(H_sinit); return s->Init(r); }
 // @476af0 BeginFrame, __fastcall(this) -> BOOL
 static int (__fastcall *o_sbegin)(Scene *);
-static int __fastcall h_sbegin(Scene *s) { HEAVY_LOG(H_sbegin); return s->BeginFrame(); }
+static unsigned g_warpFrames;   // frames drawn with the warp (sky) backdrop active
+static int __fastcall h_sbegin(Scene *s) { HEAVY_LOG(H_sbegin); if (s->warp) g_warpFrames++; return s->BeginFrame(); }
 // @476cd0 Render, __fastcall(this) -> BOOL
 static int (__fastcall *o_srender)(Scene *);
 static int __fastcall h_srender(Scene *s) { HEAVY_LOG(H_srender); return s->Render(); }
@@ -406,6 +421,29 @@ static BOOL __stdcall h_dframe(IDirect3DRMFrame *f) { HEAVY_LOG(H_dframe); retur
 static void (__stdcall *o_gmatrix)(IDirect3DRMFrame *, IDirect3DRMFrame *, float *);
 static void __stdcall h_gmatrix(IDirect3DRMFrame *f, IDirect3DRMFrame *r, float *m) { HEAVY_LOG(H_gmatrix); GetFrameMatrix(f, r, m); }
 
+// ---- Warp (sky): replace only ---------------------------------------------------------------
+// @478c80 constructor, __fastcall(this) -> this
+static Warp *(__fastcall *o_wctor)(Warp *);
+static Warp *__fastcall h_wctor(Warp *w) { HEAVY_LOG(H_wctor); new (w) Warp(); return w; }
+// @478cb0 destructor, __fastcall(this)
+static void (__fastcall *o_wdtor)(Warp *);
+static void __fastcall h_wdtor(Warp *w) { HEAVY_LOG(H_wdtor); w->~Warp(); }
+// @478ce0 Init, __thiscall(this, height, width, fov, flag) -> BOOL
+static int (__attribute__((thiscall)) *o_winit)(Warp *, int, int, float, int);
+static int __attribute__((thiscall)) h_winit(Warp *w, int h, int wd, float fov, int flag) { HEAVY_LOG(H_winit); return w->Init(h, wd, fov, (char)flag); }
+// @478da0 SetOutput, __thiscall(this, bits)
+static void (__attribute__((thiscall)) *o_woutput)(Warp *, void *);
+static void __attribute__((thiscall)) h_woutput(Warp *w, void *bits) { HEAVY_LOG(H_woutput); w->SetOutput(bits); }
+// @478dc0 Resize, __thiscall(this, width, height)
+static void (__attribute__((thiscall)) *o_wresize)(Warp *, int, int);
+static void __attribute__((thiscall)) h_wresize(Warp *w, int wd, int h) { HEAVY_LOG(H_wresize); w->Resize(wd, h); }
+// @478e10 Update, __thiscall(this, matrix)
+static void (__attribute__((thiscall)) *o_wupdate)(Warp *, const float *);
+static void __attribute__((thiscall)) h_wupdate(Warp *w, const float *m) { HEAVY_LOG(H_wupdate); w->Update(m); }
+// @479090 Load, __thiscall(this, prefix, palette, pixelFormat) -> BOOL
+static int (__attribute__((thiscall)) *o_wload)(Warp *, const char *, unsigned char *, const int *);
+static int __attribute__((thiscall)) h_wload(Warp *w, const char *p, unsigned char *pal, const int *fmt) { HEAVY_LOG(H_wload); return w->Load(p, pal, fmt); }
+
 // @474e10 UploadFrontPalette, __fastcall(this) -> BOOL
 static int (__fastcall *o_uploadpal)(Renderer *);
 static int __fastcall h_uploadpal(Renderer *r) { HEAVY_LOG(H_uploadpal); return r->UploadFrontPalette(); }
@@ -436,9 +474,28 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_lfree, &H_lcontains, &H_ladd, &H_lremove,
                            &H_qdm, &H_enterdisplay, &H_uploadpal, &H_setpal, &H_init, &H_fade,
                            &H_swarp, &H_sinit, &H_sbegin, &H_srender, &H_spresent, &H_squality, &H_sxform, &H_schild, &H_sdel,
-                           &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix };
+                           &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
+                           &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload };
 static char g_replaceList[2048];
-static bool Listed(const char *id) { return id && (strstr(g_replaceList, id) || strstr(g_replaceList, "all")); }
+// whole-name match in the comma separated list ("cframe" must not match "cframeu")
+static bool InList(const char *list, const char *name)
+{
+    size_t n = strlen(name);
+    for (const char *p = list; *p; ) {
+        const char *end = strchr(p, 0x2c);
+        size_t len = end ? (size_t)(end - p) : strlen(p);
+        if (len == n && !strncmp(p, name, n)) return true;
+        if (!end) break;
+        p = end + 1;
+    }
+    return false;
+}
+static bool Listed(const char *id) { return id && (InList(g_replaceList, id) || InList(g_replaceList, "all")); }
+
+// Warp calls made by our Scene code: use our Warp when its id is listed, otherwise the original at that address
+void Warp_Destroy(void *w)                { if (Listed("wdtor"))   ((Warp *)w)->~Warp();            else ((void (__fastcall *)(void *))0x478cb0)(w); }
+void Warp_Resize(void *w, int a, int b)   { if (Listed("wresize")) ((Warp *)w)->Resize(a, b);       else ((void (__attribute__((thiscall)) *)(void *, int, int))0x478dc0)(w, a, b); }
+void Warp_Render(void *w, void *bits)     { if (Listed("woutput")) ((Warp *)w)->SetOutput(bits);    else ((void (__attribute__((thiscall)) *)(void *, void *))0x478da0)(w, bits); }
 
 static void Setup()
 {
@@ -481,10 +538,18 @@ static void Setup()
     H_cdecal  = { "Scene::CreateDecalFrame",  0x477400, 7, "64a10000000055",   (void *)h_cdecal,  (void **)&o_cdecal,  false, 0, 0, "cdecal",  0 };
     H_dframe  = { "DestroyFrame",             0x476ff0, 7, "83ec048d442400",   (void *)h_dframe,  (void **)&o_dframe,  false, 0, 0, "dframe",  0 };
     H_gmatrix = { "GetFrameMatrix",           0x477120, 7, "64a10000000055",   (void *)h_gmatrix, (void **)&o_gmatrix, false, 0, 0, "gmatrix", 0 };
+    H_wctor   = { "Warp::Warp",               0x478c80, 5, "578bd133c0",        (void *)h_wctor,   (void **)&o_wctor,   false, 0, 0, "wctor",   0 };
+    H_wdtor   = { "Warp::~Warp",              0x478cb0, 9, "56578bf9be06000000", (void *)h_wdtor,   (void **)&o_wdtor,   false, 0, 0, "wdtor",   0 };
+    H_winit   = { "Warp::Init",               0x478ce0, 5, "83ec045356",        (void *)h_winit,   (void **)&o_winit,   false, 0, 0, "winit",   0 };
+    H_woutput = { "Warp::SetOutput",          0x478da0, 7, "8b41188b4c2404",    (void *)h_woutput, (void **)&o_woutput, false, 0, 0, "woutput", 0 };
+    H_wresize = { "Warp::Resize",             0x478dc0, 5, "83ec045356",        (void *)h_wresize, (void **)&o_wresize, false, 0, 0, "wresize", 0 };
+    H_wupdate = { "Warp::Update",             0x478e10, 6, "8b411483f801",     (void *)h_wupdate, (void **)&o_wupdate, false, 0, 0, "wupdate", 0 };
+    H_wload   = { "Warp::Load",               0x479090, 6, "81ec14010000",      (void *)h_wload,   (void **)&o_wload,   false, 0, 0, "wload",   0 };
 }
 
 static void Summary()
 {
+    Log("Scene frames with warp backdrop=%u", g_warpFrames);
     for (Hook *h : g_hooks)
         Log("summary %-34s calls=%u mismatches=%u", h->name, h->calls, h->mismatches);
 }
