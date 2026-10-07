@@ -132,8 +132,16 @@ BOOL CurrentGoodieName(String *name)
     *name = *(String *)((char *)table + 8);
     return TRUE;
 }
-int QuestPanelLoad(void *q) { return ((int (__attribute__((thiscall)) *)(void *))0x42f660)(q); }
-void QuestPanelDraw(void *q, int force, int key) { ((int (__attribute__((thiscall)) *)(void *, int, int))0x42f690)(q, force, key); }
+void *PlayerInventory()
+{
+    void *soul = GetPlayerSoul();
+    if (!soul)
+        return NULL;
+    void *inv = ((void *(__attribute__((thiscall)) *)(void *))(*(void ***)soul)[0x48 / 4])(soul);
+    if (!inv)
+        return NULL;
+    return *(void **)((char *)inv + 4);
+}
 float *PlayerMatrix()
 {
     void *obj = ((void *(__attribute__((thiscall)) *)(void *, int))0x414050)(*(void **)0x4badbc, 0);
@@ -1327,6 +1335,13 @@ static void (THISCALL *o_rtext)(Renderer *, HFONT, int, int, const char *);
 static void THISCALL h_rtext(Renderer *r, HFONT f, int x, int y, const char *t) { HEAVY_LOG(H_rtext); r->PutText(f, x, y, t); }
 static void (__fastcall *o_qifree)(QuestItems *);
 static void __fastcall h_qifree(QuestItems *k) { HEAVY_LOG(H_qifree); k->FreeCombined(); }
+static Hook H_qpload, H_qpdraw, H_qidraw;
+static int (__fastcall *o_qpload)(QuestPanel *);
+static int __fastcall h_qpload(QuestPanel *q) { HEAVY_LOG(H_qpload); return q->Load(); }
+static int (THISCALL *o_qpdraw)(QuestPanel *, int, int);
+static int THISCALL h_qpdraw(QuestPanel *q, int f, int k) { HEAVY_LOG(H_qpdraw); return q->Draw(f, k); }
+static void (THISCALL *o_qidraw)(QuestItems *, int);
+static void THISCALL h_qidraw(QuestItems *k, int place) { HEAVY_LOG(H_qidraw); k->Draw(place); }
 
 // ---- GoodieList (the goodie pictures in the status bar; replace only, "goodies") ----------------------------------------------
 static Hook H_glctor, H_gldtor, H_glinit, H_glload, H_gldraw;
@@ -1385,7 +1400,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
                            &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood, &H_sbgood, &H_sbround, &H_pngoodie,
                            &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
-                           &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree,
+                           &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree, &H_qpload, &H_qpdraw, &H_qidraw,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
@@ -1594,6 +1609,9 @@ static void Setup()
     H_pncomp = { "Panel::UpdateCompass", 0x42e2b0, 6, "83ec0c535657", (void *)h_pncomp, (void **)&o_pncomp, false, 0, 0, "panel", 0 };
     H_rtext = { "Renderer::PutText", 0x4753d0, 5, "83ec1c5356", (void *)h_rtext, (void **)&o_rtext, false, 0, 0, "panel", 0 };
     H_qifree = { "QuestItems::FreeCombined", 0x430340, 5, "568b3185f6", (void *)h_qifree, (void **)&o_qifree, false, 0, 0, "quest", 0 };
+    H_qpload = { "QuestPanel::Load", 0x42f660, 5, "566a018bf1", (void *)h_qpload, (void **)&o_qpload, false, 0, 0, "quest", 0 };
+    H_qpdraw = { "QuestPanel::Draw", 0x42f690, 8, "56578bf98b74240c", (void *)h_qpdraw, (void **)&o_qpdraw, false, 0, 0, "quest", 0 };
+    H_qidraw = { "QuestItems::Draw", 0x430440, 7, "83ec108d442404", (void *)h_qidraw, (void **)&o_qidraw, false, 0, 0, "quest", 0 };
     H_qictor = { "QuestItems::QuestItems", 0x42fc30, 7, "33c08901894118", (void *)h_qictor, (void **)&o_qictor, false, 0, 0, "quest", 0 };
     H_qidtor = { "QuestItems::~QuestItems", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_qidtor, (void **)&o_qidtor, false, 0, 0, "quest", 5 };
     H_qiinit = { "QuestItems::Init", 0x430150, 7, "64a10000000055", (void *)h_qiinit, (void **)&o_qiinit, false, 0, 0, "quest", 0 };

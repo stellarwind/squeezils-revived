@@ -5,6 +5,7 @@
 #include "QuestItems.h"
 #include "IniReader.h"
 #include "Renderer.h"
+#include "MoodFace.h"
 #include "Original.h"
 
 static Bitmap *NewBitmap()
@@ -60,8 +61,8 @@ BOOL QuestItems::Init(int a, int b, int index)
     strcat(combinedFile, _itoa(index, num, 10));
     strcat(combinedFile, ".bmp");
     combined = NewBitmap();
-    *(int *)(pad60 + 4) = b;
-    *(int *)(pad60 + 0) = a;
+    y = b;
+    x = a;
     if (LoadCombined(index))
         return TRUE;
     LoadKeys();
@@ -111,5 +112,21 @@ void QuestItems::FreeCombined()
     if (combined) {
         combined->~Bitmap();
         Operator_Delete(combined);
+    }
+}
+
+void QuestItems::Draw(int place)
+{
+    int ox, oy;
+    GetScreenOrigin(&ox, &oy);
+    LPDIRECTDRAWSURFACE screen = GetRenderer()->primary;
+    combined->DrawToSurfaceAt(screen, x + ox, y + oy, 0, 0, 1);
+    int *found = (int *)PlayerInventory();                      // three flags per place, from the second entry of the table
+    if (!found)
+        return;
+    Bitmap *piece[3] = { left, middle, right };
+    for (int i = 0; i < 3; i++) {
+        if (found[1 + place * 3 + i] == 1)
+            piece[i]->DrawToSurfaceAt(screen, x + ox, y + oy, 0, 0, 1);
     }
 }
