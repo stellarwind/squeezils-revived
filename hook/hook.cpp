@@ -9,6 +9,7 @@
 #include "ListenerTable.h"
 #include "Scene.h"
 #include "Warp.h"
+#include "Sky.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -65,6 +66,7 @@ void  SqgError(const char *m)  { ((void (__cdecl *)(const char *))0x473710)(m); 
 typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *);
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
+void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
 extern "C" HRESULT WINAPI Hook_DirectDrawCreate(GUID *g, LPDIRECTDRAW *dd, IUnknown *o)
@@ -576,6 +578,109 @@ static int __attribute__((thiscall)) h_init(Renderer *r, void *wnd, HWND hwnd, i
     return ok;
 }
 
+// ---- sky software renderer (library at 0x48bb30-0x48e2ff) ---------------------------------
+// "sky" replaces the library's entry points with SkyRenderer. "skycmp" runs the original first and then ours, and compares
+// the return values, the tables the library builds and (for Draw) the pixels written. While the original runs, calls it makes
+// into other hooked entry points just pass through (g_skyInside), otherwise ours would run with half-updated state.
+static Hook H_skyinit, H_skyshut, H_skyface, H_skyout, H_skyview, H_skyorigin, H_skyfov, H_skydraw, H_skyresize, H_skymode, H_skyrot, H_skymul;
+static bool g_skyCompare, g_skyInside;
+static unsigned g_skyStateMismatches;
+
+static void SkyReturn(Hook &h, unsigned char orig, unsigned char ours)
+{
+    h.calls++;
+    if (orig == ours) return;
+    if (++h.mismatches <= 5) Log("MISMATCH %s: returned orig=%u ours=%u", h.name, orig, ours);
+}
+
+// the tables the original keeps in its globals, against ours
+static void SkyState(Hook &h)
+{
+    const SkyRenderer &s = g_sky;
+    int rows = s.rows;
+    if (rows < 1 || rows > SkyRenderer::MAX_ROWS) return;
+    const char *bad = NULL;
+    if (memcmp(s.rays, (void *)0x4d2070, rows * 36)) bad = "rays";
+    for (int r = 0; r < rows && !bad; r++) {
+        if (memcmp(s.faceX[r], (float *)0x4c89f8 + r * 4, 12)) bad = "faceX";
+        else if (memcmp(s.faceY[r], (float *)0x4cd500 + r * 4, 12)) bad = "faceY";
+    }
+    if (!bad && memcmp(s.view, (void *)0x4c89a8, 36)) bad = "view";
+    if (!bad && memcmp(s.faceMatrix, (void *)0x4ed870, 36)) bad = "faceMatrix";
+    if (!bad && memcmp(s.faceAxisNeg, (void *)0x4c8920, 12)) bad = "faceAxisNeg";
+    if (!bad) return;
+    g_skyStateMismatches++;
+    h.mismatches++;
+    if (g_skyStateMismatches <= 8) Log("MISMATCH sky state (%s) after %s, rows=%d", bad, h.name, rows);
+}
+
+// runs the original (compare mode only), then ours; returns the original's result
+#define SKY_COMPARE(H, ORIG_CALL, OURS_CALL)                         \
+    if (g_mode == MODE_REPLACE || !g_skyCompare) { HEAVY_LOG(H); return OURS_CALL; } \
+    if (g_skyInside) return ORIG_CALL;                               \
+    g_skyInside = true; unsigned char a = ORIG_CALL; g_skyInside = false; \
+    unsigned char b = OURS_CALL;                                     \
+    SkyReturn(H, a, b); SkyState(H);                                 \
+    return a;
+
+static unsigned char (__cdecl *o_skyinit)(int, int, unsigned char);
+static unsigned char __cdecl h_skyinit(int r, int c, unsigned char f) { SKY_COMPARE(H_skyinit, o_skyinit(r, c, f), g_sky.Init(r, c, f)) }
+static unsigned char (__cdecl *o_skyshut)();
+static unsigned char __cdecl h_skyshut() { SKY_COMPARE(H_skyshut, o_skyshut(), g_sky.Shutdown()) }
+static unsigned char (__cdecl *o_skyface)(const void *, const WarpFace *);
+static unsigned char __cdecl h_skyface(const void *p, const WarpFace *f) { SKY_COMPARE(H_skyface, o_skyface(p, f), g_sky.SetFace(p, f)) }
+static unsigned char (__cdecl *o_skyout)(void *, int);
+static unsigned char __cdecl h_skyout(void *bits, int d) { SKY_COMPARE(H_skyout, o_skyout(bits, d), g_sky.SetOutput(bits, d)) }
+static unsigned char (__cdecl *o_skyview)(const float *);
+static unsigned char __cdecl h_skyview(const float *m) { SKY_COMPARE(H_skyview, o_skyview(m), g_sky.SetView(m)) }
+static unsigned char (__cdecl *o_skyorigin)(float, float, float);
+static unsigned char __cdecl h_skyorigin(float x, float y, float z) { SKY_COMPARE(H_skyorigin, o_skyorigin(x, y, z), g_sky.SetOrigin(x, y, z)) }
+static unsigned char (__cdecl *o_skyfov)(float, float);
+static unsigned char __cdecl h_skyfov(float x, float y) { SKY_COMPARE(H_skyfov, o_skyfov(x, y), g_sky.SetFov(x, y)) }
+static unsigned char (__cdecl *o_skyresize)(int, int);
+static unsigned char __cdecl h_skyresize(int r, int c) { SKY_COMPARE(H_skyresize, o_skyresize(r, c), g_sky.Resize(r, c)) }
+static unsigned char (__cdecl *o_skymode)(char);
+static unsigned char __cdecl h_skymode(char m) { SKY_COMPARE(H_skymode, o_skymode(m), g_sky.SetMode(m)) }
+
+// Draw: ours renders into a copy of the output buffer so both results can be compared
+static unsigned char (__cdecl *o_skydraw)();
+static unsigned char __cdecl h_skydraw()
+{
+    if (g_mode == MODE_REPLACE || !g_skyCompare) { HEAVY_LOG(H_skydraw); return g_sky.Draw(); }
+    if (g_skyInside) return o_skydraw();
+    g_skyInside = true; unsigned char a = o_skydraw(); g_skyInside = false;
+    void *real = g_sky.output;
+    size_t bytes = (size_t)g_sky.rows * g_sky.cols * (g_sky.depth / 8);
+    if (!g_sky.initialized || !real || !bytes) { H_skydraw.calls++; return a; }
+    static BYTE *shadow; static size_t shadowSize;
+    if (shadowSize < bytes) { shadow = (BYTE *)realloc(shadow, bytes); shadowSize = bytes; }
+    g_sky.output = shadow;
+    unsigned char b = g_sky.Draw();
+    g_sky.output = real;
+    SkyReturn(H_skydraw, a, b);
+    if (a == 0) CompareMem(H_skydraw, real, shadow, bytes);
+    return a;
+}
+
+static void (__cdecl *o_skyrot)(float *, int, float);
+static void __cdecl h_skyrot(float *out, int axis, float angle)
+{
+    if (g_mode == MODE_REPLACE || !g_skyCompare) { HEAVY_LOG(H_skyrot); SkyRenderer::RotationMatrix(out, axis, angle); return; }
+    if (g_skyInside) { o_skyrot(out, axis, angle); return; }
+    g_skyInside = true; o_skyrot(out, axis, angle); g_skyInside = false;
+    float mine[9]; SkyRenderer::RotationMatrix(mine, axis, angle);
+    CompareMem(H_skyrot, out, mine, sizeof mine);
+}
+static void (__cdecl *o_skymul)(float *, const float *, const float *);
+static void __cdecl h_skymul(float *out, const float *a, const float *b)
+{
+    if (g_mode == MODE_REPLACE || !g_skyCompare) { HEAVY_LOG(H_skymul); SkyRenderer::MatrixMultiply(out, a, b); return; }
+    if (g_skyInside) { o_skymul(out, a, b); return; }
+    g_skyInside = true; o_skymul(out, a, b); g_skyInside = false;
+    float mine[9]; SkyRenderer::MatrixMultiply(mine, a, b);
+    CompareMem(H_skymul, out, mine, sizeof mine);
+}
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -585,7 +690,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
                            &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
                            &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel, &H_lightamb, &H_lightdir, &H_fxform, &H_fdecal,
-                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad };
+                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad,
+                           &H_skyinit, &H_skyshut, &H_skyface, &H_skyout, &H_skyview, &H_skyorigin, &H_skyfov, &H_skydraw, &H_skyresize, &H_skymode, &H_skyrot, &H_skymul };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -675,6 +781,18 @@ static void Setup()
     H_pzdestroy = { "PZMorphMesh::Destroy",        0x471990, 5, "568b018bf1",          (void *)h_pzdestroy, (void **)&o_pzdestroy, false, 0, 0, "pzdestroy", 0 };
     H_sdtor     = { "Scene::~Scene",               0x476740, 9, "56578bf1e8f70b0000",  (void *)h_sdtor,     (void **)&o_sdtor,     false, 0, 0, "sdtor",     5 };
     H_quad      = { "Scene::CreateColoredQuad",    0x4777b0, 7, "64a10000000055",      (void *)h_quad,      (void **)&o_quad,      false, 0, 0, "quad",      0 };
+    H_skyinit   = { "Sky::Init",           0x48bb30, 8,  "8b4c24048b542408",           (void *)h_skyinit,   (void **)&o_skyinit,   false, 0, 0, "sky", 0 };
+    H_skyshut   = { "Sky::Shutdown",       0x48bba0, 7,  "803d3c4e4c0000",             (void *)h_skyshut,   (void **)&o_skyshut,   false, 0, 0, "sky", 0 };
+    H_skyface   = { "Sky::SetFace",        0x48bbc0, 10, "83ec30803d3c4e4c0000",       (void *)h_skyface,   (void **)&o_skyface,   false, 0, 0, "sky", 0 };
+    H_skyout    = { "Sky::SetOutput",      0x48bd30, 7,  "803d3c4e4c0000",             (void *)h_skyout,    (void **)&o_skyout,    false, 0, 0, "sky", 0 };
+    H_skyview   = { "Sky::SetView",        0x48bd60, 13, "81ec90000000803d3c4e4c0000", (void *)h_skyview,   (void **)&o_skyview,   false, 0, 0, "sky", 0 };
+    H_skyorigin = { "Sky::SetOrigin",      0x48c620, 10, "83ec30803d3c4e4c0000",       (void *)h_skyorigin, (void **)&o_skyorigin, false, 0, 0, "sky", 0 };
+    H_skyfov    = { "Sky::SetFov",         0x48c680, 10, "83ec08803d3c4e4c0000",       (void *)h_skyfov,    (void **)&o_skyfov,    false, 0, 0, "sky", 0 };
+    H_skydraw   = { "Sky::Draw",           0x48c710, 7,  "803d3c4e4c0000",             (void *)h_skydraw,   (void **)&o_skydraw,   false, 0, 0, "sky", 0 };
+    H_skyresize = { "Sky::Resize",         0x48c830, 7,  "803d3c4e4c0000",             (void *)h_skyresize, (void **)&o_skyresize, false, 0, 0, "sky", 0 };
+    H_skymode   = { "Sky::SetMode",        0x48c870, 6,  "8a44240484c0",               (void *)h_skymode,   (void **)&o_skymode,   false, 0, 0, "sky", 0 };
+    H_skyrot    = { "Sky::RotationMatrix", 0x48d7a0, 6,  "d944240cd9ff",               (void *)h_skyrot,    (void **)&o_skyrot,    false, 0, 0, "sky", 0 };
+    H_skymul    = { "Sky::MatrixMultiply", 0x48d860, 5,  "8b4c240453",                 (void *)h_skymul,    (void **)&o_skymul,    false, 0, 0, "sky", 0 };
 }
 
 static void Summary()
@@ -767,8 +885,9 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         Log("SQZ_REPLACE=%s", g_replaceList);
         g_enumCompare = strstr(g_replaceList, "enumcmp") != NULL;
         g_qdmCompare = strstr(g_replaceList, "qdmcmp") != NULL;
+        g_skyCompare = strstr(g_replaceList, "skycmp") != NULL;
         for (Hook *h : g_hooks) {
-            if (h->id) { if (Listed(h->id)) Install(*h); }          // heavy: explicit opt-in
+            if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky"))) Install(*h); }          // heavy: explicit opt-in
             else if (!h->replaceOnly || g_mode == MODE_REPLACE) Install(*h);
         }
     } else if (reason == DLL_PROCESS_DETACH) {

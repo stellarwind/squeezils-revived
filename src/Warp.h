@@ -1,14 +1,15 @@
 // Warp: the game's sky. A "six-view warp gif" (cube map, six GIFs named nz ny pz nx px py) is warped into the
-// current view by a small software renderer (library at 0x48bb30-0x48d300, not reconstructed yet) and written
+// current view by a small software renderer (SkyRenderer, see Sky.h) and written
 // into an offscreen surface that Scene stretches onto the back buffer.
 // Reconstructed from SQZ.EXE 0x478c80-0x479090. "Warp" is our name (no RTTI). Size 0x1e4, field offsets are the original ones.
 // The software renderer only supports 8 and 16 bit output, so the sky is black on 32 bit displays.
 #pragma once
 
-struct WarpFace {            // 0x48 bytes, handed to the software renderer as is (field meaning not fully known)
+struct WarpFace {            // 0x48 bytes, handed to SkyRenderer::SetFace as is. The image is extentB wide, extentA tall;
+                             // a fisheye lens circle sits in it: centre (halfA, halfB), radius halfA2, curve k20/zero24/k28
     int   extentA;           // 0x00 image height (second size value returned by the image loader)
     int   extentB;           // 0x04 image width (first size value returned by the image loader)
-    float zero08, zero0c;    // 0x08, 0x0c  0
+    float zero08, zero0c;    // 0x08, 0x0c  0   (with one: the face axis, 0 0 1)
     float one;               // 0x10        1.0
     float halfA, halfB;      // 0x14, 0x18  extentA / 2, extentB / 2
     float halfA2;            // 0x1c        extentA / 2 again
