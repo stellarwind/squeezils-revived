@@ -50,7 +50,7 @@ void Panel::UpdateCompass(int force)
     if ((int)BitsOf(roll) >= 0x3f800000 || BitsOf(roll) >= 0xbf800000u)
         roll = 0.0f;
     *kCompassRoll = roll;
-    RegionScreenSetCompass(regionScreen, angle, roll);
+    compass.SetCompass(angle, roll);
     memcpy(&prevRow0, &row0, 9 * sizeof(float));     // remember this frame's three vectors
     *kCompassAngle = angle;
     *kCompassHeight = position.y;

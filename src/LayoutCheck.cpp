@@ -101,7 +101,7 @@ static_assert(offsetof(NutCounter, x) == 0x08 && offsetof(NutCounter, file) == 0
 
 // Panel (partial)
 #include "Panel.h"
-static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) == 0x460 && offsetof(Panel, backgroundFile) == 0x464 && offsetof(Panel, regionScreen) == 0x480, "Panel fields");
+static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) == 0x460 && offsetof(Panel, backgroundFile) == 0x464 && offsetof(Panel, compass) == 0x480, "Panel fields");
 
 // StatusBar
 #include "StatusBar.h"
@@ -123,3 +123,7 @@ static_assert(offsetof(Panel, mode) == 0x450 && offsetof(Panel, event) == 0x614 
 #include "GoodieList.h"
 static_assert(offsetof(GoodieList, entries) == 0x1c && offsetof(GoodieList, canvas) == 0x24 && offsetof(GoodieList, height) == 0x2c &&
               offsetof(GoodieEntry, id) == 0x14 && offsetof(GoodieEntry, section) == 0x18 && offsetof(GoodieEntry, frame1) == 0x30, "GoodieList fields");
+#include "CompassRuler.h"
+static_assert(offsetof(CompassRuler, x) == 0x30 && offsetof(CompassRuler, sprite) == 0x38 && offsetof(CompassRuler, sector) == 0x58 &&
+              offsetof(CompassRuler, pineRegion) == 0x64 && offsetof(CompassRuler, quarter) == 0x74 && offsetof(CompassRuler, name) == 0x7c &&
+              offsetof(CompassRuler, path) == 0xf4, "CompassRuler fields");

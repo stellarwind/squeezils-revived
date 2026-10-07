@@ -22,7 +22,7 @@ BOOL Panel::LoadBitmaps()
         if (!background->Load(path))
             return FALSE;
     }
-    if (!RegionScreenLoad(regionScreen))
+    if (!compass.Load())
         return FALSE;
     for (int i = 0; i < 10; i++) {
         char path[100];
@@ -57,12 +57,11 @@ static float FloatFromBits(unsigned bits)
 
 Panel::Panel()
 {
-    // status and quest are built first (their constructors run before this body), then the region screen
-    RegionScreenCtor(regionScreen);
+    // status, quest and the compass are built before this body runs
     background = NewBitmap();
     backgroundX = 0;
     backgroundY = 0;
-    RegionScreenInit(regionScreen);
+    compass.Init();
     for (int i = 0; i < 10; i++) {
         digits[i] = 0;
         digits[i] = NewBitmap();
@@ -93,7 +92,6 @@ Panel::~Panel()
         FreeBitmap(digits[i]);
     if (font)
         DeleteObject(font);
-    RegionScreenDtor(regionScreen);        // then quest and status are destroyed, in that order
 }
 
 BOOL Panel::Load()
