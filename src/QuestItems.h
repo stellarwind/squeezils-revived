@@ -13,6 +13,7 @@ public:
     ~QuestItems();                                 // @42fc40
     BOOL Init(int a, int b, int index);          // @430150 name and load the combined picture for place `index`, then the three key piece pictures; a and b are kept
     BOOL LoadCombined(int index);                // @430360 load the combined picture (the original always answers FALSE)
+    void FreeCombined();                           // @430340 delete the combined picture (the pointer is left as it was)
     BOOL LoadKeys();                             // @42fca0 load the left, middle and right key piece pictures, once per run
 
     Bitmap *combined;          // 0x00

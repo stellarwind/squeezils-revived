@@ -119,9 +119,15 @@ void  RegionScreenCtor(void *regionScreen);                           // @004143
 void  RegionScreenInit(void *regionScreen);                           // @00414490 its set-up
 void  RegionScreenDtor(void *regionScreen);                           // @004143c0
 struct Panel;
-void  PanelLoadFonts(Panel *panel);                                   // @0042e7a0 reads the message font settings and makes the font
+void  PanelLoadFonts(Panel *panel);                                   // @0042e7a0 reads the message font settings and makes the font (PanelText.cpp)
 int   GoodieListInit(void *list, int x, int y);                          // @00415750 the status bar's goodie list widget: set up at (x, y)
 int   GoodieListLoad(void *list);                                     // @00415b40 load its pictures
+
+BOOL  GoodieCount(const char *name, int *count);                        // the player's count of a goodie by name (SpitNutGoodie ...); FALSE when there is no player
+void  StoreSetting(const char *name, void *data, int size);           // the global settings store (object at 0x4c7060, virtual slot 0): remember a value
+class Bitmap;
+void  GoodiesUpdate(void *statusBar, int force, int *event, Bitmap *panel);   // @0042f050 the goodie list's per-frame update
+static int *const kMessageShown = (int *)0x4bbea4;                    // set while the dead / won message is on screen
 
 static int *const kQuestItemsLoaded = (int *)0x4bc01c;                      // set once the left/middle/right key pictures are loaded
 
@@ -143,3 +149,10 @@ static void *const kMenuVtable = (void *)0x49d28c;
 // The window hook's callback (0x476630): the registry in ListenerTable holds it so the original window code can reach the
 // Renderer. It is original code that has not been reconstructed.
 static void *const kWindowCallback = (void *)0x476630;
+
+// ---- the panel's remaining original code ----
+int   QuestPanelLoad(void *quest);                                     // @0042f660 load the quest items and the places counter
+void  QuestPanelDraw(void *quest, int force, int key);                 // @0042f690 draw the quest items of place key
+static int *const kPanelDrawn = (int *)0x4bbe90;                       // set after the panel picture was first drawn
+float *PlayerMatrix();                                                 // the player's 4x4 matrix as floats (@00414050 then its virtual slot 3), or NULL
+void  RegionScreenSetCompass(void *regionScreen, float angle, float roll);   // @00414fb0 turn the compass to the heading, with the roll animation

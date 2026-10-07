@@ -60,8 +60,8 @@ Panel::Panel()
     // status and quest are built first (their constructors run before this body), then the region screen
     RegionScreenCtor(regionScreen);
     background = NewBitmap();
-    field478 = 0;
-    field47c = 0;
+    backgroundX = 0;
+    backgroundY = 0;
     RegionScreenInit(regionScreen);
     for (int i = 0; i < 10; i++) {
         digits[i] = 0;
@@ -75,15 +75,15 @@ Panel::Panel()
     ini.SetSection("Compass");
     verticalChange = ini.GetFloat("VerticalChange", 1.0f);
     verticalThreshold = ini.GetFloat("VerticalThreshold", 0.1f);
-    field450 = 2;
-    field454 = 2;
-    field45c = 0;
-    field614 = 0;
-    field458 = -1;
+    mode = 2;
+    lastMode = 2;
+    dirty = 0;
+    event = 0;
+    questKey = -1;
     font = NULL;
     PanelLoadFonts(this);
-    messageFont[0] = 0;
-    pad694[0] = 0;
+    message[0] = 0;
+    note[0] = 0;
 }
 
 Panel::~Panel()
@@ -94,4 +94,92 @@ Panel::~Panel()
     if (font)
         DeleteObject(font);
     RegionScreenDtor(regionScreen);        // then quest and status are destroyed, in that order
+}
+
+BOOL Panel::Load()
+{
+    if (!LoadBitmaps())
+        return FALSE;
+    if (!status.Init())
+        return FALSE;
+    return QuestPanelLoad(&quest) != 0;
+}
+
+BOOL Panel::DrawBackground()
+{
+    Renderer *r = GetRenderer();
+    LPDIRECTDRAWSURFACE screen = r->primary;
+    if (!screen)
+        return FALSE;
+    LONG rect[4];
+    r->GetScreenRect(rect);
+    originX = rect[0];
+    originY = rect[3];
+    if (background)
+        background->DrawToSurfaceAt(screen, backgroundX + originX, backgroundY + originY, 0, 0, 1);
+    return TRUE;
+}
+
+void Panel::ShowQuest(int key)
+{
+    if (questKey != key) {
+        quest.items.FreeCombined();
+        quest.items.Init(30, 5, key);
+        dirty = 1;
+    }
+    questKey = key;
+    mode = 1;
+    ClearMessage();
+    ClearNote();
+}
+
+void Panel::ShowStatus(int foodB)
+{
+    mode = 0;
+    status.SetFoodB(foodB);
+    dirty = 1;
+    ClearMessage();
+    ClearNote();
+}
+
+BOOL Panel::Update(int force)
+{
+    if (GetRenderer()->field_078)
+        return TRUE;
+    int redraw;
+    if (lastMode != mode) {
+        redraw = 1;
+        lastMode = mode;
+    } else {
+        redraw = force;
+    }
+    if (dirty)
+        redraw = 1;
+    dirty = 0;
+    if (*kPanelDrawn && !redraw) {
+        UpdateCompass(0);
+    } else {
+        DrawBackground();
+        UpdateCompass(1);
+        *kPanelDrawn = 1;
+    }
+    if (mode == 0) {
+        int before = event;
+        status.Update(redraw, &event, background);
+        if (before == 1 && event == 0)
+            ClearEvent();
+        if (redraw) {
+            if (!status.faceState) {
+                GameLog("SETTING : %s \n", message);
+                DrawMessage(message);
+            }
+            if (strlen(note))
+                DrawNote(note);
+        }
+    } else {
+        QuestPanelDraw(&quest, redraw, questKey);
+        if (redraw)
+            DrawMessage(message);
+    }
+    return TRUE;
 }
