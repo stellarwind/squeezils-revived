@@ -16,6 +16,10 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Image.h/.cpp`: `ImageLoad` (GIF to pixels in the display format, rows padded to 4 bytes) and `ImageConvertRow` (palette indices to 8/16/24/32 bit through the colour masks). Used by Texture and Warp.
 - `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
 - `Bitmap.h/.cpp`: `Bitmap`, a DirectDraw offscreen surface for the 2D interface art (HUD icons, digits, load bar): colour keyed blits with retry, and the loader for the game's 8 bit `.bmp` files, which converts to the display format with `ImageConvertRow`. Its seven virtual methods are called by the original code through the original vtable.
+- `GameString.h/.cpp`: `String` (the original's `SqzString`), the reference counted, copy-on-write string handle with case-insensitive compares.
+- `Container.h`: the game's container templates, `Array`, `PrimitiveArray`, `Set` (a sorted array with binary search), `Table` (a key set plus a parallel value array) and `BufferObjectTable`. One template covers the many per-instantiation copies in the binary. Original code also uses these objects and runs `dynamic_cast` on them, so constructors end by switching to the original vtables (listed in `Original.h`). See `CONTAINERS.md` in the project folder for the class map.
+- `IniFile.h/.cpp`: the parsed INI files: the parser, `IniFileSection` (key -> value plus the keys in file order), `IniFileCache` (one parsed file) and the global cache by path (`IniOpen`, `IniCloseAll`).
+- `IniReader.h/.cpp`: `IniReader`, the settings cursor (file + current section) the game reads nearly every setting through, including the key and int lists.
 - `Original.h`: the boundary with the original binary. Every function or global the code above still takes from `SQZ.EXE` (allocators, the error reporters, the renderer and scene globals, the window callback) is declared there, with its address. Nothing else in `src/` refers to the original, so that list is what a standalone build would still have to provide. The modules call each other directly (`Warp` and `Scene` drive `SkyRenderer`, `Texture` and `Warp` use `ImageLoad`).
 - `LayoutCheck.cpp`: compile-time asserts that the structs have the original field offsets and sizes (`Renderer` 0x9cc, `Scene`, `Warp`, `WarpFace`, `BodyPart`/`AnimatedBody`/`BodyPose`, the `Sqg` structs, `DisplayFormat`).
 
@@ -26,9 +30,10 @@ Every function here has been verified inside the real, unmodified game with `hoo
 ## Not verified in play
 - `Scene::SetQuality`, `Warp::Resize` and `SkyRenderer::Resize` never ran in a normal session (checked against the disassembly only).
 - `CheckDesktopDepth` and a few trivial setters are untested. The windowed 8 bit palette paths need an 8 bit desktop.
+- Containers: `Set::RemoveKey`, `Set::Replace`, `Table::RemoveKey` and `Table::IndexOf` were never called by the original code in play. The parser's duplicate-key warning and the missing-`]` header case did not occur in the game's files.
 
 ## Syntax check
 Needs the DirectX 7 SDK headers (not included; set `DX7_INCLUDE`):
 ```
-g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp Gif.cpp Image.cpp Bitmap.cpp LayoutCheck.cpp
+g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp Gif.cpp Image.cpp Bitmap.cpp GameString.cpp IniFile.cpp IniReader.cpp LayoutCheck.cpp
 ```

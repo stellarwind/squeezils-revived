@@ -38,3 +38,6 @@ static_assert(sizeof(String) == 4, "String layout");
 bool StringLess(const String *a, const String *b);       // @4386f0
 bool StringEqual(const String *a, const String *b);      // @438720
 int  StringCompare(const String *a, const String *b);    // @438750
+
+// The containers (Container.h) order their keys with this; in the original it is StringLess itself.
+inline bool operator<(const String &a, const String &b) { return StringLess(&a, &b); }

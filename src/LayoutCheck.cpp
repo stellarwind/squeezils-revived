@@ -65,3 +65,14 @@ static_assert(sizeof(Bitmap) == 0x80, "Bitmap size");
 #include "GameString.h"
 static_assert(offsetof(StringRep, cap) == 0x4 && offsetof(StringRep, refs) == 0x8 && sizeof(StringRep) == 0xc, "StringRep layout");
 static_assert(sizeof(String) == 4, "String size");
+
+// Containers and the parsed ini files
+#include "IniFile.h"
+static_assert(offsetof(Array<String>, count) == 0x4 && offsetof(Array<String>, capacity) == 0x8 && offsetof(Array<String>, data) == 0xc &&
+              sizeof(Array<String>) == 0x10 && sizeof(Array<IniFileSection *>) == 0x10, "Array layout");
+static_assert(offsetof(StringList, vtbl) == 0x10 && sizeof(StringList) == 0x14 &&
+              sizeof(IntList) == 0x14 && sizeof(Set<String, 23>) == 0x14, "PrimitiveArray / Set layout");
+static_assert(offsetof(IniValueTable, keys) == 0x04 && offsetof(IniValueTable, values) == 0x18 && offsetof(IniValueTable, vtbl) == 0x2c &&
+              sizeof(IniValueTable) == 0x30, "BufferObjectTable layout");
+static_assert(offsetof(IniFileTable, keys) == 0x04 && offsetof(IniFileTable, values) == 0x18 && sizeof(IniFileTable) == 0x28, "Table layout");
+static_assert(offsetof(IniFileSection, order) == 0x30 && sizeof(IniFileSection) == 0x44 && sizeof(IniFileCache) == 0x28, "ini file layout");

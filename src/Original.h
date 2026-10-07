@@ -24,6 +24,7 @@ void *SqgAlloc(size_t n);                  // calls the function pointer stored 
 void  SqgFree(void *p);                    // calls the function pointer stored at 0x4c0f80
 
 // ---- reporting ----
+void  GameLog(const char *format, ...);    // @00419290 printf style message to the game's log file and console
 const char *HResultToString(HRESULT hr);   // @00478430 text for a DirectDraw / Direct3D result code
 int   PrepareForDialog();                  // @004753c0 does nothing, returns 0 (called before the message boxes)
 void  SqgError(const char *format, ...);   // @00473710 printf style error report for model files
@@ -40,11 +41,49 @@ SqgTextureLookupFn SqgGetTextureLookup();  // the pointer stored at 0x4c0f84 (NU
 static const char *const kEmptyString = (const char *)0x4b9488;
 
 // ---- ini files ----
-const char *IniFind(void *file, const char *section, const char *key);   // @00442ee0 value text in a parsed ini file, or NULL
-void *IniOpen(const char *path);                                          // @00442fa0 the cached parsed file for a path (parses it the first time)
 static const char *const kCurrentIniPath = (const char *)0x4c74d8;        // the game's global current ini file name
 static const char *const kDefaultSectionName = (const char *)0x4b9e60;    // "Defaults"
 static const char *const kCurrentDirectory = (const char *)0x4bd220;      // "."
+static const char *const kIniParsingMessage = (const char *)0x4bd20c;     // "PARSING INI %s...\n"
+// "  PARSING ERROR! duplicate entry '%s' in section '%s'.\n    Old text: '%s'.\n    New text: '%s'.\n"
+static const char *const kIniDuplicateMessage = (const char *)0x4bd1ac;
+
+// ---- containers ----
+// The container templates (Container.h) and the ini file classes (IniFile.h) are reconstructed, but original code builds and
+// uses the same objects (and runs dynamic_cast on them), so the objects keep the original vtables. One entry per
+// instantiation the reconstruction constructs: the vtable at +0 and, for save/load capable classes, BufferObject's.
+class String;
+class IniFileSection;
+class IniFileCache;
+template<class T> class Array;
+template<class T, int ID> class PrimitiveArray;
+template<class T, int ID> class Set;
+template<class K, class V, class VArray, int ID> class Table;
+template<class K, class V, class VArray, int ID> class BufferObjectTable;
+typedef Table<String, IniFileCache *, Array<IniFileCache *>, 51> IniFileTable;
+typedef BufferObjectTable<String, String, PrimitiveArray<String, 3>, 23> IniValueTable;
+
+template<class C> struct OriginalVtables;
+template<> struct OriginalVtables<Array<String> >                  { enum : unsigned { primary = 0x4a000c }; };
+template<> struct OriginalVtables<Array<int> >                     { enum : unsigned { primary = 0x49ffcc }; };
+template<> struct OriginalVtables<Array<IniFileSection *> >        { enum : unsigned { primary = 0x4a0d6c }; };
+template<> struct OriginalVtables<Array<IniFileCache *> >          { enum : unsigned { primary = 0x4a0e1c }; };
+template<> struct OriginalVtables<PrimitiveArray<String, 3> >      { enum : unsigned { primary = 0x49d50c, bufferObject = 0x49d4f4 }; };
+template<> struct OriginalVtables<PrimitiveArray<String, 23> >     { enum : unsigned { primary = 0x4a0334, bufferObject = 0x4a031c }; };
+template<> struct OriginalVtables<PrimitiveArray<String, 50> >     { enum : unsigned { primary = 0x4a0cf4, bufferObject = 0x4a0cdc }; };
+template<> struct OriginalVtables<PrimitiveArray<String, 51> >     { enum : unsigned { primary = 0x4a0da4, bufferObject = 0x4a0d8c }; };
+template<> struct OriginalVtables<PrimitiveArray<int, 1> >         { enum : unsigned { primary = 0x49d5a4, bufferObject = 0x49d58c }; };
+template<> struct OriginalVtables<Set<String, 23> >                { enum : unsigned { primary = 0x4a036c, bufferObject = 0x4a0354 }; };
+template<> struct OriginalVtables<Set<String, 50> >                { enum : unsigned { primary = 0x4a0d2c, bufferObject = 0x4a0d14 }; };
+template<> struct OriginalVtables<Set<String, 51> >                { enum : unsigned { primary = 0x4a0ddc, bufferObject = 0x4a0dc4 }; };
+template<> struct OriginalVtables<Table<String, String, PrimitiveArray<String, 3>, 23> >
+                                                                   { enum : unsigned { primary = 0x4a0394 }; };
+template<> struct OriginalVtables<IniValueTable>                   { enum : unsigned { primary = 0x49d574, bufferObject = 0x49d55c }; };
+template<> struct OriginalVtables<Table<String, IniFileSection *, Array<IniFileSection *>, 50> >
+                                                                   { enum : unsigned { primary = 0x4a0d54 }; };
+template<> struct OriginalVtables<IniFileTable>                    { enum : unsigned { primary = 0x4a0e04 }; };
+
+IniFileTable *GetIniFiles();               // the global at 0x4c7738: every ini file parsed so far, by path (built by the game's startup code)
 
 // ---- vtables ----
 // The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
