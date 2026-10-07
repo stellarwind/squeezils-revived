@@ -9,6 +9,7 @@
 #include "ListenerTable.h"
 #include "Scene.h"
 #include "Warp.h"
+#include "SqgModel.h"
 #undef private
 #include <stdio.h>
 #include <stdarg.h>
@@ -50,6 +51,11 @@ int  Image_Load(const char *path, const int *fmt, void *u, int *outB, int *outA,
 { return ((int (__cdecl *)(const char *, const int *, void *, int *, int *, void **, unsigned char *))0x477cc0)(path, fmt, u, outB, outA, pixels, pal); }
 void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
 void *Operator_New(size_t n)                          { return ((void *(__cdecl *)(size_t))0x48ea00)(n); }
+// SqgModel helpers: the game's allocator (function pointer at 0x4c0f78), its error reporter and texture lookup (pointer at 0x4c0f84)
+void *SqgAlloc(size_t n)       { return (*(void *(__cdecl **)(size_t))0x4c0f78)(n); }
+void  SqgError(const char *m)  { ((void (__cdecl *)(const char *))0x473710)(m); }
+typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *);
+SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
@@ -348,6 +354,7 @@ typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int,
 static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
 static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
 static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
+static Hook H_sqgload, H_sqgmesh, H_sqgmorph, H_sqgframe;
 static Hook H_sload, H_scam, H_sview, H_fparent, H_fvisual, H_fchild, H_fdel;
 static Hook H_wctor, H_wdtor, H_winit, H_woutput, H_wresize, H_wupdate, H_wload;
 static bool g_qdmCompare;
@@ -443,6 +450,20 @@ static HRESULT __stdcall h_fchild(IDirect3DRMFrame *f, IDirect3DRMFrame *c) { HE
 static HRESULT (__stdcall *o_fdel)(IDirect3DRMFrame *, IDirect3DRMFrame *);
 static HRESULT __stdcall h_fdel(IDirect3DRMFrame *f, IDirect3DRMFrame *c) { HEAVY_LOG(H_fdel); return DeleteChildFromFrame(f, c); }
 
+// ---- SqgModel (character / prop meshes and morph animation): replace only ------------------------
+// @472560 Load, __thiscall(this, path, mirror) -> BOOL
+static int (__attribute__((thiscall)) *o_sqgload)(SqgModel *, const char *, int);
+static int __attribute__((thiscall)) h_sqgload(SqgModel *m, const char *path, int mirror) { HEAVY_LOG(H_sqgload); return m->Load(path, mirror); }
+// @472f60 CreateMesh, __thiscall(this, d3drm) -> PZMorphMesh *
+static PZMorphMesh *(__attribute__((thiscall)) *o_sqgmesh)(SqgModel *, IDirect3DRM *);
+static PZMorphMesh *__attribute__((thiscall)) h_sqgmesh(SqgModel *m, IDirect3DRM *d) { HEAVY_LOG(H_sqgmesh); return m->CreateMesh(d); }
+// @4734e0 Morph, __thiscall(this, instance, count, weights)
+static void (__attribute__((thiscall)) *o_sqgmorph)(SqgModel *, PZMorphMesh *, int, const float *);
+static void __attribute__((thiscall)) h_sqgmorph(SqgModel *m, PZMorphMesh *i, int n, const float *w) { HEAVY_LOG(H_sqgmorph); m->Morph(i, n, w); }
+// @4731f0 BuildFrame, __thiscall(this, d3drm, perspective) -> frame (callee pops 8)
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_sqgframe)(SqgModel *, IDirect3DRM *, BOOL);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_sqgframe(SqgModel *m, IDirect3DRM *d, BOOL p) { HEAVY_LOG(H_sqgframe); return m->BuildFrame(d, p); }
+
 // ---- Warp (sky): replace only ---------------------------------------------------------------
 // @478c80 constructor, __fastcall(this) -> this
 static Warp *(__fastcall *o_wctor)(Warp *);
@@ -505,7 +526,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_swarp, &H_sinit, &H_sbegin, &H_srender, &H_spresent, &H_squality, &H_sxform, &H_schild, &H_sdel,
                            &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
                            &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
-                           &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel };
+                           &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel,
+                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -578,6 +600,10 @@ static void Setup()
     H_fvisual = { "AddVisualToFrame",         0x4773a0, 5, "8b44240853",       (void *)h_fvisual, (void **)&o_fvisual, false, 0, 0, "fvisual", 0 };
     H_fchild  = { "AddChildToFrame",          0x4773c0, 5, "8b44240853",       (void *)h_fchild,  (void **)&o_fchild,  false, 0, 0, "fchild",  0 };
     H_fdel    = { "DeleteChildFromFrame",     0x4773e0, 5, "8b44240853",       (void *)h_fdel,    (void **)&o_fdel,    false, 0, 0, "fdel",    0 };
+    H_sqgload  = { "SqgModel::Load",       0x472560, 6, "83ec24535657",     (void *)h_sqgload,  (void **)&o_sqgload,  false, 0, 0, "sqgload",  0 };
+    H_sqgmesh  = { "SqgModel::CreateMesh", 0x472f60, 7, "64a10000000055",   (void *)h_sqgmesh,  (void **)&o_sqgmesh,  false, 0, 0, "sqgmesh",  0 };
+    H_sqgmorph = { "SqgModel::Morph",      0x4734e0, 7, "64a10000000055",   (void *)h_sqgmorph, (void **)&o_sqgmorph, false, 0, 0, "sqgmorph", 0 };
+    H_sqgframe = { "SqgModel::BuildFrame",  0x4731f0, 7, "8b44240483ec1c",   (void *)h_sqgframe, (void **)&o_sqgframe, false, 0, 0, "sqgframe", 0 };
 }
 
 static void Summary()
