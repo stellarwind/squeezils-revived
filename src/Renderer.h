@@ -39,6 +39,7 @@ public:
     void  SetViewParams(float nearPlane, float farPlane, float fovDegrees);     // 0x474f40
     void  GetClientRectInWindow(LONG out[4]);     // 0x474f70
     void  GetScreenRect(LONG out[4]);             // 0x474fe0
+    void  PutText(HFONT font, int x, int y, const char *text);   // 0x4753d0 white text on the primary surface at (x, y), clipped to its own box
     int  *GetPixelFormat(int out[6]);             // 0x475000 / 0x475020 (identical)
     void  SetShades(int shades);                  // 0x475040
     void  SetTextureColors(int colors);           // 0x475060

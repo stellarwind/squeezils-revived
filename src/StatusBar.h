@@ -16,7 +16,12 @@ struct StatusBar {
     int        foodC;          // 0x068 (-1)
     char       goodies[0x30];  // 0x06c the goodie list widget (original code)
     MoodFace   face;           // 0x09c
-    char       pad364[0x18];   // 0x364
+    int        goodieStep;     // 0x364 step of the goodie list's animation (0 after a reset)
+    int        goodieSteps;    // 0x368 steps in one round
+    int        goodieInterval; // 0x36c milliseconds between steps
+    unsigned   goodieTick;     // 0x370 timeGetTime of the last step
+    int        goodieFlip;     // 0x374 flips between 0 and 1 on each step
+    int        faceState;      // 0x378 what the face reported last frame: 0 awake, 1 dead (shows the dead message), else won
     Bitmap    *deadMessage;    // 0x37c [Interface] DeadMessage picture, shown when the player dies
     Bitmap    *wonMessage;     // 0x380 [Interface] WonMessage
     int        messageX;       // 0x384 where the messages go (405)
@@ -27,5 +32,11 @@ struct StatusBar {
 
     BOOL Init();               // @42ec10 place and set up the widgets, load all their pictures
     BOOL LoadAll();            // @42f2c0 load the counters', goodie list's, dead and won pictures
+
+    BOOL Update(int force, int *event, Bitmap *panel);   // @42ed70 once a frame: face, goodies, nut counts, then the dead / won message
+    int  UpdateFace(int force, Bitmap *panel);           // @42ee90 draw the face, remember its state
+    BOOL UpdateAmo(int force);                           // @42eec0 redraw the spit nut count when it changed (or force); 1 when it changed
+    void SetFoodB(int value);                            // @42ef40 the second number of the food counter
+    BOOL UpdateFood(int force);                          // @42ef50 same for the food nuts; also stores PlayerFoodNuts in the settings
 };
 static_assert(sizeof(StatusBar) == 0x38c, "StatusBar layout");

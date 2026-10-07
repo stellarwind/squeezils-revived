@@ -100,13 +100,45 @@ int SoulMood(void *soul)
     return ((int (__attribute__((thiscall)) *)(void *))(*(void ***)s)[0x64 / 4])(s);
 }
 void *GetPanel() { return *(void **)0x4badb0; }
+BOOL GoodieCount(const char *name, int *count)
+{
+    void *soul = GetPlayerSoul();
+    if (!soul)
+        return FALSE;
+    void *inv = ((void *(__attribute__((thiscall)) *)(void *))(*(void ***)soul)[0x48 / 4])(soul);
+    if (!inv)
+        return FALSE;
+    void *table = *(void **)((char *)inv + 4);
+    *count = ((int (__attribute__((thiscall)) *)(void *, const char *))0x416300)(table, name);
+    return TRUE;
+}
+void StoreSetting(const char *name, void *data, int size)
+{
+    String s(name);                       // the original passes a pointer to the String object and keeps ownership
+    void *store = (void *)0x4c7060;
+    void *fn = (*(void ***)store)[0];
+    ((void (__attribute__((thiscall)) *)(void *, String *, void *, int))fn)(store, &s, data, size);
+}
+void GoodiesUpdate(void *statusBar, int force, int *event, Bitmap *panel)
+{
+    ((void (__attribute__((thiscall)) *)(void *, int, int *, Bitmap *))0x42f050)(statusBar, force, event, panel);
+}
+int QuestPanelLoad(void *q) { return ((int (__attribute__((thiscall)) *)(void *))0x42f660)(q); }
+void QuestPanelDraw(void *q, int force, int key) { ((int (__attribute__((thiscall)) *)(void *, int, int))0x42f690)(q, force, key); }
+float *PlayerMatrix()
+{
+    void *obj = ((void *(__attribute__((thiscall)) *)(void *, int))0x414050)(*(void **)0x4badbc, 0);
+    if (!obj)
+        return NULL;
+    return ((float *(__attribute__((thiscall)) *)(void *))(*(void ***)obj)[3])(obj);
+}
+void RegionScreenSetCompass(void *r, float angle, float roll) { ((void (__attribute__((thiscall)) *)(void *, float, float))0x414fb0)(r, angle, roll); }
 int RegionScreenLoad(void *r) { return ((int (__attribute__((thiscall)) *)(void *))0x414c10)(r); }
 void GoodieListCtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156c0)(l); }
 void GoodieListDtor(void *l) { ((void (__attribute__((thiscall)) *)(void *))0x4156d0)(l); }
 void RegionScreenCtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414380)(r); }
 void RegionScreenInit(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x414490)(r); }
 void RegionScreenDtor(void *r) { ((void (__attribute__((thiscall)) *)(void *))0x4143c0)(r); }
-void PanelLoadFonts(Panel *p) { ((void (__attribute__((thiscall)) *)(void *))0x42e7a0)(p); }
 int GoodieListInit(void *l, int x, int y) { return ((int (__attribute__((thiscall)) *)(void *, int, int))0x415750)(l, x, y); }
 int GoodieListLoad(void *l) { return ((int (__attribute__((thiscall)) *)(void *))0x415b40)(l); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
@@ -1249,6 +1281,40 @@ static int (__fastcall *o_sbinit)(StatusBar *);
 static int __fastcall h_sbinit(StatusBar *s) { HEAVY_LOG(H_sbinit); return s->Init(); }
 static int (__fastcall *o_sbload)(StatusBar *);
 static int __fastcall h_sbload(StatusBar *s) { HEAVY_LOG(H_sbload); return s->LoadAll(); }
+static Hook H_sbupd, H_sbface, H_sbamo, H_sbfoodb, H_sbfood;
+static int (THISCALL *o_sbupd)(StatusBar *, int, int *, Bitmap *);
+static int THISCALL h_sbupd(StatusBar *s, int f, int *e, Bitmap *p) { HEAVY_LOG(H_sbupd); return s->Update(f, e, p); }
+static int (THISCALL *o_sbface)(StatusBar *, int, Bitmap *);
+static int THISCALL h_sbface(StatusBar *s, int f, Bitmap *p) { HEAVY_LOG(H_sbface); return s->UpdateFace(f, p); }
+static int (THISCALL *o_sbamo)(StatusBar *, int);
+static int THISCALL h_sbamo(StatusBar *s, int f) { HEAVY_LOG(H_sbamo); return s->UpdateAmo(f); }
+static void (THISCALL *o_sbfoodb)(StatusBar *, int);
+static void THISCALL h_sbfoodb(StatusBar *s, int v) { HEAVY_LOG(H_sbfoodb); s->SetFoodB(v); }
+static int (THISCALL *o_sbfood)(StatusBar *, int);
+static int THISCALL h_sbfood(StatusBar *s, int f) { HEAVY_LOG(H_sbfood); return s->UpdateFood(f); }
+static Hook H_pnld, H_pnsq, H_pnss, H_pninv, H_pnupd, H_pnbg, H_pnmsg, H_pnnote, H_pncomp, H_rtext, H_qifree;
+static int (__fastcall *o_pnld)(Panel *);
+static int __fastcall h_pnld(Panel *p) { HEAVY_LOG(H_pnld); return p->Load(); }
+static void (THISCALL *o_pnsq)(Panel *, int);
+static void THISCALL h_pnsq(Panel *p, int k) { HEAVY_LOG(H_pnsq); p->ShowQuest(k); }
+static void (THISCALL *o_pnss)(Panel *, int);
+static void THISCALL h_pnss(Panel *p, int v) { HEAVY_LOG(H_pnss); p->ShowStatus(v); }
+static void (__fastcall *o_pninv)(Panel *);
+static void __fastcall h_pninv(Panel *p) { HEAVY_LOG(H_pninv); p->Invalidate(); }
+static int (THISCALL *o_pnupd)(Panel *, int);
+static int THISCALL h_pnupd(Panel *p, int f) { HEAVY_LOG(H_pnupd); return p->Update(f); }
+static int (__fastcall *o_pnbg)(Panel *);
+static int __fastcall h_pnbg(Panel *p) { HEAVY_LOG(H_pnbg); return p->DrawBackground(); }
+static int (THISCALL *o_pnmsg)(Panel *, const char *);
+static int THISCALL h_pnmsg(Panel *p, const char *t) { HEAVY_LOG(H_pnmsg); return p->DrawMessage(t); }
+static int (THISCALL *o_pnnote)(Panel *, const char *);
+static int THISCALL h_pnnote(Panel *p, const char *t) { HEAVY_LOG(H_pnnote); return p->DrawNote(t); }
+static void (THISCALL *o_pncomp)(Panel *, int);
+static void THISCALL h_pncomp(Panel *p, int f) { HEAVY_LOG(H_pncomp); p->UpdateCompass(f); }
+static void (THISCALL *o_rtext)(Renderer *, HFONT, int, int, const char *);
+static void THISCALL h_rtext(Renderer *r, HFONT f, int x, int y, const char *t) { HEAVY_LOG(H_rtext); r->PutText(f, x, y, t); }
+static void (__fastcall *o_qifree)(QuestItems *);
+static void __fastcall h_qifree(QuestItems *k) { HEAVY_LOG(H_qifree); k->FreeCombined(); }
 
 // ---- QuestItems (the collectable key pieces and the stone they form; replace only, "quest") --------------------------------------------------
 static Hook H_qictor, H_qidtor, H_qiinit, H_qicomb, H_qikeys;
@@ -1285,7 +1351,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
-                           &H_sbinit, &H_sbload,
+                           &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood,
+                           &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
@@ -1470,6 +1537,22 @@ static void Setup()
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
     H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
     H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
+    H_sbupd = { "StatusBar::Update", 0x42ed70, 6, "83ec08535657", (void *)h_sbupd, (void **)&o_sbupd, false, 0, 0, "status", 0 };
+    H_sbface = { "StatusBar::UpdateFace", 0x42ee90, 5, "8b44240856", (void *)h_sbface, (void **)&o_sbface, false, 0, 0, "status", 0 };
+    H_sbamo = { "StatusBar::UpdateAmo", 0x42eec0, 5, "566a008bf1", (void *)h_sbamo, (void **)&o_sbamo, false, 0, 0, "status", 0 };
+    H_sbfoodb = { "StatusBar::SetFoodB", 0x42ef40, 7, "8b442404894164", (void *)h_sbfoodb, (void **)&o_sbfoodb, false, 0, 0, "status", 0 };
+    H_sbfood = { "StatusBar::UpdateFood", 0x42ef50, 7, "64a10000000055", (void *)h_sbfood, (void **)&o_sbfood, false, 0, 0, "status", 0 };
+    H_pnld = { "Panel::Load", 0x42d9f0, 8, "568bf1e8080b0000", (void *)h_pnld, (void **)&o_pnld, false, 0, 0, "panel", 4 };
+    H_pnsq = { "Panel::ShowQuest", 0x42da60, 6, "53568b74240c", (void *)h_pnsq, (void **)&o_pnsq, false, 0, 0, "panel", 0 };
+    H_pnss = { "Panel::ShowStatus", 0x42dac0, 5, "8b44240456", (void *)h_pnss, (void **)&o_pnss, false, 0, 0, "panel", 0 };
+    H_pninv = { "Panel::Invalidate", 0x42db00, 10, "c7815c04000001000000", (void *)h_pninv, (void **)&o_pninv, false, 0, 0, "panel", 0 };
+    H_pnupd = { "Panel::Update", 0x42db10, 6, "53a1dc754c00", (void *)h_pnupd, (void **)&o_pnupd, false, 0, 0, "panel", 0 };
+    H_pnbg = { "Panel::DrawBackground", 0x42dc50, 8, "83ec10a1dc754c00", (void *)h_pnbg, (void **)&o_pnbg, false, 0, 0, "panel", 0 };
+    H_pnmsg = { "Panel::DrawMessage", 0x42dd30, 6, "81ecd8010000", (void *)h_pnmsg, (void **)&o_pnmsg, false, 0, 0, "panel", 0 };
+    H_pnnote = { "Panel::DrawNote", 0x42e0e0, 7, "83ec388d442434", (void *)h_pnnote, (void **)&o_pnnote, false, 0, 0, "panel", 0 };
+    H_pncomp = { "Panel::UpdateCompass", 0x42e2b0, 6, "83ec0c535657", (void *)h_pncomp, (void **)&o_pncomp, false, 0, 0, "panel", 0 };
+    H_rtext = { "Renderer::PutText", 0x4753d0, 5, "83ec1c5356", (void *)h_rtext, (void **)&o_rtext, false, 0, 0, "panel", 0 };
+    H_qifree = { "QuestItems::FreeCombined", 0x430340, 5, "568b3185f6", (void *)h_qifree, (void **)&o_qifree, false, 0, 0, "quest", 0 };
     H_qictor = { "QuestItems::QuestItems", 0x42fc30, 7, "33c08901894118", (void *)h_qictor, (void **)&o_qictor, false, 0, 0, "quest", 0 };
     H_qidtor = { "QuestItems::~QuestItems", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_qidtor, (void **)&o_qidtor, false, 0, 0, "quest", 5 };
     H_qiinit = { "QuestItems::Init", 0x430150, 7, "64a10000000055", (void *)h_qiinit, (void **)&o_qiinit, false, 0, 0, "quest", 0 };

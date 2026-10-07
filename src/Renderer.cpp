@@ -845,3 +845,25 @@ BOOL Renderer::CreateSurfaces()
     }
     return TRUE;
 }
+
+void Renderer::PutText(HFONT font, int x, int y, const char *text)
+{
+    HDC dc = GetDC(hwnd);
+    HGDIOBJ old = NULL;
+    if (font)
+        old = SelectObject(dc, font);
+    SIZE size;
+    GetTextExtentPoint32A(dc, text, (int)strlen(text), &size);
+    RECT box;
+    GetClientRect(hwnd, &box);
+    box.left = x;
+    box.top = y;
+    box.right = x + size.cx;
+    box.bottom = y + size.cy;
+    SetTextColor(dc, 0xffffff);
+    SetBkMode(dc, TRANSPARENT);
+    ExtTextOutA(dc, x, y, ETO_CLIPPED, &box, text, (int)strlen(text), NULL);
+    if (font)
+        SelectObject(dc, old);
+    ReleaseDC(hwnd, dc);
+}

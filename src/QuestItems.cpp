@@ -105,3 +105,11 @@ BOOL QuestItems::LoadKeys()
     *kQuestItemsLoaded = 1;
     return TRUE;
 }
+
+void QuestItems::FreeCombined()
+{
+    if (combined) {
+        combined->~Bitmap();
+        Operator_Delete(combined);
+    }
+}
