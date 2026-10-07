@@ -148,8 +148,7 @@ static void *const kMenuVtable = (void *)0x49d28c;
 static void *const kWindowCallback = (void *)0x476630;
 
 // ---- the panel's remaining original code ----
-int   QuestPanelLoad(void *quest);                                     // @0042f660 load the quest items and the places counter
-void  QuestPanelDraw(void *quest, int force, int key);                 // @0042f690 draw the quest items of place key
 static int *const kPanelDrawn = (int *)0x4bbe90;                       // set after the panel picture was first drawn
 float *PlayerMatrix();                                                 // the player's 4x4 matrix as floats (@00414050 then its virtual slot 3), or NULL
 void  RegionScreenSetCompass(void *regionScreen, float angle, float roll);   // @00414fb0 turn the compass to the heading, with the roll animation
+void *PlayerInventory();                                               // the player's inventory table (its four byte entries start at +4: goodie counts by name, quest piece flags), or NULL

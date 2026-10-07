@@ -102,7 +102,7 @@ BOOL Panel::Load()
         return FALSE;
     if (!status.Init())
         return FALSE;
-    return QuestPanelLoad(&quest) != 0;
+    return quest.Load() != 0;
 }
 
 BOOL Panel::DrawBackground()
@@ -177,7 +177,7 @@ BOOL Panel::Update(int force)
                 DrawNote(note);
         }
     } else {
-        QuestPanelDraw(&quest, redraw, questKey);
+        quest.Draw(redraw, questKey);
         if (redraw)
             DrawMessage(message);
     }

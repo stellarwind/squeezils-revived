@@ -15,6 +15,7 @@ public:
     BOOL LoadCombined(int index);                // @430360 load the combined picture (the original always answers FALSE)
     void FreeCombined();                           // @430340 delete the combined picture (the pointer is left as it was)
     BOOL LoadKeys();                             // @42fca0 load the left, middle and right key piece pictures, once per run
+    void Draw(int place);                          // @430440 draw the combined picture, then each key piece the player has found for place
 
     Bitmap *combined;          // 0x00
     char    combinedFile[20];  // 0x04
@@ -24,6 +25,7 @@ public:
     char    middleFile[20];    // 0x34
     Bitmap *right;             // 0x48
     char    rightFile[20];     // 0x4c
-    char    pad60[8];          // 0x60 the two values Init was given (kept by original code)
+    int     x;                 // 0x60 where the pictures sit on the panel (Init's first value, 30)
+    int     y;                 // 0x64 (Init's second value, 5)
 };
 static_assert(sizeof(QuestItems) == 0x68, "QuestItems layout");
