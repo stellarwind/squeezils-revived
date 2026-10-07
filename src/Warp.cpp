@@ -1,24 +1,11 @@
 // Warp: see Warp.h. Reconstructed from SQZ.EXE 0x478c80-0x479090.
 #include "Warp.h"
+#include "Sky.h"
+#include "Image.h"
+#include "Original.h"
 #include <math.h>
 #include <string.h>
 
-// ---- the sky software renderer (SkyRenderer, Sky.h) and the image loader (ImageLoad, Image.h), still reached through
-// ---- the original addresses for now (all cdecl). The names are the library's functions in order of address. ---------
-extern unsigned char Lib_Init(int a, int b, unsigned char mode);           // @0048bb30 (SkyRenderer::Init)
-extern unsigned char Lib_Shutdown();                                       // @0048bba0
-extern int  Lib_SetFace(void *pixels, const WarpFace *face);               // @0048bbc0 selects the cube face to sample
-extern int  Lib_SetOutput(void *bits, int depth);                          // @0048bd30 only accepts depth 8 or 16
-extern int  Lib_Render(const float *m3);                                   // @0048bd60 draws with a 3x3 view matrix
-extern int  Lib_SetOrigin(float x, float y, float z);                      // @0048c620
-extern int  Lib_SetFov(float fovX, float fovY);                            // @0048c680
-extern int  Lib_Resize(int height, int width);                             // @0048c830
-extern int  Lib_SetFlag(char flag);                                        // @0048c870
-extern void Lib_RotationMatrix(float *out3x3, int axisFlag, float angle);  // @0048d7a0
-extern void Lib_MatrixMultiply(float *out3x3, const float *a, const float *b);   // @0048d860
-extern void Lib_Free(void *p);                                             // @00490540
-extern int  Image_Load(const char *path, const int *pixelFormat, void *unused, int *outB, int *outA,
-                       void **pixels, unsigned char *palette);             // @00477cc0
 
 static float FloatFromBits(unsigned bits) { float f; memcpy(&f, &bits, sizeof f); return f; }
 
@@ -37,7 +24,7 @@ Warp::Warp()
 // @00478cb0
 Warp::~Warp()
 {
-    Lib_Shutdown();
+    g_sky.Shutdown();
     for (int i = 0; i < FACES; i++)
         if (faceData[i])
             Lib_Free(faceData[i]);
@@ -48,31 +35,31 @@ int Warp::Init(int h, int w, float fov, char flag)
 {
     height = h;
     width = w;
-    if (Lib_Init(h, w, 0))
+    if (g_sky.Init(h, w, 0))
         return 0;
-    Lib_SetFlag(flag);
-    Lib_SetOrigin(0.0f, 0.0f, 0.0f);
+    g_sky.SetMode(flag);
+    g_sky.SetOrigin(0.0f, 0.0f, 0.0f);
     fovX = fov;
     fovY = (float)(((double)h / (double)w) * fov);
-    Lib_SetFov(fovX, fovY);
+    g_sky.SetFov(fovX, fovY);
     if (faceData[current] == NULL)
         return 0;
-    Lib_SetFace(faceData[0], &faces[0]);
+    g_sky.SetFace(faceData[0], &faces[0]);
     return 1;
 }
 
 // @00478da0
 void Warp::SetOutput(void *bits)
 {
-    Lib_SetOutput(bits, outputDepth);
+    g_sky.SetOutput(bits, outputDepth);
 }
 
 // @00478dc0
 void Warp::Resize(int w, int h)
 {
-    Lib_Resize(h, w);
+    g_sky.Resize(h, w);
     fovY = (float)(((double)h / (double)w) * fovX);
-    Lib_SetFov(fovX, fovY);
+    g_sky.SetFov(fovX, fovY);
 }
 
 // @00478e10
@@ -91,7 +78,7 @@ void Warp::UpdateSingle(const float *m)
     float m3[9] = { m[0], m[4], m[8],
                     m[1], m[5], m[9],
                     m[2], m[6], m[10] };
-    Lib_Render(m3);
+    g_sky.SetView(m3);
 }
 
 // @00478e90
@@ -105,24 +92,24 @@ void Warp::UpdateCube(const float *m)
         return;
 
     int face = SelectFace(m3);
-    Lib_SetFace(faceData[face], &faces[face]);
+    g_sky.SetFace(faceData[face], &faces[face]);
 
     const float halfPi = 1.5707964f, pi = 3.1415927f;
     float rot[9];
     switch (face) {
-    case 0: Lib_RotationMatrix(rot, 1, pi); break;
-    case 1: Lib_RotationMatrix(rot, 0, halfPi); break;
+    case 0: SkyRenderer::RotationMatrix(rot, 1, pi); break;
+    case 1: SkyRenderer::RotationMatrix(rot, 0, halfPi); break;
     case 2:
         memset(rot, 0, sizeof rot);
         rot[0] = rot[4] = rot[8] = 1.0f;
         break;
-    case 3: Lib_RotationMatrix(rot, 1, -halfPi); break;
-    case 4: Lib_RotationMatrix(rot, 1, halfPi); break;
-    case 5: Lib_RotationMatrix(rot, 0, -halfPi); break;
+    case 3: SkyRenderer::RotationMatrix(rot, 1, -halfPi); break;
+    case 4: SkyRenderer::RotationMatrix(rot, 1, halfPi); break;
+    case 5: SkyRenderer::RotationMatrix(rot, 0, -halfPi); break;
     }
     float out[9];
-    Lib_MatrixMultiply(out, rot, m3);
-    Lib_Render(out);
+    SkyRenderer::MatrixMultiply(out, rot, m3);
+    g_sky.SetView(out);
 }
 
 // @00478fd0
@@ -159,7 +146,7 @@ int Warp::Load(const char *prefix, unsigned char *pal, const int *pixelFormat)
         strncat(path, kFaceSuffix[i], sizeof path - strlen(path) - 1);
 
         int extentA, extentB;
-        if (Image_Load(path, pixelFormat, NULL, &extentB, &extentA, &faceData[i], pal) == 0)
+        if (ImageLoad(path, (const DisplayFormat *)pixelFormat, NULL, &extentB, &extentA, &faceData[i], pal) == 0)
             return 0;
 
         outputDepth = pixelFormat[0];
@@ -185,8 +172,8 @@ int Warp::Load(const char *prefix, unsigned char *pal, const int *pixelFormat)
     faceData[4] = t;
     current = 2;
     faceCount = FACES;
-    Lib_SetFace(faceData[0], &faces[0]);
+    g_sky.SetFace(faceData[0], &faces[0]);
     fovY = (float)(((double)height / (double)width) * fovX);
-    Lib_SetFov(fovX, fovY);
+    g_sky.SetFov(fovX, fovY);
     return 1;
 }

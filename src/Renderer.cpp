@@ -3,15 +3,12 @@
 // Conventions: // @ADDR = original function address.
 #include "Renderer.h"
 #include "ListenerTable.h"
+#include "Original.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include <mmsystem.h>
 #include <math.h>
 
-// Still taken from the original binary:
-extern const char *HResultToString(HRESULT hr);                       // @00478430
-extern int  PrepareForDialog();                                       // @004753c0 (returns 0)
-static void *const kWindowCallback = (void *)0x476630;                // callback registered with the window hook
 
 // ---- desktop helpers ----------------------------------------------------------------------
 

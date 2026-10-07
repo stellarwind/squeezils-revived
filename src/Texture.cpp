@@ -1,14 +1,9 @@
 // Texture creation: see Texture.h. Reconstructed from SQZ.EXE 0x4153f0-0x4156b9.
 #include "Texture.h"
+#include "Image.h"
+#include "Original.h"
 
 
-// The game's allocator wrappers (0x448350 / 0x448360 around its malloc and free), the renderer global at 0x4c75dc and
-// the GIF decoder (shared with the sky loader), all still the original code:
-extern void *GameAlloc(size_t size);
-extern void  GameFree(void *p);
-extern Renderer *GetRenderer();
-extern int Image_Load(const char *path, const int *pixelFormat, void *allocator, int *outWidth, int *outHeight,
-                      void **pixels, unsigned char *palette);       // @00477cc0
 
 static int *s_byteCounter;     // @004ba2a4: the counter passed to the most recent CreateTextureFromGif call
 
@@ -33,7 +28,7 @@ IDirect3DRMTexture *CreateTextureFromGif(const char *path, const float *transpar
     void *pixels = NULL;
     unsigned char planes[3][256];                   // palette from the GIF as three planes: R, G, B
 
-    int ok = Image_Load(path, fmt, (void *)ImageAlloc, &width, &height, &pixels, &planes[0][0]);
+    int ok = ImageLoad(path, (const DisplayFormat *)fmt, ImageAlloc, &width, &height, &pixels, &planes[0][0]);
     s_byteCounter = byteCounter;
     if (!ok)
         return NULL;

@@ -1,10 +1,9 @@
 // Image loading: see Image.h. Reconstructed from SQZ.EXE 0x477a90-0x477e5f.
 #include "Image.h"
 #include "Gif.h"
+#include "Original.h"
 #include <string.h>
 
-extern void *Lib_Malloc(size_t n);     // @004904c0
-extern void  Lib_Free(void *p);        // @00490540
 
 // number of zero bits below the lowest set bit (the original loops forever for an empty mask)
 static int LowZeroBits(unsigned mask)

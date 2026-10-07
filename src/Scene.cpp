@@ -1,14 +1,11 @@
 // Scene: see Scene.h. Reconstructed from SQZ.EXE 0x476720-0x477400.
 #include "Scene.h"
 #include "Warp.h"
+#include "Sky.h"
+#include "Original.h"
 #include <new>
 #include <string.h>
 
-extern const char *HResultToString(HRESULT hr);          // @00478430
-extern void *Operator_New(size_t size);                  // @0048ea00 cdecl (the game heap: objects are freed by original code too)
-extern void Operator_Delete(void *p);                    // @0048e9f0 cdecl
-extern void Unknown_48C710();                            // @0048c710 is SkyRenderer::Draw: renders the sky into the surface set with SetOutput (still the original here)
-extern int  Lib_SetFov(float fovX, float fovY);          // @0048c680 software sky renderer (see Warp.cpp)
 
 // @00476720
 Scene::Scene()
@@ -110,7 +107,7 @@ BOOL Scene::BeginFrame()
         return FALSE;
     }
     warp->SetOutput(desc.lpSurface);
-    Unknown_48C710();
+    g_sky.Draw();
     hr = warpSurface->Unlock(desc.lpSurface);
     if (hr < 0)
         renderer->Error("Unlock failed (warp).\n%s", HResultToString(hr));
@@ -348,7 +345,7 @@ void Scene::SetViewParams(float nearPlane, float farPlane, float fovDegrees)
     if (warp) {
         warp->fovX = fovDegrees;
         warp->fovY = (float)(((double)warp->height / (double)warp->width) * fovDegrees);
-        Lib_SetFov(warp->fovX, warp->fovY);
+        g_sky.SetFov(warp->fovX, warp->fovY);
     }
     if (renderer)
         renderer->SetViewParams(nearPlane, farPlane, fovDegrees);

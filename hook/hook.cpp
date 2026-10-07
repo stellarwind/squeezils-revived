@@ -9,6 +9,7 @@
 #include "ListenerTable.h"
 #include "Scene.h"
 #include "Warp.h"
+#include "Original.h"
 #include "Sky.h"
 #include "Image.h"
 #include "SqgModel.h"
@@ -34,25 +35,10 @@ static void Log(const char *fmt, ...)
     if (g_log != INVALID_HANDLE_VALUE) WriteFile(g_log, buf, n, &w, NULL);
 }
 
-// ---- functions the reconstructed code needs from the original binary ----------------------
+// ---- functions the reconstructed code needs from the original binary (declared in Original.h) ----
 const char *HResultToString(HRESULT hr) { return ((const char *(__cdecl *)(int))0x478430)((int)hr); }
 int  PrepareForDialog()                         { return 0; }
-// CRT helpers used by Scene
-// Warp software-renderer library and helpers: still the original code, called by address (all cdecl)
-unsigned char Lib_Init(int a, int b, unsigned char m) { return ((unsigned char (__cdecl *)(int, int, unsigned char))0x48bb30)(a, b, m); }
-unsigned char Lib_Shutdown()                           { return ((unsigned char (__cdecl *)())0x48bba0)(); }
-int  Lib_SetFace(void *p, const WarpFace *f)          { return ((int (__cdecl *)(void *, const WarpFace *))0x48bbc0)(p, f); }
-int  Lib_SetOutput(void *bits, int depth)             { return ((int (__cdecl *)(void *, int))0x48bd30)(bits, depth); }
-int  Lib_Render(const float *m3)                      { return ((int (__cdecl *)(const float *))0x48bd60)(m3); }
-int  Lib_SetOrigin(float x, float y, float z)         { return ((int (__cdecl *)(float, float, float))0x48c620)(x, y, z); }
-int  Lib_SetFov(float x, float y)                     { return ((int (__cdecl *)(float, float))0x48c680)(x, y); }
-int  Lib_Resize(int h, int w)                         { return ((int (__cdecl *)(int, int))0x48c830)(h, w); }
-int  Lib_SetFlag(char f)                              { return ((int (__cdecl *)(char))0x48c870)(f); }
-void Lib_RotationMatrix(float *o, int axis, float a)  { ((void (__cdecl *)(float *, int, float))0x48d7a0)(o, axis, a); }
-void Lib_MatrixMultiply(float *o, const float *a, const float *b) { ((void (__cdecl *)(float *, const float *, const float *))0x48d860)(o, a, b); }
 void Lib_Free(void *p)                                { ((void (__cdecl *)(void *))0x490540)(p); }
-int  Image_Load(const char *path, const int *fmt, void *u, int *outB, int *outA, void **pixels, unsigned char *pal)
-{ return ((int (__cdecl *)(const char *, const int *, void *, int *, int *, void **, unsigned char *))0x477cc0)(path, fmt, u, outB, outA, pixels, pal); }
 void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
 void *Operator_New(size_t n)                          { return ((void *(__cdecl *)(size_t))0x48ea00)(n); }
 // Texture creation helpers: the game's allocator wrappers and its renderer global
@@ -72,9 +58,7 @@ void  SqgError(const char *format, ...)    // the original is printf style; form
     buf[sizeof buf - 1] = 0;
     ((void (__cdecl *)(const char *, ...))0x473710)("%s", buf);
 }
-typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *);
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
-void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 

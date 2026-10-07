@@ -1,16 +1,11 @@
 // SqgModel: see SqgModel.h. Reconstructed from SQZ.EXE 0x472560-0x473710.
 #include "SqgModel.h"
+#include "Original.h"
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
 #include <new>
 
-// The game's allocator, error reporter and texture lookup, still the original code:
-extern void *SqgAlloc(size_t size);                      // function pointer stored at 0x4c0f78 (the game's malloc)
-extern void  SqgError(const char *format, ...);              // @00473710
-typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *name);
-extern SqgTextureLookupFn SqgGetTextureLookup();         // pointer stored at 0x4c0f84, NULL until the game sets it
-extern void *Operator_New(size_t size);                  // @0048ea00
 
 static const char kHeader[] = "SQG Format 1.0";          // @004c0f64, the 15 bytes including the terminator are compared
 
@@ -250,7 +245,6 @@ IDirect3DRMFrame *SqgModel::BuildFrame(IDirect3DRM *d3drm, BOOL perspective)
     return frame;
 }
 
-extern void SqgFree(void *p);                            // function pointer stored at 0x4c0f80 (the game's free)
 
 // @00471990
 void PZMorphMesh::Destroy()
