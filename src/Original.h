@@ -116,7 +116,7 @@ int   RegionScreenLoad(void *regionScreen);                              // @004
 int   GoodieListInit(void *list, int x, int y);                          // @00415750 the status bar's goodie list widget: set up at (x, y)
 int   GoodieListLoad(void *list);                                     // @00415b40 load its pictures
 
-static int *const kKeyIconsLoaded = (int *)0x4bc01c;                      // set once the left/middle/right key pictures are loaded
+static int *const kQuestItemsLoaded = (int *)0x4bc01c;                      // set once the left/middle/right key pictures are loaded
 
 // ---- the player ----
 void *GetPlayerSoul();                                                // @00420690 + 00414080 the player's actor (a Soul), or NULL

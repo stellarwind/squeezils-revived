@@ -21,7 +21,7 @@
 #include "NutCounter.h"
 #include "Panel.h"
 #include "StatusBar.h"
-#include "KeyIcons.h"
+#include "QuestItems.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -1231,18 +1231,18 @@ static int __fastcall h_sbinit(StatusBar *s) { HEAVY_LOG(H_sbinit); return s->In
 static int (__fastcall *o_sbload)(StatusBar *);
 static int __fastcall h_sbload(StatusBar *s) { HEAVY_LOG(H_sbload); return s->LoadAll(); }
 
-// ---- KeyIcons (the control key pictures in the panel; replace only, "keys") --------------------------------------------------
-static Hook H_kictor, H_kidtor, H_kiinit, H_kicomb, H_kikeys;
-static void *(__fastcall *o_kictor)(KeyIcons *);
-static void *__fastcall h_kictor(KeyIcons *k) { HEAVY_LOG(H_kictor); new (k) KeyIcons(); return k; }
-static void (__fastcall *o_kidtor)(KeyIcons *);
-static void __fastcall h_kidtor(KeyIcons *k) { HEAVY_LOG(H_kidtor); k->~KeyIcons(); }
-static int (THISCALL *o_kiinit)(KeyIcons *, int, int, int);
-static int THISCALL h_kiinit(KeyIcons *k, int a, int b, int i) { HEAVY_LOG(H_kiinit); return k->Init(a, b, i); }
-static int (THISCALL *o_kicomb)(KeyIcons *, int);
-static int THISCALL h_kicomb(KeyIcons *k, int i) { HEAVY_LOG(H_kicomb); return k->LoadCombined(i); }
-static int (__fastcall *o_kikeys)(KeyIcons *);
-static int __fastcall h_kikeys(KeyIcons *k) { HEAVY_LOG(H_kikeys); return k->LoadKeys(); }
+// ---- QuestItems (the collectable key pieces and the stone they form; replace only, "quest") --------------------------------------------------
+static Hook H_qictor, H_qidtor, H_qiinit, H_qicomb, H_qikeys;
+static void *(__fastcall *o_qictor)(QuestItems *);
+static void *__fastcall h_qictor(QuestItems *k) { HEAVY_LOG(H_qictor); new (k) QuestItems(); return k; }
+static void (__fastcall *o_qidtor)(QuestItems *);
+static void __fastcall h_qidtor(QuestItems *k) { HEAVY_LOG(H_qidtor); k->~QuestItems(); }
+static int (THISCALL *o_qiinit)(QuestItems *, int, int, int);
+static int THISCALL h_qiinit(QuestItems *k, int a, int b, int i) { HEAVY_LOG(H_qiinit); return k->Init(a, b, i); }
+static int (THISCALL *o_qicomb)(QuestItems *, int);
+static int THISCALL h_qicomb(QuestItems *k, int i) { HEAVY_LOG(H_qicomb); return k->LoadCombined(i); }
+static int (__fastcall *o_qikeys)(QuestItems *);
+static int __fastcall h_qikeys(QuestItems *k) { HEAVY_LOG(H_qikeys); return k->LoadKeys(); }
 
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
@@ -1267,7 +1267,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload,
                            &H_sbinit, &H_sbload,
-                           &H_kictor, &H_kidtor, &H_kiinit, &H_kicomb, &H_kikeys };
+                           &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1451,11 +1451,11 @@ static void Setup()
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
     H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
     H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
-    H_kictor = { "KeyIcons::KeyIcons", 0x42fc30, 7, "33c08901894118", (void *)h_kictor, (void **)&o_kictor, false, 0, 0, "keys", 0 };
-    H_kidtor = { "KeyIcons::~KeyIcons", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_kidtor, (void **)&o_kidtor, false, 0, 0, "keys", 5 };
-    H_kiinit = { "KeyIcons::Init", 0x430150, 7, "64a10000000055", (void *)h_kiinit, (void **)&o_kiinit, false, 0, 0, "keys", 0 };
-    H_kicomb = { "KeyIcons::LoadCombined", 0x430360, 6, "81ecc8000000", (void *)h_kicomb, (void **)&o_kicomb, false, 0, 0, "keys", 0 };
-    H_kikeys = { "KeyIcons::LoadKeys", 0x42fca0, 7, "64a10000000055", (void *)h_kikeys, (void **)&o_kikeys, false, 0, 0, "keys", 0 };
+    H_qictor = { "QuestItems::QuestItems", 0x42fc30, 7, "33c08901894118", (void *)h_qictor, (void **)&o_qictor, false, 0, 0, "quest", 0 };
+    H_qidtor = { "QuestItems::~QuestItems", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_qidtor, (void **)&o_qidtor, false, 0, 0, "quest", 5 };
+    H_qiinit = { "QuestItems::Init", 0x430150, 7, "64a10000000055", (void *)h_qiinit, (void **)&o_qiinit, false, 0, 0, "quest", 0 };
+    H_qicomb = { "QuestItems::LoadCombined", 0x430360, 6, "81ecc8000000", (void *)h_qicomb, (void **)&o_qicomb, false, 0, 0, "quest", 0 };
+    H_qikeys = { "QuestItems::LoadKeys", 0x42fca0, 7, "64a10000000055", (void *)h_qikeys, (void **)&o_qikeys, false, 0, 0, "quest", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

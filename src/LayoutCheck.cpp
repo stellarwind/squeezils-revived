@@ -108,7 +108,7 @@ static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) ==
 static_assert(offsetof(StatusBar, food) == 0x34 && offsetof(StatusBar, foodC) == 0x68 && offsetof(StatusBar, goodies) == 0x6c && offsetof(StatusBar, face) == 0x9c &&
               offsetof(StatusBar, deadMessage) == 0x37c && offsetof(StatusBar, messageY) == 0x388, "StatusBar fields");
 
-// KeyIcons
-#include "KeyIcons.h"
-static_assert(offsetof(KeyIcons, combinedFile) == 0x04 && offsetof(KeyIcons, left) == 0x18 && offsetof(KeyIcons, leftFile) == 0x1c && offsetof(KeyIcons, middle) == 0x30 &&
-              offsetof(KeyIcons, right) == 0x48 && offsetof(KeyIcons, rightFile) == 0x4c, "KeyIcons fields");
+// QuestItems
+#include "QuestItems.h"
+static_assert(offsetof(QuestItems, combinedFile) == 0x04 && offsetof(QuestItems, left) == 0x18 && offsetof(QuestItems, leftFile) == 0x1c && offsetof(QuestItems, middle) == 0x30 &&
+              offsetof(QuestItems, right) == 0x48 && offsetof(QuestItems, rightFile) == 0x4c, "QuestItems fields");
