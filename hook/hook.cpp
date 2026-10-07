@@ -7,6 +7,7 @@
 #define private public            // hooks poke at Renderer's private helpers
 #include "Renderer.h"
 #include "ListenerTable.h"
+#include "Scene.h"
 #undef private
 #include <stdio.h>
 #include <stdarg.h>
@@ -30,6 +31,12 @@ static void Log(const char *fmt, ...)
 // ---- functions the reconstructed code needs from the original binary ----------------------
 const char *HResultToString(HRESULT hr) { return ((const char *(__cdecl *)(int))0x478430)((int)hr); }
 int  PrepareForDialog()                         { return 0; }
+// Warp backdrop (not reconstructed) and CRT helpers used by Scene
+void Warp_Destroy(void *w)            { ((void (__attribute__((thiscall)) *)(void *))0x478cb0)(w); }
+void Warp_Resize(void *w, int a, int b) { ((void (__attribute__((thiscall)) *)(void *, int, int))0x478dc0)(w, a, b); }
+void Warp_Render(void *w, void *bits) { ((void (__attribute__((thiscall)) *)(void *, void *))0x478da0)(w, bits); }
+void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
+void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
 extern "C" HRESULT WINAPI Hook_DirectDrawCreate(GUID *g, LPDIRECTDRAW *dd, IUnknown *o)
@@ -43,6 +50,12 @@ extern "C" HRESULT WINAPI Hook_DirectDrawCreateClipper(DWORD fl, LPDIRECTDRAWCLI
     typedef HRESULT (WINAPI *F)(DWORD, LPDIRECTDRAWCLIPPER *, IUnknown *);
     static F f = (F)GetProcAddress(LoadLibraryA("ddraw.dll"), "DirectDrawCreateClipper");
     return f(fl, c, o);
+}
+extern "C" D3DCOLOR WINAPI Hook_D3DRMCreateColorRGB(D3DVALUE r, D3DVALUE g, D3DVALUE b)
+{
+    typedef D3DCOLOR (WINAPI *F)(D3DVALUE, D3DVALUE, D3DVALUE);
+    static F f = (F)GetProcAddress(LoadLibraryA("d3drm.dll"), "D3DRMCreateColorRGB");
+    return f(r, g, b);
 }
 extern "C" HRESULT WINAPI Hook_Direct3DRMCreate(LPDIRECT3DRM *p)
 {
@@ -318,7 +331,9 @@ static int __attribute__((thiscall)) h_shutdown(Renderer *r, int force) { HEAVY_
 
 // @475560 QueryDisplayMode, __fastcall(this); GetDisplayMode has no side effects, so "qdmcmp" can compare on a snapshot
 typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int, int, int, int, int, int, int, int, int, const unsigned char *);
-static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init;
+static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
+static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
+static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
 static bool g_qdmCompare;
 static int (__fastcall *o_qdm)(Renderer *);
 static int __fastcall h_qdm(Renderer *r)
@@ -339,6 +354,57 @@ static int __fastcall h_qdm(Renderer *r)
 // @476250 EnterDisplayMode, __thiscall(this, w, h): switches display mode / window layout (side effects, replace only)
 static int (__attribute__((thiscall)) *o_enterdisplay)(Renderer *, int, int);
 static int __attribute__((thiscall)) h_enterdisplay(Renderer *r, int w, int h) { HEAVY_LOG(H_enterdisplay); return r->EnterDisplayMode(w, h); }
+
+// @4750a0 FadePalette, __thiscall(this, float seconds): blocking fade to black (replace only)
+static void (__attribute__((thiscall)) *o_fade)(Renderer *, float);
+static void __attribute__((thiscall)) h_fade(Renderer *r, float seconds) { HEAVY_LOG(H_fade); r->FadePalette(seconds); }
+
+// ---- Scene (draw path): all COM side effects, replace only ---------------------------------
+// @4767a0 EnsureWarpSurface, __fastcall(this) -> BOOL
+static int (__fastcall *o_swarp)(Scene *);
+static int __fastcall h_swarp(Scene *s) { HEAVY_LOG(H_swarp); return s->EnsureWarpSurface(); }
+// @4768f0 Init, __thiscall(this, renderer) -> BOOL
+static int (__attribute__((thiscall)) *o_sinit)(Scene *, Renderer *);
+static int __attribute__((thiscall)) h_sinit(Scene *s, Renderer *r) { HEAVY_LOG(H_sinit); return s->Init(r); }
+// @476af0 BeginFrame, __fastcall(this) -> BOOL
+static int (__fastcall *o_sbegin)(Scene *);
+static int __fastcall h_sbegin(Scene *s) { HEAVY_LOG(H_sbegin); return s->BeginFrame(); }
+// @476cd0 Render, __fastcall(this) -> BOOL
+static int (__fastcall *o_srender)(Scene *);
+static int __fastcall h_srender(Scene *s) { HEAVY_LOG(H_srender); return s->Render(); }
+// @476d20 Present, __fastcall(this) -> BOOL
+static int (__fastcall *o_spresent)(Scene *);
+static int __fastcall h_spresent(Scene *s) { HEAVY_LOG(H_spresent); return s->Present(); }
+// @476ea0 SetQuality, __thiscall(this, level)
+static void (__attribute__((thiscall)) *o_squality)(Scene *, int);
+static void __attribute__((thiscall)) h_squality(Scene *s, int level) { HEAVY_LOG(H_squality); s->SetQuality(level); }
+// @477040 SetFrameTransform, __thiscall(this, frame, matrix)
+static void (__attribute__((thiscall)) *o_sxform)(Scene *, IDirect3DRMFrame *, const float *);
+static void __attribute__((thiscall)) h_sxform(Scene *s, IDirect3DRMFrame *f, const float *m) { HEAVY_LOG(H_sxform); s->SetFrameTransform(f, m); }
+// @4772d0 SetSceneChild, __thiscall(this, frame) -> BOOL
+static int (__attribute__((thiscall)) *o_schild)(Scene *, IDirect3DRMFrame *);
+static int __attribute__((thiscall)) h_schild(Scene *s, IDirect3DRMFrame *f) { HEAVY_LOG(H_schild); return s->SetSceneChild(f); }
+// @477340 DeleteSceneChild, __fastcall(this) -> BOOL
+static int (__fastcall *o_sdel)(Scene *);
+static int __fastcall h_sdel(Scene *s) { HEAVY_LOG(H_sdel); return s->DeleteSceneChild(); }
+
+// @476f40 CreateSceneFrame, __fastcall(this) -> frame
+static IDirect3DRMFrame *(__fastcall *o_cframe)(Scene *);
+static IDirect3DRMFrame *__fastcall h_cframe(Scene *s) { HEAVY_LOG(H_cframe); return s->CreateSceneFrame(); }
+// @476f90 CreateFrameUnder, __thiscall(this, parent) -> frame
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_cframeu)(Scene *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_cframeu(Scene *s, IDirect3DRMFrame *p) { HEAVY_LOG(H_cframeu); return s->CreateFrameUnder(p); }
+// @477400 CreateDecalFrame, __thiscall(this, 16 stack dwords) -> frame
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_cdecal)(Scene *, IDirect3DRMTexture *, float, float, float, int, float, float, int, float, float, int, BOOL, float, float, float, IDirect3DRMFrame *);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_cdecal(Scene *s, IDirect3DRMTexture *t, float px, float py, float pz, int a18, float sw, float sh, int a24,
+                                                            float sx, float sy, int a30, BOOL tr, float r, float g, float b, IDirect3DRMFrame *p)
+{ HEAVY_LOG(H_cdecal); return s->CreateDecalFrame(t, px, py, pz, a18, sw, sh, a24, sx, sy, a30, tr, r, g, b, p); }
+// @476ff0 DestroyFrame, __stdcall(frame) -> BOOL
+static BOOL (__stdcall *o_dframe)(IDirect3DRMFrame *);
+static BOOL __stdcall h_dframe(IDirect3DRMFrame *f) { HEAVY_LOG(H_dframe); return DestroyFrame(f); }
+// @477120 GetFrameMatrix, __stdcall(frame, ref, m)
+static void (__stdcall *o_gmatrix)(IDirect3DRMFrame *, IDirect3DRMFrame *, float *);
+static void __stdcall h_gmatrix(IDirect3DRMFrame *f, IDirect3DRMFrame *r, float *m) { HEAVY_LOG(H_gmatrix); GetFrameMatrix(f, r, m); }
 
 // @474e10 UploadFrontPalette, __fastcall(this) -> BOOL
 static int (__fastcall *o_uploadpal)(Renderer *);
@@ -368,8 +434,10 @@ static int __attribute__((thiscall)) h_init(Renderer *r, void *wnd, HWND hwnd, i
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
                            &H_lfree, &H_lcontains, &H_ladd, &H_lremove,
-                           &H_qdm, &H_enterdisplay, &H_uploadpal, &H_setpal, &H_init };
-static char g_replaceList[256];
+                           &H_qdm, &H_enterdisplay, &H_uploadpal, &H_setpal, &H_init, &H_fade,
+                           &H_swarp, &H_sinit, &H_sbegin, &H_srender, &H_spresent, &H_squality, &H_sxform, &H_schild, &H_sdel,
+                           &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix };
+static char g_replaceList[2048];
 static bool Listed(const char *id) { return id && (strstr(g_replaceList, id) || strstr(g_replaceList, "all")); }
 
 static void Setup()
@@ -398,6 +466,21 @@ static void Setup()
     H_uploadpal    = { "Renderer::UploadFrontPalette",  0x474e10, 6,  "81ec00040000",         (void *)h_uploadpal,    (void **)&o_uploadpal,    false, 0, 0, "uploadpal", 0 };
     H_setpal       = { "Renderer::SetPaletteEntries",   0x474c00, 5,  "8b44240853",           (void *)h_setpal,       (void **)&o_setpal,       false, 0, 0, "setpal", 0 };
     H_init         = { "Renderer::Initialize",          0x474540, 5,  "53568b410c",           (void *)h_init,         (void **)&o_init,         false, 0, 0, "init", 0 };
+    H_fade         = { "Renderer::FadePalette",         0x4750a0, 6,  "81ec1c040000",         (void *)h_fade,         (void **)&o_fade,         false, 0, 0, "fade", 0 };
+    H_swarp   = { "Scene::EnsureWarpSurface", 0x4767a0, 5, "83ec6c5356",     (void *)h_swarp,   (void **)&o_swarp,   false, 0, 0, "swarp",   0 };
+    H_sinit   = { "Scene::Init",              0x4768f0, 5, "8b44240453",     (void *)h_sinit,   (void **)&o_sinit,   false, 0, 0, "sinit",   0 };
+    H_sbegin  = { "Scene::BeginFrame",        0x476af0, 6, "81ecf0000000",   (void *)h_sbegin,  (void **)&o_sbegin,  false, 0, 0, "sbegin",  0 };
+    H_srender = { "Scene::Render",            0x476cd0, 6, "56578b018bf1",   (void *)h_srender, (void **)&o_srender, false, 0, 0, "srender", 0 };
+    H_spresent= { "Scene::Present",           0x476d20, 5, "83ec205356",     (void *)h_spresent,(void **)&o_spresent,false, 0, 0, "spresent",0 };
+    H_squality= { "Scene::SetQuality",        0x476ea0, 5, "538b0185c0",     (void *)h_squality,(void **)&o_squality,false, 0, 0, "squality",0 };
+    H_sxform  = { "Scene::SetFrameTransform", 0x477040, 6, "53568b74240c",   (void *)h_sxform,  (void **)&o_sxform,  false, 0, 0, "sxform",  0 };
+    H_schild  = { "Scene::SetSceneChild",     0x4772d0, 5, "5356578bf1",     (void *)h_schild,  (void **)&o_schild,  false, 0, 0, "schild",  0 };
+    H_sdel    = { "Scene::DeleteSceneChild",  0x477340, 7, "53568bf18b490c", (void *)h_sdel,    (void **)&o_sdel,    false, 0, 0, "sdel",    0 };
+    H_cframe  = { "Scene::CreateSceneFrame",  0x476f40, 7, "83ec048d542400",   (void *)h_cframe,  (void **)&o_cframe,  false, 0, 0, "cframe",  0 };
+    H_cframeu = { "Scene::CreateFrameUnder",  0x476f90, 7, "83ec048d542400",   (void *)h_cframeu, (void **)&o_cframeu, false, 0, 0, "cframeu", 0 };
+    H_cdecal  = { "Scene::CreateDecalFrame",  0x477400, 7, "64a10000000055",   (void *)h_cdecal,  (void **)&o_cdecal,  false, 0, 0, "cdecal",  0 };
+    H_dframe  = { "DestroyFrame",             0x476ff0, 7, "83ec048d442400",   (void *)h_dframe,  (void **)&o_dframe,  false, 0, 0, "dframe",  0 };
+    H_gmatrix = { "GetFrameMatrix",           0x477120, 7, "64a10000000055",   (void *)h_gmatrix, (void **)&o_gmatrix, false, 0, 0, "gmatrix", 0 };
 }
 
 static void Summary()
@@ -439,20 +522,53 @@ static LONG CALLBACK CrashHandler(EXCEPTION_POINTERS *ep)
     return EXCEPTION_CONTINUE_SEARCH;
 }
 
+// Settings can also come from sqzhook.cfg next to the DLL ("mode=..." and "replace=..." lines), used when the
+// environment variables did not reach the game process (seen with the compatibility layer applied to SQZ.EXE).
+static void ReadConfig(HINSTANCE inst, char *mode, size_t modeSize, char *replace, size_t replaceSize)
+{
+    char path[MAX_PATH];
+    if (!GetModuleFileNameA(inst, path, MAX_PATH)) return;
+    char *s = strrchr(path, 0x5c);
+    if (!s || (size_t)(s - path) + 16 >= MAX_PATH) return;
+    strcpy(s + 1, "sqzhook.cfg");
+    HANDLE f = CreateFileA(path, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+    if (f == INVALID_HANDLE_VALUE) return;
+    char buf[4096]; DWORD n = 0;
+    ReadFile(f, buf, sizeof buf - 1, &n, NULL);
+    CloseHandle(f);
+    buf[n] = 0;
+    for (char *line = strtok(buf, "\r\n"); line; line = strtok(NULL, "\r\n")) {
+        if (!strncmp(line, "mode=", 5)) { strncpy(mode, line + 5, modeSize - 1); mode[modeSize - 1] = 0; }
+        else if (!strncmp(line, "replace=", 8)) { strncpy(replace, line + 8, replaceSize - 1); replace[replaceSize - 1] = 0; }
+    }
+}
+
 BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
 {
     if (reason == DLL_PROCESS_ATTACH) {
         DisableThreadLibraryCalls(inst);
         char m[32] = "";
         GetEnvironmentVariableA("SQZ_HOOK_MODE", m, sizeof m);
+        char cfgMode[32] = "", cfgReplace[2048] = "";
+        ReadConfig(inst, cfgMode, sizeof cfgMode, cfgReplace, sizeof cfgReplace);
+        if (!m[0]) strcpy(m, cfgMode);
         g_mode = !strcmp(m, "off") ? MODE_OFF : !strcmp(m, "replace") ? MODE_REPLACE : MODE_COMPARE;
-        g_log = CreateFileA("sqzhook_log.txt", GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
-        Log("sqzhook mode=%s", g_mode == MODE_OFF ? "off" : g_mode == MODE_REPLACE ? "replace" : "compare");
+        // log next to the DLL (not the current directory); fall back to a per-process file if another instance holds it
+        char logPath[MAX_PATH] = "sqzhook_log.txt";
+        if (GetModuleFileNameA(inst, logPath, MAX_PATH)) { char *s = strrchr(logPath, '\\'); if (s) strcpy(s + 1, "sqzhook_log.txt"); }
+        g_log = CreateFileA(logPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
+        if (g_log == INVALID_HANDLE_VALUE) {
+            char alt[MAX_PATH + 16]; sprintf(alt, "%s.%lu", logPath, GetCurrentProcessId());
+            g_log = CreateFileA(alt, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 0, NULL);
+        }
+        { char exe[MAX_PATH] = ""; GetModuleFileNameA(NULL, exe, MAX_PATH);
+          Log("sqzhook mode=%s pid=%lu exe=%s", g_mode == MODE_OFF ? "off" : g_mode == MODE_REPLACE ? "replace" : "compare", GetCurrentProcessId(), exe); }
         if (g_mode == MODE_OFF) return TRUE;
         g_tramp = (BYTE *)VirtualAlloc(NULL, 4096, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
         AddVectoredExceptionHandler(1, CrashHandler);
         Setup();
-        GetEnvironmentVariableA("SQZ_REPLACE", g_replaceList, sizeof g_replaceList);
+        if (!GetEnvironmentVariableA("SQZ_REPLACE", g_replaceList, sizeof g_replaceList))
+            strcpy(g_replaceList, cfgReplace);
         Log("SQZ_REPLACE=%s", g_replaceList);
         g_enumCompare = strstr(g_replaceList, "enumcmp") != NULL;
         g_qdmCompare = strstr(g_replaceList, "qdmcmp") != NULL;

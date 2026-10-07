@@ -4,8 +4,9 @@
 original `SQZ.EXE` in memory (the EXE on disk is never modified) and either checks or replaces them with the code in `../src`.
 
 `SQZ_HOOK_MODE`: `compare` (default; run the original, run ours on a snapshot, log differences), `replace`, or `off`.
-`SQZ_REPLACE`: comma list of heavy functions to replace with our code: `quality planes frames viewport enum surfaces shutdown qdm enterdisplay uploadpal setpal init`
+`SQZ_REPLACE`: comma list of heavy functions to replace with our code: `quality planes frames viewport enum surfaces shutdown qdm enterdisplay uploadpal setpal init fade` and the `Scene` ones `swarp sinit sbegin srender spresent squality sxform schild sdel cframe cframeu cdecal dframe gmatrix`
 (`enumcmp` / `qdmcmp` run those two in compare mode). The log is `sqzhook_log.txt`; an access violation writes a `CRASH` block with registers and stack.
+Both settings can also be given as `mode=` and `replace=` lines in a `sqzhook.cfg` next to the DLL, used when the environment variables are empty (they did not reach the game process when a compatibility layer was applied to `SQZ.EXE`). The log starts with the process ID and exe path and is written next to the DLL.
 
 Lessons baked into the engine and checks:
 - Decompilers often show `void` for functions that return a value in EAX; check the callers (hook wrappers pass the original's return through).

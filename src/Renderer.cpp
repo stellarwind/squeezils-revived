@@ -8,7 +8,7 @@
 #include <mmsystem.h>
 #include <math.h>
 
-// Not yet reconstructed (see src/README.md):
+// Not yet reconstructed (see RENDERER_NOTES.md):
 extern const char *HResultToString(HRESULT hr);                       // @00478430
 extern int  PrepareForDialog();                                       // @004753c0 (returns 0)
 static void *const kWindowCallback = (void *)0x476630;                // callback registered with the window hook
@@ -38,7 +38,7 @@ BOOL CheckDesktopDepth(int *width, int *height)
 
 // @00474230  Reads back the pixel value the surface uses for `color` (SetPixel, Lock, mask).
 // Returns 0xffffffff when color == 0xffffffff (no key).
-// NOTE: the mask (1 << bitsPerPixel) - 1 is wrong at 32 bpp (shift count wraps); the proxy ddraw.dll works around it by reporting 31 bits for that caller.
+// NOTE: the mask (1 << bitsPerPixel) - 1 is wrong at 32 bpp (shift count wraps), see DECOMP_HANDOFF.md.
 DWORD GetColorKeyValue(LPDIRECTDRAWSURFACE surf, COLORREF color)
 {
     DWORD result = 0xffffffff;
@@ -611,9 +611,49 @@ BOOL Renderer::UploadFrontPalette()
 // @004750a0  Palette fade: ramps the front palette between black and the working palette over a time given
 // by a float computed in code the decompiler lost (__ftol results). TODO(opus): recover from disassembly
 // (0x4750a0-0x475380). Entries are written with SetEntries(0,0,256,...) in a timeGetTime() loop.
-void Renderer::FadePalette()
+// Fades the 8-bit front palette to black over `seconds`, blocking (busy loop on timeGetTime).
+// Fullscreen uses palette entries 1..254 (0 and 255 are fixed); windowed skips the 10 system
+// colours at each end and uses entries 10..245 for slots 0..235. Only RGB is scaled, flags stay 0x44.
+// The original leaves slot 255 untouched in windowed mode (uninitialised stack); we zero it.
+void Renderer::FadePalette(float seconds)
 {
-    // not reconstructed
+    if (!monoColorModel)
+        return;
+
+    DWORD start = timeGetTime();
+    DWORD duration = (DWORD)(int)((double)seconds * 1000.0);
+
+    PALETTEENTRY entries[256];
+    int first, last, srcFirst;   // slots [first, last) are scaled
+    if (fullscreen) {
+        first = 1; last = 255; srcFirst = 1;
+        for (int i = 0; i < 256; i++) { entries[i].peRed = entries[i].peGreen = entries[i].peBlue = 0; entries[i].peFlags = 0x44; }
+        entries[255].peRed = entries[255].peGreen = entries[255].peBlue = 255;
+    } else {
+        first = 0; last = 236; srcFirst = 10;
+        memset(entries, 0, sizeof entries);
+        for (int i = 0; i < 236; i++) entries[i].peFlags = 0x44;
+    }
+
+    if (duration != 0) {
+        float startF = (float)start, durationF = (float)duration;
+        DWORD now = start;
+        do {
+            float scale = (float)(1.0f - ((double)now - startF) / durationF);
+            for (int i = first; i < last; i++) {
+                const unsigned char *src = palette[srcFirst + (i - first)];
+                entries[i].peRed   = (BYTE)(int)((double)src[0] * scale);
+                entries[i].peGreen = (BYTE)(int)((double)src[1] * scale);
+                entries[i].peBlue  = (BYTE)(int)((double)src[2] * scale);
+            }
+            now = timeGetTime();
+            frontPalette->SetEntries(0, 0, 256, entries);
+        } while (now - start < duration);
+    }
+
+    for (int i = first; i < last; i++)
+        entries[i].peRed = entries[i].peGreen = entries[i].peBlue = 0;
+    frontPalette->SetEntries(0, 0, 256, entries);
 }
 
 // @00474f40
@@ -695,7 +735,7 @@ BOOL Renderer::CreateViewport()
 
 // @00475c10  Primary + back (3D device) + depth surfaces, clipper, palettes, then the D3DRM device.
 // NOTE: the depth-bit-depth detection is missing from the decompile (stack stores lost). Reconstructed
-// from the original disassembly: take DDCAPS.dwZBufferBitDepths of the HAL/HEL caps and prefer 16 > 24 > 32 > 8.
+// from NOTES.md / disassembly: take DDCAPS.dwZBufferBitDepths of the HAL/HEL caps and prefer 16 > 24 > 32 > 8.
 // TODO(opus): confirm which caps struct (HAL vs HEL) is read; check the sequence against 0x475c10 disassembly.
 BOOL Renderer::CreateSurfaces()
 {

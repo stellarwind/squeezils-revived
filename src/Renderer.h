@@ -35,7 +35,7 @@ public:
     void  CopyPaletteEntries(int first, int count, const unsigned char *rgba);   // first half of 0x474c00 (RGB only)
     BOOL  SetPaletteEntries(int first, int count, const unsigned char *rgba);   // 0x474c00
     BOOL  UploadFrontPalette();                   // 0x474e10
-    void  FadePalette();                          // 0x4750a0  TODO(opus): float timing lost in decompile
+    void  FadePalette(float seconds);              // 0x4750a0 (thiscall, 1 float stack arg)
     void  SetViewParams(float nearPlane, float farPlane, float fovDegrees);     // 0x474f40
     void  GetClientRectInWindow(LONG out[4]);     // 0x474f70
     void  GetScreenRect(LONG out[4]);             // 0x474fe0
