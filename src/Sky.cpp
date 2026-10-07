@@ -131,9 +131,9 @@ static unsigned ToFixed(float v)
 // @0048bb30
 unsigned char SkyRenderer::Init(int r, int c, unsigned char flag)
 {
-    if (r < 1 || r > MAX_ROWS)       // not in the original, which would overrun its tables
+    if (r < 1)
         return 2;
-    rows = r;
+    rows = r > MAX_ROWS ? MAX_ROWS : r;      // not in the original, which would overrun its tables: only the top rows are drawn
     cols = c;
     colsSquared = c * c;
     fovX = 90.0f;
@@ -368,9 +368,9 @@ unsigned char SkyRenderer::Resize(int r, int c)
 {
     if (!initialized)
         return 1;
-    if (r < 1 || r > MAX_ROWS)       // not in the original, which would overrun its tables
+    if (r < 1)
         return 2;
-    rows = r;
+    rows = r > MAX_ROWS ? MAX_ROWS : r;      // see Init
     colsSquared = c * c;
     cols = c;
     return 0;
@@ -426,6 +426,8 @@ void SkyRenderer::DrawRow(Pixel *dst, float *px, float *py)
 }
 
 // @0048c710
+// Rows are written "cols" pixels apart, ignoring the surface's pitch, exactly as the original does: it works while the warp
+// surface's pitch equals its width (it has so far), and would shear the sky for a width that is not a multiple of 4 (8 bit) or 2 (16 bit).
 unsigned char SkyRenderer::Draw()
 {
     if (!initialized)

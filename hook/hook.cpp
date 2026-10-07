@@ -63,7 +63,15 @@ Scene *GetScene()          { return *(Scene **)0x4c75e0; }
 void  SqgFree(void *p)     { (*(void (__cdecl **)(void *))0x4c0f80)(p); }
 // SqgModel helpers: the game's allocator (function pointer at 0x4c0f78), its error reporter and texture lookup (pointer at 0x4c0f84)
 void *SqgAlloc(size_t n)       { return (*(void *(__cdecl **)(size_t))0x4c0f78)(n); }
-void  SqgError(const char *m)  { ((void (__cdecl *)(const char *))0x473710)(m); }
+void  SqgError(const char *format, ...)    // the original is printf style; format here and hand it over as one string
+{
+    char buf[512];
+    va_list ap; va_start(ap, format);
+    _vsnprintf(buf, sizeof buf - 1, format, ap);
+    va_end(ap);
+    buf[sizeof buf - 1] = 0;
+    ((void (__cdecl *)(const char *, ...))0x473710)("%s", buf);
+}
 typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *);
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
@@ -71,6 +79,7 @@ void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
+// ("ddraw.dll" here is the proxy already loaded in the process, so its fixes apply to our calls too)
 extern "C" HRESULT WINAPI Hook_DirectDrawCreate(GUID *g, LPDIRECTDRAW *dd, IUnknown *o)
 {
     typedef HRESULT (WINAPI *F)(GUID *, LPDIRECTDRAW *, IUnknown *);
@@ -125,6 +134,7 @@ static bool Install(Hook &h)
 {
     BYTE *t = (BYTE *)h.addr;
     if (!HexMatches(t, h.expect)) { Log("SKIP %s @%08x: original bytes differ (different SQZ.EXE?)", h.name, h.addr); return false; }
+    if (!g_tramp || g_trampUsed + 32 > 4096 || h.stolen > 27) { Log("SKIP %s: no room for its trampoline", h.name); return false; }
     BYTE *tr = g_tramp + g_trampUsed; g_trampUsed += 32;
     memcpy(tr, t, h.stolen);
     if (h.relocCallPlus1) *(int *)(tr + (h.relocCallPlus1 - 1) + 1) += (int)(t - tr);
@@ -151,9 +161,9 @@ static void CompareMem(Hook &h, const void *real, const void *ours, size_t n)
     if (!memcmp(a, b, n)) return;
     h.mismatches++;
     if (h.mismatches > 5) return;
-    char line[400]; int len = sprintf(line, "MISMATCH %s:", h.name);
+    char line[1024]; int len = sprintf(line, "MISMATCH %s:", h.name);   // (Log itself cuts a line at 512 characters)
     int runs = 0;
-    for (size_t i = 0; i < n && runs < 12; ) {
+    for (size_t i = 0; i < n && runs < 12 && len < (int)sizeof line - 100; ) {
         if (a[i] == b[i]) { i++; continue; }
         size_t s = i; while (i < n && a[i] != b[i]) i++;
         len += sprintf(line + len, " +0x%x[%u] orig=", (unsigned)s, (unsigned)(i - s));
@@ -723,6 +733,7 @@ static int __cdecl h_imgload(const char *path, const int *fmt, void *alloc, int 
     }
     if (bad && ++H_imgload.mismatches <= 5)
         Log("MISMATCH %s: %s ret orig=%d ours=%d size orig=%dx%d ours=%dx%d bpp=%d", H_imgload.name, path, r, r2, r ? *outW : 0, r ? *outH : 0, w2, h2, fmt[0]);
+    // free with the pair of the allocator used: the only caller that passes one is the texture loader (GameAlloc at 0x4153f0)
     if (p2) { if (alloc) GameFree(p2); else Lib_Free(p2); }
     return r;
 }
@@ -737,7 +748,7 @@ static void __cdecl h_imgrow(void *dst, const int *fmt, const unsigned char *src
     }
     o_imgrow(dst, fmt, src, pal, width);
     size_t bytes = fmt[1] ? width : (size_t)width * (fmt[0] / 8);
-    if (bytes > 8192) { H_imgrow.calls++; return; }
+    if (bytes > 8192) { H_imgrow.calls++; return; }       // (rows wider than that are not compared)
     BYTE mine[8192] = {}, orig[8192];
     memcpy(orig, dst, bytes);
     ImageConvertRow(mine, (const DisplayFormat *)fmt, src, pal, width);

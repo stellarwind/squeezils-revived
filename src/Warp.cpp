@@ -3,8 +3,9 @@
 #include <math.h>
 #include <string.h>
 
-// ---- the software renderer library and helpers, still the original code (all cdecl) -----------------------
-extern unsigned char Lib_Init(int a, int b, unsigned char mode);           // @0048bb30 (names below are guesses)
+// ---- the sky software renderer (SkyRenderer, Sky.h) and the image loader (ImageLoad, Image.h), still reached through
+// ---- the original addresses for now (all cdecl). The names are the library's functions in order of address. ---------
+extern unsigned char Lib_Init(int a, int b, unsigned char mode);           // @0048bb30 (SkyRenderer::Init)
 extern unsigned char Lib_Shutdown();                                       // @0048bba0
 extern int  Lib_SetFace(void *pixels, const WarpFace *face);               // @0048bbc0 selects the cube face to sample
 extern int  Lib_SetOutput(void *bits, int depth);                          // @0048bd30 only accepts depth 8 or 16

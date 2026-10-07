@@ -1,4 +1,4 @@
-// Compile-time check that the reconstructed Renderer layout matches the original offsets.
+// Compile-time checks that the reconstructed structs have the original offsets and sizes (Renderer, Scene, Warp, BodyPart, SqgModel).
 #include "Renderer.h"
 #include "Scene.h"
 #include <stddef.h>
@@ -40,3 +40,17 @@ static_assert(offsetof(BodyPart, model) == 0x04 && offsetof(BodyPart, morph) == 
 static_assert(offsetof(AnimatedBody, partCount) == 0x0c && offsetof(AnimatedBody, parts) == 0x28 && offsetof(AnimatedBody, rootFrame) == 0x4c, "AnimatedBody fields");
 static_assert(offsetof(BodyPose, direction) == 0x0c && offsetof(BodyPose, up) == 0x18 && offsetof(BodyPose, weights) == 0x24 &&
               offsetof(WeightArray, count) == 0x04, "BodyPose fields");
+static_assert(sizeof(BodyPose) == 0x2c, "BodyPose size");
+static_assert(sizeof(DisplayFormat) == 0x18, "DisplayFormat size");
+
+// WarpFace field offsets
+static_assert(offsetof(WarpFace, extentB) == 0x04 && offsetof(WarpFace, zero08) == 0x08 && offsetof(WarpFace, one) == 0x10 &&
+              offsetof(WarpFace, halfA) == 0x14 && offsetof(WarpFace, halfB) == 0x18 && offsetof(WarpFace, halfA2) == 0x1c &&
+              offsetof(WarpFace, k20) == 0x20 && offsetof(WarpFace, zero24) == 0x24 && offsetof(WarpFace, k28) == 0x28 &&
+              offsetof(WarpFace, minusOne) == 0x2c && offsetof(WarpFace, flag) == 0x44, "WarpFace field offsets");
+
+// SqgModel
+#include "SqgModel.h"
+static_assert(sizeof(SqgGroup) == 0x24 && sizeof(SqgDelta) == 0x10 && sizeof(SqgDeltaList) == 8 && sizeof(PZMorphMesh) == 0x0c,
+              "Sqg struct sizes");
+static_assert(sizeof(SqgModel) == 0x2c, "SqgModel size");

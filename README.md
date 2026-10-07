@@ -24,7 +24,7 @@ gcc -shared -static -m32 -s -o ddraw.dll ddraw.c ddraw.def -luser32
 - Continue the readable C++ reconstruction (see `src/`), module by module, verified in the real game with `hook/`
 
 ## Source reconstruction
-`src/` holds a hand-translated, readable C++ version of the renderer module and `hook/` builds `sqzhook.dll`, a dev tool that runs the reconstructed
+`src/` holds a hand-translated, readable C++ version of the whole rendering path (window and device setup, scene, sky, models, textures, image loading) and `hook/` builds `sqzhook.dll`, a dev tool that runs the reconstructed
 functions inside the unmodified game to verify them. See the READMEs in each folder. Neither is needed to play.
 
 ## License

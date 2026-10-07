@@ -1,6 +1,6 @@
 // Renderer.cpp: hand-translated from the Ghidra decompile of SQZ.EXE 0x474230-0x476a00.
 // Goal: readable code that behaves like the original; not byte-identical.
-// Conventions: // @ADDR = original function address.  TODO(opus) = could not be resolved from the decompile.
+// Conventions: // @ADDR = original function address.
 #include "Renderer.h"
 #include "ListenerTable.h"
 #include <stdio.h>
@@ -8,7 +8,7 @@
 #include <mmsystem.h>
 #include <math.h>
 
-// Not yet reconstructed (see RENDERER_NOTES.md):
+// Still taken from the original binary:
 extern const char *HResultToString(HRESULT hr);                       // @00478430
 extern int  PrepareForDialog();                                       // @004753c0 (returns 0)
 static void *const kWindowCallback = (void *)0x476630;                // callback registered with the window hook
@@ -32,13 +32,13 @@ BOOL CheckDesktopDepth(int *width, int *height)
     QueryDesktopMode(width, height, &bpp);
     if (bpp >= 8 && bpp <= 16)
         return TRUE;
-    MessageBoxA(NULL, "This application requires that your Display Properties", "Error", MB_OK);
+    MessageBoxA(NULL, "This application requires that your Display Properties\nare set to either 256 Colors or High Color (16-bit).\nPlease update your Display Properties with the Display Control Panel.", "Error", MB_OK);
     return FALSE;
 }
 
 // @00474230  Reads back the pixel value the surface uses for `color` (SetPixel, Lock, mask).
 // Returns 0xffffffff when color == 0xffffffff (no key).
-// NOTE: the mask (1 << bitsPerPixel) - 1 is wrong at 32 bpp (shift count wraps), see DECOMP_HANDOFF.md.
+// NOTE: the mask (1 << bitsPerPixel) - 1 is wrong at 32 bpp (shift count wraps) (the proxy ddraw.dll reports 31 bits for that case).
 DWORD GetColorKeyValue(LPDIRECTDRAWSURFACE surf, COLORREF color)
 {
     DWORD result = 0xffffffff;
@@ -123,25 +123,25 @@ Renderer::Renderer()
 // ---- messages -----------------------------------------------------------------------------
 
 // @004754c0
-void Renderer::Error(const char *fmt, ...)
+int Renderer::Error(const char *fmt, ...)
 {
     char text[256];
     va_list ap; va_start(ap, fmt);
     vsprintf(text, fmt, ap);
     va_end(ap);
     PrepareForDialog();
-    MessageBoxA(hwnd, text, "Note", MB_ICONINFORMATION);
+    return MessageBoxA(hwnd, text, "Note", MB_ICONINFORMATION);
 }
 
 // @00475510
-void Renderer::FatalError(const char *fmt, ...)
+int Renderer::FatalError(const char *fmt, ...)
 {
     char text[256];
     va_list ap; va_start(ap, fmt);
     vsprintf(text, fmt, ap);
     va_end(ap);
     PrepareForDialog();
-    MessageBoxA(hwnd, text, "Application Error", MB_RETRYCANCEL | MB_ICONERROR);
+    return MessageBoxA(hwnd, text, "Application Error", MB_RETRYCANCEL | MB_ICONERROR);
 }
 
 // ---- initialisation -----------------------------------------------------------------------
@@ -402,7 +402,7 @@ BOOL Renderer::SetDisplayModeChecked(int w, int h, int bpp)
 {
     HRESULT hr = ddraw->SetDisplayMode(w, h, bpp);
     if (FAILED(hr)) {
-        Error("could not set display mode.\n%s", HResultToString(hr));   // string at 004c1960, text approximated
+        Error("could not set display mode.\n%s", HResultToString(hr));   // string at 004c1960
         Shutdown(FALSE);
         return FALSE;
     }
@@ -609,12 +609,10 @@ BOOL Renderer::UploadFrontPalette()
 }
 
 // @004750a0  Palette fade: ramps the front palette between black and the working palette over a time given
-// by a float computed in code the decompiler lost (__ftol results). TODO(opus): recover from disassembly
-// (0x4750a0-0x475380). Entries are written with SetEntries(0,0,256,...) in a timeGetTime() loop.
 // Fades the 8-bit front palette to black over `seconds`, blocking (busy loop on timeGetTime).
 // Fullscreen uses palette entries 1..254 (0 and 255 are fixed); windowed skips the 10 system
 // colours at each end and uses entries 10..245 for slots 0..235. Only RGB is scaled, flags stay 0x44.
-// The original leaves slot 255 untouched in windowed mode (uninitialised stack); we zero it.
+// In windowed mode the original leaves the RGB of slot 254 and all of slot 255 uninitialised (stack garbage); we zero them.
 void Renderer::FadePalette(float seconds)
 {
     if (!monoColorModel)
@@ -734,9 +732,8 @@ BOOL Renderer::CreateViewport()
 }
 
 // @00475c10  Primary + back (3D device) + depth surfaces, clipper, palettes, then the D3DRM device.
-// NOTE: the depth-bit-depth detection is missing from the decompile (stack stores lost). Reconstructed
-// from NOTES.md / disassembly: take DDCAPS.dwZBufferBitDepths of the HAL/HEL caps and prefer 16 > 24 > 32 > 8.
-// TODO(opus): confirm which caps struct (HAL vs HEL) is read; check the sequence against 0x475c10 disassembly.
+// The depth buffer's bit depth is the best one the driver offers: dwZBufferBitDepths of the HAL caps (HEL when the device
+// is software), preferring 16 > 24 > 32 > 8, and 16 when it reports none (0x475db3).
 BOOL Renderer::CreateSurfaces()
 {
     HRESULT hr;
@@ -770,16 +767,14 @@ BOOL Renderer::CreateSurfaces()
         Error("GetCaps failed.\n%s", HResultToString(hr));
         return FALSE;
     }
-    DWORD zbd = hardware ? halCaps.dwZBufferBitDepths : helCaps.dwZBufferBitDepths;   // TODO(opus): verify
+    DWORD zbd = hardware ? halCaps.dwZBufferBitDepths : helCaps.dwZBufferBitDepths;
     DWORD zdepth = 0;
     if (zbd & DDBD_8)  zdepth = 8;
     if (zbd & DDBD_32) zdepth = 32;
     if (zbd & DDBD_24) zdepth = 24;
     if (zbd & DDBD_16) zdepth = 16;
-    if (zdepth == 0) {
-        Error("This display does not support a depth buffer.");
-        return FALSE;
-    }
+    if (zdepth == 0)
+        zdepth = 16;                 // the original's fallback
     memset(&sd, 0, sizeof sd);
     sd.dwSize = sizeof sd;
     sd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_ZBUFFERBITDEPTH;   // 0x47

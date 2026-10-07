@@ -7,7 +7,7 @@
 extern const char *HResultToString(HRESULT hr);          // @00478430
 extern void *Operator_New(size_t size);                  // @0048ea00 cdecl (the game heap: objects are freed by original code too)
 extern void Operator_Delete(void *p);                    // @0048e9f0 cdecl
-extern void Unknown_48C710();                            // @0048c710 called after the warp is drawn (FPU/CRT state helper, no args)
+extern void Unknown_48C710();                            // @0048c710 is SkyRenderer::Draw: renders the sky into the surface set with SetOutput (still the original here)
 extern int  Lib_SetFov(float fovX, float fovY);          // @0048c680 software sky renderer (see Warp.cpp)
 
 // @00476720
@@ -53,7 +53,7 @@ BOOL Scene::EnsureWarpSurface()
     HRESULT hr = renderer->ddraw->CreateSurface(&desc, &warpSurface, NULL);
     if (hr >= 0)
         return TRUE;
-    renderer->Error("CreateSurface failed (warp).\n%s", HResultToString(hr));
+    renderer->FatalError("CreateSurface failed (warp).\n%s", HResultToString(hr));
     return FALSE;
 }
 
