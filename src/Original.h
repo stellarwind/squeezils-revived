@@ -113,6 +113,9 @@ void *GetPanel();                                                     // @004206
 
 int   RegionScreenLoad(void *regionScreen);                              // @00414c10 the panel's region screen widget: load its pictures (0 on failure)
 
+int   GoodieListInit(void *list, int x, int y);                          // @00415750 the status bar's goodie list widget: set up at (x, y)
+int   GoodieListLoad(void *list);                                     // @00415b40 load its pictures
+
 // ---- the player ----
 void *GetPlayerSoul();                                                // @00420690 + 00414080 the player's actor (a Soul), or NULL
 int   SoulMood(void *soul);                                           // the player soul's mood (dynamic_cast to SqueezilPlayerSoul, then its virtual at +0x64)
