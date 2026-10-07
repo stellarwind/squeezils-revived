@@ -24,3 +24,12 @@ static_assert(offsetof(Scene, renderer) == 0x00 && offsetof(Scene, warpSurface) 
               offsetof(Scene, warp) == 0x10 && offsetof(Scene, warpWidth) == 0x14 &&
               offsetof(Scene, warpHeight) == 0x18, "Scene field offsets");
 static_assert(sizeof(Scene) == 0x1c, "Scene size");
+
+// Warp
+#include "Warp.h"
+static_assert(sizeof(WarpFace) == 0x48, "WarpFace size");
+static_assert(offsetof(Warp, height) == 0x00 && offsetof(Warp, width) == 0x04 && offsetof(Warp, fovX) == 0x08 &&
+              offsetof(Warp, fovY) == 0x0c && offsetof(Warp, current) == 0x10 && offsetof(Warp, faceCount) == 0x14 &&
+              offsetof(Warp, outputDepth) == 0x18 && offsetof(Warp, faces) == 0x1c && offsetof(Warp, faceData) == 0x1cc,
+              "Warp field offsets");
+static_assert(sizeof(Warp) == 0x1e4, "Warp size");
