@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "Warp.h"
 #include "Sky.h"
+#include "Image.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -67,6 +68,7 @@ typedef IDirect3DRMTexture *(*SqgTextureLookupFn)(const char *);
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
+void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
 extern "C" HRESULT WINAPI Hook_DirectDrawCreate(GUID *g, LPDIRECTDRAW *dd, IUnknown *o)
@@ -681,6 +683,67 @@ static void __cdecl h_skymul(float *out, const float *a, const float *b)
     CompareMem(H_skymul, out, mine, sizeof mine);
 }
 
+// ---- image loading (GIF reader and pixel format conversion, 0x477a90 and 0x477cc0) -------
+// "img" replaces both with ImageLoad / ImageConvertRow. "imgcmp" runs the original, then ours, and compares the pixels,
+// the size and the palette entries the file defines.
+static Hook H_imgload, H_imgrow;
+static bool g_imgCompare;
+
+static int PaletteEntriesInFile(const char *path)
+{
+    FILE *f = fopen(path, "rb");
+    if (!f) return 0;
+    unsigned char h[13] = {};
+    size_t n = fread(h, 1, sizeof h, f);
+    fclose(f);
+    if (n < sizeof h || !(h[10] & 0x80)) return 0;
+    int count = 1 << ((h[10] & 0xf) + 1);
+    return count > 256 ? 256 : count;
+}
+
+static int (__cdecl *o_imgload)(const char *, const int *, void *, int *, int *, void **, unsigned char *);
+static int __cdecl h_imgload(const char *path, const int *fmt, void *alloc, int *outW, int *outH, void **pixels, unsigned char *pal)
+{
+    if (g_mode == MODE_REPLACE || !g_imgCompare) {
+        HEAVY_LOG(H_imgload);
+        return ImageLoad(path, (const DisplayFormat *)fmt, (ImageAllocFn)alloc, outW, outH, pixels, pal);
+    }
+    int r = o_imgload(path, fmt, alloc, outW, outH, pixels, pal);
+    int w2 = 0, h2 = 0; void *p2 = NULL; unsigned char pal2[768] = {};
+    int r2 = ImageLoad(path, (const DisplayFormat *)fmt, (ImageAllocFn)alloc, &w2, &h2, &p2, pal2);
+    H_imgload.calls++;
+    bool bad = (r != r2);
+    if (!bad && r) {
+        int bpp = fmt[0];
+        size_t stride = (((size_t)(bpp / 8) * (size_t)*outW) + 3) & ~(size_t)3;
+        bad = (*outW != w2 || *outH != h2) || memcmp(*pixels, p2, stride * (size_t)*outH) != 0;
+        int n = PaletteEntriesInFile(path);
+        for (int i = 0; i < n && !bad; i++)
+            bad = pal[i] != pal2[i] || pal[0x100 + i] != pal2[0x100 + i] || pal[0x200 + i] != pal2[0x200 + i];
+    }
+    if (bad && ++H_imgload.mismatches <= 5)
+        Log("MISMATCH %s: %s ret orig=%d ours=%d size orig=%dx%d ours=%dx%d bpp=%d", H_imgload.name, path, r, r2, r ? *outW : 0, r ? *outH : 0, w2, h2, fmt[0]);
+    if (p2) { if (alloc) GameFree(p2); else Lib_Free(p2); }
+    return r;
+}
+
+static void (__cdecl *o_imgrow)(void *, const int *, const unsigned char *, const unsigned char *, unsigned);
+static void __cdecl h_imgrow(void *dst, const int *fmt, const unsigned char *src, const unsigned char *pal, unsigned width)
+{
+    if (g_mode == MODE_REPLACE || !g_imgCompare) {
+        HEAVY_LOG(H_imgrow);
+        ImageConvertRow(dst, (const DisplayFormat *)fmt, src, pal, width);
+        return;
+    }
+    o_imgrow(dst, fmt, src, pal, width);
+    size_t bytes = fmt[1] ? width : (size_t)width * (fmt[0] / 8);
+    if (bytes > 8192) { H_imgrow.calls++; return; }
+    BYTE mine[8192] = {}, orig[8192];
+    memcpy(orig, dst, bytes);
+    ImageConvertRow(mine, (const DisplayFormat *)fmt, src, pal, width);
+    CompareMem(H_imgrow, orig, mine, bytes);
+}
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -691,7 +754,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
                            &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel, &H_lightamb, &H_lightdir, &H_fxform, &H_fdecal,
                            &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad,
-                           &H_skyinit, &H_skyshut, &H_skyface, &H_skyout, &H_skyview, &H_skyorigin, &H_skyfov, &H_skydraw, &H_skyresize, &H_skymode, &H_skyrot, &H_skymul };
+                           &H_skyinit, &H_skyshut, &H_skyface, &H_skyout, &H_skyview, &H_skyorigin, &H_skyfov, &H_skydraw, &H_skyresize, &H_skymode, &H_skyrot, &H_skymul,
+                           &H_imgload, &H_imgrow };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -793,6 +857,8 @@ static void Setup()
     H_skymode   = { "Sky::SetMode",        0x48c870, 6,  "8a44240484c0",               (void *)h_skymode,   (void **)&o_skymode,   false, 0, 0, "sky", 0 };
     H_skyrot    = { "Sky::RotationMatrix", 0x48d7a0, 6,  "d944240cd9ff",               (void *)h_skyrot,    (void **)&o_skyrot,    false, 0, 0, "sky", 0 };
     H_skymul    = { "Sky::MatrixMultiply", 0x48d860, 5,  "8b4c240453",                 (void *)h_skymul,    (void **)&o_skymul,    false, 0, 0, "sky", 0 };
+    H_imgload   = { "ImageLoad",           0x477cc0, 6,  "81ec10030000",               (void *)h_imgload,   (void **)&o_imgload,   false, 0, 0, "img", 0 };
+    H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
 static void Summary()
@@ -886,8 +952,9 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         g_enumCompare = strstr(g_replaceList, "enumcmp") != NULL;
         g_qdmCompare = strstr(g_replaceList, "qdmcmp") != NULL;
         g_skyCompare = strstr(g_replaceList, "skycmp") != NULL;
+        g_imgCompare = strstr(g_replaceList, "imgcmp") != NULL;
         for (Hook *h : g_hooks) {
-            if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky"))) Install(*h); }          // heavy: explicit opt-in
+            if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky")) || (g_imgCompare && !strcmp(h->id, "img"))) Install(*h); }          // heavy: explicit opt-in
             else if (!h->replaceOnly || g_mode == MODE_REPLACE) Install(*h);
         }
     } else if (reason == DLL_PROCESS_DETACH) {
