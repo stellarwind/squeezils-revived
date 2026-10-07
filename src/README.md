@@ -8,12 +8,11 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Renderer.h/.cpp`: DirectDraw + Direct3D Retained Mode setup (display modes, windowing, device selection, surfaces, palettes, frames, viewport).
 - `ListenerTable.h/.cpp`: the window object's registry of 16 callback/context pairs.
 - `Warp.h/.cpp`: the sky object. Loads the six-view cube map GIFs and, each frame, picks the cube face the camera looks at and drives the software renderer.
-- `Scene.h/.cpp`: the per-frame draw path on top of the renderer (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
+- `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
 - `LayoutCheck.cpp`: compile-time asserts that `Renderer` has the original field offsets and size (0x9cc). Also checks `Scene` (0x1c bytes).
 
 ## Not reconstructed yet
 - The software renderer behind the sky (`0x48bb30`-`0x48d300`) and the GIF decoder (`0x479290`-`0x479b70`): `Warp` calls the original code for them. The renderer only supports 8 and 16 bit output.
-- `Scene::LoadWarp` (0x4769a0) and the camera helper (0x476e10).
 - `Scene::SetQuality` and `Warp::Resize` never ran in a normal session, so they are unverified.
 - `CheckDesktopDepth`, the `Error`/`FatalError` boxes' guessed title/strings and a few trivial setters are untested.
 

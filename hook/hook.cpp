@@ -49,6 +49,7 @@ void Lib_Free(void *p)                                { ((void (__cdecl *)(void 
 int  Image_Load(const char *path, const int *fmt, void *u, int *outB, int *outA, void **pixels, unsigned char *pal)
 { return ((int (__cdecl *)(const char *, const int *, void *, int *, int *, void **, unsigned char *))0x477cc0)(path, fmt, u, outB, outA, pixels, pal); }
 void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
+void *Operator_New(size_t n)                          { return ((void *(__cdecl *)(size_t))0x48ea00)(n); }
 void Unknown_48C710()                 { ((void (__cdecl *)())0x48c710)(); }
 
 // The reconstructed code calls these through renamed imports (see build.cmd): resolve from the real DLLs.
@@ -347,6 +348,7 @@ typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int,
 static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
 static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
 static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
+static Hook H_sload, H_scam, H_sview, H_fparent, H_fvisual, H_fchild, H_fdel;
 static Hook H_wctor, H_wdtor, H_winit, H_woutput, H_wresize, H_wupdate, H_wload;
 static bool g_qdmCompare;
 static int (__fastcall *o_qdm)(Renderer *);
@@ -421,6 +423,26 @@ static BOOL __stdcall h_dframe(IDirect3DRMFrame *f) { HEAVY_LOG(H_dframe); retur
 static void (__stdcall *o_gmatrix)(IDirect3DRMFrame *, IDirect3DRMFrame *, float *);
 static void __stdcall h_gmatrix(IDirect3DRMFrame *f, IDirect3DRMFrame *r, float *m) { HEAVY_LOG(H_gmatrix); GetFrameMatrix(f, r, m); }
 
+// @4769a0 LoadWarp, __thiscall(this, name) -> BOOL
+static int (__attribute__((thiscall)) *o_sload)(Scene *, const char *);
+static int __attribute__((thiscall)) h_sload(Scene *s, const char *name) { HEAVY_LOG(H_sload); return s->LoadWarp(name); }
+// @476e10 SetCameraTransform, __thiscall(this, matrix)
+static void (__attribute__((thiscall)) *o_scam)(Scene *, const float *);
+static void __attribute__((thiscall)) h_scam(Scene *s, const float *m) { HEAVY_LOG(H_scam); s->SetCameraTransform(m); }
+// @476e40 SetViewParams, __thiscall(this, near, far, fov)
+static void (__attribute__((thiscall)) *o_sview)(Scene *, float, float, float);
+static void __attribute__((thiscall)) h_sview(Scene *s, float n, float f, float fov) { HEAVY_LOG(H_sview); s->SetViewParams(n, f, fov); }
+// @4772a0 GetFrameParent, __stdcall(frame) -> parent
+static IDirect3DRMFrame *(__stdcall *o_fparent)(IDirect3DRMFrame *);
+static IDirect3DRMFrame *__stdcall h_fparent(IDirect3DRMFrame *f) { HEAVY_LOG(H_fparent); return GetFrameParent(f); }
+// @4773a0 / @4773c0 / @4773e0 frame wrappers, __stdcall(frame, x) -> HRESULT
+static HRESULT (__stdcall *o_fvisual)(IDirect3DRMFrame *, IDirect3DRMVisual *);
+static HRESULT __stdcall h_fvisual(IDirect3DRMFrame *f, IDirect3DRMVisual *v) { HEAVY_LOG(H_fvisual); return AddVisualToFrame(f, v); }
+static HRESULT (__stdcall *o_fchild)(IDirect3DRMFrame *, IDirect3DRMFrame *);
+static HRESULT __stdcall h_fchild(IDirect3DRMFrame *f, IDirect3DRMFrame *c) { HEAVY_LOG(H_fchild); return AddChildToFrame(f, c); }
+static HRESULT (__stdcall *o_fdel)(IDirect3DRMFrame *, IDirect3DRMFrame *);
+static HRESULT __stdcall h_fdel(IDirect3DRMFrame *f, IDirect3DRMFrame *c) { HEAVY_LOG(H_fdel); return DeleteChildFromFrame(f, c); }
+
 // ---- Warp (sky): replace only ---------------------------------------------------------------
 // @478c80 constructor, __fastcall(this) -> this
 static Warp *(__fastcall *o_wctor)(Warp *);
@@ -466,7 +488,14 @@ static int __attribute__((thiscall)) h_setpal(Renderer *r, int first, int count,
 // @474540 Initialize, __thiscall(this + 12 stack args) -> BOOL
 static PFN_Init o_init;
 static int __attribute__((thiscall)) h_init(Renderer *r, void *wnd, HWND hwnd, int x, int y, int w, int h, int rw, int rh, int bpp, int full, int dbl, const unsigned char *pal)
-{ HEAVY_LOG(H_init); return r->Initialize(wnd, hwnd, x, y, w, h, rw, rh, bpp, full, dbl, pal); }
+{
+    HEAVY_LOG(H_init);
+    int ok = r->Initialize(wnd, hwnd, x, y, w, h, rw, rh, bpp, full, dbl, pal);
+    Log("renderer: ok=%d device=%s hardware=%d monoColorModel=%d doubleSize=%d display=%dbpp size=%dx%d fullscreen=%d",
+        ok, r->chosenDevice >= 0 ? r->deviceNames[r->chosenDevice] : "(none)", r->hardware, r->monoColorModel,
+        r->doubleSize, r->fmt.bpp, r->width, r->height, r->fullscreen);
+    return ok;
+}
 
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
@@ -475,7 +504,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_qdm, &H_enterdisplay, &H_uploadpal, &H_setpal, &H_init, &H_fade,
                            &H_swarp, &H_sinit, &H_sbegin, &H_srender, &H_spresent, &H_squality, &H_sxform, &H_schild, &H_sdel,
                            &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
-                           &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload };
+                           &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
+                           &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -492,10 +522,6 @@ static bool InList(const char *list, const char *name)
 }
 static bool Listed(const char *id) { return id && (InList(g_replaceList, id) || InList(g_replaceList, "all")); }
 
-// Warp calls made by our Scene code: use our Warp when its id is listed, otherwise the original at that address
-void Warp_Destroy(void *w)                { if (Listed("wdtor"))   ((Warp *)w)->~Warp();            else ((void (__fastcall *)(void *))0x478cb0)(w); }
-void Warp_Resize(void *w, int a, int b)   { if (Listed("wresize")) ((Warp *)w)->Resize(a, b);       else ((void (__attribute__((thiscall)) *)(void *, int, int))0x478dc0)(w, a, b); }
-void Warp_Render(void *w, void *bits)     { if (Listed("woutput")) ((Warp *)w)->SetOutput(bits);    else ((void (__attribute__((thiscall)) *)(void *, void *))0x478da0)(w, bits); }
 
 static void Setup()
 {
@@ -545,6 +571,13 @@ static void Setup()
     H_wresize = { "Warp::Resize",             0x478dc0, 5, "83ec045356",        (void *)h_wresize, (void **)&o_wresize, false, 0, 0, "wresize", 0 };
     H_wupdate = { "Warp::Update",             0x478e10, 6, "8b411483f801",     (void *)h_wupdate, (void **)&o_wupdate, false, 0, 0, "wupdate", 0 };
     H_wload   = { "Warp::Load",               0x479090, 6, "81ec14010000",      (void *)h_wload,   (void **)&o_wload,   false, 0, 0, "wload",   0 };
+    H_sload   = { "Scene::LoadWarp",          0x4769a0, 7, "64a10000000055",   (void *)h_sload,   (void **)&o_sload,   false, 0, 0, "sload",   0 };
+    H_scam    = { "Scene::SetCameraTransform",0x476e10, 8, "56578bf98b74240c", (void *)h_scam,    (void **)&o_scam,    false, 0, 0, "scam",    0 };
+    H_sview   = { "Scene::SetViewParams",     0x476e40, 5, "83ec045356",       (void *)h_sview,   (void **)&o_sview,   false, 0, 0, "sview",   0 };
+    H_fparent = { "GetFrameParent",           0x4772a0, 7, "83ec048d442400",   (void *)h_fparent, (void **)&o_fparent, false, 0, 0, "fparent", 0 };
+    H_fvisual = { "AddVisualToFrame",         0x4773a0, 5, "8b44240853",       (void *)h_fvisual, (void **)&o_fvisual, false, 0, 0, "fvisual", 0 };
+    H_fchild  = { "AddChildToFrame",          0x4773c0, 5, "8b44240853",       (void *)h_fchild,  (void **)&o_fchild,  false, 0, 0, "fchild",  0 };
+    H_fdel    = { "DeleteChildFromFrame",     0x4773e0, 5, "8b44240853",       (void *)h_fdel,    (void **)&o_fdel,    false, 0, 0, "fdel",    0 };
 }
 
 static void Summary()

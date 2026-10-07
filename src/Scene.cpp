@@ -1,14 +1,14 @@
 // Scene: see Scene.h. Reconstructed from SQZ.EXE 0x476720-0x477400.
 #include "Scene.h"
+#include "Warp.h"
+#include <new>
 #include <string.h>
 
 extern const char *HResultToString(HRESULT hr);          // @00478430
-// Warp backdrop object (not reconstructed yet), original functions:
-extern void Warp_Destroy(void *warp);                    // @00478cb0 thiscall
-extern void Warp_Resize(void *warp, int w, int h);       // @00478dc0 thiscall
-extern void Warp_Render(void *warp, void *bits);         // @00478da0 thiscall
+extern void *Operator_New(size_t size);                  // @0048ea00 cdecl (the game heap: objects are freed by original code too)
 extern void Operator_Delete(void *p);                    // @0048e9f0 cdecl
 extern void Unknown_48C710();                            // @0048c710 called after the warp is drawn (FPU/CRT state helper, no args)
+extern int  Lib_SetFov(float fovX, float fovY);          // @0048c680 software sky renderer (see Warp.cpp)
 
 // @00476720
 Scene::Scene()
@@ -24,7 +24,7 @@ Scene::~Scene()
     if (lightsFrame) { lightsFrame->Release(); lightsFrame = NULL; }
     if (warpSurface) { warpSurface->Release(); warpSurface = NULL; }
     renderer = NULL;
-    if (warp) { Warp_Destroy(warp); Operator_Delete(warp); warp = NULL; }
+    if (warp) { warp->~Warp(); Operator_Delete(warp); warp = NULL; }
 }
 
 // @004767a0
@@ -41,7 +41,7 @@ BOOL Scene::EnsureWarpSurface()
     warpWidth  = (renderer->width  * scale) / 2;
     warpHeight = (renderer->height * scale) / 2;
     if (warp)
-        Warp_Resize(warp, warpWidth, warpHeight);
+        warp->Resize(warpWidth, warpHeight);
 
     DDSURFACEDESC desc;
     memset(&desc, 0, sizeof desc);
@@ -109,7 +109,7 @@ BOOL Scene::BeginFrame()
         renderer->Error("Lock failed (warp).\n%s", HResultToString(hr));
         return FALSE;
     }
-    Warp_Render(warp, desc.lpSurface);
+    warp->SetOutput(desc.lpSurface);
     Unknown_48C710();
     hr = warpSurface->Unlock(desc.lpSurface);
     if (hr < 0)
@@ -297,3 +297,76 @@ void GetFrameMatrix(IDirect3DRMFrame *frame, IDirect3DRMFrame *ref, float m[16])
     m[8] = dir.x; m[9] = dir.y; m[10] = dir.z; m[11] = 0.0f;
     m[12] = pos.x; m[13] = pos.y; m[14] = pos.z; m[15] = 1.0f;
 }
+
+// @004769a0
+// Loads the six-view sky for a world (name = WarpPrefix). The Warp object is created on first use and reused
+// for later worlds. The GIF palette is uploaded to display palette entries 10..41.
+BOOL Scene::LoadWarp(const char *name)
+{
+    if (warp == NULL) {
+        void *mem = Operator_New(sizeof(Warp));
+        warp = mem ? new (mem) Warp() : NULL;
+        if (warp == NULL)
+            return FALSE;
+        warp->Init(warpHeight, warpWidth, renderer->fovDegrees, 1);   // result ignored, as in the original
+    }
+
+    int tmp[6], format[6];
+    memcpy(format, renderer->GetPixelFormat(tmp), sizeof format);
+
+    unsigned char planes[3 * 256];            // palette from the GIFs as three planes: R[256] G[256] B[256]
+    if (!warp->Load(name, planes, format)) {
+        warp->~Warp();
+        Operator_Delete(warp);
+        warp = NULL;
+        return FALSE;
+    }
+
+    unsigned char rgba[256 * 4];
+    for (int i = 0; i < 256; i++) {
+        rgba[i * 4 + 0] = planes[i];
+        rgba[i * 4 + 1] = planes[256 + i];
+        rgba[i * 4 + 2] = planes[512 + i];
+        rgba[i * 4 + 3] = 0;                  // not set by the original
+    }
+    renderer->SetPaletteEntries(10, 0x20, rgba + 10 * 4);
+    return TRUE;
+}
+
+// @00476e10
+// Moves the camera frame to matrix m and draws the sky for the same view.
+void Scene::SetCameraTransform(const float *m)
+{
+    SetFrameTransform(GetCameraFrame(), m);
+    if (warp)
+        warp->Update(m);
+}
+
+// @00476e40
+void Scene::SetViewParams(float nearPlane, float farPlane, float fovDegrees)
+{
+    if (warp) {
+        warp->fovX = fovDegrees;
+        warp->fovY = (float)(((double)warp->height / (double)warp->width) * fovDegrees);
+        Lib_SetFov(warp->fovX, warp->fovY);
+    }
+    if (renderer)
+        renderer->SetViewParams(nearPlane, farPlane, fovDegrees);
+}
+
+// @004772a0
+// Returns the frame's parent without keeping a reference (GetParent adds one, we drop it right away).
+IDirect3DRMFrame *GetFrameParent(IDirect3DRMFrame *frame)
+{
+    IDirect3DRMFrame *parent = NULL;
+    frame->GetParent(&parent);
+    if (parent == NULL)
+        return NULL;                          // the original calls Release on NULL here
+    parent->Release();
+    return parent;
+}
+
+// @004773a0, @004773c0, @004773e0: thin wrappers that pass the HRESULT through
+HRESULT AddVisualToFrame(IDirect3DRMFrame *frame, IDirect3DRMVisual *visual) { return frame->AddVisual(visual); }
+HRESULT AddChildToFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child)    { return frame->AddChild(child); }
+HRESULT DeleteChildFromFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child) { return frame->DeleteChild(child); }
