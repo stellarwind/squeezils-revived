@@ -249,3 +249,13 @@ IDirect3DRMFrame *SqgModel::BuildFrame(IDirect3DRM *d3drm, BOOL perspective)
     }
     return frame;
 }
+
+extern void SqgFree(void *p);                            // function pointer stored at 0x4c0f80 (the game's free)
+
+// @00471990
+void PZMorphMesh::Destroy()
+{
+    if (groupIds) SqgFree(groupIds);
+    if (vertices) SqgFree(vertices);
+    if (mesh) mesh->Release();
+}

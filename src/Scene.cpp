@@ -370,3 +370,111 @@ IDirect3DRMFrame *GetFrameParent(IDirect3DRMFrame *frame)
 HRESULT AddVisualToFrame(IDirect3DRMFrame *frame, IDirect3DRMVisual *visual) { return frame->AddVisual(visual); }
 HRESULT AddChildToFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child)    { return frame->AddChild(child); }
 HRESULT DeleteChildFromFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child) { return frame->DeleteChild(child); }
+
+// @00477700
+IDirect3DRMFrame *Scene::CreateAmbientLight(float r, float g, float b)
+{
+    IDirect3DRMFrame *frame;
+    IDirect3DRMLight *light;
+    renderer->d3drm->CreateFrame(lightsFrame, &frame);
+    renderer->d3drm->CreateLightRGB(D3DRMLIGHT_AMBIENT, r, g, b, &light);
+    frame->AddLight(light);
+    light->Release();
+    return frame;
+}
+
+// @004775c0
+IDirect3DRMFrame *Scene::CreateDirectionalLight(float r, float g, float b, float px, float py, float pz,
+                                                float dx, float dy, float dz, float ux, float uy, float uz)
+{
+    IDirect3DRMFrame *frame;
+    IDirect3DRMLight *light;
+    renderer->d3drm->CreateFrame(lightsFrame, &frame);
+    frame->SetPosition(renderer->sceneFrame, px, py, pz);
+    frame->SetOrientation(renderer->sceneFrame, dx, dy, dz, ux, uy, uz);
+    renderer->d3drm->CreateLightRGB(D3DRMLIGHT_DIRECTIONAL, r, g, b, &light);
+    frame->AddLight(light);
+    light->Release();
+    frame->AddRef();                       // the original takes and drops a reference here (net zero)
+    frame->Release();
+    return frame;
+}
+
+// @004770d0
+void ApplyFrameTransform(IDirect3DRMFrame *frame, IDirect3DRMFrame *ref, const float *m)
+{
+    frame->SetPosition(ref, m[12], m[13], m[14]);
+    frame->SetOrientation(ref, m[8], m[9], m[10], m[4], m[5], m[6]);
+}
+
+// @00477540
+// Sets the decal size of the frame's only visual. (The original leaks the visual array when the count is not 1.)
+IDirect3DRMFrame *SetFrameDecalSize(IDirect3DRMFrame *frame, float width, float height)
+{
+    IDirect3DRMVisualArray *visuals;
+    frame->GetVisuals(&visuals);
+    if (visuals->GetSize() != 1)
+        return NULL;
+    IDirect3DRMVisual *visual;
+    visuals->GetElement(0, &visual);
+    visual->Release();                     // GetElement added a reference; the frame still holds the visual
+    reinterpret_cast<IDirect3DRMTexture *>(visual)->SetDecalSize(width, height);
+    visuals->Release();
+    return frame;
+}
+
+// @004777b0
+IDirect3DRMFrame *Scene::CreateColoredQuad(float x0, float y0, float z0, float x1, float y1, float z1,
+                                           float x2, float y2, float z2, float x3, float y3, float z3,
+                                           float nx, float ny, float nz, double r, double g, double b)
+{
+    IDirect3DRMMeshBuilder *builder;
+    IDirect3DRMFace *face;
+    IDirect3DRMMesh *mesh;
+    IDirect3DRMFrame *frame;
+
+    if (renderer->d3drm->CreateMeshBuilder(&builder) < 0)
+        return NULL;
+    if (builder->ReserveSpace(4, 1, 1) < 0) {
+        builder->Release();
+        return NULL;
+    }
+    builder->AddVertex(x0, y0, z0);
+    builder->AddVertex(x1, y1, z1);
+    builder->AddVertex(x2, y2, z2);
+    builder->AddVertex(x3, y3, z3);
+    builder->AddNormal(nx, ny, nz);
+    if (builder->CreateFace(&face) < 0) {
+        builder->Release();
+        return NULL;
+    }
+    face->AddVertexAndNormalIndexed(0, 0);
+    face->AddVertexAndNormalIndexed(1, 0);
+    face->AddVertexAndNormalIndexed(2, 0);
+    face->AddVertexAndNormalIndexed(3, 0);
+    int green = (int)(g * 255.0), red = (int)(r * 255.0), blue = (int)(b * 255.0);
+    face->SetColor((D3DCOLOR)((((unsigned)green | 0xffff0000u) << 8) | ((unsigned)red << 16) | (unsigned)blue));   // 0xffRRGGBB
+
+    if (builder->CreateMesh(&mesh) < 0) {
+        face->Release();
+        builder->Release();
+        return NULL;
+    }
+    if (renderer->d3drm->CreateFrame(NULL, &frame) < 0) {
+        mesh->Release();
+        face->Release();
+        builder->Release();
+        return NULL;
+    }
+    if (frame->AddVisual(mesh) >= 0) {
+        mesh->Release();
+        face->Release();
+        builder->Release();
+        return frame;
+    }
+    frame->Release();
+    mesh->Release();
+    face->Release();
+    builder->Release();
+    return NULL;
+}

@@ -32,6 +32,18 @@ public:
                                        int arg18, float sizeW, float sizeH, int arg24, float scaleX, float scaleY,
                                        int arg30, BOOL transparent, float colorR, float colorG, float colorB,
                                        IDirect3DRMFrame *parent);
+    // Lights. Each makes a new frame under lightsFrame, creates the light, attaches it and returns the frame (caller keeps
+    // the creation reference). D3DRMLIGHT_AMBIENT = 0, D3DRMLIGHT_DIRECTIONAL = 3.
+    IDirect3DRMFrame *CreateAmbientLight(float r, float g, float b);             // 0x477700 (thiscall, 3 stack args)
+    IDirect3DRMFrame *CreateDirectionalLight(float r, float g, float b,          // 0x4775c0 (thiscall, 12 stack args)
+                                             float px, float py, float pz,       // position relative to the scene frame
+                                             float dx, float dy, float dz,       // direction
+                                             float ux, float uy, float uz);      // up
+    // 0x4777b0 (thiscall, 15 floats and 3 doubles on the stack): a flat colored quad in a new frame. Four corners, one normal,
+    // color from r, g, b in 0..1. Returns the frame, or NULL if any D3DRM call fails.
+    IDirect3DRMFrame *CreateColoredQuad(float x0, float y0, float z0, float x1, float y1, float z1,
+                                        float x2, float y2, float z2, float x3, float y3, float z3,
+                                        float nx, float ny, float nz, double r, double g, double b);
     IDirect3DRMFrame *GetSceneChild() const { return sceneChild; }              // 0x477290
     IDirect3DRMFrame *GetCameraFrame() const { return renderer->cameraFrame; }  // 0x477390
 
@@ -51,3 +63,5 @@ IDirect3DRMFrame *GetFrameParent(IDirect3DRMFrame *frame);                    //
 HRESULT AddVisualToFrame(IDirect3DRMFrame *frame, IDirect3DRMVisual *visual);        // 0x4773a0
 HRESULT AddChildToFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child);            // 0x4773c0
 HRESULT DeleteChildFromFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child);       // 0x4773e0
+void ApplyFrameTransform(IDirect3DRMFrame *frame, IDirect3DRMFrame *ref, const float *m);   // 0x4770d0 like Scene::SetFrameTransform, relative to ref, no error check
+IDirect3DRMFrame *SetFrameDecalSize(IDirect3DRMFrame *frame, float width, float height);    // 0x477540 for a frame holding exactly one decal texture; returns the frame, or NULL

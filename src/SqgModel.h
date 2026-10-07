@@ -4,9 +4,7 @@
 // Reconstructed from SQZ.EXE 0x472560-0x473710. "SqgModel" / "PZMorphMesh" are our names (the game's debug strings call
 // the mesh "PZMorph Mesh"). Field offsets are the original ones.
 #pragma once
-#define DIRECT3D_VERSION 0x0500
-#include <windows.h>
-#include <d3drm.h>
+#include "Renderer.h"
 
 struct SqgGroup {                 // 0x24 bytes, stored in the file
     int color;                    // 0x00 used as the group colour when textureIndex is -1
@@ -34,6 +32,8 @@ struct PZMorphMesh {
     int           *groupIds;      // 0x00 D3DRM group id of every model group
     D3DRMVERTEX   *vertices;      // 0x04 working copy of the model's vertices
     IDirect3DRMMesh *mesh;        // 0x08
+
+    void Destroy();               // 0x471990 frees both arrays (game heap) and releases the mesh; the object itself is freed by the caller
 };
 
 class SqgModel {

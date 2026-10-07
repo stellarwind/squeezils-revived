@@ -7,6 +7,7 @@ Every function here has been verified inside the real, unmodified game with `hoo
 ## Contents
 - `Renderer.h/.cpp`: DirectDraw + Direct3D Retained Mode setup (display modes, windowing, device selection, surfaces, palettes, frames, viewport).
 - `ListenerTable.h/.cpp`: the window object's registry of 16 callback/context pairs.
+- `BodyPart.h/.cpp`: the character classes' D3DRM side: `BodyPart` (places its frame from a pose and applies the morph weights, builds its mesh) and `AnimatedBody` (root frame transform, building and tearing down its parts). The animation timing and blending is game logic and not reconstructed.
 - `Texture.h/.cpp`: GIF to D3DRM texture: builds the `D3DRMIMAGE` and palette, makes the transparent colour palette index 0, calls `CreateTexture`.
 - `SqgModel.h/.cpp`: the `.sqg` model format (vertices, face lists, groups, morph deltas): the loader, the `MeshBuilder` frame builder the game uses for its models, the `Mesh` builder for morphing parts and the per-frame morph update.
 - `Warp.h/.cpp`: the sky object. Loads the six-view cube map GIFs and, each frame, picks the cube face the camera looks at and drives the software renderer.
@@ -21,5 +22,5 @@ Every function here has been verified inside the real, unmodified game with `hoo
 ## Syntax check
 Needs the DirectX 7 SDK headers (not included; set `DX7_INCLUDE`):
 ```
-g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp LayoutCheck.cpp
+g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp LayoutCheck.cpp
 ```

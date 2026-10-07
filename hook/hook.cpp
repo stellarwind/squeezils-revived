@@ -11,6 +11,7 @@
 #include "Warp.h"
 #include "SqgModel.h"
 #include "Texture.h"
+#include "BodyPart.h"
 #undef private
 #include <stdio.h>
 #include <stdarg.h>
@@ -56,6 +57,8 @@ void *Operator_New(size_t n)                          { return ((void *(__cdecl 
 void *GameAlloc(size_t n)  { return ((void *(__cdecl *)(size_t))0x448350)(n); }
 void  GameFree(void *p)    { ((void (__cdecl *)(void *))0x448360)(p); }
 Renderer *GetRenderer()    { return *(Renderer **)0x4c75dc; }
+Scene *GetScene()          { return *(Scene **)0x4c75e0; }
+void  SqgFree(void *p)     { (*(void (__cdecl **)(void *))0x4c0f80)(p); }
 // SqgModel helpers: the game's allocator (function pointer at 0x4c0f78), its error reporter and texture lookup (pointer at 0x4c0f84)
 void *SqgAlloc(size_t n)       { return (*(void *(__cdecl **)(size_t))0x4c0f78)(n); }
 void  SqgError(const char *m)  { ((void (__cdecl *)(const char *))0x473710)(m); }
@@ -359,7 +362,8 @@ typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int,
 static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
 static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
 static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
-static Hook H_sqgload, H_sqgmesh, H_sqgmorph, H_sqgframe, H_texgif;
+static Hook H_sqgload, H_sqgmesh, H_sqgmorph, H_sqgframe, H_texgif, H_bpapply, H_bpbuild, H_abroot, H_abbuild, H_abdestroy, H_pzdestroy, H_sdtor, H_quad;
+static Hook H_lightamb, H_lightdir, H_fxform, H_fdecal;
 static Hook H_sload, H_scam, H_sview, H_fparent, H_fvisual, H_fchild, H_fdel;
 static Hook H_wctor, H_wdtor, H_winit, H_woutput, H_wresize, H_wupdate, H_wload;
 static bool g_qdmCompare;
@@ -435,6 +439,20 @@ static BOOL __stdcall h_dframe(IDirect3DRMFrame *f) { HEAVY_LOG(H_dframe); retur
 static void (__stdcall *o_gmatrix)(IDirect3DRMFrame *, IDirect3DRMFrame *, float *);
 static void __stdcall h_gmatrix(IDirect3DRMFrame *f, IDirect3DRMFrame *r, float *m) { HEAVY_LOG(H_gmatrix); GetFrameMatrix(f, r, m); }
 
+// @477700 CreateAmbientLight, __thiscall(this, r, g, b) -> frame
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_lightamb)(Scene *, float, float, float);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_lightamb(Scene *s, float r, float g, float b) { HEAVY_LOG(H_lightamb); return s->CreateAmbientLight(r, g, b); }
+// @4775c0 CreateDirectionalLight, __thiscall(this, 12 floats) -> frame (callee pops 0x30)
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_lightdir)(Scene *, float, float, float, float, float, float, float, float, float, float, float, float);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_lightdir(Scene *s, float r, float g, float b, float px, float py, float pz, float dx, float dy, float dz, float ux, float uy, float uz)
+{ HEAVY_LOG(H_lightdir); return s->CreateDirectionalLight(r, g, b, px, py, pz, dx, dy, dz, ux, uy, uz); }
+// @4770d0 ApplyFrameTransform, __stdcall(frame, ref, matrix)
+static void (__stdcall *o_fxform)(IDirect3DRMFrame *, IDirect3DRMFrame *, const float *);
+static void __stdcall h_fxform(IDirect3DRMFrame *f, IDirect3DRMFrame *r, const float *m) { HEAVY_LOG(H_fxform); ApplyFrameTransform(f, r, m); }
+// @477540 SetFrameDecalSize, __stdcall(frame, width, height) -> frame
+static IDirect3DRMFrame *(__stdcall *o_fdecal)(IDirect3DRMFrame *, float, float);
+static IDirect3DRMFrame *__stdcall h_fdecal(IDirect3DRMFrame *f, float w, float h) { HEAVY_LOG(H_fdecal); return SetFrameDecalSize(f, w, h); }
+
 // @4769a0 LoadWarp, __thiscall(this, name) -> BOOL
 static int (__attribute__((thiscall)) *o_sload)(Scene *, const char *);
 static int __attribute__((thiscall)) h_sload(Scene *s, const char *name) { HEAVY_LOG(H_sload); return s->LoadWarp(name); }
@@ -473,6 +491,36 @@ static IDirect3DRMFrame *__attribute__((thiscall)) h_sqgframe(SqgModel *m, IDire
 // @415440 CreateTextureFromGif, __cdecl(path, transparent, pixelFormat, byteCounter) -> texture
 static IDirect3DRMTexture *(__cdecl *o_texgif)(const char *, const float *, const int *, int *);
 static IDirect3DRMTexture *__cdecl h_texgif(const char *p, const float *t, const int *f, int *c) { HEAVY_LOG(H_texgif); return CreateTextureFromGif(p, t, f, c); }
+
+// ---- BodyPart (character pieces): replace only ------------------------------------------------
+// @41d900 Apply, __thiscall(this, ref, pose) (callee pops 8)
+static void (__attribute__((thiscall)) *o_bpapply)(BodyPart *, IDirect3DRMFrame *, const BodyPose *);
+static void __attribute__((thiscall)) h_bpapply(BodyPart *b, IDirect3DRMFrame *ref, const BodyPose *p) { HEAVY_LOG(H_bpapply); b->Apply(ref, p); }
+// @41d990 Build, __thiscall(this, parent)
+static void (__attribute__((thiscall)) *o_bpbuild)(BodyPart *, IDirect3DRMFrame *);
+static void __attribute__((thiscall)) h_bpbuild(BodyPart *b, IDirect3DRMFrame *parent) { HEAVY_LOG(H_bpbuild); b->Build(parent); }
+
+// @41e230 AnimatedBody::SetRootTransform, __thiscall(this, ref, matrix) (callee pops 8)
+static void (__attribute__((thiscall)) *o_abroot)(AnimatedBody *, IDirect3DRMFrame *, const float *);
+static void __attribute__((thiscall)) h_abroot(AnimatedBody *a, IDirect3DRMFrame *ref, const float *m) { HEAVY_LOG(H_abroot); a->SetRootTransform(ref, m); }
+
+// @41dda0 AnimatedBody::Build, __thiscall(this, parent)
+static void (__attribute__((thiscall)) *o_abbuild)(AnimatedBody *, IDirect3DRMFrame *);
+static void __attribute__((thiscall)) h_abbuild(AnimatedBody *a, IDirect3DRMFrame *p) { HEAVY_LOG(H_abbuild); a->Build(p); }
+// @41ddf0 AnimatedBody::DestroyFrames, __thiscall(this, parent)
+static void (__attribute__((thiscall)) *o_abdestroy)(AnimatedBody *, IDirect3DRMFrame *);
+static void __attribute__((thiscall)) h_abdestroy(AnimatedBody *a, IDirect3DRMFrame *p) { HEAVY_LOG(H_abdestroy); a->DestroyFrames(p); }
+// @471990 PZMorphMesh::Destroy, __fastcall(this)
+static void (__fastcall *o_pzdestroy)(PZMorphMesh *);
+static void __fastcall h_pzdestroy(PZMorphMesh *m) { HEAVY_LOG(H_pzdestroy); m->Destroy(); }
+// @476740 Scene::~Scene, __fastcall(this)
+static void (__fastcall *o_sdtor)(Scene *);
+static void __fastcall h_sdtor(Scene *s) { HEAVY_LOG(H_sdtor); s->~Scene(); }
+
+// @4777b0 CreateColoredQuad, __thiscall(this, 15 floats, 3 doubles) -> frame (callee pops 0x54)
+static IDirect3DRMFrame *(__attribute__((thiscall)) *o_quad)(Scene *, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, double, double, double);
+static IDirect3DRMFrame *__attribute__((thiscall)) h_quad(Scene *s, float x0, float y0, float z0, float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, float nx, float ny, float nz, double r, double g, double b)
+{ HEAVY_LOG(H_quad); return s->CreateColoredQuad(x0, y0, z0, x1, y1, z1, x2, y2, z2, x3, y3, z3, nx, ny, nz, r, g, b); }
 
 // ---- Warp (sky): replace only ---------------------------------------------------------------
 // @478c80 constructor, __fastcall(this) -> this
@@ -536,8 +584,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_swarp, &H_sinit, &H_sbegin, &H_srender, &H_spresent, &H_squality, &H_sxform, &H_schild, &H_sdel,
                            &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
                            &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
-                           &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel,
-                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif };
+                           &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel, &H_lightamb, &H_lightdir, &H_fxform, &H_fdecal,
+                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -610,11 +658,23 @@ static void Setup()
     H_fvisual = { "AddVisualToFrame",         0x4773a0, 5, "8b44240853",       (void *)h_fvisual, (void **)&o_fvisual, false, 0, 0, "fvisual", 0 };
     H_fchild  = { "AddChildToFrame",          0x4773c0, 5, "8b44240853",       (void *)h_fchild,  (void **)&o_fchild,  false, 0, 0, "fchild",  0 };
     H_fdel    = { "DeleteChildFromFrame",     0x4773e0, 5, "8b44240853",       (void *)h_fdel,    (void **)&o_fdel,    false, 0, 0, "fdel",    0 };
+    H_lightamb = { "Scene::CreateAmbientLight",     0x477700, 7, "64a10000000055", (void *)h_lightamb, (void **)&o_lightamb, false, 0, 0, "lightamb", 0 };
+    H_lightdir = { "Scene::CreateDirectionalLight", 0x4775c0, 7, "64a10000000055", (void *)h_lightdir, (void **)&o_lightdir, false, 0, 0, "lightdir", 0 };
+    H_fxform   = { "ApplyFrameTransform",           0x4770d0, 6, "53568b74240c", (void *)h_fxform,   (void **)&o_fxform,   false, 0, 0, "fxform",   0 };
+    H_fdecal   = { "SetFrameDecalSize",             0x477540, 7, "83ec088d442400", (void *)h_fdecal,   (void **)&o_fdecal,   false, 0, 0, "fdecal",   0 };
     H_sqgload  = { "SqgModel::Load",       0x472560, 6, "83ec24535657",     (void *)h_sqgload,  (void **)&o_sqgload,  false, 0, 0, "sqgload",  0 };
     H_sqgmesh  = { "SqgModel::CreateMesh", 0x472f60, 7, "64a10000000055",   (void *)h_sqgmesh,  (void **)&o_sqgmesh,  false, 0, 0, "sqgmesh",  0 };
     H_sqgmorph = { "SqgModel::Morph",      0x4734e0, 7, "64a10000000055",   (void *)h_sqgmorph, (void **)&o_sqgmorph, false, 0, 0, "sqgmorph", 0 };
     H_sqgframe = { "SqgModel::BuildFrame",  0x4731f0, 7, "8b44240483ec1c",   (void *)h_sqgframe, (void **)&o_sqgframe, false, 0, 0, "sqgframe", 0 };
     H_texgif  = { "CreateTextureFromGif",    0x415440, 6, "81ec1c030000",     (void *)h_texgif,  (void **)&o_texgif,  false, 0, 0, "texgif",  0 };
+    H_bpapply  = { "BodyPart::Apply",       0x41d900, 6, "53568b742410",     (void *)h_bpapply,  (void **)&o_bpapply,  false, 0, 0, "bpapply",  0 };
+    H_bpbuild  = { "BodyPart::Build",       0x41d990, 5, "8b44240453",       (void *)h_bpbuild,  (void **)&o_bpbuild,  false, 0, 0, "bpbuild",  0 };
+    H_abroot   = { "AnimatedBody::SetRootTransform", 0x41e230, 6, "53568b742410", (void *)h_abroot, (void **)&o_abroot, false, 0, 0, "abroot", 0 };
+    H_abbuild   = { "AnimatedBody::Build",         0x41dda0, 5, "8b44240453",          (void *)h_abbuild,   (void **)&o_abbuild,   false, 0, 0, "abbuild",   0 };
+    H_abdestroy = { "AnimatedBody::DestroyFrames", 0x41ddf0, 5, "53568b414c",          (void *)h_abdestroy, (void **)&o_abdestroy, false, 0, 0, "abdestroy", 0 };
+    H_pzdestroy = { "PZMorphMesh::Destroy",        0x471990, 5, "568b018bf1",          (void *)h_pzdestroy, (void **)&o_pzdestroy, false, 0, 0, "pzdestroy", 0 };
+    H_sdtor     = { "Scene::~Scene",               0x476740, 9, "56578bf1e8f70b0000",  (void *)h_sdtor,     (void **)&o_sdtor,     false, 0, 0, "sdtor",     5 };
+    H_quad      = { "Scene::CreateColoredQuad",    0x4777b0, 7, "64a10000000055",      (void *)h_quad,      (void **)&o_quad,      false, 0, 0, "quad",      0 };
 }
 
 static void Summary()

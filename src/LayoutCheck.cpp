@@ -33,3 +33,10 @@ static_assert(offsetof(Warp, height) == 0x00 && offsetof(Warp, width) == 0x04 &&
               offsetof(Warp, outputDepth) == 0x18 && offsetof(Warp, faces) == 0x1c && offsetof(Warp, faceData) == 0x1cc,
               "Warp field offsets");
 static_assert(sizeof(Warp) == 0x1e4, "Warp size");
+
+// BodyPart
+#include "BodyPart.h"
+static_assert(offsetof(BodyPart, model) == 0x04 && offsetof(BodyPart, morph) == 0x08 && offsetof(BodyPart, frame) == 0x0c, "BodyPart fields");
+static_assert(offsetof(AnimatedBody, partCount) == 0x0c && offsetof(AnimatedBody, parts) == 0x28 && offsetof(AnimatedBody, rootFrame) == 0x4c, "AnimatedBody fields");
+static_assert(offsetof(BodyPose, direction) == 0x0c && offsetof(BodyPose, up) == 0x18 && offsetof(BodyPose, weights) == 0x24 &&
+              offsetof(WeightArray, count) == 0x04, "BodyPose fields");
