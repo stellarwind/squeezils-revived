@@ -31,7 +31,7 @@ IniReader::~IniReader()
 
 const char *IniReader::Lookup(const char *sect, const char *key) const
 {
-    return IniFind(file, sect, key);
+    return file->Find(sect, key);
 }
 
 const char *IniReader::GetString(const char *key) const
@@ -58,6 +58,11 @@ float IniReader::GetFloat(const char *key, float def) const
     return v ? (float)atof(v) : def;
 }
 
+IntList *IniReader::GetIntList(const char *key) const
+{
+    return ParseIntList(Lookup(section, key));
+}
+
 void IniReader::SetSection(const char *name)
 {
     strcpy(section, name);
@@ -80,6 +85,28 @@ String *IniReader::GetDirectory(String *result) const
 const char *IniReader::GetPath() const
 {
     return path;
+}
+
+StringList *IniReader::GetKeys() const
+{
+    StringList *list = new StringList;
+    StringList *keys = file->Keys(section);
+    if (keys)
+        for (int i = 0; i < keys->count; i++)
+            list->Insert(keys->At(i));
+    return list;
+}
+
+IntList *IniReader::ParseIntList(const char *s) const
+{
+    IntList *list = new IntList;
+    for (;;) {
+        while (*s == ' ') s++;
+        if (!*s) break;
+        list->Insert(atoi(s));
+        while (*s && *s != ' ') s++;
+    }
+    return list;
 }
 
 int IniParseFloats(const char *s, float *out, const char **end)

@@ -1,9 +1,9 @@
-// IniReader: a cursor over one parsed INI file with a current section. Reconstructed from SQZ.EXE 0x443120-0x443590.
+// IniReader: a cursor over one parsed INI file with a current section. Reconstructed from SQZ.EXE 0x443120-0x4436e0.
 // The game reads nearly every setting through it (193 callers of GetFloat, 112 of GetString, 98 of SetSection). The parsed
-// file itself (a dictionary of sections, cached by file name) is still built and searched by original code; Lookup is the
-// one call into it.
+// file itself (IniFileCache, cached by path) is in IniFile.h.
 #pragma once
 #include "GameString.h"
+#include "IniFile.h"
 
 class IniReader {
 public:
@@ -16,13 +16,16 @@ public:
     int         GetInt(const char *key, int def) const;               // @4432b0 atoi
     int         GetFloats(const char *key, float *out) const;         // @4432e0 up to 3 floats, 0 when the key is missing
     float       GetFloat(const char *key, float def) const;           // @443310 atof rounded to float
+    IntList    *GetIntList(const char *key) const;                    // @443350 new list; the key must exist (no NULL check)
     void        SetSection(const char *name);                         // @443370 copies the name in (no length check)
     String     *GetDirectory(String *result) const;                   // @4433a0 path up to the last '\', or "." without one
     const char *GetPath() const;                                      // @443460
+    StringList *GetKeys() const;                                      // @443470 new list of the section's keys in file order
+    IntList    *ParseIntList(const char *text) const;                 // @4435f0 new list of the space separated ints in text
 
-    char *path;        // 0x0 255 byte buffer
-    char *section;     // 0x4 255 byte buffer
-    void *file;        // 0x8 parsed file from the original's cache (IniOpen)
+    char *path;           // 0x0 255 byte buffer
+    char *section;        // 0x4 255 byte buffer
+    IniFileCache *file;   // 0x8 the parsed file, from the cache (IniOpen)
 };
 static_assert(sizeof(IniReader) == 12, "IniReader layout");
 

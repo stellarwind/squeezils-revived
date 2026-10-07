@@ -62,8 +62,16 @@ void  SqgError(const char *format, ...)    // the original is printf style; form
     ((void (__cdecl *)(const char *, ...))0x473710)("%s", buf);
 }
 SqgTextureLookupFn SqgGetTextureLookup() { return *(SqgTextureLookupFn *)0x4c0f84; }
-const char *IniFind(void *file, const char *section, const char *key) { return ((const char *(__attribute__((thiscall)) *)(void *, const char *, const char *))0x442ee0)(file, section, key); }
-void *IniOpen(const char *path) { return ((void *(__cdecl *)(const char *))0x442fa0)(path); }
+void  GameLog(const char *format, ...)     // printf style like SqgError: format here and hand it over as one string
+{
+    char buf[1024];
+    va_list ap; va_start(ap, format);
+    _vsnprintf(buf, sizeof buf - 1, format, ap);
+    va_end(ap);
+    buf[sizeof buf - 1] = 0;
+    ((void (__cdecl *)(const char *, ...))0x419290)("%s", buf);
+}
+IniFileTable *GetIniFiles() { return (IniFileTable *)0x4c7738; }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -109,6 +117,7 @@ struct Hook {
 };
 
 static BYTE *g_tramp; static size_t g_trampUsed;
+static const size_t kTrampPool = 8192;   // 32 bytes per hook: 256 hooks
 
 static bool HexMatches(const BYTE *p, const char *hex)
 {
@@ -123,7 +132,7 @@ static bool Install(Hook &h)
 {
     BYTE *t = (BYTE *)h.addr;
     if (!HexMatches(t, h.expect)) { Log("SKIP %s @%08x: original bytes differ (different SQZ.EXE?)", h.name, h.addr); return false; }
-    if (!g_tramp || g_trampUsed + 32 > 4096 || h.stolen > 27) { Log("SKIP %s: no room for its trampoline", h.name); return false; }
+    if (!g_tramp || g_trampUsed + 32 > kTrampPool || h.stolen > 27) { Log("SKIP %s: no room for its trampoline", h.name); return false; }
     BYTE *tr = g_tramp + g_trampUsed; g_trampUsed += 32;
     memcpy(tr, t, h.stolen);
     if (h.relocCallPlus1) *(int *)(tr + (h.relocCallPlus1 - 1) + 1) += (int)(t - tr);
@@ -880,6 +889,204 @@ static int __stdcall h_iniparse(const char *s, float *out, const char **end)
     return b;
 }
 
+// ---- containers ("ctn") and the parsed ini files ("inip") ---------------------------------------------------------------
+// Each original instantiation has its own copy of every method; all copies of one shape share a wrapper template, tied to
+// its Hook entry for the call count. Methods are called qualified (A::Insert), so the wrappers never dispatch through the
+// vtable, which would lead back into the hook. Pure lookups also run the original and compare; everything else replaces.
+// Functions that return a String by value take the MSVC result pointer as the first stack argument.
+typedef Array<IniFileSection *> SectionArray;
+typedef Array<IniFileCache *> FileArray;
+typedef Table<String, String, StringList, 23> ValueTable;
+typedef Table<String, IniFileSection *, SectionArray, 50> SectionTable;
+
+template<class A, Hook &H> static A *THISCALL W_ctor(A *a) { H.calls++; return ::new (a) A(); }
+template<class A, Hook &H> static A *THISCALL W_copy(A *a, const A *o) { H.calls++; return ::new (a) A(*o); }
+template<class A, Hook &H> static void THISCALL W_dtor(A *a) { H.calls++; a->~A(); }
+template<class A, Hook &H> static String *THISCALL W_strAt(A *a, String *result, int i) { H.calls++; return new (result) String(a->At(i)); }
+template<class T, Hook &H> static T THISCALL W_get(Array<T> *a, int i) { H.calls++; return a->Array<T>::Get(i); }
+template<class A, class T, Hook &H> static int THISCALL W_insert(A *a, const T *v, int at) { H.calls++; return a->A::Insert(*v, at); }
+template<class A, Hook &H> static void THISCALL W_removeAt(A *a, int i) { H.calls++; a->A::RemoveAt(i); }
+template<class A, class T, Hook &H> static void THISCALL W_replace(A *a, int i, const T *v) { H.calls++; a->A::Replace(i, *v); }
+template<class T, Hook &H> static T *THISCALL W_data(Array<T> *a) { H.calls++; return a->Array<T>::Data(); }
+template<class A, Hook &H> static int THISCALL W_grow(A *a, int n) { H.calls++; return a->A::Grow(n); }
+template<class A, class K, Hook &H> static void THISCALL W_removeKey(A *a, const K *k) { H.calls++; a->A::RemoveKey(*k); }
+template<class A, class K, class V, Hook &H> static int THISCALL W_tinsert(A *a, const K *k, const V *v, int hint) { H.calls++; return a->A::Insert(*k, *v, hint); }
+template<class A, Hook &H> static String *THISCALL W_tgetStr(A *a, String *result, const String *k) { H.calls++; return new (result) String(a->Get(*k)); }
+template<class A, Hook &H> static String *THISCALL W_tgetAtStr(A *a, String *result, int i) { H.calls++; return new (result) String(a->GetAt(i)); }
+
+// run the original (trampoline) and ours, count a mismatch, return ours
+#define CTN_COMPARE(h, orig, ours) \
+    { (h).calls++; auto o = (orig); auto m = (ours); \
+      if (o != m) { (h).mismatches++; Log("MISMATCH %s orig=%08x ours=%08x", (h).name, (unsigned)o, (unsigned)m); } return m; }
+template<class A, class K, Hook &H> static int THISCALL W_contains(A *a, const K *k)
+    CTN_COMPARE(H, ((int (THISCALL *)(A *, const K *))*H.orig)(a, k), a->A::Contains(*k))
+template<class A, class K, Hook &H> static int THISCALL W_indexOf(A *a, const K *k)
+    CTN_COMPARE(H, ((int (THISCALL *)(A *, const K *))*H.orig)(a, k), a->A::IndexOf(*k))
+template<class A, class K, class V, Hook &H> static V THISCALL W_tget(A *a, const K *k)
+    CTN_COMPARE(H, ((V (THISCALL *)(A *, const K *))*H.orig)(a, k), a->Get(*k))
+
+static Hook H_as_ctor, H_as_copy, H_as_dtor, H_as_get, H_as_at, H_as_insert, H_as_remove, H_as_replace, H_as_data, H_as_grow,
+            H_ai_ctor, H_ai_dtor, H_ai_get, H_ai_insert, H_ai_remove, H_ai_replace, H_ai_data, H_ai_grow,
+            H_asec_get, H_asec_insert, H_asec_remove, H_asec_replace, H_asec_data, H_asec_grow, H_asec_dtor,
+            H_afile_get, H_afile_insert, H_afile_remove, H_afile_replace, H_afile_data, H_afile_grow, H_afile_dtor,
+            H_pa3_dtor, H_pa23_dtor, H_pa50_dtor, H_pa51_dtor,
+            H_s23_insert, H_s23_replace, H_s23_contains, H_s23_indexof, H_s23_removekey, H_s23_dtor,
+            H_s50_insert, H_s50_replace, H_s50_contains, H_s50_indexof, H_s50_removekey, H_s50_dtor,
+            H_s51_insert, H_s51_replace, H_s51_contains, H_s51_indexof, H_s51_removekey, H_s51_dtor,
+            H_t23_ctor, H_t23_dtor, H_t23_insert, H_t23_contains, H_t23_indexof, H_t23_removeat, H_t23_removekey, H_t23_get, H_t23_getat,
+            H_bot23_dtor,
+            H_t50_ctor, H_t50_dtor, H_t50_insert, H_t50_contains, H_t50_indexof, H_t50_removeat, H_t50_removekey, H_t50_get,
+            H_t51_dtor, H_t51_insert, H_t51_contains, H_t51_indexof, H_t51_removeat, H_t51_removekey, H_t51_get;
+
+static Hook H_ip_skip, H_ip_back, H_ip_blank, H_ip_add, H_ip_secfind, H_ip_seckeys, H_ip_filedtor, H_ip_load, H_ip_filekeys,
+            H_ip_find, H_ip_open, H_ip_closeall, H_ip_intlist, H_ip_keys, H_ip_parseints;
+static char *__cdecl h_ip_skip(char *s) CTN_COMPARE(H_ip_skip, ((char *(__cdecl *)(char *))*H_ip_skip.orig)(s), IniSkipBlanks(s))
+static char *__cdecl h_ip_back(char *a, char *p) CTN_COMPARE(H_ip_back, ((char *(__cdecl *)(char *, char *))*H_ip_back.orig)(a, p), IniBackOverBlanks(a, p))
+static char *__cdecl h_ip_blank(char *s) CTN_COMPARE(H_ip_blank, ((char *(__cdecl *)(char *))*H_ip_blank.orig)(s), IniFindBlank(s))
+static void THISCALL h_ip_add(IniFileSection *s, char *line, const char *sect) { H_ip_add.calls++; s->Add(line, sect); }
+static const char *THISCALL h_ip_secfind(IniFileSection *s, const char *key)
+    CTN_COMPARE(H_ip_secfind, ((const char *(THISCALL *)(IniFileSection *, const char *))*H_ip_secfind.orig)(s, key), s->Find(key))
+static StringList *THISCALL h_ip_seckeys(IniFileSection *s) { H_ip_seckeys.calls++; return s->Keys(); }
+static void THISCALL h_ip_filedtor(IniFileCache *f) { H_ip_filedtor.calls++; f->~IniFileCache(); }
+static int THISCALL h_ip_load(IniFileCache *f, const char *path) { H_ip_load.calls++; return f->Load(path); }
+static StringList *THISCALL h_ip_filekeys(IniFileCache *f, const char *sect)
+    CTN_COMPARE(H_ip_filekeys, ((StringList *(THISCALL *)(IniFileCache *, const char *))*H_ip_filekeys.orig)(f, sect), f->Keys(sect))
+static const char *THISCALL h_ip_find(IniFileCache *f, const char *sect, const char *key)
+    CTN_COMPARE(H_ip_find, ((const char *(THISCALL *)(IniFileCache *, const char *, const char *))*H_ip_find.orig)(f, sect, key), f->Find(sect, key))
+static IniFileCache *__cdecl h_ip_open(const char *path) { H_ip_open.calls++; return IniOpen(path); }
+static void __cdecl h_ip_closeall() { H_ip_closeall.calls++; IniCloseAll(); }
+static IntList *THISCALL h_ip_intlist(const IniReader *r, const char *key) { H_ip_intlist.calls++; return r->GetIntList(key); }
+static StringList *THISCALL h_ip_keys(const IniReader *r) { H_ip_keys.calls++; return r->GetKeys(); }
+static IntList *THISCALL h_ip_parseints(const IniReader *r, const char *s) { H_ip_parseints.calls++; return r->ParseIntList(s); }
+
+static Hook *g_ctnHooks[] = {
+    &H_as_ctor, &H_as_copy, &H_as_dtor, &H_as_get, &H_as_at, &H_as_insert, &H_as_remove, &H_as_replace, &H_as_data, &H_as_grow,
+    &H_ai_ctor, &H_ai_dtor, &H_ai_get, &H_ai_insert, &H_ai_remove, &H_ai_replace, &H_ai_data, &H_ai_grow,
+    &H_asec_get, &H_asec_insert, &H_asec_remove, &H_asec_replace, &H_asec_data, &H_asec_grow, &H_asec_dtor,
+    &H_afile_get, &H_afile_insert, &H_afile_remove, &H_afile_replace, &H_afile_data, &H_afile_grow, &H_afile_dtor,
+    &H_pa3_dtor, &H_pa23_dtor, &H_pa50_dtor, &H_pa51_dtor,
+    &H_s23_insert, &H_s23_replace, &H_s23_contains, &H_s23_indexof, &H_s23_removekey, &H_s23_dtor,
+    &H_s50_insert, &H_s50_replace, &H_s50_contains, &H_s50_indexof, &H_s50_removekey, &H_s50_dtor,
+    &H_s51_insert, &H_s51_replace, &H_s51_contains, &H_s51_indexof, &H_s51_removekey, &H_s51_dtor,
+    &H_t23_ctor, &H_t23_dtor, &H_t23_insert, &H_t23_contains, &H_t23_indexof, &H_t23_removeat, &H_t23_removekey, &H_t23_get, &H_t23_getat,
+    &H_bot23_dtor,
+    &H_t50_ctor, &H_t50_dtor, &H_t50_insert, &H_t50_contains, &H_t50_indexof, &H_t50_removeat, &H_t50_removekey, &H_t50_get,
+    &H_t51_dtor, &H_t51_insert, &H_t51_contains, &H_t51_indexof, &H_t51_removeat, &H_t51_removekey, &H_t51_get,
+    &H_ip_skip, &H_ip_back, &H_ip_blank, &H_ip_add, &H_ip_secfind, &H_ip_seckeys, &H_ip_filedtor, &H_ip_load, &H_ip_filekeys,
+    &H_ip_find, &H_ip_open, &H_ip_closeall, &H_ip_intlist, &H_ip_keys, &H_ip_parseints };
+
+static void SetupContainers()
+{
+    static void *orig[sizeof g_ctnHooks / sizeof g_ctnHooks[0]];
+    static int used;
+    auto C = [](Hook &h, const char *name, DWORD addr, int stolen, const char *hex, void *fn, const char *id) {
+        h = { name, addr, stolen, hex, fn, &orig[used++], false, 0, 0, id, 0 };
+    };
+    // Array<String> (shared by every PrimitiveArray<String,N> and Set<String,N>)
+    C(H_as_ctor,    "Array<String>::Array",      0x45e1b0, 6, "64a100000000", (void *)W_ctor<Array<String>, H_as_ctor>, "ctn");
+    C(H_as_copy,    "Array<String>::Array(copy)", 0x45e0e0, 6, "64a100000000", (void *)W_copy<Array<String>, H_as_copy>, "ctn");
+    C(H_as_dtor,    "Array<String>::~Array",     0x45e250, 10, "568b410cc7010c004a00", (void *)W_dtor<Array<String>, H_as_dtor>, "ctn");
+    C(H_as_get,     "Array<String>::Get",        0x40ec10, 6, "64a100000000", (void *)W_strAt<Array<String>, H_as_get>, "ctn");
+    C(H_as_at,      "Array<String>::At",         0x40f310, 6, "64a100000000", (void *)W_strAt<Array<String>, H_as_at>, "ctn");
+    C(H_as_insert,  "Array<String>::Insert",     0x45e280, 5, "53568b0157", (void *)W_insert<Array<String>, String, H_as_insert>, "ctn");
+    C(H_as_remove,  "Array<String>::RemoveAt",   0x45e300, 5, "53568b4104", (void *)W_removeAt<Array<String>, H_as_remove>, "ctn");
+    C(H_as_replace, "Array<String>::Replace",    0x45e340, 7, "8b4424088b490c", (void *)W_replace<Array<String>, String, H_as_replace>, "ctn");
+    C(H_as_data,    "Array<String>::Data",       0x45e360, 5, "8b410cc3cc", (void *)W_data<String, H_as_data>, "ctn");
+    C(H_as_grow,    "Array<String>::Grow",       0x45e370, 6, "64a100000000", (void *)W_grow<Array<String>, H_as_grow>, "ctn");
+    // Array<int> (IntList)
+    C(H_ai_ctor,    "Array<int>::Array",         0x45d8d0, 9, "566a08c701ccff4900", (void *)W_ctor<Array<int>, H_ai_ctor>, "ctn");
+    C(H_ai_dtor,    "Array<int>::~Array",        0x45d900, 9, "8b410cc701ccff4900", (void *)W_dtor<Array<int>, H_ai_dtor>, "ctn");
+    C(H_ai_get,     "Array<int>::Get",           0x40ec80, 7, "8b490c8b442404", (void *)W_get<int, H_ai_get>, "ctn");
+    C(H_ai_insert,  "Array<int>::Insert",        0x45d920, 5, "53568b0157", (void *)W_insert<Array<int>, int, H_ai_insert>, "ctn");
+    C(H_ai_remove,  "Array<int>::RemoveAt",      0x45d990, 8, "568b41048b742408", (void *)W_removeAt<Array<int>, H_ai_remove>, "ctn");
+    C(H_ai_replace, "Array<int>::Replace",       0x45d9d0, 7, "8b4424088b490c", (void *)W_replace<Array<int>, int, H_ai_replace>, "ctn");
+    C(H_ai_data,    "Array<int>::Data",          0x45d9f0, 5, "8b410cc3cc", (void *)W_data<int, H_ai_data>, "ctn");
+    C(H_ai_grow,    "Array<int>::Grow",          0x45da00, 5, "53568b5108", (void *)W_grow<Array<int>, H_ai_grow>, "ctn");
+    // Array<IniFileSection*>, Array<IniFileCache*> (constructors inlined in the Table constructors)
+    C(H_asec_get,     "Array<IniFileSection*>::Get",      0x46d400, 7, "8b490c8b442404", (void *)W_get<IniFileSection *, H_asec_get>, "ctn");
+    C(H_asec_insert,  "Array<IniFileSection*>::Insert",   0x46dc60, 5, "53568b0157", (void *)W_insert<SectionArray, IniFileSection *, H_asec_insert>, "ctn");
+    C(H_asec_remove,  "Array<IniFileSection*>::RemoveAt", 0x46dcd0, 8, "568b41048b742408", (void *)W_removeAt<SectionArray, H_asec_remove>, "ctn");
+    C(H_asec_replace, "Array<IniFileSection*>::Replace",  0x46dd10, 7, "8b4424088b490c", (void *)W_replace<SectionArray, IniFileSection *, H_asec_replace>, "ctn");
+    C(H_asec_data,    "Array<IniFileSection*>::Data",     0x46dd30, 5, "8b410cc3cc", (void *)W_data<IniFileSection *, H_asec_data>, "ctn");
+    C(H_asec_grow,    "Array<IniFileSection*>::Grow",     0x46dd40, 5, "53568b5108", (void *)W_grow<SectionArray, H_asec_grow>, "ctn");
+    C(H_asec_dtor,    "Array<IniFileSection*>::~Array",   0x46f350, 9, "8b410cc7016c0d4a00", (void *)W_dtor<SectionArray, H_asec_dtor>, "ctn");
+    C(H_afile_get,     "Array<IniFileCache*>::Get",       0x46e090, 7, "8b490c8b442404", (void *)W_get<IniFileCache *, H_afile_get>, "ctn");
+    C(H_afile_insert,  "Array<IniFileCache*>::Insert",    0x46e900, 5, "53568b0157", (void *)W_insert<FileArray, IniFileCache *, H_afile_insert>, "ctn");
+    C(H_afile_remove,  "Array<IniFileCache*>::RemoveAt",  0x46e970, 8, "568b41048b742408", (void *)W_removeAt<FileArray, H_afile_remove>, "ctn");
+    C(H_afile_replace, "Array<IniFileCache*>::Replace",   0x46e9b0, 7, "8b4424088b490c", (void *)W_replace<FileArray, IniFileCache *, H_afile_replace>, "ctn");
+    C(H_afile_data,    "Array<IniFileCache*>::Data",      0x46e9d0, 5, "8b410cc3cc", (void *)W_data<IniFileCache *, H_afile_data>, "ctn");
+    C(H_afile_grow,    "Array<IniFileCache*>::Grow",      0x46e9e0, 5, "53568b5108", (void *)W_grow<FileArray, H_afile_grow>, "ctn");
+    C(H_afile_dtor,    "Array<IniFileCache*>::~Array",    0x46f3d0, 9, "8b410cc7011c0e4a00", (void *)W_dtor<FileArray, H_afile_dtor>, "ctn");
+    // PrimitiveArray<String,N> destructors
+    C(H_pa3_dtor,  "PrimitiveArray<String,3>::~",  0x40be40, 6, "64a100000000", (void *)W_dtor<StringList, H_pa3_dtor>, "ctn");
+    C(H_pa23_dtor, "PrimitiveArray<String,23>::~", 0x46f4e0, 6, "64a100000000", (void *)W_dtor<PrimitiveArray<String, 23>, H_pa23_dtor>, "ctn");
+    C(H_pa50_dtor, "PrimitiveArray<String,50>::~", 0x46f760, 6, "64a100000000", (void *)W_dtor<PrimitiveArray<String, 50>, H_pa50_dtor>, "ctn");
+    C(H_pa51_dtor, "PrimitiveArray<String,51>::~", 0x46f7b0, 6, "64a100000000", (void *)W_dtor<PrimitiveArray<String, 51>, H_pa51_dtor>, "ctn");
+    // Set<String,23> (section values), 50 (sections), 51 (files)
+    C(H_s23_insert,    "Set<String,23>::Insert",    0x462380, 6, "64a100000000", (void *)W_insert<Set<String, 23>, String, H_s23_insert>, "ctn");
+    C(H_s23_replace,   "Set<String,23>::Replace",   0x4627e0, 6, "64a100000000", (void *)W_replace<Set<String, 23>, String, H_s23_replace>, "ctn");
+    C(H_s23_contains,  "Set<String,23>::Contains",  0x4626f0, 5, "8b44240453", (void *)W_contains<Set<String, 23>, String, H_s23_contains>, "ctn");
+    C(H_s23_indexof,   "Set<String,23>::IndexOf",   0x462710, 5, "53568b7104", (void *)W_indexOf<Set<String, 23>, String, H_s23_indexof>, "ctn");
+    C(H_s23_removekey, "Set<String,23>::RemoveKey", 0x4627c0, 5, "8b44240456", (void *)W_removeKey<Set<String, 23>, String, H_s23_removekey>, "ctn");
+    C(H_s23_dtor,      "Set<String,23>::~Set",      0x46eeb0, 6, "64a100000000", (void *)W_dtor<Set<String, 23>, H_s23_dtor>, "ctn");
+    C(H_s50_insert,    "Set<String,50>::Insert",    0x46d640, 6, "64a100000000", (void *)W_insert<Set<String, 50>, String, H_s50_insert>, "ctn");
+    C(H_s50_replace,   "Set<String,50>::Replace",   0x46daa0, 6, "64a100000000", (void *)W_replace<Set<String, 50>, String, H_s50_replace>, "ctn");
+    C(H_s50_contains,  "Set<String,50>::Contains",  0x46d9b0, 5, "8b44240453", (void *)W_contains<Set<String, 50>, String, H_s50_contains>, "ctn");
+    C(H_s50_indexof,   "Set<String,50>::IndexOf",   0x46d9d0, 5, "53568b7104", (void *)W_indexOf<Set<String, 50>, String, H_s50_indexof>, "ctn");
+    C(H_s50_removekey, "Set<String,50>::RemoveKey", 0x46da80, 5, "8b44240456", (void *)W_removeKey<Set<String, 50>, String, H_s50_removekey>, "ctn");
+    C(H_s50_dtor,      "Set<String,50>::~Set",      0x46f2f0, 6, "64a100000000", (void *)W_dtor<Set<String, 50>, H_s50_dtor>, "ctn");
+    C(H_s51_insert,    "Set<String,51>::Insert",    0x46e2d0, 6, "64a100000000", (void *)W_insert<Set<String, 51>, String, H_s51_insert>, "ctn");
+    C(H_s51_replace,   "Set<String,51>::Replace",   0x46e740, 6, "64a100000000", (void *)W_replace<Set<String, 51>, String, H_s51_replace>, "ctn");
+    C(H_s51_contains,  "Set<String,51>::Contains",  0x46e650, 5, "8b44240453", (void *)W_contains<Set<String, 51>, String, H_s51_contains>, "ctn");
+    C(H_s51_indexof,   "Set<String,51>::IndexOf",   0x46e670, 5, "53568b5904", (void *)W_indexOf<Set<String, 51>, String, H_s51_indexof>, "ctn");
+    C(H_s51_removekey, "Set<String,51>::RemoveKey", 0x46e720, 5, "8b44240456", (void *)W_removeKey<Set<String, 51>, String, H_s51_removekey>, "ctn");
+    C(H_s51_dtor,      "Set<String,51>::~Set",      0x46f370, 6, "64a100000000", (void *)W_dtor<Set<String, 51>, H_s51_dtor>, "ctn");
+    // Table<String,String,..,23> (section values) and its BufferObjectTable
+    C(H_t23_ctor,      "Table<..23>::Table",        0x4629a0, 6, "64a100000000", (void *)W_ctor<ValueTable, H_t23_ctor>, "ctn");
+    C(H_t23_dtor,      "Table<..23>::~Table",       0x462b50, 6, "64a100000000", (void *)W_dtor<ValueTable, H_t23_dtor>, "ctn");
+    C(H_t23_insert,    "Table<..23>::Insert",       0x462bc0, 6, "53568b74240c", (void *)W_tinsert<ValueTable, String, String, H_t23_insert>, "ctn");
+    C(H_t23_contains,  "Table<..23>::Contains",     0x462c20, 8, "5383c1048b442408", (void *)W_contains<ValueTable, String, H_t23_contains>, "ctn");
+    C(H_t23_indexof,   "Table<..23>::IndexOf",      0x462c40, 8, "5383c1048b442408", (void *)W_indexOf<ValueTable, String, H_t23_indexof>, "ctn");
+    C(H_t23_removeat,  "Table<..23>::RemoveAt",     0x462c60, 8, "56578bf98b74240c", (void *)W_removeAt<ValueTable, H_t23_removeat>, "ctn");
+    C(H_t23_removekey, "Table<..23>::RemoveKey",    0x462c90, 5, "8b44240453", (void *)W_removeKey<ValueTable, String, H_t23_removekey>, "ctn");
+    C(H_t23_get,       "Table<..23>::Get",          0x462cc0, 6, "64a100000000", (void *)W_tgetStr<ValueTable, H_t23_get>, "ctn");
+    C(H_t23_getat,     "Table<..23>::GetAt",        0x40f2a0, 6, "64a100000000", (void *)W_tgetAtStr<ValueTable, H_t23_getat>, "ctn");
+    C(H_bot23_dtor,    "BufferObjectTable<..23>::~", 0x40c3d0, 6, "64a100000000", (void *)W_dtor<IniValueTable, H_bot23_dtor>, "ctn");
+    // Table<String,IniFileSection*,..,50> (a file's sections)
+    C(H_t50_ctor,      "Table<..50>::Table",        0x46d2c0, 6, "64a100000000", (void *)W_ctor<SectionTable, H_t50_ctor>, "ctn");
+    C(H_t50_dtor,      "Table<..50>::~Table",       0x46ddc0, 6, "64a100000000", (void *)W_dtor<SectionTable, H_t50_dtor>, "ctn");
+    C(H_t50_insert,    "Table<..50>::Insert",       0x46de30, 7, "535657558b7104", (void *)W_tinsert<SectionTable, String, IniFileSection *, H_t50_insert>, "ctn");
+    C(H_t50_contains,  "Table<..50>::Contains",     0x46de90, 8, "5383c1048b442408", (void *)W_contains<SectionTable, String, H_t50_contains>, "ctn");
+    C(H_t50_indexof,   "Table<..50>::IndexOf",      0x46deb0, 8, "5383c1048b442408", (void *)W_indexOf<SectionTable, String, H_t50_indexof>, "ctn");
+    C(H_t50_removeat,  "Table<..50>::RemoveAt",     0x46ded0, 8, "56578bf98b74240c", (void *)W_removeAt<SectionTable, H_t50_removeat>, "ctn");
+    C(H_t50_removekey, "Table<..50>::RemoveKey",    0x46df00, 5, "8b44240453", (void *)W_removeKey<SectionTable, String, H_t50_removekey>, "ctn");
+    C(H_t50_get,       "Table<..50>::Get",          0x46df30, 5, "8b44240453", (void *)W_tget<SectionTable, String, IniFileSection *, H_t50_get>, "ctn");
+    // Table<String,IniFileCache*,..,51> (the global cache; its constructor runs before the hooks are in)
+    C(H_t51_dtor,      "Table<..51>::~Table",       0x46ea60, 6, "64a100000000", (void *)W_dtor<IniFileTable, H_t51_dtor>, "ctn");
+    C(H_t51_insert,    "Table<..51>::Insert",       0x46ead0, 6, "53568b74240c", (void *)W_tinsert<IniFileTable, String, IniFileCache *, H_t51_insert>, "ctn");
+    C(H_t51_contains,  "Table<..51>::Contains",     0x46eb30, 8, "5383c1048b442408", (void *)W_contains<IniFileTable, String, H_t51_contains>, "ctn");
+    C(H_t51_indexof,   "Table<..51>::IndexOf",      0x46eb50, 8, "5383c1048b442408", (void *)W_indexOf<IniFileTable, String, H_t51_indexof>, "ctn");
+    C(H_t51_removeat,  "Table<..51>::RemoveAt",     0x46eb70, 8, "56578bf98b74240c", (void *)W_removeAt<IniFileTable, H_t51_removeat>, "ctn");
+    C(H_t51_removekey, "Table<..51>::RemoveKey",    0x46eba0, 5, "8b44240453", (void *)W_removeKey<IniFileTable, String, H_t51_removekey>, "ctn");
+    C(H_t51_get,       "Table<..51>::Get",          0x46ebd0, 5, "8b44240453", (void *)W_tget<IniFileTable, String, IniFileCache *, H_t51_get>, "ctn");
+    // the parsed ini files
+    C(H_ip_skip,     "IniSkipBlanks",              0x4426d0, 7, "8b442404803800", (void *)h_ip_skip, "inip");
+    C(H_ip_back,     "IniBackOverBlanks",          0x4426f0, 8, "8b4424088b4c2404", (void *)h_ip_back, "inip");
+    C(H_ip_blank,    "IniFindBlank",               0x442710, 7, "8b442404803800", (void *)h_ip_blank, "inip");
+    C(H_ip_add,      "IniFileSection::Add",        0x442730, 6, "64a100000000", (void *)h_ip_add, "inip");
+    C(H_ip_secfind,  "IniFileSection::Find",       0x4428a0, 6, "64a100000000", (void *)h_ip_secfind, "inip");
+    C(H_ip_seckeys,  "IniFileSection::Keys",       0x442980, 5, "8d4130c3cc", (void *)h_ip_seckeys, "inip");
+    C(H_ip_filedtor, "IniFileCache::~IniFileCache", 0x4429e0, 6, "64a100000000", (void *)h_ip_filedtor, "inip");
+    C(H_ip_load,     "IniFileCache::Load",         0x442aa0, 6, "64a100000000", (void *)h_ip_load, "inip");
+    C(H_ip_filekeys, "IniFileCache::Keys",         0x442e20, 6, "64a100000000", (void *)h_ip_filekeys, "inip");
+    C(H_ip_find,     "IniFileCache::Find",         0x442ee0, 6, "64a100000000", (void *)h_ip_find, "inip");
+    C(H_ip_open,     "IniOpen",                    0x442fa0, 6, "64a100000000", (void *)h_ip_open, "inip");
+    C(H_ip_closeall, "IniCloseAll",                0x4430e0, 8, "56578b3d40774c00", (void *)h_ip_closeall, "inip");
+    C(H_ip_intlist,  "IniReader::GetIntList",      0x443350, 5, "8b44240456", (void *)h_ip_intlist, "inip");
+    C(H_ip_keys,     "IniReader::GetKeys",         0x443470, 6, "64a100000000", (void *)h_ip_keys, "inip");
+    C(H_ip_parseints, "IniReader::ParseIntList",   0x4435f0, 6, "64a100000000", (void *)h_ip_parseints, "inip");
+}
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -1042,6 +1249,9 @@ static void Summary()
     Log("Scene frames with warp backdrop=%u", g_warpFrames);
     for (Hook *h : g_hooks)
         Log("summary %-34s calls=%u mismatches=%u", h->name, h->calls, h->mismatches);
+    for (Hook *h : g_ctnHooks)
+        if (h->id && Listed(h->id))
+            Log("summary %-34s calls=%u mismatches=%u", h->name, h->calls, h->mismatches);
 }
 
 // ---- crash reporter: logs registers and stack for the first access violation / illegal instruction ----
@@ -1072,7 +1282,7 @@ static LONG CALLBACK CrashHandler(EXCEPTION_POINTERS *ep)
         if (IsBadReadPtr(sp + i, 4)) break;
         DWORD v = sp[i];
         if (v >= 0x401000 && v < 0x49a000) Log("  stack[%d] looks like SQZ.EXE code %08lx", i, v);
-        else if (v >= (DWORD)g_tramp && v < (DWORD)g_tramp + 4096) Log("  stack[%d] points into trampoline pool +%lx", i, v - (DWORD)g_tramp);
+        else if (v >= (DWORD)g_tramp && v < (DWORD)g_tramp + kTrampPool) Log("  stack[%d] points into trampoline pool +%lx", i, v - (DWORD)g_tramp);
     }
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -1119,9 +1329,10 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         { char exe[MAX_PATH] = ""; GetModuleFileNameA(NULL, exe, MAX_PATH);
           Log("sqzhook mode=%s pid=%lu exe=%s", g_mode == MODE_OFF ? "off" : g_mode == MODE_REPLACE ? "replace" : "compare", GetCurrentProcessId(), exe); }
         if (g_mode == MODE_OFF) return TRUE;
-        g_tramp = (BYTE *)VirtualAlloc(NULL, 4096, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+        g_tramp = (BYTE *)VirtualAlloc(NULL, kTrampPool, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
         AddVectoredExceptionHandler(1, CrashHandler);
         Setup();
+        SetupContainers();
         if (!GetEnvironmentVariableA("SQZ_REPLACE", g_replaceList, sizeof g_replaceList))
             strcpy(g_replaceList, cfgReplace);
         Log("SQZ_REPLACE=%s", g_replaceList);
@@ -1133,6 +1344,8 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
             if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky")) || (g_imgCompare && !strcmp(h->id, "img"))) Install(*h); }          // heavy: explicit opt-in
             else if (!h->replaceOnly || g_mode == MODE_REPLACE) Install(*h);
         }
+        for (Hook *h : g_ctnHooks)
+            if (Listed(h->id)) Install(*h);
     } else if (reason == DLL_PROCESS_DETACH) {
         Summary();
         if (g_log != INVALID_HANDLE_VALUE) CloseHandle(g_log);
