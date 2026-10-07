@@ -15,6 +15,7 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Gif.h/.cpp`: the game's GIF reader (header, global palette, LZW decoder) giving palette indices.
 - `Image.h/.cpp`: `ImageLoad` (GIF to pixels in the display format, rows padded to 4 bytes) and `ImageConvertRow` (palette indices to 8/16/24/32 bit through the colour masks). Used by Texture and Warp.
 - `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
+- `Bitmap.h/.cpp`: `Bitmap`, a DirectDraw offscreen surface for the 2D interface art (HUD icons, digits, load bar): colour keyed blits with retry, and the loader for the game's 8 bit `.bmp` files, which converts to the display format with `ImageConvertRow`. Its seven virtual methods are called by the original code through the original vtable.
 - `Original.h`: the boundary with the original binary. Every function or global the code above still takes from `SQZ.EXE` (allocators, the error reporters, the renderer and scene globals, the window callback) is declared there, with its address. Nothing else in `src/` refers to the original, so that list is what a standalone build would still have to provide. The modules call each other directly (`Warp` and `Scene` drive `SkyRenderer`, `Texture` and `Warp` use `ImageLoad`).
 - `LayoutCheck.cpp`: compile-time asserts that the structs have the original field offsets and sizes (`Renderer` 0x9cc, `Scene`, `Warp`, `WarpFace`, `BodyPart`/`AnimatedBody`/`BodyPose`, the `Sqg` structs, `DisplayFormat`).
 
@@ -29,5 +30,5 @@ Every function here has been verified inside the real, unmodified game with `hoo
 ## Syntax check
 Needs the DirectX 7 SDK headers (not included; set `DX7_INCLUDE`):
 ```
-g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp Gif.cpp Image.cpp LayoutCheck.cpp
+g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp Gif.cpp Image.cpp Bitmap.cpp LayoutCheck.cpp
 ```

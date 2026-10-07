@@ -54,3 +54,9 @@ static_assert(offsetof(WarpFace, extentB) == 0x04 && offsetof(WarpFace, zero08) 
 static_assert(sizeof(SqgGroup) == 0x24 && sizeof(SqgDelta) == 0x10 && sizeof(SqgDeltaList) == 8 && sizeof(PZMorphMesh) == 0x0c,
               "Sqg struct sizes");
 static_assert(sizeof(SqgModel) == 0x2c, "SqgModel size");
+
+// Bitmap
+#include "Bitmap.h"
+static_assert(offsetof(Bitmap, desc) == 0x04 && offsetof(Bitmap, renderer) == 0x70 && offsetof(Bitmap, surface) == 0x74 &&
+              offsetof(Bitmap, width) == 0x78 && offsetof(Bitmap, height) == 0x7c, "Bitmap fields");
+static_assert(sizeof(Bitmap) == 0x80, "Bitmap size");

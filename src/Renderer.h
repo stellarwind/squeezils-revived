@@ -121,4 +121,4 @@ private:
 void  QueryDesktopMode(int *width, int *height, int *bpp);                // 0x474360
 BOOL  CheckDesktopDepth(int *width, int *height);                         // 0x4743b0 requires 8..16 bpp
 DWORD GetColorKeyValue(LPDIRECTDRAWSURFACE surf, COLORREF color);         // 0x474230
-void  SetSourceColorKey(LPDIRECTDRAWSURFACE surf, COLORREF color);        // 0x474310
+HRESULT SetSourceColorKey(LPDIRECTDRAWSURFACE surf, COLORREF color);        // 0x474310

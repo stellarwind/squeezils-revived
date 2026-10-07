@@ -12,6 +12,7 @@
 #include "Original.h"
 #include "Sky.h"
 #include "Image.h"
+#include "Bitmap.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -739,6 +740,39 @@ static void __cdecl h_imgrow(void *dst, const int *fmt, const unsigned char *src
     CompareMem(H_imgrow, orig, mine, bytes);
 }
 
+// ---- Bitmap, the DirectDraw surface wrapper for the 2D artwork (0x473760-0x474230) ---------
+// Replace only ("bmp"): the methods draw and lock surfaces, which cannot be compared on a snapshot. Virtual methods are
+// reached through the original vtable, so detouring the functions the vtable points to covers the original callers too.
+#define THISCALL __attribute__((thiscall))
+static Hook H_bmpctor, H_bmpdtor, H_bmpcopy, H_bmprect, H_bmpsized, H_bmpcreate, H_bmpcapture, H_bmpdrawsurf, H_bmpdrawat, H_bmpdrawbmp, H_bmpload;
+
+static void *(THISCALL *o_bmpctor)(Bitmap *, Renderer *);
+static void *THISCALL h_bmpctor(Bitmap *b, Renderer *r) { HEAVY_LOG(H_bmpctor); new (b) Bitmap(r); return b; }
+static void (__fastcall *o_bmpdtor)(Bitmap *);
+static void __fastcall h_bmpdtor(Bitmap *b) { HEAVY_LOG(H_bmpdtor); b->~Bitmap(); }
+static BOOL (THISCALL *o_bmpcopy)(Bitmap *, Bitmap *);
+static BOOL THISCALL h_bmpcopy(Bitmap *b, Bitmap *src) { HEAVY_LOG(H_bmpcopy); return b->CopyFrom(src); }
+static BOOL (THISCALL *o_bmprect)(Bitmap *, Bitmap *, int, int, int, int, int, int, int, int);
+static BOOL THISCALL h_bmprect(Bitmap *b, Bitmap *src, int a, int c, int d, int e, int f, int g, int h, int i)
+{ HEAVY_LOG(H_bmprect); return b->CopyRectFrom(src, a, c, d, e, f, g, h, i); }
+static LPDIRECTDRAWSURFACE (THISCALL *o_bmpsized)(Bitmap *, int, int);
+static LPDIRECTDRAWSURFACE THISCALL h_bmpsized(Bitmap *b, int w, int h) { HEAVY_LOG(H_bmpsized); return b->CreateSurfaceSized(w, h); }
+static LPDIRECTDRAWSURFACE (__fastcall *o_bmpcreate)(Bitmap *);
+static LPDIRECTDRAWSURFACE __fastcall h_bmpcreate(Bitmap *b) { HEAVY_LOG(H_bmpcreate); return b->CreateSurface(); }
+static BOOL (THISCALL *o_bmpcapture)(Bitmap *, LPDIRECTDRAWSURFACE, int, int);
+static BOOL THISCALL h_bmpcapture(Bitmap *b, LPDIRECTDRAWSURFACE s, int x, int y) { HEAVY_LOG(H_bmpcapture); return b->CaptureFrom(s, x, y); }
+static BOOL (THISCALL *o_bmpdrawsurf)(Bitmap *, LPDIRECTDRAWSURFACE, int, int, int, int, int, int, int, int);
+static BOOL THISCALL h_bmpdrawsurf(Bitmap *b, LPDIRECTDRAWSURFACE d, int a, int c, int e, int f, int g, int h, int i, int j)
+{ HEAVY_LOG(H_bmpdrawsurf); return b->DrawToSurface(d, a, c, e, f, g, h, i, j); }
+static BOOL (THISCALL *o_bmpdrawat)(Bitmap *, LPDIRECTDRAWSURFACE, int, int, int, int, int);
+static BOOL THISCALL h_bmpdrawat(Bitmap *b, LPDIRECTDRAWSURFACE d, int x, int y, int sx, int sy, int key)
+{ HEAVY_LOG(H_bmpdrawat); return b->DrawToSurfaceAt(d, x, y, sx, sy, key); }
+static BOOL (THISCALL *o_bmpdrawbmp)(Bitmap *, Bitmap *, int, int, int, int);
+static BOOL THISCALL h_bmpdrawbmp(Bitmap *b, Bitmap *d, int x, int y, int sx, int sy)
+{ HEAVY_LOG(H_bmpdrawbmp); return b->DrawToBitmap(d, x, y, sx, sy); }
+static LPDIRECTDRAWSURFACE (THISCALL *o_bmpload)(Bitmap *, const char *);
+static LPDIRECTDRAWSURFACE THISCALL h_bmpload(Bitmap *b, const char *path) { HEAVY_LOG(H_bmpload); return b->Load(path); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -750,7 +784,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel, &H_lightamb, &H_lightdir, &H_fxform, &H_fdecal,
                            &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif, &H_bpapply, &H_bpbuild, &H_abroot, &H_abbuild, &H_abdestroy, &H_pzdestroy, &H_sdtor, &H_quad,
                            &H_skyinit, &H_skyshut, &H_skyface, &H_skyout, &H_skyview, &H_skyorigin, &H_skyfov, &H_skydraw, &H_skyresize, &H_skymode, &H_skyrot, &H_skymul,
-                           &H_imgload, &H_imgrow };
+                           &H_imgload, &H_imgrow,
+                           &H_bmpctor, &H_bmpdtor, &H_bmpcopy, &H_bmprect, &H_bmpsized, &H_bmpcreate, &H_bmpcapture, &H_bmpdrawsurf, &H_bmpdrawat, &H_bmpdrawbmp, &H_bmpload };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -853,6 +888,17 @@ static void Setup()
     H_skyrot    = { "Sky::RotationMatrix", 0x48d7a0, 6,  "d944240cd9ff",               (void *)h_skyrot,    (void **)&o_skyrot,    false, 0, 0, "sky", 0 };
     H_skymul    = { "Sky::MatrixMultiply", 0x48d860, 5,  "8b4c240453",                 (void *)h_skymul,    (void **)&o_skymul,    false, 0, 0, "sky", 0 };
     H_imgload   = { "ImageLoad",           0x477cc0, 6,  "81ec10030000",               (void *)h_imgload,   (void **)&o_imgload,   false, 0, 0, "img", 0 };
+    H_bmpctor = { "Bitmap::Bitmap", 0x473760, 6, "33d28b442404", (void *)h_bmpctor, (void **)&o_bmpctor, false, 0, 0, "bmp", 0 };
+    H_bmpdtor = { "Bitmap::~Bitmap", 0x473890, 9, "8b4174c70160104a00", (void *)h_bmpdtor, (void **)&o_bmpdtor, false, 0, 0, "bmp", 0 };
+    H_bmpcopy = { "Bitmap::CopyFrom", 0x473780, 5, "5356578bf1", (void *)h_bmpcopy, (void **)&o_bmpcopy, false, 0, 0, "bmp", 0 };
+    H_bmprect = { "Bitmap::CopyRectFrom", 0x473810, 6, "5356578b4174", (void *)h_bmprect, (void **)&o_bmprect, false, 0, 0, "bmp", 0 };
+    H_bmpsized = { "Bitmap::CreateSurfaceSized", 0x4738c0, 11, "83ec04c744240000000000", (void *)h_bmpsized, (void **)&o_bmpsized, false, 0, 0, "bmp", 0 };
+    H_bmpcreate = { "Bitmap::CreateSurface", 0x473940, 11, "83ec04c744240000000000", (void *)h_bmpcreate, (void **)&o_bmpcreate, false, 0, 0, "bmp", 0 };
+    H_bmpcapture = { "Bitmap::CaptureFrom", 0x473e80, 6, "81ec84000000", (void *)h_bmpcapture, (void **)&o_bmpcapture, false, 0, 0, "bmp", 0 };
+    H_bmpdrawsurf = { "Bitmap::DrawToSurface", 0x473f70, 5, "83ec645356", (void *)h_bmpdrawsurf, (void **)&o_bmpdrawsurf, false, 0, 0, "bmp", 0 };
+    H_bmpdrawat = { "Bitmap::DrawToSurfaceAt", 0x474020, 6, "81ec88000000", (void *)h_bmpdrawat, (void **)&o_bmpdrawat, false, 0, 0, "bmp", 0 };
+    H_bmpdrawbmp = { "Bitmap::DrawToBitmap", 0x474130, 6, "81ec84000000", (void *)h_bmpdrawbmp, (void **)&o_bmpdrawbmp, false, 0, 0, "bmp", 0 };
+    H_bmpload = { "Bitmap::Load", 0x4739d0, 6, "81ece4030000", (void *)h_bmpload, (void **)&o_bmpload, false, 0, 0, "bmp", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
