@@ -4,6 +4,8 @@
 #pragma once
 #include "Renderer.h"
 
+class Warp;
+
 class Scene {
 public:
     Scene();                                              // 0x476720
@@ -18,6 +20,9 @@ public:
     void  SetFrameTransform(IDirect3DRMFrame *frame, const float *m);   // 0x477040 (position m[12..14], dir m[8..10], up m[4..6])
     BOOL  SetSceneChild(IDirect3DRMFrame *frame);         // 0x4772d0 attaches `frame` under the renderer's scene frame
     BOOL  DeleteSceneChild();                             // 0x477340
+    BOOL  LoadWarp(const char *name);                     // 0x4769a0 loads the sky named by the world's WarpPrefix
+    void  SetCameraTransform(const float *m);             // 0x476e10 moves the camera frame and draws the sky for the same view
+    void  SetViewParams(float nearPlane, float farPlane, float fovDegrees);   // 0x476e40
     IDirect3DRMFrame *CreateSceneFrame();                 // 0x476f40 new frame under sceneChild (parent owns it)
     IDirect3DRMFrame *CreateFrameUnder(IDirect3DRMFrame *parent);   // 0x476f90 parent == NULL: caller owns the frame
     // 0x477400 builds a decal sprite: clones the texture image, applies decal settings, wraps it in a new frame.
@@ -34,7 +39,7 @@ public:
     LPDIRECTDRAWSURFACE   warpSurface;  // 0x04 offscreen, half the render size
     IDirect3DRMFrame     *lightsFrame;  // 0x08
     IDirect3DRMFrame     *sceneChild;   // 0x0c
-    void                 *warp;         // 0x10 optional Warp object (0x1e4 bytes), not reconstructed yet
+    Warp                 *warp;         // 0x10 the sky (0x1e4 bytes), created by LoadWarp, NULL when the world has none
     int                   warpWidth;    // 0x14
     int                   warpHeight;   // 0x18
 };
@@ -42,3 +47,7 @@ public:
 // Free helpers that work on any D3DRM frame
 BOOL DestroyFrame(IDirect3DRMFrame *frame);                                   // 0x476ff0 detach from parent (or release) and drop our reference
 void GetFrameMatrix(IDirect3DRMFrame *frame, IDirect3DRMFrame *ref, float m[16]);   // 0x477120 inverse of SetFrameTransform: rows right, up, dir, position
+IDirect3DRMFrame *GetFrameParent(IDirect3DRMFrame *frame);                    // 0x4772a0 parent frame, no reference kept
+HRESULT AddVisualToFrame(IDirect3DRMFrame *frame, IDirect3DRMVisual *visual);        // 0x4773a0
+HRESULT AddChildToFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child);            // 0x4773c0
+HRESULT DeleteChildFromFrame(IDirect3DRMFrame *frame, IDirect3DRMFrame *child);       // 0x4773e0
