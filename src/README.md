@@ -12,11 +12,12 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `SqgModel.h/.cpp`: the `.sqg` model format (vertices, face lists, groups, morph deltas): the loader, the `MeshBuilder` frame builder the game uses for its models, the `Mesh` builder for morphing parts and the per-frame morph update.
 - `Warp.h/.cpp`: the sky object. Loads the six-view cube map GIFs and, each frame, picks the cube face the camera looks at and drives the software renderer.
 - `Sky.h/.cpp`: `SkyRenderer`, the software renderer behind the sky: per-row viewing rays projected into the fisheye cube faces, then a parabola per row walked in fixed point (8 and 16 bit output). Only the mode the game uses.
+- `Gif.h/.cpp`: the game's GIF reader (header, global palette, LZW decoder) giving palette indices.
+- `Image.h/.cpp`: `ImageLoad` (GIF to pixels in the display format, rows padded to 4 bytes) and `ImageConvertRow` (palette indices to 8/16/24/32 bit through the colour masks). Used by Texture and Warp.
 - `Scene.h/.cpp`: the per-frame draw path on top of the renderer, complete (z-buffer and back-buffer clear, `Viewport::Render`, present blit, scene frames, decal sprites, frame transform helpers).
 - `LayoutCheck.cpp`: compile-time asserts that `Renderer` has the original field offsets and size (0x9cc). Also checks `Scene` (0x1c bytes).
 
 ## Not reconstructed yet
-- The GIF decoder (`0x479290`-`0x479b70`): `Warp` and the texture loader call the original code for it.
 - The sky renderer's modes 0 and 2 (the game only uses mode 1) and its least-squares table.
 - `Scene::SetQuality` and `Warp::Resize` never ran in a normal session, so they are unverified.
 - `CheckDesktopDepth`, the `Error`/`FatalError` boxes' guessed title/strings and a few trivial setters are untested.
@@ -24,5 +25,5 @@ Every function here has been verified inside the real, unmodified game with `hoo
 ## Syntax check
 Needs the DirectX 7 SDK headers (not included; set `DX7_INCLUDE`):
 ```
-g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp LayoutCheck.cpp
+g++ -m32 -std=c++17 -fsyntax-only -Wno-invalid-offsetof -Wno-deprecated-enum-enum-conversion -I %DX7_INCLUDE% Renderer.cpp ListenerTable.cpp Scene.cpp Warp.cpp SqgModel.cpp Texture.cpp BodyPart.cpp Sky.cpp Gif.cpp Image.cpp LayoutCheck.cpp
 ```
