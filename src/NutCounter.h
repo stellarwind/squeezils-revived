@@ -1,6 +1,6 @@
 // NutCounter: a picture in the in-game panel with a number (or two) drawn on it, used for the nut counts (RTTI name not
-// known; the ini keys are AmoNut and FoodNut). Reconstructed from SQZ.EXE 0x42f780-0x42fc22 (size 0x34, sub objects of the
-// panel). The picture is loaded once from ui\<file>, a copy of it is kept, and every Draw restores the picture from that copy,
+// known; the ini keys are AmoNut and FoodNut). Reconstructed from SQZ.EXE 0x42f780-0x42fc22 (size 0x2c, sub objects of the
+// status bar). The picture is loaded once from ui\<file>, a copy of it is kept, and every Draw restores the picture from that copy,
 // stamps the digit pictures (the panel's ten digit bitmaps) onto it and draws it to the primary surface at its place.
 #pragma once
 #include "Bitmap.h"
@@ -21,6 +21,5 @@ public:
     char    file[20];      // 0x10 picture file (without folder)
     int     lastValue;     // 0x24 what the last Draw showed
     int     mode;          // 0x28 1 = two numbers, one above the other; otherwise one centred
-    int     pad2c[2];      // 0x2c
 };
-static_assert(sizeof(NutCounter) == 0x34, "NutCounter layout");
+static_assert(sizeof(NutCounter) == 0x2c, "NutCounter layout");

@@ -20,6 +20,7 @@
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
+#include "StatusBar.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -98,6 +99,8 @@ int SoulMood(void *soul)
 }
 void *GetPanel() { return *(void **)0x4badb0; }
 int RegionScreenLoad(void *r) { return ((int (__attribute__((thiscall)) *)(void *))0x414c10)(r); }
+int GoodieListInit(void *l, int x, int y) { return ((int (__attribute__((thiscall)) *)(void *, int, int))0x415750)(l, x, y); }
+int GoodieListLoad(void *l) { return ((int (__attribute__((thiscall)) *)(void *))0x415b40)(l); }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -143,7 +146,7 @@ struct Hook {
 };
 
 static BYTE *g_tramp; static size_t g_trampUsed;
-static const size_t kTrampPool = 8192;   // 32 bytes per hook: 256 hooks
+static const size_t kTrampPool = 16384;  // 32 bytes per hook: 512 hooks
 
 static bool HexMatches(const BYTE *p, const char *hex)
 {
@@ -1219,6 +1222,13 @@ static Hook H_pnload;
 static int (__fastcall *o_pnload)(Panel *);
 static int __fastcall h_pnload(Panel *p) { HEAVY_LOG(H_pnload); return p->LoadBitmaps(); }
 
+// ---- StatusBar (nut counters, goodies, mood face and messages in the panel; replace only, "status") ---------------------------
+static Hook H_sbinit, H_sbload;
+static int (__fastcall *o_sbinit)(StatusBar *);
+static int __fastcall h_sbinit(StatusBar *s) { HEAVY_LOG(H_sbinit); return s->Init(); }
+static int (__fastcall *o_sbload)(StatusBar *);
+static int __fastcall h_sbload(StatusBar *s) { HEAVY_LOG(H_sbload); return s->LoadAll(); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -1240,7 +1250,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mnstart, &H_mnloadgame, &H_mnabout, &H_mnhelp1, &H_mnhelp2, &H_mnquit,
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
-                           &H_pnload };
+                           &H_pnload,
+                           &H_sbinit, &H_sbload };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1422,6 +1433,8 @@ static void Setup()
     H_ncdraw = { "NutCounter::Draw", 0x42f9f0, 5, "83ec085356", (void *)h_ncdraw, (void **)&o_ncdraw, false, 0, 0, "nutc", 0 };
     H_ncnum = { "NutCounter::DrawNumber", 0x42fb10, 7, "83ec04894c2400", (void *)h_ncnum, (void **)&o_ncnum, false, 0, 0, "nutc", 0 };
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
+    H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
+    H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

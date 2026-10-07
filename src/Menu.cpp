@@ -249,7 +249,7 @@ int __cdecl Menu::ActionLoadGame()
     char path[200];
     strcpy(kLoadGameName, "");
     strcpy(kLoadGameTitle, "");
-    if (DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(0x71), GetMainWindow(), (DLGPROC)kLoadGameDialogProc, 0)) {
+    if (DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(113), GetMainWindow(), (DLGPROC)kLoadGameDialogProc, 0)) {
         if (strlen(kLoadGameName) != 0) {
             strcpy(path, kSaveGameDirectory);
             strcat(path, kLoadGameName);
@@ -265,7 +265,7 @@ int __cdecl Menu::ActionLoadGame()
 
 int __cdecl Menu::ActionAbout()
 {
-    DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(0x81), GetMainWindow(), (DLGPROC)kAboutDialogProc, 0);
+    DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(129), GetMainWindow(), (DLGPROC)kAboutDialogProc, 0);
     return 0;
 }
 
@@ -283,5 +283,5 @@ int __cdecl Menu::ActionHelpMore()
 
 int __cdecl Menu::ActionQuit()
 {
-    return DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(0x80), GetMainWindow(), (DLGPROC)kQuitDialogProc, 0) != 0;
+    return DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(128), GetMainWindow(), (DLGPROC)kQuitDialogProc, 0) != 0;
 }

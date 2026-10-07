@@ -102,3 +102,8 @@ static_assert(offsetof(NutCounter, x) == 0x08 && offsetof(NutCounter, file) == 0
 // Panel (partial)
 #include "Panel.h"
 static_assert(offsetof(Panel, digits) == 0x428 && offsetof(Panel, background) == 0x460 && offsetof(Panel, backgroundFile) == 0x464 && offsetof(Panel, regionScreen) == 0x480, "Panel fields");
+
+// StatusBar
+#include "StatusBar.h"
+static_assert(offsetof(StatusBar, food) == 0x34 && offsetof(StatusBar, foodC) == 0x68 && offsetof(StatusBar, goodies) == 0x6c && offsetof(StatusBar, face) == 0x9c &&
+              offsetof(StatusBar, deadMessage) == 0x37c && offsetof(StatusBar, messageY) == 0x388, "StatusBar fields");

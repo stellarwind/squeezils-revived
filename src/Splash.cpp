@@ -20,14 +20,14 @@ Splash::Splash()
     shown = 0;
     bar = NULL;
     step = 0;
-    barX = 0x62;
-    barY = 0x16a;
+    barX = 98;
+    barY = 362;
     void *m = Operator_New(sizeof(Bitmap));
     bar = m ? new (m) Bitmap(GetRenderer()) : NULL;
     if (bar) bar->Load(".\\ui\\loadbar.bmp");
     which = -1;
     target = kOne;
-    steps = 0x1bd / bar->GetWidth();
+    steps = 445 / bar->GetWidth();
 }
 
 Splash::~Splash()

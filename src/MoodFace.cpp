@@ -124,7 +124,7 @@ int MoodFace::Draw(int force, Bitmap *panel)
     void *soul = GetPlayerSoul();
     if (!soul) return 0;
     int mood = SoulMood(soul);
-    int asleep = mood == 0x16;
+    int asleep = mood == 22;
     if (mood == lastMood && animation[current].frameCount == 1 && !force)
         return asleep;
     if (mood == lastMood && animation[current].frameCount > 1) {
