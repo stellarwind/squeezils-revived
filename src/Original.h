@@ -108,6 +108,10 @@ static void *const kLoadGameDialogProc  = (void *)0x406eb0;           // dialog 
 static void *const kAboutDialogProc     = (void *)0x406cb0;
 static void *const kQuitDialogProc      = (void *)0x406d60;
 
+// ---- the panel ----
+void *GetPanel();                                                     // @004206c0 the in-game panel object (global 0x4badb0); its ten digit pictures start at +0x428
+void  GameError(const char *format, ...);                             // @00419290 the game's fatal error report (message box, then exit)
+
 // ---- the player ----
 void *GetPlayerSoul();                                                // @00420690 + 00414080 the player's actor (a Soul), or NULL
 int   SoulMood(void *soul);                                           // the player soul's mood (dynamic_cast to SqueezilPlayerSoul, then its virtual at +0x64)

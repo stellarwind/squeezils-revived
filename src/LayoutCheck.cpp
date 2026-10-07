@@ -94,3 +94,7 @@ static_assert(offsetof(Menu::Item, action) == 0x18 && offsetof(Menu::Item, highl
 static_assert(offsetof(MoodFace, x) == 0x284 && offsetof(MoodFace, canvas) == 0x2a0 && offsetof(MoodFace, width) == 0x2a8 &&
               offsetof(MoodFace, lastMood) == 0x2b0 && offsetof(MoodFace, animationCount) == 0x2b4 && offsetof(MoodFace, frame) == 0x2b8 &&
               offsetof(MoodFace, lastTick) == 0x2c0 && offsetof(MoodFace, frameMs) == 0x2c4, "MoodFace fields");
+
+// NutCounter
+#include "NutCounter.h"
+static_assert(offsetof(NutCounter, x) == 0x08 && offsetof(NutCounter, file) == 0x10 && offsetof(NutCounter, lastValue) == 0x24 && offsetof(NutCounter, mode) == 0x28, "NutCounter fields");
