@@ -82,3 +82,9 @@ static_assert(offsetof(IniFileSection, order) == 0x30 && sizeof(IniFileSection) 
 static_assert(offsetof(Splash, picture) == 0x04 && offsetof(Splash, bar) == 0x08 && offsetof(Splash, step) == 0x0c && offsetof(Splash, steps) == 0x10 &&
               offsetof(Splash, barX) == 0x14 && offsetof(Splash, shown) == 0x1c && offsetof(Splash, file) == 0x20 &&
               offsetof(Splash, which) == 0x5c && offsetof(Splash, target) == 0x60, "Splash fields");
+
+// Menu
+#include "Menu.h"
+static_assert(offsetof(Menu, itemCount) == 0x04 && offsetof(Menu, left) == 0x08 && offsetof(Menu, itemHeight) == 0x10 &&
+              offsetof(Menu, items) == 0x18 && offsetof(Menu, anchorX) == 0x180 && offsetof(Menu, arg1) == 0x18c, "Menu fields");
+static_assert(offsetof(Menu::Item, action) == 0x18 && offsetof(Menu::Item, highlighted) == 0x20, "Menu::Item fields");

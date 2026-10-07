@@ -16,6 +16,7 @@
 #include "GameString.h"
 #include "IniReader.h"
 #include "Splash.h"
+#include "Menu.h"
 #include "SqgModel.h"
 #include "Texture.h"
 #include "BodyPart.h"
@@ -76,6 +77,16 @@ IniFileTable *GetIniFiles() { return (IniFileTable *)0x4c7738; }
 void *GetCurrentSimulation() { return *(void **)0x4badbc; }
 const char *GetPlaceName(int index) { return ((const char *(__attribute__((thiscall)) *)(void *, int))0x41e8c0)(*(void **)0x4badb8, index); }
 void *DynamicCast(void *obj, const void *from, const void *to) { return ((void *(__cdecl *)(void *, int, const void *, const void *, int))0x48f060)(obj, 0, from, to, 0); }
+ScreenInfo *GetScreenInfo() { return (ScreenInfo *)*(void **)0x4badac; }
+int GetKeyCode(const char *name) { return ((int (__attribute__((thiscall)) *)(void *, const char *))0x43ace0)(*(void **)0x4badac, name); }
+int GameLoadGame(const char *path)
+{
+    void *sim = *(void **)0x4badbc;
+    void **vtbl = *(void ***)sim;
+    return ((int (__attribute__((thiscall)) *)(void *, const char *))vtbl[10])(sim, path);
+}
+HINSTANCE GetInstance() { return *(HINSTANCE *)0x4c73c8; }
+HWND GetMainWindow() { return *(HWND *)0x4c73cc; }
 void NumericError()                   { ((void (__cdecl *)())0x41eb80)(); }
 void *Lib_Malloc(size_t n)            { return ((void *(__cdecl *)(size_t))0x4904c0)(n); }
 
@@ -1119,6 +1130,47 @@ static void THISCALL h_spprog(Splash *s, float p) { HEAVY_LOG(H_spprog); s->SetP
 static void (__fastcall *o_spreset)(Splash *);
 static void __fastcall h_spreset(Splash *s) { HEAVY_LOG(H_spreset); s->Reset(); }
 
+// ---- Menu (the main menu; replace only, "menu") -----------------------------------------------------------------------------
+static Hook H_mnctor, H_mndtor, H_mnload, H_mnacts, H_mnbmp, H_mnanchor, H_mnlayout, H_mndraw, H_mnsel, H_mnmove, H_mnhit, H_mnmsg,
+            H_mnstart, H_mnloadgame, H_mnabout, H_mnhelp1, H_mnhelp2, H_mnquit;
+
+static void *(THISCALL *o_mnctor)(Menu *);
+static void *THISCALL h_mnctor(Menu *m) { HEAVY_LOG(H_mnctor); new (m) Menu(); return m; }
+static void (__fastcall *o_mndtor)(Menu *);
+static void __fastcall h_mndtor(Menu *m) { HEAVY_LOG(H_mndtor); m->~Menu(); }
+static int (THISCALL *o_mnload)(Menu *, int, int);
+static int THISCALL h_mnload(Menu *m, int a, int b) { HEAVY_LOG(H_mnload); return m->Load(a, b); }
+static void (__fastcall *o_mnacts)(Menu *);
+static void __fastcall h_mnacts(Menu *m) { HEAVY_LOG(H_mnacts); m->SetActions(); }
+static int (THISCALL *o_mnbmp)(Menu *, const char *, Bitmap *);
+static int THISCALL h_mnbmp(Menu *m, const char *f, Bitmap *b) { HEAVY_LOG(H_mnbmp); return m->LoadItemBitmap(f, b); }
+static void (__fastcall *o_mnanchor)(Menu *);
+static void __fastcall h_mnanchor(Menu *m) { HEAVY_LOG(H_mnanchor); m->SaveAnchor(); }
+static void (__fastcall *o_mnlayout)(Menu *);
+static void __fastcall h_mnlayout(Menu *m) { HEAVY_LOG(H_mnlayout); m->Relayout(); }
+static void (THISCALL *o_mndraw)(Menu *, int, int);
+static void THISCALL h_mndraw(Menu *m, int i, int lit) { HEAVY_LOG(H_mndraw); m->DrawItem(i, lit); }
+static int (THISCALL *o_mnsel)(Menu *, int);
+static int THISCALL h_mnsel(Menu *m, int i) { HEAVY_LOG(H_mnsel); return m->SetSelected(i); }
+static int (THISCALL *o_mnmove)(Menu *, int, int);
+static int THISCALL h_mnmove(Menu *m, int x, int y) { HEAVY_LOG(H_mnmove); return m->OnMouseMove(x, y); }
+static int (THISCALL *o_mnhit)(Menu *, int, int, int);
+static int THISCALL h_mnhit(Menu *m, int i, int x, int y) { HEAVY_LOG(H_mnhit); return m->HitTest(i, x, y); }
+static LRESULT (THISCALL *o_mnmsg)(Menu *, UINT, WPARAM, LPARAM, WPARAM *);
+static LRESULT THISCALL h_mnmsg(Menu *m, UINT msg, WPARAM w, LPARAM l, WPARAM *k) { HEAVY_LOG(H_mnmsg); return m->OnMessage(msg, w, l, k); }
+static int (__cdecl *o_mnstart)();
+static int __cdecl h_mnstart() { HEAVY_LOG(H_mnstart); return Menu::ActionStart(); }
+static int (__cdecl *o_mnloadgame)();
+static int __cdecl h_mnloadgame() { HEAVY_LOG(H_mnloadgame); return Menu::ActionLoadGame(); }
+static int (__cdecl *o_mnabout)();
+static int __cdecl h_mnabout() { HEAVY_LOG(H_mnabout); return Menu::ActionAbout(); }
+static int (__cdecl *o_mnhelp1)();
+static int __cdecl h_mnhelp1() { HEAVY_LOG(H_mnhelp1); return Menu::ActionHelpContents(); }
+static int (__cdecl *o_mnhelp2)();
+static int __cdecl h_mnhelp2() { HEAVY_LOG(H_mnhelp2); return Menu::ActionHelpMore(); }
+static int (__cdecl *o_mnquit)();
+static int __cdecl h_mnquit() { HEAVY_LOG(H_mnquit); return Menu::ActionQuit(); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -1135,7 +1187,9 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_strctor, &H_strcstr, &H_strcopy, &H_strrelease, &H_strunique, &H_strc_str, &H_strreserve, &H_strrepctor, &H_strassign, &H_strset,
                            &H_strfloat, &H_strless, &H_streq, &H_strcmp,
                            &H_inictor, &H_inictor2, &H_inidtor, &H_iniget, &H_iniint, &H_inifloats, &H_inifloat, &H_iniset, &H_inidir, &H_inipath, &H_iniparse,
-                           &H_spctor, &H_spdtor, &H_spload, &H_spfile, &H_spshow, &H_sphide, &H_spshown, &H_sppump, &H_spflush, &H_spstep, &H_spprog, &H_spreset };
+                           &H_spctor, &H_spdtor, &H_spload, &H_spfile, &H_spshow, &H_sphide, &H_spshown, &H_sppump, &H_spflush, &H_spstep, &H_spprog, &H_spreset,
+                           &H_mnctor, &H_mndtor, &H_mnload, &H_mnacts, &H_mnbmp, &H_mnanchor, &H_mnlayout, &H_mndraw, &H_mnsel, &H_mnmove, &H_mnhit, &H_mnmsg,
+                           &H_mnstart, &H_mnloadgame, &H_mnabout, &H_mnhelp1, &H_mnhelp2, &H_mnquit };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1286,6 +1340,24 @@ static void Setup()
     H_spstep = { "Splash::Step", 0x44ef30, 5, "83ec0c5356", (void *)h_spstep, (void **)&o_spstep, false, 0, 0, "splash", 0 };
     H_spprog = { "Splash::SetProgress", 0x44f010, 5, "83ec045657", (void *)h_spprog, (void **)&o_spprog, false, 0, 0, "splash", 0 };
     H_spreset = { "Splash::Reset", 0x44f080, 7, "c7410c00000000", (void *)h_spreset, (void **)&o_spreset, false, 0, 0, "splash", 0 };
+    H_mnctor = { "Menu::Menu", 0x405e90, 7, "64a10000000055", (void *)h_mnctor, (void **)&o_mnctor, false, 0, 0, "menu", 0 };
+    H_mndtor = { "Menu::~Menu", 0x405f90, 5, "53568b4104", (void *)h_mndtor, (void **)&o_mndtor, false, 0, 0, "menu", 0 };
+    H_mnload = { "Menu::Load", 0x405ff0, 7, "64a10000000055", (void *)h_mnload, (void **)&o_mnload, false, 0, 0, "menu", 0 };
+    H_mnacts = { "Menu::SetActions", 0x406600, 6, "5333c0394104", (void *)h_mnacts, (void **)&o_mnacts, false, 0, 0, "menu", 0 };
+    H_mnbmp = { "Menu::LoadItemBitmap", 0x406aa0, 6, "81ecc8000000", (void *)h_mnbmp, (void **)&o_mnbmp, false, 0, 0, "menu", 0 };
+    H_mnanchor = { "Menu::SaveAnchor", 0x406b80, 6, "8b41088b510c", (void *)h_mnanchor, (void **)&o_mnanchor, false, 0, 0, "menu", 0 };
+    H_mnlayout = { "Menu::Relayout", 0x406ba0, 5, "83ec045356", (void *)h_mnlayout, (void **)&o_mnlayout, false, 0, 0, "menu", 0 };
+    H_mndraw = { "Menu::DrawItem", 0x406c20, 8, "83ec08a1dc754c00", (void *)h_mndraw, (void **)&o_mndraw, false, 0, 0, "menu", 0 };
+    H_mnsel = { "Menu::SetSelected", 0x406a10, 7, "535657558b4104", (void *)h_mnsel, (void **)&o_mnsel, false, 0, 0, "menu", 0 };
+    H_mnmove = { "Menu::OnMouseMove", 0x406960, 6, "83ec04535657", (void *)h_mnmove, (void **)&o_mnmove, false, 0, 0, "menu", 0 };
+    H_mnhit = { "Menu::HitTest", 0x406a60, 8, "8b44240453c1e002", (void *)h_mnhit, (void **)&o_mnhit, false, 0, 0, "menu", 0 };
+    H_mnmsg = { "Menu::OnMessage", 0x406420, 7, "83ec0c8b442410", (void *)h_mnmsg, (void **)&o_mnmsg, false, 0, 0, "menu", 0 };
+    H_mnstart = { "Menu::ActionStart", 0x406950, 5, "b802000000", (void *)h_mnstart, (void **)&o_mnstart, false, 0, 0, "menu", 0 };
+    H_mnloadgame = { "Menu::ActionLoadGame", 0x406760, 6, "81ecc8000000", (void *)h_mnloadgame, (void **)&o_mnloadgame, false, 0, 0, "menu", 0 };
+    H_mnabout = { "Menu::ActionAbout", 0x406730, 6, "53a1cc734c00", (void *)h_mnabout, (void **)&o_mnabout, false, 0, 0, "menu", 0 };
+    H_mnhelp1 = { "Menu::ActionHelpContents", 0x406670, 6, "53a1dc754c00", (void *)h_mnhelp1, (void **)&o_mnhelp1, false, 0, 0, "menu", 0 };
+    H_mnhelp2 = { "Menu::ActionHelpMore", 0x406690, 6, "53a1dc754c00", (void *)h_mnhelp2, (void **)&o_mnhelp2, false, 0, 0, "menu", 0 };
+    H_mnquit = { "Menu::ActionQuit", 0x406920, 6, "53a1cc734c00", (void *)h_mnquit, (void **)&o_mnquit, false, 0, 0, "menu", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

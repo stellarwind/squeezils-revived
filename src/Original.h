@@ -93,11 +93,28 @@ static const void *const kLocationSimulationType = (const void *)0x4ba1d0;   // 
 static const void *const kPlaceSimulationType    = (const void *)0x4bae38;   // .?AVPlaceSimulation
 static const void *const kRegionSimulationType   = (const void *)0x4ba370;   // .?AVRegionSimulation
 
+// ---- application, input and menu state ----
+struct ScreenInfo { char pad[0x28]; int width; int height; };       // the object behind the global at 0x4badac (window size)
+ScreenInfo *GetScreenInfo();                                          // @004206b0
+int   GetKeyCode(const char *name);                                   // @0043ace0 key name ("Return", "F1" ...) -> virtual key
+int   GameLoadGame(const char *path);                                 // the current simulation's load-game virtual (slot 10); 0 on failure
+HINSTANCE GetInstance();                                              // the global at 0x4c73c8
+HWND      GetMainWindow();                                            // the global at 0x4c73cc
+static const char *const kGameDirectory = (const char *)0x4c73d8;     // the game folder
+static char *const kSaveGameDirectory   = (char *)0x4c6400;           // <exe folder>\sqz\save\ (built by the Menu constructor)
+static char *const kLoadGameName        = (char *)0x4c63e8;           // what the load-game dialog picked
+static char *const kLoadGameTitle       = (char *)0x4c63d0;
+static void *const kLoadGameDialogProc  = (void *)0x406eb0;           // dialog window procedures still in original code
+static void *const kAboutDialogProc     = (void *)0x406cb0;
+static void *const kQuitDialogProc      = (void *)0x406d60;
+
 // ---- vtables ----
 // The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
 static void *const kBitmapVtable = (void *)0x4a1060;
 // The vtable of Splash (Splash.h): slot 0 SetProgress, slot 1 Step.
 static void *const kSplashVtable = (void *)0x49ed34;
+// The vtable of Menu (Menu.h): slot 0 SetSelected, slot 1 OnMouseMove.
+static void *const kMenuVtable = (void *)0x49d28c;
 
 // ---- callbacks ----
 // The window hook's callback (0x476630): the registry in ListenerTable holds it so the original window code can reach the
