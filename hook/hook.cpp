@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "Warp.h"
 #include "SqgModel.h"
+#include "Texture.h"
 #undef private
 #include <stdio.h>
 #include <stdarg.h>
@@ -51,6 +52,10 @@ int  Image_Load(const char *path, const int *fmt, void *u, int *outB, int *outA,
 { return ((int (__cdecl *)(const char *, const int *, void *, int *, int *, void **, unsigned char *))0x477cc0)(path, fmt, u, outB, outA, pixels, pal); }
 void Operator_Delete(void *p)         { ((void (__cdecl *)(void *))0x48e9f0)(p); }
 void *Operator_New(size_t n)                          { return ((void *(__cdecl *)(size_t))0x48ea00)(n); }
+// Texture creation helpers: the game's allocator wrappers and its renderer global
+void *GameAlloc(size_t n)  { return ((void *(__cdecl *)(size_t))0x448350)(n); }
+void  GameFree(void *p)    { ((void (__cdecl *)(void *))0x448360)(p); }
+Renderer *GetRenderer()    { return *(Renderer **)0x4c75dc; }
 // SqgModel helpers: the game's allocator (function pointer at 0x4c0f78), its error reporter and texture lookup (pointer at 0x4c0f84)
 void *SqgAlloc(size_t n)       { return (*(void *(__cdecl **)(size_t))0x4c0f78)(n); }
 void  SqgError(const char *m)  { ((void (__cdecl *)(const char *))0x473710)(m); }
@@ -354,7 +359,7 @@ typedef int (__attribute__((thiscall)) *PFN_Init)(Renderer *, void *, HWND, int,
 static Hook H_qdm, H_enterdisplay, H_uploadpal, H_setpal, H_init, H_fade;
 static Hook H_swarp, H_sinit, H_sbegin, H_srender, H_spresent, H_squality, H_sxform, H_schild, H_sdel;
 static Hook H_cframe, H_cframeu, H_cdecal, H_dframe, H_gmatrix;
-static Hook H_sqgload, H_sqgmesh, H_sqgmorph, H_sqgframe;
+static Hook H_sqgload, H_sqgmesh, H_sqgmorph, H_sqgframe, H_texgif;
 static Hook H_sload, H_scam, H_sview, H_fparent, H_fvisual, H_fchild, H_fdel;
 static Hook H_wctor, H_wdtor, H_winit, H_woutput, H_wresize, H_wupdate, H_wload;
 static bool g_qdmCompare;
@@ -464,6 +469,11 @@ static void __attribute__((thiscall)) h_sqgmorph(SqgModel *m, PZMorphMesh *i, in
 static IDirect3DRMFrame *(__attribute__((thiscall)) *o_sqgframe)(SqgModel *, IDirect3DRM *, BOOL);
 static IDirect3DRMFrame *__attribute__((thiscall)) h_sqgframe(SqgModel *m, IDirect3DRM *d, BOOL p) { HEAVY_LOG(H_sqgframe); return m->BuildFrame(d, p); }
 
+// ---- Texture creation: replace only ---------------------------------------------------------
+// @415440 CreateTextureFromGif, __cdecl(path, transparent, pixelFormat, byteCounter) -> texture
+static IDirect3DRMTexture *(__cdecl *o_texgif)(const char *, const float *, const int *, int *);
+static IDirect3DRMTexture *__cdecl h_texgif(const char *p, const float *t, const int *f, int *c) { HEAVY_LOG(H_texgif); return CreateTextureFromGif(p, t, f, c); }
+
 // ---- Warp (sky): replace only ---------------------------------------------------------------
 // @478c80 constructor, __fastcall(this) -> this
 static Warp *(__fastcall *o_wctor)(Warp *);
@@ -527,7 +537,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_cframe, &H_cframeu, &H_cdecal, &H_dframe, &H_gmatrix,
                            &H_wctor, &H_wdtor, &H_winit, &H_woutput, &H_wresize, &H_wupdate, &H_wload,
                            &H_sload, &H_scam, &H_sview, &H_fparent, &H_fvisual, &H_fchild, &H_fdel,
-                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe };
+                           &H_sqgload, &H_sqgmesh, &H_sqgmorph, &H_sqgframe, &H_texgif };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -604,6 +614,7 @@ static void Setup()
     H_sqgmesh  = { "SqgModel::CreateMesh", 0x472f60, 7, "64a10000000055",   (void *)h_sqgmesh,  (void **)&o_sqgmesh,  false, 0, 0, "sqgmesh",  0 };
     H_sqgmorph = { "SqgModel::Morph",      0x4734e0, 7, "64a10000000055",   (void *)h_sqgmorph, (void **)&o_sqgmorph, false, 0, 0, "sqgmorph", 0 };
     H_sqgframe = { "SqgModel::BuildFrame",  0x4731f0, 7, "8b44240483ec1c",   (void *)h_sqgframe, (void **)&o_sqgframe, false, 0, 0, "sqgframe", 0 };
+    H_texgif  = { "CreateTextureFromGif",    0x415440, 6, "81ec1c030000",     (void *)h_texgif,  (void **)&o_texgif,  false, 0, 0, "texgif",  0 };
 }
 
 static void Summary()
