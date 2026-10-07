@@ -39,6 +39,13 @@ SqgTextureLookupFn SqgGetTextureLookup();  // the pointer stored at 0x4c0f84 (NU
 // The shared empty string (one NUL byte) the String class hands out for an unset string and copies into new reps.
 static const char *const kEmptyString = (const char *)0x4b9488;
 
+// ---- ini files ----
+const char *IniFind(void *file, const char *section, const char *key);   // @00442ee0 value text in a parsed ini file, or NULL
+void *IniOpen(const char *path);                                          // @00442fa0 the cached parsed file for a path (parses it the first time)
+static const char *const kCurrentIniPath = (const char *)0x4c74d8;        // the game's global current ini file name
+static const char *const kDefaultSectionName = (const char *)0x4b9e60;    // "Defaults"
+static const char *const kCurrentDirectory = (const char *)0x4bd220;      // "."
+
 // ---- vtables ----
 // The vtable of Bitmap (Bitmap.h). Bitmaps are also made and used by original code, which calls the same virtual methods.
 static void *const kBitmapVtable = (void *)0x4a1060;
