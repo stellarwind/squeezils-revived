@@ -1,12 +1,12 @@
 // Panel: the in-game panel (the HUD along the screen edge: nut counters, mood face, quest items, compass, messages). One large
 // object (0x6a8 bytes), created by the application's start-up code and kept in a global (0x4badb0). Its constructor (0x42d5f0)
-// builds the widgets in the order below; the destructor (0x42d880) frees them in reverse. What is reconstructed so far: the
-// constructor and destructor, the status bar, the quest panel, the nut counters, the mood face and the bitmap loader. The region
-// screen (compass and region list), the goodie list and the font set-up are still original code, reached through Original.h.
+// builds the widgets in the order below; the destructor (0x42d880) frees them in reverse. Everything the panel owns is reconstructed:
+// the status bar (counters, goodie list, mood face), the quest panel, the compass ruler, the message text and fonts.
 #pragma once
 #include "Bitmap.h"
 #include "StatusBar.h"
 #include "QuestPanel.h"
+#include "CompassRuler.h"
 
 struct Float3 { float x, y, z; };
 
@@ -24,7 +24,7 @@ struct Panel {
     char       backgroundFile[20]; // 0x464 its file name, from [Interface] Panel
     int        backgroundX;        // 0x478 where the panel picture sits, from the screen origin
     int        backgroundY;        // 0x47c
-    char       regionScreen[0x13c];// 0x480 the region screen widget (original code) starts here; the rest of this area is not mapped yet
+    CompassRuler compass;          // 0x480 the compass strip (the original called this the region screen)
     float      turnThreshold;      // 0x5bc 0.01: the smallest change of heading (radians) the compass bothers to follow
     float      verticalChange;     // 0x5c0 [Compass] VerticalChange (default 1.0)
     float      verticalThreshold;  // 0x5c4 [Compass] VerticalThreshold (default 0.1)
@@ -58,6 +58,7 @@ struct Panel {
     void ClearNote() { note[0] = 0; }         // @42dcd0
     void ClearEvent() { event = 0; }         // @42ea60
     void StartGoodieAnimation(int steps, float seconds);   // @42e6f0 the goodie list animates for a while (the event flag is set until it ends)
+    BOOL UpdateRegionSprites() { return compass.UpdateSprites(); }   // @42e2a0 (the game calls this when a place is finished: show the compass emblems again)
     void UpdateCompass(int force);             // @42e2b0 turn the compass to the player's heading, with the up and down roll animation (PanelCompass.cpp)
     BOOL DrawMessage(const char *text);        // @42dd30 word-wrapped text in the message area, over the cleaned panel picture
     BOOL DrawNote(const char *text);           // @42e0e0 the short note

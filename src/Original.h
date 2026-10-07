@@ -111,11 +111,7 @@ static void *const kQuitDialogProc      = (void *)0x406d60;
 // ---- the panel ----
 void *GetPanel();                                                     // @004206c0 the in-game panel object (global 0x4badb0); its ten digit pictures start at +0x428
 
-int   RegionScreenLoad(void *regionScreen);                              // @00414c10 the panel's region screen widget: load its pictures (0 on failure)
 
-void  RegionScreenCtor(void *regionScreen);                           // @00414380 the panel's region screen widget (compass and region list)
-void  RegionScreenInit(void *regionScreen);                           // @00414490 its set-up
-void  RegionScreenDtor(void *regionScreen);                           // @004143c0
 struct Panel;
 void  PanelLoadFonts(Panel *panel);                                   // @0042e7a0 reads the message font settings and makes the font (PanelText.cpp)
 
@@ -150,5 +146,4 @@ static void *const kWindowCallback = (void *)0x476630;
 // ---- the panel's remaining original code ----
 static int *const kPanelDrawn = (int *)0x4bbe90;                       // set after the panel picture was first drawn
 float *PlayerMatrix();                                                 // the player's 4x4 matrix as floats (@00414050 then its virtual slot 3), or NULL
-void  RegionScreenSetCompass(void *regionScreen, float angle, float roll);   // @00414fb0 turn the compass to the heading, with the roll animation
 void *PlayerInventory();                                               // the player's inventory table (its four byte entries start at +4: goodie counts by name, quest piece flags), or NULL
