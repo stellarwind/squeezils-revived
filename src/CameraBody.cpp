@@ -9,7 +9,7 @@ CameraBody *CameraBody::Init(const float *matrix)
 {
     Body::Init(matrix);
     vtbl = (void **)0x49d444;
-    flags = 0;
+    collisionRadius = 0.0f;
     return this;
 }
 

@@ -5,7 +5,7 @@
 #include "Body.h"
 
 struct CameraBody : Body {
-    int flags;      // 0xb8 the simulation reads this word on every actor (starts 0)
+    float collisionRadius;      // 0xb8 the simulation reads this on every actor, 0 meaning "does not collide" (starts 0)
 
     CameraBody *Init(const float *matrix);      // @0040b8a0
     CameraBody *DestroyAndFree(int flags);      // @0040b910 slot 0 (bit 0 of flags: free the memory)

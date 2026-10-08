@@ -65,6 +65,11 @@ struct LocationSimulation : Simulation {
     void  AddId(int id);                        // @00414180 notes the id as the newest
     void  DestroyCreatures();                   // @004141a0 destroys every creature in the id list and empties the list
     int   NewId();                              // @00414250 the next id above the last one handed out that no creature has
+
+    // @00413280 slot 8 (Region and Place use it as is): one frame of creature against creature collisions, then the creatures
+    // marked with AddId are destroyed. Slot 12 (not reconstructed; Region and Place have it) tells the body's own velocity.
+    void  CollideCreatures();
+    int   IsMarked(int id) { return CallVirtual<int>(&ids, 6, &id); }   // the id list is a set (vtable @004a009c); slot 6 is Contains
 };
 
 // @004142b0 an empty record (no actor, no soul)
@@ -74,3 +79,10 @@ Creature *NewCreature();
 // of length (the direction is made length 1 and the foot of the perpendicular must lie 0 to 1 along it).
 struct Vector3f;
 int PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq);
+
+// @0047d680 Where the lines p1-p2 and p3-p4 pass closest (not parallel; 0 when they are): *s is that point as a part of p1-p2 (0 at
+// p1, 1 at p2), *t the same for p3-p4.
+int ClosestLineParams(const Vector3f *p1, const Vector3f *p2, const Vector3f *p3, const Vector3f *p4, float *s, float *t);
+
+// @0047d940 The point on the line through a and b that is nearest to point; returns out.
+Vector3f *NearestPointOnLine(Vector3f *out, const Vector3f *point, const Vector3f *a, const Vector3f *b);
