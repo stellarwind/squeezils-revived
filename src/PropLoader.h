@@ -55,3 +55,7 @@ StringList *SplitWords(const char *text);
 
 // @0042cc10 the animation path with that name: looked for in the third, second, then the level's table; NULL if none
 MorphCycle *FindPath(const char *name);
+
+// @00436370 (World's, in the cluster of CreateScene) the prop files of a level or of a place: with a second reader into the third
+// set of tables (the place's), otherwise the first reader into the second set (the region's)
+void WorldReadPropFiles(IniReader *ini, IniReader *other);

@@ -43,3 +43,6 @@ inline float Normalize(Vector3f &v)
     }
     return length;
 }
+
+// @0047da80 Spherical interpolation between two unit vectors (VectorMath.cpp)
+Vector3f Slerp(float t, const Vector3f &a, const Vector3f &b);

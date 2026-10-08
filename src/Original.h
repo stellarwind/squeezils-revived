@@ -331,7 +331,8 @@ void  PlayEffect(const char *name, const Float3 &position);     // @0044a250 (cd
 void  StopLoopingSounds();                                      // @0044a8f0 (only called while the global at 0x4bd960 is set)
 static int *const kLoopingSoundPlaying = (int *)0x4bd960;
 int   PhysicalCollision(int id, int otherId);                   // @00447590 (cdecl, PhysicalSoul's) two creatures bumped: "attackEffect" / "bumpEffect"
-int   InputHeldAttack();                                        // the application object (0x4badac) +0x68: set while the attack is held (inferred)
+int   InputHeldRun();                                           // the application object +0x64: set while the run button is held (inferred: walk or run)
+int   InputHeldAttack();                                    // the application object (0x4badac) +0x68: set while the attack is held (inferred)
 void  PhysicalSoulInit(void *soul);                             // @00446e30 (thiscall) PhysicalSoul's constructor: the base vtables, and the first one made reads Gravity / StaticFriction / KineticFriction
 static const void *const kMessageMapType      = (const void *)0x4b93c8;   // .?AVMessageMap
 static const void *const kGrantMessageMapType = (const void *)0x4b93a8;   // .?AVGrantMessageMap
@@ -373,3 +374,93 @@ static String *const kFloorLevelScript = (String *)0x4c7acc;
 // @00436640 (thiscall on the world, 3 stack arguments) The matrix `matrix`, given relative to a surface copy's face, in the world:
 // the face's own transform applied. `surface` is the surface copy number (the first field of a Contact). Returns out.
 float *WorldFaceToWorld(World *world, float *out, const float *matrix, int surface);
+
+// ---- LandSimulation (LandSimulation.h) ----
+struct PossessionsTable;
+void  ConstructPossessionsTable(PossessionsTable *table);   // @004650b0 (thiscall) the table part; the vtables are set by the caller
+void  DestructPossessionsTable(PossessionsTable *table);    // @004651d0 (thiscall)
+void  InventoryConstruct(Inventory *inv);                   // @00415ef0 (thiscall) an empty inventory (0x70 bytes)
+struct BufferObject;
+void *StreamWrite(void *stream, BufferObject *object);      // @00448c60 (thiscall on the stream, ret 4) writes the object; returns the stream
+void *StreamRead(void *stream, BufferObject **object);      // @00448ca0 (thiscall on the stream, ret 4) reads an object into *object; returns the stream
+
+// ---- RegionSimulation (RegionSimulation.h) ----
+struct PlaceTable;
+struct SqueezilBody;
+struct CameraBody;
+struct Possessions;
+class IniReader;
+void  ConstructPlaceTable(PlaceTable *table);               // @004690c0 (thiscall) a table of spots (0x28 bytes, vtable @004a097c)
+void  DestructPlaceTable(PlaceTable *table);                // @00469900 (thiscall)
+void  SetCurrentSimulation(void *simulation);               // @00420670 the global at 0x4badbc
+static const void *const kRegionSoulType = (const void *)0x4ba680;   // .?AVSqueezilRegionSoul
+void  ReadFunctionList(IniReader *ini);                     // @00422730 (cdecl) the script function files named by [FunctionList] (logs "Reading function list from ...")
+void  LoadResources(IniReader *ini);                        // @00448300 (cdecl) texture, geometry and sound resource lists of a level (counts nested loads in 0x4c7798)
+void  UnloadResources();                                    // @00448330 undoes LoadResources
+void  ReleaseFunctionTable();                               // @00422b80
+void  ReleaseFunctions();                                   // @00422b00 releases each script function and pops the table stack
+int   AudioUpdate();                                        // @0044aae0 service the sound buffers; the result is positive while sounds are still being cut off
+void  UnloadSounds();                                       // @004499e0
+int   StartMidi(const char *file);                          // @0045aa00 0 when the stream buffer can't be set up
+void  StopMidi();                                           // @0045aa70
+void  StartAudio();                                         // @0044add0
+void  RunFrame();                                           // @004206e0 one game step: the clock, audio, script timers, props, the simulation's slot 8 and 3
+void  ResetClock();                                         // @00420760
+void  SetGamePaused(int paused);                            // @0043ed80 (cdecl) with 1: the application's input mode 1, the audio paused
+void  ApplicationSetInputMode(void *application, int mode); // @0043b980 (thiscall)
+void *RegionCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul);   // @00409d10 (thiscall, ret 0xc) constructs a RegionCameraSoul (0x168 bytes)
+void  PossessionsSetInventory(Possessions *possessions, Inventory *inventory);   // @004489a0 (thiscall, ret 4)
+int   InventoryLoad(Inventory *inventory, void *file);      // @00416820 (thiscall, ret 4) reads the inventory from a saved game file; 0 on failure
+int   InventorySave(Inventory *inventory, void *file);      // @00416600 (thiscall, ret 4) writes it; 0 on failure
+// The game's own C library (the inventory functions take its FILE pointers; the DLL's are different)
+static void *(__cdecl *const GameFopen)(const char *path, const char *mode) = (void *(__cdecl *)(const char *, const char *))0x48fcf0;
+static char *(__cdecl *const GameFgets)(char *buffer, int size, void *file) = (char *(__cdecl *)(char *, int, void *))0x48fbd0;
+static int   (__cdecl *const GameFclose)(void *file) = (int (__cdecl *)(void *))0x48fb10;
+static int   (__cdecl *const GameSscanf)(const char *text, const char *format, ...) = (int (__cdecl *)(const char *, const char *, ...))0x48fb80;
+static int   (__cdecl *const GameFprintf)(void *file, const char *format, ...) = (int (__cdecl *)(void *, const char *, ...))0x48fe70;
+void  DestructCreatureTable(CreatureTable *table);         // @00412d20 (thiscall) deletes the creature records, then the Table part (the actors and souls are not touched)
+
+// ---- PlaceSimulation (PlaceSimulation.h) ----
+struct PlaceLevel;
+struct NavSurfaceList;
+PlaceLevel *PlaceLevelConstruct(PlaceLevel *level);         // @0044af30 (thiscall) the place's level file object, empty
+void  PlaceLevelDestruct(PlaceLevel *level);                // @0044b2e0 (thiscall)
+void  PlaceLevelPrepare(PlaceLevel *level);                 // @0044b950 (thiscall)
+void  PlaceLevelPrepare2(PlaceLevel *level);                // @0044b780 (thiscall)
+int   PlaceLevelRead(PlaceLevel *level, IniReader *ini);    // @0044bd60 (thiscall, ret 4) reads the place's level file; nonzero when there was one
+void  PlaceLevelUpdate(PlaceLevel *level);                  // @0044e0f0 (thiscall) once a frame
+void *PlaceLevelFindCreature(PlaceLevel *level, const char *name);   // @0044e1b0 (thiscall, ret 4, a String by value that the callee frees) the template of a creature; its +0x20 is the body colour
+void  PlaceLevelFinish(PlaceLevel *level);                  // @0044df00 (thiscall)
+void  PlaceLevelForgetCreature(PlaceLevel *level, int id);  // @0044e020 (thiscall, ret 4) clears the level's record of the creature with that id (its +0x48), so that the level may make it again
+void *PlayerSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place);   // @0041ee30 (thiscall, ret 0xc) constructs a SqueezilPlayerSoul (0xa4 bytes)
+void *PlaceCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul);   // @0040a630 (thiscall, ret 0xc) a PlaceCameraSoul (0x168 bytes)
+void *RoboSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place, void *info);   // @004043a0 (thiscall, ret 0x10) a SqueezilRoboSoul (0xfc bytes)
+void  PlayerSoulPostUpdate(void *soul);                     // @0041f750 (thiscall)
+void  PlayerSoulFinishedUpdate(void *soul);                 // @0041f7f0 (thiscall) what the player's soul does in a finished place
+void  NavSurfaceDestroyInstances(NavSurfaceList *list);     // @0040ec90 (thiscall) destroys every surface copy
+void  NavSurfaceDestroyLoaded(NavSurfaceList *list);        // @0040ede0 (thiscall) destroys every loaded surface (after the copies)
+
+// ---- SqueezilRegionSoul (SqueezilRegionSoul.h) ----
+float ApplicationForwardAxis(void *application);            // @0043bc70 (thiscall) how far the player pushes forward (-1 to 1; 0 while the game is not taking input)
+// ---- SqueezilRoboSoul (SqueezilRoboSoul.h) ----
+static const void *const kSimulationSoulType = (const void *)0x4b9400;   // .?AVSimulationSoul
+struct Character;
+struct SqueezilSoul;
+struct SqueezilRoboSoul;
+// The Character (the creature's template from the level file; not reconstructed): turns a state number into the name of a script
+// function and keeps it in the soul's +0xf8 (0 when there is none or the soul is in mode 6 and the state is not 0); the second runs it
+int   CharacterTrySetState(Character *character, int state, SqueezilRoboSoul *soul);   // @004486f0 (thiscall, ret 8)
+void  CharacterRunPending(Character *character, SqueezilRoboSoul *soul);               // @004487f0 (thiscall, ret 4)
+// The seven behaviour classes of the robo souls (not reconstructed; each constructor is made with the soul's body and the soul first)
+void *BehaviourNew0(SqueezilBody *body, SqueezilSoul *soul, float a, float b, float c);   // @00402930, 0x30 bytes
+void *BehaviourNew1(SqueezilBody *body, SqueezilSoul *soul);                              // @004023b0, 0x24
+void *BehaviourNew2(SqueezilBody *body, SqueezilSoul *soul);                              // @004033b0, 0x18
+void *BehaviourNew3(SqueezilBody *body, SqueezilSoul *soul);                              // @00403650, 0x20
+void *BehaviourNew4(SqueezilBody *body, SqueezilSoul *soul, float a, float b);            // @00403b60, 0x28
+void *BehaviourNew5(SqueezilBody *body, SqueezilSoul *soul);                              // @00403ed0, 0x20
+void *BehaviourNew6(SqueezilBody *body, SqueezilSoul *soul, float a);                     // @004030f0, 0x24
+void  ApplicationLookDelta(void *application, float *pitch, float *yaw);   // @0043bdc0 (thiscall, ret 8) how far the player has moved the mouse to look about (two values; 0 while the game takes no input)
+float ApplicationForwardTap(void *application);            // @0043bc10 (thiscall) a push forward made by a single key press (read once: it clears itself; 0 while the game is not taking input)
+float ApplicationTurnTap(void *application);                // @0043bc40 (thiscall) the same for turning
+void  PlayLoopingSound(const char *name);                   // @0044a750 (cdecl, a String by value) starts a looping sound (kLoopingSoundPlaying is set)
+float ApplicationTurnAxis(void *application);            // @0043bd20 (thiscall) how far they turn

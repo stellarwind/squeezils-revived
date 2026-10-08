@@ -136,3 +136,12 @@ void ReadProps(IniReader *ini, PropTable *props)
     }
     delete entries;
 }
+
+// @00436370
+void WorldReadPropFiles(IniReader *ini, IniReader *other)
+{
+    if (other)
+        ReadPropFiles3(other);
+    else
+        ReadPropFiles2(ini);
+}
