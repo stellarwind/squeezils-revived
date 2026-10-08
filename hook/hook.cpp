@@ -31,6 +31,8 @@
 #include "Body.h"
 #include "CameraBody.h"
 #include "GoodieBody.h"
+#include "SqueezilBody.h"
+#include "SqueezilSoul.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -170,6 +172,17 @@ float *CameraMatrix()
     return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor);
 }
 void *GetPlaceSurfaces(void *place)                      { return ((void *(TC *)(void *))0x439b60)(place); }
+unsigned FrameMilliseconds()                              { return ((unsigned (TC *)(void *))0x41ec00)(*(void **)0x4badc0); }
+int   MorphCycleLoad(MorphCycle *clip, const char *file) { return ((int (TC *)(MorphCycle *, const char *))0x41bd60)(clip, file); }
+void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll)
+{
+    ((void (TC *)(const float *, float *, float *, float *))0x47e500)(m, pitch, yaw, roll);
+}
+void *SurfaceFaceOf(void *surfaces, const Contact *contact) { return ((void *(TC *)(void *, const Contact *))0x412bf0)(surfaces, contact); }
+float *FaceRelativeMatrix(void *face, float *out, const float *matrix)
+{
+    return ((float *(TC *)(void *, float *, const float *))0x4110b0)(face, out, matrix);
+}
 int   LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile)
 {
     return ((int (TC *)(void *, IniReader *, const char *, const char *))0x40fc10)(surfaces, ini, name, natFile);
@@ -297,7 +310,7 @@ struct Hook {
 };
 
 static BYTE *g_tramp; static size_t g_trampUsed;
-static const size_t kTrampPool = 16384;  // 32 bytes per hook: 512 hooks
+static const size_t kTrampPool = 32768;  // 32 bytes per hook: 1024 hooks
 
 static bool HexMatches(const BYTE *p, const char *hex)
 {
@@ -1602,6 +1615,76 @@ static void (THISCALL *o_bddtor)(Body *);
 static void THISCALL h_bddtor(Body *b) { HEAVY_LOG(H_bddtor); b->Destruct(); }
 static void (THISCALL *o_bdortho)(float *);
 static void THISCALL h_bdortho(float *m) { HEAVY_LOG(H_bdortho); OrthonormalizeMatrix(m); }
+// ---- SqueezilBody (SqueezilBody.h): the body of a squeezil, its clips and prototype bodies ----
+static Hook H_sqinit, H_sqdtor, H_sqfree, H_sqblend, H_sqplace, H_squpdate, H_sqframe, H_sqsurface, H_sqground, H_sqsetground, H_sqsetor, H_sqgetor, H_sqorient, H_sqmode, H_sqsetmode, H_sqended, H_sqhead, H_sqsetspeed, H_sqgetspeed, H_sqpitch, H_sqroll, H_sqnear, H_sqanground, H_sqanair, H_sqloadall, H_sqfreeall, H_sqloadproto, H_sqloadcycles, H_sqloadcycle, H_sqcolorname, H_sqfindcolor, H_sqreadcolor;
+static SqueezilBody * (THISCALL *o_sqinit)(SqueezilBody *, const float *, int);
+static SqueezilBody * THISCALL h_sqinit(SqueezilBody *b, const float *m, int type) { HEAVY_LOG(H_sqinit); return b->Init(m, type); }
+static void (THISCALL *o_sqdtor)(SqueezilBody *);
+static void THISCALL h_sqdtor(SqueezilBody *b) { HEAVY_LOG(H_sqdtor); b->Destruct(); }
+static SqueezilBody * (THISCALL *o_sqfree)(SqueezilBody *, int);
+static SqueezilBody * THISCALL h_sqfree(SqueezilBody *b, int flags) { HEAVY_LOG(H_sqfree); return b->DestroyAndFree(flags); }
+static float * (THISCALL *o_sqblend)(SqueezilBody *, float *);
+static float * THISCALL h_sqblend(SqueezilBody *b, float *out) { HEAVY_LOG(H_sqblend); return b->BlendedMatrix(out); }
+static void (THISCALL *o_sqplace)(SqueezilBody *, BodyPlacement);
+static void THISCALL h_sqplace(SqueezilBody *b, BodyPlacement p) { HEAVY_LOG(H_sqplace); b->Place(p); }
+static void (THISCALL *o_squpdate)(SqueezilBody *);
+static void THISCALL h_squpdate(SqueezilBody *b) { HEAVY_LOG(H_squpdate); b->Update(); }
+static void (THISCALL *o_sqframe)(SqueezilBody *);
+static void THISCALL h_sqframe(SqueezilBody *b) { HEAVY_LOG(H_sqframe); b->UpdateFrame(); }
+static int (THISCALL *o_sqsurface)(SqueezilBody *);
+static int THISCALL h_sqsurface(SqueezilBody *b) { HEAVY_LOG(H_sqsurface); return b->IsOnSurface(); }
+static int (THISCALL *o_sqground)(SqueezilBody *);
+static int THISCALL h_sqground(SqueezilBody *b) { HEAVY_LOG(H_sqground); return b->IsOnGround(); }
+static void (THISCALL *o_sqsetground)(SqueezilBody *, int);
+static void THISCALL h_sqsetground(SqueezilBody *b, int on) { HEAVY_LOG(H_sqsetground); b->SetOnGround(on); }
+static void (THISCALL *o_sqsetor)(SqueezilBody *, float, float, float);
+static void THISCALL h_sqsetor(SqueezilBody *b, float p, float y, float r) { HEAVY_LOG(H_sqsetor); b->SetOrientation(p, y, r); }
+static void (THISCALL *o_sqgetor)(SqueezilBody *, float *, float *, float *);
+static void THISCALL h_sqgetor(SqueezilBody *b, float *p, float *y, float *r) { HEAVY_LOG(H_sqgetor); b->GetOrientation(p, y, r); }
+static void (THISCALL *o_sqorient)(SqueezilBody *);
+static void THISCALL h_sqorient(SqueezilBody *b) { HEAVY_LOG(H_sqorient); b->UpdateOrientation(); }
+static int (THISCALL *o_sqmode)(SqueezilBody *);
+static int THISCALL h_sqmode(SqueezilBody *b) { HEAVY_LOG(H_sqmode); return b->GetMode(); }
+static void (THISCALL *o_sqsetmode)(SqueezilBody *, int, int, float);
+static void THISCALL h_sqsetmode(SqueezilBody *b, int mode, int blend, float t) { HEAVY_LOG(H_sqsetmode); b->SetMode(mode, blend, t); }
+static int (THISCALL *o_sqended)(SqueezilBody *);
+static int THISCALL h_sqended(SqueezilBody *b) { HEAVY_LOG(H_sqended); return b->ClipEnded(); }
+static Vector3f * (THISCALL *o_sqhead)(SqueezilBody *, Vector3f *);
+static Vector3f * THISCALL h_sqhead(SqueezilBody *b, Vector3f *out) { HEAVY_LOG(H_sqhead); return b->HeadPosition(out); }
+static void (THISCALL *o_sqsetspeed)(SqueezilBody *, float);
+static void THISCALL h_sqsetspeed(SqueezilBody *b, float s) { HEAVY_LOG(H_sqsetspeed); b->SetClipSpeed(s); }
+static float (THISCALL *o_sqgetspeed)(SqueezilBody *);
+static float THISCALL h_sqgetspeed(SqueezilBody *b) { HEAVY_LOG(H_sqgetspeed); return b->GetClipSpeed(); }
+static float (THISCALL *o_sqpitch)(SqueezilBody *);
+static float THISCALL h_sqpitch(SqueezilBody *b) { HEAVY_LOG(H_sqpitch); return b->GetPitch(); }
+static float (THISCALL *o_sqroll)(SqueezilBody *);
+static float THISCALL h_sqroll(SqueezilBody *b) { HEAVY_LOG(H_sqroll); return b->GetRoll(); }
+static int (THISCALL *o_sqnear)(SqueezilBody *);
+static int THISCALL h_sqnear(SqueezilBody *b) { HEAVY_LOG(H_sqnear); return b->IsNearCamera(); }
+static void (THISCALL *o_sqanground)(SqueezilBody *, float);
+static void THISCALL h_sqanground(SqueezilBody *b, float s) { HEAVY_LOG(H_sqanground); b->AnimateOnGround(s); }
+static void (THISCALL *o_sqanair)(SqueezilBody *, float);
+static void THISCALL h_sqanair(SqueezilBody *b, float s) { HEAVY_LOG(H_sqanair); b->AnimateInAir(s); }
+static int (__cdecl *o_sqloadall)();
+static int __cdecl h_sqloadall() { HEAVY_LOG(H_sqloadall); return LoadProtoBodies(); }
+static void (__cdecl *o_sqfreeall)();
+static void __cdecl h_sqfreeall() { HEAVY_LOG(H_sqfreeall); FreeProtoBodies(); }
+static AnimatedBody * (__cdecl *o_sqloadproto)(const char *);
+static AnimatedBody * __cdecl h_sqloadproto(const char *color) { HEAVY_LOG(H_sqloadproto); return LoadProtoBody(color); }
+static int (__cdecl *o_sqloadcycles)();
+static int __cdecl h_sqloadcycles() { HEAVY_LOG(H_sqloadcycles); return LoadCycles(); }
+static int (__cdecl *o_sqloadcycle)(IniReader *, const char *, const SqueezilClipInfo *, MorphCycle **);
+static int __cdecl h_sqloadcycle(IniReader *ini, const char *name, const SqueezilClipInfo *info, MorphCycle **out) { HEAVY_LOG(H_sqloadcycle); return LoadCycle(ini, name, info, out); }
+static const char * (__cdecl *o_sqcolorname)(int);
+static const char * __cdecl h_sqcolorname(int c) { HEAVY_LOG(H_sqcolorname); return BodyColorName(c); }
+static int (__cdecl *o_sqfindcolor)(const char *);
+static int __cdecl h_sqfindcolor(const char *name) { HEAVY_LOG(H_sqfindcolor); return FindBodyColor(name); }
+static int (__cdecl *o_sqreadcolor)(IniReader *);
+static int __cdecl h_sqreadcolor(IniReader *ini) { HEAVY_LOG(H_sqreadcolor); return ReadBodyColor(ini); }
+// ---- SqueezilSoul (SqueezilSoul.h): so far only its physics settings ----
+static Hook H_ssphys;
+static void (__cdecl *o_ssphys)();
+static void __cdecl h_ssphys() { HEAVY_LOG(H_ssphys); ReadSqueezilPhysics(); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
 static Hook H_pladd, H_plremove, H_pldestroy, H_plupdate, H_pllevels, H_plflush, H_plworld;
@@ -2031,6 +2114,10 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_gbinit, &H_gbdtor, &H_gbfree, &H_gbupdate, &H_gbcontact,
                            &H_cbinit, &H_cbfree, &H_cbupdate, &H_bddtor, &H_bdortho,
                            &H_bdinit, &H_bdmatrix, &H_bdfacing, &H_bdangles, &H_bdgetangles, &H_bdcontact,
+                           &H_sqinit, &H_sqdtor, &H_sqfree, &H_sqblend, &H_sqplace, &H_squpdate, &H_sqframe, &H_sqsurface, &H_sqground, &H_sqsetground,
+                           &H_sqsetor, &H_sqgetor, &H_sqorient, &H_sqmode, &H_sqsetmode, &H_sqended, &H_sqhead, &H_sqsetspeed, &H_sqgetspeed, &H_sqpitch,
+                           &H_sqroll, &H_sqnear, &H_sqanground, &H_sqanair, &H_sqloadall, &H_sqfreeall, &H_sqloadproto, &H_sqloadcycles, &H_sqloadcycle, &H_sqcolorname,
+                           &H_sqfindcolor, &H_sqreadcolor, &H_ssphys,
                            &H_smctor, &H_smdtor, &H_smfree, &H_sminit, &H_smclearall, &H_smnear,
                            &H_smrun, &H_smactor, &H_smsoul, &H_smidsoul, &H_smidactor, &H_smadd, &H_smaddid, &H_smclear, &H_smnewid, &H_smdestroy, &H_smput, &H_smnew,
                            &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
@@ -2359,6 +2446,39 @@ static void Setup()
     H_bdangles = { "Body::SetAngles", 0x41fd60, 5, "8b44240453", (void *)h_bdangles, (void **)&o_bdangles, false, 0, 0, "bodybase", 0 };
     H_bdgetangles = { "Body::GetAngles", 0x41fd80, 5, "8b44240453", (void *)h_bdgetangles, (void **)&o_bdgetangles, false, 0, 0, "bodybase", 0 };
     H_bdcontact = { "Body::SetContact", 0x420060, 6, "8b5424045355", (void *)h_bdcontact, (void **)&o_bdcontact, false, 0, 0, "bodybase", 0 };
+    H_sqinit = { "SqueezilBody::SqueezilBody", 0x457050, 7, "64a10000000055", (void *)h_sqinit, (void **)&o_sqinit, false, 0, 0, "squeezilbody", 0 };
+    H_sqdtor = { "SqueezilBody::~SqueezilBody", 0x457380, 7, "64a10000000055", (void *)h_sqdtor, (void **)&o_sqdtor, false, 0, 0, "squeezilbody", 0 };
+    H_sqfree = { "SqueezilBody::Destroy", 0x457360, 8, "568bf1e818000000", (void *)h_sqfree, (void **)&o_sqfree, false, 0, 0, "squeezilbody", 4 };
+    H_sqblend = { "SqueezilBody::BlendedMatrix", 0x4574b0, 7, "64a10000000055", (void *)h_sqblend, (void **)&o_sqblend, false, 0, 0, "squeezilbody", 0 };
+    H_sqplace = { "SqueezilBody::Place", 0x4577e0, 7, "64a10000000055", (void *)h_sqplace, (void **)&o_sqplace, false, 0, 0, "squeezilbody", 0 };
+    H_squpdate = { "SqueezilBody::Update", 0x457bc0, 7, "64a10000000055", (void *)h_squpdate, (void **)&o_squpdate, false, 0, 0, "squeezilbody", 0 };
+    H_sqframe = { "SqueezilBody::UpdateFrame", 0x458ec0, 7, "568b8130020000", (void *)h_sqframe, (void **)&o_sqframe, false, 0, 0, "squeezilbody", 0 };
+    H_sqsurface = { "SqueezilBody::IsOnSurface", 0x459000, 5, "8b01ff603c", (void *)h_sqsurface, (void **)&o_sqsurface, false, 0, 0, "squeezilbody", 0 };
+    H_sqground = { "SqueezilBody::IsOnGround", 0x458fe0, 6, "8b8124020000", (void *)h_sqground, (void **)&o_sqground, false, 0, 0, "squeezilbody", 0 };
+    H_sqsetground = { "SqueezilBody::SetOnGround", 0x458ff0, 10, "8b442404898124020000", (void *)h_sqsetground, (void **)&o_sqsetground, false, 0, 0, "squeezilbody", 0 };
+    H_sqsetor = { "SqueezilBody::SetOrientation", 0x457780, 5, "8b44240453", (void *)h_sqsetor, (void **)&o_sqsetor, false, 0, 0, "squeezilbody", 0 };
+    H_sqgetor = { "SqueezilBody::GetOrientation", 0x4577b0, 5, "8b44240453", (void *)h_sqgetor, (void **)&o_sqgetor, false, 0, 0, "squeezilbody", 0 };
+    H_sqorient = { "SqueezilBody::UpdateOrientation", 0x4579f0, 7, "83ec0c8d442400", (void *)h_sqorient, (void **)&o_sqorient, false, 0, 0, "squeezilbody", 0 };
+    H_sqmode = { "SqueezilBody::GetMode", 0x457ac0, 6, "8b8130020000", (void *)h_sqmode, (void **)&o_sqmode, false, 0, 0, "squeezilbody", 0 };
+    H_sqsetmode = { "SqueezilBody::SetMode", 0x458820, 7, "64a10000000055", (void *)h_sqsetmode, (void **)&o_sqsetmode, false, 0, 0, "squeezilbody", 0 };
+    H_sqended = { "SqueezilBody::ClipEnded", 0x457ad0, 5, "83ec045657", (void *)h_sqended, (void **)&o_sqended, false, 0, 0, "squeezilbody", 0 };
+    H_sqhead = { "SqueezilBody::HeadPosition", 0x457b10, 7, "64a10000000055", (void *)h_sqhead, (void **)&o_sqhead, false, 0, 0, "squeezilbody", 0 };
+    H_sqsetspeed = { "SqueezilBody::SetClipSpeed", 0x459010, 10, "8b44240489811c020000", (void *)h_sqsetspeed, (void **)&o_sqsetspeed, false, 0, 0, "squeezilbody", 0 };
+    H_sqgetspeed = { "SqueezilBody::GetClipSpeed", 0x459020, 6, "d9811c020000", (void *)h_sqgetspeed, (void **)&o_sqgetspeed, false, 0, 0, "squeezilbody", 0 };
+    H_sqpitch = { "SqueezilBody::GetPitch", 0x459030, 6, "d98110020000", (void *)h_sqpitch, (void **)&o_sqpitch, false, 0, 0, "squeezilbody", 0 };
+    H_sqroll = { "SqueezilBody::GetRoll", 0x459040, 6, "d98118020000", (void *)h_sqroll, (void **)&o_sqroll, false, 0, 0, "squeezilbody", 0 };
+    H_sqnear = { "SqueezilBody::IsNearCamera", 0x4589a0, 7, "64a10000000055", (void *)h_sqnear, (void **)&o_sqnear, false, 0, 0, "squeezilbody", 0 };
+    H_sqanground = { "SqueezilBody::AnimateOnGround", 0x458aa0, 7, "64a10000000055", (void *)h_sqanground, (void **)&o_sqanground, false, 0, 0, "squeezilbody", 0 };
+    H_sqanair = { "SqueezilBody::AnimateInAir", 0x458cd0, 10, "83ec18568b8130020000", (void *)h_sqanair, (void **)&o_sqanair, false, 0, 0, "squeezilbody", 0 };
+    H_sqloadall = { "LoadProtoBodies", 0x458050, 10, "565733ff8bb7d8fd4900", (void *)h_sqloadall, (void **)&o_sqloadall, false, 0, 0, "squeezilbody", 0 };
+    H_sqfreeall = { "FreeProtoBodies", 0x4580a0, 8, "535657bf38f14b00", (void *)h_sqfreeall, (void **)&o_sqfreeall, false, 0, 0, "squeezilbody", 0 };
+    H_sqloadproto = { "LoadProtoBody", 0x458130, 7, "64a10000000055", (void *)h_sqloadproto, (void **)&o_sqloadproto, false, 0, 0, "squeezilbody", 0 };
+    H_sqloadcycles = { "LoadCycles", 0x458590, 7, "64a10000000055", (void *)h_sqloadcycles, (void **)&o_sqloadcycles, false, 0, 0, "squeezilbody", 0 };
+    H_sqloadcycle = { "LoadCycle", 0x458700, 7, "64a10000000055", (void *)h_sqloadcycle, (void **)&o_sqloadcycle, false, 0, 0, "squeezilbody", 0 };
+    H_sqcolorname = { "BodyColorName", 0x458fd0, 11, "8b4424048b0485d8fd4900", (void *)h_sqcolorname, (void **)&o_sqcolorname, false, 0, 0, "squeezilbody", 0 };
+    H_sqfindcolor = { "FindBodyColor", 0x458f20, 8, "565733ff8b74240c", (void *)h_sqfindcolor, (void **)&o_sqfindcolor, false, 0, 0, "squeezilbody", 0 };
+    H_sqreadcolor = { "ReadBodyColor", 0x458f60, 5, "8b4c240453", (void *)h_sqreadcolor, (void **)&o_sqreadcolor, false, 0, 0, "squeezilbody", 0 };
+    H_ssphys = { "ReadSqueezilPhysics", 0x44f700, 7, "64a10000000055", (void *)h_ssphys, (void **)&o_ssphys, false, 0, 0, "squeezilsoul", 0 };
     H_smctor = { "LocationSimulation::LocationSimulation", 0x412e80, 7, "64a10000000055", (void *)h_smctor, (void **)&o_smctor, false, 0, 0, "simulation", 0 };
     H_smdtor = { "LocationSimulation::~LocationSimulation", 0x412f20, 7, "64a10000000055", (void *)h_smdtor, (void **)&o_smdtor, false, 0, 0, "simulation", 0 };
     H_smfree = { "LocationSimulation::Destroy", 0x412f00, 8, "568bf1e818000000", (void *)h_smfree, (void **)&o_smfree, false, 0, 0, "simulation", 4 };
