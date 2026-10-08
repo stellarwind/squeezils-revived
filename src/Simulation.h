@@ -35,6 +35,7 @@ struct CreatureTable {
 };
 
 struct Simulation {
+    GAME_HEAP_OPERATORS
     void **vtbl;      // 0x0 @0049d644 (the base class has nothing but the destructor)
 
     // @00414280 slot 0
@@ -44,7 +45,15 @@ struct Simulation {
 struct LocationSimulation : Simulation {
     CreatureTable *creatures;   // 0x04
     int            lastId;      // 0x08 the last id NewId handed out
-    Array<int>     ids;         // 0x0c the ids in the order they were added
+    Array<int>     ids;         // 0x0c the ids in the order they were added (the original list class has a BufferObject on the end)
+    void          *idsBufferObject;   // 0x1c
+    int            active;      // 0x20 set to 1 by the constructor
+
+    LocationSimulation *Construct();            // @00412e80 (the id list is made by the original)
+    void  Destruct();                           // @00412f20
+    LocationSimulation *DestroyAndFree(int flags);   // @00412f00 slot 0 (bit 0 of flags: free the memory)
+    void  Init();                               // @00412f90 makes the creature table, ids start at 10; drains the key and mouse messages
+    void  ClearCreatures();                     // @00413060 DestroyCreatures, then whatever creatures are left in the table
 
     void  RunActors();                          // @00414010 slot 4: the actors' virtual slot 2, one after another (not identified)
     void *GetActor(int id);                     // @00414050 NULL when there is no creature with the id
@@ -60,3 +69,8 @@ struct LocationSimulation : Simulation {
 
 // @004142b0 an empty record (no actor, no soul)
 Creature *NewCreature();
+
+// @00413100 Whether the point is within sqrt(maxDistSq) of the line from origin towards end, measured only over the first unit
+// of length (the direction is made length 1 and the foot of the perpendicular must lie 0 to 1 along it).
+struct Vector3f;
+int PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq);

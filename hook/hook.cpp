@@ -28,6 +28,7 @@
 #include "PropLoader.h"
 #include "PropList.h"
 #include "Simulation.h"
+#include "Body.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -150,6 +151,11 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 }
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
+void  ConstructIdList(void *ids)                         { ((void (TC *)(void *))0x45eef0)(ids); }
+void  DestructIdList(void *ids)                          { ((void (TC *)(void *))0x45efa0)(ids); }
+void  ConstructCreatureTable(CreatureTable *table)       { ((void (TC *)(void *))0x466590)(table); }
+void *GetApplication()                                   { return *(void **)0x4badac; }
+void  FlushInputMessages(void *application)              { ((int (TC *)(void *))0x43c970)(application); }
 void *SimulationActor(int index)                         { return ((void *(TC *)(void *, int))0x414050)(*(void **)0x4badbc, index); }
 void *SimulationSoul(int index)                          { return ((void *(TC *)(void *, int))0x414080)(*(void **)0x4badbc, index); }
 float *ActorMatrix(void *actor)                          { return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor); }
@@ -1543,6 +1549,33 @@ static void (THISCALL *o_smput)(CreatureTable *, int, void *, void *);
 static void THISCALL h_smput(CreatureTable *t, int id, void *a, void *so) { HEAVY_LOG(H_smput); t->Put(id, a, so); }
 static Creature *(__cdecl *o_smnew)();
 static Creature *__cdecl h_smnew() { HEAVY_LOG(H_smnew); return NewCreature(); }
+static Hook H_smctor, H_smdtor, H_smfree, H_sminit, H_smclearall, H_smnear;
+static LocationSimulation *(THISCALL *o_smctor)(LocationSimulation *);
+static LocationSimulation *THISCALL h_smctor(LocationSimulation *s) { HEAVY_LOG(H_smctor); return s->Construct(); }
+static void (THISCALL *o_smdtor)(LocationSimulation *);
+static void THISCALL h_smdtor(LocationSimulation *s) { HEAVY_LOG(H_smdtor); s->Destruct(); }
+static LocationSimulation *(THISCALL *o_smfree)(LocationSimulation *, int);
+static LocationSimulation *THISCALL h_smfree(LocationSimulation *s, int flags) { HEAVY_LOG(H_smfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_sminit)(LocationSimulation *);
+static void THISCALL h_sminit(LocationSimulation *s) { HEAVY_LOG(H_sminit); s->Init(); }
+static void (THISCALL *o_smclearall)(LocationSimulation *);
+static void THISCALL h_smclearall(LocationSimulation *s) { HEAVY_LOG(H_smclearall); s->ClearCreatures(); }
+static int (__stdcall *o_smnear)(const Vector3f *, const Vector3f *, const Vector3f *, float);
+static int __stdcall h_smnear(const Vector3f *p, const Vector3f *o, const Vector3f *e, float d) { HEAVY_LOG(H_smnear); return PointNearSegment(p, o, e, d); }
+// ---- Body (Body.h): the physical state of an actor ----
+static Hook H_bdinit, H_bdmatrix, H_bdfacing, H_bdangles, H_bdgetangles, H_bdcontact;
+static Body *(THISCALL *o_bdinit)(Body *, const float *);
+static Body *THISCALL h_bdinit(Body *b, const float *m) { HEAVY_LOG(H_bdinit); return b->Init(m); }
+static void (THISCALL *o_bdmatrix)(Body *, const float *);
+static void THISCALL h_bdmatrix(Body *b, const float *m) { HEAVY_LOG(H_bdmatrix); b->SetMatrix(m); }
+static void (THISCALL *o_bdfacing)(Body *, const Float3 *, float);
+static void THISCALL h_bdfacing(Body *b, const Float3 *d, float v) { HEAVY_LOG(H_bdfacing); b->SetFacing(d, v); }
+static void (THISCALL *o_bdangles)(Body *, float, float, float);
+static void THISCALL h_bdangles(Body *b, float x, float y, float z) { HEAVY_LOG(H_bdangles); b->SetAngles(x, y, z); }
+static void (THISCALL *o_bdgetangles)(Body *, float *, float *, float *);
+static void THISCALL h_bdgetangles(Body *b, float *x, float *y, float *z) { HEAVY_LOG(H_bdgetangles); b->GetAngles(x, y, z); }
+static void (THISCALL *o_bdcontact)(Body *, const Contact *);
+static void THISCALL h_bdcontact(Body *b, const Contact *c) { HEAVY_LOG(H_bdcontact); b->SetContact(c); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
 static Hook H_pladd, H_plremove, H_pldestroy, H_plupdate, H_pllevels, H_plflush, H_plworld;
@@ -1969,6 +2002,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_bdinit, &H_bdmatrix, &H_bdfacing, &H_bdangles, &H_bdgetangles, &H_bdcontact,
+                           &H_smctor, &H_smdtor, &H_smfree, &H_sminit, &H_smclearall, &H_smnear,
                            &H_smrun, &H_smactor, &H_smsoul, &H_smidsoul, &H_smidactor, &H_smadd, &H_smaddid, &H_smclear, &H_smnewid, &H_smdestroy, &H_smput, &H_smnew,
                            &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
                            &H_lploadprop, &H_lpwords, &H_lppath, &H_lprpaths, &H_lpfind,
@@ -2280,6 +2315,18 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_bdinit = { "Body::Body", 0x41fb90, 7, "64a10000000055", (void *)h_bdinit, (void **)&o_bdinit, false, 0, 0, "bodybase", 0 };
+    H_bdmatrix = { "Body::SetMatrix", 0x41fcc0, 5, "8b54240453", (void *)h_bdmatrix, (void **)&o_bdmatrix, false, 0, 0, "bodybase", 0 };
+    H_bdfacing = { "Body::SetFacing", 0x41fd30, 5, "8b54240453", (void *)h_bdfacing, (void **)&o_bdfacing, false, 0, 0, "bodybase", 0 };
+    H_bdangles = { "Body::SetAngles", 0x41fd60, 5, "8b44240453", (void *)h_bdangles, (void **)&o_bdangles, false, 0, 0, "bodybase", 0 };
+    H_bdgetangles = { "Body::GetAngles", 0x41fd80, 5, "8b44240453", (void *)h_bdgetangles, (void **)&o_bdgetangles, false, 0, 0, "bodybase", 0 };
+    H_bdcontact = { "Body::SetContact", 0x420060, 6, "8b5424045355", (void *)h_bdcontact, (void **)&o_bdcontact, false, 0, 0, "bodybase", 0 };
+    H_smctor = { "LocationSimulation::LocationSimulation", 0x412e80, 7, "64a10000000055", (void *)h_smctor, (void **)&o_smctor, false, 0, 0, "simulation", 0 };
+    H_smdtor = { "LocationSimulation::~LocationSimulation", 0x412f20, 7, "64a10000000055", (void *)h_smdtor, (void **)&o_smdtor, false, 0, 0, "simulation", 0 };
+    H_smfree = { "LocationSimulation::Destroy", 0x412f00, 8, "568bf1e818000000", (void *)h_smfree, (void **)&o_smfree, false, 0, 0, "simulation", 4 };
+    H_sminit = { "LocationSimulation::Init", 0x412f90, 7, "64a10000000055", (void *)h_sminit, (void **)&o_sminit, false, 0, 0, "simulation", 0 };
+    H_smclearall = { "LocationSimulation::ClearCreatures", 0x413060, 10, "5356578bf1e836110000", (void *)h_smclearall, (void **)&o_smclearall, false, 0, 0, "simulation", 6 };
+    H_smnear = { "PointNearSegment", 0x413100, 7, "64a10000000055", (void *)h_smnear, (void **)&o_smnear, false, 0, 0, "simulation", 0 };
     H_smrun = { "LocationSimulation::RunActors", 0x414010, 5, "53565733f6", (void *)h_smrun, (void **)&o_smrun, false, 0, 0, "simulation", 0 };
     H_smactor = { "LocationSimulation::GetActor", 0x414050, 5, "8d44240453", (void *)h_smactor, (void **)&o_smactor, false, 0, 0, "simulation", 0 };
     H_smsoul = { "LocationSimulation::GetSoul", 0x414080, 5, "8d44240453", (void *)h_smsoul, (void **)&o_smsoul, false, 0, 0, "simulation", 0 };
