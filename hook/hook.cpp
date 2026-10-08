@@ -19,6 +19,8 @@
 #include "Menu.h"
 #include "Dialogs.h"
 #include "World.h"
+#include "TextureDefaults.h"
+#include "Resources.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
@@ -126,6 +128,19 @@ int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(v
 void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
 void  ClearWorldObjects()                                { ((void (__cdecl *)())0x42d010)(); }
+// ---- the resource loaders' model calls ----
+SqgModel *SqgModelConstruct(void *memory)                { return ((SqgModel *(TC *)(void *))0x4719d0)(memory); }
+void  SqgModelDestruct(SqgModel *model)                  { ((void (TC *)(void *))0x471a00)(model); }
+int   SqgModelLoadWrl(SqgModel *model, const char *path, int flag) { return ((int (TC *)(void *, const char *, int))0x472480)(model, path, flag); }
+void  SqgModelSave(SqgModel *model, const char *path)    { ((void (TC *)(void *, const char *))0x472b90)(model, path); }
+void  SqgSetErrorCallback(void (__cdecl *fn)(const char *))                    { ((void (__cdecl *)(void *))0x4736f0)((void *)fn); }
+void  SqgSetTextureLookup(IDirect3DRMTexture *(__cdecl *fn)(const char *))     { ((void (__cdecl *)(void *))0x473700)((void *)fn); }
+IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRMTexture *(__cdecl *lookup)(const char *))
+{
+    return ((IDirect3DRMFrame *(__cdecl *)(IDirect3DRM *, const char *, void *))0x47a580)(d3drm, path, (void *)lookup);
+}
+void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
+void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
 int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
 int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
 void SetSensitivity1(float value)                        { ((void (__cdecl *)(float))0x44aa10)(value); }
@@ -1388,6 +1403,38 @@ static void (THISCALL *o_wllights)(World *, IniReader *);
 static void THISCALL h_wllights(World *w, IniReader *r) { HEAVY_LOG(H_wllights); w->SetupLights(r); }
 static void (__fastcall *o_wlframe)(World *);
 static void __fastcall h_wlframe(World *w) { HEAVY_LOG(H_wlframe); w->RenderFrame(); }
+static Hook H_rsloadtex, H_rsfindtex, H_rstexres, H_rstexlist, H_rsdefsprite, H_rspoptex, H_rstexlook, H_rsloadgeom, H_rsfindgeom, H_rsgeomres, H_rsgeomlist, H_rspopgeom, H_rsinitgeom, H_rserrlog;
+static IDirect3DRMTexture *(__cdecl *o_rsloadtex)(const char *, const char *);
+static IDirect3DRMTexture *__cdecl h_rsloadtex(const char *n, const char *p) { HEAVY_LOG(H_rsloadtex); return LoadTexture(n, p); }
+static IDirect3DRMTexture *(__cdecl *o_rsfindtex)(const char *);
+static IDirect3DRMTexture *__cdecl h_rsfindtex(const char *n) { HEAVY_LOG(H_rsfindtex); return FindTexture(n); }
+static void (__cdecl *o_rstexres)(IniReader *);
+static void __cdecl h_rstexres(IniReader *i) { HEAVY_LOG(H_rstexres); LoadTextureResources(i); }
+static void (__cdecl *o_rstexlist)(IniReader *);
+static void __cdecl h_rstexlist(IniReader *i) { HEAVY_LOG(H_rstexlist); ReadTextureList(i); }
+static void (__cdecl *o_rsdefsprite)(IniReader *);
+static void __cdecl h_rsdefsprite(IniReader *i) { HEAVY_LOG(H_rsdefsprite); ReadDefaultPropSprite(i); }
+static void (__cdecl *o_rspoptex)();
+static void __cdecl h_rspoptex() { HEAVY_LOG(H_rspoptex); PopTextureTable(); }
+static IDirect3DRMTexture *(__cdecl *o_rstexlook)(const char *);
+static IDirect3DRMTexture *__cdecl h_rstexlook(const char *n) { HEAVY_LOG(H_rstexlook); return TextureLookup(n); }
+static IDirect3DRMFrame *(__cdecl *o_rsloadgeom)(const char *, const char *);
+static IDirect3DRMFrame *__cdecl h_rsloadgeom(const char *n, const char *s) { HEAVY_LOG(H_rsloadgeom); return LoadGeometry(n, s); }
+static IDirect3DRMFrame *(__cdecl *o_rsfindgeom)(const char *);
+static IDirect3DRMFrame *__cdecl h_rsfindgeom(const char *n) { HEAVY_LOG(H_rsfindgeom); return FindGeometry(n); }
+static void (__cdecl *o_rsgeomres)(IniReader *);
+static void __cdecl h_rsgeomres(IniReader *i) { HEAVY_LOG(H_rsgeomres); LoadGeometryResources(i); }
+static void (__cdecl *o_rsgeomlist)(IniReader *);
+static void __cdecl h_rsgeomlist(IniReader *i) { HEAVY_LOG(H_rsgeomlist); ReadGeometryList(i); }
+static void (__cdecl *o_rspopgeom)();
+static void __cdecl h_rspopgeom() { HEAVY_LOG(H_rspopgeom); PopGeometryTable(); }
+static void (__cdecl *o_rsinitgeom)();
+static void __cdecl h_rsinitgeom() { HEAVY_LOG(H_rsinitgeom); InitGeometryLoading(); }
+static void (__cdecl *o_rserrlog)(const char *);
+static void __cdecl h_rserrlog(const char *m) { HEAVY_LOG(H_rserrlog); SqgErrorLog(m); }
+static Hook H_texdef;
+static void (__cdecl *o_texdef)();
+static void __cdecl h_texdef() { HEAVY_LOG(H_texdef); InitTextureDefaults(); }
 static Hook H_wldecset, H_wldecal, H_wldecsize;
 static DecalSettings *(THISCALL *o_wldecset)(World *, DecalSettings *, IniReader *, const char *, const char *, DecalSettings);
 static DecalSettings *THISCALL h_wldecset(World *w, DecalSettings *out, IniReader *r, const char *section, const char *prefix, DecalSettings defaults)
@@ -1494,7 +1541,9 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree, &H_pnspr, &H_qpload, &H_qpdraw, &H_qidraw,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys,
                            &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe,
-                           &H_wldecset, &H_wldecal, &H_wldecsize };
+                           &H_wldecset, &H_wldecal, &H_wldecsize, &H_texdef,
+                           &H_rsloadtex, &H_rsfindtex, &H_rstexres, &H_rstexlist, &H_rsdefsprite, &H_rspoptex, &H_rstexlook,
+                           &H_rsloadgeom, &H_rsfindgeom, &H_rsgeomres, &H_rsgeomlist, &H_rspopgeom, &H_rsinitgeom, &H_rserrlog };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1741,6 +1790,21 @@ static void Setup()
     H_wldecset = { "World::ReadDecalSettings", 0x435c90, 7, "64a10000000055", (void *)h_wldecset, (void **)&o_wldecset, false, 0, 0, "world", 0 };
     H_wldecal = { "World::CreateDecal", 0x435bb0, 7, "64a10000000055", (void *)h_wldecal, (void **)&o_wldecal, false, 0, 0, "world", 0 };
     H_wldecsize = { "World::SetDecalSize", 0x435c70, 8, "8b44240c8b4c2408", (void *)h_wldecsize, (void **)&o_wldecsize, false, 0, 0, "world", 0 };
+    H_texdef = { "InitTextureDefaults", 0x424e20, 7, "64a10000000055", (void *)h_texdef, (void **)&o_texdef, false, 0, 0, "world", 0 };
+    H_rsloadtex = { "LoadTexture", 0x425070, 7, "64a10000000055", (void *)h_rsloadtex, (void **)&o_rsloadtex, false, 0, 0, "resources", 0 };
+    H_rsfindtex = { "FindTexture", 0x425220, 7, "64a10000000055", (void *)h_rsfindtex, (void **)&o_rsfindtex, false, 0, 0, "resources", 0 };
+    H_rstexres = { "LoadTextureResources", 0x425310, 7, "64a10000000055", (void *)h_rstexres, (void **)&o_rstexres, false, 0, 0, "resources", 0 };
+    H_rstexlist = { "ReadTextureList", 0x425500, 7, "64a10000000055", (void *)h_rstexlist, (void **)&o_rstexlist, false, 0, 0, "resources", 0 };
+    H_rsdefsprite = { "ReadDefaultPropSprite", 0x425870, 7, "64a10000000055", (void *)h_rsdefsprite, (void **)&o_rsdefsprite, false, 0, 0, "resources", 0 };
+    H_rspoptex = { "PopTextureTable", 0x425ab0, 7, "64a10000000055", (void *)h_rspoptex, (void **)&o_rspoptex, false, 0, 0, "resources", 0 };
+    H_rstexlook = { "TextureLookup", 0x424010, 7, "64a10000000055", (void *)h_rstexlook, (void **)&o_rstexlook, false, 0, 0, "resources", 0 };
+    H_rsloadgeom = { "LoadGeometry", 0x4242b0, 7, "64a10000000055", (void *)h_rsloadgeom, (void **)&o_rsloadgeom, false, 0, 0, "resources", 0 };
+    H_rsfindgeom = { "FindGeometry", 0x4246f0, 7, "64a10000000055", (void *)h_rsfindgeom, (void **)&o_rsfindgeom, false, 0, 0, "resources", 0 };
+    H_rsgeomres = { "LoadGeometryResources", 0x4247e0, 7, "64a10000000055", (void *)h_rsgeomres, (void **)&o_rsgeomres, false, 0, 0, "resources", 0 };
+    H_rsgeomlist = { "ReadGeometryList", 0x4249a0, 7, "64a10000000055", (void *)h_rsgeomlist, (void **)&o_rsgeomlist, false, 0, 0, "resources", 0 };
+    H_rspopgeom = { "PopGeometryTable", 0x424c80, 7, "64a10000000055", (void *)h_rspopgeom, (void **)&o_rspopgeom, false, 0, 0, "resources", 0 };
+    H_rsinitgeom = { "InitGeometryLoading", 0x4241d0, 7, "64a10000000055", (void *)h_rsinitgeom, (void **)&o_rsinitgeom, false, 0, 0, "resources", 0 };
+    H_rserrlog = { "SqgErrorLog", 0x4241b0, 5, "8b44240450", (void *)h_rserrlog, (void **)&o_rserrlog, false, 0, 0, "resources", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

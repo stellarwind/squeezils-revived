@@ -11,6 +11,8 @@
 class Renderer;
 class Scene;
 struct IDirect3DRMTexture;
+struct IDirect3DRMFrame;
+struct IDirect3DRM;
 
 // ---- memory ----
 // Objects the original code frees itself must come from the heap it frees them to.
@@ -184,3 +186,29 @@ int   NavMeshLoad(void *nav, const char *path);                        // @0047c
 void  NavMeshDestroy(void *nav);                                       // @0047af00 (the caller frees the memory)
 int   LoadPaletteFile(const char *path, unsigned char *rgba);          // @00474ca0 (cdecl) reads a palette into a 256 entry RGBA table, nonzero on success
 void  ClearWorldObjects();                                             // @0042d010 frees the level's prop lists
+
+// ---- resource tables (Resources.h) ----
+// The texture and geometry tables are the same container templates as the ini files use (Container.h), with other element
+// types. The stacks that hold them are globals the game's start-up code built (0x4c7180 and 0x4c71c0).
+typedef Table<String, IDirect3DRMTexture *, Array<IDirect3DRMTexture *>, 0> TextureTable;
+typedef Table<String, IDirect3DRMFrame *, Array<IDirect3DRMFrame *>, 0>     GeometryTable;
+template<> struct OriginalVtables<PrimitiveArray<String, 0> >      { enum : unsigned { primary = 0x4a0764, bufferObject = 0x4a074c }; };
+template<> struct OriginalVtables<Set<String, 0> >                 { enum : unsigned { primary = 0x4a079c, bufferObject = 0x4a0784 }; };
+template<> struct OriginalVtables<Array<IDirect3DRMTexture *> >    { enum : unsigned { primary = 0x4a07dc }; };
+template<> struct OriginalVtables<Array<IDirect3DRMFrame *> >      { enum : unsigned { primary = 0x4a072c }; };
+template<> struct OriginalVtables<TextureTable>                    { enum : unsigned { primary = 0x4a07c4 }; };
+template<> struct OriginalVtables<GeometryTable>                   { enum : unsigned { primary = 0x4a0714 }; };
+template<> struct OriginalVtables<Array<TextureTable *> >          { enum : unsigned { primary = 0x4a06f4 }; };
+template<> struct OriginalVtables<Array<GeometryTable *> >         { enum : unsigned { primary = 0x4a06d4 }; };
+
+// The model loader's pieces that are still original code (SqgModel.h has Load, CreateMesh and BuildFrame).
+class SqgModel;
+SqgModel *SqgModelConstruct(void *memory);                             // @004719d0 clears the 0x2c byte object, returns it
+void  SqgModelDestruct(SqgModel *model);                               // @00471a00
+int   SqgModelLoadWrl(SqgModel *model, const char *path, int flag);    // @00472480 reads a .wrl file into the model ("sqgify"), nonzero on success
+void  SqgModelSave(SqgModel *model, const char *path);                 // @00472b90 writes the model as an .sqg file
+void  SqgSetErrorCallback(void (__cdecl *fn)(const char *));           // @004736f0 stores into 0x4c0f88 (the function SqgError reports through)
+void  SqgSetTextureLookup(IDirect3DRMTexture *(__cdecl *fn)(const char *));   // @00473700 stores into 0x4c0f84
+IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRMTexture *(__cdecl *lookup)(const char *));   // @0047a580 builds a frame straight from a .wrl file
+void  WrlSetLogCallback(void (__cdecl *fn)(const char *));             // @0047a790 stores into 0x4c3c4c (its meaning is a guess: the game passes its error logger to both)
+void  WrlSetErrorCallback(void (__cdecl *fn)(const char *));           // @0047a7a0 stores into 0x4c3c50
