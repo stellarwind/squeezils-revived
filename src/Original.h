@@ -261,3 +261,11 @@ static const void *const kSqueezilSoulType = (const void *)0x4b9368;   // .?AVSq
 // does); with a NULL prop they look the prop up through the actor, which is not reconstructed.
 ScriptCaller *ScriptCallerInit(ScriptCaller *caller, int actorIndex, Prop *prop);               // @004207a0
 ScriptCaller *ScriptCallerInitSoul(ScriptCaller *caller, void *soul, int actorIndex, Prop *prop);   // @00420900
+
+// ---- CycleProp's step events (CycleProp.h): a table from a child number to a script function name ----
+template<> struct OriginalVtables<PrimitiveArray<int, 24> >        { enum : unsigned { primary = 0x4a03c4, bufferObject = 0x4a03ac }; };
+template<> struct OriginalVtables<Set<int, 24> >                   { enum : unsigned { primary = 0x4a03fc, bufferObject = 0x4a03e4 }; };
+template<> struct OriginalVtables<Table<int, String, PrimitiveArray<String, 3>, 24> >
+                                                                   { enum : unsigned { primary = 0x4a0424 }; };
+template<> struct OriginalVtables<BufferObjectTable<int, String, PrimitiveArray<String, 3>, 24> >
+                                                                   { enum : unsigned { primary = 0x49dd2c, bufferObject = 0x49dd14 }; };

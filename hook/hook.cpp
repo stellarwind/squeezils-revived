@@ -24,6 +24,7 @@
 #include "Prop.h"
 #include "FrameProp.h"
 #include "LODProp.h"
+#include "CycleProp.h"
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
@@ -1508,6 +1509,31 @@ static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
+static Hook H_cpinit, H_cpdestruct, H_cpdestroy, H_cpclone, H_cpbuild, H_cpupdate, H_cpcurrent, H_cpstep, H_cpmode, H_cpfire;
+static CycleProp *(THISCALL *o_cpinit)(CycleProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, StepEventTable *, float, int, float);
+static CycleProp *THISCALL h_cpinit(CycleProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, StepEventTable *e, float period, int carry, float start)
+{
+    HEAVY_LOG(H_cpinit);
+    return p->Init(a, b, c, d, n, m, t, e, period, carry, start);
+}
+static void (__fastcall *o_cpdestruct)(CycleProp *);
+static void __fastcall h_cpdestruct(CycleProp *p) { HEAVY_LOG(H_cpdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_cpdestroy)(CycleProp *, int);
+static Prop *THISCALL h_cpdestroy(CycleProp *p, int flags) { HEAVY_LOG(H_cpdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_cpclone)(CycleProp *, FrameProp *);
+static Prop *THISCALL h_cpclone(CycleProp *p, FrameProp *o) { HEAVY_LOG(H_cpclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_cpbuild)(CycleProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_cpbuild(CycleProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_cpbuild); return p->BuildFrame(parent); }
+static void (THISCALL *o_cpupdate)(CycleProp *, float);
+static void THISCALL h_cpupdate(CycleProp *p, float seconds) { HEAVY_LOG(H_cpupdate); p->Update(seconds); }
+static void (THISCALL *o_cpcurrent)(CycleProp *, int);
+static void THISCALL h_cpcurrent(CycleProp *p, int child) { HEAVY_LOG(H_cpcurrent); p->SetCurrent(child); }
+static void (THISCALL *o_cpstep)(CycleProp *, int);
+static void THISCALL h_cpstep(CycleProp *p, int s) { HEAVY_LOG(H_cpstep); p->SetStep(s); }
+static void (THISCALL *o_cpmode)(CycleProp *, int);
+static void THISCALL h_cpmode(CycleProp *p, int m) { HEAVY_LOG(H_cpmode); p->SetMode(m); }
+static void (THISCALL *o_cpfire)(CycleProp *, int, int);
+static void THISCALL h_cpfire(CycleProp *p, int from, int to) { HEAVY_LOG(H_cpfire); p->FireStepMessages(from, to); }
 static Hook H_lpinit, H_lpdestruct, H_lpdestroy, H_lpclone, H_lpbuild, H_lplevel, H_lpselect;
 static LODProp *(THISCALL *o_lpinit)(LODProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, WeightList *);
 static LODProp *THISCALL h_lpinit(LODProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, WeightList *w)
@@ -1835,6 +1861,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_fptime, &H_fpdir, &H_fploop, &H_fpmatrix, &H_fpactor, &H_fpfollow, &H_fphideend, &H_fpfind,
                            &H_pzctor, &H_pzassign, &H_pzmatrix, &H_pcctor, &H_pcdtor, &H_pcfind, &H_pcsample, &H_pcnew, &H_pcblend,
@@ -2139,6 +2166,16 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_cpinit = { "CycleProp::Init", 0x4288b0, 7, "64a10000000055", (void *)h_cpinit, (void **)&o_cpinit, false, 0, 0, "cycleprop", 0 };
+    H_cpdestruct = { "CycleProp::Destruct", 0x428d10, 7, "64a10000000055", (void *)h_cpdestruct, (void **)&o_cpdestruct, false, 0, 0, "cycleprop", 0 };
+    H_cpdestroy = { "CycleProp::Destroy", 0x428b60, 8, "568bf1e8a8010000", (void *)h_cpdestroy, (void **)&o_cpdestroy, false, 0, 0, "cycleprop", 4 };
+    H_cpclone = { "CycleProp::Clone", 0x428bd0, 7, "64a10000000055", (void *)h_cpclone, (void **)&o_cpclone, false, 0, 0, "cycleprop", 0 };
+    H_cpbuild = { "CycleProp::BuildFrame", 0x428d80, 7, "64a10000000055", (void *)h_cpbuild, (void **)&o_cpbuild, false, 0, 0, "cycleprop", 0 };
+    H_cpupdate = { "CycleProp::Update", 0x428e90, 7, "8b442404535657", (void *)h_cpupdate, (void **)&o_cpupdate, false, 0, 0, "cycleprop", 0 };
+    H_cpcurrent = { "CycleProp::SetCurrent", 0x428fd0, 7, "64a10000000055", (void *)h_cpcurrent, (void **)&o_cpcurrent, false, 0, 0, "cycleprop", 0 };
+    H_cpstep = { "CycleProp::SetStep", 0x429350, 10, "8b4424048981e0000000", (void *)h_cpstep, (void **)&o_cpstep, false, 0, 0, "cycleprop", 0 };
+    H_cpmode = { "CycleProp::SetMode", 0x429360, 10, "8b4424048981e4000000", (void *)h_cpmode, (void **)&o_cpmode, false, 0, 0, "cycleprop", 0 };
+    H_cpfire = { "CycleProp::FireStepMessages", 0x4290b0, 7, "64a10000000055", (void *)h_cpfire, (void **)&o_cpfire, false, 0, 0, "cycleprop", 0 };
     H_lpinit = { "LODProp::Init", 0x428050, 7, "64a10000000055", (void *)h_lpinit, (void **)&o_lpinit, false, 0, 0, "lodprop", 0 };
     H_lpdestruct = { "LODProp::Destruct", 0x428260, 7, "64a10000000055", (void *)h_lpdestruct, (void **)&o_lpdestruct, false, 0, 0, "lodprop", 0 };
     H_lpdestroy = { "LODProp::Destroy", 0x428240, 8, "568bf1e818000000", (void *)h_lpdestroy, (void **)&o_lpdestroy, false, 0, 0, "lodprop", 4 };
