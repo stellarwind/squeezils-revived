@@ -323,3 +323,9 @@ void FrameProp::SetHideAtEnd(int hide)
 {
     hideAtEnd = hide;
 }
+
+// @00427f40
+int FrameProp::HasBody()
+{
+    return body != NULL;
+}

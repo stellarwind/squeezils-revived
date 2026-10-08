@@ -142,3 +142,7 @@ static_assert(offsetof(CycleProp, events) == 0xac && offsetof(CycleProp, current
 static_assert(sizeof(CycleMessageTable) == 0x30 && offsetof(CycleMessageTable, values) == 0x18, "CycleMessageTable layout");
 static_assert(offsetof(ScriptCaller, soul) == 0x08 && offsetof(ScriptCaller, actorIndex) == 0x10 && offsetof(ScriptCaller, prop) == 0x14,
               "ScriptCaller fields");
+#include "NavProp.h"
+static_assert(offsetof(NavProp, surface) == 0xf4 && offsetof(NavProp, instance) == 0xf8 && offsetof(NavProp, properties) == 0xfc &&
+              offsetof(NavProp, sizeSquared) == 0x12c, "NavProp fields");
+static_assert(offsetof(NavSurface, sizeSquared) == 0x04 && offsetof(NavSurface, propertyNames) == 0x14, "NavSurface fields");
