@@ -22,6 +22,7 @@
 #include "TextureDefaults.h"
 #include "Resources.h"
 #include "Prop.h"
+#include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
@@ -1616,6 +1617,9 @@ static void (THISCALL *o_abtime)(AnimatedBody *, float);
 static void THISCALL h_abtime(AnimatedBody *a, float t) { HEAVY_LOG(H_abtime); a->SetTime(t); }
 static float (__fastcall *o_abblend)(AnimatedBody *);
 static float __fastcall h_abblend(AnimatedBody *a) { HEAVY_LOG(H_abblend); return a->GetBlendFraction(); }
+static Hook H_scpost;
+static int (__cdecl *o_scpost)(const char *, void *, int, int);
+static int __cdecl h_scpost(const char *n, void *a, int x, int l) { HEAVY_LOG(H_scpost); return PostFunction(n, a, x, l); }
 static Hook H_texdef;
 static void (__cdecl *o_texdef)();
 static void __cdecl h_texdef() { HEAVY_LOG(H_texdef); InitTextureDefaults(); }
@@ -1735,7 +1739,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_ptctor, &H_ptcopy, &H_ptdtor, &H_ptfind, &H_ptat, &H_ptassign,
                            &H_mcctor, &H_mcrange, &H_mcdtor, &H_mcnew, &H_mcsample, &H_mcblend,
                            &H_bpinitm, &H_bpinit0, &H_bpinitc, &H_bpdtor,
-                           &H_abinit, &H_abcopy, &H_abdtor, &H_abadd, &H_abcycle, &H_abapply, &H_abadv, &H_abdir, &H_abloop, &H_abtime, &H_abblend };
+                           &H_abinit, &H_abcopy, &H_abdtor, &H_abadd, &H_abcycle, &H_abapply, &H_abadv, &H_abdir, &H_abloop, &H_abtime, &H_abblend , &H_scpost };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -2052,6 +2056,7 @@ static void Setup()
     H_abloop = { "AnimatedBody::SetLoopMode", 0x41e2f0, 6, "8b44240485c0", (void *)h_abloop, (void **)&o_abloop, false, 0, 0, "body", 0 };
     H_abtime = { "AnimatedBody::SetTime", 0x41e290, 7, "8b442404894130", (void *)h_abtime, (void **)&o_abtime, false, 0, 0, "body", 0 };
     H_abblend = { "AnimatedBody::GetBlendFraction", 0x41e2a0, 6, "568b41448bf1", (void *)h_abblend, (void **)&o_abblend, false, 0, 0, "body", 0 };
+    H_scpost = { "PostFunction", 0x422ce0, 7, "64a10000000055", (void *)h_scpost, (void **)&o_scpost, false, 0, 0, "script", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
