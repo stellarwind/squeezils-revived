@@ -23,6 +23,8 @@ Every function here has been verified inside the real, unmodified game with `hoo
 - `Original.h`: the boundary with the original binary. Every function or global the code above still takes from `SQZ.EXE` (allocators, the error reporters, the renderer and scene globals, the window callback) is declared there, with its address. Nothing else in `src/` refers to the original, so that list is what a standalone build would still have to provide. The modules call each other directly (`Warp` and `Scene` drive `SkyRenderer`, `Texture` and `Warp` use `ImageLoad`).
 - `LayoutCheck.cpp`: compile-time asserts that the structs have the original field offsets and sizes (`Renderer` 0x9cc, `Scene`, `Warp`, `WarpFace`, `BodyPart`/`AnimatedBody`/`BodyPose`, the `Sqg` structs, `DisplayFormat`).
 
+- `VectorMath.cpp`: `Slerp` (@0047da80) and `MatrixToAngles` (@0047e500), self-contained maths with no game state. Written ahead of time: **not in `hook/build.bat`, not hooked, not linked**, checked only by reading the disassembly and a small numeric test (not compared against the original in play). `Original.h` still declares `MatrixToAngles` as an original call; switch it to this one when linking.
+
 ## Not reconstructed
 - The sky renderer's modes 0 and 2 (the game only uses mode 1) and its least-squares table.
 - The original binary is still used for everything else: the game logic, which calls into this code through the original addresses (the hook redirects those calls).
