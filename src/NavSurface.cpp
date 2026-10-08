@@ -4,6 +4,7 @@
 #include "SqueezilSoulInternal.h"
 #include "NavProp.h"
 #include "IniReader.h"
+#include "World.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -240,10 +241,10 @@ SurfaceTypeDescription *NavSurfaceList::Description(const Contact *c)
 }
 
 // @0040f610
-int NavSurfaceList::BlocksWalking(const Contact *c)
+int NavSurfaceList::Bounces(const Contact *c)
 {
     SurfaceTypeDescription *d = Description(c);
-    return d ? d->blocksWalking : 0;
+    return d ? d->bounce : 0;
 }
 
 // @0040f770
@@ -254,28 +255,28 @@ int NavSurfaceList::IsSlippery(const Contact *c)
 }
 
 // @0040f8d0
-int NavSurfaceList::HasTouchScript(const Contact *c)
+int NavSurfaceList::FlyThrough(const Contact *c)
 {
     SurfaceTypeDescription *d = Description(c);
-    return d ? d->hasTouchScript : 0;
+    return d ? d->flyThrough : 0;
 }
 
 // @0040f9b0
-String *NavSurfaceList::TouchScript(String *out, const Contact *c)
+String *NavSurfaceList::ActivateScript(String *out, const Contact *c)
 {
     SurfaceTypeDescription *d = Description(c);
     if (d)
-        ::new (out) String(d->touchScript);
+        ::new (out) String(d->activate);
     else
         ::new (out) String(kEmptyString);
     return out;
 }
 
 // @0040fb20
-float NavSurfaceList::TypeValue(const Contact *c)
+float NavSurfaceList::RebudGoodies(const Contact *c)
 {
     SurfaceTypeDescription *d = Description(c);
-    return d ? d->value : 0.0f;
+    return d ? d->rebudGoodies : 0.0f;
 }
 
 // @00410890
@@ -301,12 +302,12 @@ String NavSurfaceTypeName(void *surfaces, const Contact *c)
 }
 IniValueTable *NavSurfaceProperties(void *surfaces, const Contact *c) { return ((NavSurfaceList *)surfaces)->Properties(c); }
 int   NavSurfaceIsSlippery(void *surfaces, const Contact *c)     { return ((NavSurfaceList *)surfaces)->IsSlippery(c); }
-int   NavSurfaceBlocksWalking(void *surfaces, const Contact *c)  { return ((NavSurfaceList *)surfaces)->BlocksWalking(c); }
-int   NavSurfaceHasTouchScript(void *surfaces, const Contact *c) { return ((NavSurfaceList *)surfaces)->HasTouchScript(c); }
-String NavSurfaceTouchScript(void *surfaces, const Contact *c)
+int   NavSurfaceBounces(void *surfaces, const Contact *c)  { return ((NavSurfaceList *)surfaces)->Bounces(c); }
+int   NavSurfaceFlyThrough(void *surfaces, const Contact *c) { return ((NavSurfaceList *)surfaces)->FlyThrough(c); }
+String NavSurfaceActivateScript(void *surfaces, const Contact *c)
 {
     String name;
-    ((NavSurfaceList *)surfaces)->TouchScript(&name, c);
+    ((NavSurfaceList *)surfaces)->ActivateScript(&name, c);
     return name;
 }
 LoadedSurface *LoadedSurfaceAt(void *surfaces, int surface) { return ((NavSurfaceList *)surfaces)->Loaded(surface); }
@@ -315,7 +316,9 @@ void  MoveSurfaceInstance(void *surfaces, int instance, const float *matrix) { (
 
 // ---- loading ----
 
-static const char *const kHeader = "#Nat V1.0 ascii";
+static const char *const kHeader = "#Nat V1.0 ascii\n";    // the original's string (0x4b9b1c) includes the newline
+static const char *const kNone = "none";                // the string at 0x4b9cf4 (the default binding of every type)
+static int *const kDebugSurfaceTypeOutput = (int *)0x4b9b30;   // the debug flag the ground loader sets from [Defaults]
 static const char *const kFirstType = " none";      // the string at 0x4b9ef4 (a leading blank); the instance defaults use "none" (0x4b9cf4)
 
 // @0040bc60
@@ -458,7 +461,7 @@ int NavSurfaceList::AddInstance(NavProp *prop, int surface, const float *matrix,
         String bound = copy->properties.Get(name);
         int flag = 1;
         if (types.Contains(bound))
-            flag = types.Get(bound)->flag;
+            flag = types.Get(bound)->walkable;
         copy->flags.Replace(i, flag);
     }
     int place = 0;
@@ -487,4 +490,65 @@ int  LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *n
 int  AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties)
 {
     return ((NavSurfaceList *)surfaces)->AddInstance(prop, surface, matrix, properties);
+}
+
+// @0040e480 Loads the place's own ground. The [Defaults] SurfaceFile names its .nat file; a name without a backslash is taken
+// relative to the ini's folder. Surface type 0 is " none", and the instance of the ground has every type bound to "none" unless
+// the ini's bindings say otherwise. The ground becomes loaded surface 0 and instance 0 of this list.
+// Not verified in play: the empty SurfaceFile branch.
+int NavSurfaceList::LoadGround(IniReader *ini)
+{
+    IniReader current;                                           // the game's current ini file (IniReader())
+    *kDebugSurfaceTypeOutput = current.GetInt("DebugSurfaceTypeOutput", 0);
+
+    StringList typeList;
+    StringList *types = &typeList;
+    types->Insert(String(kFirstType), -1);
+
+    String folder;
+    ini->GetDirectory(&folder);
+    String surfaceName(ini->GetString("SurfaceFile"));     // as written in the ini; this (not `path`) is what the loaded surface keeps
+    const char *surfaceFile = surfaceName.c_str();
+    int faces = 0;
+    path[0] = '\0';
+    if (!surfaceFile[0]) {
+        // @0040e593 no SurfaceFile: the name becomes <ini folder>\placexxx.nat and no file is read
+        snprintf(path, sizeof path, "%s\\placexxx.nat", folder.c_str());
+    } else {
+        strncpy(path, surfaceFile, sizeof path - 1);
+        path[sizeof path - 1] = '\0';
+        if (!strchr(path, '\\')) {
+            GameLog("...surface file name relative, setting to %s.\n", path);
+            char relative[sizeof path];
+            snprintf(relative, sizeof relative, "%s\\%s", folder.c_str(), path);
+            strncpy(path, relative, sizeof path - 1);
+            path[sizeof path - 1] = '\0';
+        }
+        // The nav mesh of the world holds the .nat file's faces (the .nav file itself was loaded by the world, LoadNavMesh).
+        faces = ReadSurfaceTypes(GetWorld()->navMesh, folder.c_str(), path, types);
+    }
+
+    IniValueTable bindings;
+    ReadSurfaceBindings(ini, &bindings);
+
+    // The instance's table: every type starts as "none", then the ini's bindings are laid over it.
+    IniValueTable properties;
+    for (int i = 0; i < types->count; i++)
+        properties.Insert(types->At(i), String(kNone), -1);
+    for (int i = 0; i < bindings.keys.count; i++)
+        properties.Insert(bindings.keys.At(i), bindings.GetAt(i), -1);
+
+    if (loaded.count == 0) {
+        LoadedSurface *surface = (LoadedSurface *)Operator_New(sizeof(LoadedSurface));
+        if (surface)
+            surface->Init(GetWorld()->navMesh, faces, folder.c_str(), surfaceFile, types);
+        loaded.Insert(surface, -1);
+    }
+
+    AddInstance(NULL, 0, kIdentity, &properties);
+
+    if (!ReadSurfaceList(ini))
+        GameLog("Error reading surface list.\n");
+    ini->SetSection(kDefaultSectionName);
+    return 1;
 }
