@@ -128,3 +128,11 @@ static_assert(offsetof(GoodieList, entries) == 0x1c && offsetof(GoodieList, canv
 static_assert(offsetof(CompassRuler, x) == 0x30 && offsetof(CompassRuler, sprite) == 0x38 && offsetof(CompassRuler, sector) == 0x58 &&
               offsetof(CompassRuler, pineRegion) == 0x64 && offsetof(CompassRuler, quarter) == 0x74 && offsetof(CompassRuler, name) == 0x7c &&
               offsetof(CompassRuler, path) == 0xf4, "CompassRuler fields");
+#include "FrameProp.h"
+static_assert(offsetof(FrameProp, childNames) == 0x40 && offsetof(FrameProp, children) == 0x54 && offsetof(FrameProp, messages) == 0x64 &&
+              offsetof(FrameProp, body) == 0x94 && offsetof(FrameProp, cycle) == 0x98 && offsetof(FrameProp, actorIndex) == 0x9c &&
+              offsetof(FrameProp, followMode) == 0xa0 && offsetof(FrameProp, startTime) == 0xa4 && offsetof(FrameProp, hideAtEnd) == 0xa8,
+              "FrameProp fields");
+static_assert(sizeof(CycleMessageTable) == 0x30 && offsetof(CycleMessageTable, values) == 0x18, "CycleMessageTable layout");
+static_assert(offsetof(ScriptCaller, soul) == 0x08 && offsetof(ScriptCaller, actorIndex) == 0x10 && offsetof(ScriptCaller, prop) == 0x14,
+              "ScriptCaller fields");

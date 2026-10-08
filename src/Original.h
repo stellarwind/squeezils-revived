@@ -235,5 +235,28 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *));             // @0047a790 stores into 0x4c3c4c (its meaning is a guess: the game passes its error logger to both)
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *));           // @0047a7a0 stores into 0x4c3c50
 
-// ---- props (Prop.h) ----
-IDirect3DRMFrame *OwnerAttachFrame(void *owner);                       // @004276b0 (thiscall) the owner prop's frame, or the frame of its named part when it has parts
+// ---- props (Prop.h, FrameProp.h) ----
+struct Prop;
+struct ScriptCaller;
+template<> struct OriginalVtables<Array<Prop *> >                  { enum : unsigned { primary = 0x4a0874 }; };
+template<> struct OriginalVtables<PrimitiveArray<float, 25> >      { enum : unsigned { primary = 0x4a04ac, bufferObject = 0x4a0494 }; };
+template<> struct OriginalVtables<Set<float, 25> >                 { enum : unsigned { primary = 0x4a0454, bufferObject = 0x4a043c }; };
+template<> struct OriginalVtables<Table<float, String, PrimitiveArray<String, 3>, 25> >
+                                                                   { enum : unsigned { primary = 0x4a047c }; };
+template<> struct OriginalVtables<BufferObjectTable<float, String, PrimitiveArray<String, 3>, 25> >
+                                                                   { enum : unsigned { primary = 0x49dc9c, bufferObject = 0x49dc84 }; };
+// The props whose Update runs every frame (the Array<Prop *> at 0x4c71f8). Removing only queues the index (in 0x4c72a8).
+void  AddUpdatingProp(Prop *prop);                                     // @0042d180
+void  RemoveUpdatingProp(Prop *prop);                                  // @0042d1a0
+// The prop template with this name from the level's prop tables (the loader: also reads "name:..." forms). The two numbers are
+// not identified; FrameProp passes 0 and 0.
+Prop *FindPropTemplate(const char *name, int unknown1, int unknown2);  // @0042c8b0 (cdecl, the name is a String by value)
+// The current simulation's actors by index (0 is the player)
+void *SimulationActor(int index);                                      // @00414050 (thiscall on the simulation)
+void *SimulationSoul(int index);                                       // @00414080
+float *ActorMatrix(void *actor);                                       // the actor's virtual slot 3: its 4x4 matrix
+static const void *const kSqueezilSoulType = (const void *)0x4b9368;   // .?AVSqueezilSoul
+// The two constructors of the record a prop hands a script function. Both fill it directly when prop is not NULL (all FrameProp
+// does); with a NULL prop they look the prop up through the actor, which is not reconstructed.
+ScriptCaller *ScriptCallerInit(ScriptCaller *caller, int actorIndex, Prop *prop);               // @004207a0
+ScriptCaller *ScriptCallerInitSoul(ScriptCaller *caller, void *soul, int actorIndex, Prop *prop);   // @00420900

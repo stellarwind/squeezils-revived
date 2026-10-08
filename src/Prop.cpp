@@ -1,6 +1,7 @@
 // Prop: see Prop.h. Reconstructed from SQZ.EXE 0x425e50-0x426c70.
 #include <string.h>
 #include "Prop.h"
+#include "FrameProp.h"
 #include "Resources.h"
 #include "Scene.h"
 #include "Renderer.h"
@@ -42,7 +43,7 @@ Prop *Prop::Destroy(int flags)
 }
 
 // @00425fa0
-Prop *Prop::Instantiate(void *newOwner, Float3 pos, Float3 scl, Float3 dir, Float3 upVector)
+Prop *Prop::Instantiate(FrameProp *newOwner, Float3 pos, Float3 scl, Float3 dir, Float3 upVector)
 {
     Prop *copy = VClone(newOwner);
     copy->position = pos;
@@ -88,12 +89,18 @@ IDirect3DRMFrame *Prop::GetAttachFrame()
         parent = GetFrameParent(frame);
     IDirect3DRMFrame *ownerFrame = NULL;
     if (owner)
-        ownerFrame = OwnerAttachFrame(owner);
+        ownerFrame = owner->GetPartFrame();
     return ownerFrame ? ownerFrame : parent;
 }
 
+// Destroys this prop the way its class does (bit 0 of flags: free the memory too)
+Prop *Prop::VDestroy(int flags)
+{
+    return CallVirtual<Prop *>(this, PROP_DESTROY, flags);
+}
+
 // Makes a copy of this prop of the same class (the object comes back with its owner set and isInstance 1)
-Prop *Prop::VClone(void *newOwner)
+Prop *Prop::VClone(FrameProp *newOwner)
 {
     return CallVirtual<Prop *>(this, PROP_CLONE, newOwner);
 }
@@ -102,6 +109,18 @@ Prop *Prop::VClone(void *newOwner)
 IDirect3DRMFrame *Prop::VBuildFrame(IDirect3DRMFrame *parent)
 {
     return CallVirtual<IDirect3DRMFrame *>(this, PROP_BUILD_FRAME, parent);
+}
+
+// Shows this prop under parent (builds its frame if it has none) and returns the frame
+IDirect3DRMFrame *Prop::VShow(IDirect3DRMFrame *parent)
+{
+    return CallVirtual<IDirect3DRMFrame *>(this, PROP_SHOW, parent);
+}
+
+// Hides this prop the way its class does (a frame prop hides its children first)
+void Prop::VHide()
+{
+    CallVirtual<void>(this, PROP_HIDE);
 }
 
 // Applies the scale to a frame this prop built (does nothing for a plain Prop; a sprite sets its decal size)
@@ -140,7 +159,7 @@ Prop *MeshProp::Destroy(int flags)
 }
 
 // @00426470 (the original reads the new object without checking the allocation)
-Prop *MeshProp::Clone(void *newOwner)
+Prop *MeshProp::Clone(FrameProp *newOwner)
 {
     MeshProp *copy = (MeshProp *)Operator_New(sizeof(MeshProp));
     if (copy)
@@ -208,7 +227,7 @@ Prop *SpriteProp::Destroy(int flags)
 }
 
 // @004269a0 Like the original, the copy keeps the position, scale and settings but gets the default facing again.
-Prop *SpriteProp::Clone(void *newOwner)
+Prop *SpriteProp::Clone(FrameProp *newOwner)
 {
     SpriteProp *copy = (SpriteProp *)Operator_New(sizeof(SpriteProp));
     if (copy)
