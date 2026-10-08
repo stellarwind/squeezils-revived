@@ -21,6 +21,7 @@
 #include "World.h"
 #include "TextureDefaults.h"
 #include "Resources.h"
+#include "Prop.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
@@ -141,6 +142,7 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 }
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
+IDirect3DRMFrame *OwnerAttachFrame(void *owner)          { return ((IDirect3DRMFrame *(TC *)(void *))0x4276b0)(owner); }
 int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
 int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
 void SetSensitivity1(float value)                        { ((void (__cdecl *)(float))0x44aa10)(value); }
@@ -1432,6 +1434,48 @@ static void (__cdecl *o_rsinitgeom)();
 static void __cdecl h_rsinitgeom() { HEAVY_LOG(H_rsinitgeom); InitGeometryLoading(); }
 static void (__cdecl *o_rserrlog)(const char *);
 static void __cdecl h_rserrlog(const char *m) { HEAVY_LOG(H_rserrlog); SqgErrorLog(m); }
+// ---- Props (Prop.h): the frame-carrying things placed in a level ----
+static Hook H_prinit, H_prdestruct, H_prdestroy, H_prinst, H_prshow, H_prisshown, H_prhide, H_prattach;
+static Hook H_mpinit, H_mpdestruct, H_mpdestroy, H_mpclone, H_mpbuild;
+static Hook H_spinit, H_spdestruct, H_spdestroy, H_spclone, H_spbuild, H_spscale;
+static Prop *(THISCALL *o_prinit)(Prop *, Float3, Float3, Float3, Float3);
+static Prop *THISCALL h_prinit(Prop *p, Float3 a, Float3 b, Float3 c, Float3 d) { HEAVY_LOG(H_prinit); return p->Init(a, b, c, d); }
+static void (__fastcall *o_prdestruct)(Prop *);
+static void __fastcall h_prdestruct(Prop *p) { HEAVY_LOG(H_prdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_prdestroy)(Prop *, int);
+static Prop *THISCALL h_prdestroy(Prop *p, int flags) { HEAVY_LOG(H_prdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_prinst)(Prop *, void *, Float3, Float3, Float3, Float3);
+static Prop *THISCALL h_prinst(Prop *p, void *o, Float3 a, Float3 b, Float3 c, Float3 d) { HEAVY_LOG(H_prinst); return p->Instantiate(o, a, b, c, d); }
+static IDirect3DRMFrame *(THISCALL *o_prshow)(Prop *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_prshow(Prop *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_prshow); return p->Show(parent); }
+static int (__fastcall *o_prisshown)(Prop *);
+static int __fastcall h_prisshown(Prop *p) { HEAVY_LOG(H_prisshown); return p->IsShown(); }
+static void (__fastcall *o_prhide)(Prop *);
+static void __fastcall h_prhide(Prop *p) { HEAVY_LOG(H_prhide); p->Hide(); }
+static IDirect3DRMFrame *(__fastcall *o_prattach)(Prop *);
+static IDirect3DRMFrame *__fastcall h_prattach(Prop *p) { HEAVY_LOG(H_prattach); return p->GetAttachFrame(); }
+static MeshProp *(THISCALL *o_mpinit)(MeshProp *, const char *, Float3, Float3, Float3, Float3);
+static MeshProp *THISCALL h_mpinit(MeshProp *p, const char *n, Float3 a, Float3 b, Float3 c, Float3 d) { HEAVY_LOG(H_mpinit); return p->Init(n, a, b, c, d); }
+static void (__fastcall *o_mpdestruct)(MeshProp *);
+static void __fastcall h_mpdestruct(MeshProp *p) { HEAVY_LOG(H_mpdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_mpdestroy)(MeshProp *, int);
+static Prop *THISCALL h_mpdestroy(MeshProp *p, int flags) { HEAVY_LOG(H_mpdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_mpclone)(MeshProp *, void *);
+static Prop *THISCALL h_mpclone(MeshProp *p, void *o) { HEAVY_LOG(H_mpclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_mpbuild)(MeshProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_mpbuild(MeshProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_mpbuild); return p->BuildFrame(parent); }
+static SpriteProp *(THISCALL *o_spinit)(SpriteProp *, const char *, Float3, Float3, const DecalSettings *);
+static SpriteProp *THISCALL h_spinit(SpriteProp *p, const char *n, Float3 a, Float3 b, const DecalSettings *d) { HEAVY_LOG(H_spinit); return p->Init(n, a, b, d); }
+static void (__fastcall *o_spdestruct)(SpriteProp *);
+static void __fastcall h_spdestruct(SpriteProp *p) { HEAVY_LOG(H_spdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_spdestroy)(SpriteProp *, int);
+static Prop *THISCALL h_spdestroy(SpriteProp *p, int flags) { HEAVY_LOG(H_spdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_spclone)(SpriteProp *, void *);
+static Prop *THISCALL h_spclone(SpriteProp *p, void *o) { HEAVY_LOG(H_spclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_spbuild)(SpriteProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_spbuild(SpriteProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_spbuild); return p->BuildFrame(parent); }
+static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
+static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
 static Hook H_texdef;
 static void (__cdecl *o_texdef)();
 static void __cdecl h_texdef() { HEAVY_LOG(H_texdef); InitTextureDefaults(); }
@@ -1543,7 +1587,10 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe,
                            &H_wldecset, &H_wldecal, &H_wldecsize, &H_texdef,
                            &H_rsloadtex, &H_rsfindtex, &H_rstexres, &H_rstexlist, &H_rsdefsprite, &H_rspoptex, &H_rstexlook,
-                           &H_rsloadgeom, &H_rsfindgeom, &H_rsgeomres, &H_rsgeomlist, &H_rspopgeom, &H_rsinitgeom, &H_rserrlog };
+                           &H_rsloadgeom, &H_rsfindgeom, &H_rsgeomres, &H_rsgeomlist, &H_rspopgeom, &H_rsinitgeom, &H_rserrlog,
+                           &H_prinit, &H_prdestruct, &H_prdestroy, &H_prinst, &H_prshow, &H_prisshown, &H_prhide, &H_prattach,
+                           &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
+                           &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1805,6 +1852,25 @@ static void Setup()
     H_rspopgeom = { "PopGeometryTable", 0x424c80, 7, "64a10000000055", (void *)h_rspopgeom, (void **)&o_rspopgeom, false, 0, 0, "resources", 0 };
     H_rsinitgeom = { "InitGeometryLoading", 0x4241d0, 7, "64a10000000055", (void *)h_rsinitgeom, (void **)&o_rsinitgeom, false, 0, 0, "resources", 0 };
     H_rserrlog = { "SqgErrorLog", 0x4241b0, 5, "8b44240450", (void *)h_rserrlog, (void **)&o_rserrlog, false, 0, 0, "resources", 0 };
+    H_prinit = { "Prop::Init", 0x425e50, 7, "64a10000000055", (void *)h_prinit, (void **)&o_prinit, false, 0, 0, "props", 0 };
+    H_prdestruct = { "Prop::Destruct", 0x426080, 7, "64a10000000055", (void *)h_prdestruct, (void **)&o_prdestruct, false, 0, 0, "props", 0 };
+    H_prdestroy = { "Prop::Destroy", 0x425f80, 8, "568bf1e8f8000000", (void *)h_prdestroy, (void **)&o_prdestroy, false, 0, 0, "props", 4 };
+    H_prinst = { "Prop::Instantiate", 0x425fa0, 7, "64a10000000055", (void *)h_prinst, (void **)&o_prinst, false, 0, 0, "props", 0 };
+    H_prshow = { "Prop::Show", 0x426120, 5, "53568b4134", (void *)h_prshow, (void **)&o_prshow, false, 0, 0, "props", 0 };
+    H_prisshown = { "Prop::IsShown", 0x426160, 8, "837934011bc040c3", (void *)h_prisshown, (void **)&o_prisshown, false, 0, 0, "props", 0 };
+    H_prhide = { "Prop::Hide", 0x426170, 6, "568b41348bf1", (void *)h_prhide, (void **)&o_prhide, false, 0, 0, "props", 0 };
+    H_prattach = { "Prop::GetAttachFrame", 0x426230, 5, "56578b4134", (void *)h_prattach, (void **)&o_prattach, false, 0, 0, "props", 0 };
+    H_mpinit = { "MeshProp::Init", 0x4262e0, 7, "64a10000000055", (void *)h_mpinit, (void **)&o_mpinit, false, 0, 0, "props", 0 };
+    H_mpdestruct = { "MeshProp::Destruct", 0x426580, 7, "64a10000000055", (void *)h_mpdestruct, (void **)&o_mpdestruct, false, 0, 0, "props", 0 };
+    H_mpdestroy = { "MeshProp::Destroy", 0x426450, 8, "568bf1e828010000", (void *)h_mpdestroy, (void **)&o_mpdestroy, false, 0, 0, "props", 4 };
+    H_mpclone = { "MeshProp::Clone", 0x426470, 7, "64a10000000055", (void *)h_mpclone, (void **)&o_mpclone, false, 0, 0, "props", 0 };
+    H_mpbuild = { "MeshProp::BuildFrame", 0x4265f0, 7, "64a10000000055", (void *)h_mpbuild, (void **)&o_mpbuild, false, 0, 0, "props", 0 };
+    H_spinit = { "SpriteProp::Init", 0x4267b0, 7, "64a10000000055", (void *)h_spinit, (void **)&o_spinit, false, 0, 0, "props", 0 };
+    H_spdestruct = { "SpriteProp::Destruct", 0x426a70, 7, "64a10000000055", (void *)h_spdestruct, (void **)&o_spdestruct, false, 0, 0, "props", 0 };
+    H_spdestroy = { "SpriteProp::Destroy", 0x426980, 8, "568bf1e8e8000000", (void *)h_spdestroy, (void **)&o_spdestroy, false, 0, 0, "props", 4 };
+    H_spclone = { "SpriteProp::Clone", 0x4269a0, 7, "64a10000000055", (void *)h_spclone, (void **)&o_spclone, false, 0, 0, "props", 0 };
+    H_spbuild = { "SpriteProp::BuildFrame", 0x426b00, 7, "64a10000000055", (void *)h_spbuild, (void **)&o_spbuild, false, 0, 0, "props", 0 };
+    H_spscale = { "SpriteProp::ApplyScale", 0x426c00, 7, "64a10000000055", (void *)h_spscale, (void **)&o_spscale, false, 0, 0, "props", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
