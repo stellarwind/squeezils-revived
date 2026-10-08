@@ -21,9 +21,9 @@ NavProp *NavProp::Init(Float3 pos, Float3 scl, Float3 dir, Float3 upVector, Stri
     vtbl = (void **)kNavPropVtable;
     surface = LoadSurface(CurrentSurfaces(), ini, surfaceName, natFile);
 
-    NavSurface *loaded = LoadedSurface(CurrentSurfaces(), surface);
-    for (int i = 0; i < loaded->propertyNames.count; i++)
-        properties.Insert(loaded->propertyNames.At(i), String(kNoValue));
+    LoadedSurface *loaded = LoadedSurfaceAt(CurrentSurfaces(), surface);
+    for (int i = 0; i < loaded->typeNames.count; i++)
+        properties.Insert(loaded->typeNames.At(i), String(kNoValue));
     sizeSquared = loaded->sizeSquared;
     for (int i = 0; i < values->keys.count; i++)
         properties.Insert(values->keys.At(i), values->GetAt(i));

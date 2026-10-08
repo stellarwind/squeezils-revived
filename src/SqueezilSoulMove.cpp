@@ -165,7 +165,7 @@ void SqueezilSoul::RotateOnSurface(float *m, Vector3f *v, Contact *contact, floa
     SetTranslation(m, position);
     Vector3f onFace = Row(contact->matrix, 3);
     float relative[16];
-    memcpy(contact->matrix, FaceRelativeMatrix(SurfaceFaceOf(GetPlaceSurfaces(place), contact), relative, m), sizeof relative);
+    memcpy(contact->matrix, FaceRelativeMatrix(NavSurfaceFaceOf(GetPlaceSurfaces(place), contact), relative, m), sizeof relative);
     SetTranslation(contact->matrix, onFace);
     *v = TransformPoint(*v, turn);
 }
@@ -199,7 +199,7 @@ int SqueezilSoul::WouldSlip(float push, const float *m, const Contact *contact)
     float mass = BodyCall::Mass(SoulCall::Body(this));
     Vector3f gravity = physics->physical.gravity;
     Vector3f up = Row(m, 1);
-    if (SurfaceIsSlippery(GetPlaceSurfaces(place), contact))
+    if (NavSurfaceIsSlippery(GetPlaceSurfaces(place), contact))
         return 1;
     if (!canSlip)
         return 0;
@@ -248,7 +248,7 @@ void SqueezilSoul::MoveOnGround(float seconds)
     int moved = MoveAlongSurface(GetPlaceSurfaces(place), this, &position, &right, &up, &forward, &dir, speed * seconds,
                                  &contact, &position, &right, &up, &forward, &dir, &contact);
     int bounce = 0;
-    if (moved && SurfaceBlocksWalking(GetPlaceSurfaces(place), &contact))
+    if (moved && NavSurfaceBlocksWalking(GetPlaceSurfaces(place), &contact))
         bounce = 1;
     if (moved) {
         Contact *now = BodyCall::GetContact(SoulCall::Body(this));
@@ -615,13 +615,13 @@ void SqueezilSoul::Fly(AirControl *c, int next)
     Float3 from = ToFloat3(position), r = ToFloat3(right), u = ToFloat3(up), fw = ToFloat3(forward), d = ToFloat3(newDirection);
     Float3 hit;
     int landed = FlightHitsSurface(GetPlaceSurfaces(place), &from, &r, &u, &fw, &d, Length(step), &hit, &r, &u, &fw, &landing);
-    if (landed && SurfaceBlocksWalking(GetPlaceSurfaces(place), &landing)) {
+    if (landed && NavSurfaceBlocksWalking(GetPlaceSurfaces(place), &landing)) {
         landed = 0;
         step = step * -1.0f;
     }
-    if (landed && SurfaceHasTouchScript(GetPlaceSurfaces(place), &landing)) {
+    if (landed && NavSurfaceHasTouchScript(GetPlaceSurfaces(place), &landing)) {
         landed = 0;
-        RunScript(this, SurfaceTouchScript(GetPlaceSurfaces(place), &landing));
+        RunScript(this, NavSurfaceTouchScript(GetPlaceSurfaces(place), &landing));
     }
     right = ToVector(r);
     up = ToVector(u);
