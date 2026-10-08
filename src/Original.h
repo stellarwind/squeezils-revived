@@ -284,3 +284,10 @@ template<> struct OriginalVtables<Table<int, String, PrimitiveArray<String, 3>, 
                                                                    { enum : unsigned { primary = 0x4a0424 }; };
 template<> struct OriginalVtables<BufferObjectTable<int, String, PrimitiveArray<String, 3>, 24> >
                                                                    { enum : unsigned { primary = 0x49dd2c, bufferObject = 0x49dd14 }; };
+
+// ---- prop loader (PropLoader.h) ----
+class IniReader;
+struct MorphCycle;
+typedef Table<String, Prop *, Array<Prop *>, 0>             PropTable;     // prop templates by name (the level's tables: 0x4c7208, 0x4c7230, 0x4c72c0)
+typedef Table<String, MorphCycle *, Array<MorphCycle *>, 0> PathTable;     // animation paths (clips) by name (0x4c7280, 0x4c7258, 0x4c71d0)
+void  ReadPaths(IniReader *ini, PathTable *paths);                     // @0042c700 (cdecl) the ini file's [PathList]: animation paths
