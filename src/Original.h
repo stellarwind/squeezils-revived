@@ -104,9 +104,36 @@ static const char *const kGameDirectory = (const char *)0x4c73d8;     // the gam
 static char *const kSaveGameDirectory   = (char *)0x4c6400;           // <exe folder>\sqz\save\ (built by the Menu constructor)
 static char *const kLoadGameName        = (char *)0x4c63e8;           // what the load-game dialog picked
 static char *const kLoadGameTitle       = (char *)0x4c63d0;
-static void *const kLoadGameDialogProc  = (void *)0x406eb0;           // dialog window procedures still in original code
-static void *const kAboutDialogProc     = (void *)0x406cb0;
-static void *const kQuitDialogProc      = (void *)0x406d60;
+static char *const kSaveGameName        = (char *)0x4c63d0;           // the name typed in the save-game dialog (same buffer kLoadGameTitle clears)
+static char *const kKeyName             = (char *)0x4c6468;           // the key name shown and typed in the "press a key" dialog
+
+// ---- the input object (global 0x4badac, the object GetScreenInfo returns): key and joystick bindings the dialogs edit ----
+struct InputSystem;
+InputSystem *GetInputSystem();                                          // the global at 0x4badac
+int   InputJoystickMode(InputSystem *in);                               // @0043aee0 0 off, 1, 2
+int   InputSetJoystickMode(InputSystem *in, int mode);                  // @0043aef0
+int   InputJoystickPresent(InputSystem *in);                            // @0043c7a0
+int   InputActionName(InputSystem *in, int index, char *line);         // @0043c7b0 text line of binding number index; > 0 when there is one
+void  InputRevertBindings(InputSystem *in, int which);                 // @0043ad30
+void  InputBindingLabel(InputSystem *in, const char *line, char *keyName);   // @0043ad00
+int   InputAssignKey(InputSystem *in, char *line, const char *keyName);      // virtual slot 0
+int   InputSetKeySlot(InputSystem *in, char *line, int slot);                // virtual slot 1
+int   InputSetButtonSlot(InputSystem *in, char *line, int slot);             // @0043ae70
+int   InputSaveBindings(InputSystem *in);                                    // @0043c4d0
+void *InputCalibration(InputSystem *in);                                // the joystick calibration object at input+0x10
+void  CalibrationStart(void *cal);                                      // @00447880
+int   CalibrationCheck(void *cal);                                      // @004479c0 nonzero: skip the calibration run
+int   CalibrationRun(void *cal, HWND dlg);                              // @00447f00 nonzero when it worked
+int   SimulationCanSave(void *sim);                                     // virtual slot 9 of the current simulation
+int   SimulationSave(void *sim, const char *path);                      // virtual slot 11
+
+// the three sensitivity settings the sensitivity dialog edits (floats 0.0 .. 1.0) and the functions that apply them
+static float *const kSensitivity1 = (float *)0x4c77c8;                  // set by @0044aa10, slider 1
+static float *const kSensitivity2 = (float *)0x4c77a0;                  // set by @0044aab0, slider 2
+static float *const kSensitivity3 = (float *)0x4c77cc;                  // set by @0044a940, slider 3
+void  SetSensitivity1(float value);
+void  SetSensitivity2(float value);
+void  SetSensitivity3(float value);
 
 // ---- the panel ----
 void *GetPanel();                                                     // @004206c0 the in-game panel object (global 0x4badb0); its ten digit pictures start at +0x428

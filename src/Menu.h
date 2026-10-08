@@ -36,7 +36,7 @@ public:
     int  HitTest(int index, int x, int y);        // @406a60 is the point inside the item's picture
     LRESULT OnMessage(UINT msg, WPARAM wParam, LPARAM lParam, WPARAM *lastKey);   // @406420 key, mouse and close handling
 
-    // the actions (the dialogs' window procedures are still original code)
+    // the actions (their dialogs are in Dialogs.cpp)
     static int __cdecl ActionStart();             // @406950 returns 2
     static int __cdecl ActionLoadGame();          // @406760 pick a saved game and load it
     static int __cdecl ActionOptions();          // @406730 the options dialog (and its sub dialogs)
