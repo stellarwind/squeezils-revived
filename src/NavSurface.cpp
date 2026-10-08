@@ -3,6 +3,9 @@
 #include "NavSurface.h"
 #include "SqueezilSoulInternal.h"
 #include "NavProp.h"
+#include "IniReader.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 static const float kIdentity[16] = { 1, 0, 0, 0,  0, 1, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1 };
 
@@ -309,3 +312,179 @@ String NavSurfaceTouchScript(void *surfaces, const Contact *c)
 LoadedSurface *LoadedSurfaceAt(void *surfaces, int surface) { return ((NavSurfaceList *)surfaces)->Loaded(surface); }
 void  RemoveSurfaceInstance(void *surfaces, int instance)   { ((NavSurfaceList *)surfaces)->Remove(instance); }
 void  MoveSurfaceInstance(void *surfaces, int instance, const float *matrix) { ((NavSurfaceList *)surfaces)->MoveInstance(instance, matrix); }
+
+// ---- loading ----
+
+static const char *const kHeader = "#Nat V1.0 ascii";
+static const char *const kFirstType = " none";      // the string at 0x4b9ef4 (a leading blank); the instance defaults use "none" (0x4b9cf4)
+
+// @0040bc60
+LoadedSurface *LoadedSurface::Init(void *navMesh, int faces, const char *folder, const char *natFile, StringList *types)
+{
+    ::new (&directory) String();
+    ::new (&file) String();
+    ::new (&typeNames) StringList(*types);
+    ::new (&typeNumbers) SurfaceTypeNumbers();
+    mesh = navMesh;
+    sizeSquared = *(float *)((char *)navMesh + 0x2020);
+    faceCount = faces;
+    directory = String(folder);
+    file = String(natFile);
+    for (int i = 0; i < typeNames.count; i++)
+        typeNumbers.Insert(typeNames.At(i), i, -1);
+    return this;
+}
+
+// @0040eec0
+int ReadSurfaceTypes(void *mesh, const char *, const char *natFile, StringList *types)
+{
+    if (natFile[0] == '\0')
+        return 0;
+    FILE *f;
+    for (;;) {
+        f = fopen(natFile, "r");
+        if (f)
+            break;
+        if (GetRenderer()->FatalError("Could not read file %s.\n", natFile) == IDCANCEL) {
+            GameLog("ERROR: Could not open surface file %s.\n", natFile);
+            return 0;
+        }
+    }
+    char line[256];
+    const char *error = NULL;
+    int count = 0;
+    if (!fgets(line, 0xff, f))
+        error = "ERROR: Could not read first line.\n";
+    else if (!strstr(line, kHeader))
+        error = "ERROR: File has invalid header.\n";
+    else if (!fgets(line, 0xff, f))
+        error = "ERROR: Could not read number of faces.\n";
+    else if ((count = atoi(line)) <= 0)
+        error = "ERROR: Invalid number of faces.\n";
+    if (error) {
+        GameLog(error);
+        fclose(f);
+        return 0;
+    }
+
+    // The type numbers of this file: the list's own, which only grows (" none" is number 0)
+    SurfaceTypeNumbers numbers;
+    numbers.Insert(String(kFirstType), 0, -1);
+    unsigned faceCount = *(unsigned *)((char *)mesh + 8);
+    char *faces = *(char **)((char *)mesh + 0xc);
+    for (int i = 0; i < count; i++) {
+        unsigned face;
+        char name[64];
+        if (!fgets(line, 0xff, f) || sscanf(line, "%d%63s", &face, name) != 2) {
+            GameLog("ERROR: Could not read surface entry %d.\n", i);
+            fclose(f);
+            return 0;
+        }
+        if (face >= faceCount)
+            continue;
+        String key(name);
+        int type;
+        if (!numbers.Contains(key)) {
+            type = types->count;
+            numbers.Insert(key, type, -1);
+            types->Insert(String(name), -1);
+        } else {
+            type = numbers.Get(key);
+        }
+        *(int *)(faces + 0x24 + face * 0x28) = type;
+    }
+    fclose(f);
+    return count;
+}
+
+// @0040fc10 The same folder and .nat file as a surface already loaded gives that one back (the .nav file is not compared).
+// Without a '\' in the .nav file name the game moves to the ini file's folder while it loads.
+int NavSurfaceList::Load(IniReader *ini, const char *navFile, const char *natFile)
+{
+    String folder;
+    ini->GetDirectory(&folder);
+    GameLog("Loading surface %s (.nat file %s) from directory %s... ", navFile, natFile, folder.c_str());
+    for (int i = 0; i < loaded.count; i++) {
+        LoadedSurface *l = loaded.At(i);
+        if (strcmp(folder.c_str(), l->directory.c_str()) == 0 && strcmp(natFile, l->file.c_str()) == 0) {
+            GameLog("already loaded OK.\n");
+            return i;
+        }
+    }
+
+    char saved[128] = "";
+    if (!strchr(navFile, '\\')) {
+        GetCurrentDirectoryA(0x7f, saved);
+        String again;
+        ini->GetDirectory(&again);
+        SetCurrentDirectoryA(again.c_str());
+    }
+    void *mesh = NavMeshConstruct(Operator_New(0x2030));
+    if (!NavMeshLoad(mesh, navFile)) {
+        GameLog("failed!\n");
+        NavMeshDestroy(mesh);
+        Operator_Delete(mesh);
+        if (saved[0])
+            SetCurrentDirectoryA(saved);
+        return 0;
+    }
+    GameLog("OK.\n");
+    StringList types;
+    types.Insert(String(kFirstType), -1);
+    String folderAgain;
+    ini->GetDirectory(&folderAgain);
+    int faces = ReadSurfaceTypes(mesh, folderAgain.c_str(), natFile, &types);
+    if (saved[0])
+        SetCurrentDirectoryA(saved);
+    String last;
+    ini->GetDirectory(&last);
+    LoadedSurface *surface = (LoadedSurface *)Operator_New(sizeof(LoadedSurface));
+    if (surface)
+        surface->Init(mesh, faces, last.c_str(), natFile, &types);
+    loaded.Insert(surface, -1);
+    return loaded.count - 1;
+}
+
+// @004100b0 The copy takes the first free place in the list (a removed copy leaves a NULL); the place is then taken off the removal
+// lists. Each surface type of the surface gets its flag from the description its binding names, 1 when that is not a known type.
+int NavSurfaceList::AddInstance(NavProp *prop, int surface, const float *matrix, IniValueTable *properties)
+{
+    LoadedSurface *l = Loaded(surface);
+    InstancedSurface *copy = (InstancedSurface *)Operator_New(sizeof(InstancedSurface));
+    if (copy)
+        copy->Init(prop, l, matrix, properties);
+    for (int i = 0; i < l->typeNames.count; i++) {
+        String name = l->typeNames.At(i);
+        String bound = copy->properties.Get(name);
+        int flag = 1;
+        if (types.Contains(bound))
+            flag = types.Get(bound)->flag;
+        copy->flags.Replace(i, flag);
+    }
+    int place = 0;
+    while (place < instances.count) {
+        if (instances.At(place) == NULL) {
+            instances.Replace(place, copy);
+            for (int k = removed.ids.count - 1; k >= 0; k--)
+                if (removed.At(k) == place)
+                    removed.RemoveAt(k);
+            for (int k = removedLater.ids.count - 1; k >= 0; k--)
+                if (removedLater.At(k) == place)
+                    removedLater.RemoveAt(k);
+            break;
+        }
+        place++;
+    }
+    if (instances.count == place)
+        instances.Insert(copy, -1);
+    return place;
+}
+
+int  LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile)
+{
+    return ((NavSurfaceList *)surfaces)->Load(ini, name, natFile);
+}
+int  AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties)
+{
+    return ((NavSurfaceList *)surfaces)->AddInstance(prop, surface, matrix, properties);
+}

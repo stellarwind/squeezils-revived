@@ -44,18 +44,23 @@ struct IdList {
     void      *bufferObject;      // 0x10
     int  Contains(int id) { return CallVirtual<int>(this, 6, &id); }
     void Insert(int id)   { CallVirtual<int>(this, 1, &id, -1); }
+    int  At(int index)    { return ids.data[index]; }
+    void RemoveAt(int index) { CallVirtual<void>(this, 2, index); }
 };
 static_assert(sizeof(IdList) == 0x14, "IdList layout");
 
-// 0x58 bytes. Built by @0040bc60 (not reconstructed: it needs the table's key set for ID 21).
+// 0x58 bytes. Built by @0040bc60.
 struct LoadedSurface {
-    void              *mesh;            // 0x00 the .nat object
-    float              sizeSquared;     // 0x04 the mesh's size (@0047af20) squared? (the instance tests squared distances against it)
-    int                number;          // 0x08 its place in the list
-    String             name;            // 0x0c the name the level gave it
-    String             file;            // 0x10 the .nat file
-    StringList         typeNames;       // 0x14 the surface types, in the order the faces number them
+    void              *mesh;            // 0x00 the .nav object (0x2030 bytes, World.h holds one too)
+    float              sizeSquared;     // 0x04 the mesh's float at +0x2020 (@0047af20); the instance tests squared distances against it
+    int                faceCount;       // 0x08 the number of faces in the .nat file (what ReadSurfaceTypes returned)
+    String             directory;       // 0x0c the ini file's folder the surface was loaded from
+    String             file;            // 0x10 the .nat file (LoadSurface reuses a loaded surface with the same folder and .nat file)
+    StringList         typeNames;       // 0x14 the surface types, in the order the faces number them (the first is " none")
     SurfaceTypeNumbers typeNumbers;     // 0x28 type name -> number
+
+    // @0040bc60 types (copied) are the .nat file's type names; the size is read from the mesh
+    LoadedSurface *Init(void *navMesh, int faces, const char *directory, const char *natFile, StringList *types);
 };
 static_assert(sizeof(LoadedSurface) == 0x58, "LoadedSurface layout");
 
@@ -70,7 +75,7 @@ struct InstancedSurface {
     int            changed;             // 0x90 the answer: 0 same as before the move, else the sign of the first differing byte
     struct NavProp *prop;               // 0x94 the prop this copy belongs to (NULL for the level's own ground)
     IniValueTable  properties;          // 0x98 surface type name -> the type it stands for here
-    IntList        flags;               // 0xc8 one 1 per surface type, appended in the constructor (use not found yet)
+    IntList        flags;               // 0xc8 per surface type: 1, or the flag of the description its binding names (AddInstance sets it)
     float          position[3];         // 0xdc the matrix's position, (0,0,0) when the matrix is the identity
     float          previousPosition[3]; // 0xe8
 
@@ -90,7 +95,7 @@ static_assert(sizeof(InstancedSurface) == 0xf4, "InstancedSurface layout");
 
 // What a surface type means for walking (a value of the place's type table; built elsewhere).
 struct SurfaceTypeDescription {
-    int    unknown0;                    // 0x00
+    int    flag;                        // 0x00 copied into the instance's flags array for every type that is bound to this one (1 for unknown types)
     int    blocksWalking;               // 0x04
     int    slippery;                    // 0x08
     int    hasTouchScript;              // 0x0c
@@ -124,6 +129,8 @@ struct NavSurfaceList {
     int   IsGone(const Contact *c);                                                             // @00410890 the instance is queued for removal
     void  Remove(int instance);                                                                 // @004102f0 queues it
     void  MoveInstance(int instance, const float *matrix);                                      // @00410310
+    int   Load(IniReader *ini, const char *navFile, const char *natFile);                       // @0040fc10 the loaded surface's number (0 when the .nav file failed to load)
+    int   AddInstance(NavProp *prop, int surface, const float *matrix, IniValueTable *properties);   // @004100b0 the new instance's number
 };
 static_assert(offsetof(NavSurfaceList, loaded) == 0x124 && offsetof(NavSurfaceList, types) == 0x16c, "NavSurfaceList layout");
 
@@ -134,3 +141,8 @@ float *PointToLocal(float *out, const float *point, const float *m, int identity
 float *MatrixToLocal(float *out, const float *a, const float *m, int identity);                            // @0040cb30
 float *PointToWorld(float *out, const float *point, const float *m, int identity, const float *turn);      // @0040ce30
 float *MatrixToWorld(float *out, const float *a, const float *m, int identity);                            // @0040d070
+
+// @0040eec0 (stdcall) Reads a .nat file: "#Nat V1.0 ascii", the number of faces, then one "face typeName" line per face. Writes each face's
+// type number into the mesh. Numbers follow `types`: it must start with " none" (number 0); a name not in it yet is appended. Returns the
+// number of faces in the file, 0 on any error (also logged). `directory` is not used. A file that cannot be opened gives a Retry/Cancel box.
+int ReadSurfaceTypes(void *mesh, const char *directory, const char *natFile, StringList *types);
