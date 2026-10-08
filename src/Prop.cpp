@@ -5,8 +5,6 @@
 #include "Scene.h"
 #include "Renderer.h"
 
-#define PROP_THISCALL __attribute__((thiscall))
-
 static void *const kPropVtable       = (void *)0x49db4c;
 static void *const kMeshPropVtable   = (void *)0x49db8c;
 static void *const kSpritePropVtable = (void *)0x49dbe4;
@@ -94,19 +92,22 @@ IDirect3DRMFrame *Prop::GetAttachFrame()
     return ownerFrame ? ownerFrame : parent;
 }
 
+// Makes a copy of this prop of the same class (the object comes back with its owner set and isInstance 1)
 Prop *Prop::VClone(void *newOwner)
 {
-    return ((Prop *(PROP_THISCALL *)(Prop *, void *))vtbl[1])(this, newOwner);
+    return CallVirtual<Prop *>(this, PROP_CLONE, newOwner);
 }
 
+// Builds this prop's frame under parent: a mesh puts its geometry there, a sprite a decal
 IDirect3DRMFrame *Prop::VBuildFrame(IDirect3DRMFrame *parent)
 {
-    return ((IDirect3DRMFrame *(PROP_THISCALL *)(Prop *, IDirect3DRMFrame *))vtbl[3])(this, parent);
+    return CallVirtual<IDirect3DRMFrame *>(this, PROP_BUILD_FRAME, parent);
 }
 
+// Applies the scale to a frame this prop built (does nothing for a plain Prop; a sprite sets its decal size)
 void Prop::VApplyScale(IDirect3DRMFrame *target, Float3 scl)
 {
-    ((void (PROP_THISCALL *)(Prop *, IDirect3DRMFrame *, Float3))vtbl[6])(this, target, scl);
+    CallVirtual<void>(this, PROP_APPLY_SCALE, target, scl);
 }
 
 // ---- MeshProp ----
