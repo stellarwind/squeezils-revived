@@ -248,7 +248,7 @@ void SqueezilSoul::MoveOnGround(float seconds)
     int moved = MoveAlongSurface(GetPlaceSurfaces(place), this, &position, &right, &up, &forward, &dir, speed * seconds,
                                  &contact, &position, &right, &up, &forward, &dir, &contact);
     int bounce = 0;
-    if (moved && NavSurfaceBlocksWalking(GetPlaceSurfaces(place), &contact))
+    if (moved && NavSurfaceBounces(GetPlaceSurfaces(place), &contact))
         bounce = 1;
     if (moved) {
         Contact *now = BodyCall::GetContact(SoulCall::Body(this));
@@ -615,13 +615,13 @@ void SqueezilSoul::Fly(AirControl *c, int next)
     Float3 from = ToFloat3(position), r = ToFloat3(right), u = ToFloat3(up), fw = ToFloat3(forward), d = ToFloat3(newDirection);
     Float3 hit;
     int landed = FlightHitsSurface(GetPlaceSurfaces(place), &from, &r, &u, &fw, &d, Length(step), &hit, &r, &u, &fw, &landing);
-    if (landed && NavSurfaceBlocksWalking(GetPlaceSurfaces(place), &landing)) {
+    if (landed && NavSurfaceBounces(GetPlaceSurfaces(place), &landing)) {
         landed = 0;
         step = step * -1.0f;
     }
-    if (landed && NavSurfaceHasTouchScript(GetPlaceSurfaces(place), &landing)) {
+    if (landed && NavSurfaceFlyThrough(GetPlaceSurfaces(place), &landing)) {
         landed = 0;
-        RunScript(this, NavSurfaceTouchScript(GetPlaceSurfaces(place), &landing));
+        RunScript(this, NavSurfaceActivateScript(GetPlaceSurfaces(place), &landing));
     }
     right = ToVector(r);
     up = ToVector(u);

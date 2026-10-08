@@ -190,6 +190,13 @@ World *GetWorld();                                                     // the gl
 void *NavMeshConstruct(void *memory);                                  // @0047aec0 clears the object, returns it
 int   NavMeshLoad(void *nav, const char *path);                        // @0047c8e0 nonzero when the file loaded
 void  NavMeshDestroy(void *nav);                                       // @0047af00 (the caller frees the memory)
+// The nav mesh's own geometry (original, not reconstructed). The directions are unit vectors, flags are the instance's per surface type
+// flags (NavSurface.h). Both return nonzero when they found something.
+int   NavMeshTrace(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                   float length, float *hitPos, float *hitRight, float *hitUp, float *hitForward, int *face, const int *flags);   // @0047b180 (thiscall, 12 stack arguments) a straight line from pos: the first face it hits
+int   NavMeshMove(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                  float distance, int face, float *newPos, float *newRight, float *newUp, float *newForward, float *newDirection,
+                  int *newFace, const int *flags);   // @0047b490 (thiscall, 14 stack arguments) slides along the faces from face; ends at the new place
 int   LoadPaletteFile(const char *path, unsigned char *rgba);          // @00474ca0 (cdecl) reads a palette into a 256 entry RGBA table, nonzero on success
 void  ClearWorldObjects();                                             // @0042d010 frees the level's prop lists (reconstructed: PropList.cpp)
 
@@ -347,9 +354,9 @@ int   NavSurfaceIsGone(void *surfaces, const Contact *contact);              // 
 String NavSurfaceTypeName(void *surfaces, const Contact *contact);           // @0040f3c0 (thiscall, String returned through a hidden pointer)
 IniValueTable *NavSurfaceProperties(void *surfaces, const Contact *contact); // @0040f3a0
 int   NavSurfaceIsSlippery(void *surfaces, const Contact *contact);          // @0040f770 a property of the face's type (inferred from its use)
-int   NavSurfaceBlocksWalking(void *surfaces, const Contact *contact);       // @0040f610 a property of the face's type (inferred from its use)
-int   NavSurfaceHasTouchScript(void *surfaces, const Contact *contact);      // @0040f8d0 a property of the face's type (inferred from its use)
-String NavSurfaceTouchScript(void *surfaces, const Contact *contact);        // @0040f9b0 the script function named by the face's type
+int   NavSurfaceBounces(void *surfaces, const Contact *contact);       // @0040f610 a property of the face's type (inferred from its use)
+int   NavSurfaceFlyThrough(void *surfaces, const Contact *contact);      // @0040f8d0 a property of the face's type (inferred from its use)
+String NavSurfaceActivateScript(void *surfaces, const Contact *contact);        // @0040f9b0 the script function named by the face's type
 void  NavSurfaceTypeChanged(void *surfaces, void *soul, const Contact *contact, const void *oldInfo, const void *newInfo);   // @00412920
 // @00411120 Moves a squeezil `distance` along the surface from the first five vectors and the contact, writing the new ones into
 // the second set (the original passes the same buffers for both). 0 when it ran off the surface.

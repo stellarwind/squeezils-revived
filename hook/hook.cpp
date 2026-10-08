@@ -141,6 +141,19 @@ World *GetWorld()                                        { return *(World **)0x4
 void *NavMeshConstruct(void *memory)                     { return ((void *(TC *)(void *))0x47aec0)(memory); }
 int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(void *, const char *))0x47c8e0)(nav, path); }
 void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
+int   NavMeshTrace(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                   float length, float *hitPos, float *hitRight, float *hitUp, float *hitForward, int *face, const int *flags)
+{
+    typedef int (TC *F)(void *, const float *, const float *, const float *, const float *, const float *, float, float *, float *, float *, float *, int *, const int *);
+    return ((F)0x47b180)(nav, pos, right, up, forward, direction, length, hitPos, hitRight, hitUp, hitForward, face, flags);
+}
+int   NavMeshMove(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                  float distance, int face, float *newPos, float *newRight, float *newUp, float *newForward, float *newDirection,
+                  int *newFace, const int *flags)
+{
+    typedef int (TC *F)(void *, const float *, const float *, const float *, const float *, const float *, float, int, float *, float *, float *, float *, float *, int *, const int *);
+    return ((F)0x47b490)(nav, pos, right, up, forward, direction, distance, face, newPos, newRight, newUp, newForward, newDirection, newFace, flags);
+}
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
 int   ReadPathText(MorphCycle *clip, IniReader *ini, const char *file) { return ((int (TC *)(MorphCycle *, IniReader *, const char *))0x41c530)(clip, ini, file); }
 // ---- the resource loaders' model calls ----
@@ -178,10 +191,6 @@ int   MorphCycleLoad(MorphCycle *clip, const char *file) { return ((int (TC *)(M
 void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll)
 {
     ((void (TC *)(const float *, float *, float *, float *))0x47e500)(m, pitch, yaw, roll);
-}
-float *FaceRelativeMatrix(void *face, float *out, const float *matrix)
-{
-    return ((float *(TC *)(void *, float *, const float *))0x4110b0)(face, out, matrix);
 }
 // ---- SqueezilSoul's boundary ----
 void  DebugLog(const char *format, ...)    // printf style like GameLog: format here and hand it over as one string
@@ -225,26 +234,6 @@ void  ThrowGoodie(void *goodies, int value, Matrix16 at, Float3 direction, float
 void  GoodieGranted(void *goodies, const char *goodie, void *soul, void *place)
 {
     ((void (TC *)(void *, const char *, void *, void *))0x44bc40)(goodies, goodie, soul, place);
-}
-void  NavSurfaceTypeChanged(void *surfaces, void *soul, const Contact *c, const void *oldInfo, const void *newInfo)
-{
-    ((void (TC *)(void *, void *, const Contact *, const void *, const void *))0x412920)(surfaces, soul, c, oldInfo, newInfo);
-}
-int   MoveAlongSurface(void *surfaces, void *soul, Float3 *pos, Float3 *right, Float3 *up, Float3 *forward, Float3 *direction,
-                       float distance, Contact *contact, Float3 *newPos, Float3 *newRight, Float3 *newUp, Float3 *newForward,
-                       Float3 *newDirection, Contact *newContact)
-{
-    typedef int (TC *F)(void *, void *, Float3 *, Float3 *, Float3 *, Float3 *, Float3 *, float, Contact *, Float3 *, Float3 *,
-                        Float3 *, Float3 *, Float3 *, Contact *);
-    return ((F)0x411120)(surfaces, soul, pos, right, up, forward, direction, distance, contact, newPos, newRight, newUp, newForward,
-                         newDirection, newContact);
-}
-int   FlightHitsSurface(void *surfaces, Float3 *pos, Float3 *right, Float3 *up, Float3 *forward, Float3 *direction,
-                        float distance, Float3 *hitPos, Float3 *newRight, Float3 *newUp, Float3 *newForward, Contact *newContact)
-{
-    typedef int (TC *F)(void *, Float3 *, Float3 *, Float3 *, Float3 *, Float3 *, float, Float3 *, Float3 *, Float3 *, Float3 *,
-                        Contact *);
-    return ((F)0x4108e0)(surfaces, pos, right, up, forward, direction, distance, hitPos, newRight, newUp, newForward, newContact);
 }
 void *WorldSurface(World *world, int surface)             { return ((void *(TC *)(World *, int))0x4365a0)(world, surface); }
 float *WorldFaceToWorld(World *world, float *out, const float *matrix, int surface)
@@ -2030,15 +2019,15 @@ static IniValueTable *THISCALL h_slprops(NavSurfaceList *l, const Contact *c) { 
 static String *(THISCALL *o_sltname)(NavSurfaceList *, String *, const Contact *);
 static String *THISCALL h_sltname(NavSurfaceList *l, String *o, const Contact *c) { HEAVY_LOG(H_sltname); return l->TypeName(o, c); }
 static int (THISCALL *o_slblocks)(NavSurfaceList *, const Contact *);
-static int THISCALL h_slblocks(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slblocks); return l->BlocksWalking(c); }
+static int THISCALL h_slblocks(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slblocks); return l->Bounces(c); }
 static int (THISCALL *o_slslip)(NavSurfaceList *, const Contact *);
 static int THISCALL h_slslip(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slslip); return l->IsSlippery(c); }
 static int (THISCALL *o_sltouch)(NavSurfaceList *, const Contact *);
-static int THISCALL h_sltouch(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_sltouch); return l->HasTouchScript(c); }
+static int THISCALL h_sltouch(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_sltouch); return l->FlyThrough(c); }
 static String *(THISCALL *o_sltscript)(NavSurfaceList *, String *, const Contact *);
-static String *THISCALL h_sltscript(NavSurfaceList *l, String *o, const Contact *c) { HEAVY_LOG(H_sltscript); return l->TouchScript(o, c); }
+static String *THISCALL h_sltscript(NavSurfaceList *l, String *o, const Contact *c) { HEAVY_LOG(H_sltscript); return l->ActivateScript(o, c); }
 static float (THISCALL *o_slvalue)(NavSurfaceList *, const Contact *);
-static float THISCALL h_slvalue(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slvalue); return l->TypeValue(c); }
+static float THISCALL h_slvalue(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slvalue); return l->RebudGoodies(c); }
 static int (THISCALL *o_slgone)(NavSurfaceList *, const Contact *);
 static int THISCALL h_slgone(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slgone); return l->IsGone(c); }
 static void (THISCALL *o_slremove)(NavSurfaceList *, int);
@@ -2058,6 +2047,65 @@ static int (THISCALL *o_slload2)(NavSurfaceList *, IniReader *, const char *, co
 static int THISCALL h_slload2(NavSurfaceList *l, IniReader *i, const char *n, const char *f) { HEAVY_LOG(H_slload2); return l->Load(i, n, f); }
 static int (THISCALL *o_sladd)(NavSurfaceList *, NavProp *, int, const float *, IniValueTable *);
 static int THISCALL h_sladd(NavSurfaceList *l, NavProp *p, int s, const float *m, IniValueTable *t) { HEAVY_LOG(H_sladd); return l->AddInstance(p, s, m, t); }
+// ---- the rest of the surface cluster: lifetime and ini reading (id navread), once-a-frame work (navframe), moving (navmove) ----
+static Hook H_lsdtor, H_slctor, H_sldtor, H_slrlist, H_slrnames, H_slrtype, H_slunload, H_slbind, H_slground;
+static void (THISCALL *o_lsdtor)(LoadedSurface *);
+static void THISCALL h_lsdtor(LoadedSurface *s) { HEAVY_LOG(H_lsdtor); s->Destruct(); }
+static NavSurfaceList *(THISCALL *o_slctor)(NavSurfaceList *);
+static NavSurfaceList *THISCALL h_slctor(NavSurfaceList *l) { HEAVY_LOG(H_slctor); return l->Construct(); }
+static void (THISCALL *o_sldtor)(NavSurfaceList *);
+static void THISCALL h_sldtor(NavSurfaceList *l) { HEAVY_LOG(H_sldtor); l->Destruct(); }
+static int (THISCALL *o_slrlist)(NavSurfaceList *, IniReader *);
+static int THISCALL h_slrlist(NavSurfaceList *l, IniReader *i) { HEAVY_LOG(H_slrlist); return l->ReadSurfaceList(i); }
+static int (THISCALL *o_slrnames)(NavSurfaceList *, IniReader *, NameSet *);
+static int THISCALL h_slrnames(NavSurfaceList *l, IniReader *i, NameSet *n) { HEAVY_LOG(H_slrnames); return l->ReadSurfaceNames(i, n); }
+static int (THISCALL *o_slrtype)(NavSurfaceList *, IniReader *, const char *);
+static int THISCALL h_slrtype(NavSurfaceList *l, IniReader *i, const char *n) { HEAVY_LOG(H_slrtype); return l->ReadSurfaceType(i, n); }
+static void (THISCALL *o_slunload)(NavSurfaceList *);
+static void THISCALL h_slunload(NavSurfaceList *l) { HEAVY_LOG(H_slunload); l->UnloadLastFile(); }
+static void (__stdcall *o_slbind)(IniReader *, IniValueTable *);
+static void __stdcall h_slbind(IniReader *i, IniValueTable *o) { HEAVY_LOG(H_slbind); ReadSurfaceBindings(i, o); }
+static int (THISCALL *o_slground)(NavSurfaceList *, IniReader *);
+static int THISCALL h_slground(NavSurfaceList *l, IniReader *i) { HEAVY_LOG(H_slground); return l->LoadGround(i); }
+
+static Hook H_slsetface, H_sltchg, H_slflush, H_slcarry;
+static void (THISCALL *o_slsetface)(NavSurfaceList *, StringRep *, StringRep *, const Contact *);
+static void THISCALL h_slsetface(NavSurfaceList *l, StringRep *faceSet, StringRep *type, const Contact *c)
+{
+    HEAVY_LOG(H_slsetface);
+    String f, t;                        // the original takes both by value (the rep pointer) and releases them
+    f.rep = faceSet;
+    t.rep = type;
+    l->SetFaceSet(f, t, c);
+}
+static void (THISCALL *o_sltchg)(NavSurfaceList *, void *, const Contact *, const SurfaceInfo *, const SurfaceInfo *);
+static void THISCALL h_sltchg(NavSurfaceList *l, void *soul, const Contact *c, const SurfaceInfo *o, const SurfaceInfo *n) { HEAVY_LOG(H_sltchg); l->TypeChanged(soul, c, o, n); }
+static void (THISCALL *o_slflush)(NavSurfaceList *);
+static void THISCALL h_slflush(NavSurfaceList *l) { HEAVY_LOG(H_slflush); l->FlushRemoved(); }
+static void (THISCALL *o_slcarry)(NavSurfaceList *);
+static void THISCALL h_slcarry(NavSurfaceList *l) { HEAVY_LOG(H_slcarry); l->MoveCarried(); }
+
+static Hook H_slflight, H_slwalk, H_sfmloc, H_sfwbefore, H_mkmat, H_mkmat2;
+static int (THISCALL *o_slflight)(NavSurfaceList *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, float, Float3 *, Float3 *, Float3 *, Float3 *, Contact *);
+static int THISCALL h_slflight(NavSurfaceList *l, const Float3 *pos, const Float3 *r, const Float3 *u, const Float3 *f, const Float3 *d, float dist, Float3 *hit, Float3 *nr, Float3 *nu, Float3 *nf, Contact *nc)
+{
+    HEAVY_LOG(H_slflight);
+    return l->FlightHitsSurface(pos, r, u, f, d, dist, hit, nr, nu, nf, nc);
+}
+static int (THISCALL *o_slwalk)(NavSurfaceList *, void *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, float, const Contact *, Float3 *, Float3 *, Float3 *, Float3 *, Float3 *, Contact *);
+static int THISCALL h_slwalk(NavSurfaceList *l, void *soul, const Float3 *pos, const Float3 *r, const Float3 *u, const Float3 *f, const Float3 *d, float dist, const Contact *c, Float3 *np, Float3 *nr, Float3 *nu, Float3 *nf, Float3 *nd, Contact *nc)
+{
+    HEAVY_LOG(H_slwalk);
+    return l->MoveAlongSurface(soul, pos, r, u, f, d, dist, c, np, nr, nu, nf, nd, nc);
+}
+static float *(THISCALL *o_sfmloc)(InstancedSurface *, float *, const float *);
+static float *THISCALL h_sfmloc(InstancedSurface *s, float *out, const float *m) { HEAVY_LOG(H_sfmloc); return s->MatrixToLocal(out, m); }
+static float *(THISCALL *o_sfwbefore)(InstancedSurface *, float *, const float *);
+static float *THISCALL h_sfwbefore(InstancedSurface *s, float *out, const float *p) { HEAVY_LOG(H_sfwbefore); return s->ToWorldBefore(out, p); }
+static float *(THISCALL *o_mkmat)(float *, const float *, const float *, const float *, const float *);
+static float *THISCALL h_mkmat(float *out, const float *r, const float *u, const float *f, const float *p) { HEAVY_LOG(H_mkmat); return MakeMatrix(out, r, u, f, p); }
+static float *(THISCALL *o_mkmat2)(float *, const float *, const float *, const float *, const float *);
+static float *THISCALL h_mkmat2(float *out, const float *r, const float *u, const float *f, const float *p) { HEAVY_LOG(H_mkmat2); return MakeMatrix(out, r, u, f, p); }
 static Hook H_fptime, H_fpdir, H_fploop, H_fpmatrix, H_fpactor, H_fpfollow, H_fphideend, H_fpfind;
 static FrameProp *(THISCALL *o_fpinit)(FrameProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *);
 static FrameProp *THISCALL h_fpinit(FrameProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t)
@@ -2391,6 +2439,9 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_slmesh, &H_sltype, &H_slprops, &H_sltname, &H_slblocks, &H_slslip, &H_sltouch, &H_sltscript, &H_slvalue, &H_slgone,
                            &H_slremove, &H_slmove, &H_slinst, &H_slload,
                            &H_lsinit, &H_lsread, &H_slload2, &H_sladd,
+                           &H_lsdtor, &H_slctor, &H_sldtor, &H_slrlist, &H_slrnames, &H_slrtype, &H_slunload, &H_slbind, &H_slground,
+                           &H_slsetface, &H_sltchg, &H_slflush, &H_slcarry,
+                           &H_slflight, &H_slwalk, &H_sfmloc, &H_sfwbefore, &H_mkmat, &H_mkmat2,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_npinit, &H_npinitc, &H_npdestruct, &H_npdestroy, &H_npclone, &H_npbuild, &H_nphide, &H_npupdate, &H_npsize, &H_npsurf,
@@ -2893,11 +2944,11 @@ static void Setup()
     H_sltype = { "NavSurfaceList::FaceType", 0x40f380, 5, "568b742408", (void *)h_sltype, (void **)&o_sltype, false, 0, 0, "navsurface", 0 };
     H_slprops = { "NavSurfaceList::Properties", 0x40f3a0, 7, "5381c134010000", (void *)h_slprops, (void **)&o_slprops, false, 0, 0, "navsurface", 0 };
     H_sltname = { "NavSurfaceList::TypeName", 0x40f3c0, 7, "64a10000000055", (void *)h_sltname, (void **)&o_sltname, false, 0, 0, "navsurface", 0 };
-    H_slblocks = { "NavSurfaceList::BlocksWalking", 0x40f610, 7, "64a10000000055", (void *)h_slblocks, (void **)&o_slblocks, false, 0, 0, "navsurface", 0 };
+    H_slblocks = { "NavSurfaceList::Bounces", 0x40f610, 7, "64a10000000055", (void *)h_slblocks, (void **)&o_slblocks, false, 0, 0, "navsurface", 0 };
     H_slslip = { "NavSurfaceList::IsSlippery", 0x40f770, 7, "64a10000000055", (void *)h_slslip, (void **)&o_slslip, false, 0, 0, "navsurface", 0 };
-    H_sltouch = { "NavSurfaceList::HasTouchScript", 0x40f8d0, 7, "64a10000000055", (void *)h_sltouch, (void **)&o_sltouch, false, 0, 0, "navsurface", 0 };
-    H_sltscript = { "NavSurfaceList::TouchScript", 0x40f9b0, 7, "64a10000000055", (void *)h_sltscript, (void **)&o_sltscript, false, 0, 0, "navsurface", 0 };
-    H_slvalue = { "NavSurfaceList::TypeValue", 0x40fb20, 7, "64a10000000055", (void *)h_slvalue, (void **)&o_slvalue, false, 0, 0, "navsurface", 0 };
+    H_sltouch = { "NavSurfaceList::FlyThrough", 0x40f8d0, 7, "64a10000000055", (void *)h_sltouch, (void **)&o_sltouch, false, 0, 0, "navsurface", 0 };
+    H_sltscript = { "NavSurfaceList::ActivateScript", 0x40f9b0, 7, "64a10000000055", (void *)h_sltscript, (void **)&o_sltscript, false, 0, 0, "navsurface", 0 };
+    H_slvalue = { "NavSurfaceList::RebudGoodies", 0x40fb20, 7, "64a10000000055", (void *)h_slvalue, (void **)&o_slvalue, false, 0, 0, "navsurface", 0 };
     H_slgone = { "NavSurfaceList::IsGone", 0x410890, 8, "56578bf98b74240c", (void *)h_slgone, (void **)&o_slgone, false, 0, 0, "navsurface", 0 };
     H_slremove = { "NavSurfaceList::Remove", 0x4102f0, 7, "5381c144010000", (void *)h_slremove, (void **)&o_slremove, false, 0, 0, "navsurface", 0 };
     H_slmove = { "NavSurfaceList::MoveInstance", 0x410310, 7, "5381c134010000", (void *)h_slmove, (void **)&o_slmove, false, 0, 0, "navsurface", 0 };
@@ -2907,6 +2958,25 @@ static void Setup()
     H_lsread = { "ReadSurfaceTypes", 0x40eec0, 7, "64a10000000055", (void *)h_lsread, (void **)&o_lsread, false, 0, 0, "navsurface", 0 };
     H_slload2 = { "NavSurfaceList::Load", 0x40fc10, 7, "64a10000000055", (void *)h_slload2, (void **)&o_slload2, false, 0, 0, "navsurface", 0 };
     H_sladd = { "NavSurfaceList::AddInstance", 0x4100b0, 7, "64a10000000055", (void *)h_sladd, (void **)&o_sladd, false, 0, 0, "navsurface", 0 };
+    H_lsdtor = { "LoadedSurface::Destruct", 0x40bee0, 7, "64a10000000055", (void *)h_lsdtor, (void **)&o_lsdtor, false, 0, 0, "navread", 0 };
+    H_slctor = { "NavSurfaceList::Construct", 0x40d530, 7, "64a10000000055", (void *)h_slctor, (void **)&o_slctor, false, 0, 0, "navread", 0 };
+    H_sldtor = { "NavSurfaceList::Destruct", 0x40d640, 7, "64a10000000055", (void *)h_sldtor, (void **)&o_sldtor, false, 0, 0, "navread", 0 };
+    H_slrlist = { "NavSurfaceList::ReadSurfaceList", 0x40d870, 7, "64a10000000055", (void *)h_slrlist, (void **)&o_slrlist, false, 0, 0, "navread", 0 };
+    H_slrnames = { "NavSurfaceList::ReadSurfaceNames", 0x40dad0, 7, "64a10000000055", (void *)h_slrnames, (void **)&o_slrnames, false, 0, 0, "navread", 0 };
+    H_slrtype = { "NavSurfaceList::ReadSurfaceType", 0x40dd30, 7, "64a10000000055", (void *)h_slrtype, (void **)&o_slrtype, false, 0, 0, "navread", 0 };
+    H_slunload = { "NavSurfaceList::UnloadLastFile", 0x40e160, 7, "64a10000000055", (void *)h_slunload, (void **)&o_slunload, false, 0, 0, "navread", 0 };
+    H_slbind = { "ReadSurfaceBindings", 0x40e2e0, 7, "64a10000000055", (void *)h_slbind, (void **)&o_slbind, false, 0, 0, "navread", 0 };
+    H_slground = { "NavSurfaceList::LoadGround", 0x40e480, 7, "64a10000000055", (void *)h_slground, (void **)&o_slground, false, 0, 0, "navread", 0 };
+    H_slsetface = { "NavSurfaceList::SetFaceSet", 0x40f450, 7, "64a10000000055", (void *)h_slsetface, (void **)&o_slsetface, false, 0, 0, "navframe", 0 };
+    H_sltchg = { "NavSurfaceList::TypeChanged", 0x412920, 7, "64a10000000055", (void *)h_sltchg, (void **)&o_sltchg, false, 0, 0, "navframe", 0 };
+    H_slflush = { "NavSurfaceList::FlushRemoved", 0x4106e0, 7, "64a10000000055", (void *)h_slflush, (void **)&o_slflush, false, 0, 0, "navframe", 0 };
+    H_slcarry = { "NavSurfaceList::MoveCarried", 0x410330, 7, "64a10000000055", (void *)h_slcarry, (void **)&o_slcarry, false, 0, 0, "navframe", 0 };
+    H_slflight = { "NavSurfaceList::FlightHitsSurface", 0x4108e0, 7, "64a10000000055", (void *)h_slflight, (void **)&o_slflight, false, 0, 0, "navmove", 0 };
+    H_slwalk = { "NavSurfaceList::MoveAlongSurface", 0x411120, 7, "64a10000000055", (void *)h_slwalk, (void **)&o_slwalk, false, 0, 0, "navmove", 0 };
+    H_sfmloc = { "InstancedSurface::MatrixToLocal", 0x4110b0, 7, "64a10000000055", (void *)h_sfmloc, (void **)&o_sfmloc, false, 0, 0, "navmove", 0 };
+    H_sfwbefore = { "InstancedSurface::ToWorldBefore", 0x4128a0, 7, "64a10000000055", (void *)h_sfwbefore, (void **)&o_sfwbefore, false, 0, 0, "navmove", 0 };
+    H_mkmat = { "MakeMatrix", 0x412830, 5, "8b54240453", (void *)h_mkmat, (void **)&o_mkmat, false, 0, 0, "navmove", 0 };
+    H_mkmat2 = { "MakeMatrix (copy)", 0x409f00, 5, "8b54240453", (void *)h_mkmat2, (void **)&o_mkmat2, false, 0, 0, "navmove", 0 };
     H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };
