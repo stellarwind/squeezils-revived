@@ -185,7 +185,7 @@ void *NavMeshConstruct(void *memory);                                  // @0047a
 int   NavMeshLoad(void *nav, const char *path);                        // @0047c8e0 nonzero when the file loaded
 void  NavMeshDestroy(void *nav);                                       // @0047af00 (the caller frees the memory)
 int   LoadPaletteFile(const char *path, unsigned char *rgba);          // @00474ca0 (cdecl) reads a palette into a 256 entry RGBA table, nonzero on success
-void  ClearWorldObjects();                                             // @0042d010 frees the level's prop lists
+void  ClearWorldObjects();                                             // @0042d010 frees the level's prop lists (reconstructed: PropList.cpp)
 
 // ---- resource tables (Resources.h) ----
 // The texture and geometry tables are the same container templates as the ini files use (Container.h), with other element
@@ -246,8 +246,8 @@ template<> struct OriginalVtables<Table<float, String, PrimitiveArray<String, 3>
 template<> struct OriginalVtables<BufferObjectTable<float, String, PrimitiveArray<String, 3>, 25> >
                                                                    { enum : unsigned { primary = 0x49dc9c, bufferObject = 0x49dc84 }; };
 // The props whose Update runs every frame (the Array<Prop *> at 0x4c71f8). Removing only queues the index (in 0x4c72a8).
-void  AddUpdatingProp(Prop *prop);                                     // @0042d180
-void  RemoveUpdatingProp(Prop *prop);                                  // @0042d1a0
+void  AddUpdatingProp(Prop *prop);                                     // @0042d180 (reconstructed: PropList.cpp)
+void  RemoveUpdatingProp(Prop *prop);                                  // @0042d1a0 (reconstructed: PropList.cpp)
 // The prop template with this name from the level's prop tables (the loader: also reads "name:..." forms). The two numbers are
 // not identified; FrameProp passes 0 and 0.
 Prop *FindPropTemplate(const char *name, int unknown1, int unknown2);  // @0042c8b0 (cdecl, the name is a String by value)

@@ -26,6 +26,7 @@
 #include "LODProp.h"
 #include "CycleProp.h"
 #include "PropLoader.h"
+#include "PropList.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -134,7 +135,6 @@ void *NavMeshConstruct(void *memory)                     { return ((void *(TC *)
 int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(void *, const char *))0x47c8e0)(nav, path); }
 void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
-void  ClearWorldObjects()                                { ((void (__cdecl *)())0x42d010)(); }
 void  ReadPaths(IniReader *ini, PathTable *paths)        { ((void (__cdecl *)(IniReader *, PathTable *))0x42c700)(ini, paths); }
 // ---- the resource loaders' model calls ----
 SqgModel *SqgModelConstruct(void *memory)                { return ((SqgModel *(TC *)(void *))0x4719d0)(memory); }
@@ -149,8 +149,6 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 }
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
-void  AddUpdatingProp(Prop *prop)                        { ((void (__cdecl *)(Prop *))0x42d180)(prop); }
-void  RemoveUpdatingProp(Prop *prop)                     { ((void (__cdecl *)(Prop *))0x42d1a0)(prop); }
 Prop *FindPropTemplate(const char *name, int unknown1, int unknown2)
 {
     String s(name);                       // passed by value (the rep pointer); the callee releases it
@@ -1527,6 +1525,21 @@ static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
+static Hook H_pladd, H_plremove, H_pldestroy, H_plupdate, H_pllevels, H_plflush, H_plworld;
+static void (__cdecl *o_pladd)(Prop *);
+static void __cdecl h_pladd(Prop *p) { HEAVY_LOG(H_pladd); AddUpdatingProp(p); }
+static void (__cdecl *o_plremove)(Prop *);
+static void __cdecl h_plremove(Prop *p) { HEAVY_LOG(H_plremove); RemoveUpdatingProp(p); }
+static void (__cdecl *o_pldestroy)(Prop *);
+static void __cdecl h_pldestroy(Prop *p) { HEAVY_LOG(H_pldestroy); DestroyPropLater(p); }
+static void (__cdecl *o_plupdate)(float);
+static void __cdecl h_plupdate(float s) { HEAVY_LOG(H_plupdate); UpdateProps(s); }
+static void (__cdecl *o_pllevels)();
+static void __cdecl h_pllevels() { HEAVY_LOG(H_pllevels); UpdateLevels(); }
+static void (__cdecl *o_plflush)();
+static void __cdecl h_plflush() { HEAVY_LOG(H_plflush); FlushRemovedProps(); }
+static void (__cdecl *o_plworld)();
+static void __cdecl h_plworld() { HEAVY_LOG(H_plworld); ClearWorldObjects(); }
 static Hook H_lploadprop, H_lpwords, H_lppath;
 static Prop *(__cdecl *o_lploadprop)(IniReader *, PropTable *, const char *, const char *);
 static Prop *__cdecl h_lploadprop(IniReader *i, PropTable *t, const char *n, const char *k) { HEAVY_LOG(H_lploadprop); return LoadProp(i, t, n, k); }
@@ -1931,6 +1944,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
                            &H_lploadprop, &H_lpwords, &H_lppath,
                            &H_plclear, &H_plfiles, &H_plprops,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
@@ -2240,6 +2254,13 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_pladd = { "AddUpdatingProp", 0x42d180, 12, "8d4424046aff50b9f8714c00", (void *)h_pladd, (void **)&o_pladd, false, 0, 0, "proplist", 0 };
+    H_plremove = { "RemoveUpdatingProp", 0x42d1a0, 9, "83ec04a1fc714c0048", (void *)h_plremove, (void **)&o_plremove, false, 0, 0, "proplist", 0 };
+    H_pldestroy = { "DestroyPropLater", 0x42d1f0, 12, "8d4424046aff50b9e8724c00", (void *)h_pldestroy, (void **)&o_pldestroy, false, 0, 0, "proplist", 0 };
+    H_plupdate = { "UpdateProps", 0x42d210, 9, "565733ffe897000000", (void *)h_plupdate, (void **)&o_plupdate, false, 0, 0, "proplist", 5 };
+    H_pllevels = { "UpdateLevels", 0x42d250, 7, "53565733f633ff", (void *)h_pllevels, (void **)&o_pllevels, false, 0, 0, "proplist", 0 };
+    H_plflush = { "FlushRemovedProps", 0x42d2b0, 10, "535657558b3dac724c00", (void *)h_plflush, (void **)&o_plflush, false, 0, 0, "proplist", 0 };
+    H_plworld = { "ClearWorldObjects", 0x42d010, 12, "53565733db558b3dc8724c00", (void *)h_plworld, (void **)&o_plworld, false, 0, 0, "proplist", 0 };
     H_lploadprop = { "LoadProp", 0x42a520, 7, "64a10000000055", (void *)h_lploadprop, (void **)&o_lploadprop, false, 0, 0, "proploader", 0 };
     H_lpwords = { "SplitWords", 0x421db0, 7, "64a10000000055", (void *)h_lpwords, (void **)&o_lpwords, false, 0, 0, "proploader", 0 };
     H_lppath = { "FindPath", 0x42cc10, 7, "64a10000000055", (void *)h_lppath, (void **)&o_lppath, false, 0, 0, "proploader", 0 };
