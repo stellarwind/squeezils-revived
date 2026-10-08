@@ -8,6 +8,7 @@
 // the original calls through it are plain members here, found through the original table (slot numbers in BodySlot).
 #pragma once
 #include "Float3.h"
+#include "Container.h"
 
 // How a body stands on the surface it is on (0x48 bytes)
 struct Contact {
@@ -24,6 +25,7 @@ enum BodySlot {
 };
 
 struct Body {
+    GAME_HEAP_OPERATORS
     void **vtbl;            // 0x00 @0049d484 for the base class
     float  matrix[16];      // 0x04
     Float3 facing;          // 0x44 starts as the matrix's third row
@@ -48,5 +50,11 @@ struct Body {
     void   SetAngles(float x, float y, float z);             // @0041fd60 slot 11
     void   GetAngles(float *x, float *y, float *z);          // @0041fd80 slot 12
     void   SetContact(const Contact *c);                     // @00420060 slot 14
+    void   Destruct();                                       // @0040bae0 back to the plain Body class (the derived classes end with it)
 };
 static_assert(sizeof(Body) == 0xb8, "Body layout");
+
+// @0047e350 Makes the matrix's rotation square again: the up row (4..6) and a right row (0..2) made from up and facing are
+// scaled to length 1, the facing row (8..10) is rebuilt from them, the fourth column is set to 0 0 0 1 and the position row
+// (12..14) is kept.
+void OrthonormalizeMatrix(float *m);
