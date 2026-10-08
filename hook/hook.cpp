@@ -27,6 +27,7 @@
 #include "CycleProp.h"
 #include "PropLoader.h"
 #include "PropList.h"
+#include "Simulation.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -1516,6 +1517,32 @@ static IDirect3DRMFrame *(THISCALL *o_spbuild)(SpriteProp *, IDirect3DRMFrame *)
 static IDirect3DRMFrame *THISCALL h_spbuild(SpriteProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_spbuild); return p->BuildFrame(parent); }
 static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
+// ---- Simulation (Simulation.h): the creatures of the world being run ----
+static Hook H_smrun, H_smactor, H_smsoul, H_smidsoul, H_smidactor, H_smadd, H_smaddid, H_smclear, H_smnewid, H_smdestroy, H_smput, H_smnew;
+static void (THISCALL *o_smrun)(LocationSimulation *);
+static void THISCALL h_smrun(LocationSimulation *s) { HEAVY_LOG(H_smrun); s->RunActors(); }
+static void *(THISCALL *o_smactor)(LocationSimulation *, int);
+static void *THISCALL h_smactor(LocationSimulation *s, int id) { HEAVY_LOG(H_smactor); return s->GetActor(id); }
+static void *(THISCALL *o_smsoul)(LocationSimulation *, int);
+static void *THISCALL h_smsoul(LocationSimulation *s, int id) { HEAVY_LOG(H_smsoul); return s->GetSoul(id); }
+static int (THISCALL *o_smidsoul)(LocationSimulation *, void *);
+static int THISCALL h_smidsoul(LocationSimulation *s, void *x) { HEAVY_LOG(H_smidsoul); return s->FindIdBySoul(x); }
+static int (THISCALL *o_smidactor)(LocationSimulation *, void *);
+static int THISCALL h_smidactor(LocationSimulation *s, void *x) { HEAVY_LOG(H_smidactor); return s->FindIdByActor(x); }
+static void (THISCALL *o_smadd)(LocationSimulation *, int, void *, void *);
+static void THISCALL h_smadd(LocationSimulation *s, int id, void *a, void *so) { HEAVY_LOG(H_smadd); s->AddCreature(id, a, so); }
+static void (THISCALL *o_smaddid)(LocationSimulation *, int);
+static void THISCALL h_smaddid(LocationSimulation *s, int id) { HEAVY_LOG(H_smaddid); s->AddId(id); }
+static void (THISCALL *o_smclear)(LocationSimulation *);
+static void THISCALL h_smclear(LocationSimulation *s) { HEAVY_LOG(H_smclear); s->DestroyCreatures(); }
+static int (THISCALL *o_smnewid)(LocationSimulation *);
+static int THISCALL h_smnewid(LocationSimulation *s) { HEAVY_LOG(H_smnewid); return s->NewId(); }
+static Simulation *(THISCALL *o_smdestroy)(Simulation *, int);
+static Simulation *THISCALL h_smdestroy(Simulation *s, int flags) { HEAVY_LOG(H_smdestroy); return s->Destroy(flags); }
+static void (THISCALL *o_smput)(CreatureTable *, int, void *, void *);
+static void THISCALL h_smput(CreatureTable *t, int id, void *a, void *so) { HEAVY_LOG(H_smput); t->Put(id, a, so); }
+static Creature *(__cdecl *o_smnew)();
+static Creature *__cdecl h_smnew() { HEAVY_LOG(H_smnew); return NewCreature(); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
 static Hook H_pladd, H_plremove, H_pldestroy, H_plupdate, H_pllevels, H_plflush, H_plworld;
@@ -1942,6 +1969,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_smrun, &H_smactor, &H_smsoul, &H_smidsoul, &H_smidactor, &H_smadd, &H_smaddid, &H_smclear, &H_smnewid, &H_smdestroy, &H_smput, &H_smnew,
                            &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
                            &H_lploadprop, &H_lpwords, &H_lppath, &H_lprpaths, &H_lpfind,
                            &H_plclear, &H_plfiles, &H_plprops,
@@ -2252,6 +2280,18 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_smrun = { "LocationSimulation::RunActors", 0x414010, 5, "53565733f6", (void *)h_smrun, (void **)&o_smrun, false, 0, 0, "simulation", 0 };
+    H_smactor = { "LocationSimulation::GetActor", 0x414050, 5, "8d44240453", (void *)h_smactor, (void **)&o_smactor, false, 0, 0, "simulation", 0 };
+    H_smsoul = { "LocationSimulation::GetSoul", 0x414080, 5, "8d44240453", (void *)h_smsoul, (void **)&o_smsoul, false, 0, 0, "simulation", 0 };
+    H_smidsoul = { "LocationSimulation::FindIdBySoul", 0x4140b0, 5, "538b490456", (void *)h_smidsoul, (void **)&o_smidsoul, false, 0, 0, "simulation", 0 };
+    H_smidactor = { "LocationSimulation::FindIdByActor", 0x414100, 5, "538b490456", (void *)h_smidactor, (void **)&o_smidactor, false, 0, 0, "simulation", 0 };
+    H_smadd = { "LocationSimulation::AddCreature", 0x414160, 5, "8b44240c53", (void *)h_smadd, (void **)&o_smadd, false, 0, 0, "simulation", 0 };
+    H_smaddid = { "LocationSimulation::AddId", 0x414180, 8, "5383c10c8d442408", (void *)h_smaddid, (void **)&o_smaddid, false, 0, 0, "simulation", 0 };
+    H_smclear = { "LocationSimulation::DestroyCreatures", 0x4141a0, 5, "83ec045356", (void *)h_smclear, (void **)&o_smclear, false, 0, 0, "simulation", 0 };
+    H_smnewid = { "LocationSimulation::NewId", 0x414250, 5, "5356578bf1", (void *)h_smnewid, (void **)&o_smnewid, false, 0, 0, "simulation", 0 };
+    H_smdestroy = { "Simulation::Destroy", 0x414280, 5, "8b44240456", (void *)h_smdestroy, (void **)&o_smdestroy, false, 0, 0, "simulation", 0 };
+    H_smput = { "CreatureTable::Put", 0x412da0, 7, "64a10000000055", (void *)h_smput, (void **)&o_smput, false, 0, 0, "simulation", 0 };
+    H_smnew = { "NewCreature", 0x4142b0, 7, "64a10000000055", (void *)h_smnew, (void **)&o_smnew, false, 0, 0, "simulation", 0 };
     H_pladd = { "AddUpdatingProp", 0x42d180, 12, "8d4424046aff50b9f8714c00", (void *)h_pladd, (void **)&o_pladd, false, 0, 0, "proplist", 0 };
     H_plremove = { "RemoveUpdatingProp", 0x42d1a0, 9, "83ec04a1fc714c0048", (void *)h_plremove, (void **)&o_plremove, false, 0, 0, "proplist", 0 };
     H_pldestroy = { "DestroyPropLater", 0x42d1f0, 12, "8d4424046aff50b9e8724c00", (void *)h_pldestroy, (void **)&o_pldestroy, false, 0, 0, "proplist", 0 };
