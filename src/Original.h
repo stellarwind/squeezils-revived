@@ -264,11 +264,11 @@ ScriptCaller *ScriptCallerInitSoul(ScriptCaller *caller, void *soul, int actorIn
 // That class is not reconstructed; these are the functions of its surface list that NavProp calls.
 class IniReader;
 struct NavProp;
-struct NavSurface;
+struct LoadedSurface;
 void *GetPlaceSurfaces(void *place);                                    // @00439b60 the place simulation's surface list (its +0x3c)
 // "Loading surface %s (.nat file %s) from directory %s" (the ini file's directory); returns the surface's number
 int   LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile);   // @0040fc10
-NavSurface *LoadedSurface(void *surfaces, int surface);                  // @00412c10 (the list at +0x124, virtual slot 0)
+LoadedSurface *LoadedSurfaceAt(void *surfaces, int surface);             // @00412c10 (reconstructed in NavSurface.cpp)
 // A copy of a surface placed with a prop's matrix; returns the copy's number
 int   AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties);   // @004100b0
 void  RemoveSurfaceInstance(void *surfaces, int instance);              // @004102f0 only adds the number to a list at +0x144 (presumably removed later)
@@ -302,7 +302,7 @@ struct Contact;
 unsigned FrameMilliseconds();                                   // @004206d0 the game clock (the global at 0x4badc0), then @0041ec00 its +0xc: the milliseconds the last frame took
 int   MorphCycleLoad(MorphCycle *clip, const char *file);       // @0041bd60 (thiscall) fills the clip from a cycle file; 0 on failure
 void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll);   // @0047e500 (thiscall on the matrix) radians: atan2 of the matrix's rows
-void *SurfaceFaceOf(void *surfaces, const Contact *contact);   // @00412bf0 the face object of contact->face (the list at +0x134, virtual slot 0)
+void *NavSurfaceFaceOf(void *surfaces, const Contact *contact);   // @00412bf0 the face object of contact->face (the list at +0x134, virtual slot 0)
 float *FaceRelativeMatrix(void *face, float *out, const float *matrix);   // @004110b0 (thiscall) the matrix relative to the face; returns out
 
 // ---- SqueezilSoul (SqueezilSoul.h) ----
@@ -336,15 +336,15 @@ void *GetPlaceGoodies(void *place);                                       // @00
 void  DropGoodie(void *goodies, int value, const char *goodie, Matrix16 at);      // @0044d4f0 (thiscall) puts a goodie into the place
 void  ThrowGoodie(void *goodies, int value, Matrix16 at, Float3 direction, float speed);   // @0044dc30 (thiscall) a spat nut
 void  GoodieGranted(void *goodies, const char *goodie, void *soul, void *place);  // @0044bc40 (thiscall) tells the place a goodie was picked up
-// the place's surfaces (GetPlaceSurfaces) as a squeezil moves over them
-int   SurfaceIsGone(void *surfaces, const Contact *contact);              // @00410890 the contact's surface copy was removed (its two lists, virtual slot 6)
-String SurfaceTypeName(void *surfaces, const Contact *contact);           // @0040f3c0 (thiscall, String returned through a hidden pointer)
-IniValueTable *SurfaceProperties(void *surfaces, const Contact *contact); // @0040f3a0
-int   SurfaceIsSlippery(void *surfaces, const Contact *contact);          // @0040f770 a property of the face's type (inferred from its use)
-int   SurfaceBlocksWalking(void *surfaces, const Contact *contact);       // @0040f610 a property of the face's type (inferred from its use)
-int   SurfaceHasTouchScript(void *surfaces, const Contact *contact);      // @0040f8d0 a property of the face's type (inferred from its use)
-String SurfaceTouchScript(void *surfaces, const Contact *contact);        // @0040f9b0 the script function named by the face's type
-void  SurfaceTypeChanged(void *surfaces, void *soul, const Contact *contact, const void *oldInfo, const void *newInfo);   // @00412920
+// the place's surfaces (GetPlaceSurfaces) as a squeezil moves over them -- reconstructed in NavSurface.cpp (NavSurfaceList)
+int   NavSurfaceIsGone(void *surfaces, const Contact *contact);              // @00410890 the contact's surface copy was removed (its two lists, virtual slot 6)
+String NavSurfaceTypeName(void *surfaces, const Contact *contact);           // @0040f3c0 (thiscall, String returned through a hidden pointer)
+IniValueTable *NavSurfaceProperties(void *surfaces, const Contact *contact); // @0040f3a0
+int   NavSurfaceIsSlippery(void *surfaces, const Contact *contact);          // @0040f770 a property of the face's type (inferred from its use)
+int   NavSurfaceBlocksWalking(void *surfaces, const Contact *contact);       // @0040f610 a property of the face's type (inferred from its use)
+int   NavSurfaceHasTouchScript(void *surfaces, const Contact *contact);      // @0040f8d0 a property of the face's type (inferred from its use)
+String NavSurfaceTouchScript(void *surfaces, const Contact *contact);        // @0040f9b0 the script function named by the face's type
+void  NavSurfaceTypeChanged(void *surfaces, void *soul, const Contact *contact, const void *oldInfo, const void *newInfo);   // @00412920
 // @00411120 Moves a squeezil `distance` along the surface from the first five vectors and the contact, writing the new ones into
 // the second set (the original passes the same buffers for both). 0 when it ran off the surface.
 int   MoveAlongSurface(void *surfaces, void *soul, Float3 *pos, Float3 *right, Float3 *up, Float3 *forward, Float3 *direction,

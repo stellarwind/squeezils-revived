@@ -15,16 +15,9 @@
 //                             25 GetSurface  26 GetInstance
 #pragma once
 #include "CycleProp.h"
+#include "NavSurface.h"
 
 class IniReader;
-
-// A loaded walkable surface (the place's class). Only the fields NavProp reads are known.
-struct NavSurface {
-    int           unknown0;         // 0x00
-    float         sizeSquared;      // 0x04 copied into a NavProp (slot 11; LODProp reads it as a size squared)
-    int           unknown8[3];      // 0x08
-    Array<String> propertyNames;    // 0x14 the properties a copy of the surface has
-};
 
 enum NavPropSlot { NAVPROP_GET_SIZE_SQUARED = 11, NAVPROP_GET_SURFACE = 25, NAVPROP_GET_INSTANCE = 26 };
 

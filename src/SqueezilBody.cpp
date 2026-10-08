@@ -202,7 +202,7 @@ void SqueezilBody::Place(BodyPlacement placement)
     memcpy(contact.matrix, placement.contact.matrix, sizeof contact.matrix);
     void *surfaces = GetPlaceSurfaces(DynamicCast(GetCurrentSimulation(), kLocationSimulationType, kPlaceSimulationType));
     float relative[16];
-    FaceRelativeMatrix(SurfaceFaceOf(surfaces, &placement.contact), relative, matrix);
+    FaceRelativeMatrix(NavSurfaceFaceOf(surfaces, &placement.contact), relative, matrix);
     memcpy(contact.matrix, relative, sizeof contact.matrix);
 }
 

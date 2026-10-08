@@ -145,7 +145,9 @@ static_assert(offsetof(ScriptCaller, soul) == 0x08 && offsetof(ScriptCaller, act
 #include "NavProp.h"
 static_assert(offsetof(NavProp, surface) == 0xf4 && offsetof(NavProp, instance) == 0xf8 && offsetof(NavProp, properties) == 0xfc &&
               offsetof(NavProp, sizeSquared) == 0x12c, "NavProp fields");
-static_assert(offsetof(NavSurface, sizeSquared) == 0x04 && offsetof(NavSurface, propertyNames) == 0x14, "NavSurface fields");
+#include "NavSurface.h"
+static_assert(offsetof(LoadedSurface, sizeSquared) == 0x04 && offsetof(LoadedSurface, typeNames) == 0x14 && offsetof(InstancedSurface, previous) == 0x48 &&
+              offsetof(InstancedSurface, properties) == 0x98 && offsetof(InstancedSurface, flags) == 0xc8 && offsetof(InstancedSurface, position) == 0xdc, "Surface fields");
 #include "SqueezilSoul.h"
 static_assert(offsetof(SqueezilSoul, directions) == 0x10 && offsetof(SqueezilSoul, canSlip) == 0x2c &&
               offsetof(SqueezilSoul, state) == 0x3c && offsetof(SqueezilSoul, physics) == 0x48 &&

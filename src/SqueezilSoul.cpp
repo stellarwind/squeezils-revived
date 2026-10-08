@@ -720,7 +720,7 @@ void SqueezilSoul::ResetSurface()
     surface.type = 0;
     surface.typeName = String(" none");
     surface.value = String("none");
-    SurfaceTypeChanged(GetPlaceSurfaces(place), this, BodyCall::GetContact(SoulCall::Body(this)), &old, &surface);
+    NavSurfaceTypeChanged(GetPlaceSurfaces(place), this, BodyCall::GetContact(SoulCall::Body(this)), &old, &surface);
 }
 
 // @00451270 The face's type number is in the world's record of the surface copy. A new type takes its name and the face's
@@ -733,19 +733,19 @@ void SqueezilSoul::UpdateSurface(Contact contact)
     if (type != surface.type) {
         SurfaceInfo old = surface;
         surface.type = type;
-        surface.typeName = SurfaceTypeName(GetPlaceSurfaces(place), &contact);
-        surface.value = SurfaceProperties(GetPlaceSurfaces(place), &contact)->Get(surface.typeName);
-        SurfaceTypeChanged(GetPlaceSurfaces(place), this, &contact, &old, &surface);
+        surface.typeName = NavSurfaceTypeName(GetPlaceSurfaces(place), &contact);
+        surface.value = NavSurfaceProperties(GetPlaceSurfaces(place), &contact)->Get(surface.typeName);
+        NavSurfaceTypeChanged(GetPlaceSurfaces(place), this, &contact, &old, &surface);
         return;
     }
-    String name = SurfaceTypeName(surfaces, &contact);
+    String name = NavSurfaceTypeName(surfaces, &contact);
     surface.typeName = name;
-    String value = SurfaceProperties(GetPlaceSurfaces(place), &contact)->Get(name);
+    String value = NavSurfaceProperties(GetPlaceSurfaces(place), &contact)->Get(name);
     if (StringCompare(&value, &surface.value) != 0) {
         GameLog("Surface type changed to %s!\n", value.c_str());
         SurfaceInfo old = surface;
         surface.value = value;
-        SurfaceTypeChanged(GetPlaceSurfaces(place), this, &contact, &old, &surface);
+        NavSurfaceTypeChanged(GetPlaceSurfaces(place), this, &contact, &old, &surface);
     }
 }
 
@@ -760,7 +760,7 @@ void SqueezilSoul::Update()
 {
     SqueezilBody *b = SoulCall::Body(this);
     int onGround = BodyCall::IsOnGround(b);
-    if (onGround && SurfaceIsGone(GetPlaceSurfaces(place), BodyCall::GetContact(SoulCall::Body(this)))) {
+    if (onGround && NavSurfaceIsGone(GetPlaceSurfaces(place), BodyCall::GetContact(SoulCall::Body(this)))) {
         SoulCall::StartTumble(this);
         onGround = BodyCall::IsOnGround(SoulCall::Body(this));
     }
