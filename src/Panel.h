@@ -8,7 +8,7 @@
 #include "QuestPanel.h"
 #include "CompassRuler.h"
 
-struct Float3 { float x, y, z; };
+#include "Float3.h"
 
 struct Panel {
     int        originX;            // 0x000 screen position the panel is placed from (GetScreenOrigin, taken at construction)
