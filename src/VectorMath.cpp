@@ -31,6 +31,8 @@ Vector3f Slerp(float t, const Vector3f &a, const Vector3f &b)
 //   roll  = atan2(m[1], m[5])      the turn of the right and up rows about the forward axis
 // When the forward row points straight up or down (m[9] = +-1, so yaw is not defined) yaw is set to 0 and the roll comes from
 // the right/up rows' other entries instead: atan2(m[2], m[6]).
+// (Compiled only with -DLINK_MATRIX_TO_ANGLES: the hook calls the original through the same name, see hook.cpp.)
+#ifdef LINK_MATRIX_TO_ANGLES
 void MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll)
 {
     float lift = -m[9];
@@ -60,3 +62,4 @@ void MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll)
         reach = m[10] / cosineYaw;
     *pitch = atan2f(lift, reach);
 }
+#endif

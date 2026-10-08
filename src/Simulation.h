@@ -55,6 +55,8 @@ struct LocationSimulation : Simulation {
     void  Init();                               // @00412f90 makes the creature table, ids start at 10; drains the key and mouse messages
     void  ClearCreatures();                     // @00413060 DestroyCreatures, then whatever creatures are left in the table
 
+    void  Clear();                              // @004130b0 slot 2: frees the creature table (not the creatures), the scene and the parsed ini files
+    void  UpdateSouls();                        // @00413f80 slot 3: the souls decide (the player's, then the others, the camera's last), then every actor moves; then the creatures marked with AddId are destroyed
     void  RunActors();                          // @00414010 slot 4: the actors' virtual slot 2, one after another (not identified)
     void *GetActor(int id);                     // @00414050 NULL when there is no creature with the id
     void *GetSoul(int id);                      // @00414080 NULL when there is no creature with the id

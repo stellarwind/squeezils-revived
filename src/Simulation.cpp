@@ -4,6 +4,8 @@
 #include "Vector3f.h"
 #include "VirtualCall.h"
 #include "Body.h"
+#include "World.h"
+#include "IniFile.h"
 #include <string.h>
 #include <math.h>
 
@@ -361,5 +363,29 @@ void LocationSimulation::CollideCreatures()
             }
         }
     }
+    DestroyCreatures();
+}
+
+// @004130b0 (the table is freed with the original's destructor: it deletes the creature records, which no longer hold anything
+// by then; the pointer is left as it was)
+void LocationSimulation::Clear()
+{
+    if (creatures) {
+        DestructCreatureTable(creatures);
+        Operator_Delete(creatures);
+    }
+    GetWorld()->DestroyScene();
+    IniCloseAll();
+}
+
+// @00413f80 The camera is entry 1 of the table: its soul is updated after all the others.
+void LocationSimulation::UpdateSouls()
+{
+    CallVirtual<void>(creatures->values.At(0)->soul, 5);
+    for (int i = 2; i < creatures->keys.count; i++)
+        CallVirtual<void>(creatures->values.At(i)->soul, 5);
+    CallVirtual<void>(creatures->values.At(1)->soul, 5);
+    for (int i = 0; i < creatures->keys.count; i++)
+        CallVirtual<void>(creatures->values.At(i)->actor, 1);
     DestroyCreatures();
 }

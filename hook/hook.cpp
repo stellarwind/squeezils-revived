@@ -28,6 +28,14 @@
 #include "PropLoader.h"
 #include "PropList.h"
 #include "Simulation.h"
+#include "LandSimulation.h"
+#include "RegionSimulation.h"
+#include "PlaceSimulation.h"
+#include "SqueezilRegionSoul.h"
+#include "SqueezilPlayerSoul.h"
+#include "GoodieSoul.h"
+#include "SqueezilRoboSoul.h"
+#include "CameraSoul.h"
 #include "Body.h"
 #include "CameraBody.h"
 #include "GoodieBody.h"
@@ -157,6 +165,109 @@ void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)
 void  ConstructIdList(void *ids)                         { ((void (TC *)(void *))0x45eef0)(ids); }
 void  DestructIdList(void *ids)                          { ((void (TC *)(void *))0x45efa0)(ids); }
 void  ConstructCreatureTable(CreatureTable *table)       { ((void (TC *)(void *))0x466590)(table); }
+void  ConstructPossessionsTable(PossessionsTable *table) { ((void (TC *)(void *))0x4650b0)(table); }
+void  DestructCreatureTable(CreatureTable *table)         { ((void (TC *)(void *))0x412d20)(table); }
+// ---- RegionSimulation / PlaceSimulation (RegionSimulation.h, PlaceSimulation.h): calls into the original ----
+void  ConstructPlaceTable(PlaceTable *table)             { ((void (TC *)(void *))0x4690c0)(table); }
+void  DestructPlaceTable(PlaceTable *table)              { ((void (TC *)(void *))0x469900)(table); }
+void  SetCurrentSimulation(void *simulation)             { *(void **)0x4badbc = simulation; }
+void  ReadFunctionList(IniReader *ini)                   { ((void (__cdecl *)(void *))0x422730)(ini); }
+void  LoadResources(IniReader *ini)                      { ((void (__cdecl *)(void *))0x448300)(ini); }
+void  UnloadResources()                                  { ((void (__cdecl *)())0x448330)(); }
+void  ReleaseFunctionTable()                             { ((void (__cdecl *)())0x422b80)(); }
+void  ReleaseFunctions()                                 { ((void (__cdecl *)())0x422b00)(); }
+int   AudioUpdate()                                      { return ((int (__cdecl *)())0x44aae0)(); }
+void  UnloadSounds()                                     { ((void (__cdecl *)())0x4499e0)(); }
+int   StartMidi(const char *file)                        { return ((int (__cdecl *)(const char *))0x45aa00)(file); }
+void  StopMidi()                                         { ((void (__cdecl *)())0x45aa70)(); }
+void  StartAudio()                                       { ((void (__cdecl *)())0x44add0)(); }
+void  RunFrame()                                         { ((void (__cdecl *)())0x4206e0)(); }
+void  ResetClock()                                       { ((void (__cdecl *)())0x420760)(); }
+void  SetGamePaused(int paused)                          { ((void (__cdecl *)(int))0x43ed80)(paused); }
+void  ApplicationSetInputMode(void *application, int mode) { ((void (TC *)(void *, int))0x43b980)(application, mode); }
+float ApplicationForwardAxis(void *application)          { return ((float (TC *)(void *))0x43bc70)(application); }
+float ApplicationTurnAxis(void *application)             { return ((float (TC *)(void *))0x43bd20)(application); }
+int   CharacterTrySetState(Character *c, int state, SqueezilRoboSoul *soul) { return ((int (TC *)(void *, int, void *))0x4486f0)(c, state, soul); }
+void  CharacterRunPending(Character *c, SqueezilRoboSoul *soul)           { ((void (TC *)(void *, void *))0x4487f0)(c, soul); }
+void *BehaviourNew0(SqueezilBody *body, SqueezilSoul *soul, float a, float b, float c)
+{
+    void *m = Operator_New(0x30);
+    return m ? ((void *(TC *)(void *, void *, void *, float, float, float))0x402930)(m, body, soul, a, b, c) : NULL;
+}
+void *BehaviourNew1(SqueezilBody *body, SqueezilSoul *soul)
+{
+    void *m = Operator_New(0x24);
+    return m ? ((void *(TC *)(void *, void *, void *))0x4023b0)(m, body, soul) : NULL;
+}
+void *BehaviourNew2(SqueezilBody *body, SqueezilSoul *soul)
+{
+    void *m = Operator_New(0x18);
+    return m ? ((void *(TC *)(void *, void *, void *))0x4033b0)(m, body, soul) : NULL;
+}
+void *BehaviourNew3(SqueezilBody *body, SqueezilSoul *soul)
+{
+    void *m = Operator_New(0x20);
+    return m ? ((void *(TC *)(void *, void *, void *))0x403650)(m, body, soul) : NULL;
+}
+void *BehaviourNew4(SqueezilBody *body, SqueezilSoul *soul, float a, float b)
+{
+    void *m = Operator_New(0x28);
+    return m ? ((void *(TC *)(void *, void *, void *, float, float))0x403b60)(m, body, soul, a, b) : NULL;
+}
+void *BehaviourNew5(SqueezilBody *body, SqueezilSoul *soul)
+{
+    void *m = Operator_New(0x20);
+    return m ? ((void *(TC *)(void *, void *, void *))0x403ed0)(m, body, soul) : NULL;
+}
+void *BehaviourNew6(SqueezilBody *body, SqueezilSoul *soul, float a)
+{
+    void *m = Operator_New(0x24);
+    return m ? ((void *(TC *)(void *, void *, void *, float))0x4030f0)(m, body, soul, a) : NULL;
+}
+void  ApplicationLookDelta(void *application, float *pitch, float *yaw) { ((void (TC *)(void *, float *, float *))0x43bdc0)(application, pitch, yaw); }
+float ApplicationForwardTap(void *application)           { return ((float (TC *)(void *))0x43bc10)(application); }
+float ApplicationTurnTap(void *application)              { return ((float (TC *)(void *))0x43bc40)(application); }
+void  PlayLoopingSound(const char *name)
+{
+    String s(name);                       // the original takes the String by value (its rep pointer) and releases it
+    StringRep *rep = s.rep;
+    s.rep = NULL;
+    ((void (__cdecl *)(StringRep *))0x44a750)(rep);
+}
+void *RegionCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul)
+                                                         { return ((void *(TC *)(void *, void *, void *, void *))0x409d10)(memory, camera, body, playerSoul); }
+void  PossessionsSetInventory(Possessions *p, Inventory *i) { ((void (TC *)(void *, void *))0x4489a0)(p, i); }
+int   InventoryLoad(Inventory *inventory, void *file)    { return ((int (TC *)(void *, void *))0x416820)(inventory, file); }
+int   InventorySave(Inventory *inventory, void *file)    { return ((int (TC *)(void *, void *))0x416600)(inventory, file); }
+PlaceLevel *PlaceLevelConstruct(PlaceLevel *level)       { return ((PlaceLevel *(TC *)(void *))0x44af30)(level); }
+void  PlaceLevelDestruct(PlaceLevel *level)              { ((void (TC *)(void *))0x44b2e0)(level); }
+void  PlaceLevelPrepare(PlaceLevel *level)               { ((void (TC *)(void *))0x44b950)(level); }
+void  PlaceLevelPrepare2(PlaceLevel *level)              { ((void (TC *)(void *))0x44b780)(level); }
+int   PlaceLevelRead(PlaceLevel *level, IniReader *ini)  { return ((int (TC *)(void *, void *))0x44bd60)(level, ini); }
+void  PlaceLevelUpdate(PlaceLevel *level)                { ((void (TC *)(void *))0x44e0f0)(level); }
+void *PlaceLevelFindCreature(PlaceLevel *level, const char *name)
+{
+    String s(name);                         // the callee frees the String it is given, so hand over our reference
+    StringRep *rep = s.rep;
+    s.rep = NULL;
+    return ((void *(TC *)(void *, StringRep *))0x44e1b0)(level, rep);
+}
+void  PlaceLevelFinish(PlaceLevel *level)                { ((void (TC *)(void *))0x44df00)(level); }
+void  PlaceLevelForgetCreature(PlaceLevel *level, int id) { ((void (TC *)(void *, int))0x44e020)(level, id); }
+void *PlayerSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place)
+                                                         { return ((void *(TC *)(void *, void *, void *, void *))0x41ee30)(memory, body, possessions, place); }
+void *PlaceCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul)
+                                                         { return ((void *(TC *)(void *, void *, void *, void *))0x40a630)(memory, camera, body, playerSoul); }
+void *RoboSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place, void *info)
+                                                         { return ((void *(TC *)(void *, void *, void *, void *, void *))0x4043a0)(memory, body, possessions, place, info); }
+void  PlayerSoulPostUpdate(void *soul)                   { ((void (TC *)(void *))0x41f750)(soul); }
+void  PlayerSoulFinishedUpdate(void *soul)               { ((void (TC *)(void *))0x41f7f0)(soul); }
+void  NavSurfaceDestroyInstances(NavSurfaceList *list)   { ((void (TC *)(void *))0x40ec90)(list); }
+void  NavSurfaceDestroyLoaded(NavSurfaceList *list)      { ((void (TC *)(void *))0x40ede0)(list); }
+void  DestructPossessionsTable(PossessionsTable *table)  { ((void (TC *)(void *))0x4651d0)(table); }
+void  InventoryConstruct(Inventory *inv)                 { ((void (TC *)(void *))0x415ef0)(inv); }
+void *StreamWrite(void *stream, BufferObject *object)    { return ((void *(TC *)(void *, void *))0x448c60)(stream, object); }
+void *StreamRead(void *stream, BufferObject **object)    { return ((void *(TC *)(void *, void *))0x448ca0)(stream, object); }
 void *GetApplication()                                   { return *(void **)0x4badac; }
 void  FlushInputMessages(void *application)              { ((int (TC *)(void *))0x43c970)(application); }
 void *SimulationActor(int index)                         { return ((void *(TC *)(void *, int))0x414050)(*(void **)0x4badbc, index); }
@@ -198,7 +309,8 @@ void  PlayEffect(const char *name, const Float3 &position)
 }
 void  StopLoopingSounds()                                 { ((void (__cdecl *)())0x44a8f0)(); }
 int   PhysicalCollision(int id, int otherId)              { return ((int (__cdecl *)(int, int))0x447590)(id, otherId); }
-int   InputHeldAttack()                                   { return *(int *)((char *)*(void **)0x4badac + 0x68); }
+int   InputHeldRun()                                      { return *(int *)((char *)*(void **)0x4badac + 0x64); }
+int   InputHeldAttack()                               { return *(int *)((char *)*(void **)0x4badac + 0x68); }
 void  PhysicalSoulInit(void *soul)                        { ((void *(TC *)(void *))0x446e30)(soul); }
 void  InventoryAdd(Inventory *inv, const char *goodie, int value)    { ((void (TC *)(void *, const char *, int))0x416110)(inv, goodie, value); }
 void  InventoryRemove(Inventory *inv, const char *goodie, int index) { ((void (TC *)(void *, const char *, int))0x416280)(inv, goodie, index); }
@@ -546,7 +658,9 @@ static int __attribute__((thiscall)) h_lremove(ListenerTable *t, void *cb, void 
 // ---- heavy functions: COM side effects, cannot be compared; installed only via SQZ_REPLACE=id1,id2 ----
 static Hook H_quality, H_planes, H_frames, H_viewport, H_enum, H_surfaces, H_shutdown;
 
-#define HEAVY_LOG(h) do { (h).calls++; } while (0)
+static Hook *g_trace[256];             // the last 256 replaced functions entered, for the crash report
+static volatile LONG g_traceN;
+#define HEAVY_LOG(h) do { (h).calls++; g_trace[(unsigned)InterlockedIncrement(&g_traceN) & 255] = &(h); } while (0)
 
 // @4756a0 ApplyQualitySettings, __fastcall(this), returns last HRESULT in EAX
 static int (__fastcall *o_quality)(Renderer *);
@@ -1612,6 +1726,274 @@ static int (__cdecl *o_smlines)(const Vector3f *, const Vector3f *, const Vector
 static int __cdecl h_smlines(const Vector3f *p1, const Vector3f *p2, const Vector3f *p3, const Vector3f *p4, float *s, float *t) { HEAVY_LOG(H_smlines); return ClosestLineParams(p1, p2, p3, p4, s, t); }
 static Vector3f *(__cdecl *o_smnearest)(Vector3f *, const Vector3f *, const Vector3f *, const Vector3f *);
 static Vector3f *__cdecl h_smnearest(Vector3f *out, const Vector3f *p, const Vector3f *a, const Vector3f *b) { HEAVY_LOG(H_smnearest); return NearestPointOnLine(out, p, a, b); }
+// ---- LandSimulation (LandSimulation.h): the map of the whole game ----
+static Hook H_ldctor, H_lddtor, H_ldfree, H_ldinit, H_ldclear, H_ldcount, H_ldlent, H_ldlend, H_ldreturn, H_ldname, H_ldwrite, H_ldread, H_ldcreate;
+static LandSimulation *(THISCALL *o_ldctor)(LandSimulation *);
+static LandSimulation *THISCALL h_ldctor(LandSimulation *s) { HEAVY_LOG(H_ldctor); return s->Construct(); }
+static void (THISCALL *o_lddtor)(LandSimulation *);
+static void THISCALL h_lddtor(LandSimulation *s) { HEAVY_LOG(H_lddtor); s->Destruct(); }
+static LandSimulation *(THISCALL *o_ldfree)(LandSimulation *, int);
+static LandSimulation *THISCALL h_ldfree(LandSimulation *s, int flags) { HEAVY_LOG(H_ldfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_ldinit)(LandSimulation *);
+static void THISCALL h_ldinit(LandSimulation *s) { HEAVY_LOG(H_ldinit); s->Init(); }
+static void (THISCALL *o_ldclear)(LandSimulation *);
+static void THISCALL h_ldclear(LandSimulation *s) { HEAVY_LOG(H_ldclear); s->Clear(); }
+static int (THISCALL *o_ldcount)(LandSimulation *);
+static int THISCALL h_ldcount(LandSimulation *s) { HEAVY_LOG(H_ldcount); return s->CharacterCount(); }
+static int (THISCALL *o_ldlent)(LandSimulation *, int);
+static int THISCALL h_ldlent(LandSimulation *s, int id) { HEAVY_LOG(H_ldlent); return s->IsLentOut(id); }
+static Possessions *(THISCALL *o_ldlend)(LandSimulation *, int);
+static Possessions *THISCALL h_ldlend(LandSimulation *s, int id) { HEAVY_LOG(H_ldlend); return s->Lend(id); }
+static void (THISCALL *o_ldreturn)(LandSimulation *, int, Possessions *);
+static void THISCALL h_ldreturn(LandSimulation *s, int id, Possessions *p) { HEAVY_LOG(H_ldreturn); s->Return(id, p); }
+static const char *(THISCALL *o_ldname)(LandSimulation *, int);
+static const char *THISCALL h_ldname(LandSimulation *s, int index) { HEAVY_LOG(H_ldname); return s->GetPlaceName(index); }
+// the BufferObject part of the object is at +4
+static void (THISCALL *o_ldwrite)(char *, void *);
+static void THISCALL h_ldwrite(char *part, void *stream) { HEAVY_LOG(H_ldwrite); ((LandSimulation *)(part - 4))->Write(stream); }
+static void (THISCALL *o_ldread)(char *, void *);
+static void THISCALL h_ldread(char *part, void *stream) { HEAVY_LOG(H_ldread); ((LandSimulation *)(part - 4))->Read(stream); }
+static BufferObject *(THISCALL *o_ldcreate)(void *);
+static BufferObject *THISCALL h_ldcreate(void *) { HEAVY_LOG(H_ldcreate); return LandSimulation::Create(); }
+// ---- RegionSimulation / PlaceSimulation (RegionSimulation.h, PlaceSimulation.h) ----
+static Hook H_rgdinit, H_rgddtor, H_rgctor, H_rgdtor, H_rgfree, H_rginit, H_rgclear, H_rgvel, H_rgreadall, H_rgread, H_rgreg, H_rgshow, H_rgstate,
+            H_rgsetloc, H_rgload, H_rgsave, H_rghas, H_rgget;
+static PlaceDescriptor *(THISCALL *o_rgdinit)(PlaceDescriptor *);
+static PlaceDescriptor *THISCALL h_rgdinit(PlaceDescriptor *d) { HEAVY_LOG(H_rgdinit); return d->Init(); }
+static void (THISCALL *o_rgddtor)(PlaceDescriptor *);
+static void THISCALL h_rgddtor(PlaceDescriptor *d) { HEAVY_LOG(H_rgddtor); d->Destruct(); }
+static RegionSimulation *(THISCALL *o_rgctor)(RegionSimulation *, int, int);
+static RegionSimulation *THISCALL h_rgctor(RegionSimulation *s, int r, int l) { HEAVY_LOG(H_rgctor); return s->Construct(r, l); }
+static void (THISCALL *o_rgdtor)(RegionSimulation *);
+static void THISCALL h_rgdtor(RegionSimulation *s) { HEAVY_LOG(H_rgdtor); s->Destruct(); }
+static RegionSimulation *(THISCALL *o_rgfree)(RegionSimulation *, int);
+static RegionSimulation *THISCALL h_rgfree(RegionSimulation *s, int flags) { HEAVY_LOG(H_rgfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_rginit)(RegionSimulation *);
+static void THISCALL h_rginit(RegionSimulation *s) { HEAVY_LOG(H_rginit); s->Init(); }
+static void (THISCALL *o_rgclear)(RegionSimulation *);
+static void THISCALL h_rgclear(RegionSimulation *s) { HEAVY_LOG(H_rgclear); s->Clear(); }
+static Float3 *(THISCALL *o_rgvel)(RegionSimulation *, Float3 *, void *);
+static Float3 *THISCALL h_rgvel(RegionSimulation *s, Float3 *out, void *b) { HEAVY_LOG(H_rgvel); return s->Velocity(out, b); }
+static void (THISCALL *o_rgreadall)(RegionSimulation *, IniReader *);
+static void THISCALL h_rgreadall(RegionSimulation *s, IniReader *ini) { HEAVY_LOG(H_rgreadall); s->ReadLocations(ini); }
+static PlaceDescriptor *(THISCALL *o_rgread)(RegionSimulation *, IniReader *, const char *, int);
+static PlaceDescriptor *THISCALL h_rgread(RegionSimulation *s, IniReader *ini, const char *name, int id) { HEAVY_LOG(H_rgread); return s->ReadLocation(ini, name, id); }
+static void (THISCALL *o_rgreg)(RegionSimulation *, PlaceDescriptor *, int);
+static void THISCALL h_rgreg(RegionSimulation *s, PlaceDescriptor *p, int id) { HEAVY_LOG(H_rgreg); s->RegisterPlace(p, id); }
+static void (THISCALL *o_rgshow)(RegionSimulation *, PlaceDescriptor *, int);
+static void THISCALL h_rgshow(RegionSimulation *s, PlaceDescriptor *p, int state) { HEAVY_LOG(H_rgshow); s->ShowPlaceProp(p, state); }
+static int (THISCALL *o_rgstate)(RegionSimulation *, PlaceDescriptor *, int);
+static int THISCALL h_rgstate(RegionSimulation *s, PlaceDescriptor *p, int id) { HEAVY_LOG(H_rgstate); return s->LocationState(p, id); }
+static void (THISCALL *o_rgsetloc)(RegionSimulation *, int);
+static void THISCALL h_rgsetloc(RegionSimulation *s, int l) { HEAVY_LOG(H_rgsetloc); s->SetLocation(l); }
+static int (THISCALL *o_rgload)(RegionSimulation *, const char *);
+static int THISCALL h_rgload(RegionSimulation *s, const char *path) { HEAVY_LOG(H_rgload); return s->Load(path); }
+static int (THISCALL *o_rgsave)(RegionSimulation *, const char *);
+static int THISCALL h_rgsave(RegionSimulation *s, const char *path) { HEAVY_LOG(H_rgsave); return s->Save(path); }
+static int (THISCALL *o_rghas)(RegionSimulation *, int);
+static int THISCALL h_rghas(RegionSimulation *s, int id) { HEAVY_LOG(H_rghas); return s->HasPlace(id); }
+static PlaceDescriptor *(THISCALL *o_rgget)(RegionSimulation *, int);
+static PlaceDescriptor *THISCALL h_rgget(RegionSimulation *s, int id) { HEAVY_LOG(H_rgget); return s->GetPlace(id); }
+
+// ---- SqueezilRegionSoul (SqueezilRegionSoul.h). Enter and OnEvent are called on the InputEventTarget part at +0x80, so
+// their detours step back to the soul. ----
+static Hook H_rsinit, H_rsfree, H_rsstart, H_rsenter, H_rsevent, H_rsbridge, H_rsupdate, H_rslink, H_rsbeen, H_rsblink, H_rsshow;
+static SqueezilRegionSoul *(THISCALL *o_rsinit)(SqueezilRegionSoul *, SqueezilBody *, Possessions *, RegionSimulation *);
+static SqueezilRegionSoul *THISCALL h_rsinit(SqueezilRegionSoul *s, SqueezilBody *b, Possessions *p, RegionSimulation *r) { HEAVY_LOG(H_rsinit); return s->Init(b, p, r); }
+static SqueezilRegionSoul *(THISCALL *o_rsfree)(SqueezilRegionSoul *, int);
+static SqueezilRegionSoul *THISCALL h_rsfree(SqueezilRegionSoul *s, int flags) { HEAVY_LOG(H_rsfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_rsstart)(SqueezilRegionSoul *);
+static void THISCALL h_rsstart(SqueezilRegionSoul *s) { HEAVY_LOG(H_rsstart); s->StartFunction(); }
+static void (THISCALL *o_rsenter)(void *);
+static void THISCALL h_rsenter(void *part) { HEAVY_LOG(H_rsenter); ((SqueezilRegionSoul *)((char *)part - 0x80))->Enter(); }
+static void (THISCALL *o_rsevent)(void *, int, const char *);
+static void THISCALL h_rsevent(void *part, int what, const char *text) { HEAVY_LOG(H_rsevent); ((SqueezilRegionSoul *)((char *)part - 0x80))->OnEvent(what, text); }
+static IDirect3DRMFrame *(THISCALL *o_rsbridge)(SqueezilRegionSoul *, Float3, Float3, Float3);
+static IDirect3DRMFrame *THISCALL h_rsbridge(SqueezilRegionSoul *s, Float3 a, Float3 b, Float3 c) { HEAVY_LOG(H_rsbridge); return s->BuildBridge(a, b, c); }
+static void (THISCALL *o_rsupdate)(SqueezilRegionSoul *);
+static void THISCALL h_rsupdate(SqueezilRegionSoul *s) { HEAVY_LOG(H_rsupdate); s->UpdateRegion(); }
+static int (THISCALL *o_rslink)(SqueezilRegionSoul *, PlaceDescriptor *, PlaceDescriptor *);
+static int THISCALL h_rslink(SqueezilRegionSoul *s, PlaceDescriptor *a, PlaceDescriptor *b) { HEAVY_LOG(H_rslink); return s->LinkOpen(a, b); }
+static int (THISCALL *o_rsbeen)(SqueezilRegionSoul *, int);
+static int THISCALL h_rsbeen(SqueezilRegionSoul *s, int place) { HEAVY_LOG(H_rsbeen); return s->BeenTo(place); }
+static void (THISCALL *o_rsblink)(SqueezilRegionSoul *, int);
+static void THISCALL h_rsblink(SqueezilRegionSoul *s, int selected) { HEAVY_LOG(H_rsblink); s->BlinkSelection(selected); }
+static void (THISCALL *o_rsshow)(SqueezilRegionSoul *, int);
+static void THISCALL h_rsshow(SqueezilRegionSoul *s, int target) { HEAVY_LOG(H_rsshow); s->ShowBridge(target); }
+
+// ---- SqueezilPlayerSoul (SqueezilPlayerSoul.h). The InputEventTarget functions are called on the part at +0x80. ----
+static Hook H_psinit, H_psfree, H_psdtor, H_psevent, H_psjump, H_psjumprel, H_psspit, H_psspitrel, H_psground, H_psair, H_psupdate,
+            H_pspost, H_psfinish, H_pshit;
+static SqueezilPlayerSoul *(THISCALL *o_psinit)(SqueezilPlayerSoul *, SqueezilBody *, Possessions *, void *);
+static SqueezilPlayerSoul *THISCALL h_psinit(SqueezilPlayerSoul *s, SqueezilBody *b, Possessions *p, void *place) { HEAVY_LOG(H_psinit); return s->Init(b, p, place); }
+static SqueezilPlayerSoul *(THISCALL *o_psfree)(SqueezilPlayerSoul *, int);
+static SqueezilPlayerSoul *THISCALL h_psfree(SqueezilPlayerSoul *s, int flags) { HEAVY_LOG(H_psfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_psdtor)(SqueezilPlayerSoul *);
+static void THISCALL h_psdtor(SqueezilPlayerSoul *s) { HEAVY_LOG(H_psdtor); s->Destruct(); }
+static void (THISCALL *o_psevent)(void *, int, const char *);
+static void THISCALL h_psevent(void *part, int what, const char *text) { HEAVY_LOG(H_psevent); ((SqueezilPlayerSoul *)((char *)part - 0x80))->OnEvent(what, text); }
+static void (THISCALL *o_psjump)(void *);
+static void THISCALL h_psjump(void *part) { HEAVY_LOG(H_psjump); ((SqueezilPlayerSoul *)((char *)part - 0x80))->JumpPressed(); }
+static void (THISCALL *o_psjumprel)(void *, float);
+static void THISCALL h_psjumprel(void *part, float strength) { HEAVY_LOG(H_psjumprel); ((SqueezilPlayerSoul *)((char *)part - 0x80))->JumpReleased(strength); }
+static void (THISCALL *o_psspit)(void *);
+static void THISCALL h_psspit(void *part) { HEAVY_LOG(H_psspit); ((SqueezilPlayerSoul *)((char *)part - 0x80))->SpitPressed(); }
+static void (THISCALL *o_psspitrel)(void *, float);
+static void THISCALL h_psspitrel(void *part, float strength) { HEAVY_LOG(H_psspitrel); ((SqueezilPlayerSoul *)((char *)part - 0x80))->SpitReleased(strength); }
+static void (THISCALL *o_psground)(SqueezilPlayerSoul *, GroundControl *, int *);
+static void THISCALL h_psground(SqueezilPlayerSoul *s, GroundControl *c, int *next) { HEAVY_LOG(H_psground); s->ReadGroundInput(c, next); }
+static void (THISCALL *o_psair)(SqueezilPlayerSoul *, AirControl *, int *);
+static void THISCALL h_psair(SqueezilPlayerSoul *s, AirControl *c, int *next) { HEAVY_LOG(H_psair); s->ReadAirInput(c, next); }
+static void (THISCALL *o_psupdate)(SqueezilPlayerSoul *);
+static void THISCALL h_psupdate(SqueezilPlayerSoul *s) { HEAVY_LOG(H_psupdate); s->UpdatePlayer(); }
+static int (THISCALL *o_pspost)(SqueezilPlayerSoul *);
+static int THISCALL h_pspost(SqueezilPlayerSoul *s) { HEAVY_LOG(H_pspost); return s->PostUpdate(); }
+static void (THISCALL *o_psfinish)(SqueezilPlayerSoul *);
+static void THISCALL h_psfinish(SqueezilPlayerSoul *s) { HEAVY_LOG(H_psfinish); s->Finish(); }
+static void (THISCALL *o_pshit)(SqueezilPlayerSoul *, int, int, int);
+static void THISCALL h_pshit(SqueezilPlayerSoul *s, int knock, int spray, int unused) { HEAVY_LOG(H_pshit); s->Hit(knock, spray, unused); }
+
+// ---- GoodieSoul (GoodieSoul.h). Two of its functions belong to the GrantMessageMap part at +4 and are called on that part. ----
+static Hook H_gsinit, H_gsfree, H_gssettings, H_gsiface, H_gsloose, H_gsgrant3, H_gstouch, H_gshit, H_gsgrantto, H_gskind, H_gsspray,
+            H_gslaunch, H_gsupdate, H_gsattack, H_gsphys;
+static GoodieSoul *(THISCALL *o_gsinit)(GoodieSoul *, GoodieBody *, const char *, int);
+static GoodieSoul *THISCALL h_gsinit(GoodieSoul *s, GoodieBody *b, const char *n, int k) { HEAVY_LOG(H_gsinit); return s->Init(b, n, k); }
+static GoodieSoul *(THISCALL *o_gsfree)(GoodieSoul *, int);
+static GoodieSoul *THISCALL h_gsfree(GoodieSoul *s, int flags) { HEAVY_LOG(H_gsfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_gssettings)(void *);
+static void THISCALL h_gssettings(void *) { HEAVY_LOG(H_gssettings); ReadGoodieSettings(); }
+static void *(THISCALL *o_gsiface)(GoodieSoul *, int);
+static void *THISCALL h_gsiface(GoodieSoul *s, int which) { HEAVY_LOG(H_gsiface); return s->GetInterface(which); }
+static int (THISCALL *o_gsloose)(GoodieSoul *);
+static int THISCALL h_gsloose(GoodieSoul *s) { HEAVY_LOG(H_gsloose); return s->IsLoose(); }
+static int (THISCALL *o_gsgrant3)(void *, int);
+static int THISCALL h_gsgrant3(void *part, int arg) { HEAVY_LOG(H_gsgrant3); return ((GoodieSoul *)((char *)part - 4))->GrantSlot3(arg); }
+static void (THISCALL *o_gstouch)(GoodieSoul *, int);
+static void THISCALL h_gstouch(GoodieSoul *s, int other) { HEAVY_LOG(H_gstouch); s->Touch(other); }
+static void (THISCALL *o_gshit)(GoodieSoul *, int, int, int);
+static void THISCALL h_gshit(GoodieSoul *s, int knock, int unused, int by) { HEAVY_LOG(H_gshit); s->Hit(knock, unused, by); }
+static int (THISCALL *o_gsgrantto)(void *, int);
+static int THISCALL h_gsgrantto(void *part, int other) { HEAVY_LOG(H_gsgrantto); return ((GoodieSoul *)((char *)part - 4))->GrantTo(other); }
+static int (THISCALL *o_gskind)(GoodieSoul *);
+static int THISCALL h_gskind(GoodieSoul *s) { HEAVY_LOG(H_gskind); return s->GetKind(); }
+static void (THISCALL *o_gsspray)(GoodieSoul *, Matrix16);
+static void THISCALL h_gsspray(GoodieSoul *s, Matrix16 m) { HEAVY_LOG(H_gsspray); s->Spray(m); }
+static void (THISCALL *o_gslaunch)(GoodieSoul *, Matrix16, Float3, float);
+static void THISCALL h_gslaunch(GoodieSoul *s, Matrix16 m, Float3 d, float speed) { HEAVY_LOG(H_gslaunch); s->Launch(m, d, speed); }
+static void (THISCALL *o_gsupdate)(GoodieSoul *);
+static void THISCALL h_gsupdate(GoodieSoul *s) { HEAVY_LOG(H_gsupdate); s->UpdateGoodie(); }
+static int (THISCALL *o_gsattack)(GoodieSoul *);
+static int THISCALL h_gsattack(GoodieSoul *s) { HEAVY_LOG(H_gsattack); return s->IsAttacking(); }
+static GoodieSettings *(THISCALL *o_gsphys)(GoodieSoul *);
+static GoodieSettings *THISCALL h_gsphys(GoodieSoul *s) { HEAVY_LOG(H_gsphys); return s->GetSettings(); }
+
+// ---- SqueezilRoboSoul (SqueezilRoboSoul.h) ----
+static Hook H_rbinit, H_rbfree, H_rbdtor, H_rbground, H_rbair, H_rbhit, H_rbreset, H_rbremember, H_rbsense, H_rbnear, H_rbgone, H_rbpick,
+            H_rbclear, H_rbstate, H_rbstep, H_rbbehave, H_rbupdate, H_rbkind, H_rboffer, H_rbrecreset;
+static SqueezilRoboSoul *(THISCALL *o_rbinit)(SqueezilRoboSoul *, SqueezilBody *, Possessions *, void *, Character *);
+static SqueezilRoboSoul *THISCALL h_rbinit(SqueezilRoboSoul *s, SqueezilBody *b, Possessions *p, void *place, Character *c) { HEAVY_LOG(H_rbinit); return s->Init(b, p, place, c); }
+static SqueezilRoboSoul *(THISCALL *o_rbfree)(SqueezilRoboSoul *, int);
+static SqueezilRoboSoul *THISCALL h_rbfree(SqueezilRoboSoul *s, int flags) { HEAVY_LOG(H_rbfree); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_rbdtor)(SqueezilRoboSoul *);
+static void THISCALL h_rbdtor(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbdtor); s->Destruct(); }
+static void (THISCALL *o_rbground)(SqueezilRoboSoul *, GroundControl *, int *);
+static void THISCALL h_rbground(SqueezilRoboSoul *s, GroundControl *c, int *next) { HEAVY_LOG(H_rbground); s->ReadGroundInput(c, next); }
+static void (THISCALL *o_rbair)(SqueezilRoboSoul *, AirControl *, int *);
+static void THISCALL h_rbair(SqueezilRoboSoul *s, AirControl *c, int *next) { HEAVY_LOG(H_rbair); s->ReadAirInput(c, next); }
+static void (THISCALL *o_rbhit)(SqueezilRoboSoul *, int, int, int);
+static void THISCALL h_rbhit(SqueezilRoboSoul *s, int knock, int spray, int by) { HEAVY_LOG(H_rbhit); s->Hit(knock, spray, by); }
+static void (THISCALL *o_rbreset)(SqueezilRoboSoul *);
+static void THISCALL h_rbreset(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbreset); s->ResetSenses(); }
+static void (THISCALL *o_rbremember)(SqueezilRoboSoul *);
+static void THISCALL h_rbremember(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbremember); s->Remember(); }
+static void (THISCALL *o_rbsense)(SqueezilRoboSoul *, const AwarenessRecord *);
+static void THISCALL h_rbsense(SqueezilRoboSoul *s, const AwarenessRecord *r) { HEAVY_LOG(H_rbsense); s->Sense(r); }
+static int (THISCALL *o_rbnear)(SqueezilRoboSoul *, int);
+static int THISCALL h_rbnear(SqueezilRoboSoul *s, int kind) { HEAVY_LOG(H_rbnear); return s->IsNear(kind); }
+static int (THISCALL *o_rbgone)(SqueezilRoboSoul *, int);
+static int THISCALL h_rbgone(SqueezilRoboSoul *s, int kind) { HEAVY_LOG(H_rbgone); return s->TargetGone(kind); }
+static int (THISCALL *o_rbpick)(SqueezilRoboSoul *);
+static int THISCALL h_rbpick(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbpick); return s->PickState(); }
+static void (THISCALL *o_rbclear)(SqueezilRoboSoul *);
+static void THISCALL h_rbclear(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbclear); s->ClearSeen(); }
+static int (THISCALL *o_rbstate)(SqueezilRoboSoul *, int);
+static int THISCALL h_rbstate(SqueezilRoboSoul *s, int kind) { HEAVY_LOG(H_rbstate); return s->SenseState(kind); }
+static int (THISCALL *o_rbstep)(SqueezilRoboSoul *);
+static int THISCALL h_rbstep(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbstep); return s->StepAI(); }
+static void (THISCALL *o_rbbehave)(SqueezilRoboSoul *, int, const float *);
+static void THISCALL h_rbbehave(SqueezilRoboSoul *s, int mode, const float *args) { HEAVY_LOG(H_rbbehave); s->SetBehaviour(mode, args); }
+static void (THISCALL *o_rbupdate)(SqueezilRoboSoul *);
+static void THISCALL h_rbupdate(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbupdate); s->UpdateRobo(); }
+static int (THISCALL *o_rbkind)(SqueezilRoboSoul *);
+static int THISCALL h_rbkind(SqueezilRoboSoul *s) { HEAVY_LOG(H_rbkind); return s->GetKind(); }
+static void (THISCALL *o_rboffer)(AwarenessRecord *, const AwarenessRecord *);
+static void THISCALL h_rboffer(AwarenessRecord *r, const AwarenessRecord *other) { HEAVY_LOG(H_rboffer); r->Offer(other); }
+static void (THISCALL *o_rbrecreset)(AwarenessRecord *);
+static void THISCALL h_rbrecreset(AwarenessRecord *r) { HEAVY_LOG(H_rbrecreset); r->Reset(); }
+
+// ---- CameraSoul, RegionCameraSoul, PlaceCameraSoul (CameraSoul.h). The two that return a matrix take the result's address first
+// and return it, as the original does. The InputEventTarget function is called on the part at +4. ----
+static Hook H_cmread, H_cmview, H_cmblend, H_cmpath, H_cmstop, H_cminitr, H_cminitp, H_cmfreer, H_cmfreep, H_cmupr, H_cmupp, H_cmevr, H_cmevp;
+static void (THISCALL *o_cmread)(void *, const char *, CameraSettings *);
+static void THISCALL h_cmread(void *, const char *section, CameraSettings *out) { HEAVY_LOG(H_cmread); ReadCameraSettings(section, out); }
+static Matrix16 *(THISCALL *o_cmview)(CameraSoul *, Matrix16 *, const CameraSettings *, Matrix16);
+static Matrix16 *THISCALL h_cmview(CameraSoul *s, Matrix16 *ret, const CameraSettings *set, Matrix16 target) { HEAVY_LOG(H_cmview); *ret = s->ComputeView(set, target); return ret; }
+static Matrix16 *(THISCALL *o_cmblend)(CameraSoul *, Matrix16 *);
+static Matrix16 *THISCALL h_cmblend(CameraSoul *s, Matrix16 *ret) { HEAVY_LOG(H_cmblend); *ret = s->BlendMatrices(); return ret; }
+static void (THISCALL *o_cmpath)(CameraSoul *, MorphCycle *, int, int, float);
+static void THISCALL h_cmpath(CameraSoul *s, MorphCycle *clip, int loop, int mode, float duration) { HEAVY_LOG(H_cmpath); s->StartPath(clip, loop, mode, duration); }
+static void (THISCALL *o_cmstop)(CameraSoul *, float);
+static void THISCALL h_cmstop(CameraSoul *s, float duration) { HEAVY_LOG(H_cmstop); s->StopPath(duration); }
+static RegionCameraSoul *(THISCALL *o_cminitr)(RegionCameraSoul *, CameraBody *, SqueezilBody *, SqueezilSoul *);
+static RegionCameraSoul *THISCALL h_cminitr(RegionCameraSoul *s, CameraBody *c, SqueezilBody *b, SqueezilSoul *p) { HEAVY_LOG(H_cminitr); return s->Init(c, b, p); }
+static PlaceCameraSoul *(THISCALL *o_cminitp)(PlaceCameraSoul *, CameraBody *, SqueezilBody *, SqueezilSoul *);
+static PlaceCameraSoul *THISCALL h_cminitp(PlaceCameraSoul *s, CameraBody *c, SqueezilBody *b, SqueezilSoul *p) { HEAVY_LOG(H_cminitp); return s->Init(c, b, p); }
+static RegionCameraSoul *(THISCALL *o_cmfreer)(RegionCameraSoul *, int);
+static RegionCameraSoul *THISCALL h_cmfreer(RegionCameraSoul *s, int flags) { HEAVY_LOG(H_cmfreer); return s->DestroyAndFree(flags); }
+static PlaceCameraSoul *(THISCALL *o_cmfreep)(PlaceCameraSoul *, int);
+static PlaceCameraSoul *THISCALL h_cmfreep(PlaceCameraSoul *s, int flags) { HEAVY_LOG(H_cmfreep); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_cmupr)(RegionCameraSoul *);
+static void THISCALL h_cmupr(RegionCameraSoul *s) { HEAVY_LOG(H_cmupr); s->UpdateRegion(); }
+static void (THISCALL *o_cmupp)(PlaceCameraSoul *);
+static void THISCALL h_cmupp(PlaceCameraSoul *s) { HEAVY_LOG(H_cmupp); s->UpdatePlace(); }
+static void (THISCALL *o_cmevr)(void *, int, const char *);
+static void THISCALL h_cmevr(void *part, int what, const char *text) { HEAVY_LOG(H_cmevr); ((RegionCameraSoul *)((char *)part - 4))->OnEvent(what, text); }
+static void (THISCALL *o_cmevp)(void *, int, const char *);
+static void THISCALL h_cmevp(void *part, int what, const char *text) { HEAVY_LOG(H_cmevp); ((PlaceCameraSoul *)((char *)part - 4))->OnEvent(what, text); }
+
+static Hook H_plctor, H_pldtor2, H_plfree2, H_plinit, H_plstart, H_plclr, H_plclrcr, H_plcoll, H_plsouls, H_plvel, H_plload2, H_plsave2;
+static PlaceSimulation *(THISCALL *o_plctor)(PlaceSimulation *, int, int, int);
+static PlaceSimulation *THISCALL h_plctor(PlaceSimulation *s, int r, int p, int l) { HEAVY_LOG(H_plctor); return s->Construct(r, p, l); }
+static void (THISCALL *o_pldtor2)(PlaceSimulation *);
+static void THISCALL h_pldtor2(PlaceSimulation *s) { HEAVY_LOG(H_pldtor2); s->Destruct(); }
+static PlaceSimulation *(THISCALL *o_plfree2)(PlaceSimulation *, int);
+static PlaceSimulation *THISCALL h_plfree2(PlaceSimulation *s, int flags) { HEAVY_LOG(H_plfree2); return s->DestroyAndFree(flags); }
+static void (THISCALL *o_plinit)(PlaceSimulation *);
+static void THISCALL h_plinit(PlaceSimulation *s) { HEAVY_LOG(H_plinit); s->Init(); }
+static void (THISCALL *o_plstart)(PlaceSimulation *);
+static void THISCALL h_plstart(PlaceSimulation *s) { HEAVY_LOG(H_plstart); s->Start(); }
+static void (THISCALL *o_plclr)(PlaceSimulation *);
+static void THISCALL h_plclr(PlaceSimulation *s) { HEAVY_LOG(H_plclr); s->Clear(); }
+static void (THISCALL *o_plclrcr)(PlaceSimulation *);
+static void THISCALL h_plclrcr(PlaceSimulation *s) { HEAVY_LOG(H_plclrcr); s->ClearCreatures(); }
+static void (THISCALL *o_plcoll)(PlaceSimulation *);
+static void THISCALL h_plcoll(PlaceSimulation *s) { HEAVY_LOG(H_plcoll); s->CollideCreatures(); }
+static void (THISCALL *o_plsouls)(PlaceSimulation *);
+static void THISCALL h_plsouls(PlaceSimulation *s) { HEAVY_LOG(H_plsouls); s->UpdateSouls(); }
+static Float3 *(THISCALL *o_plvel)(PlaceSimulation *, Float3 *, void *);
+static Float3 *THISCALL h_plvel(PlaceSimulation *s, Float3 *out, void *b) { HEAVY_LOG(H_plvel); return s->Velocity(out, b); }
+static int (THISCALL *o_plload2)(PlaceSimulation *, const char *);
+static int THISCALL h_plload2(PlaceSimulation *s, const char *path) { HEAVY_LOG(H_plload2); return s->Load(path); }
+static int (THISCALL *o_plsave2)(PlaceSimulation *, const char *);
+static int THISCALL h_plsave2(PlaceSimulation *s, const char *path) { HEAVY_LOG(H_plsave2); return s->Save(path); }
+
+static Hook H_ldlclear, H_ldlsouls, H_wlprops;
+static void (THISCALL *o_ldlclear)(LocationSimulation *);
+static void THISCALL h_ldlclear(LocationSimulation *s) { HEAVY_LOG(H_ldlclear); s->Clear(); }
+static void (THISCALL *o_ldlsouls)(LocationSimulation *);
+static void THISCALL h_ldlsouls(LocationSimulation *s) { HEAVY_LOG(H_ldlsouls); s->UpdateSouls(); }
+static void (__stdcall *o_wlprops)(IniReader *, IniReader *);
+static void __stdcall h_wlprops(IniReader *ini, IniReader *other) { HEAVY_LOG(H_wlprops); WorldReadPropFiles(ini, other); }
 // ---- Body (Body.h): the physical state of an actor ----
 static Hook H_bdinit, H_bdmatrix, H_bdfacing, H_bdangles, H_bdgetangles, H_bdcontact;
 static Body *(THISCALL *o_bdinit)(Body *, const float *);
@@ -2664,6 +3046,20 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_ssattack, &H_ssstumble, &H_sslie, &H_ssgetup, &H_ssland, &H_ssdyingst, &H_ssskid, &H_ssjumpair, &H_sshopair,
                            &H_ssskihopair, &H_sstumblest, &H_ssdyingair, &H_ssjumpflight, &H_ssgrant, &H_ssspeedstep, &H_ssanglestep,
                            &H_ssfloorscript, &H_ssfloor, &H_sslanding,
+                           &H_rgdinit, &H_rgddtor, &H_rgctor, &H_rgdtor, &H_rgfree, &H_rginit, &H_rgclear, &H_rgvel, &H_rgreadall, &H_rgread, &H_rgreg, &H_rgshow, &H_rgstate,
+                           &H_rgsetloc, &H_rgload, &H_rgsave, &H_rghas, &H_rgget,
+                           &H_rsinit, &H_rsfree, &H_rsstart, &H_rsenter, &H_rsevent, &H_rsbridge, &H_rsupdate, &H_rslink, &H_rsbeen, &H_rsblink, &H_rsshow,
+                           &H_psinit, &H_psfree, &H_psdtor, &H_psevent, &H_psjump, &H_psjumprel, &H_psspit, &H_psspitrel, &H_psground, &H_psair,
+                           &H_psupdate, &H_pspost, &H_psfinish, &H_pshit,
+                           &H_gsinit, &H_gsfree, &H_gssettings, &H_gsiface, &H_gsloose, &H_gsgrant3, &H_gstouch, &H_gshit, &H_gsgrantto, &H_gskind,
+                           &H_gsspray, &H_gslaunch, &H_gsupdate, &H_gsattack, &H_gsphys,
+                           &H_rbinit, &H_rbfree, &H_rbdtor, &H_rbground, &H_rbair, &H_rbhit, &H_rbreset, &H_rbremember, &H_rbsense, &H_rbnear, &H_rbgone,
+                           &H_rbpick, &H_rbclear, &H_rbstate, &H_rbstep, &H_rbbehave, &H_rbupdate, &H_rbkind, &H_rboffer, &H_rbrecreset,
+                           &H_cmread, &H_cmview, &H_cmblend, &H_cmpath, &H_cmstop, &H_cminitr, &H_cminitp, &H_cmfreer, &H_cmfreep, &H_cmupr, &H_cmupp,
+                           &H_cmevr, &H_cmevp,
+                           &H_plctor, &H_pldtor2, &H_plfree2, &H_plinit, &H_plstart, &H_plclr, &H_plclrcr, &H_plcoll, &H_plsouls, &H_plvel, &H_plload2, &H_plsave2,
+                           &H_ldlclear, &H_ldlsouls, &H_wlprops,
+                           &H_ldctor, &H_lddtor, &H_ldfree, &H_ldinit, &H_ldclear, &H_ldcount, &H_ldlent, &H_ldlend, &H_ldreturn, &H_ldname, &H_ldwrite, &H_ldread, &H_ldcreate,
                            &H_smctor, &H_smdtor, &H_smfree, &H_sminit, &H_smclearall, &H_smnear, &H_smcollide, &H_smlines, &H_smnearest,
                            &H_smrun, &H_smactor, &H_smsoul, &H_smidsoul, &H_smidactor, &H_smadd, &H_smaddid, &H_smclear, &H_smnewid, &H_smdestroy, &H_smput, &H_smnew,
                            &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
@@ -3106,6 +3502,125 @@ static void Setup()
     H_smcollide = { "LocationSimulation::CollideCreatures", 0x413280, 7, "64a10000000055", (void *)h_smcollide, (void **)&o_smcollide, false, 0, 0, "simulation", 0 };
     H_smlines = { "ClosestLineParams", 0x47d680, 7, "64a10000000055", (void *)h_smlines, (void **)&o_smlines, false, 0, 0, "simulation", 0 };
     H_smnearest = { "NearestPointOnLine", 0x47d940, 7, "64a10000000055", (void *)h_smnearest, (void **)&o_smnearest, false, 0, 0, "simulation", 0 };
+    H_ldctor = { "LandSimulation::LandSimulation", 0x41e310, 6, "64a100000000", (void *)h_ldctor, (void **)&o_ldctor, false, 0, 0, "land", 0 };
+    H_lddtor = { "LandSimulation::~LandSimulation", 0x41e3a0, 6, "64a100000000", (void *)h_lddtor, (void **)&o_lddtor, false, 0, 0, "land", 0 };
+    H_ldfree = { "LandSimulation::Destroy", 0x41e380, 8, "568bf1e818000000", (void *)h_ldfree, (void **)&o_ldfree, false, 0, 0, "land", 4 };
+    H_ldinit = { "LandSimulation::Init", 0x41e490, 6, "64a100000000", (void *)h_ldinit, (void **)&o_ldinit, false, 0, 0, "land", 0 };
+    H_ldclear = { "LandSimulation::Clear", 0x41e700, 6, "64a100000000", (void *)h_ldclear, (void **)&o_ldclear, false, 0, 0, "land", 0 };
+    H_ldcount = { "LandSimulation::CharacterCount", 0x41e810, 6, "8b41088b4008", (void *)h_ldcount, (void **)&o_ldcount, false, 0, 0, "land", 0 };
+    H_ldlent = { "LandSimulation::IsLentOut", 0x41e830, 8, "538b490c8d442408", (void *)h_ldlent, (void **)&o_ldlent, false, 0, 0, "land", 0 };
+    H_ldlend = { "LandSimulation::Lend", 0x41e850, 5, "8d44240453", (void *)h_ldlend, (void **)&o_ldlend, false, 0, 0, "land", 0 };
+    H_ldreturn = { "LandSimulation::Return", 0x41e880, 5, "8d44240453", (void *)h_ldreturn, (void **)&o_ldreturn, false, 0, 0, "land", 0 };
+    H_ldname = { "LandSimulation::GetPlaceName", 0x41e8c0, 7, "8b49108b442404", (void *)h_ldname, (void **)&o_ldname, false, 0, 0, "land", 0 };
+    H_ldwrite = { "LandSimulation::Write", 0x41e8d0, 5, "8b510885d2", (void *)h_ldwrite, (void **)&o_ldwrite, false, 0, 0, "land", 0 };
+    H_ldread = { "LandSimulation::Read", 0x41e910, 6, "64a100000000", (void *)h_ldread, (void **)&o_ldread, false, 0, 0, "land", 0 };
+    H_ldcreate = { "LandSimulation::Create", 0x41ea60, 6, "64a100000000", (void *)h_ldcreate, (void **)&o_ldcreate, false, 0, 0, "land", 0 };
+    H_rgdinit = { "PlaceDescriptor::PlaceDescriptor", 0x416c60, 6, "64a100000000", (void *)h_rgdinit, (void **)&o_rgdinit, false, 0, 0, "region", 0 };
+    H_rgddtor = { "PlaceDescriptor::~PlaceDescriptor", 0x416d40, 6, "64a100000000", (void *)h_rgddtor, (void **)&o_rgddtor, false, 0, 0, "region", 0 };
+    H_rgctor = { "RegionSimulation::RegionSimulation", 0x416e50, 6, "64a100000000", (void *)h_rgctor, (void **)&o_rgctor, false, 0, 0, "region", 0 };
+    H_rgdtor = { "RegionSimulation::~RegionSimulation", 0x416ee0, 6, "64a100000000", (void *)h_rgdtor, (void **)&o_rgdtor, false, 0, 0, "region", 0 };
+    H_rgfree = { "RegionSimulation::Destroy", 0x418a40, 8, "568bf1e898e4ffff", (void *)h_rgfree, (void **)&o_rgfree, false, 0, 0, "region", 4 };
+    H_rginit = { "RegionSimulation::Init", 0x416f50, 6, "64a100000000", (void *)h_rginit, (void **)&o_rginit, false, 0, 0, "region", 0 };
+    H_rgclear = { "RegionSimulation::Clear", 0x417600, 5, "5356578bf1", (void *)h_rgclear, (void **)&o_rgclear, false, 0, 0, "region", 0 };
+    H_rgvel = { "RegionSimulation::Velocity", 0x4189b0, 6, "64a100000000", (void *)h_rgvel, (void **)&o_rgvel, false, 0, 0, "region", 0 };
+    H_rgreadall = { "RegionSimulation::ReadLocations", 0x417680, 6, "64a100000000", (void *)h_rgreadall, (void **)&o_rgreadall, false, 0, 0, "region", 0 };
+    H_rgread = { "RegionSimulation::ReadLocation", 0x4178e0, 6, "64a100000000", (void *)h_rgread, (void **)&o_rgread, false, 0, 0, "region", 0 };
+    H_rgreg = { "RegionSimulation::RegisterPlace", 0x4180e0, 5, "8b44240856", (void *)h_rgreg, (void **)&o_rgreg, false, 0, 0, "region", 0 };
+    H_rgshow = { "RegionSimulation::ShowPlaceProp", 0x4183e0, 6, "64a100000000", (void *)h_rgshow, (void **)&o_rgshow, false, 0, 0, "region", 0 };
+    H_rgstate = { "RegionSimulation::LocationState", 0x418590, 7, "83ec08894c2404", (void *)h_rgstate, (void **)&o_rgstate, false, 0, 0, "region", 0 };
+    H_rgsetloc = { "RegionSimulation::SetLocation", 0x418170, 6, "64a100000000", (void *)h_rgsetloc, (void **)&o_rgsetloc, false, 0, 0, "region", 0 };
+    H_rgload = { "RegionSimulation::Load", 0x418680, 6, "64a100000000", (void *)h_rgload, (void **)&o_rgload, false, 0, 0, "region", 0 };
+    H_rgsave = { "RegionSimulation::Save", 0x4188c0, 5, "8b44240456", (void *)h_rgsave, (void **)&o_rgsave, false, 0, 0, "region", 0 };
+    H_rghas = { "RegionSimulation::HasPlace", 0x418120, 8, "5383c1308d442408", (void *)h_rghas, (void **)&o_rghas, false, 0, 0, "region", 0 };
+    H_rgget = { "RegionSimulation::GetPlace", 0x418140, 7, "8d44240483c130", (void *)h_rgget, (void **)&o_rgget, false, 0, 0, "region", 0 };
+    H_rsinit = { "SqueezilRegionSoul::SqueezilRegionSoul", 0x436710, 6, "64a100000000", (void *)h_rsinit, (void **)&o_rsinit, false, 0, 0, "regionsoul", 0 };
+    H_rsfree = { "SqueezilRegionSoul::Destroy", 0x4369c0, 6, "64a100000000", (void *)h_rsfree, (void **)&o_rsfree, false, 0, 0, "regionsoul", 0 };
+    H_rsstart = { "SqueezilRegionSoul::StartFunction", 0x436a60, 5, "83ec185657", (void *)h_rsstart, (void **)&o_rsstart, false, 0, 0, "regionsoul", 0 };
+    H_rsenter = { "SqueezilRegionSoul::Enter", 0x436af0, 6, "64a100000000", (void *)h_rsenter, (void **)&o_rsenter, false, 0, 0, "regionsoul", 0 };
+    H_rsevent = { "SqueezilRegionSoul::OnEvent", 0x436e10, 6, "64a100000000", (void *)h_rsevent, (void **)&o_rsevent, false, 0, 0, "regionsoul", 0 };
+    H_rsbridge = { "SqueezilRegionSoul::BuildBridge", 0x436fc0, 6, "64a100000000", (void *)h_rsbridge, (void **)&o_rsbridge, false, 0, 0, "regionsoul", 0 };
+    H_rsupdate = { "SqueezilRegionSoul::UpdateRegion", 0x4373d0, 6, "64a100000000", (void *)h_rsupdate, (void **)&o_rsupdate, false, 0, 0, "regionsoul", 0 };
+    H_rslink = { "SqueezilRegionSoul::LinkOpen", 0x437e40, 5, "5356578bf1", (void *)h_rslink, (void **)&o_rslink, false, 0, 0, "regionsoul", 0 };
+    H_rsbeen = { "SqueezilRegionSoul::BeenTo", 0x437f40, 5, "83ec0c5356", (void *)h_rsbeen, (void **)&o_rsbeen, false, 0, 0, "regionsoul", 0 };
+    H_rsblink = { "SqueezilRegionSoul::BlinkSelection", 0x438020, 5, "53568b0157", (void *)h_rsblink, (void **)&o_rsblink, false, 0, 0, "regionsoul", 0 };
+    H_rsshow = { "SqueezilRegionSoul::ShowBridge", 0x438110, 6, "64a100000000", (void *)h_rsshow, (void **)&o_rsshow, false, 0, 0, "regionsoul", 0 };
+    H_psinit = { "SqueezilPlayerSoul::SqueezilPlayerSoul", 0x41ee30, 6, "64a100000000", (void *)h_psinit, (void **)&o_psinit, false, 0, 0, "playersoul", 0 };
+    H_psfree = { "SqueezilPlayerSoul::Destroy", 0x41ef60, 8, "568bf1e818000000", (void *)h_psfree, (void **)&o_psfree, false, 0, 0, "playersoul", 4 };
+    H_psdtor = { "SqueezilPlayerSoul::~SqueezilPlayerSoul", 0x41ef80, 6, "64a100000000", (void *)h_psdtor, (void **)&o_psdtor, false, 0, 0, "playersoul", 0 };
+    H_psevent = { "SqueezilPlayerSoul::OnEvent", 0x41eff0, 5, "8b44240453", (void *)h_psevent, (void **)&o_psevent, false, 0, 0, "playersoul", 0 };
+    H_psjump = { "SqueezilPlayerSoul::JumpPressed", 0x41f070, 6, "5356578b41c4", (void *)h_psjump, (void **)&o_psjump, false, 0, 0, "playersoul", 0 };
+    H_psjumprel = { "SqueezilPlayerSoul::JumpReleased", 0x41f160, 5, "8b41c485c0", (void *)h_psjumprel, (void **)&o_psjumprel, false, 0, 0, "playersoul", 0 };
+    H_psspit = { "SqueezilPlayerSoul::SpitPressed", 0x41f180, 5, "56578b7180", (void *)h_psspit, (void **)&o_psspit, false, 0, 0, "playersoul", 0 };
+    H_psspitrel = { "SqueezilPlayerSoul::SpitReleased", 0x41f1a0, 7, "5381e980000000", (void *)h_psspitrel, (void **)&o_psspitrel, false, 0, 0, "playersoul", 0 };
+    H_psground = { "SqueezilPlayerSoul::ReadGroundInput", 0x41f1c0, 5, "83ec185356", (void *)h_psground, (void **)&o_psground, false, 0, 0, "playersoul", 0 };
+    H_psair = { "SqueezilPlayerSoul::ReadAirInput", 0x41f3e0, 5, "83ec145356", (void *)h_psair, (void **)&o_psair, false, 0, 0, "playersoul", 0 };
+    H_psupdate = { "SqueezilPlayerSoul::Update", 0x41f5a0, 6, "64a100000000", (void *)h_psupdate, (void **)&o_psupdate, false, 0, 0, "playersoul", 0 };
+    H_pspost = { "SqueezilPlayerSoul::PostUpdate", 0x41f750, 10, "83ec18568b8198000000", (void *)h_pspost, (void **)&o_pspost, false, 0, 0, "playersoul", 0 };
+    H_psfinish = { "SqueezilPlayerSoul::Finish", 0x41f7f0, 6, "64a100000000", (void *)h_psfinish, (void **)&o_psfinish, false, 0, 0, "playersoul", 0 };
+    H_pshit = { "SqueezilPlayerSoul::Hit", 0x41fab0, 6, "56a160d94b00", (void *)h_pshit, (void **)&o_pshit, false, 0, 0, "playersoul", 0 };
+    H_gsinit = { "GoodieSoul::GoodieSoul", 0x459590, 6, "64a100000000", (void *)h_gsinit, (void **)&o_gsinit, false, 0, 0, "goodiesoul", 0 };
+    H_gsfree = { "GoodieSoul::Destroy", 0x4596e0, 6, "64a100000000", (void *)h_gsfree, (void **)&o_gsfree, false, 0, 0, "goodiesoul", 0 };
+    H_gssettings = { "ReadGoodieSettings", 0x4597b0, 6, "64a100000000", (void *)h_gssettings, (void **)&o_gssettings, false, 0, 0, "goodiesoul", 0 };
+    H_gsiface = { "GoodieSoul::GetInterface", 0x459960, 7, "8b44240483f801", (void *)h_gsiface, (void **)&o_gsiface, false, 0, 0, "goodiesoul", 0 };
+    H_gsloose = { "GoodieSoul::IsLoose", 0x459980, 6, "837910011bc0", (void *)h_gsloose, (void **)&o_gsloose, false, 0, 0, "goodiesoul", 0 };
+    H_gsgrant3 = { "GoodieSoul::GrantSlot3", 0x459990, 5, "8b410c85c0", (void *)h_gsgrant3, (void **)&o_gsgrant3, false, 0, 0, "goodiesoul", 0 };
+    H_gstouch = { "GoodieSoul::Touch", 0x4599b0, 5, "5356578bd9", (void *)h_gstouch, (void **)&o_gstouch, false, 0, 0, "goodiesoul", 0 };
+    H_gshit = { "GoodieSoul::Hit", 0x459a80, 6, "64a100000000", (void *)h_gshit, (void **)&o_gshit, false, 0, 0, "goodiesoul", 0 };
+    H_gsgrantto = { "GoodieSoul::GrantTo", 0x459b80, 5, "5356578bf1", (void *)h_gsgrantto, (void **)&o_gsgrantto, false, 0, 0, "goodiesoul", 0 };
+    H_gskind = { "GoodieSoul::GetKind", 0x459bf0, 6, "837910011bc0", (void *)h_gskind, (void **)&o_gskind, false, 0, 0, "goodiesoul", 0 };
+    H_gsspray = { "GoodieSoul::Spray", 0x459c00, 6, "64a100000000", (void *)h_gsspray, (void **)&o_gsspray, false, 0, 0, "goodiesoul", 0 };
+    H_gslaunch = { "GoodieSoul::Launch", 0x459ed0, 6, "64a100000000", (void *)h_gslaunch, (void **)&o_gslaunch, false, 0, 0, "goodiesoul", 0 };
+    H_gsupdate = { "GoodieSoul::Update", 0x459f80, 6, "64a100000000", (void *)h_gsupdate, (void **)&o_gsupdate, false, 0, 0, "goodiesoul", 0 };
+    H_gsattack = { "GoodieSoul::IsAttacking", 0x45a830, 6, "837914011bc0", (void *)h_gsattack, (void **)&o_gsattack, false, 0, 0, "goodiesoul", 0 };
+    H_gsphys = { "GoodieSoul::GetSettings", 0x45a840, 5, "a1b47b4c00", (void *)h_gsphys, (void **)&o_gsphys, false, 0, 0, "goodiesoul", 0 };
+    H_rbinit = { "SqueezilRoboSoul::SqueezilRoboSoul", 0x4043a0, 6, "64a100000000", (void *)h_rbinit, (void **)&o_rbinit, false, 0, 0, "robosoul", 0 };
+    H_rbfree = { "SqueezilRoboSoul::Destroy", 0x4044a0, 8, "568bf1e868000000", (void *)h_rbfree, (void **)&o_rbfree, false, 0, 0, "robosoul", 4 };
+    H_rbdtor = { "SqueezilRoboSoul::~SqueezilRoboSoul", 0x404510, 6, "64a100000000", (void *)h_rbdtor, (void **)&o_rbdtor, false, 0, 0, "robosoul", 0 };
+    H_rbground = { "SqueezilRoboSoul::ReadGroundInput", 0x4045b0, 5, "53568b3157", (void *)h_rbground, (void **)&o_rbground, false, 0, 0, "robosoul", 0 };
+    H_rbair = { "SqueezilRoboSoul::ReadAirInput", 0x4045f0, 5, "5356578b19", (void *)h_rbair, (void **)&o_rbair, false, 0, 0, "robosoul", 0 };
+    H_rbhit = { "SqueezilRoboSoul::Hit", 0x404630, 5, "5356578bf1", (void *)h_rbhit, (void **)&o_rbhit, false, 0, 0, "robosoul", 0 };
+    H_rbreset = { "SqueezilRoboSoul::ResetSenses", 0x4046f0, 8, "56578db9a4000000", (void *)h_rbreset, (void **)&o_rbreset, false, 0, 0, "robosoul", 0 };
+    H_rbremember = { "SqueezilRoboSoul::Remember", 0x404710, 6, "8b819c000000", (void *)h_rbremember, (void **)&o_rbremember, false, 0, 0, "robosoul", 0 };
+    H_rbsense = { "SqueezilRoboSoul::Sense", 0x404720, 6, "56578bf16a00", (void *)h_rbsense, (void **)&o_rbsense, false, 0, 0, "robosoul", 0 };
+    H_rbnear = { "SqueezilRoboSoul::IsNear", 0x404770, 6, "53568b74240c", (void *)h_rbnear, (void **)&o_rbnear, false, 0, 0, "robosoul", 0 };
+    H_rbgone = { "SqueezilRoboSoul::TargetGone", 0x4047c0, 5, "8b44240456", (void *)h_rbgone, (void **)&o_rbgone, false, 0, 0, "robosoul", 0 };
+    H_rbpick = { "SqueezilRoboSoul::PickState", 0x404840, 5, "5356578bf1", (void *)h_rbpick, (void **)&o_rbpick, false, 0, 0, "robosoul", 0 };
+    H_rbclear = { "SqueezilRoboSoul::ClearSeen", 0x404900, 6, "81c188000000", (void *)h_rbclear, (void **)&o_rbclear, false, 0, 0, "robosoul", 0 };
+    H_rbstate = { "SqueezilRoboSoul::SenseState", 0x404920, 5, "83ec045356", (void *)h_rbstate, (void **)&o_rbstate, false, 0, 0, "robosoul", 0 };
+    H_rbstep = { "SqueezilRoboSoul::StepAI", 0x404a80, 7, "83ec048b442400", (void *)h_rbstep, (void **)&o_rbstep, false, 0, 0, "robosoul", 0 };
+    H_rbbehave = { "SqueezilRoboSoul::SetBehaviour", 0x404b10, 6, "64a100000000", (void *)h_rbbehave, (void **)&o_rbbehave, false, 0, 0, "robosoul", 0 };
+    H_rbupdate = { "SqueezilRoboSoul::Update", 0x404df0, 5, "83ec0c5657", (void *)h_rbupdate, (void **)&o_rbupdate, false, 0, 0, "robosoul", 0 };
+    H_rbkind = { "SqueezilRoboSoul::GetKind", 0x4053d0, 6, "837908011bc0", (void *)h_rbkind, (void **)&o_rbkind, false, 0, 0, "robosoul", 0 };
+    H_rboffer = { "AwarenessRecord::Offer", 0x448370, 5, "538b411455", (void *)h_rboffer, (void **)&o_rboffer, false, 0, 0, "robosoul", 0 };
+    H_rbrecreset = { "AwarenessRecord::Reset", 0x4483c0, 7, "c7411401000000", (void *)h_rbrecreset, (void **)&o_rbrecreset, false, 0, 0, "robosoul", 0 };
+    H_cmread = { "ReadCameraSettings", 0x408600, 6, "64a100000000", (void *)h_cmread, (void **)&o_cmread, false, 0, 0, "camerasoul", 0 };
+    H_cmview = { "CameraSoul::ComputeView", 0x408850, 6, "64a100000000", (void *)h_cmview, (void **)&o_cmview, false, 0, 0, "camerasoul", 0 };
+    H_cmblend = { "CameraSoul::BlendMatrices", 0x409620, 6, "64a100000000", (void *)h_cmblend, (void **)&o_cmblend, false, 0, 0, "camerasoul", 0 };
+    H_cmpath = { "CameraSoul::StartPath", 0x409a50, 6, "64a100000000", (void *)h_cmpath, (void **)&o_cmpath, false, 0, 0, "camerasoul", 0 };
+    H_cmstop = { "CameraSoul::StopPath", 0x409c40, 5, "5356578bf1", (void *)h_cmstop, (void **)&o_cmstop, false, 0, 0, "camerasoul", 0 };
+    H_cminitr = { "RegionCameraSoul::RegionCameraSoul", 0x409d10, 6, "64a100000000", (void *)h_cminitr, (void **)&o_cminitr, false, 0, 0, "camerasoul", 0 };
+    H_cminitp = { "PlaceCameraSoul::PlaceCameraSoul", 0x40a630, 6, "64a100000000", (void *)h_cminitp, (void **)&o_cminitp, false, 0, 0, "camerasoul", 0 };
+    H_cmfreer = { "RegionCameraSoul::Destroy", 0x40b7c0, 6, "64a100000000", (void *)h_cmfreer, (void **)&o_cmfreer, false, 0, 0, "camerasoul", 0 };
+    H_cmfreep = { "PlaceCameraSoul::Destroy", 0x40b830, 6, "64a100000000", (void *)h_cmfreep, (void **)&o_cmfreep, false, 0, 0, "camerasoul", 0 };
+    H_cmupr = { "RegionCameraSoul::Update", 0x409f70, 6, "64a100000000", (void *)h_cmupr, (void **)&o_cmupr, false, 0, 0, "camerasoul", 0 };
+    H_cmupp = { "PlaceCameraSoul::Update", 0x40a820, 6, "64a100000000", (void *)h_cmupp, (void **)&o_cmupp, false, 0, 0, "camerasoul", 0 };
+    H_cmevr = { "RegionCameraSoul::OnEvent", 0x40a5e0, 5, "8b44240456", (void *)h_cmevr, (void **)&o_cmevr, false, 0, 0, "camerasoul", 0 };
+    H_cmevp = { "PlaceCameraSoul::OnEvent", 0x40b2f0, 6, "568b41108bf1", (void *)h_cmevp, (void **)&o_cmevp, false, 0, 0, "camerasoul", 0 };
+    H_plctor = { "PlaceSimulation::PlaceSimulation", 0x438850, 6, "64a100000000", (void *)h_plctor, (void **)&o_plctor, false, 0, 0, "place", 0 };
+    H_pldtor2 = { "PlaceSimulation::~PlaceSimulation", 0x4388f0, 6, "64a100000000", (void *)h_pldtor2, (void **)&o_pldtor2, false, 0, 0, "place", 0 };
+    H_plfree2 = { "PlaceSimulation::Destroy", 0x4388d0, 8, "568bf1e818000000", (void *)h_plfree2, (void **)&o_plfree2, false, 0, 0, "place", 4 };
+    H_plinit = { "PlaceSimulation::Init", 0x438940, 6, "64a100000000", (void *)h_plinit, (void **)&o_plinit, false, 0, 0, "place", 0 };
+    H_plstart = { "PlaceSimulation::Start", 0x438ee0, 6, "64a100000000", (void *)h_plstart, (void **)&o_plstart, false, 0, 0, "place", 0 };
+    H_plclr = { "PlaceSimulation::Clear", 0x439a50, 6, "56578b018bf9", (void *)h_plclr, (void **)&o_plclr, false, 0, 0, "place", 0 };
+    H_plclrcr = { "PlaceSimulation::ClearCreatures", 0x439a00, 9, "56578bf9e8d7100100", (void *)h_plclrcr, (void **)&o_plclrcr, false, 0, 0, "place", 5 };
+    H_plcoll = { "PlaceSimulation::CollideCreatures", 0x439ae0, 6, "568bf18b493c", (void *)h_plcoll, (void **)&o_plcoll, false, 0, 0, "place", 0 };
+    H_plsouls = { "PlaceSimulation::UpdateSouls", 0x439b00, 6, "568b41348bf1", (void *)h_plsouls, (void **)&o_plsouls, false, 0, 0, "place", 0 };
+    H_plvel = { "PlaceSimulation::Velocity", 0x439e90, 6, "64a100000000", (void *)h_plvel, (void **)&o_plvel, false, 0, 0, "place", 0 };
+    H_plload2 = { "PlaceSimulation::Load", 0x439b70, 6, "64a100000000", (void *)h_plload2, (void **)&o_plload2, false, 0, 0, "place", 0 };
+    H_plsave2 = { "PlaceSimulation::Save", 0x439db0, 5, "8b44240456", (void *)h_plsave2, (void **)&o_plsave2, false, 0, 0, "place", 0 };
+    H_ldlclear = { "LocationSimulation::Clear", 0x4130b0, 6, "568b710485f6", (void *)h_ldlclear, (void **)&o_ldlclear, false, 0, 0, "simulation", 0 };
+    H_ldlsouls = { "LocationSimulation::UpdateSouls", 0x413f80, 5, "53568b4104", (void *)h_ldlsouls, (void **)&o_ldlsouls, false, 0, 0, "simulation", 0 };
+    H_wlprops = { "WorldReadPropFiles", 0x436370, 6, "8b44240885c0", (void *)h_wlprops, (void **)&o_wlprops, false, 0, 0, "proploader", 0 };
     H_smrun = { "LocationSimulation::RunActors", 0x414010, 5, "53565733f6", (void *)h_smrun, (void **)&o_smrun, false, 0, 0, "simulation", 0 };
     H_smactor = { "LocationSimulation::GetActor", 0x414050, 5, "8d44240453", (void *)h_smactor, (void **)&o_smactor, false, 0, 0, "simulation", 0 };
     H_smsoul = { "LocationSimulation::GetSoul", 0x414080, 5, "8d44240453", (void *)h_smsoul, (void **)&o_smsoul, false, 0, 0, "simulation", 0 };
@@ -3293,8 +3808,26 @@ static LONG CALLBACK CrashHandler(EXCEPTION_POINTERS *ep)
         }
         Log("  [esp+%02x]%s", row * 16, line);
     }
+    // the frame-pointer chain (most of the game's code keeps ebp frames)
+    {
+        DWORD *fp = (DWORD *)c->Ebp;
+        for (int depth = 0; depth < 32 && fp && !IsBadReadPtr(fp, 8); depth++) {
+            Log("  frame[%d] ret=%08lx", depth, fp[1]);
+            DWORD *next = (DWORD *)fp[0];
+            if (next <= fp) break;
+            fp = next;
+        }
+    }
+    // the last functions of ours that were entered, newest last
+    {
+        LONG n = g_traceN;
+        for (int i = 63; i >= 0; i--) {
+            Hook *h = g_trace[(unsigned)(n - i) & 255];
+            if (h) Log("  trace[-%d] %s", i, h->name);
+        }
+    }
     // symbolise return-address-looking values: inside SQZ.EXE .text or our trampolines/DLL
-    for (int i = 0; i < 24; i++) {
+    for (int i = 0; i < 96; i++) {
         if (IsBadReadPtr(sp + i, 4)) break;
         DWORD v = sp[i];
         if (v >= 0x401000 && v < 0x49a000) Log("  stack[%d] looks like SQZ.EXE code %08lx", i, v);
