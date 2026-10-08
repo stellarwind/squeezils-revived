@@ -25,6 +25,7 @@
 #include "FrameProp.h"
 #include "LODProp.h"
 #include "CycleProp.h"
+#include "PropLoader.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -134,6 +135,7 @@ int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(v
 void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
 void  ClearWorldObjects()                                { ((void (__cdecl *)())0x42d010)(); }
+void  ReadPaths(IniReader *ini, PathTable *paths)        { ((void (__cdecl *)(IniReader *, PathTable *))0x42c700)(ini, paths); }
 // ---- the resource loaders' model calls ----
 SqgModel *SqgModelConstruct(void *memory)                { return ((SqgModel *(TC *)(void *))0x4719d0)(memory); }
 void  SqgModelDestruct(SqgModel *model)                  { ((void (TC *)(void *))0x471a00)(model); }
@@ -1525,6 +1527,20 @@ static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
+static Hook H_lploadprop, H_lpwords, H_lppath;
+static Prop *(__cdecl *o_lploadprop)(IniReader *, PropTable *, const char *, const char *);
+static Prop *__cdecl h_lploadprop(IniReader *i, PropTable *t, const char *n, const char *k) { HEAVY_LOG(H_lploadprop); return LoadProp(i, t, n, k); }
+static StringList *(__cdecl *o_lpwords)(const char *);
+static StringList *__cdecl h_lpwords(const char *s) { HEAVY_LOG(H_lpwords); return SplitWords(s); }
+static MorphCycle *(__cdecl *o_lppath)(const char *);
+static MorphCycle *__cdecl h_lppath(const char *n) { HEAVY_LOG(H_lppath); return FindPath(n); }
+static Hook H_plclear, H_plfiles, H_plprops;
+static void (__cdecl *o_plclear)();
+static void __cdecl h_plclear() { HEAVY_LOG(H_plclear); ClearPropTables(); }
+static void (__cdecl *o_plfiles)(IniReader *, PropTable *, PathTable *);
+static void __cdecl h_plfiles(IniReader *i, PropTable *p, PathTable *t) { HEAVY_LOG(H_plfiles); ReadPropFiles(i, p, t); }
+static void (__cdecl *o_plprops)(IniReader *, PropTable *);
+static void __cdecl h_plprops(IniReader *i, PropTable *p) { HEAVY_LOG(H_plprops); ReadProps(i, p); }
 static Hook H_cpinit, H_cpdestruct, H_cpdestroy, H_cpclone, H_cpbuild, H_cpupdate, H_cpcurrent, H_cpstep, H_cpmode, H_cpfire;
 static CycleProp *(THISCALL *o_cpinit)(CycleProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, StepEventTable *, float, int, float);
 static CycleProp *THISCALL h_cpinit(CycleProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, StepEventTable *e, float period, int carry, float start)
@@ -1915,6 +1931,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_lploadprop, &H_lpwords, &H_lppath,
+                           &H_plclear, &H_plfiles, &H_plprops,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_npinit, &H_npinitc, &H_npdestruct, &H_npdestroy, &H_npclone, &H_npbuild, &H_nphide, &H_npupdate, &H_npsize, &H_npsurf,
@@ -2222,6 +2240,12 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_lploadprop = { "LoadProp", 0x42a520, 7, "64a10000000055", (void *)h_lploadprop, (void **)&o_lploadprop, false, 0, 0, "proploader", 0 };
+    H_lpwords = { "SplitWords", 0x421db0, 7, "64a10000000055", (void *)h_lpwords, (void **)&o_lpwords, false, 0, 0, "proploader", 0 };
+    H_lppath = { "FindPath", 0x42cc10, 7, "64a10000000055", (void *)h_lppath, (void **)&o_lppath, false, 0, 0, "proploader", 0 };
+    H_plclear = { "ClearPropTables", 0x429dc0, 7, "64a10000000055", (void *)h_plclear, (void **)&o_plclear, false, 0, 0, "proploader", 0 };
+    H_plfiles = { "ReadPropFiles", 0x429fa0, 7, "64a10000000055", (void *)h_plfiles, (void **)&o_plfiles, false, 0, 0, "proploader", 0 };
+    H_plprops = { "ReadProps", 0x42a290, 7, "64a10000000055", (void *)h_plprops, (void **)&o_plprops, false, 0, 0, "proploader", 0 };
     H_cpinit = { "CycleProp::Init", 0x4288b0, 7, "64a10000000055", (void *)h_cpinit, (void **)&o_cpinit, false, 0, 0, "cycleprop", 0 };
     H_cpdestruct = { "CycleProp::Destruct", 0x428d10, 7, "64a10000000055", (void *)h_cpdestruct, (void **)&o_cpdestruct, false, 0, 0, "cycleprop", 0 };
     H_cpdestroy = { "CycleProp::Destroy", 0x428b60, 8, "568bf1e8a8010000", (void *)h_cpdestroy, (void **)&o_cpdestroy, false, 0, 0, "cycleprop", 4 };

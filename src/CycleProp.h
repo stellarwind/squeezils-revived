@@ -23,7 +23,7 @@ struct CycleProp : FrameProp {
     int            current;     // 0xdc the child on show
     int            step;        // 0xe0 +1 or -1 (0 stops it)
     int            mode;        // 0xe4 at an end: 1 wrap round, -1 turn back, else stop
-    int            carry;       // 0xe8 nonzero: time left over when the timer runs out is kept
+    int            carry;       // 0xe8 nonzero: time left over when the timer runs out is kept (the "UseRealTime" key of the prop's section)
     float          timer;       // 0xec seconds until the next step
     float          period;      // 0xf0 seconds between steps
 
