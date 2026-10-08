@@ -296,3 +296,11 @@ void  DestructIdList(void *ids);                        // @0045efa0 (thiscall)
 void  ConstructCreatureTable(CreatureTable *table);     // @00466590 (thiscall) the table part of the creature table; the vtables are set by the caller
 void *GetApplication();                                 // @004206b0 the global at 0x4badac
 void  FlushInputMessages(void *application);            // @0043c970 (thiscall) throws away the key and mouse messages waiting
+
+// ---- SqueezilBody (SqueezilBody.h) ----
+struct Contact;
+unsigned FrameMilliseconds();                                   // @004206d0 the game clock (the global at 0x4badc0), then @0041ec00 its +0xc: the milliseconds the last frame took
+int   MorphCycleLoad(MorphCycle *clip, const char *file);       // @0041bd60 (thiscall) fills the clip from a cycle file; 0 on failure
+void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll);   // @0047e500 (thiscall on the matrix) radians: atan2 of the matrix's rows
+void *SurfaceFaceOf(void *surfaces, const Contact *contact);   // @00412bf0 the face object of contact->face (the list at +0x134, virtual slot 0)
+float *FaceRelativeMatrix(void *face, float *out, const float *matrix);   // @004110b0 (thiscall) the matrix relative to the face; returns out
