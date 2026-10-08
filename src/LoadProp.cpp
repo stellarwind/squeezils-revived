@@ -17,7 +17,9 @@
 
 #pragma GCC diagnostic ignored "-Wdelete-non-virtual-dtor"
 
+static PropTable *const kLevelProps  = (PropTable *)0x4c7208;
 static PropTable *const kSecondProps = (PropTable *)0x4c7230;
+static PropTable *const kThirdProps  = (PropTable *)0x4c72c0;
 static PathTable *const kLevelPaths  = (PathTable *)0x4c7280;
 static PathTable *const kSecondPaths = (PathTable *)0x4c7258;
 static PathTable *const kThirdPaths  = (PathTable *)0x4c71d0;
@@ -163,6 +165,70 @@ MorphCycle *FindPath(const char *name)
             return tables[i]->Get(String(name));
     }
     return NULL;
+}
+
+// Walks a prop down a list of path words: "this" stays, "parent" goes to the owner, any other word is a child's name
+// @0042cea0 (the fourth argument of the original is not used)
+static Prop *WalkPropPath(StringList *words, Prop *prop)
+{
+    while (words->count != 0) {
+        if (stricmp(words->At(0).c_str(), "this") == 0) {
+            words->RemoveAt(0);
+        } else if (stricmp(words->At(0).c_str(), "parent") == 0) {
+            words->RemoveAt(0);
+            prop = CallVirtual<Prop *>(prop, PROP_GET_OWNER);
+        } else {
+            String name(words->At(0));
+            StringRep *rep = name.rep;     // slot 13 takes the String by value and releases it
+            name.rep = NULL;
+            Prop *child = CallVirtual<Prop *>(prop, 13, rep);
+            words->RemoveAt(0);
+            prop = child;
+        }
+    }
+    return prop;
+}
+
+// @0042cdb0 Splits at each ':' (an empty last word is added too)
+static void SplitColons(const char *text, StringList *words)
+{
+    String copy(text);
+    char *p = (char *)copy.c_str();
+    char *start = p;
+    while (*p) {
+        if (*p == ':') {
+            *p = 0;
+            words->Insert(String(start), -1);
+            start = p + 1;
+        }
+        p++;
+    }
+    words->Insert(String(start), -1);
+}
+
+// @0042c8b0 A template by name in the third, second, then level tables. "a:b:c" finds template a and then its child b and
+// that one's child c; a name that begins "this" or "parent" starts from the prop given instead.
+Prop *FindPropTemplate(const char *name, Prop *context, int)
+{
+    StringList words;
+    if (strchr(name, ':') == NULL)
+        words.Insert(String(name), -1);
+    else
+        SplitColons(name, &words);
+
+    if (stricmp(words.At(0).c_str(), "parent") == 0 || stricmp(words.At(0).c_str(), "this") == 0)
+        return WalkPropPath(&words, context);
+
+    PropTable *tables[3] = { kThirdProps, kSecondProps, kLevelProps };
+    Prop *found = NULL;
+    for (int i = 0; i < 3 && !found; i++) {
+        if (tables[i]->Contains(words.At(0)))
+            found = tables[i]->Get(words.At(0));
+    }
+    if (!found)
+        return NULL;
+    words.RemoveAt(0);
+    return WalkPropPath(&words, found);
 }
 
 // A key that begins with the given word (the entries PathFunction1, PathFunction2 ... share their start)

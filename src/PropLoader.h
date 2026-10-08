@@ -32,6 +32,8 @@ void ReadPropFiles3(IniReader *ini);   // @00429f80 into the third pair
 // @0042a290 [BackstagePropList] then [PropList] of one ini file: every entry names a prop, loaded by LoadProp; the ones in
 // [PropList] are shown in the scene at once
 void ReadProps(IniReader *ini, PropTable *props);
+void ReadPaths(IniReader *ini, PathTable *paths);    // @0042c700 the ini file's [PathList]: one animation path per entry
+Prop *FindPropTemplate(const char *name, Prop *context, int unused);   // @0042c8b0 template by name (also "a:b:c", "this:..", "parent:..")
 
 // @0042a520 Builds the prop template called name from its section in ini (what its Type key says) and files it in table (NULL:
 // the second pair's table), replacing a template of that name. kind is NULL from the prop lists; "Prop" (what the sim code

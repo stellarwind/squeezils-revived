@@ -248,9 +248,6 @@ template<> struct OriginalVtables<BufferObjectTable<float, String, PrimitiveArra
 // The props whose Update runs every frame (the Array<Prop *> at 0x4c71f8). Removing only queues the index (in 0x4c72a8).
 void  AddUpdatingProp(Prop *prop);                                     // @0042d180 (reconstructed: PropList.cpp)
 void  RemoveUpdatingProp(Prop *prop);                                  // @0042d1a0 (reconstructed: PropList.cpp)
-// The prop template with this name from the level's prop tables (the loader: also reads "name:..." forms). The two numbers are
-// not identified; FrameProp passes 0 and 0.
-Prop *FindPropTemplate(const char *name, int unknown1, int unknown2);  // @0042c8b0 (cdecl, the name is a String by value)
 // The current simulation's actors by index (0 is the player)
 void *SimulationActor(int index);                                      // @00414050 (thiscall on the simulation)
 void *SimulationSoul(int index);                                       // @00414080
@@ -290,4 +287,4 @@ class IniReader;
 struct MorphCycle;
 typedef Table<String, Prop *, Array<Prop *>, 0>             PropTable;     // prop templates by name (the level's tables: 0x4c7208, 0x4c7230, 0x4c72c0)
 typedef Table<String, MorphCycle *, Array<MorphCycle *>, 0> PathTable;     // animation paths (clips) by name (0x4c7280, 0x4c7258, 0x4c71d0)
-void  ReadPaths(IniReader *ini, PathTable *paths);                     // @0042c700 (cdecl) the ini file's [PathList]: animation paths
+int   ReadPathText(MorphCycle *clip, IniReader *ini, const char *file);   // @0041c530 (thiscall) fills the clip from a text path file; 0 on failure

@@ -135,7 +135,7 @@ void *NavMeshConstruct(void *memory)                     { return ((void *(TC *)
 int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(void *, const char *))0x47c8e0)(nav, path); }
 void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
-void  ReadPaths(IniReader *ini, PathTable *paths)        { ((void (__cdecl *)(IniReader *, PathTable *))0x42c700)(ini, paths); }
+int   ReadPathText(MorphCycle *clip, IniReader *ini, const char *file) { return ((int (TC *)(MorphCycle *, IniReader *, const char *))0x41c530)(clip, ini, file); }
 // ---- the resource loaders' model calls ----
 SqgModel *SqgModelConstruct(void *memory)                { return ((SqgModel *(TC *)(void *))0x4719d0)(memory); }
 void  SqgModelDestruct(SqgModel *model)                  { ((void (TC *)(void *))0x471a00)(model); }
@@ -149,13 +149,6 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 }
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
-Prop *FindPropTemplate(const char *name, int unknown1, int unknown2)
-{
-    String s(name);                       // passed by value (the rep pointer); the callee releases it
-    StringRep *rep = s.rep;
-    s.rep = NULL;
-    return ((Prop *(__cdecl *)(StringRep *, int, int))0x42c8b0)(rep, unknown1, unknown2);
-}
 void *SimulationActor(int index)                         { return ((void *(TC *)(void *, int))0x414050)(*(void **)0x4badbc, index); }
 void *SimulationSoul(int index)                          { return ((void *(TC *)(void *, int))0x414080)(*(void **)0x4badbc, index); }
 float *ActorMatrix(void *actor)                          { return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor); }
@@ -1540,7 +1533,12 @@ static void (__cdecl *o_plflush)();
 static void __cdecl h_plflush() { HEAVY_LOG(H_plflush); FlushRemovedProps(); }
 static void (__cdecl *o_plworld)();
 static void __cdecl h_plworld() { HEAVY_LOG(H_plworld); ClearWorldObjects(); }
-static Hook H_lploadprop, H_lpwords, H_lppath;
+static Hook H_lploadprop, H_lpwords, H_lppath, H_lprpaths, H_lpfind;
+static Prop *(__cdecl *o_lpfind)(StringRep *, Prop *, int);
+// the name is a String by value (the rep pointer); the original releases it, so we do
+static Prop *__cdecl h_lpfind(StringRep *rep, Prop *ctx, int x) { HEAVY_LOG(H_lpfind); String name; name.rep = rep; return FindPropTemplate(name.c_str(), ctx, x); }
+static void (__cdecl *o_lprpaths)(IniReader *, PathTable *);
+static void __cdecl h_lprpaths(IniReader *i, PathTable *t) { HEAVY_LOG(H_lprpaths); ReadPaths(i, t); }
 static Prop *(__cdecl *o_lploadprop)(IniReader *, PropTable *, const char *, const char *);
 static Prop *__cdecl h_lploadprop(IniReader *i, PropTable *t, const char *n, const char *k) { HEAVY_LOG(H_lploadprop); return LoadProp(i, t, n, k); }
 static StringList *(__cdecl *o_lpwords)(const char *);
@@ -1945,7 +1943,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
                            &H_pladd, &H_plremove, &H_pldestroy, &H_plupdate, &H_pllevels, &H_plflush, &H_plworld,
-                           &H_lploadprop, &H_lpwords, &H_lppath,
+                           &H_lploadprop, &H_lpwords, &H_lppath, &H_lprpaths, &H_lpfind,
                            &H_plclear, &H_plfiles, &H_plprops,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
@@ -2264,6 +2262,8 @@ static void Setup()
     H_lploadprop = { "LoadProp", 0x42a520, 7, "64a10000000055", (void *)h_lploadprop, (void **)&o_lploadprop, false, 0, 0, "proploader", 0 };
     H_lpwords = { "SplitWords", 0x421db0, 7, "64a10000000055", (void *)h_lpwords, (void **)&o_lpwords, false, 0, 0, "proploader", 0 };
     H_lppath = { "FindPath", 0x42cc10, 7, "64a10000000055", (void *)h_lppath, (void **)&o_lppath, false, 0, 0, "proploader", 0 };
+    H_lprpaths = { "ReadPaths", 0x42c700, 7, "64a10000000055", (void *)h_lprpaths, (void **)&o_lprpaths, false, 0, 0, "proploader", 0 };
+    H_lpfind = { "FindPropTemplate", 0x42c8b0, 7, "64a10000000055", (void *)h_lpfind, (void **)&o_lpfind, false, 0, 0, "proploader", 0 };
     H_plclear = { "ClearPropTables", 0x429dc0, 7, "64a10000000055", (void *)h_plclear, (void **)&o_plclear, false, 0, 0, "proploader", 0 };
     H_plfiles = { "ReadPropFiles", 0x429fa0, 7, "64a10000000055", (void *)h_plfiles, (void **)&o_plfiles, false, 0, 0, "proploader", 0 };
     H_plprops = { "ReadProps", 0x42a290, 7, "64a10000000055", (void *)h_plprops, (void **)&o_plprops, false, 0, 0, "proploader", 0 };
