@@ -637,8 +637,8 @@ static IDirect3DRMTexture *__cdecl h_texgif(const char *p, const float *t, const
 
 // ---- BodyPart (character pieces): replace only ------------------------------------------------
 // @41d900 Apply, __thiscall(this, ref, pose) (callee pops 8)
-static void (__attribute__((thiscall)) *o_bpapply)(BodyPart *, IDirect3DRMFrame *, const BodyPose *);
-static void __attribute__((thiscall)) h_bpapply(BodyPart *b, IDirect3DRMFrame *ref, const BodyPose *p) { HEAVY_LOG(H_bpapply); b->Apply(ref, p); }
+static void (__attribute__((thiscall)) *o_bpapply)(BodyPart *, IDirect3DRMFrame *, const PartPose *);
+static void __attribute__((thiscall)) h_bpapply(BodyPart *b, IDirect3DRMFrame *ref, const PartPose *p) { HEAVY_LOG(H_bpapply); b->Apply(ref, p); }
 // @41d990 Build, __thiscall(this, parent)
 static void (__attribute__((thiscall)) *o_bpbuild)(BodyPart *, IDirect3DRMFrame *);
 static void __attribute__((thiscall)) h_bpbuild(BodyPart *b, IDirect3DRMFrame *parent) { HEAVY_LOG(H_bpbuild); b->Build(parent); }
@@ -1476,6 +1476,146 @@ static IDirect3DRMFrame *(THISCALL *o_spbuild)(SpriteProp *, IDirect3DRMFrame *)
 static IDirect3DRMFrame *THISCALL h_spbuild(SpriteProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_spbuild); return p->BuildFrame(parent); }
 static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
+// ---- Animation (Animation.h): poses, tracks, clips ----
+// animcmp (with the "anim" hooks): run the original and compare our version on a copy of the same input. The poses the game
+// keeps are the original's; ours only checks.
+static bool g_animCompare;
+static void CompareFloats(Hook &h, const float *real, const float *ours, int n, const char *what)
+{
+    h.calls++;
+    for (int i = 0; i < n; i++) {
+        float a = real[i], b = ours[i];
+        float scale = fabsf(a) > fabsf(b) ? fabsf(a) : fabsf(b);
+        if (fabsf(a - b) <= 1e-5f * (scale > 1.0f ? scale : 1.0f)) continue;
+        h.mismatches++;
+        if (h.mismatches <= 8) Log("MISMATCH %s %s[%d]: orig=%g ours=%g", h.name, what, i, a, b);
+        return;
+    }
+}
+static void ComparePoses(Hook &h, const PartPose *real, const PartPose *ours)
+{
+    CompareFloats(h, &real->position.x, &ours->position.x, 9, "vectors");
+    if (real->weights.count != ours->weights.count) { h.mismatches++; Log("MISMATCH %s weight count orig=%d ours=%d", h.name, real->weights.count, ours->weights.count); return; }
+    if (real->weights.count > 0) CompareFloats(h, real->weights.data, ours->weights.data, real->weights.count, "weights");
+}
+static Hook H_pzctor, H_pzassign, H_pzmatrix, H_pcctor, H_pcdtor, H_pcfind, H_pcsample, H_pcnew, H_pcblend;
+static Hook H_ptctor, H_ptcopy, H_ptdtor, H_ptfind, H_ptat, H_ptassign;
+static Hook H_mcctor, H_mcrange, H_mcdtor, H_mcnew, H_mcsample, H_mcblend;
+static PartPose *(THISCALL *o_pzctor)(PartPose *, const Vector3f *, const Vector3f *, const Vector3f *, const WeightList *);
+static PartPose *THISCALL h_pzctor(PartPose *p, const Vector3f *a, const Vector3f *b, const Vector3f *c, const WeightList *w) { HEAVY_LOG(H_pzctor); return ::new (p) PartPose(*a, *b, *c, w); }
+static void (THISCALL *o_pzassign)(PartPose *, const PartPose *);
+static void THISCALL h_pzassign(PartPose *p, const PartPose *o) { HEAVY_LOG(H_pzassign); p->Assign(*o); }
+static float *(THISCALL *o_pzmatrix)(PartPose *, float *);
+static float *THISCALL h_pzmatrix(PartPose *p, float *m)
+{
+    if (g_mode == MODE_REPLACE || !g_animCompare) { HEAVY_LOG(H_pzmatrix); p->ToMatrix(m); return m; }
+    float mine[16];
+    o_pzmatrix(p, m);
+    p->ToMatrix(mine);
+    CompareFloats(H_pzmatrix, m, mine, 16, "matrix");
+    return m;
+}
+static PartCycle *(THISCALL *o_pcctor)(PartCycle *, int, const Vector3f *, int, const PartOrientation *, int, WeightList **, MorphCycle *);
+static PartCycle *THISCALL h_pcctor(PartCycle *p, int pn, const Vector3f *pd, int on, const PartOrientation *od, int mn, WeightList **md, MorphCycle *o)
+{ HEAVY_LOG(H_pcctor); return ::new (p) PartCycle(pn, pd, on, od, mn, md, o); }
+static void (__fastcall *o_pcdtor)(PartCycle *);
+static void __fastcall h_pcdtor(PartCycle *p) { HEAVY_LOG(H_pcdtor); p->~PartCycle(); }
+static int (THISCALL *o_pcfind)(PartCycle *, float, int *);
+static int THISCALL h_pcfind(PartCycle *p, float t, int *hint)
+{
+    if (g_mode == MODE_REPLACE || !g_animCompare) { HEAVY_LOG(H_pcfind); return p->FindSegment(t, hint); }
+    int mineHint = *hint;
+    int real = o_pcfind(p, t, hint);
+    int mine = p->FindSegment(t, &mineHint);
+    H_pcfind.calls++;
+    if (real != mine || *hint != mineHint) {
+        H_pcfind.mismatches++;
+        if (H_pcfind.mismatches <= 8) Log("MISMATCH %s orig=%d (hint %d) ours=%d (hint %d)", H_pcfind.name, real, *hint, mine, mineHint);
+    }
+    return real;
+}
+static int (THISCALL *o_pcsample)(PartCycle *, PartPose *, float, int);
+static int THISCALL h_pcsample(PartCycle *p, PartPose *out, float t, int hint)
+{
+    if (g_mode == MODE_REPLACE || !g_animCompare) { HEAVY_LOG(H_pcsample); return p->Sample(out, t, hint); }
+    PartPose scratch(*out);
+    int real = o_pcsample(p, out, t, hint);
+    int mine = p->Sample(&scratch, t, hint);
+    ComparePoses(H_pcsample, out, &scratch);
+    if (real != mine) { H_pcsample.mismatches++; if (H_pcsample.mismatches <= 8) Log("MISMATCH %s hint orig=%d ours=%d", H_pcsample.name, real, mine); }
+    return real;
+}
+static PartPose *(THISCALL *o_pcnew)(PartCycle *, float, int);
+static PartPose *THISCALL h_pcnew(PartCycle *p, float t, int hint) { HEAVY_LOG(H_pcnew); return p->NewPose(t, hint); }
+static int (THISCALL *o_pcblend)(PartCycle *, PartPose *, float, float, int);
+static int THISCALL h_pcblend(PartCycle *p, PartPose *pose, float t, float w, int hint)
+{
+    if (g_mode == MODE_REPLACE || !g_animCompare) { HEAVY_LOG(H_pcblend); return p->Blend(pose, t, w, hint); }
+    PartPose scratch(*pose);
+    int real = o_pcblend(p, pose, t, w, hint);
+    int mine = p->Blend(&scratch, t, w, hint);
+    ComparePoses(H_pcblend, pose, &scratch);
+    if (real != mine) { H_pcblend.mismatches++; if (H_pcblend.mismatches <= 8) Log("MISMATCH %s hint orig=%d ours=%d", H_pcblend.name, real, mine); }
+    return real;
+}
+static PoseTable *(__fastcall *o_ptctor)(PoseTable *);
+static PoseTable *__fastcall h_ptctor(PoseTable *t) { HEAVY_LOG(H_ptctor); return ::new (t) PoseTable(); }
+static PoseTable *(THISCALL *o_ptcopy)(PoseTable *, const PoseTable *);
+static PoseTable *THISCALL h_ptcopy(PoseTable *t, const PoseTable *o) { HEAVY_LOG(H_ptcopy); return ::new (t) PoseTable(*o); }
+static void (__fastcall *o_ptdtor)(PoseTable *);
+static void __fastcall h_ptdtor(PoseTable *t) { HEAVY_LOG(H_ptdtor); t->~PoseTable(); }
+static PartPose *(THISCALL *o_ptfind)(PoseTable *, const char *);
+static PartPose *THISCALL h_ptfind(PoseTable *t, const char *n) { HEAVY_LOG(H_ptfind); return t->Find(n); }
+static PartPose *(THISCALL *o_ptat)(PoseTable *, int);
+static PartPose *THISCALL h_ptat(PoseTable *t, int i) { HEAVY_LOG(H_ptat); return t->At(i); }
+static void (THISCALL *o_ptassign)(PoseTable *, const PoseTable *);
+static void THISCALL h_ptassign(PoseTable *t, const PoseTable *o) { HEAVY_LOG(H_ptassign); t->Assign(*o); }
+static MorphCycle *(THISCALL *o_mcctor)(MorphCycle *, int, float, float);
+static MorphCycle *THISCALL h_mcctor(MorphCycle *c, int noLoop, float speed, float period) { HEAVY_LOG(H_mcctor); return ::new (c) MorphCycle(noLoop, speed, period); }
+static MorphCycle *(THISCALL *o_mcrange)(MorphCycle *, const MorphCycle *, int, int, int, float, float);
+static MorphCycle *THISCALL h_mcrange(MorphCycle *c, const MorphCycle *whole, int first, int last, int noLoop, float speed, float period)
+{ HEAVY_LOG(H_mcrange); return ::new (c) MorphCycle(*whole, first, last, noLoop, speed, period); }
+static void (__fastcall *o_mcdtor)(MorphCycle *);
+static void __fastcall h_mcdtor(MorphCycle *c) { HEAVY_LOG(H_mcdtor); c->~MorphCycle(); }
+static PoseTable *(__fastcall *o_mcnew)(MorphCycle *);
+static PoseTable *__fastcall h_mcnew(MorphCycle *c) { HEAVY_LOG(H_mcnew); return c->NewPoseTable(); }
+static int (THISCALL *o_mcsample)(MorphCycle *, PoseTable *, float, int);
+static int THISCALL h_mcsample(MorphCycle *c, PoseTable *pose, float t, int hint) { HEAVY_LOG(H_mcsample); return c->SamplePose(pose, t, hint); }
+static int (THISCALL *o_mcblend)(MorphCycle *, PoseTable *, float, float, int);
+static int THISCALL h_mcblend(MorphCycle *c, PoseTable *pose, float t, float w, int hint) { HEAVY_LOG(H_mcblend); return c->BlendPose(pose, t, w, hint); }
+// ---- BodyPart and AnimatedBody (BodyPart.h) ----
+static Hook H_bpinitm, H_bpinit0, H_bpinitc, H_bpdtor;
+static Hook H_abinit, H_abcopy, H_abdtor, H_abadd, H_abcycle, H_abapply, H_abadv, H_abdir, H_abloop, H_abtime, H_abblend;
+static BodyPart *(THISCALL *o_bpinitm)(BodyPart *, SqgModel *);
+static BodyPart *THISCALL h_bpinitm(BodyPart *b, SqgModel *m) { HEAVY_LOG(H_bpinitm); return b->Init(m); }
+static BodyPart *(__fastcall *o_bpinit0)(BodyPart *);
+static BodyPart *__fastcall h_bpinit0(BodyPart *b) { HEAVY_LOG(H_bpinit0); return b->Init(); }
+static BodyPart *(THISCALL *o_bpinitc)(BodyPart *, const BodyPart *);
+static BodyPart *THISCALL h_bpinitc(BodyPart *b, const BodyPart *o) { HEAVY_LOG(H_bpinitc); return b->Init(o); }
+static void (__fastcall *o_bpdtor)(BodyPart *);
+static void __fastcall h_bpdtor(BodyPart *b) { HEAVY_LOG(H_bpdtor); b->Destruct(); }
+static AnimatedBody *(__fastcall *o_abinit)(AnimatedBody *);
+static AnimatedBody *__fastcall h_abinit(AnimatedBody *a) { HEAVY_LOG(H_abinit); return a->Init(); }
+static AnimatedBody *(THISCALL *o_abcopy)(AnimatedBody *, const AnimatedBody *);
+static AnimatedBody *THISCALL h_abcopy(AnimatedBody *a, const AnimatedBody *o) { HEAVY_LOG(H_abcopy); return a->InitCopy(o); }
+static void (__fastcall *o_abdtor)(AnimatedBody *);
+static void __fastcall h_abdtor(AnimatedBody *a) { HEAVY_LOG(H_abdtor); a->Destruct(); }
+static int (THISCALL *o_abadd)(AnimatedBody *, const char *, BodyPart *);
+static int THISCALL h_abadd(AnimatedBody *a, const char *n, BodyPart *p) { HEAVY_LOG(H_abadd); return a->AddPart(n, p); }
+static void (THISCALL *o_abcycle)(AnimatedBody *, MorphCycle *, int);
+static void THISCALL h_abcycle(AnimatedBody *a, MorphCycle *c, int blend) { HEAVY_LOG(H_abcycle); a->SetCycle(c, blend); }
+static void (__fastcall *o_abapply)(AnimatedBody *);
+static void __fastcall h_abapply(AnimatedBody *a) { HEAVY_LOG(H_abapply); a->ApplyPose(); }
+static void (THISCALL *o_abadv)(AnimatedBody *, float, int);
+static void THISCALL h_abadv(AnimatedBody *a, float dt, int skip) { HEAVY_LOG(H_abadv); a->Advance(dt, skip); }
+static void (THISCALL *o_abdir)(AnimatedBody *, int);
+static void THISCALL h_abdir(AnimatedBody *a, int d) { HEAVY_LOG(H_abdir); a->SetDirection(d); }
+static void (THISCALL *o_abloop)(AnimatedBody *, int);
+static void THISCALL h_abloop(AnimatedBody *a, int m) { HEAVY_LOG(H_abloop); a->SetLoopMode(m); }
+static void (THISCALL *o_abtime)(AnimatedBody *, float);
+static void THISCALL h_abtime(AnimatedBody *a, float t) { HEAVY_LOG(H_abtime); a->SetTime(t); }
+static float (__fastcall *o_abblend)(AnimatedBody *);
+static float __fastcall h_abblend(AnimatedBody *a) { HEAVY_LOG(H_abblend); return a->GetBlendFraction(); }
 static Hook H_texdef;
 static void (__cdecl *o_texdef)();
 static void __cdecl h_texdef() { HEAVY_LOG(H_texdef); InitTextureDefaults(); }
@@ -1590,7 +1730,12 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_rsloadgeom, &H_rsfindgeom, &H_rsgeomres, &H_rsgeomlist, &H_rspopgeom, &H_rsinitgeom, &H_rserrlog,
                            &H_prinit, &H_prdestruct, &H_prdestroy, &H_prinst, &H_prshow, &H_prisshown, &H_prhide, &H_prattach,
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
-                           &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale };
+                           &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
+                           &H_pzctor, &H_pzassign, &H_pzmatrix, &H_pcctor, &H_pcdtor, &H_pcfind, &H_pcsample, &H_pcnew, &H_pcblend,
+                           &H_ptctor, &H_ptcopy, &H_ptdtor, &H_ptfind, &H_ptat, &H_ptassign,
+                           &H_mcctor, &H_mcrange, &H_mcdtor, &H_mcnew, &H_mcsample, &H_mcblend,
+                           &H_bpinitm, &H_bpinit0, &H_bpinitc, &H_bpdtor,
+                           &H_abinit, &H_abcopy, &H_abdtor, &H_abadd, &H_abcycle, &H_abapply, &H_abadv, &H_abdir, &H_abloop, &H_abtime, &H_abblend };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1871,6 +2016,42 @@ static void Setup()
     H_spclone = { "SpriteProp::Clone", 0x4269a0, 7, "64a10000000055", (void *)h_spclone, (void **)&o_spclone, false, 0, 0, "props", 0 };
     H_spbuild = { "SpriteProp::BuildFrame", 0x426b00, 7, "64a10000000055", (void *)h_spbuild, (void **)&o_spbuild, false, 0, 0, "props", 0 };
     H_spscale = { "SpriteProp::ApplyScale", 0x426c00, 7, "64a10000000055", (void *)h_spscale, (void **)&o_spscale, false, 0, 0, "props", 0 };
+    H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
+    H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };
+    H_pzmatrix = { "PartPose::ToMatrix", 0x4195b0, 6, "64a100000000", (void *)h_pzmatrix, (void **)&o_pzmatrix, false, 0, 0, "anim", 0 };
+    H_pcctor = { "PartCycle::PartCycle", 0x419750, 6, "64a100000000", (void *)h_pcctor, (void **)&o_pcctor, false, 0, 0, "anim", 0 };
+    H_pcdtor = { "PartCycle::~PartCycle", 0x419880, 6, "64a100000000", (void *)h_pcdtor, (void **)&o_pcdtor, false, 0, 0, "anim", 0 };
+    H_pcfind = { "PartCycle::FindSegment", 0x41b2a0, 5, "5356576a00", (void *)h_pcfind, (void **)&o_pcfind, false, 0, 0, "anim", 0 };
+    H_pcsample = { "PartCycle::Sample", 0x419960, 6, "64a100000000", (void *)h_pcsample, (void **)&o_pcsample, false, 0, 0, "anim", 0 };
+    H_pcnew = { "PartCycle::NewPose", 0x41a3f0, 6, "64a100000000", (void *)h_pcnew, (void **)&o_pcnew, false, 0, 0, "anim", 0 };
+    H_pcblend = { "PartCycle::Blend", 0x41a5d0, 6, "64a100000000", (void *)h_pcblend, (void **)&o_pcblend, false, 0, 0, "anim", 0 };
+    H_ptctor = { "PoseTable::PoseTable", 0x41b3f0, 6, "64a100000000", (void *)h_ptctor, (void **)&o_ptctor, false, 0, 0, "anim", 0 };
+    H_ptcopy = { "PoseTable::PoseTable(copy)", 0x41b440, 6, "64a100000000", (void *)h_ptcopy, (void **)&o_ptcopy, false, 0, 0, "anim", 0 };
+    H_ptdtor = { "PoseTable::~PoseTable", 0x41b5f0, 6, "64a100000000", (void *)h_ptdtor, (void **)&o_ptdtor, false, 0, 0, "anim", 0 };
+    H_ptfind = { "PoseTable::Find", 0x41b6e0, 6, "64a100000000", (void *)h_ptfind, (void **)&o_ptfind, false, 0, 0, "anim", 0 };
+    H_ptat = { "PoseTable::At", 0x41b750, 7, "8b49248b442404", (void *)h_ptat, (void **)&o_ptat, false, 0, 0, "anim", 0 };
+    H_ptassign = { "PoseTable::Assign", 0x41b760, 5, "53565733db", (void *)h_ptassign, (void **)&o_ptassign, false, 0, 0, "anim", 0 };
+    H_mcctor = { "MorphCycle::MorphCycle", 0x41b7b0, 6, "64a100000000", (void *)h_mcctor, (void **)&o_mcctor, false, 0, 0, "anim", 0 };
+    H_mcrange = { "MorphCycle::MorphCycle(range)", 0x41b8b0, 7, "8b44241083ec04", (void *)h_mcrange, (void **)&o_mcrange, false, 0, 0, "anim", 0 };
+    H_mcdtor = { "MorphCycle::~MorphCycle", 0x41b940, 6, "64a100000000", (void *)h_mcdtor, (void **)&o_mcdtor, false, 0, 0, "anim", 0 };
+    H_mcnew = { "MorphCycle::NewPoseTable", 0x41ba70, 6, "64a100000000", (void *)h_mcnew, (void **)&o_mcnew, false, 0, 0, "anim", 0 };
+    H_mcsample = { "MorphCycle::SamplePose", 0x41bbf0, 6, "64a100000000", (void *)h_mcsample, (void **)&o_mcsample, false, 0, 0, "anim", 0 };
+    H_mcblend = { "MorphCycle::BlendPose", 0x41bcf0, 5, "83ec045356", (void *)h_mcblend, (void **)&o_mcblend, false, 0, 0, "anim", 0 };
+    H_bpinitm = { "BodyPart::BodyPart(model)", 0x41d870, 10, "8b442404c701c4d74900", (void *)h_bpinitm, (void **)&o_bpinitm, false, 0, 0, "body", 0 };
+    H_bpinit0 = { "BodyPart::BodyPart()", 0x41d8a0, 8, "33c0c701c4d74900", (void *)h_bpinit0, (void **)&o_bpinit0, false, 0, 0, "body", 0 };
+    H_bpinitc = { "BodyPart::BodyPart(copy)", 0x41d8c0, 10, "8b442404c701c4d74900", (void *)h_bpinitc, (void **)&o_bpinitc, false, 0, 0, "body", 0 };
+    H_bpdtor = { "BodyPart::~BodyPart", 0x41d8e0, 7, "56c701c4d74900", (void *)h_bpdtor, (void **)&o_bpdtor, false, 0, 0, "body", 0 };
+    H_abinit = { "AnimatedBody::AnimatedBody", 0x41d9e0, 6, "64a100000000", (void *)h_abinit, (void **)&o_abinit, false, 0, 0, "body", 0 };
+    H_abcopy = { "AnimatedBody::AnimatedBody(copy)", 0x41dab0, 6, "64a100000000", (void *)h_abcopy, (void **)&o_abcopy, false, 0, 0, "body", 0 };
+    H_abdtor = { "AnimatedBody::~AnimatedBody", 0x41dc70, 6, "64a100000000", (void *)h_abdtor, (void **)&o_abdtor, false, 0, 0, "body", 0 };
+    H_abadd = { "AnimatedBody::AddPart", 0x41dd30, 6, "64a100000000", (void *)h_abadd, (void **)&o_abadd, false, 0, 0, "body", 0 };
+    H_abcycle = { "AnimatedBody::SetCycle", 0x41de20, 6, "64a100000000", (void *)h_abcycle, (void **)&o_abcycle, false, 0, 0, "body", 0 };
+    H_abapply = { "AnimatedBody::ApplyPose", 0x41df10, 5, "53565733db", (void *)h_abapply, (void **)&o_abapply, false, 0, 0, "body", 0 };
+    H_abadv = { "AnimatedBody::Advance", 0x41df50, 5, "83ec045356", (void *)h_abadv, (void **)&o_abadv, false, 0, 0, "body", 0 };
+    H_abdir = { "AnimatedBody::SetDirection", 0x41e2d0, 6, "8b44240485c0", (void *)h_abdir, (void **)&o_abdir, false, 0, 0, "body", 0 };
+    H_abloop = { "AnimatedBody::SetLoopMode", 0x41e2f0, 6, "8b44240485c0", (void *)h_abloop, (void **)&o_abloop, false, 0, 0, "body", 0 };
+    H_abtime = { "AnimatedBody::SetTime", 0x41e290, 7, "8b442404894130", (void *)h_abtime, (void **)&o_abtime, false, 0, 0, "body", 0 };
+    H_abblend = { "AnimatedBody::GetBlendFraction", 0x41e2a0, 6, "568b41448bf1", (void *)h_abblend, (void **)&o_abblend, false, 0, 0, "body", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
@@ -1971,8 +2152,9 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         g_qdmCompare = strstr(g_replaceList, "qdmcmp") != NULL;
         g_skyCompare = strstr(g_replaceList, "skycmp") != NULL;
         g_imgCompare = strstr(g_replaceList, "imgcmp") != NULL;
+        g_animCompare = strstr(g_replaceList, "animcmp") != NULL;
         for (Hook *h : g_hooks) {
-            if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky")) || (g_imgCompare && !strcmp(h->id, "img"))) Install(*h); }          // heavy: explicit opt-in
+            if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky")) || (g_imgCompare && !strcmp(h->id, "img")) || (g_animCompare && (h == &H_pcfind || h == &H_pcsample || h == &H_pcblend || h == &H_pzmatrix))) Install(*h); }          // heavy: explicit opt-in
             else if (!h->replaceOnly || g_mode == MODE_REPLACE) Install(*h);
         }
         for (Hook *h : g_ctnHooks)
