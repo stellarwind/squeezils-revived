@@ -85,6 +85,27 @@ void ReadPropFiles2(IniReader *ini) { ReadPropFiles(ini, kSecondProps, kSecondPa
 // @00429f80
 void ReadPropFiles3(IniReader *ini) { ReadPropFiles(ini, kThirdProps, kThirdPaths); }
 
+// @0042c700 The table key is the file name (the entry's value), not the entry's own name. A path file that can't be read is dropped.
+void ReadPaths(IniReader *ini, PathTable *paths)
+{
+    ini->SetSection("PathList");
+    StringList *entries = ini->GetKeys();
+    for (int i = 0; i < entries->count; i++) {
+        MorphCycle *clip = new MorphCycle(0, 1.0f, -1.0f);
+        ini->SetSection("PathList");
+        String file(ini->GetString(entries->At(i).c_str()));
+        if (ReadPathText(clip, ini, file.c_str())) {
+            if (paths->Contains(file)) {
+                MorphCycle *old = paths->Get(file);
+                if (old)
+                    delete old;
+            }
+            paths->Insert(file, clip, -1);
+        }
+    }
+    delete entries;
+}
+
 // @0042a290
 void ReadProps(IniReader *ini, PropTable *props)
 {

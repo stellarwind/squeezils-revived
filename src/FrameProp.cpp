@@ -4,6 +4,7 @@
 // vtable are plain calls here. The children can be any kind of prop and are called through their own vtables.
 #include <string.h>
 #include "FrameProp.h"
+#include "PropLoader.h"
 #include "BodyPart.h"
 #include "Animation.h"
 #include "Script.h"
