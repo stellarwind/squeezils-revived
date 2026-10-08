@@ -186,15 +186,14 @@ void *PlayerInventory();                                               // the pl
 // ---- the world (World.h) ----
 class World;
 World *GetWorld();                                                     // the global at 0x4bada8
-// The nav surface is an original class (0x2030 bytes) the world only creates, loads and frees.
-void *NavMeshConstruct(void *memory);                                  // @0047aec0 clears the object, returns it
-int   NavMeshLoad(void *nav, const char *path);                        // @0047c8e0 nonzero when the file loaded
-void  NavMeshDestroy(void *nav);                                       // @0047af00 (the caller frees the memory)
-// The nav mesh's own geometry (original, not reconstructed). The directions are unit vectors, flags are the instance's per surface type
-// flags (NavSurface.h). Both return nonzero when they found something.
-int   NavMeshTrace(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+// The nav mesh (NavMesh.h) is reconstructed. These three are the calls the code makes into it; hook.cpp defines them, either straight
+// to the NavMesh methods or, in the "navcmp" test mode, running the original and ours and comparing. The directions are unit vectors,
+// flags are the instance's per surface type flags (NavSurface.h). Trace and Move return nonzero when they found something.
+struct NavMesh;
+int   NavMeshLoad(NavMesh *nav, const char *path);                     // @0047c8e0 nonzero when the file loaded
+int   NavMeshTrace(NavMesh *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
                    float length, float *hitPos, float *hitRight, float *hitUp, float *hitForward, int *face, const int *flags);   // @0047b180 (thiscall, 12 stack arguments) a straight line from pos: the first face it hits
-int   NavMeshMove(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+int   NavMeshMove(NavMesh *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
                   float distance, int face, float *newPos, float *newRight, float *newUp, float *newForward, float *newDirection,
                   int *newFace, const int *flags);   // @0047b490 (thiscall, 14 stack arguments) slides along the faces from face; ends at the new place
 int   LoadPaletteFile(const char *path, unsigned char *rgba);          // @00474ca0 (cdecl) reads a palette into a 256 entry RGBA table, nonzero on success

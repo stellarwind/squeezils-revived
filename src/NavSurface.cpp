@@ -1,6 +1,7 @@
 // NavSurface: see NavSurface.h. Reconstructed from SQZ.EXE 0x40bf90-0x40d520 (instances and the space conversions) and 0x40f380-0x412c10
 // (the place's surface list queries).
 #include "NavSurface.h"
+#include "NavMesh.h"
 #include "SqueezilSoulInternal.h"
 #include "NavProp.h"
 #include "IniReader.h"
@@ -215,10 +216,10 @@ float *InstancedSurface::Carried(float *out, const float *point)
 // ---- NavSurfaceList ----
 
 // @00412bc0
-void *NavSurfaceList::FaceMesh(const Contact *c) { return Instance(c->face)->surface->mesh; }
+NavMesh *NavSurfaceList::FaceMesh(const Contact *c) { return Instance(c->face)->surface->mesh; }
 
 // @0040f380
-int NavSurfaceList::FaceType(const Contact *c) { return NavMeshFaceType(FaceMesh(c), c->second); }
+int NavSurfaceList::FaceType(const Contact *c) { return FaceMesh(c)->faces[c->second].type; }
 
 // @0040f3c0 the loaded surface's name for the face's type number (String by value, built in *out)
 String *NavSurfaceList::TypeName(String *out, const Contact *c)
@@ -322,14 +323,14 @@ static int *const kDebugSurfaceTypeOutput = (int *)0x4b9b30;   // the debug flag
 static const char *const kFirstType = " none";      // the string at 0x4b9ef4 (a leading blank); the instance defaults use "none" (0x4b9cf4)
 
 // @0040bc60
-LoadedSurface *LoadedSurface::Init(void *navMesh, int faces, const char *folder, const char *natFile, StringList *types)
+LoadedSurface *LoadedSurface::Init(NavMesh *navMesh, int faces, const char *folder, const char *natFile, StringList *types)
 {
     ::new (&directory) String();
     ::new (&file) String();
     ::new (&typeNames) StringList(*types);
     ::new (&typeNumbers) SurfaceTypeNumbers();
     mesh = navMesh;
-    sizeSquared = *(float *)((char *)navMesh + 0x2020);
+    sizeSquared = navMesh->sizeSquared;
     faceCount = faces;
     directory = String(folder);
     file = String(natFile);
@@ -339,7 +340,7 @@ LoadedSurface *LoadedSurface::Init(void *navMesh, int faces, const char *folder,
 }
 
 // @0040eec0
-int ReadSurfaceTypes(void *mesh, const char *, const char *natFile, StringList *types)
+int ReadSurfaceTypes(NavMesh *mesh, const char *, const char *natFile, StringList *types)
 {
     if (natFile[0] == '\0')
         return 0;
@@ -373,8 +374,7 @@ int ReadSurfaceTypes(void *mesh, const char *, const char *natFile, StringList *
     // The type numbers of this file: the list's own, which only grows (" none" is number 0)
     SurfaceTypeNumbers numbers;
     numbers.Insert(String(kFirstType), 0, -1);
-    unsigned faceCount = *(unsigned *)((char *)mesh + 8);
-    char *faces = *(char **)((char *)mesh + 0xc);
+    unsigned faceCount = mesh->faceCount;
     for (int i = 0; i < count; i++) {
         unsigned face;
         char name[64];
@@ -394,7 +394,7 @@ int ReadSurfaceTypes(void *mesh, const char *, const char *natFile, StringList *
         } else {
             type = numbers.Get(key);
         }
-        *(int *)(faces + 0x24 + face * 0x28) = type;
+        mesh->faces[face].type = type;
     }
     fclose(f);
     return count;
@@ -422,11 +422,10 @@ int NavSurfaceList::Load(IniReader *ini, const char *navFile, const char *natFil
         ini->GetDirectory(&again);
         SetCurrentDirectoryA(again.c_str());
     }
-    void *mesh = NavMeshConstruct(Operator_New(0x2030));
+    NavMesh *mesh = new NavMesh;
     if (!NavMeshLoad(mesh, navFile)) {
         GameLog("failed!\n");
-        NavMeshDestroy(mesh);
-        Operator_Delete(mesh);
+        delete mesh;
         if (saved[0])
             SetCurrentDirectoryA(saved);
         return 0;
