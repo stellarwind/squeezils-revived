@@ -23,6 +23,7 @@
 #include "Resources.h"
 #include "Prop.h"
 #include "FrameProp.h"
+#include "LODProp.h"
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
@@ -156,6 +157,14 @@ Prop *FindPropTemplate(const char *name, int unknown1, int unknown2)
 void *SimulationActor(int index)                         { return ((void *(TC *)(void *, int))0x414050)(*(void **)0x4badbc, index); }
 void *SimulationSoul(int index)                          { return ((void *(TC *)(void *, int))0x414080)(*(void **)0x4badbc, index); }
 float *ActorMatrix(void *actor)                          { return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor); }
+float *CameraMatrix()
+{
+    char *simulation = *(char **)0x4badbc;
+    char *table = *(char **)(simulation + 4);                   // @414150
+    char **values = *(char ***)(table + 0x24);
+    void *actor = *(void **)(values[1] + 4);
+    return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor);
+}
 ScriptCaller *ScriptCallerInit(ScriptCaller *c, int actorIndex, Prop *prop)
 {
     return ((ScriptCaller *(TC *)(ScriptCaller *, int, Prop *))0x4207a0)(c, actorIndex, prop);
@@ -1499,6 +1508,25 @@ static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
+static Hook H_lpinit, H_lpdestruct, H_lpdestroy, H_lpclone, H_lpbuild, H_lplevel, H_lpselect;
+static LODProp *(THISCALL *o_lpinit)(LODProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, WeightList *);
+static LODProp *THISCALL h_lpinit(LODProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, WeightList *w)
+{
+    HEAVY_LOG(H_lpinit);
+    return p->Init(a, b, c, d, n, m, t, w);
+}
+static void (__fastcall *o_lpdestruct)(LODProp *);
+static void __fastcall h_lpdestruct(LODProp *p) { HEAVY_LOG(H_lpdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_lpdestroy)(LODProp *, int);
+static Prop *THISCALL h_lpdestroy(LODProp *p, int flags) { HEAVY_LOG(H_lpdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_lpclone)(LODProp *, FrameProp *);
+static Prop *THISCALL h_lpclone(LODProp *p, FrameProp *o) { HEAVY_LOG(H_lpclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_lpbuild)(LODProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_lpbuild(LODProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_lpbuild); return p->BuildFrame(parent); }
+static void (__fastcall *o_lplevel)(LODProp *);
+static void __fastcall h_lplevel(LODProp *p) { HEAVY_LOG(H_lplevel); p->UpdateLevel(); }
+static int (THISCALL *o_lpselect)(LODProp *, Float3, Float3);
+static int THISCALL h_lpselect(LODProp *p, Float3 pos, Float3 fwd) { HEAVY_LOG(H_lpselect); return p->SelectLevel(pos, fwd); }
 static Hook H_fptime, H_fpdir, H_fploop, H_fpmatrix, H_fpactor, H_fpfollow, H_fphideend, H_fpfind;
 static FrameProp *(THISCALL *o_fpinit)(FrameProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *);
 static FrameProp *THISCALL h_fpinit(FrameProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t)
@@ -1807,6 +1835,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_fptime, &H_fpdir, &H_fploop, &H_fpmatrix, &H_fpactor, &H_fpfollow, &H_fphideend, &H_fpfind,
                            &H_pzctor, &H_pzassign, &H_pzmatrix, &H_pcctor, &H_pcdtor, &H_pcfind, &H_pcsample, &H_pcnew, &H_pcblend,
                            &H_ptctor, &H_ptcopy, &H_ptdtor, &H_ptfind, &H_ptat, &H_ptassign,
@@ -2110,6 +2139,13 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_lpinit = { "LODProp::Init", 0x428050, 7, "64a10000000055", (void *)h_lpinit, (void **)&o_lpinit, false, 0, 0, "lodprop", 0 };
+    H_lpdestruct = { "LODProp::Destruct", 0x428260, 7, "64a10000000055", (void *)h_lpdestruct, (void **)&o_lpdestruct, false, 0, 0, "lodprop", 0 };
+    H_lpdestroy = { "LODProp::Destroy", 0x428240, 8, "568bf1e818000000", (void *)h_lpdestroy, (void **)&o_lpdestroy, false, 0, 0, "lodprop", 4 };
+    H_lpclone = { "LODProp::Clone", 0x4282d0, 7, "64a10000000055", (void *)h_lpclone, (void **)&o_lpclone, false, 0, 0, "lodprop", 0 };
+    H_lpbuild = { "LODProp::BuildFrame", 0x4283f0, 7, "64a10000000055", (void *)h_lpbuild, (void **)&o_lpbuild, false, 0, 0, "lodprop", 0 };
+    H_lplevel = { "LODProp::UpdateLevel", 0x428510, 7, "64a10000000055", (void *)h_lplevel, (void **)&o_lplevel, false, 0, 0, "lodprop", 0 };
+    H_lpselect = { "LODProp::SelectLevel", 0x4286d0, 7, "64a10000000055", (void *)h_lpselect, (void **)&o_lpselect, false, 0, 0, "lodprop", 0 };
     H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };

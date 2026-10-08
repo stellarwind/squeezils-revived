@@ -255,6 +255,7 @@ Prop *FindPropTemplate(const char *name, int unknown1, int unknown2);  // @0042c
 void *SimulationActor(int index);                                      // @00414050 (thiscall on the simulation)
 void *SimulationSoul(int index);                                       // @00414080
 float *ActorMatrix(void *actor);                                       // the actor's virtual slot 3: its 4x4 matrix
+float *CameraMatrix();                                                  // @00420690 + @00414150: entry 1 of the simulation's actor table, its actor's 4x4 matrix (the camera; LODProp reads it)
 static const void *const kSqueezilSoulType = (const void *)0x4b9368;   // .?AVSqueezilSoul
 // The two constructors of the record a prop hands a script function. Both fill it directly when prop is not NULL (all FrameProp
 // does); with a NULL prop they look the prop up through the actor, which is not reconstructed.
