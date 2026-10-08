@@ -1,6 +1,6 @@
 // NavSurface: the walkable geometry of a place (nothing to do with DirectDraw surfaces). Reconstructed from SQZ.EXE 0x40bc60-0x412c40.
 // The three classes keep the names the RTTI of their container instantiations gives (Array<LoadedSurface*>, Array<InstancedSurface*>,
-// Array<SurfaceTypeDescription*>); NavSurfaceList, NavMeshFaces and IdList are our names (no RTTI).
+// Array<SurfaceTypeDescription*>); NavSurfaceList and IdList are our names (no RTTI).
 //
 // A level's ground is made of surfaces. A *loaded surface* is a .nat file read once (its faces, and the surface types the faces
 // refer to by number). An *instanced surface* is a copy of a loaded surface standing in the world with its own matrix: the level's
@@ -25,15 +25,7 @@
 
 class String;
 
-// The .nat file object (0x2030 bytes, original class; World.h holds one too). Only the face array is read here.
-struct NavMeshFaces {
-    char  pad0[0x0c];
-    char *faces;                // 0x0c faces, 0x28 bytes each; +0x24 of a face is its surface type number
-};
-inline int NavMeshFaceType(const void *mesh, int face)
-{
-    return *(const int *)(((const NavMeshFaces *)mesh)->faces + face * 0x28 + 0x24);
-}
+struct NavMesh;
 
 typedef BufferObjectTable<String, int, PrimitiveArray<int, 1>, 21> SurfaceTypeNumbers;
 
@@ -51,7 +43,7 @@ static_assert(sizeof(IdList) == 0x14, "IdList layout");
 
 // 0x58 bytes. Built by @0040bc60.
 struct LoadedSurface {
-    void              *mesh;            // 0x00 the .nav object (0x2030 bytes, World.h holds one too)
+    NavMesh           *mesh;            // 0x00 the .nav object (NavMesh.h; World.h holds one too)
     float              sizeSquared;     // 0x04 the mesh's float at +0x2020 (@0047af20); the instance tests squared distances against it
     int                faceCount;       // 0x08 the number of faces in the .nat file (what ReadSurfaceTypes returned)
     String             directory;       // 0x0c the ini file's folder the surface was loaded from
@@ -60,7 +52,7 @@ struct LoadedSurface {
     SurfaceTypeNumbers typeNumbers;     // 0x28 type name -> number
 
     // @0040bc60 types (copied) are the .nat file's type names; the size is read from the mesh
-    LoadedSurface *Init(void *navMesh, int faces, const char *directory, const char *natFile, StringList *types);
+    LoadedSurface *Init(NavMesh *navMesh, int faces, const char *directory, const char *natFile, StringList *types);
     // @0040bee0 deletes the nav mesh, then the type tables and the two names
     void Destruct();
 };
@@ -140,7 +132,7 @@ struct NavSurfaceList {
 
     LoadedSurface    *Loaded(int number)         { return loaded.At(number); }                  // @00412c10
     InstancedSurface *Instance(int number)       { return instances.At(number); }              // @00412bf0
-    void *FaceMesh(const Contact *c);                                                           // @00412bc0 the .nat object of the contact's surface
+    NavMesh *FaceMesh(const Contact *c);                                                           // @00412bc0 the .nat object of the contact's surface
     int   FaceType(const Contact *c);                                                           // @0040f380 the surface type number of the face
     IniValueTable *Properties(const Contact *c) { return &Instance(c->face)->properties; }     // @0040f3a0
     String *TypeName(String *out, const Contact *c);                                            // @0040f3c0 the face's type, by name
@@ -204,4 +196,4 @@ float *MakeMatrix(float *out, const float *right, const float *up, const float *
 // @0040eec0 (stdcall) Reads a .nat file: "#Nat V1.0 ascii", the number of faces, then one "face typeName" line per face. Writes each face's
 // type number into the mesh. Numbers follow `types`: it must start with " none" (number 0); a name not in it yet is appended. Returns the
 // number of faces in the file, 0 on any error (also logged). `directory` is not used. A file that cannot be opened gives a Retry/Cancel box.
-int ReadSurfaceTypes(void *mesh, const char *directory, const char *natFile, StringList *types);
+int ReadSurfaceTypes(NavMesh *mesh, const char *directory, const char *natFile, StringList *types);

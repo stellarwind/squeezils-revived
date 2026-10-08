@@ -23,6 +23,8 @@ struct DecalSettings {
 };
 static_assert(sizeof(DecalSettings) == 44, "DecalSettings layout");
 
+struct NavMesh;
+
 class World {
 public:
     World();                                          // @004357b0 reads [Camera] FOV / Far / Near, sets the view, makes the frame timer
@@ -43,7 +45,7 @@ public:
     int           unknown0;          // 0x00 never written or read by the code seen
     IDirect3DRMFrame *directionalLight;   // 0x04 frame of the sun
     IDirect3DRMFrame *ambientLight;       // 0x08 frame of the ambient light
-    void         *navMesh;            // 0x0c the nav surface object (0x2030 bytes, original class), NULL when the level has none
+    NavMesh      *navMesh;            // 0x0c the level's ground (NavMesh.h), NULL when the level has none
 };
 static_assert(sizeof(World) == 16, "World layout");
 static_assert(offsetof(World, directionalLight) == 4 && offsetof(World, navMesh) == 12, "World layout");

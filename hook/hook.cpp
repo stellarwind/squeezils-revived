@@ -35,6 +35,7 @@
 #include "SqueezilSoul.h"
 #include "NavProp.h"
 #include "NavSurface.h"
+#include "NavMesh.h"
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
@@ -138,22 +139,6 @@ int  CalibrationCheck(void *cal)                         { return ((int (TC *)(v
 int  CalibrationRun(void *cal, HWND dlg)                 { return ((int (TC *)(void *, HWND))0x447f00)(cal, dlg); }
 // ---- the world ----
 World *GetWorld()                                        { return *(World **)0x4bada8; }
-void *NavMeshConstruct(void *memory)                     { return ((void *(TC *)(void *))0x47aec0)(memory); }
-int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(void *, const char *))0x47c8e0)(nav, path); }
-void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
-int   NavMeshTrace(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
-                   float length, float *hitPos, float *hitRight, float *hitUp, float *hitForward, int *face, const int *flags)
-{
-    typedef int (TC *F)(void *, const float *, const float *, const float *, const float *, const float *, float, float *, float *, float *, float *, int *, const int *);
-    return ((F)0x47b180)(nav, pos, right, up, forward, direction, length, hitPos, hitRight, hitUp, hitForward, face, flags);
-}
-int   NavMeshMove(void *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
-                  float distance, int face, float *newPos, float *newRight, float *newUp, float *newForward, float *newDirection,
-                  int *newFace, const int *flags)
-{
-    typedef int (TC *F)(void *, const float *, const float *, const float *, const float *, const float *, float, int, float *, float *, float *, float *, float *, int *, const int *);
-    return ((F)0x47b490)(nav, pos, right, up, forward, direction, distance, face, newPos, newRight, newUp, newForward, newDirection, newFace, flags);
-}
 int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
 int   ReadPathText(MorphCycle *clip, IniReader *ini, const char *file) { return ((int (TC *)(MorphCycle *, IniReader *, const char *))0x41c530)(clip, ini, file); }
 // ---- the resource loaders' model calls ----
@@ -2040,9 +2025,9 @@ static LoadedSurface *(THISCALL *o_slload)(NavSurfaceList *, int);
 static LoadedSurface *THISCALL h_slload(NavSurfaceList *l, int i) { HEAVY_LOG(H_slload); return l->Loaded(i); }
 static Hook H_lsinit, H_lsread, H_slload2, H_sladd;
 static LoadedSurface *(THISCALL *o_lsinit)(LoadedSurface *, void *, int, const char *, const char *, StringList *);
-static LoadedSurface *THISCALL h_lsinit(LoadedSurface *s, void *m, int n, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsinit); return s->Init(m, n, d, f, t); }
+static LoadedSurface *THISCALL h_lsinit(LoadedSurface *s, NavMesh *m, int n, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsinit); return s->Init(m, n, d, f, t); }
 static int (__stdcall *o_lsread)(void *, const char *, const char *, StringList *);
-static int __stdcall h_lsread(void *m, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsread); return ReadSurfaceTypes(m, d, f, t); }
+static int __stdcall h_lsread(NavMesh *m, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsread); return ReadSurfaceTypes(m, d, f, t); }
 static int (THISCALL *o_slload2)(NavSurfaceList *, IniReader *, const char *, const char *);
 static int THISCALL h_slload2(NavSurfaceList *l, IniReader *i, const char *n, const char *f) { HEAVY_LOG(H_slload2); return l->Load(i, n, f); }
 static int (THISCALL *o_sladd)(NavSurfaceList *, NavProp *, int, const float *, IniValueTable *);
@@ -2084,6 +2069,256 @@ static void (THISCALL *o_slflush)(NavSurfaceList *);
 static void THISCALL h_slflush(NavSurfaceList *l) { HEAVY_LOG(H_slflush); l->FlushRemoved(); }
 static void (THISCALL *o_slcarry)(NavSurfaceList *);
 static void THISCALL h_slcarry(NavSurfaceList *l) { HEAVY_LOG(H_slcarry); l->MoveCarried(); }
+
+// ---- the nav mesh (NavMesh.cpp, 0x47aec0-0x47d5f0) ----
+// "navmesh" detours the five entry points (constructor, destructor, Load, Trace, Move) to our NavMesh. "navcmp" detours nothing: the
+// three calls our own code makes (NavMeshLoad / NavMeshTrace / NavMeshMove, Original.h) then run the original first and ours second,
+// compare the answers, and give the game the original's. List one of the two, not both.
+static Hook H_nmctor, H_nmdtor, H_nmload, H_nmtrace, H_nmmove;
+static bool g_navCompare;
+static int g_navInexact;        // answers that were the same to 1e-4 but not bit for bit
+static bool g_navTest, g_navTestRan;   // "navtest" (below)
+static void NavSelfTest();
+
+static int OrigNavLoad(NavMesh *nav, const char *path) { return ((int (TC *)(NavMesh *, const char *))0x47c8e0)(nav, path); }
+
+// Equal bit for bit, or (the x87 does not always round the same way) close; `exact` goes false on the second
+static bool NavSame(const float *a, const float *b, int count, bool *exact)
+{
+    for (int i = 0; i < count; i++) {
+        if (memcmp(&a[i], &b[i], 4) == 0) continue;
+        *exact = false;
+        if (!(fabsf(a[i] - b[i]) <= 1e-4f * (1.0f + fabsf(a[i])))) return false;
+    }
+    return true;
+}
+
+static void NavInexact(Hook &h)
+{
+    if (++g_navInexact <= 5 || g_navInexact % 1000 == 0) Log("NAVNEAR %s: answers differ in the last bits (%d so far)", h.name, g_navInexact);
+}
+
+static bool NavBoxSame(const NavBox *a, const NavBox *b)
+{
+    if (!a || !b) return a == b;
+    if (memcmp(a, b, 0x18) != 0 || a->faceCount != b->faceCount) return false;
+    if (a->faceCount && memcmp(a->faces, b->faces, a->faceCount * sizeof(int)) != 0) return false;
+    for (int i = 0; i < 8; i++)
+        if (!NavBoxSame(a->child[i], b->child[i])) return false;
+    return true;
+}
+
+int NavMeshLoad(NavMesh *nav, const char *path)
+{
+    if (!g_navCompare) return nav->Load(path);
+    if (g_navTest && !g_navTestRan) { g_navTestRan = true; NavSelfTest(); }
+    int original = OrigNavLoad(nav, path);
+    NavMesh mine;
+    int ours = mine.Load(path);
+    H_nmload.calls++;
+    bool bad = original != ours;
+    if (!bad && original)
+        bad = nav->pointCount != mine.pointCount || nav->faceCount != mine.faceCount ||
+              memcmp(&nav->sizeSquared, &mine.sizeSquared, 4) != 0 ||
+              memcmp(nav->points, mine.points, nav->pointCount * sizeof(Vector3f)) != 0 ||
+              memcmp(nav->faces, mine.faces, nav->faceCount * sizeof(NavFace)) != 0 || !NavBoxSame(nav->tree, mine.tree);
+    if (bad && ++H_nmload.mismatches <= 10)
+        Log("MISMATCH %s: %s result orig=%d ours=%d points %u/%u faces %u/%u size %g/%g", H_nmload.name, path, original, ours,
+            nav->pointCount, mine.pointCount, nav->faceCount, mine.faceCount, nav->sizeSquared, mine.sizeSquared);
+    return original;
+}
+
+int NavMeshTrace(NavMesh *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                 float length, float *hitPos, float *hitRight, float *hitUp, float *hitForward, int *face, const int *flags)
+{
+    if (!g_navCompare)
+        return nav->Trace(pos, right, up, forward, direction, length, hitPos, hitRight, hitUp, hitForward, face, flags);
+    typedef int (TC *F)(NavMesh *, const float *, const float *, const float *, const float *, const float *, float, float *, float *, float *, float *, int *, const int *);
+    float o[12], m[12];
+    memcpy(o, hitPos, 12); memcpy(o + 3, hitRight, 12); memcpy(o + 6, hitUp, 12); memcpy(o + 9, hitForward, 12);
+    memcpy(m, o, sizeof m);
+    int oFace = *face, mFace = *face;
+    int original = ((F)0x47b180)(nav, pos, right, up, forward, direction, length, o, o + 3, o + 6, o + 9, &oFace, flags);
+    int ours = nav->Trace(pos, right, up, forward, direction, length, m, m + 3, m + 6, m + 9, &mFace, flags);
+    H_nmtrace.calls++;
+    bool exact = true;
+    bool bad = original != ours || oFace != mFace || !NavSame(o, m, 12, &exact);
+    if (bad) {
+        if (++H_nmtrace.mismatches <= 10)
+            Log("MISMATCH %s: result orig=%d ours=%d face %d/%d at orig %g %g %g ours %g %g %g", H_nmtrace.name, original, ours, oFace, mFace,
+                o[0], o[1], o[2], m[0], m[1], m[2]);
+    } else if (!exact) NavInexact(H_nmtrace);
+    memcpy(hitPos, o, 12); memcpy(hitRight, o + 3, 12); memcpy(hitUp, o + 6, 12); memcpy(hitForward, o + 9, 12);
+    *face = oFace;
+    return original;
+}
+
+int NavMeshMove(NavMesh *nav, const float *pos, const float *right, const float *up, const float *forward, const float *direction,
+                float distance, int face, float *newPos, float *newRight, float *newUp, float *newForward, float *newDirection,
+                int *newFace, const int *flags)
+{
+    if (!g_navCompare)
+        return nav->Move(pos, right, up, forward, direction, distance, face, newPos, newRight, newUp, newForward, newDirection, newFace, flags);
+    typedef int (TC *F)(NavMesh *, const float *, const float *, const float *, const float *, const float *, float, int, float *, float *, float *, float *, float *, int *, const int *);
+    float o[15], m[15];
+    memcpy(o, newPos, 12); memcpy(o + 3, newRight, 12); memcpy(o + 6, newUp, 12); memcpy(o + 9, newForward, 12); memcpy(o + 12, newDirection, 12);
+    memcpy(m, o, sizeof m);
+    int oFace = *newFace, mFace = *newFace;
+    int original = ((F)0x47b490)(nav, pos, right, up, forward, direction, distance, face, o, o + 3, o + 6, o + 9, o + 12, &oFace, flags);
+    int ours = nav->Move(pos, right, up, forward, direction, distance, face, m, m + 3, m + 6, m + 9, m + 12, &mFace, flags);
+    H_nmmove.calls++;
+    bool exact = true;
+    bool bad = original != ours || oFace != mFace || !NavSame(o, m, 15, &exact);
+    if (bad) {
+        if (++H_nmmove.mismatches <= 10)
+            { int k = 0; while (k < 15 && NavSame(o + k, m + k, 1, &exact)) k++;
+                Log("MISMATCH %s: result orig=%d ours=%d face %d/%d dist %g from face %d; float %d orig %.9g ours %.9g", H_nmmove.name, original, ours,
+                    oFace, mFace, distance, face, k, k < 15 ? o[k] : 0.0f, k < 15 ? m[k] : 0.0f); 
+                if (H_nmmove.mismatches <= 4) {
+                    Log("  in  pos %.9g %.9g %.9g right %.9g %.9g %.9g up %.9g %.9g %.9g fwd %.9g %.9g %.9g dir %.9g %.9g %.9g", pos[0], pos[1], pos[2], right[0], right[1], right[2], up[0], up[1], up[2], forward[0], forward[1], forward[2], direction[0], direction[1], direction[2]);
+                    Log("  orig %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g", o[0], o[1], o[2], o[3], o[4], o[5], o[6], o[7], o[8], o[9], o[10], o[11], o[12], o[13], o[14]);
+                    Log("  ours %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g | %.9g %.9g %.9g", m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8], m[9], m[10], m[11], m[12], m[13], m[14]);
+                } }
+    } else if (!exact) NavInexact(H_nmmove);
+    memcpy(newPos, o, 12); memcpy(newRight, o + 3, 12); memcpy(newUp, o + 6, 12); memcpy(newForward, o + 9, 12); memcpy(newDirection, o + 12, 12);
+    *newFace = oFace;
+    return original;
+}
+
+// ---- "navtest": a self test that needs no playing ----
+// On the first nav mesh load of the game every .nav file under SQZ is loaded and compared, and each mesh is asked 300 moves and 300
+// traces made up from its own faces (a point on a random face, a direction along it or at it, a distance of a few edge lengths, some
+// surface types made impassable). Both run the original and ours through the compare wrappers above, so the answer is in the summary.
+static unsigned g_navSeed = 20241008;
+static unsigned g_navTraceHits, g_navMoveDone, g_navMoveBlocked, g_navFiles;
+
+static float NavRnd() { g_navSeed = g_navSeed * 1664525u + 1013904223u; return (float)(g_navSeed >> 8) * (1.0f / 16777216.0f); }
+
+static Vector3f NavRandomUnit()
+{
+    for (;;) {
+        Vector3f v(NavRnd() * 2 - 1, NavRnd() * 2 - 1, NavRnd() * 2 - 1);
+        float l = Length(v);
+        if (l > 0.1f && l <= 1.0f) return v * (1.0f / l);
+    }
+}
+
+static void NavTestMesh(const char *path)
+{
+    NavMesh *m = new NavMesh;
+    if (!m) return;
+    if (NavMeshLoad(m, path) && m->faceCount && m->tree && m->pointCount) {
+        g_navFiles++;
+        int types = 1;
+        for (unsigned i = 0; i < m->faceCount; i++)
+            if (m->faces[i].type >= types) types = m->faces[i].type + 1;
+        if (types > 1024) types = 1024;
+        int size = (int)m->faceCount + 1 > types ? (int)m->faceCount + 1 : types;   // (the original reads flags[faceCount] at an edge without a neighbour)
+        int *flags = new int[size];
+        for (int i = types; i < size; i++) flags[i] = 1;
+        for (int i = 0; i < types; i++) flags[i] = NavRnd() < 0.8f || i == 0;
+        for (int q = 0; q < 300; q++) {
+            int fi = (int)(NavRnd() * m->faceCount) % m->faceCount;
+            const NavFace &f = m->faces[fi];
+            if (f.type >= types) continue;
+            Vector3f a = m->points[f.vertex[0]], b = m->points[f.vertex[1]], c = m->points[f.vertex[2]];
+            float u = NavRnd(), v = NavRnd();
+            if (u + v > 1.0f) { u = 1.0f - u; v = 1.0f - v; }
+            Vector3f p = a + (b - a) * u + (c - a) * v;
+            Vector3f n = f.normal;
+            float L = Length(b - a);
+            if (!(L > 0.0f)) continue;
+
+            // a walk along the face
+            Vector3f d = Cross(n, NavRandomUnit());
+            if (Normalize(d) == 0.0f) continue;
+            Vector3f up = n, fwd = d, right = Cross(up, fwd);
+            Normalize(right);
+            float dist = (NavRnd() * 3.5f - 0.5f) * L;
+            float np[3], nr[3], nu[3], nf[3], nd[3]; int nface = -2;
+            if (NavMeshMove(m, &p.x, &right.x, &up.x, &fwd.x, &d.x, dist, fi, np, nr, nu, nf, nd, &nface, flags)) g_navMoveDone++;
+            else g_navMoveBlocked++;
+
+            // a line at the face (half the time) or anywhere in the mesh's box
+            Vector3f start, dir;
+            float length;
+            if (q & 1) {
+                float h = L * (0.2f + NavRnd() * 1.3f);
+                start = p + n * h;
+                dir = n * -1.0f + NavRandomUnit() * 0.3f;
+                Normalize(dir);
+                length = h * 2.0f;
+            } else {
+                const NavBox *t = m->tree;
+                start = Vector3f(t->xMin + NavRnd() * (t->xMax - t->xMin), t->yMin + NavRnd() * (t->yMax - t->yMin), t->zMin + NavRnd() * (t->zMax - t->zMin));
+                dir = NavRandomUnit();
+                length = NavRnd() * L * 4.0f;
+            }
+            Vector3f tf = dir, tu = n, tr = Cross(tu, tf);
+            Normalize(tr);
+            float hp[3], hr[3], hu[3], hf[3]; int hface = -2;
+            if (NavMeshTrace(m, &start.x, &tr.x, &tu.x, &tf.x, &dir.x, length, hp, hr, hu, hf, &hface, flags)) g_navTraceHits++;
+        }
+        delete[] flags;
+    }
+    delete m;
+}
+
+static void NavTestDirectory(const char *dir)
+{
+    char pattern[MAX_PATH];
+    sprintf(pattern, "%s\\*", dir);
+    WIN32_FIND_DATAA fd;
+    HANDLE h = FindFirstFileA(pattern, &fd);
+    if (h == INVALID_HANDLE_VALUE) return;
+    do {
+        if (fd.cFileName[0] == '.') continue;
+        char full[MAX_PATH];
+        sprintf(full, "%s\\%s", dir, fd.cFileName);
+        if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+            NavTestDirectory(full);
+        } else {
+            size_t n = strlen(full);
+            if (n > 4 && _stricmp(full + n - 4, ".nav") == 0) NavTestMesh(full);
+        }
+    } while (FindNextFileA(h, &fd));
+    FindClose(h);
+}
+
+static void NavSelfTest()
+{
+    char root[MAX_PATH];
+    GetModuleFileNameA(NULL, root, MAX_PATH);
+    char *slash = strrchr(root, '\\');
+    if (slash) *slash = 0;
+    strcat(root, "\\SQZ");
+    unsigned before[3] = { H_nmload.mismatches, H_nmtrace.mismatches, H_nmmove.mismatches };
+    unsigned calls[3] = { H_nmload.calls, H_nmtrace.calls, H_nmmove.calls };
+    Log("navtest: starting in %s", root);
+    NavTestDirectory(root);
+    Log("navtest: %u meshes; loads %u (mismatches %u); traces %u (%u hit, mismatches %u); moves %u (%u walked, %u blocked, mismatches %u)",
+        g_navFiles, H_nmload.calls - calls[0], H_nmload.mismatches - before[0], H_nmtrace.calls - calls[1], g_navTraceHits,
+        H_nmtrace.mismatches - before[1], H_nmmove.calls - calls[2], g_navMoveDone, g_navMoveBlocked, H_nmmove.mismatches - before[2]);
+}
+
+static void *(THISCALL *o_nmctor)(NavMesh *);
+static void *THISCALL h_nmctor(NavMesh *m) { HEAVY_LOG(H_nmctor); ::new (m) NavMesh(); return m; }
+static void (__fastcall *o_nmdtor)(NavMesh *);
+static void __fastcall h_nmdtor(NavMesh *m) { HEAVY_LOG(H_nmdtor); m->~NavMesh(); }
+static int (THISCALL *o_nmload)(NavMesh *, const char *);
+static int THISCALL h_nmload(NavMesh *m, const char *path) { HEAVY_LOG(H_nmload); return m->Load(path); }
+static int (THISCALL *o_nmtrace)(NavMesh *, const float *, const float *, const float *, const float *, const float *, float, float *, float *, float *, float *, int *, const int *);
+static int THISCALL h_nmtrace(NavMesh *m, const float *pos, const float *r, const float *u, const float *f, const float *d, float length, float *hp, float *hr, float *hu, float *hf, int *face, const int *flags)
+{
+    HEAVY_LOG(H_nmtrace);
+    return m->Trace(pos, r, u, f, d, length, hp, hr, hu, hf, face, flags);
+}
+static int (THISCALL *o_nmmove)(NavMesh *, const float *, const float *, const float *, const float *, const float *, float, int, float *, float *, float *, float *, float *, int *, const int *);
+static int THISCALL h_nmmove(NavMesh *m, const float *pos, const float *r, const float *u, const float *f, const float *d, float dist, int face, float *np, float *nr, float *nu, float *nf, float *nd, int *nface, const int *flags)
+{
+    HEAVY_LOG(H_nmmove);
+    return m->Move(pos, r, u, f, d, dist, face, np, nr, nu, nf, nd, nface, flags);
+}
 
 static Hook H_slflight, H_slwalk, H_sfmloc, H_sfwbefore, H_mkmat, H_mkmat2;
 static int (THISCALL *o_slflight)(NavSurfaceList *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, const Float3 *, float, Float3 *, Float3 *, Float3 *, Float3 *, Contact *);
@@ -2442,6 +2677,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_lsdtor, &H_slctor, &H_sldtor, &H_slrlist, &H_slrnames, &H_slrtype, &H_slunload, &H_slbind, &H_slground,
                            &H_slsetface, &H_sltchg, &H_slflush, &H_slcarry,
                            &H_slflight, &H_slwalk, &H_sfmloc, &H_sfwbefore, &H_mkmat, &H_mkmat2,
+                           &H_nmctor, &H_nmdtor, &H_nmload, &H_nmtrace, &H_nmmove,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_npinit, &H_npinitc, &H_npdestruct, &H_npdestroy, &H_npclone, &H_npbuild, &H_nphide, &H_npupdate, &H_npsize, &H_npsurf,
@@ -2977,6 +3213,11 @@ static void Setup()
     H_sfwbefore = { "InstancedSurface::ToWorldBefore", 0x4128a0, 7, "64a10000000055", (void *)h_sfwbefore, (void **)&o_sfwbefore, false, 0, 0, "navmove", 0 };
     H_mkmat = { "MakeMatrix", 0x412830, 5, "8b54240453", (void *)h_mkmat, (void **)&o_mkmat, false, 0, 0, "navmove", 0 };
     H_mkmat2 = { "MakeMatrix (copy)", 0x409f00, 5, "8b54240453", (void *)h_mkmat2, (void **)&o_mkmat2, false, 0, 0, "navmove", 0 };
+    H_nmctor = { "NavMesh::NavMesh", 0x47aec0, 7, "33c08901894104", (void *)h_nmctor, (void **)&o_nmctor, false, 0, 0, "navmesh", 0 };
+    H_nmdtor = { "NavMesh::~NavMesh", 0x47af00, 8, "568bf1e828020000", (void *)h_nmdtor, (void **)&o_nmdtor, false, 0, 0, "navmesh", 4 };
+    H_nmload = { "NavMesh::Load", 0x47c8e0, 5, "83ec045356", (void *)h_nmload, (void **)&o_nmload, false, 0, 0, "navmesh", 0 };
+    H_nmtrace = { "NavMesh::Trace", 0x47b180, 6, "64a100000000", (void *)h_nmtrace, (void **)&o_nmtrace, false, 0, 0, "navmesh", 0 };
+    H_nmmove = { "NavMesh::Move", 0x47b490, 6, "64a100000000", (void *)h_nmmove, (void **)&o_nmmove, false, 0, 0, "navmesh", 0 };
     H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };
@@ -3021,6 +3262,7 @@ static void Setup()
 static void Summary()
 {
     Log("Scene frames with warp backdrop=%u", g_warpFrames);
+    if (g_navCompare) Log("nav mesh compare: %d answers equal but for the last bits", g_navInexact);
     for (Hook *h : g_hooks)
         Log("summary %-34s calls=%u mismatches=%u", h->name, h->calls, h->mismatches);
     for (Hook *h : g_ctnHooks)
@@ -3116,6 +3358,8 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID)
         g_skyCompare = strstr(g_replaceList, "skycmp") != NULL;
         g_imgCompare = strstr(g_replaceList, "imgcmp") != NULL;
         g_animCompare = strstr(g_replaceList, "animcmp") != NULL;
+        g_navTest = strstr(g_replaceList, "navtest") != NULL;
+        g_navCompare = g_navTest || strstr(g_replaceList, "navcmp") != NULL;
         for (Hook *h : g_hooks) {
             if (h->id) { if (Listed(h->id) || (g_skyCompare && !strcmp(h->id, "sky")) || (g_imgCompare && !strcmp(h->id, "img")) || (g_animCompare && (h == &H_pcfind || h == &H_pcsample || h == &H_pcblend || h == &H_pzmatrix))) Install(*h); }          // heavy: explicit opt-in
             else if (!h->replaceOnly || g_mode == MODE_REPLACE) Install(*h);

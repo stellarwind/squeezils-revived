@@ -2,6 +2,7 @@
 // Reconstructed from SQZ.EXE 0x40bee0, 0x40d530-0x40e2e0 (+ the one at 0x40e160), 0x40f450, 0x410330, 0x4106e0 and 0x412920.
 // The classes and the loading of the surfaces themselves are in NavSurface.h / NavSurface.cpp.
 #include "NavSurface.h"
+#include "NavMesh.h"
 #include "SqueezilSoulInternal.h"
 #include "FrameProp.h"
 #include "Simulation.h"
@@ -16,10 +17,7 @@ static const char *const kNoneName = "none";     // the string at 0x4b9cf4
 // @0040bee0
 void LoadedSurface::Destruct()
 {
-    if (mesh) {
-        NavMeshDestroy(mesh);
-        Operator_Delete(mesh);
-    }
+    delete mesh;
     typeNumbers.~SurfaceTypeNumbers();
     typeNames.~StringList();
     file.~String();

@@ -161,3 +161,8 @@ static_assert(offsetof(FlightModel, dragZMult) == 0x2c && offsetof(FlightModel, 
               offsetof(FlightModel, climbPitchFactor) == 0x58, "FlightModel fields");
 static_assert(offsetof(LeverMotion, pushIncrement) == 0x18 && offsetof(LeverMotion, leverWeightFactor) == 0x28, "LeverMotion fields");
 static_assert(offsetof(DirectionHistory, sum) == 0x08 && offsetof(DirectionHistory, added) == 0x18, "DirectionHistory fields");
+#include "NavMesh.h"
+static_assert(sizeof(NavMesh) == 0x2030 && offsetof(NavMesh, points) == 0x04 && offsetof(NavMesh, faces) == 0x0c && offsetof(NavMesh, tree) == 0x10 &&
+              offsetof(NavMesh, hits) == 0x14 && offsetof(NavMesh, sizeSquared) == 0x2020, "NavMesh fields");
+static_assert(offsetof(NavFace, normal) == 0x0c && offsetof(NavFace, neighbour) == 0x18 && offsetof(NavFace, type) == 0x24 &&
+              offsetof(NavBox, faceCount) == 0x18 && offsetof(NavBox, child) == 0x20, "NavMesh parts");

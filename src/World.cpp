@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include "World.h"
+#include "NavMesh.h"
 #include "Panel.h"
 #include "Original.h"
 
@@ -50,10 +51,7 @@ World::World()
 World::~World()
 {
     Operator_Delete(*kFrameTimer);
-    if (navMesh) {
-        NavMeshDestroy(navMesh);
-        Operator_Delete(navMesh);
-    }
+    delete navMesh;
 }
 
 // @00435910
@@ -111,10 +109,7 @@ void World::DestroyScene()
     directionalLight = NULL;
     ClearWorldObjects();
     scene->DeleteSceneChild();
-    if (navMesh) {
-        NavMeshDestroy(navMesh);
-        Operator_Delete(navMesh);
-    }
+    delete navMesh;
     navMesh = NULL;
 }
 
@@ -127,8 +122,7 @@ void World::LoadNavMesh(IniReader *reader)
         GameLog("No nav surface defined.\n");
         return;
     }
-    void *memory = Operator_New(0x2030);
-    navMesh = memory ? NavMeshConstruct(memory) : NULL;
+    navMesh = new NavMesh;
     GameLog("Loading nav surface %s: ", name);
 
     // Like the sky: a bare file name is looked up next to the ini file.
@@ -141,10 +135,7 @@ void World::LoadNavMesh(IniReader *reader)
     }
     if (!NavMeshLoad(navMesh, name)) {
         GameLog("failed!\n");
-        if (navMesh) {
-            NavMeshDestroy(navMesh);
-            Operator_Delete(navMesh);
-        }
+        delete navMesh;
         navMesh = NULL;
     } else {
         GameLog("OK.\n");

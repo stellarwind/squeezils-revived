@@ -9,6 +9,7 @@
 //
 // The original works on matrices of 16 floats whose fourth column is 0 0 0 1; MakeMatrix builds one from its four rows.
 #include "NavSurface.h"
+#include "NavMesh.h"
 #include "SqueezilSoulInternal.h"
 #include "FrameProp.h"
 #include "Simulation.h"
