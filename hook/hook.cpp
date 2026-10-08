@@ -29,6 +29,8 @@
 #include "PropList.h"
 #include "Simulation.h"
 #include "Body.h"
+#include "CameraBody.h"
+#include "GoodieBody.h"
 #include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
@@ -1576,6 +1578,30 @@ static void (THISCALL *o_bdgetangles)(Body *, float *, float *, float *);
 static void THISCALL h_bdgetangles(Body *b, float *x, float *y, float *z) { HEAVY_LOG(H_bdgetangles); b->GetAngles(x, y, z); }
 static void (THISCALL *o_bdcontact)(Body *, const Contact *);
 static void THISCALL h_bdcontact(Body *b, const Contact *c) { HEAVY_LOG(H_bdcontact); b->SetContact(c); }
+// ---- GoodieBody (GoodieBody.h): the body of a goodie lying in the world ----
+static Hook H_gbinit, H_gbdtor, H_gbfree, H_gbupdate, H_gbcontact;
+static GoodieBody *(THISCALL *o_gbinit)(GoodieBody *, const float *, const char *);
+static GoodieBody *THISCALL h_gbinit(GoodieBody *b, const float *m, const char *prop) { HEAVY_LOG(H_gbinit); return b->Init(m, prop); }
+static void (THISCALL *o_gbdtor)(GoodieBody *);
+static void THISCALL h_gbdtor(GoodieBody *b) { HEAVY_LOG(H_gbdtor); b->Destruct(); }
+static GoodieBody *(THISCALL *o_gbfree)(GoodieBody *, int);
+static GoodieBody *THISCALL h_gbfree(GoodieBody *b, int flags) { HEAVY_LOG(H_gbfree); return b->DestroyAndFree(flags); }
+static void (THISCALL *o_gbupdate)(GoodieBody *);
+static void THISCALL h_gbupdate(GoodieBody *b) { HEAVY_LOG(H_gbupdate); b->UpdateFrame(); }
+static int (THISCALL *o_gbcontact)(GoodieBody *);
+static int THISCALL h_gbcontact(GoodieBody *b) { HEAVY_LOG(H_gbcontact); return b->HasContact(); }
+// ---- CameraBody (CameraBody.h) and the Body helpers used with it ----
+static Hook H_cbinit, H_cbfree, H_cbupdate, H_bddtor, H_bdortho;
+static CameraBody *(THISCALL *o_cbinit)(CameraBody *, const float *);
+static CameraBody *THISCALL h_cbinit(CameraBody *b, const float *m) { HEAVY_LOG(H_cbinit); return b->Init(m); }
+static CameraBody *(THISCALL *o_cbfree)(CameraBody *, int);
+static CameraBody *THISCALL h_cbfree(CameraBody *b, int flags) { HEAVY_LOG(H_cbfree); return b->DestroyAndFree(flags); }
+static void (THISCALL *o_cbupdate)(CameraBody *);
+static void THISCALL h_cbupdate(CameraBody *b) { HEAVY_LOG(H_cbupdate); b->Update(); }
+static void (THISCALL *o_bddtor)(Body *);
+static void THISCALL h_bddtor(Body *b) { HEAVY_LOG(H_bddtor); b->Destruct(); }
+static void (THISCALL *o_bdortho)(float *);
+static void THISCALL h_bdortho(float *m) { HEAVY_LOG(H_bdortho); OrthonormalizeMatrix(m); }
 // ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
 static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
 static Hook H_pladd, H_plremove, H_pldestroy, H_plupdate, H_pllevels, H_plflush, H_plworld;
@@ -2002,6 +2028,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_gbinit, &H_gbdtor, &H_gbfree, &H_gbupdate, &H_gbcontact,
+                           &H_cbinit, &H_cbfree, &H_cbupdate, &H_bddtor, &H_bdortho,
                            &H_bdinit, &H_bdmatrix, &H_bdfacing, &H_bdangles, &H_bdgetangles, &H_bdcontact,
                            &H_smctor, &H_smdtor, &H_smfree, &H_sminit, &H_smclearall, &H_smnear,
                            &H_smrun, &H_smactor, &H_smsoul, &H_smidsoul, &H_smidactor, &H_smadd, &H_smaddid, &H_smclear, &H_smnewid, &H_smdestroy, &H_smput, &H_smnew,
@@ -2315,6 +2343,16 @@ static void Setup()
     H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
     H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
     H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_gbinit = { "GoodieBody::GoodieBody", 0x45a850, 7, "64a10000000055", (void *)h_gbinit, (void **)&o_gbinit, false, 0, 0, "goodiebody", 0 };
+    H_gbdtor = { "GoodieBody::~GoodieBody", 0x45a940, 7, "64a10000000055", (void *)h_gbdtor, (void **)&o_gbdtor, false, 0, 0, "goodiebody", 0 };
+    H_gbfree = { "GoodieBody::Destroy", 0x45a920, 8, "568bf1e818000000", (void *)h_gbfree, (void **)&o_gbfree, false, 0, 0, "goodiebody", 4 };
+    H_gbupdate = { "GoodieBody::UpdateFrame", 0x45a9d0, 9, "8d41048b91c0000000", (void *)h_gbupdate, (void **)&o_gbupdate, false, 0, 0, "goodiebody", 0 };
+    H_gbcontact = { "GoodieBody::HasContact", 0x45a9f0, 5, "33c08b5170", (void *)h_gbcontact, (void **)&o_gbcontact, false, 0, 0, "goodiebody", 0 };
+    H_cbinit = { "CameraBody::CameraBody", 0x40b8a0, 7, "64a10000000055", (void *)h_cbinit, (void **)&o_cbinit, false, 0, 0, "camerabody", 0 };
+    H_cbfree = { "CameraBody::Destroy", 0x40b910, 7, "64a10000000055", (void *)h_cbfree, (void **)&o_cbfree, false, 0, 0, "camerabody", 0 };
+    H_cbupdate = { "CameraBody::Update", 0x40b990, 7, "64a10000000055", (void *)h_cbupdate, (void **)&o_cbupdate, false, 0, 0, "camerabody", 0 };
+    H_bddtor = { "Body::~Body", 0x40bae0, 7, "64a10000000055", (void *)h_bddtor, (void **)&o_bddtor, false, 0, 0, "camerabody", 0 };
+    H_bdortho = { "OrthonormalizeMatrix", 0x47e350, 7, "64a10000000055", (void *)h_bdortho, (void **)&o_bdortho, false, 0, 0, "camerabody", 0 };
     H_bdinit = { "Body::Body", 0x41fb90, 7, "64a10000000055", (void *)h_bdinit, (void **)&o_bdinit, false, 0, 0, "bodybase", 0 };
     H_bdmatrix = { "Body::SetMatrix", 0x41fcc0, 5, "8b54240453", (void *)h_bdmatrix, (void **)&o_bdmatrix, false, 0, 0, "bodybase", 0 };
     H_bdfacing = { "Body::SetFacing", 0x41fd30, 5, "8b54240453", (void *)h_bdfacing, (void **)&o_bdfacing, false, 0, 0, "bodybase", 0 };
