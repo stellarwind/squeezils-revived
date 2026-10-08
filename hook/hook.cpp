@@ -18,6 +18,7 @@
 #include "Splash.h"
 #include "Menu.h"
 #include "Dialogs.h"
+#include "World.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
@@ -118,6 +119,13 @@ void *InputCalibration(InputSystem *in)                  { return *(void **)((ch
 void CalibrationStart(void *cal)                         { ((void (TC *)(void *))0x447880)(cal); }
 int  CalibrationCheck(void *cal)                         { return ((int (TC *)(void *))0x4479c0)(cal); }
 int  CalibrationRun(void *cal, HWND dlg)                 { return ((int (TC *)(void *, HWND))0x447f00)(cal, dlg); }
+// ---- the world ----
+World *GetWorld()                                        { return *(World **)0x4bada8; }
+void *NavMeshConstruct(void *memory)                     { return ((void *(TC *)(void *))0x47aec0)(memory); }
+int   NavMeshLoad(void *nav, const char *path)           { return ((int (TC *)(void *, const char *))0x47c8e0)(nav, path); }
+void  NavMeshDestroy(void *nav)                          { ((void (TC *)(void *))0x47af00)(nav); }
+int   LoadPaletteFile(const char *path, unsigned char *rgba) { return ((int (__cdecl *)(const char *, unsigned char *))0x474ca0)(path, rgba); }
+void  ClearWorldObjects()                                { ((void (__cdecl *)())0x42d010)(); }
 int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
 int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
 void SetSensitivity1(float value)                        { ((void (__cdecl *)(float))0x44aa10)(value); }
@@ -1364,6 +1372,22 @@ static void (THISCALL *o_sbround)(StatusBar *, int, float);
 static void THISCALL h_sbround(StatusBar *s, int n, float sec) { HEAVY_LOG(H_sbround); s->SetRound(n, sec); }
 static void (THISCALL *o_pngoodie)(Panel *, int, float);
 static void THISCALL h_pngoodie(Panel *p, int n, float sec) { HEAVY_LOG(H_pngoodie); p->StartGoodieAnimation(n, sec); }
+// ---- World (World.h): the level's scene set-up ----
+static Hook H_wlctor, H_wldtor, H_wlcreate, H_wldestroy, H_wlnav, H_wllights, H_wlframe;
+static void *(__fastcall *o_wlctor)(World *);
+static void *__fastcall h_wlctor(World *w) { HEAVY_LOG(H_wlctor); new (w) World(); return w; }
+static void (__fastcall *o_wldtor)(World *);
+static void __fastcall h_wldtor(World *w) { HEAVY_LOG(H_wldtor); w->~World(); }
+static void (THISCALL *o_wlcreate)(World *, IniReader *, IniReader *);
+static void THISCALL h_wlcreate(World *w, IniReader *a, IniReader *b) { HEAVY_LOG(H_wlcreate); w->CreateScene(a, b); }
+static void (__fastcall *o_wldestroy)(World *);
+static void __fastcall h_wldestroy(World *w) { HEAVY_LOG(H_wldestroy); w->DestroyScene(); }
+static void (THISCALL *o_wlnav)(World *, IniReader *);
+static void THISCALL h_wlnav(World *w, IniReader *r) { HEAVY_LOG(H_wlnav); w->LoadNavMesh(r); }
+static void (THISCALL *o_wllights)(World *, IniReader *);
+static void THISCALL h_wllights(World *w, IniReader *r) { HEAVY_LOG(H_wllights); w->SetupLights(r); }
+static void (__fastcall *o_wlframe)(World *);
+static void __fastcall h_wlframe(World *w) { HEAVY_LOG(H_wlframe); w->RenderFrame(); }
 static Hook H_pnld, H_pnsq, H_pnss, H_pninv, H_pnupd, H_pnbg, H_pnmsg, H_pnnote, H_pncomp, H_rtext, H_qifree;
 static int (__fastcall *o_pnld)(Panel *);
 static int __fastcall h_pnld(Panel *p) { HEAVY_LOG(H_pnld); return p->Load(); }
@@ -1458,7 +1482,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood, &H_sbgood, &H_sbround, &H_pngoodie,
                            &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree, &H_pnspr, &H_qpload, &H_qpdraw, &H_qidraw,
-                           &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys };
+                           &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys,
+                           &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1695,6 +1720,13 @@ static void Setup()
     H_sbdtor = { "StatusBar::~StatusBar", 0x42eb40, 7, "64a10000000055", (void *)h_sbdtor, (void **)&o_sbdtor, false, 0, 0, "status", 0 };
     H_qpctor = { "QuestPanel::QuestPanel", 0x42f580, 7, "64a10000000055", (void *)h_qpctor, (void **)&o_qpctor, false, 0, 0, "quest", 0 };
     H_qpdtor = { "QuestPanel::~QuestPanel", 0x42f5f0, 7, "64a10000000055", (void *)h_qpdtor, (void **)&o_qpdtor, false, 0, 0, "quest", 0 };
+    H_wlctor = { "World::World", 0x4357b0, 7, "64a10000000055", (void *)h_wlctor, (void **)&o_wlctor, false, 0, 0, "world", 0 };
+    H_wldtor = { "World::~World", 0x4358e0, 6, "56a108734c00", (void *)h_wldtor, (void **)&o_wldtor, false, 0, 0, "world", 0 };
+    H_wlcreate = { "World::CreateScene", 0x435910, 7, "64a10000000055", (void *)h_wlcreate, (void **)&o_wlcreate, false, 0, 0, "world", 0 };
+    H_wldestroy = { "World::DestroyScene", 0x435b30, 5, "53568b4108", (void *)h_wldestroy, (void **)&o_wldestroy, false, 0, 0, "world", 0 };
+    H_wlnav = { "World::LoadNavMesh", 0x4363a0, 7, "64a10000000055", (void *)h_wlnav, (void **)&o_wlnav, false, 0, 0, "world", 0 };
+    H_wllights = { "World::SetupLights", 0x436040, 7, "64a10000000055", (void *)h_wllights, (void **)&o_wllights, false, 0, 0, "world", 0 };
+    H_wlframe = { "World::RenderFrame", 0x4362a0, 6, "56a124734c00", (void *)h_wlframe, (void **)&o_wlframe, false, 0, 0, "world", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 
