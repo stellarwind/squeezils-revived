@@ -174,3 +174,13 @@ static void *const kWindowCallback = (void *)0x476630;
 static int *const kPanelDrawn = (int *)0x4bbe90;                       // set after the panel picture was first drawn
 float *PlayerMatrix();                                                 // the player's 4x4 matrix as floats (@00414050 then its virtual slot 3), or NULL
 void *PlayerInventory();                                               // the player's inventory table (its four byte entries start at +4: goodie counts by name, quest piece flags), or NULL
+
+// ---- the world (World.h) ----
+class World;
+World *GetWorld();                                                     // the global at 0x4bada8
+// The nav surface is an original class (0x2030 bytes) the world only creates, loads and frees.
+void *NavMeshConstruct(void *memory);                                  // @0047aec0 clears the object, returns it
+int   NavMeshLoad(void *nav, const char *path);                        // @0047c8e0 nonzero when the file loaded
+void  NavMeshDestroy(void *nav);                                       // @0047af00 (the caller frees the memory)
+int   LoadPaletteFile(const char *path, unsigned char *rgba);          // @00474ca0 (cdecl) reads a palette into a 256 entry RGBA table, nonzero on success
+void  ClearWorldObjects();                                             // @0042d010 frees the level's prop lists
