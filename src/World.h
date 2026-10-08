@@ -8,6 +8,20 @@
 #pragma once
 #include "IniReader.h"
 #include "Scene.h"
+#include "Float3.h"
+
+// How a decal (a flat picture on a prop) looks: the 44 byte record the ini files describe with the keys <prefix>Colors, Origin,
+// Size, UseTransparency and TransparentColor. The original passes it by value (11 dwords) to the functions below and to
+// Scene::CreateDecalFrame, which uses size[0..1], origin[0..1] and the transparency fields. The unused values are kept because
+// the ini reader fills up to three floats per key.
+struct DecalSettings {
+    int   colors;               // 0x00 "Colors", an integer (CreateDecalFrame ignores it)
+    float size[3];              // 0x04 "Size": width and height of the decal (the third value is ignored)
+    float origin[3];            // 0x10 "Origin": the decal origin as a fraction of the picture's width and height (the third value is ignored)
+    int   useTransparency;      // 0x1c "UseTransparency"
+    float transparentColor[3];  // 0x20 "TransparentColor": red, green, blue
+};
+static_assert(sizeof(DecalSettings) == 44, "DecalSettings layout");
 
 class World {
 public:
@@ -19,7 +33,14 @@ public:
     void SetupLights(IniReader *reader);              // @00436040 [Render] InitialLightPosition / Orientation / AmbientLightIntensity
     void RenderFrame();                               // @004362a0 clear, draw the scene and the panel, present; times each phase
 
-    int           unknown0;           // 0x00 never written or read by the code seen
+    // Decal helpers. The world is the caller in the original, but none of them uses `this`.
+    DecalSettings *ReadDecalSettings(DecalSettings *out, IniReader *reader, const char *section, const char *prefix,
+                                     DecalSettings defaults);   // @00435c90 the [section] keys override `defaults`; returns out
+    IDirect3DRMFrame *CreateDecal(IDirect3DRMTexture *texture, Float3 position, DecalSettings settings,
+                                  IDirect3DRMFrame *parent);    // @00435bb0 forwards to Scene::CreateDecalFrame
+    IDirect3DRMFrame *SetDecalSize(IDirect3DRMFrame *frame, float width, float height);   // @00435c70 forwards to SetFrameDecalSize
+
+    int           unknown0;          // 0x00 never written or read by the code seen
     IDirect3DRMFrame *directionalLight;   // 0x04 frame of the sun
     IDirect3DRMFrame *ambientLight;       // 0x08 frame of the ambient light
     void         *navMesh;            // 0x0c the nav surface object (0x2030 bytes, original class), NULL when the level has none

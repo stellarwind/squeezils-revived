@@ -1388,6 +1388,16 @@ static void (THISCALL *o_wllights)(World *, IniReader *);
 static void THISCALL h_wllights(World *w, IniReader *r) { HEAVY_LOG(H_wllights); w->SetupLights(r); }
 static void (__fastcall *o_wlframe)(World *);
 static void __fastcall h_wlframe(World *w) { HEAVY_LOG(H_wlframe); w->RenderFrame(); }
+static Hook H_wldecset, H_wldecal, H_wldecsize;
+static DecalSettings *(THISCALL *o_wldecset)(World *, DecalSettings *, IniReader *, const char *, const char *, DecalSettings);
+static DecalSettings *THISCALL h_wldecset(World *w, DecalSettings *out, IniReader *r, const char *section, const char *prefix, DecalSettings defaults)
+{ HEAVY_LOG(H_wldecset); return w->ReadDecalSettings(out, r, section, prefix, defaults); }
+static IDirect3DRMFrame *(THISCALL *o_wldecal)(World *, IDirect3DRMTexture *, Float3, DecalSettings, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_wldecal(World *w, IDirect3DRMTexture *t, Float3 p, DecalSettings s, IDirect3DRMFrame *parent)
+{ HEAVY_LOG(H_wldecal); return w->CreateDecal(t, p, s, parent); }
+static IDirect3DRMFrame *(THISCALL *o_wldecsize)(World *, IDirect3DRMFrame *, float, float);
+static IDirect3DRMFrame *THISCALL h_wldecsize(World *w, IDirect3DRMFrame *f, float width, float height)
+{ HEAVY_LOG(H_wldecsize); return w->SetDecalSize(f, width, height); }
 static Hook H_pnld, H_pnsq, H_pnss, H_pninv, H_pnupd, H_pnbg, H_pnmsg, H_pnnote, H_pncomp, H_rtext, H_qifree;
 static int (__fastcall *o_pnld)(Panel *);
 static int __fastcall h_pnld(Panel *p) { HEAVY_LOG(H_pnld); return p->Load(); }
@@ -1483,7 +1493,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree, &H_pnspr, &H_qpload, &H_qpdraw, &H_qidraw,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys,
-                           &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe };
+                           &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe,
+                           &H_wldecset, &H_wldecal, &H_wldecsize };
 static char g_replaceList[2048];
 // whole-name match in the comma separated list ("cframe" must not match "cframeu")
 static bool InList(const char *list, const char *name)
@@ -1727,6 +1738,9 @@ static void Setup()
     H_wlnav = { "World::LoadNavMesh", 0x4363a0, 7, "64a10000000055", (void *)h_wlnav, (void **)&o_wlnav, false, 0, 0, "world", 0 };
     H_wllights = { "World::SetupLights", 0x436040, 7, "64a10000000055", (void *)h_wllights, (void **)&o_wllights, false, 0, 0, "world", 0 };
     H_wlframe = { "World::RenderFrame", 0x4362a0, 6, "56a124734c00", (void *)h_wlframe, (void **)&o_wlframe, false, 0, 0, "world", 0 };
+    H_wldecset = { "World::ReadDecalSettings", 0x435c90, 7, "64a10000000055", (void *)h_wldecset, (void **)&o_wldecset, false, 0, 0, "world", 0 };
+    H_wldecal = { "World::CreateDecal", 0x435bb0, 7, "64a10000000055", (void *)h_wldecal, (void **)&o_wldecal, false, 0, 0, "world", 0 };
+    H_wldecsize = { "World::SetDecalSize", 0x435c70, 8, "8b44240c8b4c2408", (void *)h_wldecsize, (void **)&o_wldecsize, false, 0, 0, "world", 0 };
     H_imgrow    = { "ImageConvertRow",     0x477a90, 7,  "8b4c240883ec24",             (void *)h_imgrow,    (void **)&o_imgrow,    false, 0, 0, "img", 0 };
 }
 

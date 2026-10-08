@@ -231,3 +231,67 @@ void World::RenderFrame()
     kFrameStats->lastPresent = lap;
     kFrameStats->totalPresent += lap;
 }
+
+// key = prefix + suffix (the original builds it with strcpy and strcat into a stack buffer)
+static void BuildKey(char *key, const char *prefix, const char *suffix)
+{
+    strcpy(key, prefix);
+    strcat(key, suffix);
+}
+
+// @00435c90 Each key only overrides the default when the ini file has it.
+DecalSettings *World::ReadDecalSettings(DecalSettings *out, IniReader *reader, const char *section, const char *prefix,
+                                        DecalSettings defaults)
+{
+    char key[128];
+    reader->SetSection(section);
+
+    BuildKey(key, prefix, "Colors");
+    if (strlen(reader->GetString(key)) != 0)
+        defaults.colors = reader->GetInt(key, 0);
+
+    BuildKey(key, prefix, "Origin");
+    if (strlen(reader->GetString(key)) != 0)
+        reader->GetFloats(key, defaults.origin);
+
+    BuildKey(key, prefix, "Size");
+    if (strlen(reader->GetString(key)) != 0)
+        reader->GetFloats(key, defaults.size);
+
+    BuildKey(key, prefix, "UseTransparency");
+    if (strlen(reader->GetString(key)) != 0)
+        defaults.useTransparency = reader->GetInt(key, 0);
+
+    BuildKey(key, prefix, "TransparentColor");
+    if (strlen(reader->GetString(key)) != 0)
+        reader->GetFloats(key, defaults.transparentColor);
+
+    *out = defaults;
+    return out;
+}
+
+// CreateDecalFrame takes the record's unused values as plain dwords (its colors, size[2] and origin[2] arguments)
+static int Bits(float f)
+{
+    int bits;
+    memcpy(&bits, &f, sizeof bits);
+    return bits;
+}
+
+// @00435bb0
+IDirect3DRMFrame *World::CreateDecal(IDirect3DRMTexture *texture, Float3 position, DecalSettings settings,
+                                     IDirect3DRMFrame *parent)
+{
+    return GetScene()->CreateDecalFrame(texture, position.x, position.y, position.z,
+                                        settings.colors, settings.size[0], settings.size[1], Bits(settings.size[2]),
+                                        settings.origin[0], settings.origin[1], Bits(settings.origin[2]),
+                                        settings.useTransparency,
+                                        settings.transparentColor[0], settings.transparentColor[1], settings.transparentColor[2],
+                                        parent);
+}
+
+// @00435c70
+IDirect3DRMFrame *World::SetDecalSize(IDirect3DRMFrame *frame, float width, float height)
+{
+    return SetFrameDecalSize(frame, width, height);
+}
