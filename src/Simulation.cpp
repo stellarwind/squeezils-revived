@@ -1,9 +1,12 @@
 // Simulation: see Simulation.h. Reconstructed from SQZ.EXE 0x412da0 and 0x414010-0x4142b0.
 #include "Simulation.h"
+#include "Original.h"
+#include "Vector3f.h"
 #include "VirtualCall.h"
 
 static_assert(offsetof(CreatureTable, values) == 0x18, "CreatureTable layout");
 static_assert(offsetof(LocationSimulation, ids) == 0xc, "LocationSimulation layout");
+static_assert(offsetof(LocationSimulation, active) == 0x20, "LocationSimulation layout");
 
 // Destroys one of a creature's objects (slot 0 with bit 0 set: free the memory too)
 static void DestroyObject(void *object)
@@ -128,4 +131,73 @@ int LocationSimulation::NewId()
         lastId++;
     } while (creatures->Contains(lastId));
     return lastId;
+}
+
+// @00412e80
+LocationSimulation *LocationSimulation::Construct()
+{
+    vtbl = (void **)0x49d644;
+    ConstructIdList(&ids);
+    vtbl = (void **)0x49d60c;
+    active = 1;
+    return this;
+}
+
+// @00412f20 (it ends as a plain Simulation again)
+void LocationSimulation::Destruct()
+{
+    vtbl = (void **)0x49d60c;
+    DestructIdList(&ids);
+    vtbl = (void **)0x49d644;
+}
+
+// @00412f00
+LocationSimulation *LocationSimulation::DestroyAndFree(int flags)
+{
+    Destruct();
+    if (flags & 1)
+        delete this;
+    return this;
+}
+
+// @00412f90
+void LocationSimulation::Init()
+{
+    CreatureTable *table = (CreatureTable *)Operator_New(0x30);
+    if (table) {
+        ConstructCreatureTable(table);
+        table->vtbl = (void **)0x49d5f4;
+        *(void **)((char *)table + 0x2c) = (void *)0x49d5dc;     // the table's BufferObject part
+    }
+    lastId = 10;
+    creatures = table;
+    FlushInputMessages(GetApplication());
+}
+
+// @00413060
+void LocationSimulation::ClearCreatures()
+{
+    DestroyCreatures();
+    for (int i = creatures->keys.count - 1; i >= 0; i--) {
+        Creature *creature = creatures->values.At(i);
+        DestroyObject(creature->actor);
+        DestroyObject(creature->soul);
+        delete creature;
+        creatures->RemoveAt(i);
+    }
+}
+
+// @00413100 (a point against a line from origin towards end: how far along it the nearest point is, and how far away it is)
+int PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq)
+{
+    Vector3f direction = *end - *origin;
+    Normalize(direction);
+    float along = ((point->x * direction.x + point->y * direction.y + point->z * direction.z) -
+                   (origin->x * direction.x + origin->y * direction.y + origin->z * direction.z)) /
+                  (direction.y * direction.y + direction.z * direction.z + direction.x * direction.x);
+    if (along < 0.0f || along > 1.0f)
+        return 0;
+    Vector3f nearest = *origin + direction * along;
+    Vector3f offset = *point - nearest;
+    return (offset.x * offset.x + offset.y * offset.y + offset.z * offset.z) < maxDistSq;
 }

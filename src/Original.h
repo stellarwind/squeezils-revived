@@ -288,3 +288,11 @@ struct MorphCycle;
 typedef Table<String, Prop *, Array<Prop *>, 0>             PropTable;     // prop templates by name (the level's tables: 0x4c7208, 0x4c7230, 0x4c72c0)
 typedef Table<String, MorphCycle *, Array<MorphCycle *>, 0> PathTable;     // animation paths (clips) by name (0x4c7280, 0x4c7258, 0x4c71d0)
 int   ReadPathText(MorphCycle *clip, IniReader *ini, const char *file);   // @0041c530 (thiscall) fills the clip from a text path file; 0 on failure
+
+// ---- simulation (Simulation.h) ----
+struct CreatureTable;
+void  ConstructIdList(void *ids);                       // @0045eef0 (thiscall) the simulation's list of ids: empty, room for 2
+void  DestructIdList(void *ids);                        // @0045efa0 (thiscall)
+void  ConstructCreatureTable(CreatureTable *table);     // @00466590 (thiscall) the table part of the creature table; the vtables are set by the caller
+void *GetApplication();                                 // @004206b0 the global at 0x4badac
+void  FlushInputMessages(void *application);            // @0043c970 (thiscall) throws away the key and mouse messages waiting
