@@ -251,14 +251,6 @@ float *WorldFaceToWorld(World *world, float *out, const float *matrix, int surfa
 {
     return ((float *(TC *)(World *, float *, const float *, int))0x436640)(world, out, matrix, surface);
 }
-int   LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile)
-{
-    return ((int (TC *)(void *, IniReader *, const char *, const char *))0x40fc10)(surfaces, ini, name, natFile);
-}
-int   AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties)
-{
-    return ((int (TC *)(void *, NavProp *, int, const float *, IniValueTable *))0x4100b0)(surfaces, prop, surface, matrix, properties);
-}
 ScriptCaller *ScriptCallerInit(ScriptCaller *c, int actorIndex, Prop *prop)
 {
     return ((ScriptCaller *(TC *)(ScriptCaller *, int, Prop *))0x4207a0)(c, actorIndex, prop);
@@ -2057,6 +2049,15 @@ static InstancedSurface *(THISCALL *o_slinst)(NavSurfaceList *, const Contact *)
 static InstancedSurface *THISCALL h_slinst(NavSurfaceList *l, const Contact *c) { HEAVY_LOG(H_slinst); return l->Instance(c->face); }
 static LoadedSurface *(THISCALL *o_slload)(NavSurfaceList *, int);
 static LoadedSurface *THISCALL h_slload(NavSurfaceList *l, int i) { HEAVY_LOG(H_slload); return l->Loaded(i); }
+static Hook H_lsinit, H_lsread, H_slload2, H_sladd;
+static LoadedSurface *(THISCALL *o_lsinit)(LoadedSurface *, void *, int, const char *, const char *, StringList *);
+static LoadedSurface *THISCALL h_lsinit(LoadedSurface *s, void *m, int n, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsinit); return s->Init(m, n, d, f, t); }
+static int (__stdcall *o_lsread)(void *, const char *, const char *, StringList *);
+static int __stdcall h_lsread(void *m, const char *d, const char *f, StringList *t) { HEAVY_LOG(H_lsread); return ReadSurfaceTypes(m, d, f, t); }
+static int (THISCALL *o_slload2)(NavSurfaceList *, IniReader *, const char *, const char *);
+static int THISCALL h_slload2(NavSurfaceList *l, IniReader *i, const char *n, const char *f) { HEAVY_LOG(H_slload2); return l->Load(i, n, f); }
+static int (THISCALL *o_sladd)(NavSurfaceList *, NavProp *, int, const float *, IniValueTable *);
+static int THISCALL h_sladd(NavSurfaceList *l, NavProp *p, int s, const float *m, IniValueTable *t) { HEAVY_LOG(H_sladd); return l->AddInstance(p, s, m, t); }
 static Hook H_fptime, H_fpdir, H_fploop, H_fpmatrix, H_fpactor, H_fpfollow, H_fphideend, H_fpfind;
 static FrameProp *(THISCALL *o_fpinit)(FrameProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *);
 static FrameProp *THISCALL h_fpinit(FrameProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t)
@@ -2389,6 +2390,7 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_sftolocal, &H_sftoworld, &H_sfimworld, &H_sftolocalb,
                            &H_slmesh, &H_sltype, &H_slprops, &H_sltname, &H_slblocks, &H_slslip, &H_sltouch, &H_sltscript, &H_slvalue, &H_slgone,
                            &H_slremove, &H_slmove, &H_slinst, &H_slload,
+                           &H_lsinit, &H_lsread, &H_slload2, &H_sladd,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
                            &H_npinit, &H_npinitc, &H_npdestruct, &H_npdestroy, &H_npclone, &H_npbuild, &H_nphide, &H_npupdate, &H_npsize, &H_npsurf,
@@ -2901,6 +2903,10 @@ static void Setup()
     H_slmove = { "NavSurfaceList::MoveInstance", 0x410310, 7, "5381c134010000", (void *)h_slmove, (void **)&o_slmove, false, 0, 0, "navsurface", 0 };
     H_slinst = { "NavSurfaceList::Instance", 0x412bf0, 7, "5381c134010000", (void *)h_slinst, (void **)&o_slinst, false, 0, 0, "navsurface", 0 };
     H_slload = { "NavSurfaceList::Loaded", 0x412c10, 7, "5381c124010000", (void *)h_slload, (void **)&o_slload, false, 0, 0, "navsurface", 0 };
+    H_lsinit = { "LoadedSurface::Init", 0x40bc60, 7, "64a10000000055", (void *)h_lsinit, (void **)&o_lsinit, false, 0, 0, "navsurface", 0 };
+    H_lsread = { "ReadSurfaceTypes", 0x40eec0, 7, "64a10000000055", (void *)h_lsread, (void **)&o_lsread, false, 0, 0, "navsurface", 0 };
+    H_slload2 = { "NavSurfaceList::Load", 0x40fc10, 7, "64a10000000055", (void *)h_slload2, (void **)&o_slload2, false, 0, 0, "navsurface", 0 };
+    H_sladd = { "NavSurfaceList::AddInstance", 0x4100b0, 7, "64a10000000055", (void *)h_sladd, (void **)&o_sladd, false, 0, 0, "navsurface", 0 };
     H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };

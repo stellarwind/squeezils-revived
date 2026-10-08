@@ -75,6 +75,12 @@ template<> struct OriginalVtables<PrimitiveArray<String, 23> >     { enum : unsi
 template<> struct OriginalVtables<PrimitiveArray<String, 50> >     { enum : unsigned { primary = 0x4a0cf4, bufferObject = 0x4a0cdc }; };
 template<> struct OriginalVtables<PrimitiveArray<String, 51> >     { enum : unsigned { primary = 0x4a0da4, bufferObject = 0x4a0d8c }; };
 template<> struct OriginalVtables<PrimitiveArray<int, 1> >         { enum : unsigned { primary = 0x49d5a4, bufferObject = 0x49d58c }; };
+template<> struct OriginalVtables<PrimitiveArray<String, 21> >     { enum : unsigned { primary = 0x4a0214, bufferObject = 0x4a01fc }; };
+template<> struct OriginalVtables<Set<String, 21> >                { enum : unsigned { primary = 0x4a024c, bufferObject = 0x4a0234 }; };
+template<> struct OriginalVtables<Table<String, int, PrimitiveArray<int, 1>, 21> >
+                                                                   { enum : unsigned { primary = 0x4a0274 }; };
+template<> struct OriginalVtables<BufferObjectTable<String, int, PrimitiveArray<int, 1>, 21> >
+                                                                   { enum : unsigned { primary = 0x49d4dc, bufferObject = 0x49d4c4 }; };
 template<> struct OriginalVtables<Set<String, 23> >                { enum : unsigned { primary = 0x4a036c, bufferObject = 0x4a0354 }; };
 template<> struct OriginalVtables<Set<String, 50> >                { enum : unsigned { primary = 0x4a0d2c, bufferObject = 0x4a0d14 }; };
 template<> struct OriginalVtables<Set<String, 51> >                { enum : unsigned { primary = 0x4a0ddc, bufferObject = 0x4a0dc4 }; };
