@@ -25,6 +25,7 @@
 #include "FrameProp.h"
 #include "LODProp.h"
 #include "CycleProp.h"
+#include "NavProp.h"
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
@@ -165,6 +166,21 @@ float *CameraMatrix()
     char **values = *(char ***)(table + 0x24);
     void *actor = *(void **)(values[1] + 4);
     return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor);
+}
+void *GetPlaceSurfaces(void *place)                      { return ((void *(TC *)(void *))0x439b60)(place); }
+int   LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile)
+{
+    return ((int (TC *)(void *, IniReader *, const char *, const char *))0x40fc10)(surfaces, ini, name, natFile);
+}
+NavSurface *LoadedSurface(void *surfaces, int surface)   { return ((NavSurface *(TC *)(void *, int))0x412c10)(surfaces, surface); }
+int   AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties)
+{
+    return ((int (TC *)(void *, NavProp *, int, const float *, IniValueTable *))0x4100b0)(surfaces, prop, surface, matrix, properties);
+}
+void  RemoveSurfaceInstance(void *surfaces, int instance) { ((void (TC *)(void *, int))0x4102f0)(surfaces, instance); }
+void  MoveSurfaceInstance(void *surfaces, int instance, const float *matrix)
+{
+    ((void (TC *)(void *, int, const float *))0x410310)(surfaces, instance, matrix);
 }
 ScriptCaller *ScriptCallerInit(ScriptCaller *c, int actorIndex, Prop *prop)
 {
@@ -1553,6 +1569,44 @@ static void (__fastcall *o_lplevel)(LODProp *);
 static void __fastcall h_lplevel(LODProp *p) { HEAVY_LOG(H_lplevel); p->UpdateLevel(); }
 static int (THISCALL *o_lpselect)(LODProp *, Float3, Float3);
 static int THISCALL h_lpselect(LODProp *p, Float3 pos, Float3 fwd) { HEAVY_LOG(H_lpselect); return p->SelectLevel(pos, fwd); }
+// ---- NavProp (NavProp.h): a CycleProp carrying a walkable surface; and FrameProp::HasBody, which NavProp::Update calls ----
+static Hook H_npinit, H_npinitc, H_npdestruct, H_npdestroy, H_npclone, H_npbuild, H_nphide, H_npupdate, H_npsize, H_npsurf, H_npinst, H_fpbody;
+static NavProp *(THISCALL *o_npinit)(NavProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, StepEventTable *, float, int, float,
+                                     IniReader *, const char *, const char *, IniValueTable *);
+static NavProp *THISCALL h_npinit(NavProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, StepEventTable *e,
+                                  float period, int carry, float start, IniReader *ini, const char *name, const char *nat, IniValueTable *v)
+{
+    HEAVY_LOG(H_npinit);
+    return p->Init(a, b, c, d, n, m, t, e, period, carry, start, ini, name, nat, v);
+}
+static NavProp *(THISCALL *o_npinitc)(NavProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *, StepEventTable *, float, int, float,
+                                      int, IniValueTable *);
+static NavProp *THISCALL h_npinitc(NavProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t, StepEventTable *e,
+                                   float period, int carry, float start, int surface, IniValueTable *v)
+{
+    HEAVY_LOG(H_npinitc);
+    return p->InitCopy(a, b, c, d, n, m, t, e, period, carry, start, surface, v);
+}
+static void (__fastcall *o_npdestruct)(NavProp *);
+static void __fastcall h_npdestruct(NavProp *p) { HEAVY_LOG(H_npdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_npdestroy)(NavProp *, int);
+static Prop *THISCALL h_npdestroy(NavProp *p, int flags) { HEAVY_LOG(H_npdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_npclone)(NavProp *, FrameProp *);
+static Prop *THISCALL h_npclone(NavProp *p, FrameProp *o) { HEAVY_LOG(H_npclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_npbuild)(NavProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_npbuild(NavProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_npbuild); return p->BuildFrame(parent); }
+static void (__fastcall *o_nphide)(NavProp *);
+static void __fastcall h_nphide(NavProp *p) { HEAVY_LOG(H_nphide); p->Hide(); }
+static void (THISCALL *o_npupdate)(NavProp *, float);
+static void THISCALL h_npupdate(NavProp *p, float seconds) { HEAVY_LOG(H_npupdate); p->Update(seconds); }
+static int (THISCALL *o_npsize)(NavProp *, float *);
+static int THISCALL h_npsize(NavProp *p, float *out) { HEAVY_LOG(H_npsize); return p->GetSizeSquared(out); }
+static int (__fastcall *o_npsurf)(NavProp *);
+static int __fastcall h_npsurf(NavProp *p) { HEAVY_LOG(H_npsurf); return p->GetSurface(); }
+static int (__fastcall *o_npinst)(NavProp *);
+static int __fastcall h_npinst(NavProp *p) { HEAVY_LOG(H_npinst); return p->GetInstance(); }
+static int (__fastcall *o_fpbody)(FrameProp *);
+static int __fastcall h_fpbody(FrameProp *p) { HEAVY_LOG(H_fpbody); return p->HasBody(); }
 static Hook H_fptime, H_fpdir, H_fploop, H_fpmatrix, H_fpactor, H_fpfollow, H_fphideend, H_fpfind;
 static FrameProp *(THISCALL *o_fpinit)(FrameProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *);
 static FrameProp *THISCALL h_fpinit(FrameProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t)
@@ -1863,6 +1917,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
                            &H_cpinit, &H_cpdestruct, &H_cpdestroy, &H_cpclone, &H_cpbuild, &H_cpupdate, &H_cpcurrent, &H_cpstep, &H_cpmode, &H_cpfire,
                            &H_lpinit, &H_lpdestruct, &H_lpdestroy, &H_lpclone, &H_lpbuild, &H_lplevel, &H_lpselect,
+                           &H_npinit, &H_npinitc, &H_npdestruct, &H_npdestroy, &H_npclone, &H_npbuild, &H_nphide, &H_npupdate, &H_npsize, &H_npsurf,
+                           &H_npinst, &H_fpbody,
                            &H_fptime, &H_fpdir, &H_fploop, &H_fpmatrix, &H_fpactor, &H_fpfollow, &H_fphideend, &H_fpfind,
                            &H_pzctor, &H_pzassign, &H_pzmatrix, &H_pcctor, &H_pcdtor, &H_pcfind, &H_pcsample, &H_pcnew, &H_pcblend,
                            &H_ptctor, &H_ptcopy, &H_ptdtor, &H_ptfind, &H_ptat, &H_ptassign,
@@ -2183,6 +2239,18 @@ static void Setup()
     H_lpbuild = { "LODProp::BuildFrame", 0x4283f0, 7, "64a10000000055", (void *)h_lpbuild, (void **)&o_lpbuild, false, 0, 0, "lodprop", 0 };
     H_lplevel = { "LODProp::UpdateLevel", 0x428510, 7, "64a10000000055", (void *)h_lplevel, (void **)&o_lplevel, false, 0, 0, "lodprop", 0 };
     H_lpselect = { "LODProp::SelectLevel", 0x4286d0, 7, "64a10000000055", (void *)h_lpselect, (void **)&o_lpselect, false, 0, 0, "lodprop", 0 };
+    H_npinit = { "NavProp::Init", 0x429380, 7, "64a10000000055", (void *)h_npinit, (void **)&o_npinit, false, 0, 0, "navprop", 0 };
+    H_npinitc = { "NavProp::InitCopy", 0x4296d0, 7, "64a10000000055", (void *)h_npinitc, (void **)&o_npinitc, false, 0, 0, "navprop", 0 };
+    H_npdestruct = { "NavProp::Destruct", 0x429a40, 7, "64a10000000055", (void *)h_npdestruct, (void **)&o_npdestruct, false, 0, 0, "navprop", 0 };
+    H_npdestroy = { "NavProp::Destroy", 0x4296b0, 8, "568bf1e888030000", (void *)h_npdestroy, (void **)&o_npdestroy, false, 0, 0, "navprop", 4 };
+    H_npclone = { "NavProp::Clone", 0x4298f0, 7, "64a10000000055", (void *)h_npclone, (void **)&o_npclone, false, 0, 0, "navprop", 0 };
+    H_npbuild = { "NavProp::BuildFrame", 0x429ab0, 7, "64a10000000055", (void *)h_npbuild, (void **)&o_npbuild, false, 0, 0, "navprop", 0 };
+    H_nphide = { "NavProp::Hide", 0x429c20, 8, "568bf1e8f8d6ffff", (void *)h_nphide, (void **)&o_nphide, false, 0, 0, "navprop", 4 };
+    H_npupdate = { "NavProp::Update", 0x429c60, 7, "64a10000000055", (void *)h_npupdate, (void **)&o_npupdate, false, 0, 0, "navprop", 0 };
+    H_npsize = { "NavProp::GetSizeSquared", 0x429da0, 10, "8b5424048b812c010000", (void *)h_npsize, (void **)&o_npsize, false, 0, 0, "navprop", 0 };
+    H_npsurf = { "NavProp::GetSurface", 0x429690, 6, "8b81f4000000", (void *)h_npsurf, (void **)&o_npsurf, false, 0, 0, "navprop", 0 };
+    H_npinst = { "NavProp::GetInstance", 0x4296a0, 6, "8b81f8000000", (void *)h_npinst, (void **)&o_npinst, false, 0, 0, "navprop", 0 };
+    H_fpbody = { "FrameProp::HasBody", 0x427f40, 7, "83b99400000001", (void *)h_fpbody, (void **)&o_fpbody, false, 0, 0, "navprop", 0 };
     H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };

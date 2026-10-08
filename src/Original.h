@@ -262,6 +262,21 @@ static const void *const kSqueezilSoulType = (const void *)0x4b9368;   // .?AVSq
 ScriptCaller *ScriptCallerInit(ScriptCaller *caller, int actorIndex, Prop *prop);               // @004207a0
 ScriptCaller *ScriptCallerInitSoul(ScriptCaller *caller, void *soul, int actorIndex, Prop *prop);   // @00420900
 
+// ---- the place's walkable surfaces (NavProp.h) ----
+// The PlaceSimulation keeps the level's walkable surfaces (loaded from .nat files) and the copies of them that NavProps place.
+// That class is not reconstructed; these are the functions of its surface list that NavProp calls.
+class IniReader;
+struct NavProp;
+struct NavSurface;
+void *GetPlaceSurfaces(void *place);                                    // @00439b60 the place simulation's surface list (its +0x3c)
+// "Loading surface %s (.nat file %s) from directory %s" (the ini file's directory); returns the surface's number
+int   LoadSurface(void *surfaces, IniReader *ini, const char *name, const char *natFile);   // @0040fc10
+NavSurface *LoadedSurface(void *surfaces, int surface);                  // @00412c10 (the list at +0x124, virtual slot 0)
+// A copy of a surface placed with a prop's matrix; returns the copy's number
+int   AddSurfaceInstance(void *surfaces, NavProp *prop, int surface, const float *matrix, IniValueTable *properties);   // @004100b0
+void  RemoveSurfaceInstance(void *surfaces, int instance);              // @004102f0 only adds the number to a list at +0x144 (presumably removed later)
+void  MoveSurfaceInstance(void *surfaces, int instance, const float *matrix);   // @00410310
+
 // ---- CycleProp's step events (CycleProp.h): a table from a child number to a script function name ----
 template<> struct OriginalVtables<PrimitiveArray<int, 24> >        { enum : unsigned { primary = 0x4a03c4, bufferObject = 0x4a03ac }; };
 template<> struct OriginalVtables<Set<int, 24> >                   { enum : unsigned { primary = 0x4a03fc, bufferObject = 0x4a03e4 }; };
