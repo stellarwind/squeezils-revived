@@ -146,3 +146,16 @@ static_assert(offsetof(ScriptCaller, soul) == 0x08 && offsetof(ScriptCaller, act
 static_assert(offsetof(NavProp, surface) == 0xf4 && offsetof(NavProp, instance) == 0xf8 && offsetof(NavProp, properties) == 0xfc &&
               offsetof(NavProp, sizeSquared) == 0x12c, "NavProp fields");
 static_assert(offsetof(NavSurface, sizeSquared) == 0x04 && offsetof(NavSurface, propertyNames) == 0x14, "NavSurface fields");
+#include "SqueezilSoul.h"
+static_assert(offsetof(SqueezilSoul, directions) == 0x10 && offsetof(SqueezilSoul, canSlip) == 0x2c &&
+              offsetof(SqueezilSoul, state) == 0x3c && offsetof(SqueezilSoul, physics) == 0x48 &&
+              offsetof(SqueezilSoul, hopStrength) == 0x50 && offsetof(SqueezilSoul, leverSpin) == 0x5c &&
+              offsetof(SqueezilSoul, surface) == 0x60 && offsetof(SqueezilSoul, possessions) == 0x6c &&
+              offsetof(SqueezilSoul, body) == 0x74 && offsetof(SqueezilSoul, jumpStartY) == 0x7c, "SqueezilSoul fields");
+static_assert(offsetof(SqueezilPhysics, walk) == 0x24 && offsetof(SqueezilPhysics, tumble) == 0x13c &&
+              offsetof(SqueezilPhysics, slip) == 0x23c && offsetof(SqueezilPhysics, maxLandingSpeed) == 0x270 &&
+              offsetof(SqueezilPhysics, cornerAngle) == 0x284 && offsetof(SqueezilPhysics, maxRunSpeed) == 0x29c, "SqueezilPhysics fields");
+static_assert(offsetof(FlightModel, dragZMult) == 0x2c && offsetof(FlightModel, liftMult) == 0x44 &&
+              offsetof(FlightModel, climbPitchFactor) == 0x58, "FlightModel fields");
+static_assert(offsetof(LeverMotion, pushIncrement) == 0x18 && offsetof(LeverMotion, leverWeightFactor) == 0x28, "LeverMotion fields");
+static_assert(offsetof(DirectionHistory, sum) == 0x08 && offsetof(DirectionHistory, added) == 0x18, "DirectionHistory fields");

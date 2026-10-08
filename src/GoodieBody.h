@@ -8,7 +8,7 @@
 struct IDirect3DRMFrame;
 
 struct GoodieBody : Body {
-    int   flags;                    // 0xb8 the simulation reads this word on every actor (the goodie never sets it)
+    float collisionRadius;          // 0xb8 the simulation reads this on every actor, 0 meaning "does not collide" (the goodie never sets it)
     int   unused_bc;                // 0xbc
     IDirect3DRMFrame *instance;     // 0xc0 the goodie's frame in the scene, hung under the scene child
 

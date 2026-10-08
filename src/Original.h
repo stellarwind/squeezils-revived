@@ -304,3 +304,60 @@ int   MorphCycleLoad(MorphCycle *clip, const char *file);       // @0041bd60 (th
 void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll);   // @0047e500 (thiscall on the matrix) radians: atan2 of the matrix's rows
 void *SurfaceFaceOf(void *surfaces, const Contact *contact);   // @00412bf0 the face object of contact->face (the list at +0x134, virtual slot 0)
 float *FaceRelativeMatrix(void *face, float *out, const float *matrix);   // @004110b0 (thiscall) the matrix relative to the face; returns out
+
+// ---- SqueezilSoul (SqueezilSoul.h) ----
+struct Float3;
+struct Vector3f;
+struct Inventory;
+class World;
+template<class T> class Array;
+struct Matrix16 { float m[16]; };                               // a 4x4 matrix passed by value (the original's matrix class)
+void  DebugLog(const char *format, ...);                        // @00419360 printf style; written only while the game's debug output is on
+int   ClockValueA();                                            // @004206d0 then @0041ec10: the game clock's +0x20 (meaning not identified)
+int   ClockValueB();                                            // @004206d0 then @0041ebf0: the game clock's +0x24 (meaning not identified)
+void  PlayEffect(const char *name, const Float3 &position);     // @0044a250 (cdecl, a String and a vector by value) plays the named sound effect there
+void  StopLoopingSounds();                                      // @0044a8f0 (only called while the global at 0x4bd960 is set)
+static int *const kLoopingSoundPlaying = (int *)0x4bd960;
+int   PhysicalCollision(int id, int otherId);                   // @00447590 (cdecl, PhysicalSoul's) two creatures bumped: "attackEffect" / "bumpEffect"
+int   InputHeldAttack();                                        // the application object (0x4badac) +0x68: set while the attack is held (inferred)
+void  PhysicalSoulInit(void *soul);                             // @00446e30 (thiscall) PhysicalSoul's constructor: the base vtables, and the first one made reads Gravity / StaticFriction / KineticFriction
+static const void *const kMessageMapType      = (const void *)0x4b93c8;   // .?AVMessageMap
+static const void *const kGrantMessageMapType = (const void *)0x4b93a8;   // .?AVGrantMessageMap
+// the inventory (class Inventory, 0x416010-0x4165e0): one list of values per goodie name, plus the one goodie held
+void  InventoryAdd(Inventory *inv, const char *goodie, int value);       // @00416110
+void  InventoryRemove(Inventory *inv, const char *goodie, int index);    // @00416280
+int   InventoryCount(Inventory *inv, const char *goodie);                // @00416300
+Array<int> *InventoryItems(Inventory *inv, const char *goodie);          // @004163d0 NULL when there are none
+void  InventoryRemoveNuts(Inventory *inv);                               // @004164a0 empties the food nut and spit nut lists (and more, not read)
+String *InventoryHeldName(Inventory *inv);                               // its +8: the goodie held ("" for none)
+int  *InventoryHeldValue(Inventory *inv);                                // its +0xc
+// the place (PlaceSimulation, not reconstructed) and its goodie list (its +0x38, @00439b50)
+void *GetPlaceGoodies(void *place);                                       // @00439b50
+void  DropGoodie(void *goodies, int value, const char *goodie, Matrix16 at);      // @0044d4f0 (thiscall) puts a goodie into the place
+void  ThrowGoodie(void *goodies, int value, Matrix16 at, Float3 direction, float speed);   // @0044dc30 (thiscall) a spat nut
+void  GoodieGranted(void *goodies, const char *goodie, void *soul, void *place);  // @0044bc40 (thiscall) tells the place a goodie was picked up
+// the place's surfaces (GetPlaceSurfaces) as a squeezil moves over them
+int   SurfaceIsGone(void *surfaces, const Contact *contact);              // @00410890 the contact's surface copy was removed (its two lists, virtual slot 6)
+String SurfaceTypeName(void *surfaces, const Contact *contact);           // @0040f3c0 (thiscall, String returned through a hidden pointer)
+IniValueTable *SurfaceProperties(void *surfaces, const Contact *contact); // @0040f3a0
+int   SurfaceIsSlippery(void *surfaces, const Contact *contact);          // @0040f770 a property of the face's type (inferred from its use)
+int   SurfaceBlocksWalking(void *surfaces, const Contact *contact);       // @0040f610 a property of the face's type (inferred from its use)
+int   SurfaceHasTouchScript(void *surfaces, const Contact *contact);      // @0040f8d0 a property of the face's type (inferred from its use)
+String SurfaceTouchScript(void *surfaces, const Contact *contact);        // @0040f9b0 the script function named by the face's type
+void  SurfaceTypeChanged(void *surfaces, void *soul, const Contact *contact, const void *oldInfo, const void *newInfo);   // @00412920
+// @00411120 Moves a squeezil `distance` along the surface from the first five vectors and the contact, writing the new ones into
+// the second set (the original passes the same buffers for both). 0 when it ran off the surface.
+int   MoveAlongSurface(void *surfaces, void *soul, Float3 *pos, Float3 *right, Float3 *up, Float3 *forward, Float3 *direction,
+                       float distance, Contact *contact, Float3 *newPos, Float3 *newRight, Float3 *newUp, Float3 *newForward,
+                       Float3 *newDirection, Contact *newContact);
+// @004108e0 Whether a flight of `distance` from pos along direction hits a surface; if so, where and how the squeezil lands
+int   FlightHitsSurface(void *surfaces, Float3 *pos, Float3 *right, Float3 *up, Float3 *forward, Float3 *direction,
+                        float distance, Float3 *hitPos, Float3 *newRight, Float3 *newUp, Float3 *newForward, Contact *newContact);
+void *WorldSurface(World *world, int surface);                  // @004365a0 the surface copy `surface` of the current place (its +0xc: face records)
+// The lowest height a squeezil can reach (set by @00450c00): one that would sink below it is held at it, and on reaching it the
+// script function named by the string (set by @00450b90, both not reconstructed) runs once
+static float *const kFloorLevel = (float *)0x4c7ac8;
+static String *const kFloorLevelScript = (String *)0x4c7acc;
+// @00436640 (thiscall on the world, 3 stack arguments) The matrix `matrix`, given relative to a surface copy's face, in the world:
+// the face's own transform applied. `surface` is the surface copy number (the first field of a Contact). Returns out.
+float *WorldFaceToWorld(World *world, float *out, const float *matrix, int surface);

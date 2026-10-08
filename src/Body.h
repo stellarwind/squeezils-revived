@@ -50,6 +50,7 @@ struct Body {
     void   SetAngles(float x, float y, float z);             // @0041fd60 slot 11
     void   GetAngles(float *x, float *y, float *z);          // @0041fd80 slot 12
     void   SetContact(const Contact *c);                     // @00420060 slot 14
+    void   PlaceOnFace(const Contact *at);                    // @0041fda0 slot 13: stand on the centre of face at->second of surface copy at->face
     void   Destruct();                                       // @0040bae0 back to the plain Body class (the derived classes end with it)
 };
 static_assert(sizeof(Body) == 0xb8, "Body layout");

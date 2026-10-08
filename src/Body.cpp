@@ -2,6 +2,7 @@
 #include <string.h>
 #include "Body.h"
 #include "Vector3f.h"
+#include "Original.h"
 
 // @0041fb90
 Body *Body::Init(const float *m)
@@ -74,4 +75,32 @@ void OrthonormalizeMatrix(float *m)
     m[4] = up.x;     m[5] = up.y;     m[6] = up.z;      m[7] = 0.0f;
     m[8] = facing.x; m[9] = facing.y; m[10] = facing.z; m[11] = 0.0f;
     m[12] = position.x; m[13] = position.y; m[14] = position.z; m[15] = 1.0f;
+}
+
+// @0041fda0 Puts the body on the middle of a face. The face's frame: right = unit(normal x reference), up = normal, forward =
+// right x normal, where the reference is the world's y axis, or the x axis when the face is nearly flat (|normal.y| > 0.9); its
+// origin is the mean of the face's three corners. That frame (relative to the face) becomes the contact's matrix and, taken into
+// the world, the body's own matrix.
+void Body::PlaceOnFace(const Contact *at)
+{
+    char *surface = (char *)WorldSurface(GetWorld(), at->face);
+    char *faces = *(char **)(surface + 0xc);
+    Vector3f *corners = *(Vector3f **)(surface + 4);
+    const int *face = (const int *)(faces + at->second * 0x28);
+
+    Vector3f sum = corners[face[0]] + corners[face[1]] + corners[face[2]];
+    Vector3f centre(sum.x / 3.0f, sum.y / 3.0f, sum.z / 3.0f);
+    Vector3f normal = *(Vector3f *)(faces + at->second * 0x28 + 0xc);
+    Vector3f reference = (normal.y > 0.9f || normal.y < -0.9f) ? Vector3f(1.0f, 0.0f, 0.0f) : Vector3f(0.0f, 1.0f, 0.0f);
+    Vector3f right = Cross(normal, reference);
+    Normalize(right);
+    Vector3f forward = Cross(right, normal);
+
+    float local[16] = { right.x, right.y, right.z, 0.0f, normal.x, normal.y, normal.z, 0.0f,
+                        forward.x, forward.y, forward.z, 0.0f, centre.x, centre.y, centre.z, 1.0f };
+    float world[16];
+    memcpy(matrix, WorldFaceToWorld(GetWorld(), world, local, at->face), sizeof matrix);
+    contact.face = at->face;
+    contact.second = at->second;
+    memcpy(contact.matrix, local, sizeof local);
 }
