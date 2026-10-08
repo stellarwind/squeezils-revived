@@ -19,9 +19,16 @@
 //                     8 no-op  9 GetOwner  10 GetAttachFrame  11 returns 0 (1 arg)  12 returns 0  13 returns 0 (a String by value)  14 IsShown
 #pragma once
 #include "Float3.h"
+#include "VirtualCall.h"
 #include "GameString.h"
 #include "World.h"
 #include "Original.h"
+
+// The slot numbers of Prop's virtual functions (the order of the original vtable, shared by every prop class)
+enum PropSlot {
+    PROP_DESTROY = 0, PROP_CLONE = 1, PROP_INSTANTIATE = 2, PROP_BUILD_FRAME = 3, PROP_SHOW = 4, PROP_HIDE = 5,
+    PROP_APPLY_SCALE = 6, PROP_GET_OWNER = 9, PROP_GET_ATTACH_FRAME = 10, PROP_IS_SHOWN = 14
+};
 
 struct Prop {
     void  **vtbl;                   // 0x00
@@ -42,7 +49,8 @@ struct Prop {
     void  Hide();                                                             // @00426170 slot 5: takes the frame out of its parent
     IDirect3DRMFrame *GetAttachFrame();                                       // @00426230 slot 10: the owner's part frame, else the frame's parent
 
-    // the virtual calls, through the object's own vtable
+    // The virtual calls: each looks the function up in the object's own vtable (see VirtualCall.h), so the version of the
+    // object's class runs. The number is the slot in the list above.
     Prop *VClone(void *owner);                                                // slot 1
     IDirect3DRMFrame *VBuildFrame(IDirect3DRMFrame *parent);                  // slot 3
     void  VApplyScale(IDirect3DRMFrame *frame, Float3 scale);                 // slot 6
