@@ -250,6 +250,13 @@ void FrameProp::FireMessages(float from, float to)
 // Runs message number index: its script function, with this prop (and its actor, when it follows one) as the caller.
 void FrameProp::RunMessage(int index)
 {
+    String name = messages.GetAt(index);
+    RunScript(name.c_str());
+}
+
+// Runs a script function with this prop (and its actor, when it follows one) as the caller.
+void FrameProp::RunScript(const char *functionName)
+{
     ScriptCaller caller;
     if (actorIndex != -1) {
         void *soul = DynamicCast(SimulationSoul(actorIndex), kSoulType, kSqueezilSoulType);
@@ -257,8 +264,7 @@ void FrameProp::RunMessage(int index)
     } else {
         ScriptCallerInit(&caller, -1, this);
     }
-    String name = messages.GetAt(index);
-    PostFunction(name.c_str(), &caller, 0, 0);
+    PostFunction(functionName, &caller, 0, 0);
 }
 
 // @00427f60

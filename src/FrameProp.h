@@ -75,5 +75,6 @@ struct FrameProp : Prop {
     IDirect3DRMFrame *GetPartFrame();                                         // @004276b0 the body part's frame, or the prop's frame without a body
     void  FireMessages(float from, float to);                                 // @00427b50 runs the messages whose times the clip passed going from -> to
     void  RunMessage(int index);                                              // inlined twice in FireMessages
+    void  RunScript(const char *functionName);                                // inlined wherever a prop runs a script function as the caller (FireMessages, CycleProp::FireStepMessages)
 };
 static_assert(sizeof(FrameProp) == 0xac, "FrameProp layout");

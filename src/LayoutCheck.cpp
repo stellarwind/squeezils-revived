@@ -135,6 +135,10 @@ static_assert(offsetof(FrameProp, childNames) == 0x40 && offsetof(FrameProp, chi
               "FrameProp fields");
 #include "LODProp.h"
 static_assert(offsetof(LODProp, level) == 0xac && offsetof(LODProp, distances) == 0xb0, "LODProp fields");
+#include "CycleProp.h"
+static_assert(offsetof(CycleProp, events) == 0xac && offsetof(CycleProp, current) == 0xdc && offsetof(CycleProp, step) == 0xe0 &&
+              offsetof(CycleProp, mode) == 0xe4 && offsetof(CycleProp, carry) == 0xe8 && offsetof(CycleProp, timer) == 0xec &&
+              offsetof(CycleProp, period) == 0xf0, "CycleProp fields");
 static_assert(sizeof(CycleMessageTable) == 0x30 && offsetof(CycleMessageTable, values) == 0x18, "CycleMessageTable layout");
 static_assert(offsetof(ScriptCaller, soul) == 0x08 && offsetof(ScriptCaller, actorIndex) == 0x10 && offsetof(ScriptCaller, prop) == 0x14,
               "ScriptCaller fields");
