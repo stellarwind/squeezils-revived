@@ -26,6 +26,7 @@ struct BodyPart {
     void Destruct();                                           // @0041d8e0 frees the mesh
     void Apply(IDirect3DRMFrame *ref, const PartPose *pose);   // @0041d900 slot 0 (thiscall, 2 stack args)
     void Build(IDirect3DRMFrame *parent);                      // @0041d990 slot 1 (thiscall, 1 stack arg)
+    IDirect3DRMFrame *GetFrame() { return frame; }             // @0041d890 slot 2
 };
 
 // Where the player is in its clip when it is not blending: loopMode 1 starts again at the beginning, -1 plays back and forth,

@@ -22,6 +22,7 @@
 #include "TextureDefaults.h"
 #include "Resources.h"
 #include "Prop.h"
+#include "FrameProp.h"
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
@@ -143,7 +144,26 @@ IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRM
 }
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *))   { ((void (__cdecl *)(void *))0x47a790)((void *)fn); }
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *)) { ((void (__cdecl *)(void *))0x47a7a0)((void *)fn); }
-IDirect3DRMFrame *OwnerAttachFrame(void *owner)          { return ((IDirect3DRMFrame *(TC *)(void *))0x4276b0)(owner); }
+void  AddUpdatingProp(Prop *prop)                        { ((void (__cdecl *)(Prop *))0x42d180)(prop); }
+void  RemoveUpdatingProp(Prop *prop)                     { ((void (__cdecl *)(Prop *))0x42d1a0)(prop); }
+Prop *FindPropTemplate(const char *name, int unknown1, int unknown2)
+{
+    String s(name);                       // passed by value (the rep pointer); the callee releases it
+    StringRep *rep = s.rep;
+    s.rep = NULL;
+    return ((Prop *(__cdecl *)(StringRep *, int, int))0x42c8b0)(rep, unknown1, unknown2);
+}
+void *SimulationActor(int index)                         { return ((void *(TC *)(void *, int))0x414050)(*(void **)0x4badbc, index); }
+void *SimulationSoul(int index)                          { return ((void *(TC *)(void *, int))0x414080)(*(void **)0x4badbc, index); }
+float *ActorMatrix(void *actor)                          { return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor); }
+ScriptCaller *ScriptCallerInit(ScriptCaller *c, int actorIndex, Prop *prop)
+{
+    return ((ScriptCaller *(TC *)(ScriptCaller *, int, Prop *))0x4207a0)(c, actorIndex, prop);
+}
+ScriptCaller *ScriptCallerInitSoul(ScriptCaller *c, void *soul, int actorIndex, Prop *prop)
+{
+    return ((ScriptCaller *(TC *)(ScriptCaller *, void *, int, Prop *))0x420900)(c, soul, actorIndex, prop);
+}
 int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
 int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
 void SetSensitivity1(float value)                        { ((void (__cdecl *)(float))0x44aa10)(value); }
@@ -1445,8 +1465,8 @@ static void (__fastcall *o_prdestruct)(Prop *);
 static void __fastcall h_prdestruct(Prop *p) { HEAVY_LOG(H_prdestruct); p->Destruct(); }
 static Prop *(THISCALL *o_prdestroy)(Prop *, int);
 static Prop *THISCALL h_prdestroy(Prop *p, int flags) { HEAVY_LOG(H_prdestroy); return p->Destroy(flags); }
-static Prop *(THISCALL *o_prinst)(Prop *, void *, Float3, Float3, Float3, Float3);
-static Prop *THISCALL h_prinst(Prop *p, void *o, Float3 a, Float3 b, Float3 c, Float3 d) { HEAVY_LOG(H_prinst); return p->Instantiate(o, a, b, c, d); }
+static Prop *(THISCALL *o_prinst)(Prop *, FrameProp *, Float3, Float3, Float3, Float3);
+static Prop *THISCALL h_prinst(Prop *p, FrameProp *o, Float3 a, Float3 b, Float3 c, Float3 d) { HEAVY_LOG(H_prinst); return p->Instantiate(o, a, b, c, d); }
 static IDirect3DRMFrame *(THISCALL *o_prshow)(Prop *, IDirect3DRMFrame *);
 static IDirect3DRMFrame *THISCALL h_prshow(Prop *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_prshow); return p->Show(parent); }
 static int (__fastcall *o_prisshown)(Prop *);
@@ -1461,8 +1481,8 @@ static void (__fastcall *o_mpdestruct)(MeshProp *);
 static void __fastcall h_mpdestruct(MeshProp *p) { HEAVY_LOG(H_mpdestruct); p->Destruct(); }
 static Prop *(THISCALL *o_mpdestroy)(MeshProp *, int);
 static Prop *THISCALL h_mpdestroy(MeshProp *p, int flags) { HEAVY_LOG(H_mpdestroy); return p->Destroy(flags); }
-static Prop *(THISCALL *o_mpclone)(MeshProp *, void *);
-static Prop *THISCALL h_mpclone(MeshProp *p, void *o) { HEAVY_LOG(H_mpclone); return p->Clone(o); }
+static Prop *(THISCALL *o_mpclone)(MeshProp *, FrameProp *);
+static Prop *THISCALL h_mpclone(MeshProp *p, FrameProp *o) { HEAVY_LOG(H_mpclone); return p->Clone(o); }
 static IDirect3DRMFrame *(THISCALL *o_mpbuild)(MeshProp *, IDirect3DRMFrame *);
 static IDirect3DRMFrame *THISCALL h_mpbuild(MeshProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_mpbuild); return p->BuildFrame(parent); }
 static SpriteProp *(THISCALL *o_spinit)(SpriteProp *, const char *, Float3, Float3, const DecalSettings *);
@@ -1471,12 +1491,63 @@ static void (__fastcall *o_spdestruct)(SpriteProp *);
 static void __fastcall h_spdestruct(SpriteProp *p) { HEAVY_LOG(H_spdestruct); p->Destruct(); }
 static Prop *(THISCALL *o_spdestroy)(SpriteProp *, int);
 static Prop *THISCALL h_spdestroy(SpriteProp *p, int flags) { HEAVY_LOG(H_spdestroy); return p->Destroy(flags); }
-static Prop *(THISCALL *o_spclone)(SpriteProp *, void *);
-static Prop *THISCALL h_spclone(SpriteProp *p, void *o) { HEAVY_LOG(H_spclone); return p->Clone(o); }
+static Prop *(THISCALL *o_spclone)(SpriteProp *, FrameProp *);
+static Prop *THISCALL h_spclone(SpriteProp *p, FrameProp *o) { HEAVY_LOG(H_spclone); return p->Clone(o); }
 static IDirect3DRMFrame *(THISCALL *o_spbuild)(SpriteProp *, IDirect3DRMFrame *);
 static IDirect3DRMFrame *THISCALL h_spbuild(SpriteProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_spbuild); return p->BuildFrame(parent); }
 static void (THISCALL *o_spscale)(SpriteProp *, IDirect3DRMFrame *, Float3);
 static void THISCALL h_spscale(SpriteProp *p, IDirect3DRMFrame *f, Float3 s) { HEAVY_LOG(H_spscale); p->ApplyScale(f, s); }
+// ---- FrameProp (FrameProp.h): groups of child props, with an optional animated body ----
+static Hook H_fpinit, H_fpdestruct, H_fpdestroy, H_fpclone, H_fpbuild, H_fphide, H_fpown, H_fppart, H_fpupdate, H_fpfire;
+static Hook H_fptime, H_fpdir, H_fploop, H_fpmatrix, H_fpactor, H_fpfollow, H_fphideend, H_fpfind;
+static FrameProp *(THISCALL *o_fpinit)(FrameProp *, Float3, Float3, Float3, Float3, StringList *, MorphCycle *, CycleMessageTable *);
+static FrameProp *THISCALL h_fpinit(FrameProp *p, Float3 a, Float3 b, Float3 c, Float3 d, StringList *n, MorphCycle *m, CycleMessageTable *t)
+{
+    HEAVY_LOG(H_fpinit);
+    return p->Init(a, b, c, d, n, m, t);
+}
+static void (__fastcall *o_fpdestruct)(FrameProp *);
+static void __fastcall h_fpdestruct(FrameProp *p) { HEAVY_LOG(H_fpdestruct); p->Destruct(); }
+static Prop *(THISCALL *o_fpdestroy)(FrameProp *, int);
+static Prop *THISCALL h_fpdestroy(FrameProp *p, int flags) { HEAVY_LOG(H_fpdestroy); return p->Destroy(flags); }
+static Prop *(THISCALL *o_fpclone)(FrameProp *, FrameProp *);
+static Prop *THISCALL h_fpclone(FrameProp *p, FrameProp *o) { HEAVY_LOG(H_fpclone); return p->Clone(o); }
+static IDirect3DRMFrame *(THISCALL *o_fpbuild)(FrameProp *, IDirect3DRMFrame *);
+static IDirect3DRMFrame *THISCALL h_fpbuild(FrameProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_fpbuild); return p->BuildFrame(parent); }
+static void (__fastcall *o_fphide)(FrameProp *);
+static void __fastcall h_fphide(FrameProp *p) { HEAVY_LOG(H_fphide); p->Hide(); }
+static void (THISCALL *o_fpown)(FrameProp *, IDirect3DRMFrame *);
+static void THISCALL h_fpown(FrameProp *p, IDirect3DRMFrame *parent) { HEAVY_LOG(H_fpown); p->BuildOwnFrame(parent); }
+static IDirect3DRMFrame *(__fastcall *o_fppart)(FrameProp *);
+static IDirect3DRMFrame *__fastcall h_fppart(FrameProp *p) { HEAVY_LOG(H_fppart); return p->GetPartFrame(); }
+static void (THISCALL *o_fpupdate)(FrameProp *, float);
+static void THISCALL h_fpupdate(FrameProp *p, float seconds) { HEAVY_LOG(H_fpupdate); p->Update(seconds); }
+static void (THISCALL *o_fpfire)(FrameProp *, float, float);
+static void THISCALL h_fpfire(FrameProp *p, float from, float to) { HEAVY_LOG(H_fpfire); p->FireMessages(from, to); }
+static void (THISCALL *o_fptime)(FrameProp *, float);
+static void THISCALL h_fptime(FrameProp *p, float t) { HEAVY_LOG(H_fptime); p->SetCycleTime(t); }
+static void (THISCALL *o_fpdir)(FrameProp *, int);
+static void THISCALL h_fpdir(FrameProp *p, int d) { HEAVY_LOG(H_fpdir); p->SetCycleDirection(d); }
+static void (THISCALL *o_fploop)(FrameProp *, int);
+static void THISCALL h_fploop(FrameProp *p, int m) { HEAVY_LOG(H_fploop); p->SetCycleLoopMode(m); }
+// slot 18 returns a matrix by value: MSVC passes the caller's result space as the first stack argument and returns it
+static float *(THISCALL *o_fpmatrix)(FrameProp *, float *);
+static float *THISCALL h_fpmatrix(FrameProp *p, float *result) { HEAVY_LOG(H_fpmatrix); return p->GetPartMatrix(result); }
+static void (THISCALL *o_fpactor)(FrameProp *, int);
+static void THISCALL h_fpactor(FrameProp *p, int i) { HEAVY_LOG(H_fpactor); p->SetActor(i); }
+static void (THISCALL *o_fpfollow)(FrameProp *, int);
+static void THISCALL h_fpfollow(FrameProp *p, int m) { HEAVY_LOG(H_fpfollow); p->SetFollowMode(m); }
+static void (THISCALL *o_fphideend)(FrameProp *, int);
+static void THISCALL h_fphideend(FrameProp *p, int h) { HEAVY_LOG(H_fphideend); p->SetHideAtEnd(h); }
+// slot 13 takes a String by value (its rep pointer) and releases it
+static Prop *(THISCALL *o_fpfind)(FrameProp *, StringRep *);
+static Prop *THISCALL h_fpfind(FrameProp *p, StringRep *rep)
+{
+    HEAVY_LOG(H_fpfind);
+    String name;
+    name.rep = rep;
+    return p->FindChild(name);
+}
 // ---- Animation (Animation.h): poses, tracks, clips ----
 // animcmp (with the "anim" hooks): run the original and compare our version on a copy of the same input. The poses the game
 // keeps are the original's; ours only checks.
@@ -1735,6 +1806,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_prinit, &H_prdestruct, &H_prdestroy, &H_prinst, &H_prshow, &H_prisshown, &H_prhide, &H_prattach,
                            &H_mpinit, &H_mpdestruct, &H_mpdestroy, &H_mpclone, &H_mpbuild,
                            &H_spinit, &H_spdestruct, &H_spdestroy, &H_spclone, &H_spbuild, &H_spscale,
+                           &H_fpinit, &H_fpdestruct, &H_fpdestroy, &H_fpclone, &H_fpbuild, &H_fphide, &H_fpown, &H_fppart, &H_fpupdate, &H_fpfire,
+                           &H_fptime, &H_fpdir, &H_fploop, &H_fpmatrix, &H_fpactor, &H_fpfollow, &H_fphideend, &H_fpfind,
                            &H_pzctor, &H_pzassign, &H_pzmatrix, &H_pcctor, &H_pcdtor, &H_pcfind, &H_pcsample, &H_pcnew, &H_pcblend,
                            &H_ptctor, &H_ptcopy, &H_ptdtor, &H_ptfind, &H_ptat, &H_ptassign,
                            &H_mcctor, &H_mcrange, &H_mcdtor, &H_mcnew, &H_mcsample, &H_mcblend,
@@ -2020,6 +2093,24 @@ static void Setup()
     H_spclone = { "SpriteProp::Clone", 0x4269a0, 7, "64a10000000055", (void *)h_spclone, (void **)&o_spclone, false, 0, 0, "props", 0 };
     H_spbuild = { "SpriteProp::BuildFrame", 0x426b00, 7, "64a10000000055", (void *)h_spbuild, (void **)&o_spbuild, false, 0, 0, "props", 0 };
     H_spscale = { "SpriteProp::ApplyScale", 0x426c00, 7, "64a10000000055", (void *)h_spscale, (void **)&o_spscale, false, 0, 0, "props", 0 };
+    H_fpinit = { "FrameProp::Init", 0x426c70, 7, "64a10000000055", (void *)h_fpinit, (void **)&o_fpinit, false, 0, 0, "frameprop", 0 };
+    H_fpdestruct = { "FrameProp::Destruct", 0x427100, 7, "64a10000000055", (void *)h_fpdestruct, (void **)&o_fpdestruct, false, 0, 0, "frameprop", 0 };
+    H_fpdestroy = { "FrameProp::Destroy", 0x426f70, 8, "568bf1e888010000", (void *)h_fpdestroy, (void **)&o_fpdestroy, false, 0, 0, "frameprop", 4 };
+    H_fpclone = { "FrameProp::Clone", 0x426fe0, 7, "64a10000000055", (void *)h_fpclone, (void **)&o_fpclone, false, 0, 0, "frameprop", 0 };
+    H_fpbuild = { "FrameProp::BuildFrame", 0x4271f0, 7, "64a10000000055", (void *)h_fpbuild, (void **)&o_fpbuild, false, 0, 0, "frameprop", 0 };
+    H_fphide = { "FrameProp::Hide", 0x427320, 5, "53568b4158", (void *)h_fphide, (void **)&o_fphide, false, 0, 0, "frameprop", 0 };
+    H_fpown = { "FrameProp::BuildOwnFrame", 0x427380, 7, "64a10000000055", (void *)h_fpown, (void **)&o_fpown, false, 0, 0, "frameprop", 0 };
+    H_fppart = { "FrameProp::GetPartFrame", 0x4276b0, 7, "64a10000000055", (void *)h_fppart, (void **)&o_fppart, false, 0, 0, "frameprop", 0 };
+    H_fpupdate = { "FrameProp::Update", 0x427740, 7, "64a10000000055", (void *)h_fpupdate, (void **)&o_fpupdate, false, 0, 0, "frameprop", 0 };
+    H_fpfire = { "FrameProp::FireMessages", 0x427b50, 7, "64a10000000055", (void *)h_fpfire, (void **)&o_fpfire, false, 0, 0, "frameprop", 0 };
+    H_fptime = { "FrameProp::SetCycleTime", 0x427e30, 7, "538b8994000000", (void *)h_fptime, (void **)&o_fptime, false, 0, 0, "frameprop", 0 };
+    H_fpdir = { "FrameProp::SetCycleDirection", 0x427e50, 7, "538b8994000000", (void *)h_fpdir, (void **)&o_fpdir, false, 0, 0, "frameprop", 0 };
+    H_fploop = { "FrameProp::SetCycleLoopMode", 0x427e70, 7, "538b8994000000", (void *)h_fploop, (void **)&o_fploop, false, 0, 0, "frameprop", 0 };
+    H_fpmatrix = { "FrameProp::GetPartMatrix", 0x427e90, 7, "64a10000000055", (void *)h_fpmatrix, (void **)&o_fpmatrix, false, 0, 0, "frameprop", 0 };
+    H_fpactor = { "FrameProp::SetActor", 0x427f10, 10, "8b44240489819c000000", (void *)h_fpactor, (void **)&o_fpactor, false, 0, 0, "frameprop", 0 };
+    H_fpfollow = { "FrameProp::SetFollowMode", 0x427f20, 10, "8b4424048981a0000000", (void *)h_fpfollow, (void **)&o_fpfollow, false, 0, 0, "frameprop", 0 };
+    H_fphideend = { "FrameProp::SetHideAtEnd", 0x427f30, 10, "8b4424048981a8000000", (void *)h_fphideend, (void **)&o_fphideend, false, 0, 0, "frameprop", 0 };
+    H_fpfind = { "FrameProp::FindChild", 0x427f60, 7, "64a10000000055", (void *)h_fpfind, (void **)&o_fpfind, false, 0, 0, "frameprop", 0 };
     H_pzctor = { "PartPose::PartPose", 0x4193c0, 6, "64a100000000", (void *)h_pzctor, (void **)&o_pzctor, false, 0, 0, "anim", 0 };
     H_pzassign = { "PartPose::Assign", 0x419530, 5, "83ec085356", (void *)h_pzassign, (void **)&o_pzassign, false, 0, 0, "anim", 0 };
     H_pzmatrix = { "PartPose::ToMatrix", 0x4195b0, 6, "64a100000000", (void *)h_pzmatrix, (void **)&o_pzmatrix, false, 0, 0, "anim", 0 };
