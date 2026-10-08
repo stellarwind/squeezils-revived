@@ -212,3 +212,6 @@ void  SqgSetTextureLookup(IDirect3DRMTexture *(__cdecl *fn)(const char *));   //
 IDirect3DRMFrame *LoadWrlFrame(IDirect3DRM *d3drm, const char *path, IDirect3DRMTexture *(__cdecl *lookup)(const char *));   // @0047a580 builds a frame straight from a .wrl file
 void  WrlSetLogCallback(void (__cdecl *fn)(const char *));             // @0047a790 stores into 0x4c3c4c (its meaning is a guess: the game passes its error logger to both)
 void  WrlSetErrorCallback(void (__cdecl *fn)(const char *));           // @0047a7a0 stores into 0x4c3c50
+
+// ---- props (Prop.h) ----
+IDirect3DRMFrame *OwnerAttachFrame(void *owner);                       // @004276b0 (thiscall) the owner prop's frame, or the frame of its named part when it has parts
