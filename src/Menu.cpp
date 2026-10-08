@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <new>
 #include "Menu.h"
+#include "Dialogs.h"
 #include "IniReader.h"
 #include "Renderer.h"
 #include "Original.h"
@@ -249,7 +250,7 @@ int __cdecl Menu::ActionLoadGame()
     char path[200];
     strcpy(kLoadGameName, "");
     strcpy(kLoadGameTitle, "");
-    if (DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(113), GetMainWindow(), (DLGPROC)kLoadGameDialogProc, 0)) {
+    if (DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(113), GetMainWindow(), (DLGPROC)Dialogs::SaveLoad, 0)) {
         if (strlen(kLoadGameName) != 0) {
             strcpy(path, kSaveGameDirectory);
             strcat(path, kLoadGameName);
@@ -265,7 +266,7 @@ int __cdecl Menu::ActionLoadGame()
 
 int __cdecl Menu::ActionOptions()
 {
-    DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(129), GetMainWindow(), (DLGPROC)kAboutDialogProc, 0);
+    DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(129), GetMainWindow(), (DLGPROC)Dialogs::Options, 0);
     return 0;
 }
 
@@ -283,5 +284,5 @@ int __cdecl Menu::ActionCredits()
 
 int __cdecl Menu::ActionQuit()
 {
-    return DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(128), GetMainWindow(), (DLGPROC)kQuitDialogProc, 0) != 0;
+    return DialogBoxParamA(GetInstance(), MAKEINTRESOURCE(128), GetMainWindow(), (DLGPROC)Dialogs::QuitQuestion, 0) != 0;
 }

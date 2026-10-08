@@ -17,6 +17,7 @@
 #include "IniReader.h"
 #include "Splash.h"
 #include "Menu.h"
+#include "Dialogs.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
 #include "Panel.h"
@@ -94,6 +95,34 @@ int GameLoadGame(const char *path)
 }
 HINSTANCE GetInstance() { return *(HINSTANCE *)0x4c73c8; }
 HWND GetMainWindow() { return *(HWND *)0x4c73cc; }
+// ---- the input object and the dialogs' other boundary calls ----
+#define TC __attribute__((thiscall))
+InputSystem *GetInputSystem() { return *(InputSystem **)0x4badac; }
+int  InputJoystickMode(InputSystem *in)                  { return ((int (TC *)(void *))0x43aee0)(in); }
+int  InputSetJoystickMode(InputSystem *in, int mode)     { return ((int (TC *)(void *, int))0x43aef0)(in, mode); }
+int  InputJoystickPresent(InputSystem *in)               { return ((int (TC *)(void *))0x43c7a0)(in); }
+int  InputActionName(InputSystem *in, int index, char *line) { return ((int (TC *)(void *, int, char *))0x43c7b0)(in, index, line); }
+void InputRevertBindings(InputSystem *in, int which)     { ((void (TC *)(void *, int))0x43ad30)(in, which); }
+void InputBindingLabel(InputSystem *in, const char *line, char *keyName) { ((void (TC *)(void *, const char *, char *))0x43ad00)(in, line, keyName); }
+int  InputAssignKey(InputSystem *in, char *line, const char *keyName)
+{
+    return ((int (TC *)(void *, char *, const char *))(*(void ***)in)[0])(in, line, keyName);
+}
+int  InputSetKeySlot(InputSystem *in, char *line, int slot)
+{
+    return ((int (TC *)(void *, char *, int))(*(void ***)in)[1])(in, line, slot);
+}
+int  InputSetButtonSlot(InputSystem *in, char *line, int slot) { return ((int (TC *)(void *, char *, int))0x43ae70)(in, line, slot); }
+int  InputSaveBindings(InputSystem *in)                  { return ((int (TC *)(void *))0x43c4d0)(in); }
+void *InputCalibration(InputSystem *in)                  { return *(void **)((char *)in + 0x10); }
+void CalibrationStart(void *cal)                         { ((void (TC *)(void *))0x447880)(cal); }
+int  CalibrationCheck(void *cal)                         { return ((int (TC *)(void *))0x4479c0)(cal); }
+int  CalibrationRun(void *cal, HWND dlg)                 { return ((int (TC *)(void *, HWND))0x447f00)(cal, dlg); }
+int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
+int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
+void SetSensitivity1(float value)                        { ((void (__cdecl *)(float))0x44aa10)(value); }
+void SetSensitivity2(float value)                        { ((void (__cdecl *)(float))0x44aab0)(value); }
+void SetSensitivity3(float value)                        { ((void (__cdecl *)(float))0x44a940)(value); }
 void *GetPlayerSoul() { return ((void *(__attribute__((thiscall)) *)(void *, int))0x414080)(*(void **)0x4badbc, 0); }
 int SoulMood(void *soul)
 {
@@ -1234,6 +1263,34 @@ static int __cdecl h_mncredits() { HEAVY_LOG(H_mncredits); return Menu::ActionCr
 static int (__cdecl *o_mnquit)();
 static int __cdecl h_mnquit() { HEAVY_LOG(H_mnquit); return Menu::ActionQuit(); }
 
+// ---- Dialogs (the options dialog and the dialogs it opens, load / save game; replace only, "dialogs") -------------------------
+static Hook H_dgquit, H_dgopt, H_dgjoy, H_dgkeys, H_dgsens, H_dgsave, H_dgname, H_dgkind, H_dgpress,
+            H_dgshowjoy, H_dgshowkeys, H_dgshowsens, H_dgcreate, H_dgvalid;
+
+#define DIALOG_HOOK(tag, fn) \
+    static INT_PTR (CALLBACK *o_##tag)(HWND, UINT, WPARAM, LPARAM); \
+    static INT_PTR CALLBACK h_##tag(HWND d, UINT m, WPARAM w, LPARAM l) { HEAVY_LOG(H_##tag); return Dialogs::fn(d, m, w, l); }
+DIALOG_HOOK(dgquit, QuitQuestion)
+DIALOG_HOOK(dgopt, Options)
+DIALOG_HOOK(dgjoy, Joystick)
+DIALOG_HOOK(dgkeys, Keys)
+DIALOG_HOOK(dgsens, Sensitivity)
+DIALOG_HOOK(dgsave, SaveLoad)
+DIALOG_HOOK(dgname, SaveName)
+DIALOG_HOOK(dgkind, KeyKind)
+DIALOG_HOOK(dgpress, PressKey)
+
+static int (__cdecl *o_dgshowjoy)(HWND);
+static int __cdecl h_dgshowjoy(HWND p) { HEAVY_LOG(H_dgshowjoy); return Dialogs::ShowJoystick(p); }
+static int (__cdecl *o_dgshowkeys)(HWND);
+static int __cdecl h_dgshowkeys(HWND p) { HEAVY_LOG(H_dgshowkeys); return Dialogs::ShowKeys(p); }
+static int (__cdecl *o_dgshowsens)(HWND);
+static int __cdecl h_dgshowsens(HWND p) { HEAVY_LOG(H_dgshowsens); return Dialogs::ShowSensitivity(p); }
+static HANDLE (__cdecl *o_dgcreate)(HWND, const char *);
+static HANDLE __cdecl h_dgcreate(HWND o, const char *p) { HEAVY_LOG(H_dgcreate); return Dialogs::CreateSaveFile(o, p); }
+static int (__cdecl *o_dgvalid)(const char *);
+static int __cdecl h_dgvalid(const char *n) { HEAVY_LOG(H_dgvalid); return Dialogs::IsValidSaveName(n); }
+
 // ---- MoodFace (the animated face in the panel; replace only, "face") --------------------------------------------------------
 static Hook H_fcctor, H_fcdtor, H_fcload, H_fcdraw, H_fcfind, H_fcorigin;
 
@@ -1393,6 +1450,8 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_spctor, &H_spdtor, &H_spload, &H_spfile, &H_spshow, &H_sphide, &H_spshown, &H_sppump, &H_spflush, &H_spstep, &H_spprog, &H_spreset,
                            &H_mnctor, &H_mndtor, &H_mnload, &H_mnacts, &H_mnbmp, &H_mnanchor, &H_mnlayout, &H_mndraw, &H_mnsel, &H_mnmove, &H_mnhit, &H_mnmsg,
                            &H_mnstart, &H_mnloadgame, &H_mnoptions, &H_mnhelp, &H_mncredits, &H_mnquit,
+                           &H_dgquit, &H_dgopt, &H_dgjoy, &H_dgkeys, &H_dgsens, &H_dgsave, &H_dgname, &H_dgkind, &H_dgpress,
+                           &H_dgshowjoy, &H_dgshowkeys, &H_dgshowsens, &H_dgcreate, &H_dgvalid,
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
@@ -1568,6 +1627,20 @@ static void Setup()
     H_mnhelp = { "Menu::ActionHelp", 0x406670, 6, "53a1dc754c00", (void *)h_mnhelp, (void **)&o_mnhelp, false, 0, 0, "menu", 0 };
     H_mncredits = { "Menu::ActionCredits", 0x406690, 6, "53a1dc754c00", (void *)h_mncredits, (void **)&o_mncredits, false, 0, 0, "menu", 0 };
     H_mnquit = { "Menu::ActionQuit", 0x406920, 6, "53a1cc734c00", (void *)h_mnquit, (void **)&o_mnquit, false, 0, 0, "menu", 0 };
+    H_dgquit = { "Dialogs::QuitQuestion", 0x406d60, 5, "8b44240853", (void *)h_dgquit, (void **)&o_dgquit, false, 0, 0, "dialogs", 0 };
+    H_dgopt = { "Dialogs::Options", 0x406cb0, 5, "8b44240853", (void *)h_dgopt, (void **)&o_dgopt, false, 0, 0, "dialogs", 0 };
+    H_dgjoy = { "Dialogs::Joystick", 0x4078e0, 5, "8b44240853", (void *)h_dgjoy, (void **)&o_dgjoy, false, 0, 0, "dialogs", 0 };
+    H_dgkeys = { "Dialogs::Keys", 0x407d40, 6, "81ecd4000000", (void *)h_dgkeys, (void **)&o_dgkeys, false, 0, 0, "dialogs", 0 };
+    H_dgsens = { "Dialogs::Sensitivity", 0x408410, 5, "83ec0c5356", (void *)h_dgsens, (void **)&o_dgsens, false, 0, 0, "dialogs", 0 };
+    H_dgsave = { "Dialogs::SaveLoad", 0x406eb0, 6, "81ecac030000", (void *)h_dgsave, (void **)&o_dgsave, false, 0, 0, "dialogs", 0 };
+    H_dgname = { "Dialogs::SaveName", 0x4077c0, 5, "8b44240853", (void *)h_dgname, (void **)&o_dgname, false, 0, 0, "dialogs", 0 };
+    H_dgkind = { "Dialogs::KeyKind", 0x407c90, 5, "8b44240856", (void *)h_dgkind, (void **)&o_dgkind, false, 0, 0, "dialogs", 0 };
+    H_dgpress = { "Dialogs::PressKey", 0x407b90, 5, "8b44240853", (void *)h_dgpress, (void **)&o_dgpress, false, 0, 0, "dialogs", 0 };
+    H_dgshowjoy = { "Dialogs::ShowJoystick", 0x4066b0, 6, "53568b74240c", (void *)h_dgshowjoy, (void **)&o_dgshowjoy, false, 0, 0, "dialogs", 0 };
+    H_dgshowkeys = { "Dialogs::ShowKeys", 0x4066f0, 6, "53568b74240c", (void *)h_dgshowkeys, (void **)&o_dgshowkeys, false, 0, 0, "dialogs", 0 };
+    H_dgshowsens = { "Dialogs::ShowSensitivity", 0x4068e0, 6, "53568b74240c", (void *)h_dgshowsens, (void **)&o_dgshowsens, false, 0, 0, "dialogs", 0 };
+    H_dgcreate = { "Dialogs::CreateSaveFile", 0x406dc0, 11, "83ec0cc74424000c000000", (void *)h_dgcreate, (void **)&o_dgcreate, false, 0, 0, "dialogs", 0 };
+    H_dgvalid = { "Dialogs::IsValidSaveName", 0x407730, 6, "53b9ffffffff", (void *)h_dgvalid, (void **)&o_dgvalid, false, 0, 0, "dialogs", 0 };
     H_fcctor = { "MoodFace::MoodFace", 0x405430, 6, "53ba0a000000", (void *)h_fcctor, (void **)&o_fcctor, false, 0, 0, "face", 0 };
     H_fcdtor = { "MoodFace::~MoodFace", 0x405490, 7, "83ec08894c2400", (void *)h_fcdtor, (void **)&o_fcdtor, false, 0, 0, "face", 0 };
     H_fcload = { "MoodFace::Load", 0x405520, 7, "64a10000000055", (void *)h_fcload, (void **)&o_fcload, false, 0, 0, "face", 0 };
