@@ -201,6 +201,28 @@ template<> struct OriginalVtables<GeometryTable>                   { enum : unsi
 template<> struct OriginalVtables<Array<TextureTable *> >          { enum : unsigned { primary = 0x4a06f4 }; };
 template<> struct OriginalVtables<Array<GeometryTable *> >         { enum : unsigned { primary = 0x4a06d4 }; };
 
+// ---- animation containers (Animation.h, BodyPart.h) ----
+struct Vector3f;
+struct PartOrientation;
+struct PartPose;
+struct PartCycle;
+struct BodyPart;
+typedef Table<String, PartPose *, Array<PartPose *>, 0>   PoseTableBase;
+typedef Table<String, PartCycle *, Array<PartCycle *>, 0> PartCycleTable;
+typedef Table<String, BodyPart *, Array<BodyPart *>, 0>   BodyPartTable;
+template<> struct OriginalVtables<Array<float> >                   { enum : unsigned { primary = 0x49ffec }; };
+template<> struct OriginalVtables<PrimitiveArray<float, 2> >       { enum : unsigned { primary = 0x49d75c, bufferObject = 0x49d744 }; };
+template<> struct OriginalVtables<Array<Vector3f> >                { enum : unsigned { primary = 0x4a002c }; };
+template<> struct OriginalVtables<PrimitiveArray<Vector3f, 4> >    { enum : unsigned { primary = 0x49d7a4, bufferObject = 0x49d78c }; };
+template<> struct OriginalVtables<Array<PartOrientation> >         { enum : unsigned { primary = 0x4a0a2c }; };
+template<> struct OriginalVtables<Array<PrimitiveArray<float, 2> *> > { enum : unsigned { primary = 0x4a0a4c }; };
+template<> struct OriginalVtables<Array<PartPose *> >              { enum : unsigned { primary = 0x4a0a84 }; };
+template<> struct OriginalVtables<PoseTableBase>                       { enum : unsigned { primary = 0x4a0a6c }; };
+template<> struct OriginalVtables<Array<BodyPart *> >              { enum : unsigned { primary = 0x4a0abc }; };
+template<> struct OriginalVtables<BodyPartTable>                   { enum : unsigned { primary = 0x4a0aa4 }; };
+template<> struct OriginalVtables<Array<PartCycle *> >             { enum : unsigned { primary = 0x4a0b14 }; };
+template<> struct OriginalVtables<PartCycleTable>                  { enum : unsigned { primary = 0x4a0afc }; };
+
 // The model loader's pieces that are still original code (SqgModel.h has Load, CreateMesh and BuildFrame).
 class SqgModel;
 SqgModel *SqgModelConstruct(void *memory);                             // @004719d0 clears the 0x2c byte object, returns it

@@ -72,10 +72,17 @@ struct GameHeapObject {
     static void operator delete(void *p) { Operator_Delete(p); }
 };
 
+// The same two operators for a class that cannot derive from GameHeapObject because its first member already does: an empty
+// base may not share an address with another base of its own type, so the members would move.
+#define GAME_HEAP_OPERATORS \
+    static void *operator new(size_t n) noexcept { return Operator_New(n); } \
+    static void operator delete(void *p) { Operator_Delete(p); }
+
 template<class T> class Array : public GameHeapObject {
 public:
     Array();                                          // String @45e1b0, int @45d8d0, pointers inlined: empty, room for 2
-    Array(const Array &o);                            // String @45e0e0: room for o.capacity, copies o's elements
+    Array(const Array &o);                            // String @45e0e0, float @45dc70: room for o.capacity, copies o's elements
+    Array(int n, const T *src);                       // float @45dcd0, Vector3f @45e6c0: n elements copied from src, room for n (2 when n is 0)
     ~Array();                                         // String @45e250, int @45d900 (not virtual)
 
     virtual T    Get(int i);                          // slot 0  String @40ec10, int @40ec80
@@ -95,6 +102,8 @@ public:
 template<class T, int ID> class PrimitiveArray : public Array<T>, public BufferObject {
 public:
     PrimitiveArray() { UseOriginalVtables(this); }   // inlined everywhere in the original
+    PrimitiveArray(const PrimitiveArray &o) : Array<T>(o) { UseOriginalVtables(this); }   // inlined (float: the Array copy @45dc70, then the vtables)
+    PrimitiveArray(int n, const T *src) : Array<T>(n, src) { UseOriginalVtables(this); }
 };
 
 template<class T, int ID> class Set : public PrimitiveArray<T, ID> {
@@ -154,6 +163,13 @@ template<class T> Array<T>::Array(const Array &o) : count(o.count), capacity(o.c
     UseOriginalVtables(this);
     for (int i = 0; i < count; i++)
         data[i] = o.data[i];
+}
+
+template<class T> Array<T>::Array(int n, const T *src) : count(n), capacity(n ? n : 2), data(NewArray<T>(n ? n : 2))
+{
+    UseOriginalVtables(this);
+    for (int i = 0; i < count; i++)
+        data[i] = src[i];
 }
 
 template<class T> Array<T>::~Array()

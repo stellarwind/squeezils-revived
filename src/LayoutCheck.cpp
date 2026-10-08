@@ -37,10 +37,11 @@ static_assert(sizeof(Warp) == 0x1e4, "Warp size");
 // BodyPart
 #include "BodyPart.h"
 static_assert(offsetof(BodyPart, model) == 0x04 && offsetof(BodyPart, morph) == 0x08 && offsetof(BodyPart, frame) == 0x0c, "BodyPart fields");
-static_assert(offsetof(AnimatedBody, partCount) == 0x0c && offsetof(AnimatedBody, parts) == 0x28 && offsetof(AnimatedBody, rootFrame) == 0x4c, "AnimatedBody fields");
-static_assert(offsetof(BodyPose, direction) == 0x0c && offsetof(BodyPose, up) == 0x18 && offsetof(BodyPose, weights) == 0x24 &&
-              offsetof(WeightArray, count) == 0x04, "BodyPose fields");
-static_assert(sizeof(BodyPose) == 0x2c, "BodyPose size");
+static_assert(offsetof(AnimatedBody, partTable) == 0x04 && offsetof(AnimatedBody, cycle) == 0x2c && offsetof(AnimatedBody, time) == 0x30 &&
+              offsetof(AnimatedBody, pose) == 0x40 && offsetof(AnimatedBody, blendLeft) == 0x48 && offsetof(AnimatedBody, rootFrame) == 0x4c, "AnimatedBody fields");
+static_assert(offsetof(PartPose, direction) == 0x0c && offsetof(PartPose, up) == 0x18 && offsetof(PartPose, weights) == 0x24, "PartPose fields");
+static_assert(offsetof(PartCycle, orientations) == 0x14 && offsetof(PartCycle, morph) == 0x24 && offsetof(PartCycle, cycle) == 0x34 && offsetof(PartCycle, weightCount) == 0x38, "PartCycle fields");
+static_assert(offsetof(MorphCycle, noLoop) == 0x10 && offsetof(MorphCycle, speed) == 0x18 && offsetof(MorphCycle, times) == 0x20 && offsetof(MorphCycle, parts) == 0x24, "MorphCycle fields");
 static_assert(sizeof(DisplayFormat) == 0x18, "DisplayFormat size");
 
 // WarpFace field offsets
