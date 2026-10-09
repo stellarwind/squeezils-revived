@@ -1,0 +1,16 @@
+^\?Get@TableGet  465340 get_possessions
+^\?Get@TableGet  466210 get_inventory
+^\?Get@TableGet  466820 get_a
+^\?Get@TableGet  467a50 get_b
+^\?Get@TableGet  467e90 get_c
+^\?Get@TableGet  468630 get_d
+^\?Get@TableGet  468ab0 get_e
+^\?Get@TableGet  468ef0 get_f
+^\?Get@TableGet  469a70 get_place
+^\?Get@TableGet  46a210 get_g
+^\?Get@TableGet  46acd0 get_h
+^\?Get@TableGet  46b110 get_i
+^\?Get@TableGet  46c430 get_j
+^\?Get@TableGet  46d2a0 get_ini50
+^\?Get@TableGet  46df30 get_k
+^\?Get@TableGet  46ebd0 get_l

@@ -58,6 +58,4 @@ QuestItems/targets.txt QuestItems/QuestItems.cpp
 LandSimulation/targets.txt LandSimulation/LandSimulation.cpp
 SimulationAddId/targets.txt SimulationAddId/SimulationAddId.cpp
 SimulationAddCreature/targets.txt SimulationAddCreature/SimulationAddCreature.cpp
-PlaceTable/targets.txt PlaceTable/PlaceTable.cpp
-PossessionsTable/targets.txt PossessionsTable/PossessionsTable.cpp
-StringTable/targets.txt StringTable/StringTable.cpp
+TableGet/targets.txt TableGet/TableGet.cpp
