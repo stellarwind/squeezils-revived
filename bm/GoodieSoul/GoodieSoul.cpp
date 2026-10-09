@@ -14,3 +14,10 @@ int GoodieSoul::IsLoose()    { return kind == 0; }
 int GoodieSoul::GetKind()    { return kind == 0 ? 2 : 4; }
 int GoodieSoul::IsAttacking(){ return thrown != 0; }
 void *GoodieSoul::GetSettings() { return g_goodieSettings; }
+
+int GoodieSoulGrant::GrantSlot3(int arg)
+{
+    if (kind != 0)
+        return arg == 0;
+    return thrown == 0;
+}
