@@ -1,0 +1,3 @@
+^\?GetMode@SqueezilBody      457ac0 getmode
+^\?IsOnGround@SqueezilBody   458fe0 isonground
+^\?SetOnGround@SqueezilBody  458ff0 setonground

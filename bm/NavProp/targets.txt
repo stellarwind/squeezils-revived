@@ -1,0 +1,2 @@
+^\?GetSurface@NavProp   429690 getsurface
+^\?GetInstance@NavProp  4296a0 getinstance

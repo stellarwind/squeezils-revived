@@ -1,0 +1,4 @@
+^\?PlaceCount@RegionSimulation   418110 placecount
+^\?GetLocation@RegionSimulation  418150 getlocation
+^\?GetRegion@RegionSimulation    418160 getregion
+^\?CanSave@RegionSimulation      4189a0 cansave
