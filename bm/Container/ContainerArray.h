@@ -6,6 +6,7 @@ template <class T>
 class Array {
 public:
     Array();
+    Array(int n, const T *src);
     ~Array();
     virtual T Get(int i);                              // slot 0
     virtual int Insert(const T &v, int at);            // slot 1
@@ -28,6 +29,16 @@ Array<T>::Array()
     count = 0;
     capacity = 2;
     data = new T[capacity];
+}
+
+template <class T>
+Array<T>::Array(int n, const T *src)
+{
+    count = n;
+    capacity = n ? n : 2;
+    data = new T[capacity];
+    for (int i = 0; i < count; i++)
+        data[i] = src[i];
 }
 
 template <class T>

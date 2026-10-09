@@ -16,6 +16,7 @@ struct MorphCycle {
     void *times;                    // 0x20 PrimitiveArray<float,2>*
     void *parts;                    // 0x24 PartCycleTable*
 
+    ~MorphCycle();                  // 0x41b940
     float Duration();               // 0x41ba00
     float Period();                 // 0x41ba10
     float Speed();                  // 0x41ba20
