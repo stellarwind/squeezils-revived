@@ -3,9 +3,16 @@
 #include "compat41.h"
 
 struct AwarenessRecord {
-    char pad14[0x14];
-    int  stale;            // 0x14 1 after a reset
-    void Reset();          // 0x4483c0: stale = 1
+    int   id;              // 0x00 the creature (-1: none)
+    char  pad10[0x10 - 0x4];
+    float distance;        // 0x10 how far it was
+    int   stale;           // 0x14 1 after a reset
+    void  Reset();         // 0x4483c0: stale = 1
+};
+
+struct CreatureTemplate {
+    char  pad14[0x14];
+    float senseRadius[3];  // 0x14 per-kind sense radius
 };
 
 struct SqueezilRoboSoul {
@@ -18,9 +25,13 @@ struct SqueezilRoboSoul {
     int  senseKind;        // 0x9c
     int  lastSenseKind;    // 0xa0
     AwarenessRecord records[3];   // 0xa4 the nearest player, robo, goodie
+    void *behaviour;       // 0xec
+    int   mode;            // 0xf0
+    CreatureTemplate *character;   // 0xf4
 
     int  GetKind();        // 0x4053d0 slot 8: 6 when finished, else 1
     void Remember();       // 0x404710: lastSenseKind = senseKind
     void ClearSeen();      // 0x404900: lastSeen[0..2] = -1
     void ResetSenses();    // 0x4046f0: records[i].Reset() for i in 0..2
+    int  IsNear(int kind); // 0x404770: the record's creature is within the sense radius
 };

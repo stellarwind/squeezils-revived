@@ -24,3 +24,12 @@ void SqueezilRoboSoul::ResetSenses()
     for (int i = 0; i < 3; i++)
         records[i].Reset();
 }
+
+int SqueezilRoboSoul::IsNear(int kind)
+{
+    if (records[kind].id != -1) {
+        float r = character->senseRadius[kind];
+        return r * r > records[kind].distance;
+    }
+    return 0;
+}
