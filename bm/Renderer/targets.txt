@@ -1,0 +1,5 @@
+^\?GetPixelFormat@Renderer  475000 getpixelfmt1
+^\?GetPixelFormat@Renderer  475020 getpixelfmt2
+^\?SetShades@Renderer  475040 setshades
+^\?SetTextureColors@Renderer  475060 settexturecolors
+^\?SetTextureShades@Renderer  475080 settextureshades
