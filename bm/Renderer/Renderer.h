@@ -5,7 +5,9 @@
 struct Renderer {
     char pad[0x38];
     int  format[6];       // 0x38 (DisplayFormat: bpp, isPalettized, r/g/b/alpha masks)
-    char pad2[0x9ac - 0x50];
+    char pad2a[0x58 - 0x50];
+    int  screenRect[4];   // 0x58 (RECT: left, top, right, bottom)
+    char pad2b[0x9ac - 0x68];
     int  textureColors;   // 0x9ac
     int  textureShades;   // 0x9b0
     int  shades;          // 0x9b4
@@ -19,5 +21,6 @@ struct Renderer {
     void SetTextureColors(int colors); // 0x475060
     void SetTextureShades(int shades); // 0x475080
     void SetViewParams(float nearPlane, float farPlane, float fovDegrees);  // 0x474f40
+    void GetScreenRect(int out[4]);    // 0x474fe0
     void Rebuild();                    // dummy (the real 0x4756a0/0x4757d0)
 };
