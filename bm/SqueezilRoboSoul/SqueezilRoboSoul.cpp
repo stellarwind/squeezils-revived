@@ -18,3 +18,9 @@ void SqueezilRoboSoul::ClearSeen()
     p[1] = -1;
     p[2] = -1;
 }
+
+void SqueezilRoboSoul::ResetSenses()
+{
+    for (int i = 0; i < 3; i++)
+        records[i].Reset();
+}
