@@ -70,3 +70,4 @@ GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
 Menu/targets.txt Menu/Menu.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
+StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
