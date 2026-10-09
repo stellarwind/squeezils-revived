@@ -59,3 +59,4 @@ LandSimulation/targets.txt LandSimulation/LandSimulation.cpp
 SimulationAddId/targets.txt SimulationAddId/SimulationAddId.cpp
 SimulationAddCreature/targets.txt SimulationAddCreature/SimulationAddCreature.cpp
 TableGet/targets.txt TableGet/TableGet.cpp
+TableFwd/targets.txt TableFwd/TableFwd.cpp
