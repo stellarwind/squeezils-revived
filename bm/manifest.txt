@@ -60,3 +60,5 @@ SimulationAddId/targets.txt SimulationAddId/SimulationAddId.cpp
 SimulationAddCreature/targets.txt SimulationAddCreature/SimulationAddCreature.cpp
 TableGet/targets.txt TableGet/TableGet.cpp
 TableFwd/targets.txt TableFwd/TableFwd.cpp
+ArrayGet/targets.txt ArrayGet/ArrayGet.cpp
+ArrayData/targets.txt ArrayData/ArrayData.cpp
