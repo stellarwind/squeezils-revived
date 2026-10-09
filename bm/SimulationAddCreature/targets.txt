@@ -1,0 +1,1 @@
+^\?AddCreature@Simulation  414160 addcreature
