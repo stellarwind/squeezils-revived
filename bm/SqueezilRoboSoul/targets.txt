@@ -2,4 +2,5 @@
 ^\?Remember@SqueezilRoboSoul  404710 remember
 ^\?ClearSeen@SqueezilRoboSoul 404900 clearseen
 ^\?ResetSenses@SqueezilRoboSoul 4046f0 resetsenses
+^\?IsNear@SqueezilRoboSoul      404770 isnear
 ^\?Reset@AwarenessRecord   4483c0 reset
