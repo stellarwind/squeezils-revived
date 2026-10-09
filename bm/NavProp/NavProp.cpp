@@ -3,3 +3,9 @@
 
 int NavProp::GetSurface()  { return surface; }
 int NavProp::GetInstance() { return instance; }
+
+int NavProp::GetSizeSquared(float *out)
+{
+    *out = sizeSquared;
+    return 1;
+}
