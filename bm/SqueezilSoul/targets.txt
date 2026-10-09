@@ -1,4 +1,10 @@
+^\?GetInterface@SqueezilSoul    4503f0 getinterface
 ^\?GetState@SqueezilSoul        405010 getstate
+^\?IsDying@SqueezilSoul         405020 isdying
+^\?CanEnter@SqueezilSoul        404ff0 canenter
+^\?IsActive@SqueezilSoul        450410 isactive
+^\?Freeze@SqueezilSoul          456990 freeze
+^\?Unfreeze@SqueezilSoul        4569a0 unfreeze
 ^\?GetPhysics@SqueezilSoul      404fd0 getphysics
 ^\?GetBody@SqueezilSoul         404fc0 getbody
 ^\?GetPossessions@SqueezilSoul  450300 getpossessions
