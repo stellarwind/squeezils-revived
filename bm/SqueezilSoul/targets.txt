@@ -1,5 +1,6 @@
 ^\?GetInterface@SqueezilSoul    4503f0 getinterface
 ^\?GroundStateForSpeed@SqueezilSoul 456590 groundspeed
+^\?SetSpitStrength@SqueezilSoul    456b20 setspitstrength
 ^\?GetState@SqueezilSoul        405010 getstate
 ^\?IsDying@SqueezilSoul         405020 isdying
 ^\?CanEnter@SqueezilSoul        404ff0 canenter

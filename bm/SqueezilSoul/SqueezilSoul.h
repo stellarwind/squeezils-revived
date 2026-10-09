@@ -15,13 +15,17 @@ struct SqueezilSoul {
     char pad44[0x44 - 0x40];
     int  frozen;        // 0x44
     SqueezilPhysics *physics;  // 0x48
-    char pad6c[0x6c - 0x4c];
+    char  pad54[0x54 - 0x4c];
+    float spitStrength;        // 0x54
+    int   spitRequested;       // 0x58
+    char  pad6c[0x6c - 0x5c];
     void *possessions;  // 0x6c
     void *place;        // 0x70
     void *body;         // 0x74
 
     void *GetInterface(int which); // 0x4503f0 slot 1
     int  GroundStateForSpeed(float speed);   // 0x456590 slot 27
+    void SetSpitStrength(float strength);    // 0x456b20 slot 30
     int  GetState();        // 0x405010 slot 25
     int  IsDying();         // 0x405020 slot 26 (dying or dead)
     int  CanEnter(int newState);   // 0x404ff0 slot 23
