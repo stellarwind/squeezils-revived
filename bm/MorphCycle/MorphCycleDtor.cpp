@@ -1,0 +1,22 @@
+// MorphCycle dtor (0x41b940): when not sharing data, free the part tracks, the parts table, and the sample times.
+#include "Container/ContainerTable.h"
+#include "PartCycle/PartCycle.h"
+#include "String/String.h"
+#include "MorphCycle/MorphCycle.h"
+
+typedef Table<String, PartCycle *, Array<PartCycle *>, 0> PartCycleTable;
+
+MorphCycle::~MorphCycle()
+{
+    if (sharesData == 0) {
+        for (int i = 0; i < ((PartCycleTable *)parts)->keys.count; i++) {
+            PartCycle *pc = ((PartCycleTable *)parts)->values.data[i];
+            if (pc != 0)
+                delete pc;
+        }
+        if (parts != 0)
+            delete (PartCycleTable *)parts;
+        if (times != 0)
+            delete (PrimitiveArray<float, 2> *)times;
+    }
+}
