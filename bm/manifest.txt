@@ -50,3 +50,4 @@ Globals/targets.txt Globals/Globals.cpp
 Alloc/targets.txt Alloc/Alloc.cpp
 Input/targets.txt Input/Input.cpp
 SqueezilBodyVtbl/targets.txt SqueezilBodyVtbl/SqueezilBodyVtbl.cpp
+CycleProp/targets.txt CycleProp/CycleProp.cpp
