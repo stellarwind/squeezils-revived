@@ -5,3 +5,13 @@ void CycleProp::SetCurrentThin(int child)
 {
     SetCurrent(child);
 }
+
+void CycleProp::SetStep(int newStep)
+{
+    step = newStep;
+}
+
+void CycleProp::SetMode(int newMode)
+{
+    mode = newMode;
+}
