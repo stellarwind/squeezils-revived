@@ -1,0 +1,7 @@
+^\?\?1\?\$Array@PAVIniFileCache  46f3d0 cache_dtor
+^\?Get@\?\$Array@PAVIniFileCache 46e090 cache_get
+^\?Insert@\?\$Array@PAVIniFileCache 46e900 cache_insert
+^\?Remove@\?\$Array@PAVIniFileCache 46e970 cache_remove
+^\?Replace@\?\$Array@PAVIniFileCache 46e9b0 cache_set
+^\?Data@\?\$Array@PAVIniFileCache 46e9d0 cache_data
+^\?Grow@\?\$Array@PAVIniFileCache 46e9e0 cache_grow

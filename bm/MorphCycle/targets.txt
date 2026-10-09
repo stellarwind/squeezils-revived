@@ -1,0 +1,6 @@
+^\?Duration@MorphCycle   41ba00 duration
+^\?Period@MorphCycle     41ba10 period
+^\?Speed@MorphCycle      41ba20 speed
+^\?SampleCount@MorphCycle 41ba30 samplecount
+^\?NoLoop@MorphCycle     41ba40 noloop
+^\?TimeAt@MorphCycle     41ba50 timeat

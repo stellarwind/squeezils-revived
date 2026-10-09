@@ -1,0 +1,10 @@
+# regex-on-mangled-name  address  label
+^\?\?0Vector3f@@QAE@MMM@Z   418570 v3ctor
+^\?\?4Vector3f   4183c0 assign
+^\?\?GVector3f   401ae0 minus
+^\?\?DVector3f   401b60 times
+^\?\?HVector3f   403070 plus
+^\?Cross@        41a350 cross
+^\?Length@       47d5f0 length
+^\?LengthSq@     47d610 lengthsq
+^\?Normalize@    47d630 normalize

@@ -1,0 +1,7 @@
+^\?\?1\?\$Array@PAVIniFileSection  46f350 sec_dtor
+^\?Get@\?\$Array@PAVIniFileSection 46d400 sec_get
+^\?Insert@\?\$Array@PAVIniFileSection 46dc60 sec_insert
+^\?Remove@\?\$Array@PAVIniFileSection 46dcd0 sec_remove
+^\?Replace@\?\$Array@PAVIniFileSection 46dd10 sec_set
+^\?Data@\?\$Array@PAVIniFileSection 46dd30 sec_data
+^\?Grow@\?\$Array@PAVIniFileSection 46dd40 sec_grow

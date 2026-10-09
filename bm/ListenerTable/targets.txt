@@ -1,0 +1,4 @@
+^\?Add@ListenerTable          477ef0 add
+^\?Contains@ListenerTable     477f20 contains
+^\?Remove@ListenerTable       477f60 remove
+^\?FindFreeSlot@ListenerTable 478130 findfree

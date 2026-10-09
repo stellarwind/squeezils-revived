@@ -1,0 +1,5 @@
+^\?Contains@\?\$Set@VString@@\$0BH@  4626f0 contains
+^\?IndexOf@\?\$Set@VString@@\$0BH@   462710 indexof
+^\?RemoveKey@\?\$Set@VString@@\$0BH@ 4627c0 removekey
+^\?Replace@\?\$Set@VString@@\$0BH@   4627e0 replace
+^\?Insert@\?\$Set@VString@@\$0BH@  462380 insert 831
