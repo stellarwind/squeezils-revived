@@ -3,9 +3,14 @@
 #include "compat41.h"
 
 struct PossessionsTable {
-    void **vtbl;    // 0x00
-    char   pad4[4]; // 0x04 keys (Set<int,5>) vptr
-    int    count;   // 0x08 keys.count
+    virtual int Insert(const int &k, void *const &v, int hint); // slot 0
+    virtual int Contains(const int &k);                          // slot 1
+    virtual int IndexOf(const int &k);                           // slot 2
+    virtual void RemoveAt(int i);                                // slot 3
+    virtual void RemoveKey(const int &k);                        // slot 4
+    char keysVtbl[4];   // 0x04 keys (Set<int,5>) vptr
+    int  count;         // 0x08 keys.count
+    char pad[0x10];     // 0x0c..0x18 (capacity, data)
 
     void *Get(const int &k);   // 0x465340 (out-of-line Table::Get)
 };
@@ -34,5 +39,6 @@ struct LandSimulation {
     PossessionsTable *GetTable();      // 0x41e820 slot 8
     int IsLentOut(int id);             // 0x41e830 slot 9
     void *Lend(int id);                // 0x41e850 slot 10
+    void Return(int id, void *possessions); // 0x41e880 slot 11
     const char *GetPlaceName(int index); // 0x41e8c0
 };

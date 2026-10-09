@@ -2,4 +2,5 @@
 ^\?GetTable@LandSimulation        41e820 gettable
 ^\?IsLentOut@LandSimulation       41e830 islentout
 ^\?Lend@LandSimulation            41e850 lend
+^\?Return@LandSimulation          41e880 return
 ^\?GetPlaceName@LandSimulation    41e8c0 getplacename
