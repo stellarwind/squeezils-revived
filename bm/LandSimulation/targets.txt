@@ -1,3 +1,4 @@
 ^\?CharacterCount@LandSimulation  41e810 charactercount
 ^\?GetTable@LandSimulation        41e820 gettable
+^\?IsLentOut@LandSimulation       41e830 islentout
 ^\?GetPlaceName@LandSimulation    41e8c0 getplacename
