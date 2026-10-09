@@ -65,3 +65,5 @@ ArrayData/targets.txt ArrayData/ArrayData.cpp
 ArrayReplace/targets.txt ArrayReplace/ArrayReplace.cpp
 ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
 Keylist/targets.txt Keylist/Keylist.cpp
+StatusBar/targets.txt StatusBar/StatusBar.cpp
+GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
