@@ -3,3 +3,4 @@
 ^\?SetShades@Renderer  475040 setshades
 ^\?SetTextureColors@Renderer  475060 settexturecolors
 ^\?SetTextureShades@Renderer  475080 settextureshades
+^\?SetViewParams@Renderer  474f40 setviewparams
