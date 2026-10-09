@@ -8,4 +8,5 @@
 ^\?GetPhysics@SqueezilSoul      404fd0 getphysics
 ^\?GetBody@SqueezilSoul         404fc0 getbody
 ^\?GetPossessions@SqueezilSoul  450300 getpossessions
+^\?TakePossessions@SqueezilSoul 450310 takepossessions
 ^\?GetDefaultPhysics@SqueezilSoul 404fe0 getdefaultphysics

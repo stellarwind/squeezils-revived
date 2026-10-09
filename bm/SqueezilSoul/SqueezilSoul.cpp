@@ -21,4 +21,5 @@ void SqueezilSoul::Unfreeze()       { frozen--; if (frozen < 0) frozen = 0; }
 void *SqueezilSoul::GetPhysics()    { return physics; }
 void *SqueezilSoul::GetBody()       { return body; }
 void *SqueezilSoul::GetPossessions(){ return possessions; }
+void *SqueezilSoul::TakePossessions(){ void *p = possessions; possessions = 0; return p; }
 void *SqueezilSoul::GetDefaultPhysics() { return g_defaultPhysics; }

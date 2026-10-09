@@ -1,0 +1,2 @@
+^\?GetKind@SqueezilRoboSoul   4053d0 getkind
+^\?Remember@SqueezilRoboSoul  404710 remember
