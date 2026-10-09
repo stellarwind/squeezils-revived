@@ -1,0 +1,3 @@
+^\?CharacterCount@LandSimulation  41e810 charactercount
+^\?GetTable@LandSimulation        41e820 gettable
+^\?GetPlaceName@LandSimulation    41e8c0 getplacename
