@@ -29,4 +29,10 @@ struct SqueezilBody : Body {
     void SetOnGround(int on);                   // 0x458ff0 slot 16
     void SetOrientation(float pitch, float yaw, float roll);   // 0x457780 slot 17
     void GetOrientation(float *pitch, float *yaw, float *roll); // 0x4577b0 slot 18
+    void SetClipSpeed(float s);                 // 0x459010 slot 24
+    float GetClipSpeed();                       // 0x459020 slot 25
+    float GetPitch();                           // 0x459030 slot 26
+    float GetRoll();                            // 0x459040 slot 27
 };
+
+const char *BodyColorName(int color);           // 0x458fd0

@@ -3,3 +3,8 @@
 ^\?SetOnGround@SqueezilBody  458ff0 setonground
 ^\?SetOrientation@SqueezilBody 457780 setorientation
 ^\?GetOrientation@SqueezilBody 4577b0 getorientation
+^\?SetClipSpeed@SqueezilBody 459010 setclipspeed
+^\?GetClipSpeed@SqueezilBody 459020 getclipspeed
+^\?GetPitch@SqueezilBody      459030 getpitch
+^\?GetRoll@SqueezilBody       459040 getroll
+^\?BodyColorName              458fd0 bodycolorname

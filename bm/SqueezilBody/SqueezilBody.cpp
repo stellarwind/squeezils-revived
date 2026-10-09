@@ -18,3 +18,11 @@ void SqueezilBody::GetOrientation(float *pitch, float *yaw, float *roll)
     *yaw = orientation.y;
     *roll = orientation.z;
 }
+
+void SqueezilBody::SetClipSpeed(float s)   { clipSpeed = s; }
+float SqueezilBody::GetClipSpeed()         { return clipSpeed; }
+float SqueezilBody::GetPitch()             { return orientation.x; }
+float SqueezilBody::GetRoll()              { return orientation.z; }
+
+extern const char *g_bodyColorNames[];
+const char *BodyColorName(int color) { return g_bodyColorNames[color]; }

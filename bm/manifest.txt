@@ -51,3 +51,5 @@ Alloc/targets.txt Alloc/Alloc.cpp
 Input/targets.txt Input/Input.cpp
 SqueezilBodyVtbl/targets.txt SqueezilBodyVtbl/SqueezilBodyVtbl.cpp
 CycleProp/targets.txt CycleProp/CycleProp.cpp
+Function/targets.txt Function/Function.cpp
+Panel/targets.txt Panel/Panel.cpp

@@ -1,0 +1,4 @@
+^\?\?1Function@@UAE@XZ       422ea0 dtor
+^\?\?0ExecuteFunction       444770 execute
+^\?\?0IfFunction            4459e0 iff
+^\?\?0DelayedExecuteFunction 444ca0 delayed

@@ -5,3 +5,4 @@
 ^\?GetSceneChild@Scene 477290 getscenechild
 ^\?GetCameraFrame@Scene 477390 getcameraframe
 ^\?IsShown@Splash      44eea0 isshown
+^\?Reset@Splash        44f080 reset
