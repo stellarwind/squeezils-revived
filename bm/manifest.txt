@@ -25,7 +25,7 @@ MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp
 PoseTable/targets.txt PoseTable/PoseTable.cpp PoseTable/PoseTableLife.cpp
 PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
-NavSurface/targets.txt NavSurface/NavSurfaceList.cpp
+NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp
 Body/targets.txt Body/Body.cpp

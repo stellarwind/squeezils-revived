@@ -10,3 +10,8 @@ InstancedSurface *NavSurfaceList::FaceOf(const Contact *contact)
 {
     return instances.Get(contact->face);
 }
+
+void *NavSurfaceList::Properties(const Contact *c)
+{
+    return instances.Get(c->face)->GetProperties();
+}
