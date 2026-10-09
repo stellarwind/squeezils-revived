@@ -46,3 +46,16 @@ public:
     int field_4;
     int field_8;
 };
+
+// 0x4a0e3c (0x46f800, CreatePropFunction): field_4, field_8 and field_C.
+class Fnc3Field : public Function {
+public:
+    Fnc3Field();
+    virtual void vf1();
+    virtual void vf2();
+    virtual void vf3();
+    virtual void vf4();
+    int field_4;
+    int field_8;
+    int field_C;
+};

@@ -40,3 +40,15 @@ void DelayedExecuteFunction::vf1() {}
 void DelayedExecuteFunction::vf2() {}
 void DelayedExecuteFunction::vf3() {}
 void DelayedExecuteFunction::vf4() {}
+
+Fnc3Field::Fnc3Field()
+{
+    field_4 = 0;
+    field_8 = 0;
+    field_C = 0;
+}
+
+void Fnc3Field::vf1() {}
+void Fnc3Field::vf2() {}
+void Fnc3Field::vf3() {}
+void Fnc3Field::vf4() {}
