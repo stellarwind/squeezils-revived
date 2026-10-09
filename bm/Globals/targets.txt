@@ -1,4 +1,5 @@
 ^\?GetLand@@             420680 getland
+^\?GetWorld@@            4206a0 getworld
 ^\?GetCurrentSimulation@@ 420690 getcurrentsimulation
 ^\?GetApplication@@       4206b0 getapplication
 ^\?GetPanel@@             4206c0 getpanel

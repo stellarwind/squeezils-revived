@@ -10,3 +10,4 @@ void *Scene::GetSceneChild()  { return sceneChild; }
 void *Scene::GetCameraFrame() { return renderer->cameraFrame; }
 
 int   Splash::IsShown()  { return shown; }
+void  Splash::Reset()    { step = 0; }

@@ -1,0 +1,2 @@
+^\?Invalidate@Panel  42db00 invalidate
+^\?ClearEvent@Panel  42ea60 clearevent

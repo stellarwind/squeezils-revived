@@ -3,6 +3,7 @@
 #include "compat41.h"
 
 void *GetLand();                              // 0x420680 (global 0x4badb8)
+void *GetWorld();                             // 0x4206a0 (global 0x4bada8)
 void *GetCurrentSimulation();                 // 0x420690 (global 0x4badbc)
 void *GetApplication();                       // 0x4206b0 (global 0x4badac)
 void *GetPanel();                             // 0x4206c0 (global 0x4badb0)
