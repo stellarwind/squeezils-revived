@@ -3,6 +3,7 @@
 ^\?GetCurrentSimulation@@ 420690 getcurrentsimulation
 ^\?GetApplication@@       4206b0 getapplication
 ^\?GetPanel@@             4206c0 getpanel
+^\?GetGameClock@@         4206d0 getgameclock
 ^\?SetCurrentSimulation@@ 420670 setcurrentsimulation
 ^\?SqgSetErrorCallback@@  4736f0 sqgseterrorcallback
 ^\?SqgSetTextureLookup@@  473700 sqgsettexturelookup

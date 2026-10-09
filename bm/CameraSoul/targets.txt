@@ -18,6 +18,7 @@
 ^\?void6b@CameraSoulStubs       40a620 v6b
 ^\?void6c@CameraSoulStubs       40b330 v6c
 ^\?return0arg1b@CameraSoulStubs 404fa0 r0a1b
+^\?return0arg1b@CameraSoulStubs 404fb0 r0a1b2
 ^\?return0arg1c@CameraSoulStubs 45a7f0 r0a1c
 ^\?return0arg2@CameraSoulStubs  45a820 r0a2
 ^\?return1arg1@CameraSoulStubs  41fb00 r1a1
