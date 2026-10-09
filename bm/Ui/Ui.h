@@ -11,6 +11,7 @@ struct Bitmap {
     void *GetSurface(); // 0x4738b0
     int   GetWidth();   // 0x4739b0
     int   GetHeight();  // 0x4739c0
+    void  ReportError(int hr);  // 0x474350 (does nothing)
 };
 
 struct Renderer {
