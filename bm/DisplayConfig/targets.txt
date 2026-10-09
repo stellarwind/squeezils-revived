@@ -1,0 +1,2 @@
+^\?ToInt@DisplayConfig   459130 toint
+^\?GetField1c@DisplayConfig   4593c0 getfield1c

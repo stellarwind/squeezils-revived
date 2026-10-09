@@ -1,0 +1,7 @@
+^\?\?0\?\$Table@VString@@PAVIniFileSection  46d2c0 ctor
+^\?\?1\?\$Table@VString@@PAVIniFileSection  46ddc0 dtor 112
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  46de30 insert
+^\?Contains@\?\$Table@VString@@PAVIniFileSection  46de90 contains
+^\?IndexOf@\?\$Table@VString@@PAVIniFileSection  46deb0 indexof
+^\?RemoveAt@\?\$Table@VString@@PAVIniFileSection  46ded0 removeat
+^\?RemoveKey@\?\$Table@VString@@PAVIniFileSection  46df00 removekey

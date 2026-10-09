@@ -1,0 +1,16 @@
+^\?\?0String@@QAE@PBD@Z                 438380 ctor_cstr
+^\?MakeUnique@String                    4383e0 makeunique
+^\?Release@String                       4384f0 release
+^\?c_str@String                         438530 c_str
+^\?Reserve@StringRep                    438540 reserve
+^\?\?0StringRep@@QAE@XZ                 4385c0 repctor
+^\?Assign@String                        438620 assign
+^\?\?4String                            438670 assign_op
+^\?ToFloat@String                       4386a0 tofloat
+^\?StringLess                           4386f0 less
+^\?StringEqual                          438720 equal
+^\?StringCompare                        438750 compare
+^\?\?1StringRep                         438610 repdtor
+^\?\?0String@@QAE@XZ                    438370 ctor_default
+^\?\?0String@@QAE@ABV0@@Z               4383b0 ctor_copy
+^\?\?1String@@QAE@XZ                    4383d0 dtor

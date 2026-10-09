@@ -1,0 +1,5 @@
+^\?\?0GoodieList    4156c0 ctor
+^\?\?1GoodieList    4156d0 dtor
+^\?Init@GoodieList  415750 init auto
+^\?Load@GoodieList  415b40 load
+^\?Draw@GoodieList  415d50 draw auto

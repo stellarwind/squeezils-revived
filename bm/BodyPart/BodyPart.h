@@ -1,0 +1,13 @@
+// BodyPart: one part of a character's body (SQZ.EXE 0x41d870-0x41d900), VC++ 4.1 dialect.
+// Layout from Repo/src/BodyPart.h. Only the trivial getter is ported (ctors/Apply/Build are larger).
+#pragma once
+#include "compat41.h"
+
+struct BodyPart {
+    void *vtbl;              // 0x00 vtable 0x49d7c4
+    void *model;             // 0x04 SqgModel*
+    void *morph;             // 0x08 PZMorphMesh*
+    void *frame;             // 0x0c IDirect3DRMFrame*
+
+    void *GetFrame();        // 0x41d890
+};

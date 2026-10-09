@@ -1,0 +1,13 @@
+^\?\?0GameClock@@QAE@HIIM@Z  41eb90 ctor
+^\?\?1GameClock              41ebe0 dtor
+^\?UsedTime@GameClock        41ebf0 usedtime
+^\?SimRate@GameClock         41ec00 simrate
+^\?GameTime@GameClock        41ec10 gametime
+^\?ResetRender@GameClock     41ec20 resetrender
+^\?EndRender@GameClock       41ec30 endrender
+^\?BeginSim@GameClock        41eca0 beginsim
+^\?EndSim@GameClock          41ecb0 endsim
+^\?Ahead@GameClock           41ed40 ahead
+^\?RenderStep@GameClock      41ed50 renderstep
+^\?SimStep@GameClock         41ed60 simstep
+^\?Balance@GameClock         41ed70 balance

@@ -1,0 +1,10 @@
+^\?\?0Inventory     415ef0 ctor auto
+^\?\?1Inventory     416030 dtor auto
+^\?Add@Inventory    416110 add auto
+^\?Remove@Inventory 416280 remove auto
+^\?Count@Inventory  416300 count auto
+^\?Items@Inventory  4163d0 items auto
+^\?RemoveNuts@Inventory 4164a0 removenuts auto
+^\?KeysFound@Inventory 416580 keysfound
+^\?AllRelics@Inventory 4165b0 allrelics
+^\?Read@Inventory   4165e0 read

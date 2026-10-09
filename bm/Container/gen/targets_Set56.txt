@@ -1,0 +1,5 @@
+^\?Insert@\?\$Set@   46bca0 insert
+^\?Replace@\?\$Set@   46c100 replace
+^\?Contains@\?\$Set@   46c010 contains
+^\?IndexOf@\?\$Set@   46c030 indexof
+^\?RemoveKey@\?\$Set@   46c0e0 removekey

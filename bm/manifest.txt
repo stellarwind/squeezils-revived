@@ -1,0 +1,28 @@
+# Every byte-match unit: <targets file> <source files...>   (paths relative to Repo/bm). Run: tools/flagsearch/status.sh
+String/targets.txt String/String.cpp
+Gif/targets.txt Gif/Gif.c
+Container/targets_int.txt Container/ArrayInt.cpp
+Container/targets_string.txt Container/ArrayString.cpp
+Container/targets_inisection.txt Container/ArrayIniSection.cpp
+Container/targets_inicache.txt Container/ArrayIniCache.cpp
+Container/targets_set23.txt Container/SetString23.cpp
+Container/targets_table23.txt Container/TableStringString.cpp
+Container/targets_table50.txt Container/TableIniSection.cpp
+Container/targets_table51.txt Container/TableIniCache.cpp
+Ini/targets.txt Ini/IniFile.cpp
+IniReader/targets.txt IniReader/IniReader.cpp
+ListenerTable/targets.txt ListenerTable/ListenerTable.cpp
+GameClock/targets.txt GameClock/GameClock.cpp
+NutCounter/targets.txt NutCounter/NutCounter.cpp
+GoodieList/targets.txt GoodieList/GoodieList.cpp
+Inventory/targets.txt Inventory/Inventory.cpp
+Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
+NavMesh/targets.txt NavMesh/Outcode.cpp
+Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
+DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
+DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
+MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp
+PoseTable/targets.txt PoseTable/PoseTable.cpp
+NavSurface/targets.txt NavSurface/NavSurfaceList.cpp
+AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp
+BodyPart/targets.txt BodyPart/BodyPart.cpp
