@@ -26,6 +26,14 @@ void Renderer::SetTextureShades(int s)
     Rebuild();
 }
 
+void Renderer::SetViewParams(float nearP, float farP, float fov)
+{
+    nearPlane = nearP;
+    farPlane = farP;
+    fovDegrees = fov;
+    Rebuild();
+}
+
 void Renderer::Rebuild()
 {
 }
