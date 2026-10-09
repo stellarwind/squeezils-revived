@@ -34,6 +34,14 @@ void Renderer::SetViewParams(float nearP, float farP, float fov)
     Rebuild();
 }
 
+void Renderer::GetScreenRect(int out[4])
+{
+    out[0] = screenRect[0];
+    out[2] = screenRect[2];
+    out[1] = screenRect[1];
+    out[3] = screenRect[3];
+}
+
 void Renderer::Rebuild()
 {
 }
