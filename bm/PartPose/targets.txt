@@ -1,0 +1,2 @@
+^\?\?0PartPose      4193c0 ctor
+^\?Assign@PartPose  419530 assign

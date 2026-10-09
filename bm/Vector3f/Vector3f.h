@@ -28,7 +28,11 @@ struct Vector3f {
 #endif
     ~Vector3f() {}
 
-    Vector3f &operator=(const Vector3f &o);       // 0x4183c0 (vector copy, ~46 callers)
+#ifdef V3_ASSIGN_OUTOFLINE
+    Vector3f &operator=(const Vector3f &o);       // out-of-line, 0x4183c0 (vector copy)
+#else
+    Vector3f &operator=(const Vector3f &o) { x = o.x; y = o.y; z = o.z; return *this; }   // inlined where a vector is copied
+#endif
     Vector3f operator-(const Vector3f &o) const;   // 0x401ae0
     Vector3f operator*(float s) const;             // 0x401b60
     Vector3f operator+(const Vector3f &o) const;   // 0x403070

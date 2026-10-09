@@ -29,6 +29,7 @@ template <class T, int ID>
 class PrimitiveArray : public Array<T>, public BufferObject {
 public:
     PrimitiveArray() {}
+    ~PrimitiveArray() {}
 #ifdef BUFFEROBJECT_SIGNATURES
     virtual const char *TypeName();
     virtual BufferObject *Create();

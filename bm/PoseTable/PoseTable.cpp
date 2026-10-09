@@ -1,7 +1,7 @@
 // PoseTable getters (SQZ.EXE 0x41b6d0 / 0x41b750).
 #include "PoseTable/PoseTable.h"
 
-int PoseTable::Count()
+int PoseTable::Count() const
 {
     return keys.count;
 }
