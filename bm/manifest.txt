@@ -56,3 +56,4 @@ Panel/targets.txt Panel/Panel.cpp
 WaveSound/targets.txt WaveSound/WaveSound.cpp
 QuestItems/targets.txt QuestItems/QuestItems.cpp
 LandSimulation/targets.txt LandSimulation/LandSimulation.cpp
+SimulationAddId/targets.txt SimulationAddId/SimulationAddId.cpp
