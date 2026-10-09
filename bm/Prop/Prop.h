@@ -14,5 +14,10 @@ struct Prop {
     void  *owner;       // 0x38
     int    isInstance;  // 0x3c
 
-    int IsShown();      // 0x426160 slot 14
+    int IsShown();         // 0x426160 slot 14
+    void *GetOwner();      // 0x426220 slot 9
+    void UpdateNoop(float seconds);   // 0x426200 slot 7 (no-op)
+    void Slot8Noop();      // 0x426210 slot 8 (no-op)
+    int  Slot11Return0(int a);        // 0x4262d0 slot 11 (returns 0)
+    int  Slot12Return0();  // 0x426270 slot 12 (returns 0)
 };
