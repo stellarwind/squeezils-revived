@@ -24,5 +24,6 @@ struct SqueezilSoul {
     void *GetPhysics();     // 0x404fd0 slot 10
     void *GetBody();        // 0x404fc0 slot 17
     void *GetPossessions(); // 0x450300 slot 18
+    void *TakePossessions(); // 0x450310 slot 19 (hands them over: clears the field)
     void *GetDefaultPhysics(); // 0x404fe0 slot 20 (returns the global at 0x4c7ad0)
 };

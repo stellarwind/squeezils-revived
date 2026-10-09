@@ -1,0 +1,5 @@
+^\?GetInterface@GoodieSoul  459960 getinterface
+^\?IsLoose@GoodieSoul       459980 isloose
+^\?GetKind@GoodieSoul       459bf0 getkind
+^\?IsAttacking@GoodieSoul   45a830 isattacking
+^\?GetSettings@GoodieSoul   45a840 getsettings
