@@ -42,6 +42,11 @@ void CameraSoulStubs::void6e(int a, int b, int c, int d, int e, int f) {}
 void CameraSoulStubs::void1j(int a)      {}
 int  CameraSoulStubs::return24a(int a)   { return 24; }
 int  CameraSoulStubs::return24b(int a)   { return 24; }
+
+extern char kLandSimulationName[];       // 0x4bac68 "LandSimulation"
+extern char kInventoryName[];            // 0x4ba344 "Inventory"
+const char *CameraSoulStubs::returnLandSimulation() { return kLandSimulationName; }
+const char *CameraSoulStubs::returnInventory()      { return kInventoryName; }
 void CameraSoulStubs::void0o()           {}
 void CameraSoulStubs::void1n(int a)      {}
 void CameraSoulStubs::void1k(int a)      {}

@@ -39,6 +39,8 @@
 ^\?void1j@CameraSoulStubs       4165d0 v1j
 ^\?return24a@CameraSoulStubs    405200 r24a
 ^\?return24b@CameraSoulStubs    405370 r24b
+^\?returnLandSimulation@CameraSoulStubs 41ea50 rland
+^\?returnInventory@CameraSoulStubs 416be0 rinv
 ^\?void0o@CameraSoulStubs       438000 v0o
 ^\?void1n@CameraSoulStubs       438010 v1n
 ^\?void1k@CameraSoulStubs       4382d0 v1k
