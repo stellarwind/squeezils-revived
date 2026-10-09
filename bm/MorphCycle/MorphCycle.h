@@ -17,6 +17,7 @@ struct MorphCycle {
     void *parts;                    // 0x24 PartCycleTable*
 
     MorphCycle(int noLoop, float speed, float period);   // 0x41b7b0
+    MorphCycle(const MorphCycle &whole, int first, int last, int noLoop, float speed, float period);   // 0x41b8b0
     ~MorphCycle();                  // 0x41b940
     float Duration();               // 0x41ba00
     float Period();                 // 0x41ba10
