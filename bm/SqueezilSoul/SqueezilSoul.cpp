@@ -21,6 +21,14 @@ int  SqueezilSoul::GroundStateForSpeed(float speed)
     return 0;
 }
 
+void SqueezilSoul::SetSpitStrength(float strength)
+{
+    if (spitRequested != 0)
+        spitRequested = 0;
+    else
+        spitStrength = strength;
+}
+
 int  SqueezilSoul::GetState()       { return state; }
 int  SqueezilSoul::IsDying()        { return g_stateTable[state * 23]; }
 int  SqueezilSoul::CanEnter(int newState) { return g_stateMayFollow[state * 23 + newState]; }
