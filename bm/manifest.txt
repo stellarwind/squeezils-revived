@@ -43,3 +43,4 @@ CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp
+Possessions/targets.txt Possessions/Possessions.cpp
