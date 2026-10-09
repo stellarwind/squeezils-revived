@@ -1,0 +1,5 @@
+^\?GetState@SqueezilSoul        405010 getstate
+^\?GetPhysics@SqueezilSoul      404fd0 getphysics
+^\?GetBody@SqueezilSoul         404fc0 getbody
+^\?GetPossessions@SqueezilSoul  450300 getpossessions
+^\?GetDefaultPhysics@SqueezilSoul 404fe0 getdefaultphysics

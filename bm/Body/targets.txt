@@ -1,0 +1,6 @@
+^\?GetFacing@Body       40bb70 getfacing
+^\?GetFacingValue@Body  40bb80 getfacingvalue
+^\?GetExtraValue@Body   40bb90 getextravalue
+^\?GetContact@Body      40bba0 getcontact
+^\?GetMatrix@Body       41fcb0 getmatrix
+^\?IsOnSurface@Body     40bbb0 isonsurface

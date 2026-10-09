@@ -28,3 +28,13 @@ PartCycle/targets.txt PartCycle/PartCycle.cpp
 NavSurface/targets.txt NavSurface/NavSurfaceList.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp
+Body/targets.txt Body/Body.cpp
+SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp
+GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
+Prop/targets.txt Prop/Prop.cpp
+RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
+SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp
+NavProp/targets.txt NavProp/NavProp.cpp
+Simulation/targets.txt Simulation/Simulation.cpp
+PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
+FrameProp/targets.txt FrameProp/FrameProp.cpp
