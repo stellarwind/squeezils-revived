@@ -5,4 +5,5 @@
 ^\?NoLoop@MorphCycle     41ba40 noloop
 ^\?TimeAt@MorphCycle     41ba50 timeat
 ^\?\?1MorphCycle         41b940 dtor
-^\?\?0MorphCycle         41b7b0 ctor
+^\?\?0MorphCycle@@QAE@H  41b7b0 ctor
+^\?\?0MorphCycle@@QAE@ABU0 41b8b0 copyctor
