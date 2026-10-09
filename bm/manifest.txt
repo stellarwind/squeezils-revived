@@ -46,3 +46,4 @@ GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
 Behavior/targets.txt Behavior/Behavior.cpp
+Globals/targets.txt Globals/Globals.cpp

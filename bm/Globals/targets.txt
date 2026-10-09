@@ -1,0 +1,9 @@
+^\?GetLand@@             420680 getland
+^\?GetCurrentSimulation@@ 420690 getcurrentsimulation
+^\?GetApplication@@       4206b0 getapplication
+^\?GetPanel@@             4206c0 getpanel
+^\?SetCurrentSimulation@@ 420670 setcurrentsimulation
+^\?SqgSetErrorCallback@@  4736f0 sqgseterrorcallback
+^\?SqgSetTextureLookup@@  473700 sqgsettexturelookup
+^\?WrlSetLogCallback@@    47a790 wrlsetlogcallback
+^\?WrlSetErrorCallback@@  47a7a0 wrlseterrorcallback
