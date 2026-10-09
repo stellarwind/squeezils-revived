@@ -3,18 +3,25 @@
 #pragma once
 #include "compat41.h"
 
+struct SqueezilPhysics {
+    char  pad294[0x294];
+    float speed294;     // 0x294
+    float speed298;     // 0x298
+};
+
 struct SqueezilSoul {
     char pad3c[0x3c];
     int  state;         // 0x3c
     char pad44[0x44 - 0x40];
     int  frozen;        // 0x44
-    void *physics;      // 0x48
+    SqueezilPhysics *physics;  // 0x48
     char pad6c[0x6c - 0x4c];
     void *possessions;  // 0x6c
     void *place;        // 0x70
     void *body;         // 0x74
 
     void *GetInterface(int which); // 0x4503f0 slot 1
+    int  GroundStateForSpeed(float speed);   // 0x456590 slot 27
     int  GetState();        // 0x405010 slot 25
     int  IsDying();         // 0x405020 slot 26 (dying or dead)
     int  CanEnter(int newState);   // 0x404ff0 slot 23

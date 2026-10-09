@@ -12,6 +12,15 @@ void *SqueezilSoul::GetInterface(int which)
     return 0;
 }
 
+int  SqueezilSoul::GroundStateForSpeed(float speed)
+{
+    SqueezilPhysics *p = physics;
+    if (p->speed298 < speed) return 8;
+    if (p->speed294 < speed) return 4;
+    if (0.01f < speed) return 3;
+    return 0;
+}
+
 int  SqueezilSoul::GetState()       { return state; }
 int  SqueezilSoul::IsDying()        { return g_stateTable[state * 23]; }
 int  SqueezilSoul::CanEnter(int newState) { return g_stateMayFollow[state * 23 + newState]; }
