@@ -1,0 +1,6 @@
+^\?GetSurface@Bitmap   4738b0 getsurface
+^\?GetWidth@Bitmap     4739b0 getwidth
+^\?GetHeight@Bitmap    4739c0 getheight
+^\?GetSceneChild@Scene 477290 getscenechild
+^\?GetCameraFrame@Scene 477390 getcameraframe
+^\?IsShown@Splash      44eea0 isshown
