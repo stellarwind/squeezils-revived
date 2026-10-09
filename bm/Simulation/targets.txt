@@ -1,3 +1,5 @@
 ^\?GetCreatures@Simulation  414150 getcreatures
 ^\?GetActor@Simulation      414050 getactor
 ^\?GetSoul@Simulation       414080 getsoul
+^\?FindIdBySoul@Simulation  4140b0 findidbysoul
+^\?FindIdByActor@Simulation 414100 findidbyactor
