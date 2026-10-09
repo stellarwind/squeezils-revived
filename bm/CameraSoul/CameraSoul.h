@@ -27,4 +27,30 @@ struct CameraSoulStubs {
     int  return0arg1c(int a);                           // 0x45a7f0 ret 4, returns 0
     int  return0arg2(int a, int b);                     // 0x45a820 ret 8, returns 0
     int  return1arg1(int a);                            // 0x41fb00 ret 4, returns 1
+    void void0f();                                      // 0x41fb10 ret
+    void void6d(int a, int b, int c, int d, int e, int f); // 0x41fb20 ret 0x18
+    void void1f(int a);                                 // 0x41fb30 ret 4
+    void void4b(int a, int b, int c, int d);            // 0x41fb40 ret 0x10
+    void void1g(int a);                                 // 0x41fb50 ret 4
+    void void0g();                                      // 0x41fb60 ret
+    void void1h(int a);                                 // 0x41f7e0 ret 4
+    void void0h();                                      // 0x41e7e0 ret
+    void void0i();                                      // 0x41e7f0 ret
+    void void0j();                                      // 0x41e800 ret
+    void void0k();                                      // 0x41ea40 ret
+    void void1i(int a);                                 // 0x45a800 ret 4
+    void void0l();                                      // 0x45a810 ret
+    int  returnNull(int a);                             // 0x438310 ret 4, returns 0
+    void void6e(int a, int b, int c, int d, int e, int f); // 0x438320 ret 0x18
+    void void1j(int a);                                 // 0x4165d0 ret 4
+    void void0o();                                      // 0x438000 ret
+    void void1n(int a);                                 // 0x438010 ret 4
+    void void1k(int a);                                 // 0x4382d0 ret 4
+    void void0m();                                      // 0x4382e0 ret
+    void void2b(int a, int b);                          // 0x4382f0 ret 8
+    void void2c(int a, int b);                          // 0x438300 ret 8
+    void void1l(int a);                                 // 0x438330 ret 4
+    void void4c(int a, int b, int c, int d);            // 0x438340 ret 0x10
+    void void0n();                                      // 0x438350 ret
+    void void1m(int a);                                 // 0x438360 ret 4
 };
