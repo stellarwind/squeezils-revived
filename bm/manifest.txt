@@ -62,3 +62,5 @@ TableGet/targets.txt TableGet/TableGet.cpp
 TableFwd/targets.txt TableFwd/TableFwd.cpp
 ArrayGet/targets.txt ArrayGet/ArrayGet.cpp
 ArrayData/targets.txt ArrayData/ArrayData.cpp
+ArrayReplace/targets.txt ArrayReplace/ArrayReplace.cpp
+ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
