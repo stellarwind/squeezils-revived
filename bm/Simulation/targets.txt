@@ -1,1 +1,3 @@
 ^\?GetCreatures@Simulation  414150 getcreatures
+^\?GetActor@Simulation      414050 getactor
+^\?GetSoul@Simulation       414080 getsoul
