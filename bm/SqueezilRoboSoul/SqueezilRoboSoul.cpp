@@ -10,3 +10,11 @@ void SqueezilRoboSoul::Remember()
 {
     lastSenseKind = senseKind;
 }
+
+void SqueezilRoboSoul::ClearSeen()
+{
+    int *p = lastSeen;
+    p[0] = -1;
+    p[1] = -1;
+    p[2] = -1;
+}
