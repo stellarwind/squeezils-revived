@@ -55,4 +55,6 @@ struct CameraSoulStubs {
     void void4c(int a, int b, int c, int d);            // 0x438340 ret 0x10
     void void0n();                                      // 0x438350 ret
     void void1m(int a);                                 // 0x438360 ret 4
+    const char *returnLandSimulation();                 // 0x41ea50 ret, returns "LandSimulation" (0x4bac68)
+    const char *returnInventory();                      // 0x416be0 ret, returns "Inventory" (0x4ba344)
 };
