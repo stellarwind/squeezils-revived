@@ -4,7 +4,11 @@
 #include "Container/ContainerArray.h"
 
 struct LoadedSurface;
-struct InstancedSurface;
+
+struct InstancedSurface {
+    char pad98[0x98];
+    void *GetProperties();    // 0x40d520 (non-inline): returns this + 0x98
+};
 
 struct Contact {
     int   face;          // 0x00 the surface face, -1 for none
@@ -19,4 +23,5 @@ struct NavSurfaceList {
 
     LoadedSurface    *Loaded(int number);           // 0x412c10
     InstancedSurface *FaceOf(const Contact *contact);   // 0x412bf0
+    void *Properties(const Contact *c);             // 0x40f3a0
 };
