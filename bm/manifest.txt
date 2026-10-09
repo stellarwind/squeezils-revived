@@ -48,3 +48,4 @@ Ui/targets.txt Ui/Ui.cpp
 Behavior/targets.txt Behavior/Behavior.cpp
 Globals/targets.txt Globals/Globals.cpp
 Alloc/targets.txt Alloc/Alloc.cpp
+Input/targets.txt Input/Input.cpp

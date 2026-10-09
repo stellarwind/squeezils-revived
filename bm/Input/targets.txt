@@ -1,0 +1,2 @@
+^\?InputJoystickMode@   43aee0 inputjoystickmode
+^\?ApplicationRunning@  43c1a0 applicationrunning
