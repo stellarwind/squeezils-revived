@@ -75,3 +75,5 @@ Renderer/targets.txt Renderer/Renderer.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
+GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp
+GetAirMotion/targets.txt GetAirMotion/GetAirMotion.cpp
