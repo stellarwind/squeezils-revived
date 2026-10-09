@@ -68,3 +68,4 @@ Keylist/targets.txt Keylist/Keylist.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
+Menu/targets.txt Menu/Menu.cpp
