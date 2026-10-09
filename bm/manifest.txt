@@ -53,3 +53,5 @@ SqueezilBodyVtbl/targets.txt SqueezilBodyVtbl/SqueezilBodyVtbl.cpp
 CycleProp/targets.txt CycleProp/CycleProp.cpp
 Function/targets.txt Function/Function.cpp
 Panel/targets.txt Panel/Panel.cpp
+WaveSound/targets.txt WaveSound/WaveSound.cpp
+QuestItems/targets.txt QuestItems/QuestItems.cpp
