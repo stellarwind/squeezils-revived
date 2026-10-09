@@ -1,1 +1,2 @@
 ^\?ActionStart@Menu  406950 actionstart
+^\?SaveAnchor@Menu  406b80 saveanchor
