@@ -43,6 +43,8 @@ struct CameraSoulStubs {
     int  returnNull(int a);                             // 0x438310 ret 4, returns 0
     void void6e(int a, int b, int c, int d, int e, int f); // 0x438320 ret 0x18
     void void1j(int a);                                 // 0x4165d0 ret 4
+    int  return24a(int a);                              // 0x405200 ret 4, returns 24 (SS_NONE)
+    int  return24b(int a);                              // 0x405370 ret 4, returns 24 (SS_NONE)
     void void0o();                                      // 0x438000 ret
     void void1n(int a);                                 // 0x438010 ret 4
     void void1k(int a);                                 // 0x4382d0 ret 4

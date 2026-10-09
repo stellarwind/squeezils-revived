@@ -40,6 +40,8 @@ void CameraSoulStubs::void0l()           {}
 int  CameraSoulStubs::returnNull(int a)  { return 0; }
 void CameraSoulStubs::void6e(int a, int b, int c, int d, int e, int f) {}
 void CameraSoulStubs::void1j(int a)      {}
+int  CameraSoulStubs::return24a(int a)   { return 24; }
+int  CameraSoulStubs::return24b(int a)   { return 24; }
 void CameraSoulStubs::void0o()           {}
 void CameraSoulStubs::void1n(int a)      {}
 void CameraSoulStubs::void1k(int a)      {}
