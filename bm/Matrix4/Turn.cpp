@@ -3,30 +3,24 @@
 #include "Matrix4.h"
 Matrix4 &Matrix4::TurnX(float angle)
 {
-    float c = (float)cos(angle);
-    float s = (float)sin(angle);
     m[0] = 1; m[1] = 0; m[2] = 0; m[3] = 0;
-    m[4] = 0; m[5] = c; m[6] = s; m[7] = 0;
-    m[8] = 0; m[9] = -s; m[10] = c; m[11] = 0;
+    m[4] = 0; m[5] = (float)cos(angle); m[6] = (float)sin(angle); m[7] = 0;
+    m[8] = 0; m[9] = -(float)sin(angle); m[10] = (float)cos(angle); m[11] = 0;
     m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
     return *this;
 }
 Matrix4 &Matrix4::TurnY(float angle)
 {
-    float c = (float)cos(angle);
-    float s = (float)sin(angle);
-    m[0] = c; m[1] = 0; m[2] = s; m[3] = 0;
+    m[0] = (float)cos(angle); m[1] = 0; m[2] = -(float)sin(angle); m[3] = 0;
     m[4] = 0; m[5] = 1; m[6] = 0; m[7] = 0;
-    m[8] = -s; m[9] = 0; m[10] = c; m[11] = 0;
+    m[8] = (float)sin(angle); m[9] = 0; m[10] = (float)cos(angle); m[11] = 0;
     m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
     return *this;
 }
 Matrix4 &Matrix4::TurnZ(float angle)
 {
-    float c = (float)cos(angle);
-    float s = (float)sin(angle);
-    m[0] = c; m[1] = s; m[2] = 0; m[3] = 0;
-    m[4] = -s; m[5] = c; m[6] = 0; m[7] = 0;
+    m[0] = (float)cos(angle); m[1] = (float)sin(angle); m[2] = 0; m[3] = 0;
+    m[4] = -(float)sin(angle); m[5] = (float)cos(angle); m[6] = 0; m[7] = 0;
     m[8] = 0; m[9] = 0; m[10] = 1; m[11] = 0;
     m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
     return *this;

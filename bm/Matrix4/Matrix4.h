@@ -3,9 +3,10 @@
 //
 // Status (score = instruction diff, 0 = match):
 //   SetTranslation 0x47e330  0
-//   TurnX          0x47dcd0  14 (x87 scheduling: cos/sin store order)
-//   TurnY          0x47dd20  9  (same)
-//   TurnZ          0x47dd70  12 (same)
+//   TurnX          0x47dcd0  0 (fixed: inline cos/sin instead of c/s locals; note TurnY uses the opposite sign
+//                              convention m[2]=-sin/m[8]=+sin)
+//   TurnY          0x47dd20  0
+//   TurnZ          0x47dd70  0
 //   TurnAxis       0x47ddc0  24 in context, 8 in isolation (Rodrigues rotation; scheduling)
 #pragma once
 #include "compat41.h"
