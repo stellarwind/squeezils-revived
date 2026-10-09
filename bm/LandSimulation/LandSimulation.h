@@ -6,6 +6,8 @@ struct PossessionsTable {
     void **vtbl;    // 0x00
     char   pad4[4]; // 0x04 keys (Set<int,5>) vptr
     int    count;   // 0x08 keys.count
+
+    void *Get(const int &k);   // 0x465340 (out-of-line Table::Get)
 };
 
 // Set<int,10> primary vtable stub: Contains is slot 6 (offset 0x18).
@@ -31,5 +33,6 @@ struct LandSimulation {
     int CharacterCount();              // 0x41e810 slot 7
     PossessionsTable *GetTable();      // 0x41e820 slot 8
     int IsLentOut(int id);             // 0x41e830 slot 9
+    void *Lend(int id);                // 0x41e850 slot 10
     const char *GetPlaceName(int index); // 0x41e8c0
 };
