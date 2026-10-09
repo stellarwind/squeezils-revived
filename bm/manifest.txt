@@ -21,7 +21,7 @@ NavMesh/targets.txt NavMesh/Outcode.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
-MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp MorphCycle/MorphCycleDtor.cpp
+MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp MorphCycle/MorphCycleCtor.cpp MorphCycle/MorphCycleDtor.cpp
 PoseTable/targets.txt PoseTable/PoseTable.cpp PoseTable/PoseTableLife.cpp
 PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
