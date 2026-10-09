@@ -41,5 +41,5 @@ FrameProp/targets.txt FrameProp/FrameProp.cpp
 Misc/targets.txt Misc/Misc.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp
-SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp
+SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp

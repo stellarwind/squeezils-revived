@@ -1,3 +1,5 @@
 ^\?GetKind@SqueezilRoboSoul   4053d0 getkind
 ^\?Remember@SqueezilRoboSoul  404710 remember
 ^\?ClearSeen@SqueezilRoboSoul 404900 clearseen
+^\?ResetSenses@SqueezilRoboSoul 4046f0 resetsenses
+^\?Reset@AwarenessRecord   4483c0 reset
