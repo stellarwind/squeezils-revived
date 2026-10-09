@@ -3,7 +3,8 @@
 #include "compat41.h"
 
 struct PlaceSimulation {
-    char pad38[0x38];
+    char pad34[0x34];
+    int  finished;     // 0x34
     void *level;       // 0x38
     void *surfaces;    // 0x3c
     char pad1f8[0x1f8 - 0x40];
@@ -13,4 +14,5 @@ struct PlaceSimulation {
     void *GetSurfaces();       // 0x439b60
     void *StartPlacement();    // 0x439f70
     int   CanSave();           // 0x439f80 slot 9
+    void  Finish();            // 0x439ad0: finished = 1
 };

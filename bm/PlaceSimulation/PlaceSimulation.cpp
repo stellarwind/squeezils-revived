@@ -5,3 +5,4 @@ void *PlaceSimulation::GetLevel()      { return level; }
 void *PlaceSimulation::GetSurfaces()   { return surfaces; }
 void *PlaceSimulation::StartPlacement(){ return startPlacement; }
 int   PlaceSimulation::CanSave()       { return 0; }
+void  PlaceSimulation::Finish()        { finished = 1; }
