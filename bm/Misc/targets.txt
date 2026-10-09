@@ -1,1 +1,3 @@
 ^\?PrepareForDialog@@YA  4753c0 preparefordialog
+^\?SetFloorLevel@@       450c00 setfloorlevel
+^\?SetMaxLandingSpeed@@  450c10 setmaxlandingspeed 16
