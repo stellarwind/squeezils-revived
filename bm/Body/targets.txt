@@ -4,3 +4,8 @@
 ^\?GetContact@Body      40bba0 getcontact
 ^\?GetMatrix@Body       41fcb0 getmatrix
 ^\?IsOnSurface@Body     40bbb0 isonsurface
+^\?SetFacing@Body       41fd30 setfacing
+^\?SetAngles@Body       41fd60 setangles
+^\?GetAngles@Body       41fd80 getangles 32
+^\?SetMatrix@Body       41fcc0 setmatrix
+^\?SetContact@Body      420060 setcontact
