@@ -1,8 +1,9 @@
-// PossessionsTable (Table<int, Possessions*, ...>) — the out-of-line Get (0x465340).
+// Table<K,V>::Get — the out-of-line non-virtual Get, byte-identical across every instantiation.
+// One source matches all the addresses below (the key type does not change the bytes: `mov eax,[esp+4]; push eax`).
 #pragma once
 #include "compat41.h"
 
-struct SetInt5 {
+struct SetStub {
     virtual int Get(int i);              // slot 0
     virtual int Insert(const int &v, int at); // slot 1
     virtual void RemoveAt(int i);        // slot 2
@@ -18,15 +19,15 @@ struct SetInt5 {
     char bufferVtbl[4];
 };
 
-struct PossessionsTable {
+struct TableGet {
     virtual int Insert(const int &k, void *const &v, int hint);
     virtual int Contains(const int &k);
     virtual int IndexOf(const int &k);
     virtual void RemoveAt(int i);
     virtual void RemoveKey(const int &k);
-    SetInt5 keys;         // 0x04
+    SetStub keys;         // 0x04
     char values_pad[0xc]; // 0x18..0x24
     void **data;          // 0x24
 
-    void *Get(int id);    // 0x465340
+    void *Get(int id);    // one out-of-line instance per Table type
 };
