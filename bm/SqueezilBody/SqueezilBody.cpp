@@ -4,3 +4,17 @@
 int SqueezilBody::GetMode()         { return mode; }
 int SqueezilBody::IsOnGround()      { return onGround; }
 void SqueezilBody::SetOnGround(int on) { onGround = on; }
+
+void SqueezilBody::SetOrientation(float pitch, float yaw, float roll)
+{
+    orientation.x = pitch;
+    orientation.y = yaw;
+    orientation.z = roll;
+}
+
+void SqueezilBody::GetOrientation(float *pitch, float *yaw, float *roll)
+{
+    *pitch = orientation.x;
+    *yaw = orientation.y;
+    *roll = orientation.z;
+}

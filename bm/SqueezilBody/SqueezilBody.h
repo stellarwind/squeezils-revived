@@ -27,4 +27,6 @@ struct SqueezilBody : Body {
     int GetMode();                              // 0x457ac0 slot 20
     int IsOnGround();                           // 0x458fe0 slot 15
     void SetOnGround(int on);                   // 0x458ff0 slot 16
+    void SetOrientation(float pitch, float yaw, float roll);   // 0x457780 slot 17
+    void GetOrientation(float *pitch, float *yaw, float *roll); // 0x4577b0 slot 18
 };
