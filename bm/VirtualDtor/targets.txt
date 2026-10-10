@@ -2,3 +2,4 @@
 ^\?\?_GVirtualDtorObj  40b360 messagemap_sdd 32
 ^\?Dtor@FlatDtor       414270 simulation_dtor 16
 ^\?Dtor@FlatDtor       40b340 messagemap_dtor
+^\?Dtor@FlatDtor       403b50 behavior_dtor
