@@ -11,6 +11,7 @@ Container/targets_table50.txt Container/TableIniSection.cpp
 Container/targets_table51.txt Container/TableIniCache.cpp
 Container/gen/targets_SetDtor.txt Container/gen/SetDtor.cpp
 Container/gen/targets_ArrayDtor.txt Container/gen/ArrayDtor.cpp
+Container/gen/targets_TableDtor.txt Container/gen/TableDtor.cpp
 Ini/targets.txt Ini/IniFile.cpp
 IniReader/targets.txt IniReader/IniReader.cpp
 ListenerTable/targets.txt ListenerTable/ListenerTable.cpp
