@@ -24,6 +24,7 @@ VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
 PropList/targets.txt PropList/PropList.cpp
 PropLoader/targets.txt PropLoader/PropLoader.cpp
 Vector3fEmpty/targets.txt Vector3fEmpty/Vector3fEmpty.cpp
+Destruct/targets.txt Destruct/Destruct.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
