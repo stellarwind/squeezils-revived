@@ -86,3 +86,4 @@ GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp
 GetAirMotion/targets.txt GetAirMotion/GetAirMotion.cpp
 CreatureTemplate/targets.txt CreatureTemplate/CreatureTemplate.cpp CreatureTemplate/CreatureTemplateFind.cpp
 SoulDtor/targets.txt SoulDtor/SoulDtor.cpp
+FnDtor/targets.txt FnDtor/FnDtor.cpp
