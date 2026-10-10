@@ -12,3 +12,13 @@ struct Scene {
 void *__stdcall SetDecalSize(void *frame, float width, float height); // 0x435c70 (forwards to the global scene)
 void  SqgErrorLog(const char *message);          // 0x4241b0
 void  SetSensitivity2(float value);              // 0x44aab0
+
+struct ClientBitmap {
+    int f0;    // 0x00
+    int f4;    // 0x04
+    int f8;    // 0x08
+    int fc;    // 0x0c
+    int f10;   // 0x10
+    int f14;   // 0x14
+    ClientBitmap *Init();  // 0x478150
+};

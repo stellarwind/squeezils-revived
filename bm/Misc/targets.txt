@@ -5,3 +5,4 @@
 ^\?SetDecalSize@@        435c70 setdecalsize
 ^\?SqgErrorLog@@         4241b0 sqgerrorlog
 ^\?SetSensitivity2@@     44aab0 setsensitivity2
+^\?Init@ClientBitmap     478150 clientbitmapinit

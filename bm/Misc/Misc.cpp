@@ -48,3 +48,14 @@ void SetSensitivity2(float value)
     kSens2 = value;
     ApplySensitivity(value);
 }
+
+ClientBitmap *ClientBitmap::Init()
+{
+    f4 = 0;
+    f8 = 0;
+    f0 = 0;
+    fc = 0;
+    f10 = 0;
+    f14 = 0;
+    return this;
+}
