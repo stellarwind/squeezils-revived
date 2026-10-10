@@ -5,6 +5,7 @@
 #include "NavSurface.h"
 #include "CameraBody.h"
 #include "SqueezilSoul.h"
+#include "SqueezilRoboSoul.h"
 #include "Panel.h"
 #include "Splash.h"
 #include "World.h"
@@ -268,7 +269,7 @@ void PlaceSimulation::Start()
             void *creatureSoul = Operator_New(0xfc);          // SqueezilRoboSoul
             if (creatureSoul)
                 creatureSoul = RoboSoulInit(creatureSoul, creatureBody, theirs, this, info);
-            *(int *)((char *)creatureSoul + 0x98) = i;
+            ((SqueezilRoboSoul *)creatureSoul)->levelIndex = i;
             int id = NewId();
             AddCreature(id, creatureBody, creatureSoul);
             CallVirtual<int>(&level->ids, 1, &id, -1);

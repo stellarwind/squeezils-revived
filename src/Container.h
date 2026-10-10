@@ -1,5 +1,5 @@
 // Container.h: the game's container templates. Reconstructed from SQZ.EXE 0x45d8d0-0x46f800, where every instantiation has
-// its own copy of each method (CONTAINERS.md lists the addresses). The class names are the original's (RTTI).
+// its own copy of each method (META/CONTAINERS.md lists the addresses). The class names are the original's (RTTI).
 //
 //   Array<T>                      growable array: count, capacity and a heap block of elements
 //   PrimitiveArray<T, ID>         an Array that can also be saved and loaded (BufferObject); ID is the save type tag

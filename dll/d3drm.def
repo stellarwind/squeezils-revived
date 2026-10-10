@@ -1,0 +1,18 @@
+LIBRARY d3drm
+EXPORTS
+    Direct3DRMCreate
+    D3DRMColorGetAlpha = d3drm_real.D3DRMColorGetAlpha
+    D3DRMColorGetBlue = d3drm_real.D3DRMColorGetBlue
+    D3DRMColorGetGreen = d3drm_real.D3DRMColorGetGreen
+    D3DRMColorGetRed = d3drm_real.D3DRMColorGetRed
+    D3DRMCreateColorRGB = d3drm_real.D3DRMCreateColorRGB
+    D3DRMCreateColorRGBA = d3drm_real.D3DRMCreateColorRGBA
+    D3DRMMatrixFromQuaternion = d3drm_real.D3DRMMatrixFromQuaternion
+    D3DRMQuaternionFromRotation = d3drm_real.D3DRMQuaternionFromRotation
+    D3DRMQuaternionMultiply = d3drm_real.D3DRMQuaternionMultiply
+    D3DRMQuaternionSlerp = d3drm_real.D3DRMQuaternionSlerp
+    D3DRMVectorAdd = d3drm_real.D3DRMVectorAdd
+    D3DRMVectorCrossProduct = d3drm_real.D3DRMVectorCrossProduct
+    D3DRMVectorDotProduct = d3drm_real.D3DRMVectorDotProduct
+    D3DRMVectorModulus = d3drm_real.D3DRMVectorModulus
+    D3DRMVectorNormalize = d3drm_real.D3DRMVectorNormalize

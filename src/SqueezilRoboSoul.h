@@ -3,7 +3,7 @@
 //
 // It is a SqueezilSoul whose wishes come from a "behaviour" (an object of one of seven classes the original makes, not
 // reconstructed yet: slot 1 of it is given the ground or air control record and answers with the state to go to) and whose
-// moods come from a Character (the creature's template from the level file: SenseRadiusP / R / G and the names of the script
+// moods come from a CreatureTemplate (the creature's template from the level file: SenseRadiusP / R / G and the names of the script
 // functions the states run).
 //
 // How it decides. Every frame (UpdateRobo) it runs a little state machine (StepAI) that asks, in turn, for the squeezil's own
@@ -12,14 +12,14 @@
 // creatures that do not count: dead or fixed): the creatures near enough are offered to it by the simulation (Sense) and it
 // keeps the nearest of each kind (an AwarenessRecord). Each answer is a state number (5..0xc: noticed or lost the player / robo /
 // goodie on the ground or in the air; 0xd..0x12: hit by one; 1 and 2: left and touched the ground; 3 and 4: dying), 0x13 meaning
-// "nothing to do". The Character turns a state number into the name of a script function and the function is run; it decides
+// "nothing to do". The CreatureTemplate turns a state number into the name of a script function and the function is run; it decides
 // the behaviour to use (SetBehaviour, slot 60 of the table).
 //
 // The InputEventTarget part does not exist (the object ends at 0xfc; its fields start at 0x80).
 #pragma once
 #include "SqueezilSoul.h"
 
-struct Character;
+struct CreatureTemplate;
 
 // What the soul knows of the nearest creature of one kind (0x18 bytes, constructor @00404f10)
 struct AwarenessRecord {
@@ -43,17 +43,17 @@ struct SqueezilRoboSoul : SqueezilSoul {
     int              wasOnGround;       // 0x84 the body's on-ground flag as of the last PickState (1 at the start)
     int              lastSeen[3];       // 0x88 the creature each kind's record held when it was last looked at (-1: none)
     int              retarget;          // 0x94 cleared every frame; nothing here sets it
-    char             unknown98[4];      // 0x98
+    int              levelIndex;        // 0x98 which of the level file's creatures it is (set by PlaceSimulation::Start)
     int              senseKind;         // 0x9c the kind (0-2) just noticed or hit by, kNoSense for none
     int              lastSenseKind;     // 0xa0 the value of senseKind when a state was last taken (Remember)
     AwarenessRecord  records[3];        // 0xa4 the nearest player, robo, goodie
     void            *behaviour;         // 0xec the current behaviour object (NULL: none)
     int              mode;              // 0xf0 which behaviour class it is (0-6; 7 at the start: none)
-    Character       *character;         // 0xf4
-    const char      *pendingFunction;   // 0xf8 the script function the Character chose for the state taken, until it is run
+    CreatureTemplate       *character;         // 0xf4
+    const char      *pendingFunction;   // 0xf8 the script function the CreatureTemplate chose for the state taken, until it is run
     // total 0xfc
 
-    SqueezilRoboSoul *Init(SqueezilBody *body, Possessions *possessions, void *place, Character *character);   // @004043a0 ret 0x10
+    SqueezilRoboSoul *Init(SqueezilBody *body, Possessions *possessions, void *place, CreatureTemplate *character);   // @004043a0 ret 0x10
     void  Destruct();                                       // @00404510
     SqueezilRoboSoul *DestroyAndFree(int flags);            // @004044a0 slot 0
     void  UpdateRobo();                                     // @00404df0 slot 5
@@ -66,7 +66,7 @@ struct SqueezilRoboSoul : SqueezilSoul {
     void  SetBehaviour(int mode, const float *args);        // @00404b10 slot 60 ret 8
 
     void  Remember() { lastSenseKind = senseKind; }         // @00404710
-    int   IsNear(int kind);                                 // @00404770 ret 4: the kind's record is within the Character's sense radius
+    int   IsNear(int kind);                                 // @00404770 ret 4: the kind's record is within the CreatureTemplate's sense radius
     int   TargetGone(int kind);                             // @004047c0 ret 4: the record's creature is gone or finished
     int   PickState();                                      // @00404840 the soul's own state: dying, left or touched the ground
     void  ClearSeen();                                      // @00404900

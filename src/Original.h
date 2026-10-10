@@ -90,6 +90,12 @@ template<> struct OriginalVtables<IniValueTable>                   { enum : unsi
 template<> struct OriginalVtables<Table<String, IniFileSection *, Array<IniFileSection *>, 50> >
                                                                    { enum : unsigned { primary = 0x4a0d54 }; };
 template<> struct OriginalVtables<IniFileTable>                    { enum : unsigned { primary = 0x4a0e04 }; };
+// The inventory's table: goodie name -> list of values (Table<String, PrimitiveArray<int, 1> *, ..., 5>, built at 0x4655a0)
+template<> struct OriginalVtables<PrimitiveArray<String, 5> >      { enum : unsigned { primary = 0x4a06b4, bufferObject = 0x4a069c }; };
+template<> struct OriginalVtables<Set<String, 5> >                 { enum : unsigned { primary = 0x4a063c, bufferObject = 0x4a0624 }; };
+template<> struct OriginalVtables<Array<PrimitiveArray<int, 1> *> > { enum : unsigned { primary = 0x4a067c }; };
+template<> struct OriginalVtables<Table<String, PrimitiveArray<int, 1> *, Array<PrimitiveArray<int, 1> *>, 5> >
+                                                                   { enum : unsigned { primary = 0x4a0664 }; };
 
 IniFileTable *GetIniFiles();               // the global at 0x4c7738: every ini file parsed so far, by path (built by the game's startup code)
 
@@ -270,6 +276,7 @@ static const void *const kSqueezilSoulType = (const void *)0x4b9368;   // .?AVSq
 // does); with a NULL prop they look the prop up through the actor, which is not reconstructed.
 ScriptCaller *ScriptCallerInit(ScriptCaller *caller, int actorIndex, Prop *prop);               // @004207a0
 ScriptCaller *ScriptCallerInitSoul(ScriptCaller *caller, void *soul, int actorIndex, Prop *prop);   // @00420900
+ScriptCaller *ScriptCallerInitSoulOf(ScriptCaller *caller, void *soul, int actorIndex, Prop *prop);   // @00420a60 the same record made from a soul (the same code as the one above, with the soul also in the first word)
 
 // ---- the place's walkable surfaces (NavProp.h) ----
 // The PlaceSimulation keeps the level's walkable surfaces (loaded from .nat files) and the copies of them that NavProps place.
@@ -336,7 +343,7 @@ int   InputHeldAttack();                                    // the application o
 void  PhysicalSoulInit(void *soul);                             // @00446e30 (thiscall) PhysicalSoul's constructor: the base vtables, and the first one made reads Gravity / StaticFriction / KineticFriction
 static const void *const kMessageMapType      = (const void *)0x4b93c8;   // .?AVMessageMap
 static const void *const kGrantMessageMapType = (const void *)0x4b93a8;   // .?AVGrantMessageMap
-// the inventory (class Inventory, 0x416010-0x4165e0): one list of values per goodie name, plus the one goodie held
+// the inventory (class Inventory, Inventory.h): one list of values per goodie name, plus the one goodie held. Reconstructed (Inventory.cpp); these forward to its methods
 void  InventoryAdd(Inventory *inv, const char *goodie, int value);       // @00416110
 void  InventoryRemove(Inventory *inv, const char *goodie, int index);    // @00416280
 int   InventoryCount(Inventory *inv, const char *goodie);                // @00416300
@@ -403,9 +410,27 @@ int   AudioUpdate();                                        // @0044aae0 service
 void  UnloadSounds();                                       // @004499e0
 int   StartMidi(const char *file);                          // @0045aa00 0 when the stream buffer can't be set up
 void  StopMidi();                                           // @0045aa70
+void  PauseAudio();                                           // @0044ad60 (cdecl) the counterpart of StartAudio
+// ---- AppWindow (AppWindow.cpp): the objects the window procedure talks to, none reconstructed ----
+struct ClientBitmap { int fields[6]; };                     // 0x18 bytes at @00478150: a picture drawn straight onto a window (guess)
+void  ClientBitmapInit(ClientBitmap *b);                    // @00478150 (thiscall) clears it
+void  ClientBitmapAttach(ClientBitmap *b, HWND window, int width, int height);   // @004781d0 (thiscall, ret 0xc) takes the window's DC
+void  ClientBitmapDraw(ClientBitmap *b, int x, int y);      // @004783e0 (thiscall, ret 8)
+void  ClientBitmapFree(ClientBitmap *b);                    // @00478170 (thiscall)
+void  ProgressBegin(void *progress);                        // @0044edd0 (thiscall) the loading screen (global 0x4c75e8, its +0x1c set while it is up) starts a repaint
+void  ProgressEnd(void *progress);                          // @0044ef00 (thiscall)
+int   ApplicationRunning(void *application);                // @0043c1a0 the application object's +0x9c (set while the game takes input)
+void  ApplicationRedraw(void *application);                 // @0043c1b0 (thiscall)
+void *GetLevelManager();                                    // @004206c0 the global at 0x4badb0
+void  LevelManagerRefresh(void *manager, int flag);         // @0042db10 (thiscall, ret 4)
+void  ViewerSetQuality(void *viewer, int level);            // @00476ea0 (thiscall, ret 4) the model viewer (global 0x4c75e0): render quality 0 to 4
+void  ViewerLoadModel(void *viewer, const char *path);      // @004769a0 (thiscall, ret 4)
+char *FileOpenDialog(HWND owner);                           // @0041ed80 (cdecl) the Open File dialog; the chosen path, or NULL
 void  StartAudio();                                         // @0044add0
-void  RunFrame();                                           // @004206e0 one game step: the clock, audio, script timers, props, the simulation's slot 8 and 3
-void  ResetClock();                                         // @00420760
+void  RunFrame();                                           // @004206e0 one game step: the clock, audio, script timers, props, the simulation's slot 8 and 3 (reconstructed: GameClock.cpp)
+void  ScriptUpdateTimers(float seconds);                    // @00422f70 (cdecl) runs the script delay timers forward by that many seconds (the Function classes, not reconstructed)
+void  ScriptResetTimers();                                  // @00423050 (cdecl) the same walk at a level change
+void  ResetClock();                                         // @00420760 (reconstructed: GameClock.cpp)
 void  SetGamePaused(int paused);                            // @0043ed80 (cdecl) with 1: the application's input mode 1, the audio paused
 void  ApplicationSetInputMode(void *application, int mode); // @0043b980 (thiscall)
 void *RegionCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul);   // @00409d10 (thiscall, ret 0xc) constructs a RegionCameraSoul (0x168 bytes)
@@ -432,6 +457,8 @@ void  PlaceLevelUpdate(PlaceLevel *level);                  // @0044e0f0 (thisca
 void *PlaceLevelFindCreature(PlaceLevel *level, const char *name);   // @0044e1b0 (thiscall, ret 4, a String by value that the callee frees) the template of a creature; its +0x20 is the body colour
 void  PlaceLevelFinish(PlaceLevel *level);                  // @0044df00 (thiscall)
 void  PlaceLevelForgetCreature(PlaceLevel *level, int id);  // @0044e020 (thiscall, ret 4) clears the level's record of the creature with that id (its +0x48), so that the level may make it again
+void  PlaceLevelForgetInventory(PlaceLevel *level, Inventory *inventory);   // @0044e0b0 (thiscall, ret 4) forgets the creatures that gave the goodies in the two lists of the inventory (and the inventory's own creature)
+int   GameRandom();                                         // @0048ea20 the game's rand()
 void *PlayerSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place);   // @0041ee30 (thiscall, ret 0xc) constructs a SqueezilPlayerSoul (0xa4 bytes)
 void *PlaceCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul);   // @0040a630 (thiscall, ret 0xc) a PlaceCameraSoul (0x168 bytes)
 void *RoboSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place, void *info);   // @004043a0 (thiscall, ret 0x10) a SqueezilRoboSoul (0xfc bytes)
@@ -444,21 +471,8 @@ void  NavSurfaceDestroyLoaded(NavSurfaceList *list);        // @0040ede0 (thisca
 float ApplicationForwardAxis(void *application);            // @0043bc70 (thiscall) how far the player pushes forward (-1 to 1; 0 while the game is not taking input)
 // ---- SqueezilRoboSoul (SqueezilRoboSoul.h) ----
 static const void *const kSimulationSoulType = (const void *)0x4b9400;   // .?AVSimulationSoul
-struct Character;
 struct SqueezilSoul;
 struct SqueezilRoboSoul;
-// The Character (the creature's template from the level file; not reconstructed): turns a state number into the name of a script
-// function and keeps it in the soul's +0xf8 (0 when there is none or the soul is in mode 6 and the state is not 0); the second runs it
-int   CharacterTrySetState(Character *character, int state, SqueezilRoboSoul *soul);   // @004486f0 (thiscall, ret 8)
-void  CharacterRunPending(Character *character, SqueezilRoboSoul *soul);               // @004487f0 (thiscall, ret 4)
-// The seven behaviour classes of the robo souls (not reconstructed; each constructor is made with the soul's body and the soul first)
-void *BehaviourNew0(SqueezilBody *body, SqueezilSoul *soul, float a, float b, float c);   // @00402930, 0x30 bytes
-void *BehaviourNew1(SqueezilBody *body, SqueezilSoul *soul);                              // @004023b0, 0x24
-void *BehaviourNew2(SqueezilBody *body, SqueezilSoul *soul);                              // @004033b0, 0x18
-void *BehaviourNew3(SqueezilBody *body, SqueezilSoul *soul);                              // @00403650, 0x20
-void *BehaviourNew4(SqueezilBody *body, SqueezilSoul *soul, float a, float b);            // @00403b60, 0x28
-void *BehaviourNew5(SqueezilBody *body, SqueezilSoul *soul);                              // @00403ed0, 0x20
-void *BehaviourNew6(SqueezilBody *body, SqueezilSoul *soul, float a);                     // @004030f0, 0x24
 void  ApplicationLookDelta(void *application, float *pitch, float *yaw);   // @0043bdc0 (thiscall, ret 8) how far the player has moved the mouse to look about (two values; 0 while the game takes no input)
 float ApplicationForwardTap(void *application);            // @0043bc10 (thiscall) a push forward made by a single key press (read once: it clears itself; 0 while the game is not taking input)
 float ApplicationTurnTap(void *application);                // @0043bc40 (thiscall) the same for turning
