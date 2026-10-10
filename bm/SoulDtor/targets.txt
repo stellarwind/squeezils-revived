@@ -4,3 +4,5 @@
 ^\?\?_GSoul  4446d0 abort_sdd auto
 ^\?\?_GSoul  445030 renderdelayedexecute_sdd auto
 ^\?\?_GSoul  4477a0 physicalsoul_sdd auto
+^\?\?_GSoul  445ed0 ifhasallkeys_sdd 108
+^\?\?_GSoul  446010 ifcompletedplace_sdd 108
