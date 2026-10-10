@@ -21,6 +21,8 @@ NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDt
 CompassRuler/targets.txt CompassRuler/CompassRuler.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
 VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
+PropList/targets.txt PropList/PropList.cpp
+PropLoader/targets.txt PropLoader/PropLoader.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
