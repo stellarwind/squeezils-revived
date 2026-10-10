@@ -1,24 +1,20 @@
-// FindBehaviourMode (0x448850) and FindStimulus (0x448890): case-insensitive name -> index loops
-// over the STIM_* / BEH_* name tables. The tables are read-only global arrays of string pointers.
-#include <string.h>
+// CreatureTemplate ctor (0x4483d0) and dtor (0x4484a0).
+#include "CreatureTemplate/CreatureTemplate.h"
 
-extern const char *kStimulusName[20];   // 0x49ec10
-extern const char *kBehaviourName[8];   // 0x49ec60
-
-int FindBehaviourMode(const char *name)
+CreatureTemplate::CreatureTemplate()
 {
-    int i;
-    for (i = 0; i < 8; i++)
-        if (_stricmp(name, kBehaviourName[i]) == 0)
-            break;
-    return i == 8 ? -1 : i;
+    PrimitiveArray<String, 3> *list = this;
+    for (int i = 0; i < 20; i++) {
+        String none("");
+        list->Insert(none, -1);
+    }
+    float *sr = senseRadius;
+    sr[0] = sr[1] = sr[2] = 0.0f;
 }
 
-int FindStimulus(const char *name)
+CreatureTemplate::~CreatureTemplate()
 {
-    int i;
-    for (i = 0; i < 20; i++)
-        if (_stricmp(name, kStimulusName[i]) == 0)
-            break;
-    return i == 20 ? -1 : i;
+    PrimitiveArray<String, 3> *list = this;
+    for (int i = 19; i >= 0; i--)
+        list->Remove(i);
 }
