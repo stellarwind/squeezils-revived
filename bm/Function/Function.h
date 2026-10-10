@@ -6,7 +6,7 @@
 class Function {
 public:
     Function() {}
-    virtual ~Function();
+    virtual ~Function() {}
     virtual void vf1() = 0;
     virtual void vf2() = 0;
     virtual void vf3() = 0;

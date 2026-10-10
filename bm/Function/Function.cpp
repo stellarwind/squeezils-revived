@@ -1,10 +1,6 @@
 // Function hierarchy: base dtor + the small derived ctors.
 #include "Function/Function.h"
 
-Function::~Function()
-{
-}
-
 void Function::vf1() {}
 void Function::vf2() {}
 void Function::vf3() {}
