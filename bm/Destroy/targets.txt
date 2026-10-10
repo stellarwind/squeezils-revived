@@ -3,6 +3,7 @@
 ^\?DestroyAndFree@DestroyObj  402ba0 pacebehavior
 ^\?DestroyAndFree@DestroyObj  403230 deathbehavior
 ^\?DestroyAndFree@DestroyObj  4034b0 simpleflybehavior
+^\?DestroyAndFree@DestroyObj  403800 chasebehavior 32
 ^\?DestroyAndFree@DestroyObj  403c90 spitbehavior
 ^\?DestroyAndFree@DestroyObj  404020 fleebehavior
 ^\?DestroyAndFree@DestroyObj  426f70 frameprop
@@ -10,10 +11,12 @@
 ^\?DestroyAndFree@DestroyObj  418a40 regionsimulation
 ^\?DestroyAndFree@DestroyObj  4296b0 navprop
 ^\?DestroyAndFree@DestroyObj  428240 lodprop
+^\?DestroyAndFree@DestroyObj  425f80 prop 32
 ^\?DestroyAndFree@DestroyObj  426450 meshprop
 ^\?DestroyAndFree@DestroyObj  426980 spriteprop
 ^\?DestroyAndFree@DestroyObj  44f570 squeezilsoul
 ^\?DestroyAndFree@DestroyObj  4388d0 placesimulation
+^\?DestroyAndFree@DestroyObj  41e380 landsimulation 32
 ^\?DestroyAndFree@DestroyObj  4044a0 squeezilrobosoul
 ^\?DestroyAndFree@DestroyObj  41ef60 squeezilplayersoul
 ^\?DestroyAndFree@DestroyObj  457360 squeezilbody
