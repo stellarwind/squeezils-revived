@@ -6,5 +6,6 @@ struct CalibrationCheck {
     char pad[0x2c];
     int  field2c;   // 0x2c
 
-    int Check();    // 0x4479c0 (thiscall)
+    int  Check();   // 0x4479c0 (thiscall)
+    void Start();   // 0x447880 (field2c = 0)
 };

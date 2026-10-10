@@ -17,7 +17,8 @@ NutCounter/targets.txt NutCounter/NutCounter.cpp
 GoodieList/targets.txt GoodieList/GoodieList.cpp
 Inventory/targets.txt Inventory/Inventory.cpp
 Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
-NavMesh/targets.txt NavMesh/Outcode.cpp
+NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp
+CompassRuler/targets.txt CompassRuler/CompassRuler.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp

@@ -1,0 +1,2 @@
+^\?UpdateSprites@CompassRuler  4153e0 updatesprites
+^\?UpdateRegionSprites@Panel   42e2a0 updateregionsprites
