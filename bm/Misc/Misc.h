@@ -10,3 +10,5 @@ struct Scene {
     void *SetFrameDecalSize(void *frame, float width, float height);  // 0x477540
 };
 void *__stdcall SetDecalSize(void *frame, float width, float height); // 0x435c70 (forwards to the global scene)
+void  SqgErrorLog(const char *message);          // 0x4241b0
+void  SetSensitivity2(float value);              // 0x44aab0

@@ -3,3 +3,5 @@
 ^\?SetMaxLandingSpeed@@  450c10 setmaxlandingspeed 16
 ^\?NumericError@@        41eb80 numericerror
 ^\?SetDecalSize@@        435c70 setdecalsize
+^\?SqgErrorLog@@         4241b0 sqgerrorlog
+^\?SetSensitivity2@@     44aab0 setsensitivity2
