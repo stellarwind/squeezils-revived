@@ -1,6 +1,8 @@
 // SqueezilRoboSoul: see SqueezilRoboSoul.h. Reconstructed from SQZ.EXE 0x4043a0-0x4053d0.
 #include "SqueezilRoboSoul.h"
 #include "SqueezilSoulInternal.h"
+#include "Behavior.h"
+#include "CreatureTemplate.h"
 #include "Simulation.h"
 #include "Original.h"
 #include "VirtualCall.h"
@@ -15,8 +17,8 @@ static void **const kRoboGrantVtable = (void **)0x49d16c;
 static const int kSlotSetBehaviour = 60;        // the one virtual function this class adds (SqueezilSoul has slots 0-59)
 static const int kSlotKind = 8;                 // Soul slot 8: what kind of creature it is (RoboKind; 4 and 6 do not count)
 
-// The creatures' sense radii are the Character's +0x14 (player), +0x18 (robo), +0x1c (goodie)
-static float SenseRadius(Character *c, int kind) { return *(float *)((char *)c + 0x14 + kind * 4); }
+// The creatures' sense radii are the CreatureTemplate's +0x14 (player), +0x18 (robo), +0x1c (goodie)
+static float SenseRadius(CreatureTemplate *c, int kind) { return c->senseRadius[kind]; }
 
 // The creature soul behind an id, as a Soul that has a kind
 static void *KindSoul(int id)
@@ -36,7 +38,7 @@ void AwarenessRecord::Offer(const AwarenessRecord *other)
 }
 
 // @004043a0
-SqueezilRoboSoul *SqueezilRoboSoul::Init(SqueezilBody *bodyArg, Possessions *possessionsArg, void *placeArg, Character *characterArg)
+SqueezilRoboSoul *SqueezilRoboSoul::Init(SqueezilBody *bodyArg, Possessions *possessionsArg, void *placeArg, CreatureTemplate *characterArg)
 {
     SqueezilSoul::Init(bodyArg, possessionsArg, placeArg);
     step = 0;
@@ -223,20 +225,20 @@ void SqueezilRoboSoul::UpdateRobo()
         int wanted = StepAI();
         if (wanted == kNoActivity)
             break;
-        if (CharacterTrySetState(character, wanted, this))
+        if (character->TrySetState(wanted, this))
             break;
     }
     step = 0;
     retarget = 0;
-    CharacterRunPending(character, this);
+    character->RunPending(this);
 
     if (mode == 3 || mode == 4 || mode == 5) {
         int last = lastSenseKind;
         if (last == kNoSense || TargetGone(last) || records[last].id == -1) {
             int onGround = BodyCall::IsOnGround(SoulCall::Body(this));
-            if (!CharacterTrySetState(character, onGround ? 0xb : 0xc, this))
-                CharacterTrySetState(character, 0, this);
-            CharacterRunPending(character, this);
+            if (!character->TrySetState(onGround ? 0xb : 0xc, this))
+                character->TrySetState(0, this);
+            character->RunPending(this);
             if (mode == 3 || mode == 4 || mode == 5) {
                 float args[3] = { 90.0f, 5.0f, 1.0f };
                 CallVirtual<void>(this, kSlotSetBehaviour, 0, args);
@@ -246,7 +248,7 @@ void SqueezilRoboSoul::UpdateRobo()
     SqueezilSoul::Update();
 }
 
-// @00404630 slot 9 Hit by a creature: the state for being hit by its kind, on the ground or in the air, runs the Character's function
+// @00404630 slot 9 Hit by a creature: the state for being hit by its kind, on the ground or in the air, runs the CreatureTemplate's function
 void SqueezilRoboSoul::Hit(int knock, int sprayNuts, int byId)
 {
     senseKind = CallVirtual<int>(KindSoul(byId), kSlotKind);
@@ -257,8 +259,8 @@ void SqueezilRoboSoul::Hit(int knock, int sprayNuts, int byId)
     case ROBO_ROBO:   wanted = onGround ? 0xf : 0x10; break;
     case ROBO_GOODIE: wanted = onGround ? 0x11 : 0x12; break;
     }
-    if (wanted != kNoActivity && CharacterTrySetState(character, wanted, this))
-        CharacterRunPending(character, this);
+    if (wanted != kNoActivity && character->TrySetState(wanted, this))
+        character->RunPending(this);
     SqueezilSoul::Hit(knock, sprayNuts, byId);
 }
 
@@ -276,7 +278,7 @@ void SqueezilRoboSoul::ReadAirInput(AirControl *c, int *next)
     *next = CallVirtual<int>(behaviour, 1, (GroundControl *)NULL, c);
 }
 
-// @00404b10 slot 60 Change the behaviour. The seven classes (their constructors are the original's, sizes in the comments) take the
+// @00404b10 slot 60 Change the behaviour. The seven classes (Behavior.h; sizes in the comments) take the
 // body and the soul and some of the three numbers.
 void SqueezilRoboSoul::SetBehaviour(int newMode, const float *args)
 {
@@ -285,13 +287,13 @@ void SqueezilRoboSoul::SetBehaviour(int newMode, const float *args)
     SqueezilBody *theBody = SoulCall::Body(this);
     void *fresh = NULL;
     switch (newMode) {
-    case 0: fresh = BehaviourNew0(theBody, this, args[0], args[1], args[2]); break;      // @00402930, 0x30 bytes
-    case 1: fresh = BehaviourNew1(theBody, this); break;                                 // @004023b0, 0x24
-    case 2: fresh = BehaviourNew2(theBody, this); break;                                 // @004033b0, 0x18
-    case 3: fresh = BehaviourNew3(theBody, this); break;                                 // @00403650, 0x20
-    case 4: fresh = BehaviourNew4(theBody, this, args[0], args[1]); break;               // @00403b60, 0x28
-    case 5: fresh = BehaviourNew5(theBody, this); break;                                 // @00403ed0, 0x20
-    case 6: fresh = BehaviourNew6(theBody, this, args[0]); break;                        // @004030f0, 0x24
+    case 0: fresh = new PaceBehavior(theBody, this, args[0], args[1], args[2]); break;     // 0x30 bytes
+    case 1: fresh = new WanderBehavior(theBody, this); break;                            // 0x24
+    case 2: fresh = new SimpleFlyBehavior(theBody, this); break;                         // 0x18
+    case 3: fresh = new ChaseBehavior(theBody, this); break;                             // 0x20
+    case 4: fresh = new SpitBehavior(theBody, this, args[0], args[1]); break;            // 0x28
+    case 5: fresh = new FleeBehavior(theBody, this); break;                              // 0x20
+    case 6: fresh = new DeathBehavior(theBody, this, args[0]); break;                    // 0x24
     default: fresh = NULL; break;       // (the original stores an unset local here)
     }
     if (behaviour) {

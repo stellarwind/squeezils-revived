@@ -166,3 +166,15 @@ static_assert(sizeof(NavMesh) == 0x2030 && offsetof(NavMesh, points) == 0x04 && 
               offsetof(NavMesh, hits) == 0x14 && offsetof(NavMesh, sizeSquared) == 0x2020, "NavMesh fields");
 static_assert(offsetof(NavFace, normal) == 0x0c && offsetof(NavFace, neighbour) == 0x18 && offsetof(NavFace, type) == 0x24 &&
               offsetof(NavBox, faceCount) == 0x18 && offsetof(NavBox, child) == 0x20, "NavMesh parts");
+
+// Inventory
+#include "Inventory.h"
+static_assert(offsetof(Inventory, table) == 0x04 && offsetof(Inventory, held) == 0x08 && offsetof(Inventory, heldValue) == 0x0c &&
+              offsetof(Inventory, keyFlags) == 0x10 && offsetof(Inventory, relics) == 0x58, "Inventory fields");
+static_assert(sizeof(InventoryTable) == 0x28 && offsetof(InventoryTable, values) == 0x18, "InventoryTable layout");
+
+// GameClock
+#include "GameClock.h"
+static_assert(offsetof(GameClock, maxSimMs) == 0x04 && offsetof(GameClock, simRateMs) == 0x0c && offsetof(GameClock, renderStart) == 0x10 &&
+              offsetof(GameClock, simStart) == 0x18 && offsetof(GameClock, gameTime) == 0x20 && offsetof(GameClock, balance) == 0x28 &&
+              offsetof(GameClock, multiplier) == 0x2c, "GameClock fields");

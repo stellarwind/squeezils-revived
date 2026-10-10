@@ -36,6 +36,8 @@
 #include "GoodieSoul.h"
 #include "SqueezilRoboSoul.h"
 #include "CameraSoul.h"
+#include "Behavior.h"
+#include "CreatureTemplate.h"
 #include "Body.h"
 #include "CameraBody.h"
 #include "GoodieBody.h"
@@ -47,10 +49,15 @@
 #include "Script.h"
 #include "MoodFace.h"
 #include "NutCounter.h"
+#include "WaveSound.h"
 #include "Panel.h"
 #include "StatusBar.h"
 #include "GoodieList.h"
 #include "QuestItems.h"
+#include "Inventory.h"
+#include "GameClock.h"
+#include "GameLoop.h"
+#include "AppWindow.h"
 #include "QuestPanel.h"
 #include "SqgModel.h"
 #include "Texture.h"
@@ -179,51 +186,27 @@ void  ReleaseFunctions()                                 { ((void (__cdecl *)())
 int   AudioUpdate()                                      { return ((int (__cdecl *)())0x44aae0)(); }
 void  UnloadSounds()                                     { ((void (__cdecl *)())0x4499e0)(); }
 int   StartMidi(const char *file)                        { return ((int (__cdecl *)(const char *))0x45aa00)(file); }
+void  ScriptUpdateTimers(float seconds)                     { ((void (__cdecl *)(float))0x422f70)(seconds); }
+void  ScriptResetTimers()                                { ((void (__cdecl *)())0x423050)(); }
 void  StopMidi()                                         { ((void (__cdecl *)())0x45aa70)(); }
+void  PauseAudio()                                      { ((void (__cdecl *)())0x44ad60)(); }
+void  ClientBitmapInit(ClientBitmap *b)                 { ((void (TC *)(void *))0x478150)(b); }
+void  ClientBitmapAttach(ClientBitmap *b, HWND w, int x, int y) { ((void (TC *)(void *, HWND, int, int))0x4781d0)(b, w, x, y); }
+void  ClientBitmapDraw(ClientBitmap *b, int x, int y)    { ((void (TC *)(void *, int, int))0x4783e0)(b, x, y); }
+void  ClientBitmapFree(ClientBitmap *b)                  { ((void (TC *)(void *))0x478170)(b); }
+void  ProgressBegin(void *p)                             { ((void (TC *)(void *))0x44edd0)(p); }
+void  ProgressEnd(void *p)                               { ((void (TC *)(void *))0x44ef00)(p); }
+int   ApplicationRunning(void *a)                        { return *(int *)((char *)a + 0x9c); }
+void  ApplicationRedraw(void *a)                         { ((void (TC *)(void *))0x43c1b0)(a); }
+void *GetLevelManager()                                  { return *(void **)0x4badb0; }
+void  LevelManagerRefresh(void *m, int f)                { ((void (TC *)(void *, int))0x42db10)(m, f); }
+void  ViewerSetQuality(void *v, int l)                   { ((void (TC *)(void *, int))0x476ea0)(v, l); }
+void  ViewerLoadModel(void *v, const char *p)            { ((void (TC *)(void *, const char *))0x4769a0)(v, p); }
+char *FileOpenDialog(HWND owner)                         { return ((char *(__cdecl *)(HWND))0x41ed80)(owner); }
 void  StartAudio()                                       { ((void (__cdecl *)())0x44add0)(); }
-void  RunFrame()                                         { ((void (__cdecl *)())0x4206e0)(); }
-void  ResetClock()                                       { ((void (__cdecl *)())0x420760)(); }
-void  SetGamePaused(int paused)                          { ((void (__cdecl *)(int))0x43ed80)(paused); }
 void  ApplicationSetInputMode(void *application, int mode) { ((void (TC *)(void *, int))0x43b980)(application, mode); }
 float ApplicationForwardAxis(void *application)          { return ((float (TC *)(void *))0x43bc70)(application); }
 float ApplicationTurnAxis(void *application)             { return ((float (TC *)(void *))0x43bd20)(application); }
-int   CharacterTrySetState(Character *c, int state, SqueezilRoboSoul *soul) { return ((int (TC *)(void *, int, void *))0x4486f0)(c, state, soul); }
-void  CharacterRunPending(Character *c, SqueezilRoboSoul *soul)           { ((void (TC *)(void *, void *))0x4487f0)(c, soul); }
-void *BehaviourNew0(SqueezilBody *body, SqueezilSoul *soul, float a, float b, float c)
-{
-    void *m = Operator_New(0x30);
-    return m ? ((void *(TC *)(void *, void *, void *, float, float, float))0x402930)(m, body, soul, a, b, c) : NULL;
-}
-void *BehaviourNew1(SqueezilBody *body, SqueezilSoul *soul)
-{
-    void *m = Operator_New(0x24);
-    return m ? ((void *(TC *)(void *, void *, void *))0x4023b0)(m, body, soul) : NULL;
-}
-void *BehaviourNew2(SqueezilBody *body, SqueezilSoul *soul)
-{
-    void *m = Operator_New(0x18);
-    return m ? ((void *(TC *)(void *, void *, void *))0x4033b0)(m, body, soul) : NULL;
-}
-void *BehaviourNew3(SqueezilBody *body, SqueezilSoul *soul)
-{
-    void *m = Operator_New(0x20);
-    return m ? ((void *(TC *)(void *, void *, void *))0x403650)(m, body, soul) : NULL;
-}
-void *BehaviourNew4(SqueezilBody *body, SqueezilSoul *soul, float a, float b)
-{
-    void *m = Operator_New(0x28);
-    return m ? ((void *(TC *)(void *, void *, void *, float, float))0x403b60)(m, body, soul, a, b) : NULL;
-}
-void *BehaviourNew5(SqueezilBody *body, SqueezilSoul *soul)
-{
-    void *m = Operator_New(0x20);
-    return m ? ((void *(TC *)(void *, void *, void *))0x403ed0)(m, body, soul) : NULL;
-}
-void *BehaviourNew6(SqueezilBody *body, SqueezilSoul *soul, float a)
-{
-    void *m = Operator_New(0x24);
-    return m ? ((void *(TC *)(void *, void *, void *, float))0x4030f0)(m, body, soul, a) : NULL;
-}
 void  ApplicationLookDelta(void *application, float *pitch, float *yaw) { ((void (TC *)(void *, float *, float *))0x43bdc0)(application, pitch, yaw); }
 float ApplicationForwardTap(void *application)           { return ((float (TC *)(void *))0x43bc10)(application); }
 float ApplicationTurnTap(void *application)              { return ((float (TC *)(void *))0x43bc40)(application); }
@@ -237,8 +220,6 @@ void  PlayLoopingSound(const char *name)
 void *RegionCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul)
                                                          { return ((void *(TC *)(void *, void *, void *, void *))0x409d10)(memory, camera, body, playerSoul); }
 void  PossessionsSetInventory(Possessions *p, Inventory *i) { ((void (TC *)(void *, void *))0x4489a0)(p, i); }
-int   InventoryLoad(Inventory *inventory, void *file)    { return ((int (TC *)(void *, void *))0x416820)(inventory, file); }
-int   InventorySave(Inventory *inventory, void *file)    { return ((int (TC *)(void *, void *))0x416600)(inventory, file); }
 PlaceLevel *PlaceLevelConstruct(PlaceLevel *level)       { return ((PlaceLevel *(TC *)(void *))0x44af30)(level); }
 void  PlaceLevelDestruct(PlaceLevel *level)              { ((void (TC *)(void *))0x44b2e0)(level); }
 void  PlaceLevelPrepare(PlaceLevel *level)               { ((void (TC *)(void *))0x44b950)(level); }
@@ -254,6 +235,8 @@ void *PlaceLevelFindCreature(PlaceLevel *level, const char *name)
 }
 void  PlaceLevelFinish(PlaceLevel *level)                { ((void (TC *)(void *))0x44df00)(level); }
 void  PlaceLevelForgetCreature(PlaceLevel *level, int id) { ((void (TC *)(void *, int))0x44e020)(level, id); }
+void  PlaceLevelForgetInventory(PlaceLevel *level, Inventory *inventory) { ((void (TC *)(void *, void *))0x44e0b0)(level, inventory); }
+int   GameRandom()                                       { return ((int (__cdecl *)())0x48ea20)(); }
 void *PlayerSoulInit(void *memory, SqueezilBody *body, Possessions *possessions, void *place)
                                                          { return ((void *(TC *)(void *, void *, void *, void *))0x41ee30)(memory, body, possessions, place); }
 void *PlaceCameraSoulInit(void *memory, CameraBody *camera, SqueezilBody *body, void *playerSoul)
@@ -265,7 +248,6 @@ void  PlayerSoulFinishedUpdate(void *soul)               { ((void (TC *)(void *)
 void  NavSurfaceDestroyInstances(NavSurfaceList *list)   { ((void (TC *)(void *))0x40ec90)(list); }
 void  NavSurfaceDestroyLoaded(NavSurfaceList *list)      { ((void (TC *)(void *))0x40ede0)(list); }
 void  DestructPossessionsTable(PossessionsTable *table)  { ((void (TC *)(void *))0x4651d0)(table); }
-void  InventoryConstruct(Inventory *inv)                 { ((void (TC *)(void *))0x415ef0)(inv); }
 void *StreamWrite(void *stream, BufferObject *object)    { return ((void *(TC *)(void *, void *))0x448c60)(stream, object); }
 void *StreamRead(void *stream, BufferObject **object)    { return ((void *(TC *)(void *, void *))0x448ca0)(stream, object); }
 void *GetApplication()                                   { return *(void **)0x4badac; }
@@ -282,7 +264,6 @@ float *CameraMatrix()
     return ((float *(TC *)(void *))(*(void ***)actor)[3])(actor);
 }
 void *GetPlaceSurfaces(void *place)                      { return ((void *(TC *)(void *))0x439b60)(place); }
-unsigned FrameMilliseconds()                              { return ((unsigned (TC *)(void *))0x41ec00)(*(void **)0x4badc0); }
 int   MorphCycleLoad(MorphCycle *clip, const char *file) { return ((int (TC *)(MorphCycle *, const char *))0x41bd60)(clip, file); }
 void  MatrixToAngles(const float *m, float *pitch, float *yaw, float *roll)
 {
@@ -298,8 +279,6 @@ void  DebugLog(const char *format, ...)    // printf style like GameLog: format 
     buf[sizeof buf - 1] = 0;
     ((void (__cdecl *)(const char *, ...))0x419360)("%s", buf);
 }
-int   ClockValueA()                                       { return ((int (TC *)(void *))0x41ec10)(*(void **)0x4badc0); }
-int   ClockValueB()                                       { return ((int (TC *)(void *))0x41ebf0)(*(void **)0x4badc0); }
 void  PlayEffect(const char *name, const Float3 &position)
 {
     String s(name);                       // the original takes the String by value (its rep pointer) and releases it
@@ -312,13 +291,6 @@ int   PhysicalCollision(int id, int otherId)              { return ((int (__cdec
 int   InputHeldRun()                                      { return *(int *)((char *)*(void **)0x4badac + 0x64); }
 int   InputHeldAttack()                               { return *(int *)((char *)*(void **)0x4badac + 0x68); }
 void  PhysicalSoulInit(void *soul)                        { ((void *(TC *)(void *))0x446e30)(soul); }
-void  InventoryAdd(Inventory *inv, const char *goodie, int value)    { ((void (TC *)(void *, const char *, int))0x416110)(inv, goodie, value); }
-void  InventoryRemove(Inventory *inv, const char *goodie, int index) { ((void (TC *)(void *, const char *, int))0x416280)(inv, goodie, index); }
-int   InventoryCount(Inventory *inv, const char *goodie)             { return ((int (TC *)(void *, const char *))0x416300)(inv, goodie); }
-Array<int> *InventoryItems(Inventory *inv, const char *goodie)       { return ((Array<int> *(TC *)(void *, const char *))0x4163d0)(inv, goodie); }
-void  InventoryRemoveNuts(Inventory *inv)                            { ((void (TC *)(void *))0x4164a0)(inv); }
-String *InventoryHeldName(Inventory *inv)                            { return (String *)((char *)inv + 8); }
-int  *InventoryHeldValue(Inventory *inv)                             { return (int *)((char *)inv + 0xc); }
 void *GetPlaceGoodies(void *place)                        { return ((void *(TC *)(void *))0x439b50)(place); }
 void  DropGoodie(void *goodies, int value, const char *goodie, Matrix16 at)
 {
@@ -344,6 +316,10 @@ ScriptCaller *ScriptCallerInit(ScriptCaller *c, int actorIndex, Prop *prop)
 ScriptCaller *ScriptCallerInitSoul(ScriptCaller *c, void *soul, int actorIndex, Prop *prop)
 {
     return ((ScriptCaller *(TC *)(ScriptCaller *, void *, int, Prop *))0x420900)(c, soul, actorIndex, prop);
+}
+ScriptCaller *ScriptCallerInitSoulOf(ScriptCaller *c, void *soul, int actorIndex, Prop *prop)
+{
+    return ((ScriptCaller *(TC *)(ScriptCaller *, void *, int, Prop *))0x420a60)(c, soul, actorIndex, prop);
 }
 int  SimulationCanSave(void *sim)                        { return ((int (TC *)(void *))(*(void ***)sim)[0x24 / 4])(sim); }
 int  SimulationSave(void *sim, const char *path)         { return ((int (TC *)(void *, const char *))(*(void ***)sim)[0x2c / 4])(sim, path); }
@@ -1890,8 +1866,8 @@ static GoodieSettings *THISCALL h_gsphys(GoodieSoul *s) { HEAVY_LOG(H_gsphys); r
 // ---- SqueezilRoboSoul (SqueezilRoboSoul.h) ----
 static Hook H_rbinit, H_rbfree, H_rbdtor, H_rbground, H_rbair, H_rbhit, H_rbreset, H_rbremember, H_rbsense, H_rbnear, H_rbgone, H_rbpick,
             H_rbclear, H_rbstate, H_rbstep, H_rbbehave, H_rbupdate, H_rbkind, H_rboffer, H_rbrecreset;
-static SqueezilRoboSoul *(THISCALL *o_rbinit)(SqueezilRoboSoul *, SqueezilBody *, Possessions *, void *, Character *);
-static SqueezilRoboSoul *THISCALL h_rbinit(SqueezilRoboSoul *s, SqueezilBody *b, Possessions *p, void *place, Character *c) { HEAVY_LOG(H_rbinit); return s->Init(b, p, place, c); }
+static SqueezilRoboSoul *(THISCALL *o_rbinit)(SqueezilRoboSoul *, SqueezilBody *, Possessions *, void *, CreatureTemplate *);
+static SqueezilRoboSoul *THISCALL h_rbinit(SqueezilRoboSoul *s, SqueezilBody *b, Possessions *p, void *place, CreatureTemplate *c) { HEAVY_LOG(H_rbinit); return s->Init(b, p, place, c); }
 static SqueezilRoboSoul *(THISCALL *o_rbfree)(SqueezilRoboSoul *, int);
 static SqueezilRoboSoul *THISCALL h_rbfree(SqueezilRoboSoul *s, int flags) { HEAVY_LOG(H_rbfree); return s->DestroyAndFree(flags); }
 static void (THISCALL *o_rbdtor)(SqueezilRoboSoul *);
@@ -1930,6 +1906,60 @@ static void (THISCALL *o_rboffer)(AwarenessRecord *, const AwarenessRecord *);
 static void THISCALL h_rboffer(AwarenessRecord *r, const AwarenessRecord *other) { HEAVY_LOG(H_rboffer); r->Offer(other); }
 static void (THISCALL *o_rbrecreset)(AwarenessRecord *);
 static void THISCALL h_rbrecreset(AwarenessRecord *r) { HEAVY_LOG(H_rbrecreset); r->Reset(); }
+
+// ---- CreatureTemplate (CreatureTemplate.h). The two functions that take a String by value get the rep pointer the caller pushed; ----
+static Hook H_ctctor, H_ctdtor, H_ctread, H_ctset, H_cttry, H_ctrun, H_ctfindbeh, H_ctfindstim;
+static CreatureTemplate *(THISCALL *o_ctctor)(CreatureTemplate *);
+static CreatureTemplate *THISCALL h_ctctor(CreatureTemplate *t) { HEAVY_LOG(H_ctctor); ::new (t) CreatureTemplate(); return t; }
+static void (THISCALL *o_ctdtor)(CreatureTemplate *);
+static void THISCALL h_ctdtor(CreatureTemplate *t) { HEAVY_LOG(H_ctdtor); t->~CreatureTemplate(); }
+static int (THISCALL *o_ctread)(CreatureTemplate *, const String *, IniReader *);
+static int THISCALL h_ctread(CreatureTemplate *t, const String *section, IniReader *ini) { HEAVY_LOG(H_ctread); return t->Read(*section, ini); }
+static void (THISCALL *o_ctset)(CreatureTemplate *, int, StringRep *);
+static void THISCALL h_ctset(CreatureTemplate *t, int stimulus, StringRep *name)
+{
+    HEAVY_LOG(H_ctset);
+    String s; s.rep = name;
+    t->SetFunction(stimulus, s);
+}
+static int (THISCALL *o_cttry)(CreatureTemplate *, int, SqueezilRoboSoul *);
+static int THISCALL h_cttry(CreatureTemplate *t, int stimulus, SqueezilRoboSoul *soul) { HEAVY_LOG(H_cttry); return t->TrySetState(stimulus, soul); }
+static void (THISCALL *o_ctrun)(CreatureTemplate *, SqueezilRoboSoul *);
+static void THISCALL h_ctrun(CreatureTemplate *t, SqueezilRoboSoul *soul) { HEAVY_LOG(H_ctrun); t->RunPending(soul); }
+static int (__cdecl *o_ctfindbeh)(const char *);
+static int __cdecl h_ctfindbeh(const char *name) { HEAVY_LOG(H_ctfindbeh); return FindBehaviourMode(name); }
+static int (__cdecl *o_ctfindstim)(const char *);
+static int __cdecl h_ctfindstim(const char *name) { HEAVY_LOG(H_ctfindstim); return FindStimulus(name); }
+
+// ---- Activities and behaviours (Activity.h, Behavior.h): the objects keep the original's tables, so their functions are hooked where the
+// tables point. Slot 1 of a behaviour answers the ground or the air question, slot 0 destroys. ----
+static Hook H_acmove, H_acturn, H_acstop, H_acfly, H_acdie, H_acregen,
+            H_bhwander, H_bhwanderfree, H_bhpace, H_bhpacefree, H_bhdeath, H_bhdeathfree, H_bhfly, H_bhflyfree,
+            H_bhchase, H_bhchasefree, H_bhspit, H_bhspitfree, H_bhflee, H_bhfleefree;
+static int (THISCALL *o_acmove)(MoveActivity *, GroundControl *);
+static int THISCALL h_acmove(MoveActivity *a, GroundControl *out) { HEAVY_LOG(H_acmove); return a->MoveActivity::StepGround(out); }
+static int (THISCALL *o_acturn)(TurnTargetActivity *, GroundControl *);
+static int THISCALL h_acturn(TurnTargetActivity *a, GroundControl *out) { HEAVY_LOG(H_acturn); return a->StepGround(out); }
+static int (THISCALL *o_acstop)(StopActivity *, GroundControl *);
+static int THISCALL h_acstop(StopActivity *a, GroundControl *out) { HEAVY_LOG(H_acstop); return a->StepGround(out); }
+static int (THISCALL *o_acfly)(FlyTargetActivity *, AirControl *);
+static int THISCALL h_acfly(FlyTargetActivity *a, AirControl *out) { HEAVY_LOG(H_acfly); return a->StepAir(out); }
+static int (THISCALL *o_acdie)(DieActivity *, GroundControl *);
+static int THISCALL h_acdie(DieActivity *a, GroundControl *out) { HEAVY_LOG(H_acdie); return a->StepGround(out); }
+static int (THISCALL *o_acregen)(RegenActivity *, GroundControl *);
+static int THISCALL h_acregen(RegenActivity *a, GroundControl *out) { HEAVY_LOG(H_acregen); return a->StepGround(out); }
+#define BEHAVIOR_HOOKS(tag, Type) \
+    static int (THISCALL *o_bh##tag)(Type *, GroundControl *, AirControl *); \
+    static int THISCALL h_bh##tag(Type *b, GroundControl *g, AirControl *a) { HEAVY_LOG(H_bh##tag); return b->Step(g, a); } \
+    static Type *(THISCALL *o_bh##tag##free)(Type *, int); \
+    static Type *THISCALL h_bh##tag##free(Type *b, int flags) { HEAVY_LOG(H_bh##tag##free); return b->DestroyAndFree(flags); }
+BEHAVIOR_HOOKS(wander, WanderBehavior)
+BEHAVIOR_HOOKS(pace, PaceBehavior)
+BEHAVIOR_HOOKS(death, DeathBehavior)
+BEHAVIOR_HOOKS(fly, SimpleFlyBehavior)
+BEHAVIOR_HOOKS(chase, ChaseBehavior)
+BEHAVIOR_HOOKS(spit, SpitBehavior)
+BEHAVIOR_HOOKS(flee, FleeBehavior)
 
 // ---- CameraSoul, RegionCameraSoul, PlaceCameraSoul (CameraSoul.h). The two that return a matrix take the result's address first
 // and return it, as the original does. The InputEventTarget function is called on the part at +4. ----
@@ -2995,6 +3025,90 @@ static int THISCALL h_qicomb(QuestItems *k, int i) { HEAVY_LOG(H_qicomb); return
 static int (__fastcall *o_qikeys)(QuestItems *);
 static int __fastcall h_qikeys(QuestItems *k) { HEAVY_LOG(H_qikeys); return k->LoadKeys(); }
 
+// ---- GameClock (the timer behind the game steps, and RunFrame / ResetClock that drive it; replace only, "clock") ----
+static Hook H_gcctor, H_gcdtor, H_gcrrender, H_gcsim, H_gcendr, H_gcends, H_runframe, H_resetclock;
+static void *(THISCALL *o_gcctor)(GameClock *, int, unsigned, unsigned, float);
+static void *THISCALL h_gcctor(GameClock *c, int a, unsigned b, unsigned d, float s) { HEAVY_LOG(H_gcctor); new (c) GameClock(a, b, d, s); return c; }
+static void (__fastcall *o_gcdtor)(GameClock *);
+static void __fastcall h_gcdtor(GameClock *c) { HEAVY_LOG(H_gcdtor); c->~GameClock(); }
+static void (__fastcall *o_gcrrender)(GameClock *);
+static void __fastcall h_gcrrender(GameClock *c) { HEAVY_LOG(H_gcrrender); c->ResetRender(); }
+static void (__fastcall *o_gcsim)(GameClock *);
+static void __fastcall h_gcsim(GameClock *c) { HEAVY_LOG(H_gcsim); c->BeginSim(); }
+static void (__fastcall *o_gcendr)(GameClock *);
+static void __fastcall h_gcendr(GameClock *c) { HEAVY_LOG(H_gcendr); c->EndRender(); }
+static void (__fastcall *o_gcends)(GameClock *);
+static void __fastcall h_gcends(GameClock *c) { HEAVY_LOG(H_gcends); c->EndSim(); }
+static void (__cdecl *o_runframe)();
+static void __cdecl h_runframe() { HEAVY_LOG(H_runframe); RunFrame(); }
+static void (__cdecl *o_resetclock)();
+static void __cdecl h_resetclock() { HEAVY_LOG(H_resetclock); ResetClock(); }
+
+// ---- GameLoop (the idle step and the pause switch; replace only, "gameloop") ----
+static Hook H_glpause, H_gldlg, H_glidle, H_glredraw;
+static void (__cdecl *o_glpause)(int);
+static void __cdecl h_glpause(int p) { HEAVY_LOG(H_glpause); SetGamePaused(p); }
+static INT_PTR (__stdcall *o_gldlg)(HWND, UINT, WPARAM, LPARAM);
+static INT_PTR __stdcall h_gldlg(HWND h, UINT m, WPARAM w, LPARAM l) { HEAVY_LOG(H_gldlg); return SimpleDialogProc(h, m, w, l); }
+static int (__cdecl *o_glidle)();
+static int __cdecl h_glidle() { HEAVY_LOG(H_glidle); return GameIdle(); }
+static int (__cdecl *o_glredraw)();
+static int __cdecl h_glredraw() { HEAVY_LOG(H_glredraw); return RedrawWindowsAbove(); }
+
+// ---- AppWindow (the game window's message handler; replace only, "appwindow") ----
+static Hook H_appwnd;
+static LRESULT (__stdcall *o_appwnd)(HWND, UINT, WPARAM, LPARAM);
+static LRESULT __stdcall h_appwnd(HWND h, UINT m, WPARAM w, LPARAM l) { HEAVY_LOG(H_appwnd); return MainWindowProc(h, m, w, l); }
+
+// ---- Inventory (what the player carries, and the quest flags; replace only, "inventory") ----
+static Hook H_invctor, H_invdtor, H_invadd, H_invremove, H_invcount, H_invitems, H_invnuts, H_invkeys, H_invrelics, H_invsave, H_invload,
+            H_invtype, H_invcreate, H_invrelease;
+static void *(__fastcall *o_invctor)(Inventory *);
+static void *__fastcall h_invctor(Inventory *v) { HEAVY_LOG(H_invctor); new (v) Inventory(); return v; }
+static void (__fastcall *o_invdtor)(Inventory *);
+static void __fastcall h_invdtor(Inventory *v) { HEAVY_LOG(H_invdtor); v->~Inventory(); }
+static void (THISCALL *o_invadd)(Inventory *, const char *, int);
+static void THISCALL h_invadd(Inventory *v, const char *g, int x) { HEAVY_LOG(H_invadd); v->Add(g, x); }
+static void (THISCALL *o_invremove)(Inventory *, const char *, int);
+static void THISCALL h_invremove(Inventory *v, const char *g, int i) { HEAVY_LOG(H_invremove); v->Remove(g, i); }
+static int (THISCALL *o_invcount)(Inventory *, const char *);
+static int THISCALL h_invcount(Inventory *v, const char *g) { HEAVY_LOG(H_invcount); return v->Count(g); }
+static IntList *(THISCALL *o_invitems)(Inventory *, const char *);
+static IntList *THISCALL h_invitems(Inventory *v, const char *g) { HEAVY_LOG(H_invitems); return v->Items(g); }
+static void (__fastcall *o_invnuts)(Inventory *);
+static void __fastcall h_invnuts(Inventory *v) { HEAVY_LOG(H_invnuts); v->RemoveNuts(); }
+static int (THISCALL *o_invkeys)(Inventory *, int);
+static int THISCALL h_invkeys(Inventory *v, int region) { HEAVY_LOG(H_invkeys); return v->KeysFound(region); }
+static int (__fastcall *o_invrelics)(Inventory *);
+static int __fastcall h_invrelics(Inventory *v) { HEAVY_LOG(H_invrelics); return v->AllRelics(); }
+static int (THISCALL *o_invsave)(Inventory *, void *);
+static int THISCALL h_invsave(Inventory *v, void *f) { HEAVY_LOG(H_invsave); return v->Save(f); }
+static int (THISCALL *o_invload)(Inventory *, void *);
+static int THISCALL h_invload(Inventory *v, void *f) { HEAVY_LOG(H_invload); return v->Load(f); }
+static const char *(__fastcall *o_invtype)(Inventory *);
+static const char *__fastcall h_invtype(Inventory *v) { HEAVY_LOG(H_invtype); return v->TypeName(); }
+static Inventory *(__fastcall *o_invcreate)(Inventory *);
+static Inventory *__fastcall h_invcreate(Inventory *v) { HEAVY_LOG(H_invcreate); return v->Create(); }
+static void (THISCALL *o_invrelease)(Inventory *, void *);
+static void THISCALL h_invrelease(Inventory *v, void *s) { HEAVY_LOG(H_invrelease); v->ReleaseTable(s); }
+
+// ---- WaveSound (a .wav file read into a DirectSound buffer; replace only, "wavesound") ----
+static Hook H_wsctor, H_wsopen, H_wsdata, H_wsread, H_wsload, H_wsbuf, H_wsfree;
+static void *(__fastcall *o_wsctor)(WaveSound *);
+static void *__fastcall h_wsctor(WaveSound *w) { HEAVY_LOG(H_wsctor); new (w) WaveSound(); return w; }
+static int (THISCALL *o_wsopen)(WaveSound *, const char *);
+static int THISCALL h_wsopen(WaveSound *w, const char *p) { HEAVY_LOG(H_wsopen); return w->OpenWave(p); }
+static int (__fastcall *o_wsdata)(WaveSound *);
+static int __fastcall h_wsdata(WaveSound *w) { HEAVY_LOG(H_wsdata); return w->FindData(); }
+static int (THISCALL *o_wsread)(WaveSound *, int);
+static int THISCALL h_wsread(WaveSound *w, int n) { HEAVY_LOG(H_wsread); return w->ReadData(n); }
+static int (THISCALL *o_wsload)(WaveSound *, const char *);
+static int THISCALL h_wsload(WaveSound *w, const char *p) { HEAVY_LOG(H_wsload); return w->Load(p); }
+static int (__fastcall *o_wsbuf)(WaveSound *);
+static int __fastcall h_wsbuf(WaveSound *w) { HEAVY_LOG(H_wsbuf); return w->CreateBuffer(); }
+static int (__fastcall *o_wsfree)(WaveSound *);
+static int __fastcall h_wsfree(WaveSound *w) { HEAVY_LOG(H_wsfree); return w->Free(); }
+
 // ---- table and entry point ---------------------------------------------------------------
 static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &H_pix1, &H_pix2, &H_desktop, &H_check,
                            &H_quality, &H_planes, &H_frames, &H_viewport, &H_enum, &H_surfaces, &H_shutdown,
@@ -3018,11 +3132,17 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_dgshowjoy, &H_dgshowkeys, &H_dgshowsens, &H_dgcreate, &H_dgvalid,
                            &H_fcctor, &H_fcdtor, &H_fcload, &H_fcdraw, &H_fcfind, &H_fcorigin,
                            &H_ncctor, &H_ncdtor, &H_ncinit, &H_ncload, &H_ncdraw, &H_ncnum,
+                           &H_wsctor, &H_wsopen, &H_wsdata, &H_wsread, &H_wsload, &H_wsbuf, &H_wsfree,
                            &H_pnload, &H_pnctor, &H_pndtor, &H_sbctor, &H_sbdtor, &H_qpctor, &H_qpdtor,
                            &H_sbinit, &H_sbload, &H_sbupd, &H_sbface, &H_sbamo, &H_sbfoodb, &H_sbfood, &H_sbgood, &H_sbround, &H_pngoodie,
                            &H_glctor, &H_gldtor, &H_glinit, &H_glload, &H_gldraw,
                            &H_pnld, &H_pnsq, &H_pnss, &H_pninv, &H_pnupd, &H_pnbg, &H_pnmsg, &H_pnnote, &H_pncomp, &H_rtext, &H_qifree, &H_pnspr, &H_qpload, &H_qpdraw, &H_qidraw,
                            &H_qictor, &H_qidtor, &H_qiinit, &H_qicomb, &H_qikeys,
+                           &H_invctor, &H_invdtor, &H_invadd, &H_invremove, &H_invcount, &H_invitems, &H_invnuts, &H_invkeys, &H_invrelics,
+                           &H_invsave, &H_invload, &H_invtype, &H_invcreate, &H_invrelease,
+                           &H_appwnd,
+                           &H_glpause, &H_gldlg, &H_glidle, &H_glredraw,
+                           &H_gcctor, &H_gcdtor, &H_gcrrender, &H_gcsim, &H_gcendr, &H_gcends, &H_runframe, &H_resetclock,
                            &H_wlctor, &H_wldtor, &H_wlcreate, &H_wldestroy, &H_wlnav, &H_wllights, &H_wlframe,
                            &H_wldecset, &H_wldecal, &H_wldecsize, &H_texdef,
                            &H_rsloadtex, &H_rsfindtex, &H_rstexres, &H_rstexlist, &H_rsdefsprite, &H_rspoptex, &H_rstexlook,
@@ -3055,6 +3175,9 @@ static Hook *g_hooks[] = { &H_ctor, &H_updateRect, &H_getClient, &H_getScreen, &
                            &H_gsspray, &H_gslaunch, &H_gsupdate, &H_gsattack, &H_gsphys,
                            &H_rbinit, &H_rbfree, &H_rbdtor, &H_rbground, &H_rbair, &H_rbhit, &H_rbreset, &H_rbremember, &H_rbsense, &H_rbnear, &H_rbgone,
                            &H_rbpick, &H_rbclear, &H_rbstate, &H_rbstep, &H_rbbehave, &H_rbupdate, &H_rbkind, &H_rboffer, &H_rbrecreset,
+                           &H_acmove, &H_acturn, &H_acstop, &H_acfly, &H_acdie, &H_acregen, &H_bhwander, &H_bhwanderfree, &H_bhpace, &H_bhpacefree,
+                           &H_bhdeath, &H_bhdeathfree, &H_bhfly, &H_bhflyfree, &H_bhchase, &H_bhchasefree, &H_bhspit, &H_bhspitfree, &H_bhflee, &H_bhfleefree,
+                           &H_ctctor, &H_ctdtor, &H_ctread, &H_ctset, &H_cttry, &H_ctrun, &H_ctfindbeh, &H_ctfindstim,
                            &H_cmread, &H_cmview, &H_cmblend, &H_cmpath, &H_cmstop, &H_cminitr, &H_cminitp, &H_cmfreer, &H_cmfreep, &H_cmupr, &H_cmupp,
                            &H_cmevr, &H_cmevp,
                            &H_plctor, &H_pldtor2, &H_plfree2, &H_plinit, &H_plstart, &H_plclr, &H_plclrcr, &H_plcoll, &H_plsouls, &H_plvel, &H_plload2, &H_plsave2,
@@ -3278,6 +3401,13 @@ static void Setup()
     H_ncload = { "NutCounter::Load", 0x42f900, 6, "81ecc8000000", (void *)h_ncload, (void **)&o_ncload, false, 0, 0, "nutc", 0 };
     H_ncdraw = { "NutCounter::Draw", 0x42f9f0, 5, "83ec085356", (void *)h_ncdraw, (void **)&o_ncdraw, false, 0, 0, "nutc", 0 };
     H_ncnum = { "NutCounter::DrawNumber", 0x42fb10, 7, "83ec04894c2400", (void *)h_ncnum, (void **)&o_ncnum, false, 0, 0, "nutc", 0 };
+    H_wsctor = { "WaveSound::WaveSound", 0x448d90, 7, "c74104ffffffff", (void *)h_wsctor, (void **)&o_wsctor, false, 0, 0, "wavesound", 0 };
+    H_wsopen = { "WaveSound::OpenWave", 0x448dc0, 5, "83ec245356", (void *)h_wsopen, (void **)&o_wsopen, false, 0, 0, "wavesound", 0 };
+    H_wsdata = { "WaveSound::FindData", 0x448f70, 5, "53568b412c", (void *)h_wsdata, (void **)&o_wsdata, false, 0, 0, "wavesound", 0 };
+    H_wsread = { "WaveSound::ReadData", 0x448fe0, 7, "83ec488d442400", (void *)h_wsread, (void **)&o_wsread, false, 0, 0, "wavesound", 0 };
+    H_wsload = { "WaveSound::Load", 0x4490f0, 5, "8b44240453", (void *)h_wsload, (void **)&o_wsload, false, 0, 0, "wavesound", 0 };
+    H_wsbuf = { "WaveSound::CreateBuffer", 0x449200, 5, "83ec1033d2", (void *)h_wsbuf, (void **)&o_wsbuf, false, 0, 0, "wavesound", 0 };
+    H_wsfree = { "WaveSound::Free", 0x4493a0, 5, "56578b4150", (void *)h_wsfree, (void **)&o_wsfree, false, 0, 0, "wavesound", 0 };
     H_pnload = { "Panel::LoadBitmaps", 0x42e500, 7, "64a10000000055", (void *)h_pnload, (void **)&o_pnload, false, 0, 0, "panel", 0 };
     H_sbinit = { "StatusBar::Init", 0x42ec10, 7, "64a10000000055", (void *)h_sbinit, (void **)&o_sbinit, false, 0, 0, "status", 0 };
     H_sbload = { "StatusBar::LoadAll", 0x42f2c0, 7, "64a10000000055", (void *)h_sbload, (void **)&o_sbload, false, 0, 0, "status", 0 };
@@ -3309,6 +3439,33 @@ static void Setup()
     H_qpload = { "QuestPanel::Load", 0x42f660, 5, "566a018bf1", (void *)h_qpload, (void **)&o_qpload, false, 0, 0, "quest", 0 };
     H_qpdraw = { "QuestPanel::Draw", 0x42f690, 8, "56578bf98b74240c", (void *)h_qpdraw, (void **)&o_qpdraw, false, 0, 0, "quest", 0 };
     H_qidraw = { "QuestItems::Draw", 0x430440, 7, "83ec108d442404", (void *)h_qidraw, (void **)&o_qidraw, false, 0, 0, "quest", 0 };
+    H_appwnd = { "MainWindowProc", 0x43eea0, 7, "64a10000000055", (void *)h_appwnd, (void **)&o_appwnd, false, 0, 0, "appwindow", 0 };
+    H_glpause = { "SetGamePaused", 0x43ed80, 5, "a1e4754c00", (void *)h_glpause, (void **)&o_glpause, false, 0, 0, "gameloop", 0 };
+    H_gldlg = { "SimpleDialogProc", 0x43edd0, 5, "8b44240853", (void *)h_gldlg, (void **)&o_gldlg, false, 0, 0, "gameloop", 0 };
+    H_glidle = { "GameIdle", 0x43ee10, 5, "a100774c00", (void *)h_glidle, (void **)&o_glidle, false, 0, 0, "gameloop", 0 };
+    H_glredraw = { "RedrawWindowsAbove", 0x43ee60, 6, "53a1dc754c00", (void *)h_glredraw, (void **)&o_glredraw, false, 0, 0, "gameloop", 0 };
+    H_gcctor = { "GameClock::GameClock", 0x41eb90, 5, "566a018bf1", (void *)h_gcctor, (void **)&o_gcctor, false, 0, 0, "clock", 0 };
+    H_gcdtor = { "GameClock::~GameClock", 0x41ebe0, 8, "6a01ff1538f74e00", (void *)h_gcdtor, (void **)&o_gcdtor, false, 0, 0, "clock", 0 };
+    H_gcrrender = { "GameClock::ResetRender", 0x41ec20, 9, "568bf1ff1510f74e00", (void *)h_gcrrender, (void **)&o_gcrrender, false, 0, 0, "clock", 0 };
+    H_gcendr = { "GameClock::EndRender", 0x41ec30, 5, "83ec085657", (void *)h_gcendr, (void **)&o_gcendr, false, 0, 0, "clock", 0 };
+    H_gcsim = { "GameClock::BeginSim", 0x41eca0, 9, "568bf1ff1510f74e00", (void *)h_gcsim, (void **)&o_gcsim, false, 0, 0, "clock", 0 };
+    H_gcends = { "GameClock::EndSim", 0x41ecb0, 5, "83ec085657", (void *)h_gcends, (void **)&o_gcends, false, 0, 0, "clock", 0 };
+    H_runframe = { "RunFrame", 0x4206e0, 9, "83ec0853e8e7ffffff", (void *)h_runframe, (void **)&o_runframe, false, 0, 0, "clock", 5 };
+    H_resetclock = { "ResetClock", 0x420760, 7, "538b0dc0ad4b00", (void *)h_resetclock, (void **)&o_resetclock, false, 0, 0, "clock", 0 };
+    H_invctor = { "Inventory::Inventory", 0x415ef0, 6, "64a100000000", (void *)h_invctor, (void **)&o_invctor, false, 0, 0, "inventory", 0 };
+    H_invdtor = { "Inventory::~Inventory", 0x416030, 6, "64a100000000", (void *)h_invdtor, (void **)&o_invdtor, false, 0, 0, "inventory", 0 };
+    H_invadd = { "Inventory::Add", 0x416110, 6, "64a100000000", (void *)h_invadd, (void **)&o_invadd, false, 0, 0, "inventory", 0 };
+    H_invremove = { "Inventory::Remove", 0x416280, 6, "64a100000000", (void *)h_invremove, (void **)&o_invremove, false, 0, 0, "inventory", 0 };
+    H_invcount = { "Inventory::Count", 0x416300, 6, "64a100000000", (void *)h_invcount, (void **)&o_invcount, false, 0, 0, "inventory", 0 };
+    H_invitems = { "Inventory::Items", 0x4163d0, 6, "64a100000000", (void *)h_invitems, (void **)&o_invitems, false, 0, 0, "inventory", 0 };
+    H_invnuts = { "Inventory::RemoveNuts", 0x4164a0, 6, "64a100000000", (void *)h_invnuts, (void **)&o_invnuts, false, 0, 0, "inventory", 0 };
+    H_invkeys = { "Inventory::KeysFound", 0x416580, 7, "5333d28b442408", (void *)h_invkeys, (void **)&o_invkeys, false, 0, 0, "inventory", 0 };
+    H_invrelics = { "Inventory::AllRelics", 0x4165b0, 5, "33c083c158", (void *)h_invrelics, (void **)&o_invrelics, false, 0, 0, "inventory", 0 };
+    H_invrelease = { "Inventory::ReleaseTable", 0x4165e0, 6, "568b710485f6", (void *)h_invrelease, (void **)&o_invrelease, false, 0, 0, "inventory", 0 };
+    H_invsave = { "Inventory::Save", 0x416600, 6, "64a100000000", (void *)h_invsave, (void **)&o_invsave, false, 0, 0, "inventory", 0 };
+    H_invload = { "Inventory::Load", 0x416820, 6, "64a100000000", (void *)h_invload, (void **)&o_invload, false, 0, 0, "inventory", 0 };
+    H_invtype = { "Inventory::TypeName", 0x416be0, 5, "b844a34b00", (void *)h_invtype, (void **)&o_invtype, false, 0, 0, "inventory", 0 };
+    H_invcreate = { "Inventory::Create", 0x416bf0, 6, "64a100000000", (void *)h_invcreate, (void **)&o_invcreate, false, 0, 0, "inventory", 0 };
     H_qictor = { "QuestItems::QuestItems", 0x42fc30, 7, "33c08901894118", (void *)h_qictor, (void **)&o_qictor, false, 0, 0, "quest", 0 };
     H_qidtor = { "QuestItems::~QuestItems", 0x42fc40, 9, "56578bf9e8f7060000", (void *)h_qidtor, (void **)&o_qidtor, false, 0, 0, "quest", 5 };
     H_qiinit = { "QuestItems::Init", 0x430150, 7, "64a10000000055", (void *)h_qiinit, (void **)&o_qiinit, false, 0, 0, "quest", 0 };
@@ -3593,6 +3750,34 @@ static void Setup()
     H_rbkind = { "SqueezilRoboSoul::GetKind", 0x4053d0, 6, "837908011bc0", (void *)h_rbkind, (void **)&o_rbkind, false, 0, 0, "robosoul", 0 };
     H_rboffer = { "AwarenessRecord::Offer", 0x448370, 5, "538b411455", (void *)h_rboffer, (void **)&o_rboffer, false, 0, 0, "robosoul", 0 };
     H_rbrecreset = { "AwarenessRecord::Reset", 0x4483c0, 7, "c7411401000000", (void *)h_rbrecreset, (void **)&o_rbrecreset, false, 0, 0, "robosoul", 0 };
+    H_acmove = { "MoveActivity::StepGround", 0x401430, 5, "83ec045356", (void *)h_acmove, (void **)&o_acmove, false, 0, 0, "behaviors", 0 };
+    H_acturn = { "TurnTargetActivity::StepGround", 0x401700, 6, "64a100000000", (void *)h_acturn, (void **)&o_acturn, false, 0, 0, "behaviors", 0 };
+    H_acstop = { "StopActivity::StepGround", 0x401be0, 5, "8b44240453", (void *)h_acstop, (void **)&o_acstop, false, 0, 0, "behaviors", 0 };
+    H_acfly = { "FlyTargetActivity::StepAir", 0x401c60, 6, "64a100000000", (void *)h_acfly, (void **)&o_acfly, false, 0, 0, "behaviors", 0 };
+    H_acdie = { "DieActivity::StepGround", 0x401ef0, 8, "56578b81ac020000", (void *)h_acdie, (void **)&o_acdie, false, 0, 0, "behaviors", 0 };
+    H_acregen = { "RegenActivity::StepGround", 0x401fd0, 6, "64a100000000", (void *)h_acregen, (void **)&o_acregen, false, 0, 0, "behaviors", 0 };
+    H_bhwander = { "WanderBehavior::Step", 0x4028a0, 7, "53568bf18b4908", (void *)h_bhwander, (void **)&o_bhwander, false, 0, 0, "behaviors", 0 };
+    H_bhwanderfree = { "WanderBehavior::Destroy", 0x4025b0, 8, "568bf1e818000000", (void *)h_bhwanderfree, (void **)&o_bhwanderfree, false, 0, 0, "behaviors", 4 };
+    H_bhpace = { "PaceBehavior::Step", 0x402cd0, 6, "64a100000000", (void *)h_bhpace, (void **)&o_bhpace, false, 0, 0, "behaviors", 0 };
+    H_bhpacefree = { "PaceBehavior::Destroy", 0x402ba0, 8, "568bf1e818000000", (void *)h_bhpacefree, (void **)&o_bhpacefree, false, 0, 0, "behaviors", 4 };
+    H_bhdeath = { "DeathBehavior::Step", 0x403310, 5, "53568b4110", (void *)h_bhdeath, (void **)&o_bhdeath, false, 0, 0, "behaviors", 0 };
+    H_bhdeathfree = { "DeathBehavior::Destroy", 0x403230, 8, "568bf1e818000000", (void *)h_bhdeathfree, (void **)&o_bhdeathfree, false, 0, 0, "behaviors", 4 };
+    H_bhfly = { "SimpleFlyBehavior::Step", 0x403580, 6, "64a100000000", (void *)h_bhfly, (void **)&o_bhfly, false, 0, 0, "behaviors", 0 };
+    H_bhflyfree = { "SimpleFlyBehavior::Destroy", 0x4034b0, 8, "568bf1e818000000", (void *)h_bhflyfree, (void **)&o_bhflyfree, false, 0, 0, "behaviors", 4 };
+    H_bhchase = { "ChaseBehavior::Step", 0x403930, 6, "64a100000000", (void *)h_bhchase, (void **)&o_bhchase, false, 0, 0, "behaviors", 0 };
+    H_bhchasefree = { "ChaseBehavior::Destroy", 0x403800, 8, "568bf1e818000000", (void *)h_bhchasefree, (void **)&o_bhchasefree, false, 0, 0, "behaviors", 4 };
+    H_bhspit = { "SpitBehavior::Step", 0x403d90, 5, "53568b4108", (void *)h_bhspit, (void **)&o_bhspit, false, 0, 0, "behaviors", 0 };
+    H_bhspitfree = { "SpitBehavior::Destroy", 0x403c90, 8, "568bf1e818000000", (void *)h_bhspitfree, (void **)&o_bhspitfree, false, 0, 0, "behaviors", 4 };
+    H_bhflee = { "FleeBehavior::Step", 0x404120, 6, "64a100000000", (void *)h_bhflee, (void **)&o_bhflee, false, 0, 0, "behaviors", 0 };
+    H_bhfleefree = { "FleeBehavior::Destroy", 0x404020, 8, "568bf1e818000000", (void *)h_bhfleefree, (void **)&o_bhfleefree, false, 0, 0, "behaviors", 4 };
+    H_ctctor = { "CreatureTemplate::CreatureTemplate", 0x4483d0, 6, "64a100000000", (void *)h_ctctor, (void **)&o_ctctor, false, 0, 0, "robotemplate", 0 };
+    H_ctdtor = { "CreatureTemplate::~CreatureTemplate", 0x4484a0, 6, "64a100000000", (void *)h_ctdtor, (void **)&o_ctdtor, false, 0, 0, "robotemplate", 0 };
+    H_ctread = { "CreatureTemplate::Read", 0x448510, 6, "64a100000000", (void *)h_ctread, (void **)&o_ctread, false, 0, 0, "robotemplate", 0 };
+    H_ctset = { "CreatureTemplate::SetFunction", 0x448640, 6, "64a100000000", (void *)h_ctset, (void **)&o_ctset, false, 0, 0, "robotemplate", 0 };
+    H_cttry = { "CreatureTemplate::TrySetState", 0x4486f0, 6, "64a100000000", (void *)h_cttry, (void **)&o_cttry, false, 0, 0, "robotemplate", 0 };
+    H_ctrun = { "CreatureTemplate::RunPending", 0x4487f0, 8, "83ec18568b742420", (void *)h_ctrun, (void **)&o_ctrun, false, 0, 0, "robotemplate", 0 };
+    H_ctfindbeh = { "FindBehaviourMode", 0x448850, 8, "535657bb60ec4900", (void *)h_ctfindbeh, (void **)&o_ctfindbeh, false, 0, 0, "robotemplate", 0 };
+    H_ctfindstim = { "FindStimulus", 0x448890, 8, "535657bb10ec4900", (void *)h_ctfindstim, (void **)&o_ctfindstim, false, 0, 0, "robotemplate", 0 };
     H_cmread = { "ReadCameraSettings", 0x408600, 6, "64a100000000", (void *)h_cmread, (void **)&o_cmread, false, 0, 0, "camerasoul", 0 };
     H_cmview = { "CameraSoul::ComputeView", 0x408850, 6, "64a100000000", (void *)h_cmview, (void **)&o_cmview, false, 0, 0, "camerasoul", 0 };
     H_cmblend = { "CameraSoul::BlendMatrices", 0x409620, 6, "64a100000000", (void *)h_cmblend, (void **)&o_cmblend, false, 0, 0, "camerasoul", 0 };
