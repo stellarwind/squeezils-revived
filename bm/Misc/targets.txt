@@ -6,3 +6,5 @@
 ^\?SqgErrorLog@@         4241b0 sqgerrorlog
 ^\?SetSensitivity2@@     44aab0 setsensitivity2
 ^\?Init@ClientBitmap     478150 clientbitmapinit
+^\?UnloadResources@@     448330 unloadresources
+^\?GetKeyCode@Input      43ace0 getkeycode

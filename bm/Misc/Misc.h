@@ -22,3 +22,14 @@ struct ClientBitmap {
     int f14;   // 0x14
     ClientBitmap *Init();  // 0x478150
 };
+
+void UnloadResources();   // 0x448330
+
+struct KeyObj {
+    virtual int GetKey(void *name);  // slot 0
+};
+struct Input {
+    char pad[4];
+    KeyObj *keys;          // 0x04
+    int GetKeyCode(void *name);  // 0x43ace0
+};
