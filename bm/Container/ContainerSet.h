@@ -58,12 +58,20 @@ public:
     virtual int Contains(const T &v);                  // slot 6
     virtual int IndexOf(const T &v);                   // slot 7
     virtual void RemoveKey(const T &v);                // slot 8
+    ~Set();                                            // 2-vtable complete dtor
 #ifdef SET_INSERT_EXPERIMENT
     int Search(const T &v);                            // inline binary search: where v is or belongs
 #endif
 };
 
 #ifdef CONTAINER_DEFINITIONS
+
+#ifdef SET_DTOR
+template <class T, int ID>
+Set<T, ID>::~Set()
+{
+}
+#endif
 
 #ifdef SET_INSERT_EXPERIMENT
 // Set::Insert (0x462380) is not matched yet (about 270 lines off); it is only compiled where this macro is defined, because
