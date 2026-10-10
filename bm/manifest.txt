@@ -9,6 +9,7 @@ Container/targets_set23.txt Container/SetString23.cpp
 Container/targets_table23.txt Container/TableStringString.cpp
 Container/targets_table50.txt Container/TableIniSection.cpp
 Container/targets_table51.txt Container/TableIniCache.cpp
+Container/gen/targets_SetDtor.txt Container/gen/SetDtor.cpp
 Ini/targets.txt Ini/IniFile.cpp
 IniReader/targets.txt IniReader/IniReader.cpp
 ListenerTable/targets.txt ListenerTable/ListenerTable.cpp
