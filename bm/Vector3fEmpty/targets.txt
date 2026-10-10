@@ -1,0 +1,2 @@
+^\?\?0Vector3fEmpty  457040 v3_empty_ctor
+^\?\?1Vector3fEmpty  401660 v3_empty_dtor

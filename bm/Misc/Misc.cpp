@@ -59,3 +59,21 @@ ClientBitmap *ClientBitmap::Init()
     f14 = 0;
     return this;
 }
+
+extern void FreeSound(void);        // 0x44a1a0
+extern void PopGeometryTable(void); // 0x424c80
+extern void PopTextureTable(void);  // 0x425ab0
+extern int  g_resCount;             // 0x4c7798
+
+void UnloadResources()
+{
+    FreeSound();
+    PopGeometryTable();
+    PopTextureTable();
+    g_resCount--;
+}
+
+int Input::GetKeyCode(void *name)
+{
+    return keys->GetKey(name);
+}
