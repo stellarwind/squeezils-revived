@@ -20,6 +20,7 @@ Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vecto
 NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp
 CompassRuler/targets.txt CompassRuler/CompassRuler.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
+VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
