@@ -14,6 +14,7 @@ struct D3 : TBase { char pad[0x30 - 4]; TMember m; virtual ~D3(); };  // RegionS
 struct D4 : TBase { char pad[0x0c - 4]; TMember m; virtual ~D4(); };  // LocationSimulation
 struct D5 : TBase { char pad[0x40 - 4]; TMember m; virtual ~D5(); };  // MeshProp
 struct D6 : TBase { char pad[0xfc - 4]; TMember m; virtual ~D6(); };  // NavProp
+struct D7 : TBase { virtual ~D7(); };                                 // PlaceSimulation (no member)
 
 D1::~D1() {}
 D2::~D2() {}
@@ -21,3 +22,4 @@ D3::~D3() {}
 D4::~D4() {}
 D5::~D5() {}
 D6::~D6() {}
+D7::~D7() {}

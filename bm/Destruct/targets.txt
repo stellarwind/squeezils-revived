@@ -4,3 +4,4 @@
 ^\?\?1D4  412f20 locationsimulation_destruct auto
 ^\?\?1D5  426580 meshprop_destruct auto
 ^\?\?1D6  429a40 navprop_destruct auto
+^\?\?1D7  4388f0 placesimulation_destruct auto
