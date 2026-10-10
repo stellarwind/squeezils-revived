@@ -6,3 +6,16 @@ void ReadPropFiles1(void *ini)
 {
     ReadPropFiles(ini, (void *)0x4c7208, (void *)0x4c7280);
 }
+
+extern void ReadPropFiles2(void *ini);   // 0x429f60
+extern void ReadPropFiles3(void *ini);   // 0x429f80
+
+int __stdcall WorldReadPropFiles(void *ini, void *other)
+{
+    if (other) {
+        ReadPropFiles3(other);
+        return 1;
+    }
+    ReadPropFiles2(ini);
+    return 1;
+}
