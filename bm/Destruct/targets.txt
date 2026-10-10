@@ -5,3 +5,5 @@
 ^\?\?1D5  426580 meshprop_destruct auto
 ^\?\?1D6  429a40 navprop_destruct auto
 ^\?\?1D7  4388f0 placesimulation_destruct auto
+^\?\?1D8  426a70 spriteprop_destruct auto
+^\?\?1D9  426080 prop_destruct auto
