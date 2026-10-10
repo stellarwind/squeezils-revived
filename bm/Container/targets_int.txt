@@ -1,4 +1,4 @@
-^\?\?0\?\$Array@H@@          45d8d0 int_ctor
+^\?\?0\?\$Array@H@@QAE@XZ      45d8d0 int_ctor
 ^\?\?1\?\$Array@H@@          45d900 int_dtor
 ^\?Insert@\?\$Array@H@@      45d920 int_insert
 ^\?Remove@\?\$Array@H@@      45d990 int_remove
