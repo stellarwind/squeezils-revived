@@ -1,1 +1,2 @@
 ^\?Outcode   47d4f0 outcode
+^\?GetSizeSquared@NavMeshGet  47af20 getsizesquared

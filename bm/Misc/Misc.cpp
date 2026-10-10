@@ -18,3 +18,10 @@ void SetMaxLandingSpeed(float speed)
 {
     *(float *)((char *)g_defaultPhysics + 0x270) = speed;
 }
+
+extern void GameLog(const char *);   // 0x419290
+
+void NumericError()
+{
+    GameLog("number out of range");
+}

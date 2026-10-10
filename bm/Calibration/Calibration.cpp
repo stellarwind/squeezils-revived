@@ -5,3 +5,8 @@ int CalibrationCheck::Check()
 {
     return field2c;
 }
+
+void CalibrationCheck::Start()
+{
+    field2c = 0;
+}
