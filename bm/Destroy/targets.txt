@@ -22,3 +22,16 @@
 ^\?DestroyAndFree@DestroyObj  457360 squeezilbody
 ^\?DestroyAndFree@DestroyObj  412f00 locationsimulation
 ^\?DestroyAndFree@DestroyObj  416010 inventory
+^\?DestroyAndFree@DestroyObj  402320 behavior
+^\?DestroyAndFree@DestroyObj  421bb0 compoundfunction
+^\?DestroyAndFree@DestroyObj  423650 setrobobehaviorfunction
+^\?DestroyAndFree@DestroyObj  430600 tweakfloatfunction
+^\?DestroyAndFree@DestroyObj  440920 setsurfacetypefunction
+^\?DestroyAndFree@DestroyObj  441730 flashgoodiefunction
+^\?DestroyAndFree@DestroyObj  441950 playmoviefunction
+^\?DestroyAndFree@DestroyObj  441c00 fadescreendownfunction
+^\?DestroyAndFree@DestroyObj  443b40 ifonsurfacetypefunction
+^\?DestroyAndFree@DestroyObj  4447e0 executefunction
+^\?DestroyAndFree@DestroyObj  444d10 delayedexecutefunction
+^\?DestroyAndFree@DestroyObj  448950 character
+^\?DestroyAndFree@DestroyObj  46f8a0 createpropfunction
