@@ -1,0 +1,2 @@
+^\?FindBehaviourMode@@  448850 findbehaviourmode
+^\?FindStimulus@@       448890 findstimulus
