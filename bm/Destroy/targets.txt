@@ -18,3 +18,4 @@
 ^\?DestroyAndFree@DestroyObj  41ef60 squeezilplayersoul
 ^\?DestroyAndFree@DestroyObj  457360 squeezilbody
 ^\?DestroyAndFree@DestroyObj  412f00 locationsimulation
+^\?DestroyAndFree@DestroyObj  416010 inventory

@@ -25,3 +25,10 @@ void NumericError()
 {
     GameLog("number out of range");
 }
+
+extern Scene *g_scene;   // 0x4c75e0
+
+void *__stdcall SetDecalSize(void *frame, float width, float height)
+{
+    return g_scene->SetFrameDecalSize(frame, width, height);
+}

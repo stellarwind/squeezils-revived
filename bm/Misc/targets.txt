@@ -2,3 +2,4 @@
 ^\?SetFloorLevel@@       450c00 setfloorlevel
 ^\?SetMaxLandingSpeed@@  450c10 setmaxlandingspeed 16
 ^\?NumericError@@        41eb80 numericerror
+^\?SetDecalSize@@        435c70 setdecalsize
