@@ -7,5 +7,6 @@
 ^\?\?1D7  4388f0 placesimulation_destruct auto
 ^\?\?1D7  40b380 soul_destruct 76
 ^\?\?1D7  40b440 simulationsoul_destruct 76
+^\?\?1D7  450e40 physicalsoul_destruct 76
 ^\?\?1D8  426a70 spriteprop_destruct auto
 ^\?\?1D9  426080 prop_destruct auto
