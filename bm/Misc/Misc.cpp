@@ -32,3 +32,19 @@ void *__stdcall SetDecalSize(void *frame, float width, float height)
 {
     return g_scene->SetFrameDecalSize(frame, width, height);
 }
+
+extern void GameLog2(const char *format, const char *arg);   // any 2-arg log; target masked
+
+void SqgErrorLog(const char *message)
+{
+    GameLog2("sqg: %s", message);
+}
+
+extern float kSens2;                // 0x4c77a0
+extern void ApplySensitivity(float); // 0x45ac40
+
+void SetSensitivity2(float value)
+{
+    kSens2 = value;
+    ApplySensitivity(value);
+}

@@ -1,1 +1,4 @@
+^\?Init@BodyPart@@QAEPAU1@PAX   41d870 init_model
+^\?Init@BodyPart@@QAEPAU1@XZ    41d8a0 init
+^\?Init@BodyPart@@QAEPAU1@PBU1  41d8c0 init_like
 ^\?GetFrame@BodyPart   41d890 getframe
