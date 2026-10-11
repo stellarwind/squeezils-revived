@@ -23,4 +23,9 @@ struct AnimatedBody {
     void  SetTime(float t);      // 0x41e290
     void  SetDirection(int d);   // 0x41e2d0 (only the sign counts)
     void  SetLoopMode(int m);    // 0x41e2f0 (only the sign counts)
+#ifdef ANIMBODY_SLOTS
+    void Attach(int frameName);                   // slot 1  0x41dda0
+    void Detach(void *owner);                     // slot 2  0x41ddf0
+    void ApplyPose();                             // slot 4  0x41df10
+#endif
 };
