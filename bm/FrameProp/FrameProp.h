@@ -6,7 +6,7 @@
 
 // AnimatedBody vtable as seen from the callers: slot 6 SetDirection, slot 7 SetLoopMode, slot 14 SetTime.
 struct AnimatedBody {
-    virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
+    virtual void s0(); virtual void s1(); virtual void Detach(void *owner); virtual void s3();   // slot 2 = Detach (0x41ddf0)
     virtual void s4(); virtual void s5();
     virtual void SetDirection(int d);   // slot 6
     virtual void SetLoopMode(int m);    // slot 7
@@ -34,4 +34,7 @@ struct FrameProp {
     void  SetActor(int index);             // 0x427f10 slot 20
     void  SetHideAtEnd(int hide);          // 0x427f30 slot 21
     int   HasBody();                       // 0x427f40 (not virtual)
+#ifdef FRAMEPROP_HIDE
+    void Hide();                           // slot 5  0x427320
+#endif
 };

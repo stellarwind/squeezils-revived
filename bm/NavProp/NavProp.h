@@ -12,4 +12,7 @@ struct NavProp {
     int GetSurface();   // 0x429690 slot 25
     int GetInstance();  // 0x4296a0 slot 26
     int GetSizeSquared(float *out);  // 0x429da0 slot 11
+#ifdef NAVPROP_HIDE
+    void Hide();        // slot 5  0x429c20
+#endif
 };
