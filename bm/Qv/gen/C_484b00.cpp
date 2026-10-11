@@ -39,13 +39,33 @@ QvNodeC484b00::QvNodeC484b00()
     ((int *)this)[0x1e] = 0x3f000000;
     ((int *)this)[9] = 0;
     ((int *)this)[0x10] = 0;
-    ((int *)this)[10] = local_20;
-    ((int *)this)[0xb] = local_1c;
-    ((int *)this)[0xc] = local_14;
-    ((int *)this)[0x11] = local_20;
-    ((int *)this)[0x12] = local_1c;
-    ((int *)this)[0x13] = local_14;
-    ((int *)this)[0x18] = local_20;
-    ((int *)this)[0x19] = local_1c;
-    ((int *)this)[0x1a] = local_14;
+    if (firstInstance)
+        fieldData->addEnum("VertexOrdering", "UNKNOWN_ORDERING", 0);
+    if (firstInstance)
+        fieldData->addEnum("ShapeType", "UNKNOWN_SHAPE_TYPE", 0);
+    if (firstInstance)
+        fieldData->addEnum("FaceType", "UNKNOWN_FACE_TYPE", 0);
+    if (firstInstance)
+        fieldData->addEnum("VertexOrdering", "CLOCKWISE", 1);
+    if (firstInstance)
+        fieldData->addEnum("ShapeType", "SOLID", 1);
+    if (firstInstance)
+        fieldData->addEnum("FaceType", "CONVEX", 1);
+    if (firstInstance)
+        fieldData->addEnum("VertexOrdering", "COUNTERCLOCKWISE", 2);
+    {
+        int local_20;
+        int local_1c;
+        int *local_14;
+    fieldData->getEnum("VertexOrdering", &local_20, &local_1c, (int *)&local_14);
+    ((int *)this)[10] = (int)local_20;
+    ((int *)this)[0xb] = (int)local_1c;
+    ((int *)this)[0xc] = (int)local_14;
+    ((int *)this)[0x11] = (int)local_20;
+    ((int *)this)[0x12] = (int)local_1c;
+    ((int *)this)[0x13] = (int)local_14;
+    ((int *)this)[0x18] = (int)local_20;
+    ((int *)this)[0x19] = (int)local_1c;
+    ((int *)this)[0x1a] = (int)local_14;
+    }
 }
