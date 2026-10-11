@@ -2,3 +2,4 @@
 ^?Execute@WanderBehavior  4028a0 wander_exec 144
 ^?Execute@SimpleFlyBehavior  403580 simplefly_exec cc
 ^?Execute@ChaseBehavior  403930 chase_exec cc
+^?Execute@FleeBehavior  404120 flee_exec cc
