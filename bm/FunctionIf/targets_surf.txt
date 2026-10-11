@@ -10,3 +10,4 @@
 ^\?Name@IfOnOrAboveSurfaceTypeFunction  446080 above_name
 ^\?Make@IfOnOrAboveSurfaceTypeFunction  446090 above_make
 ^\?\?_GIfOnOrAboveSurfaceTypeFunction  446140 above_sdd 98
+^\?Test@IfOnOrAboveSurfaceTypeFunction  443d90 above_test 48
