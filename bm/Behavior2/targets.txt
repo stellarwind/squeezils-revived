@@ -3,3 +3,4 @@
 ^?Execute@SimpleFlyBehavior  403580 simplefly_exec cc
 ^?Execute@ChaseBehavior  403930 chase_exec cc
 ^?Execute@FleeBehavior  404120 flee_exec cc
+^?Execute@DeathBehavior  403310 death_exec 156
