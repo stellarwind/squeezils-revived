@@ -7,6 +7,7 @@ public:
     StringFunctionArgument();
     virtual void Print();                               // 0x421a70
     String text;                                        // 0x0c
+    String Get(int context);                            // 0x421a90 (by value)
 };
 StringFunctionArgument *ParseStringArgument(ArgList *list);   // 0x421940 (cdecl)
 
