@@ -4,3 +4,5 @@
 ^?Close@PlaceSimulation  439a00 ps_close cc
 ^?Close@LocationSimulation  413060 ls_close 80
 ^?Save@LandSimulation  41e8d0 land_wire cc
+^?Rewind@LocationSimulation  413f80 ls_rewind cc
+^?Load@LandSimulation  41e910 land_load cc
