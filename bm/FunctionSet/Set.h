@@ -30,6 +30,7 @@ public:
 class AddToFunction : public Function {
 public:
     AddToFunction() { value = 0; }
+    ~AddToFunction() { delete value; }
     virtual int Execute(ScriptCall *args, int extra);    // 0x444590
     virtual Function *Create(ArgList *list);             // 0x444380
     virtual void Print();                                // 0x444550
