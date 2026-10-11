@@ -17,3 +17,4 @@
 ^?Clone@CycleProp  428bd0 cyc_clone cc
 ^\?Show@CycleProp  428d80 cyc_show cc
 ^\?Show@LODProp  4283f0 lod_show 285
+^\?Show@FrameProp  4271f0 frame_show 285
