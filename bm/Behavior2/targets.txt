@@ -5,3 +5,4 @@
 ^?Execute@FleeBehavior  404120 flee_exec cc
 ^?Execute@DeathBehavior  403310 death_exec 156
 ^?Execute@PaceBehavior  402cd0 pace_exec cc
+^?Execute@SpitBehavior  403d90 spit_exec 320
