@@ -1,0 +1,4 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^?QvIsNameChar  4825d0 cc_namechar
+^?QvIsNameStart  482580 cc_namestart
+^?QvIsNameStart  482620 cc_namestart2
