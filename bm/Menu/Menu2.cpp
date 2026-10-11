@@ -1,7 +1,10 @@
+// 3 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
 // Menu helpers, SQZ.EXE 0x406670-0x406a60: help topics, the dialog launchers, HitTest.
 #include <windows.h>
 // one spare declaration (symbol count, see padscan.sh)
-void PadDecl1();
 #include <ctype.h>
 #include <string.h>
 

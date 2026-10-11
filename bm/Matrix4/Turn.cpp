@@ -1,3 +1,12 @@
+// 8 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
 // Matrix4 rotation constructors (0x47dcd0 / 0x47dd20 / 0x47dd70), contiguous in the original.
 #include <math.h>
 #include "Matrix4.h"

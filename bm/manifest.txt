@@ -92,7 +92,7 @@ SoulDtor/targets.txt SoulDtor/SoulDtor.cpp
 FnDtor/targets.txt FnDtor/FnDtor.cpp FnDtor/FnDtorEwp.cpp
 FnDtorDtor/targets.txt FnDtorDtor/FnDtorDtor.cpp
 Image/targets.txt Image/Image.cpp
-Souls2/targets.txt Souls2/CameraStop.cpp Souls2/RoboPick.cpp Souls2/SetState.cpp Souls2/StepGround.cpp Souls2/NewCreature.cpp Souls2/DestroyCreatures.cpp Souls2/AngleStep.cpp Souls2/SpeedStep.cpp Souls2/JumpPressed.cpp Souls2/Hit.cpp Souls2/Small.cpp Souls2/Die.cpp Souls2/Handlers.cpp Souls2/Misc2.cpp Souls2/Misc3.cpp Souls2/Misc4.cpp
+Souls2/targets.txt Souls2/CameraStop.cpp Souls2/RoboPick.cpp Souls2/SetState.cpp Souls2/StepGround.cpp Souls2/NewCreature.cpp Souls2/DestroyCreatures.cpp Souls2/AngleStep.cpp Souls2/SpeedStep.cpp Souls2/JumpPressed.cpp Souls2/Hit.cpp Souls2/Small.cpp Souls2/Die.cpp Souls2/Handlers.cpp Souls2/Misc2.cpp Souls2/Misc2a.cpp Souls2/Misc2b.cpp Souls2/Misc3.cpp Souls2/Misc4.cpp
 Sky/targets.txt Sky/SkyMath.cpp
 Renderer2/targets.txt Renderer2/Screen.cpp Renderer2/Quality.cpp Renderer2/Setup.cpp Renderer2/Position.cpp Renderer2/Misc.cpp Renderer2/DisplayMode.cpp Renderer2/Enter.cpp Renderer2/Palette.cpp Renderer2/LoadPal.cpp Renderer2/Fade.cpp Renderer2/PutText.cpp Renderer2/Enum.cpp Renderer2/Ctor.cpp Renderer2/Shutdown.cpp Renderer2/Init.cpp Renderer2/Surfaces.cpp
 Bitmap2/targets.txt Bitmap2/Bitmap2.cpp Bitmap2/Blit.cpp Bitmap2/Load.cpp
