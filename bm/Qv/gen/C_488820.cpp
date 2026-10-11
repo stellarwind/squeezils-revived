@@ -40,7 +40,17 @@ QvNodeC488820::QvNodeC488820()
     ((int *)this)[0xf] = 0x3f800000;
     ((int *)this)[0x13] = 0;
     *(int *)((int *)this)[0x1c] = 0;
-    ((int *)this)[0x14] = local_20;
-    ((int *)this)[0x15] = local_1c;
-    ((int *)this)[0x16] = local_18;
+    if (firstInstance)
+        fieldData->addEnum("Justification", "CENTER", 1);
+    if (firstInstance)
+        fieldData->addEnum("Justification", "RIGHT", 2);
+    {
+        int local_20;
+        int local_1c;
+        int *local_18;
+    fieldData->getEnum("Justification", &local_20, &local_1c, (int *)&local_18);
+    ((int *)this)[0x14] = (int)local_20;
+    ((int *)this)[0x15] = (int)local_1c;
+    ((int *)this)[0x16] = (int)local_18;
+    }
 }

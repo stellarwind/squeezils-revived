@@ -14,6 +14,8 @@ class QvNode;
 struct QvFieldData {                  // 0x18 bytes
     QvPList fields; QvPList names;
     void addField(QvNode *node, const char *name, QvField *f);   // 0x480720
+    void addEnum(const char *type, const char *name, int value);         // 0x480840
+    void getEnum(const char *type, int *a, int *b, int *c);             // 0x480b50
 };
 
 class QvNode {                        // 0x18 bytes, vtbl 0x4a11d8
