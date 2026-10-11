@@ -1,0 +1,7 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^\?\?0QvFieldA@@  489570 fa_ctor
+^\?\?1QvFieldA@@  489600 fa_dtor auto
+^\?\?_GQvFieldA@@ 4895e0 fa_sdd
+^\?\?0QvFieldB@@  489650 fb_ctor
+^\?\?1QvFieldB@@  4896e0 fb_dtor auto
+^\?\?_GQvFieldB@@ 4896c0 fb_sdd
