@@ -11,3 +11,7 @@
 ^\?FindChild@FindFrame  427f60 fp_find cc
 ^\?Place@PropMade  425fa0 pm_place 179
 ^\?Clone@MeshProp  426470 mesh_clone cc
+^\?Clone@FrameProp  426fe0 frame_clone cc
+^\?Clone@LODProp  4282d0 lod_clone cc
+^?Clone@NavProp  4298f0 nav_clone cc
+^?Clone@CycleProp  428bd0 cyc_clone cc
