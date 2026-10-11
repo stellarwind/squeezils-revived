@@ -5,6 +5,7 @@
 
 class Vector3fFunctionArgument : public FunctionArgument {   // vtable 0x49da94
 public:
+    Vector3f Get(int context);                           // 0x421800 (by value)
     Vector3fFunctionArgument();
     virtual void Print();                                // 0x4217c0
     Vector3f value;                                      // 0x0c
