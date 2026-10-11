@@ -1,3 +1,5 @@
+// 1 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
 // ChangeRoboResponseFunction (SQZ.EXE 0x423860-0x423a10).
 #include "FunctionRobo/Robo.h"
 

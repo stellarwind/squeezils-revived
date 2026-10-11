@@ -15,3 +15,6 @@
 ^\?Create@AnimateCameraPathOffFunction  44e610 AnimateCameraPathOff_create
 ^\?Print@AnimateCameraPathOffFunction  44e760 AnimateCameraPathOff_print
 ^\?\?_GAnimateCameraPathOffFunction  44e6c0 AnimateCameraPathOff_sdd 150
+^\?Execute@ClearTimerMessageFunction  440810 ClearTimerMessage_exec cc
+^\?Execute@FadeScreenDownFunction  441cf0 FadeScreenDown_exec cc
+^\?Execute@AnimateCameraPathOffFunction  44e790 CamOff_exec cc
