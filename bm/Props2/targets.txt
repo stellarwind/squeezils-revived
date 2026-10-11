@@ -15,3 +15,4 @@
 ^\?Clone@LODProp  4282d0 lod_clone cc
 ^?Clone@NavProp  4298f0 nav_clone cc
 ^?Clone@CycleProp  428bd0 cyc_clone cc
+^\?Show@CycleProp  428d80 cyc_show cc
