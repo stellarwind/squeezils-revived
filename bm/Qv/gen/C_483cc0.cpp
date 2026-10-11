@@ -35,11 +35,11 @@ QvNodeC483cc0::QvNodeC483cc0()
     if (firstInstance)
         fieldData->addField(this, "center", &m3);
     m3.SetOwner(this);
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[14] = 0x0;
-    ((int *)this)[19] = 0x3f800000;
-    ((int *)this)[18] = 0x3f800000;
-    ((int *)this)[24] = 0x0;
-    ((int *)this)[23] = 0x0;
+    ((int *)this)[10] = 0;
+    ((int *)this)[9] = 0;
+    ((int *)this)[0xe] = 0;
+    ((int *)this)[0x13] = 0x3f800000;
+    ((int *)this)[0x12] = 0x3f800000;
+    ((int *)this)[0x18] = 0;
+    ((int *)this)[0x17] = 0;
 }

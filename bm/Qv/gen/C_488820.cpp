@@ -37,10 +37,10 @@ QvNodeC488820::QvNodeC488820()
     if (firstInstance)
         fieldData->addField(this, "width", &m3);
     m3.SetOwner(this);
-    ((int *)this)[15] = 0x3f800000;
-    ((int *)this)[19] = 0x0;
-    ((int *)this)[28] = 0x0;
-    ((int *)this)[20] = 0x0;
-    ((int *)this)[21] = 0x0;
-    ((int *)this)[22] = 0x0;
+    ((int *)this)[0xf] = 0x3f800000;
+    ((int *)this)[0x13] = 0;
+    *(int *)((int *)this)[0x1c] = 0;
+    ((int *)this)[0x14] = local_20;
+    ((int *)this)[0x15] = local_1c;
+    ((int *)this)[0x16] = local_18;
 }

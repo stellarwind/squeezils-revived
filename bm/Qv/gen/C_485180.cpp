@@ -22,7 +22,7 @@ QvNodeC485180::QvNodeC485180()
     if (firstInstance)
         fieldData->addField(this, "scaleFactor", &m0);
     m0.SetOwner(this);
-    ((int *)this)[11] = 0x3f800000;
+    ((int *)this)[0xb] = 0x3f800000;
     ((int *)this)[10] = 0x3f800000;
     ((int *)this)[9] = 0x3f800000;
 }

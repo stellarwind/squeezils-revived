@@ -35,17 +35,17 @@ QvNodeC484b00::QvNodeC484b00()
     if (firstInstance)
         fieldData->addField(this, "creaseAngle", &m3);
     m3.SetOwner(this);
-    ((int *)this)[23] = 0x1;
-    ((int *)this)[30] = 0x3f000000;
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[16] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[12] = 0x0;
-    ((int *)this)[17] = 0x0;
-    ((int *)this)[18] = 0x0;
-    ((int *)this)[19] = 0x0;
-    ((int *)this)[24] = 0x0;
-    ((int *)this)[25] = 0x0;
-    ((int *)this)[26] = 0x0;
+    ((int *)this)[0x17] = 1;
+    ((int *)this)[0x1e] = 0x3f000000;
+    ((int *)this)[9] = 0;
+    ((int *)this)[0x10] = 0;
+    ((int *)this)[10] = local_20;
+    ((int *)this)[0xb] = local_1c;
+    ((int *)this)[0xc] = local_14;
+    ((int *)this)[0x11] = local_20;
+    ((int *)this)[0x12] = local_1c;
+    ((int *)this)[0x13] = local_14;
+    ((int *)this)[0x18] = local_20;
+    ((int *)this)[0x19] = local_1c;
+    ((int *)this)[0x1a] = local_14;
 }

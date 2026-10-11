@@ -38,4 +38,7 @@ QvNodeC488330::QvNodeC488330()
     if (firstInstance)
         fieldData->addField(this, "point", &m0);
     m0.SetOwner(this);
+    *(int *)(((int *)this)[0xb] + 8) = 0;
+    *(int *)(((int *)this)[0xb] + 4) = *(int *)(((int *)this)[0xb] + 8);
+    *(int *)((int *)this)[0xb] = ((int *)((int *)this)[0xb])[1];
 }

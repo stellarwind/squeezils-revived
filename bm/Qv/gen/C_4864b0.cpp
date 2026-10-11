@@ -38,4 +38,5 @@ QvNodeC4864b0::QvNodeC4864b0()
     if (firstInstance)
         fieldData->addField(this, "matrix", &m0);
     m0.SetOwner(this);
+    param_1[iVar1 + 9] = uVar2;
 }

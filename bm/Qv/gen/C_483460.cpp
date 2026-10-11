@@ -22,7 +22,7 @@ QvNodeC483460::QvNodeC483460()
     if (firstInstance)
         fieldData->addField(this, "translation", &m0);
     m0.SetOwner(this);
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[9] = 0x0;
+    ((int *)this)[0xb] = 0;
+    ((int *)this)[10] = 0;
+    ((int *)this)[9] = 0;
 }

@@ -34,8 +34,8 @@ QvNodeC487440::QvNodeC487440()
     if (firstInstance)
         fieldData->addField(this, "textureCoordIndex", &m3);
     m3.SetOwner(this);
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[17] = 0xffffffff;
-    ((int *)this)[23] = 0xffffffff;
-    ((int *)this)[29] = 0xffffffff;
+    *(int *)((int *)this)[0xb] = 0;
+    *(int *)((int *)this)[0x11] = 0xffffffff;
+    *(int *)((int *)this)[0x17] = 0xffffffff;
+    *(int *)((int *)this)[0x1d] = 0xffffffff;
 }

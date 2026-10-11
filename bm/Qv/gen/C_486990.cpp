@@ -43,6 +43,18 @@ QvNodeC486990::QvNodeC486990()
     if (firstInstance)
         fieldData->addField(this, "transparency", &m5);
     m5.SetOwner(this);
-    ((int *)this)[35] = 0x3e4ccccd;
-    ((int *)this)[41] = 0x0;
+    *(int *)(((int *)this)[0xb] + 8) = 0x3e4ccccd;
+    *(int *)(((int *)this)[0xb] + 4) = *(int *)(((int *)this)[0xb] + 8);
+    *(int *)((int *)this)[0xb] = ((int *)((int *)this)[0xb])[1];
+    *(int *)(((int *)this)[0x11] + 8) = 0x3e4ccccd;
+    *(int *)(((int *)this)[0x11] + 4) = *(int *)(((int *)this)[0x11] + 8);
+    *(int *)((int *)this)[0x11] = ((int *)((int *)this)[0x11])[1];
+    *(int *)(((int *)this)[0x17] + 8) = 0;
+    *(int *)(((int *)this)[0x17] + 4) = *(int *)(((int *)this)[0x17] + 8);
+    *(int *)((int *)this)[0x17] = ((int *)((int *)this)[0x17])[1];
+    *(int *)(((int *)this)[0x1d] + 8) = 0;
+    *(int *)(((int *)this)[0x1d] + 4) = *(int *)(((int *)this)[0x1d] + 8);
+    *(int *)((int *)this)[0x1d] = ((int *)((int *)this)[0x1d])[1];
+    *(int *)((int *)this)[0x23] = 0x3e4ccccd;
+    *(int *)((int *)this)[0x29] = 0;
 }

@@ -36,14 +36,14 @@ QvNodeC483f90::QvNodeC483f90()
     if (firstInstance)
         fieldData->addField(this, "wrapT", &m3);
     m3.SetOwner(this);
-    ((int *)this)[23] = 0x0;
-    ((int *)this)[24] = 0x0;
-    ((int *)this)[28] = 0x0;
-    ((int *)this)[35] = 0x0;
-    ((int *)this)[29] = 0x0;
-    ((int *)this)[30] = 0x0;
-    ((int *)this)[31] = 0x0;
-    ((int *)this)[36] = 0x0;
-    ((int *)this)[37] = 0x0;
-    ((int *)this)[38] = 0x0;
+    ((int *)this)[0x17] = 0;
+    ((int *)this)[0x18] = 0;
+    ((int *)this)[0x1c] = 0;
+    ((int *)this)[0x23] = 0;
+    ((int *)this)[0x1d] = local_20;
+    ((int *)this)[0x1e] = local_1c;
+    ((int *)this)[0x1f] = local_14;
+    ((int *)this)[0x24] = local_20;
+    ((int *)this)[0x25] = local_1c;
+    ((int *)this)[0x26] = local_14;
 }

@@ -36,13 +36,13 @@ QvNodeC485a20::QvNodeC485a20()
     if (firstInstance)
         fieldData->addField(this, "heightAngle", &m3);
     m3.SetOwner(this);
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[11] = 0x3f800000;
-    ((int *)this)[15] = 0x0;
-    ((int *)this)[16] = 0x0;
-    ((int *)this)[17] = 0x3f800000;
-    ((int *)this)[22] = 0x40a00000;
-    ((int *)this)[18] = 0x0;
-    ((int *)this)[26] = 0x3f490fdb;
+    ((int *)this)[9] = 0;
+    ((int *)this)[10] = 0;
+    ((int *)this)[0xb] = 0x3f800000;
+    ((int *)this)[0xf] = 0;
+    ((int *)this)[0x10] = 0;
+    ((int *)this)[0x11] = 0x3f800000;
+    ((int *)this)[0x16] = 0x40a00000;
+    ((int *)this)[0x12] = 0;
+    ((int *)this)[0x1a] = 0x3f490fdb;
 }
