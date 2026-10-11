@@ -7,3 +7,4 @@
 ^\?Execute@AddToFunction  444590 add_exec 144
 ^\?Print@AddToFunction  444550 add_print
 ^\?Name@AddToFunction  444480 add_name 6
+^\?\?_GAddToFunction  444490 add_sdd cc
