@@ -127,7 +127,7 @@ FunctionAmbient/targets.txt FunctionAmbient/Ambient.cpp String/String.cpp
 FunctionMisc/targets_noarg2.txt FunctionMisc/Noarg2.cpp String/String.cpp
 FunctionCompound/targets.txt FunctionCompound/Compound.cpp FunctionCompound/CompoundPrint.cpp String/String.cpp
 FunctionWithProp/targets.txt FunctionWithProp/WithProp.cpp String/String.cpp
-FunctionProp/targets_cls.txt FunctionProp/PropClasses.cpp FunctionProp/PropPos.cpp FunctionProp/Prop.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
+FunctionProp/targets_cls.txt FunctionProp/PropClasses.cpp FunctionProp/PropPos.cpp FunctionProp/Prop.cpp String/String.cpp Vector3f/Vector3fCtor.cpp FunctionProp/PropApplyT.cpp FunctionProp/PropApplyX.cpp FunctionProp/PropAt.cpp FunctionProp/PropAtExtra.cpp
 FunctionCamPath/targets.txt FunctionCamPath/CamPath.cpp FunctionCamPath/CamExec.cpp String/String.cpp
 FunctionRobo/targets.txt FunctionRobo/Robo.cpp String/String.cpp
 FunctionTweak/targets_exec.txt FunctionTweak/exec/Exec_Accelerate.cpp FunctionTweak/exec/Exec_BounceBackwards.cpp FunctionTweak/exec/Exec_ResetClaws.cpp FunctionTweak/exec/Exec_ResetFriction.cpp FunctionTweak/exec/Exec_ResetHop.cpp FunctionTweak/exec/Exec_ResetJump.cpp FunctionTweak/exec/Exec_ResetJumpable.cpp FunctionTweak/exec/Exec_ResetWalkSpeeds.cpp FunctionTweak/exec/Exec_SetClaws.cpp FunctionTweak/exec/Exec_SetClawsZero.cpp FunctionTweak/exec/Exec_SetFriction.cpp FunctionTweak/exec/Exec_SetHop.cpp FunctionTweak/exec/Exec_SetJump.cpp FunctionTweak/exec/Exec_SetJumpable.cpp FunctionTweak/exec/Exec_SetMotionSpeed.cpp FunctionTweak/exec/Exec_SetWalkSpeeds.cpp  String/String.cpp Vector3f/Vector3fCtor.cpp
