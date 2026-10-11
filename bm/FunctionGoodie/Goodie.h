@@ -11,6 +11,7 @@
 struct GoodieMatrix {                                    // 64 bytes: right, up, forward, position rows (0x440fa0)
     float m[16];
     GoodieMatrix() {}
+    GoodieMatrix(const GoodieMatrix &o);                 // out of line (0x4099e0)
     ~GoodieMatrix();                                     // empty, out of line (0x402310)
     void Set(const Vector3f &r, const Vector3f &u, const Vector3f &f, const Vector3f &p)
     {
@@ -68,6 +69,9 @@ public:
     virtual void ParseExtra(ArgList *list);              // 0x441220
     virtual void DumpExtra();                            // 0x441200
     virtual CreateGoodieAtPositionFunction *Make();      // 0x4412a0
+#ifdef GOODIE_EXEC
+    virtual void Spawn(int extra, void *level, const char *name, GoodieMatrix *m);   // slot 8: 0x441550
+#endif
     Vector3fFunctionArgument *velocity;                  // 0x10
     FloatFunctionArgument *speed;                        // 0x14
 };
