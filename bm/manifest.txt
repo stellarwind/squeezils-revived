@@ -111,7 +111,7 @@ FunctionIf/targets_ifs.txt FunctionIf/IfClasses.cpp FunctionIf/FunctionIf.cpp St
 FunctionIf/targets_surf.txt FunctionIf/IfSurface.cpp FunctionIf/FunctionIf.cpp String/String.cpp
 FunctionIf/targets_var.txt FunctionIf/IfVar.cpp FunctionIf/IfVarNZ.cpp FunctionIf/FunctionIf.cpp String/String.cpp
 FunctionMisc/targets.txt FunctionMisc/Misc.cpp String/String.cpp
-FunctionMisc/targets_misc.txt FunctionMisc/MiscClasses.cpp FunctionMisc/ExecClear.cpp FunctionMisc/ExecFade.cpp FunctionMisc/ExecCamOff.cpp String/String.cpp
+FunctionMisc/targets_misc.txt FunctionMisc/MiscClasses.cpp FunctionMisc/ExecClear.cpp FunctionMisc/ExecFade.cpp FunctionMisc/ExecCamOff.cpp FunctionMisc/ExecGoodie.cpp String/String.cpp
 FunctionCycle/targets.txt FunctionCycle/Cycle.cpp FunctionCycle/CycleDtor.cpp String/String.cpp
 FunctionCycle/targets_cycle.txt FunctionCycle/CycleClasses.cpp FunctionCycle/Cycle.cpp String/String.cpp
 FunctionMessage/targets.txt FunctionMessage/Message.cpp String/String.cpp
