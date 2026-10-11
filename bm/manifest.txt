@@ -120,7 +120,7 @@ FunctionMovie/targets.txt FunctionMovie/Movie.cpp String/String.cpp
 FunctionFlash/targets.txt FunctionFlash/Flash.cpp FunctionFlash/FlashCreate.cpp String/String.cpp
 FunctionExec/targets.txt FunctionExec/Exec.cpp String/String.cpp
 FunctionExec/targets_delayed.txt FunctionExec/Delayed.cpp FunctionExec/RenderDelayedCreate.cpp FunctionExec/DelayedCreate.cpp String/String.cpp
-FunctionSurf/targets.txt FunctionSurf/Surf.cpp FunctionSurf/SurfCreate.cpp String/String.cpp
+FunctionSurf/targets.txt FunctionSurf/Surf.cpp FunctionSurf/SurfCreate.cpp String/String.cpp FunctionSurf/SurfExec.cpp
 FunctionSpit/targets.txt FunctionSpit/Spit.cpp String/String.cpp
 FunctionStr/targets.txt FunctionStr/Str.cpp String/String.cpp
 FunctionAmbient/targets.txt FunctionAmbient/Ambient.cpp String/String.cpp
