@@ -50,7 +50,7 @@ PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
 FrameProp/targets.txt FrameProp/FrameProp.cpp
 Misc/targets.txt Misc/Misc.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
-SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp
+SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
@@ -249,3 +249,7 @@ Qv/targets_fd2.txt Qv/FieldData.cpp
 Qv/targets_et.txt Qv/EnumType.cpp
 Qv/targets_skip.txt Qv/Skip.cpp
 Qv/targets_fdd.txt Qv/FieldDataDtor.cpp
+Qv/targets_in.txt Qv/InputGet.cpp
+Qv/targets_in2.txt Qv/Input.cpp
+Qv/targets_in3.txt Qv/Input3.cpp
+Qv/targets_in4.txt Qv/Input4.cpp
