@@ -253,3 +253,7 @@ Qv/targets_in.txt Qv/InputGet.cpp
 Qv/targets_in2.txt Qv/Input.cpp
 Qv/targets_in3.txt Qv/Input3.cpp
 Qv/targets_in4.txt Qv/Input4.cpp
+Qv/targets_in5.txt Qv/Input5.cpp
+Qv/targets_in6.txt Qv/Input6.cpp
+Qv/targets_in7.txt Qv/Input7.cpp
+Qv/targets_cc.txt Qv/CharClass.cpp

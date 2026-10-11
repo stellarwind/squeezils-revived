@@ -1,0 +1,3 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^?AtEnd@QvIn6  4815d0 in6_atend
+^?ReadHeader@QvIn6  481670 in6_header
