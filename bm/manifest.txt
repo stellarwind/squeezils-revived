@@ -135,4 +135,4 @@ FunctionStr/targets_exec.txt FunctionStr/ShowProp.cpp FunctionStr/HideProp.cpp F
 FunctionIf/targets_tests.txt FunctionIf/IfTests.cpp FunctionIf/IfTests2.cpp FunctionIf/IfTests3.cpp String/String.cpp
 FunctionProp/targets.txt FunctionProp/Prop.cpp FunctionProp/PropDtor.cpp FunctionProp/PropPrint.cpp FunctionProp/PropCreate.cpp String/String.cpp Vector3f/Vector3fCtor.cpp FunctionProp/PropExec.cpp
 FunctionGoodie/targets.txt FunctionGoodie/Goodie.cpp String/String.cpp Vector3f/Vector3fCtor.cpp FunctionGoodie/GoodieExec.cpp FunctionGoodie/GoodieSpawn.cpp
-Behavior2/targets.txt Behavior2/Die.cpp Behavior2/Wander.cpp Behavior2/SimpleFly.cpp Behavior2/Chase.cpp Behavior2/Flee.cpp Behavior2/Death.cpp Behavior2/Pace.cpp
+Behavior2/targets.txt Behavior2/Die.cpp Behavior2/Wander.cpp Behavior2/SimpleFly.cpp Behavior2/Chase.cpp Behavior2/Flee.cpp Behavior2/Death.cpp Behavior2/Pace.cpp Behavior2/Spit.cpp
