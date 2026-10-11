@@ -59,6 +59,9 @@ public:
     virtual int IndexOf(const T &v);                   // slot 7
     virtual void RemoveKey(const T &v);                // slot 8
     ~Set();                                            // 2-vtable complete dtor
+#ifdef SET_CREATE
+    virtual BufferObject *Create();                    // BufferObject slot 1: a fresh empty Set (Container2/PrimBuf.h)
+#endif
 #ifdef SET_INSERT_EXPERIMENT
     int Search(const T &v);                            // inline binary search: where v is or belongs
 #endif

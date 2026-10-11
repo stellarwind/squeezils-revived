@@ -1,0 +1,20 @@
+# unit  number of spare declarations (padscan.sh result, tools/genPrimBuf.pl reads this file)
+PA_f2 1
+PA_f25 1
+PA_i1 14
+PA_i10 14
+PA_i20 21
+PA_i24 1
+PA_i5 1
+PA_i9 1
+PA_s0 7
+PA_s11 7
+PA_s13 14
+PA_s21 7
+PA_s22 23
+PA_s23 23
+PA_s3 18
+PA_s50 7
+PA_s51 23
+PA_s6 18
+PA_v4 3

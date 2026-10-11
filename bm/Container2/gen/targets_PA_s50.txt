@@ -1,0 +1,4 @@
+^\?TypeName@\?\$PrimitiveArray@   46d410 tn
+^\?Create@\?\$PrimitiveArray@   46d4a0 create cc
+^\?Write@\?\$PrimitiveArray@   46d600 write
+^\?Read@\?\$PrimitiveArray@   46d5a0 read
