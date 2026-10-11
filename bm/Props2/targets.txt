@@ -8,3 +8,4 @@
 ^\?Hide@FrameProp  427320 fp_hide cc
 ^\?Hide@NavProp  429c20 np_hide cc
 ^\?CurrentPose@XFrame  427e90 fp_pose cc
+^\?FindChild@FindFrame  427f60 fp_find cc
