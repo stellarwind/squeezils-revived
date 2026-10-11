@@ -5,3 +5,15 @@
 ^\?IndexOf@\?\$Table@VString@@PAVIniFileSection  46deb0 indexof
 ^\?RemoveAt@\?\$Table@VString@@PAVIniFileSection  46ded0 removeat
 ^\?RemoveKey@\?\$Table@VString@@PAVIniFileSection  46df00 removekey
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  4603c0 insert_d4603c0
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  461130 insert_d461130
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  465240 insert_d465240
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  466110 insert_d466110
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  467950 insert_d467950
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  467d90 insert_d467d90
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  468530 insert_d468530
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  4689b0 insert_d4689b0
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  468df0 insert_d468df0
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  469970 insert_d469970
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  46a110 insert_d46a110
+^\?Insert@\?\$Table@VString@@PAVIniFileSection  46c330 insert_d46c330

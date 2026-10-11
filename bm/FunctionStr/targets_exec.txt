@@ -1,0 +1,4 @@
+^\?Execute@ShowPropFunction  470070 showprop_exec cc
+^\?Execute@HidePropFunction  4702c0 hideprop_exec cc
+^\?Execute@PlayAudioEffectFunction  43a130 playaudio_exec cc
+^\?Execute@TimerTimeMessageFunction  440520 ttm_exec 112

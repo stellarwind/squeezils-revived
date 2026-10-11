@@ -27,6 +27,11 @@ struct Vector3f {
     Vector3f(float ax, float ay, float az) : x(ax), y(ay), z(az) {}   // inlined by the operators
 #endif
     ~Vector3f() {}
+#ifdef V3_COPYCTOR_OUTOFLINE
+    Vector3f(const Vector3f &o);                         // out-of-line copy constructor (0x4183c0 doubles as the copy)
+#elif defined(V3_COPYCTOR)
+    Vector3f(const Vector3f &o) : x(o.x), y(o.y), z(o.z) {}   // explicit inline copy (the Tweak commands copy a direction this way)
+#endif
 
 #ifdef V3_ASSIGN_OUTOFLINE
     Vector3f &operator=(const Vector3f &o);       // out-of-line, 0x4183c0 (vector copy)

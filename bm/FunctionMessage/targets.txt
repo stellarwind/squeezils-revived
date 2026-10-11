@@ -1,0 +1,10 @@
+^\?Create@MessageFunction  43fde0 msg_create ehend
+^\?Execute@MessageFunction  440090 msg_exec 32
+^\?Print@MessageFunction  440060 msg_print
+^\?Name@MessageFunction  43ffd0 msg_name
+^\?\?_GMessageFunction  43ffe0 msg_sdd 122
+^\?Create@TimerMessageFunction  4400b0 tmsg_create ehend
+^\?Execute@TimerMessageFunction  440360 tmsg_exec 32
+^\?Print@TimerMessageFunction  440330 tmsg_print
+^\?Name@TimerMessageFunction  4402a0 tmsg_name
+^\?\?_GTimerMessageFunction  4402b0 tmsg_sdd 122

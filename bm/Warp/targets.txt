@@ -1,0 +1,10 @@
+^\?\?0Warp@@  478c80 ctor
+^\?\?1Warp@@  478cb0 dtor
+^\?Init@Warp  478ce0 init
+^\?SetOutput@Warp  478da0 setoutput
+^\?Resize@Warp  478dc0 resize
+^\?Update@Warp  478e10 update
+^\?UpdateSingle@Warp  478e30 updatesingle
+^\?UpdateCube@Warp  478e90 updatecube
+^\?SelectFace@Warp  478fd0 selectface
+^\?Load@Warp  479090 load

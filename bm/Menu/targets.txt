@@ -1,2 +1,28 @@
 ^\?ActionStart@Menu  406950 actionstart
 ^\?SaveAnchor@Menu  406b80 saveanchor
+^\?ActionHelp1@@YAHXZ  406670 help1
+^\?ActionHelp2@@YAHXZ  406690 help2
+^\?ShowJoystick@@YAHPAX  4066b0 showjoy
+^\?ShowDialog6a@@YAHPAX  4066f0 dlg6a
+^\?ShowDialog73@@YAHPAX  4068e0 dlg73
+^\?ActionDialog81@@YAHXZ  406730 dlg81
+^\?ActionDialog80@@YAHXZ  406920 dlg80
+^\?HitTest@MenuH  406a60 hittest
+^\?ConfirmDlgProc  406d60 confirmdlg
+^\?IsAlnumString  407730 isalnum
+^\?OptionsDlgProc  407c90 optionsdlg
+^\?NameDlgProc  4077c0 namedlg
+^\?VolumeDlgProc  408410 volumedlg
+^\?JoystickDlgProc  4078e0 joystickdlg 688
+^\?TextDlgProc  407b90 textdlg 256
+^\?ActionStart@Menu  431a40 actionstart_d431a40
+^\?ActionStart@Menu  432110 actionstart_d432110
+^\?SetActions@MenuS  406600 setactions
+^?SetSelected@MenuD  406a10 setselected
+^?DrawItem@MenuD  406c20 drawitem
+^?Relayout@MenuD  406ba0 relayout
+^?OnMouseMove@MenuD  406960 mousemove
+^?OptionsMenuDlgProc  406cb0 menudlg
+^\?LoadItemBitmap@MenuL  406aa0 loadbmp
+^\?ActionLoadGame@@  406760 loadgame
+^\?OpenSaveFile@@  406dc0 savefile

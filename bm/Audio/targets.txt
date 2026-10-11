@@ -1,0 +1,3 @@
+^\?SetMusicVolume 44a940 music
+^\?SetSfxVolume 44aa10 sfx
+^\?SetMasterVolumeAndApply 44aab0 master

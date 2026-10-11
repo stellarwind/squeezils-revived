@@ -8,3 +8,4 @@
 ^\?Length@       47d5f0 length
 ^\?LengthSq@     47d610 lengthsq
 ^\?Normalize@    47d630 normalize
+^\?\?4Vector3f  401670 assign_d401670

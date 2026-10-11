@@ -1,0 +1,6 @@
+^\?\?1CreatePropFunction  46f8c0 cp_dtor cc
+^\?Create@CreatePropFunction  46f9e0 cp_create 208
+^\?Print@CreatePropFunction  46fab0 cp_print 80
+^\?ParseExtra@CreatePropFunction  46f870 cp_extra 6
+^\?DumpExtra@CreatePropFunction  46f880 cp_dump 1
+^\?\?0CreatePropFunction  46f800 cp_ctor cc

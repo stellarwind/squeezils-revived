@@ -51,7 +51,7 @@ FrameProp/targets.txt FrameProp/FrameProp.cpp
 Misc/targets.txt Misc/Misc.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp
-SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp
+SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
@@ -78,10 +78,10 @@ Keylist/targets.txt Keylist/Keylist.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
-Menu/targets.txt Menu/Menu.cpp
+Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
 StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
-Renderer/targets.txt Renderer/Renderer.cpp
+Renderer/targets.txt Renderer/Renderer.cpp Renderer/ViewportPlanes.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
@@ -91,3 +91,47 @@ CreatureTemplate/targets.txt CreatureTemplate/CreatureTemplate.cpp CreatureTempl
 SoulDtor/targets.txt SoulDtor/SoulDtor.cpp
 FnDtor/targets.txt FnDtor/FnDtor.cpp FnDtor/FnDtorEwp.cpp
 FnDtorDtor/targets.txt FnDtorDtor/FnDtorDtor.cpp
+Image/targets.txt Image/Image.cpp
+Souls2/targets.txt Souls2/CameraStop.cpp Souls2/RoboPick.cpp Souls2/SetState.cpp Souls2/StepGround.cpp Souls2/NewCreature.cpp Souls2/DestroyCreatures.cpp Souls2/AngleStep.cpp Souls2/SpeedStep.cpp Souls2/JumpPressed.cpp Souls2/Hit.cpp Souls2/Small.cpp Souls2/Die.cpp Souls2/Handlers.cpp Souls2/Misc2.cpp Souls2/Misc3.cpp Souls2/Misc4.cpp
+Sky/targets.txt Sky/SkyMath.cpp
+Renderer2/targets.txt Renderer2/Screen.cpp Renderer2/Quality.cpp Renderer2/Setup.cpp Renderer2/Position.cpp Renderer2/Misc.cpp Renderer2/DisplayMode.cpp Renderer2/Enter.cpp Renderer2/Palette.cpp Renderer2/LoadPal.cpp Renderer2/Fade.cpp Renderer2/PutText.cpp Renderer2/Enum.cpp Renderer2/Ctor.cpp Renderer2/Shutdown.cpp Renderer2/Init.cpp Renderer2/Surfaces.cpp
+Bitmap2/targets.txt Bitmap2/Bitmap2.cpp Bitmap2/Blit.cpp Bitmap2/Load.cpp
+Scene/targets.txt Scene/Scene.cpp Scene/Quality.cpp Scene/Lights.cpp
+Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
+Audio/targets.txt Audio/Volume.cpp
+DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
+PrintStubs/targets.txt PrintStubs/PrintStubs.cpp PrintStubs/PrintStubs2.cpp PrintStubs/PrintStubs3.cpp
+Thunks/targets.txt Thunks/Thunks.cpp
+Leaves/targets.txt Leaves/Leaves.cpp
+FunctionArgs/targets.txt FunctionArgs/FunctionArgs.cpp FunctionArgs/FunctionKill.cpp String/String.cpp
+FunctionTweak/targets.txt FunctionTweak/FunctionTweak.cpp FunctionTweak/FunctionTweakCreate.cpp String/String.cpp
+FunctionTweak/targets_tweaks.txt FunctionTweak/TweakClasses.cpp String/String.cpp
+FunctionIf/targets.txt FunctionIf/FunctionIf.cpp String/String.cpp
+FunctionIf/targets_ifs.txt FunctionIf/IfClasses.cpp FunctionIf/FunctionIf.cpp String/String.cpp
+FunctionIf/targets_surf.txt FunctionIf/IfSurface.cpp FunctionIf/FunctionIf.cpp String/String.cpp
+FunctionIf/targets_var.txt FunctionIf/IfVar.cpp FunctionIf/IfVarNZ.cpp FunctionIf/FunctionIf.cpp String/String.cpp
+FunctionMisc/targets.txt FunctionMisc/Misc.cpp String/String.cpp
+FunctionMisc/targets_misc.txt FunctionMisc/MiscClasses.cpp String/String.cpp
+FunctionCycle/targets.txt FunctionCycle/Cycle.cpp FunctionCycle/CycleDtor.cpp String/String.cpp
+FunctionCycle/targets_cycle.txt FunctionCycle/CycleClasses.cpp FunctionCycle/Cycle.cpp String/String.cpp
+FunctionMessage/targets.txt FunctionMessage/Message.cpp String/String.cpp
+FunctionSet/targets.txt FunctionSet/Set.cpp FunctionSet/ExecSet.cpp FunctionSet/ExecAdd.cpp String/String.cpp
+FunctionMovie/targets.txt FunctionMovie/Movie.cpp String/String.cpp
+FunctionFlash/targets.txt FunctionFlash/Flash.cpp FunctionFlash/FlashCreate.cpp String/String.cpp
+FunctionExec/targets.txt FunctionExec/Exec.cpp String/String.cpp
+FunctionExec/targets_delayed.txt FunctionExec/Delayed.cpp FunctionExec/RenderDelayedCreate.cpp FunctionExec/DelayedCreate.cpp String/String.cpp
+FunctionSurf/targets.txt FunctionSurf/Surf.cpp FunctionSurf/SurfCreate.cpp String/String.cpp
+FunctionSpit/targets.txt FunctionSpit/Spit.cpp String/String.cpp
+FunctionStr/targets.txt FunctionStr/Str.cpp String/String.cpp
+FunctionAmbient/targets.txt FunctionAmbient/Ambient.cpp String/String.cpp
+FunctionMisc/targets_noarg2.txt FunctionMisc/Noarg2.cpp String/String.cpp
+FunctionCompound/targets.txt FunctionCompound/Compound.cpp FunctionCompound/CompoundPrint.cpp String/String.cpp
+FunctionWithProp/targets.txt FunctionWithProp/WithProp.cpp String/String.cpp
+FunctionProp/targets_cls.txt FunctionProp/PropClasses.cpp FunctionProp/PropPos.cpp FunctionProp/Prop.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
+FunctionCamPath/targets.txt FunctionCamPath/CamPath.cpp FunctionCamPath/CamExec.cpp String/String.cpp
+FunctionRobo/targets.txt FunctionRobo/Robo.cpp String/String.cpp
+FunctionTweak/targets_exec.txt FunctionTweak/exec/Exec_Accelerate.cpp FunctionTweak/exec/Exec_BounceBackwards.cpp FunctionTweak/exec/Exec_ResetClaws.cpp FunctionTweak/exec/Exec_ResetFriction.cpp FunctionTweak/exec/Exec_ResetHop.cpp FunctionTweak/exec/Exec_ResetJump.cpp FunctionTweak/exec/Exec_ResetJumpable.cpp FunctionTweak/exec/Exec_ResetWalkSpeeds.cpp FunctionTweak/exec/Exec_SetClaws.cpp FunctionTweak/exec/Exec_SetClawsZero.cpp FunctionTweak/exec/Exec_SetFriction.cpp FunctionTweak/exec/Exec_SetHop.cpp FunctionTweak/exec/Exec_SetJump.cpp FunctionTweak/exec/Exec_SetJumpable.cpp FunctionTweak/exec/Exec_SetMotionSpeed.cpp FunctionTweak/exec/Exec_SetWalkSpeeds.cpp  String/String.cpp Vector3f/Vector3fCtor.cpp
+FunctionStr/targets_exec.txt FunctionStr/ShowProp.cpp FunctionStr/HideProp.cpp FunctionStr/PlayAudio.cpp FunctionStr/TimerTime.cpp String/String.cpp
+FunctionIf/targets_tests.txt FunctionIf/IfTests.cpp FunctionIf/IfTests2.cpp FunctionIf/IfTests3.cpp String/String.cpp
+FunctionProp/targets.txt FunctionProp/Prop.cpp FunctionProp/PropDtor.cpp FunctionProp/PropPrint.cpp FunctionProp/PropCreate.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
+FunctionGoodie/targets.txt FunctionGoodie/Goodie.cpp String/String.cpp Vector3f/Vector3fCtor.cpp

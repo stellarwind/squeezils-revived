@@ -1,0 +1,2 @@
+^\?Create@ChangeRoboResponseFunction  423860 crr_create 192
+^\?Name@ChangeRoboResponseFunction  423920 crr_name 6

@@ -7,3 +7,6 @@
 ^\?\?1MorphCycle         41b940 dtor
 ^\?\?0MorphCycle@@QAE@H  41b7b0 ctor
 ^\?\?0MorphCycle@@QAE@ABU0 41b8b0 copyctor
+^\?NoLoop@MorphCycle  420c60 noloop_d420c60
+^\?SampleCount@MorphCycle  420c70 samplecount_d420c70
+^\?NoLoop@MorphCycle  47e780 noloop_d47e780

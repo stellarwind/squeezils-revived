@@ -1,0 +1,4 @@
+^\?Create@GoToRegionFunction  4425a0 goto_create
+^\?Print@GoToRegionFunction  442630 goto_print
+^\?Name@GoToRegionFunction  442650 goto_name
+^\?\?_GGoToRegionFunction  442660 goto_sdd auto

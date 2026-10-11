@@ -1,0 +1,5 @@
+^\?Create@AnimateCameraPathFunction  44e2c0 acp_create cc
+^\?Execute@AnimateCameraPathFunction  44e560 acp_exec cc
+^\?Print@AnimateCameraPathFunction  44e500 acp_print 96
+^\?Name@AnimateCameraPathFunction  44e3e0 acp_name 6
+^\?\?_GAnimateCameraPathFunction  44e3f0 acp_sdd cc

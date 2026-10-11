@@ -1,0 +1,5 @@
+^\?Create@AddSpitNutsFunction  423b00 asn_create 192
+^\?Execute@AddSpitNutsFunction  423ca0 asn_exec 78
+^\?Print@AddSpitNutsFunction  423c70 asn_print
+^\?Name@AddSpitNutsFunction  423bc0 asn_name 6
+^\?\?_GAddSpitNutsFunction  423bd0 asn_sdd cc

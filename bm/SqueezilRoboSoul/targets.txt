@@ -4,3 +4,6 @@
 ^\?ResetSenses@SqueezilRoboSoul 4046f0 resetsenses
 ^\?IsNear@SqueezilRoboSoul      404770 isnear
 ^\?Reset@AwarenessRecord   4483c0 reset
+^?Sense@SqueezilRoboSoul   404720 sense
+^?TargetGone@SqueezilRoboSoul 4047c0 targetgone
+^\?SenseState@SqueezilRoboSoul 404920 sensestate
