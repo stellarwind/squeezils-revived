@@ -1,0 +1,5 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^\?QvIntern  482390 intern 480
+^\?QvHash  4827e0 hash
+^\?\?1QvStrS@@  482730 strs_dtor
+^\?Reset@QvStrS  482810 strs_reset
