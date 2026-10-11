@@ -10,3 +10,4 @@
 ^\?Print@AbortFunction  444740 ab_print 48
 ^\?Name@AbortFunction  4446c0 ab_name 6
 ^\?\?_GAbortFunction  4446d0 ab_sdd cc
+^\?Execute@ClearMessageFunction  4406c0 ClearMessage_exec cc

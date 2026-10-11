@@ -5,3 +5,4 @@
 ^\?DumpExtra@CreatePropFunction  46f880 cp_dump 1
 ^\?\?0CreatePropFunction  46f800 cp_ctor cc
 ^\?Execute@CreatePropFunction  46fb00 cp_exec cc
+^\?Apply@CreatePropFunction  46f890 cp_apply cc
