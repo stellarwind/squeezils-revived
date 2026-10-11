@@ -31,6 +31,7 @@ QvNodeC487d90::QvNodeC487d90()
     if (firstInstance)
         fieldData->addField(this, "height", &m2);
     m2.SetOwner(this);
+    m2.v[0] = 0;
     ((int *)this)[9] = 7;
     ((int *)this)[0x10] = 0x3f800000;
     ((int *)this)[0x14] = 0x40000000;

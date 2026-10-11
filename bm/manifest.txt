@@ -36,7 +36,7 @@ PoseTable/targets.txt PoseTable/PoseTable.cpp PoseTable/PoseTableLife.cpp
 PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
 NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp
-AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp
+AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp
 Body/targets.txt Body/Body.cpp
 SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp
@@ -50,7 +50,7 @@ PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
 FrameProp/targets.txt FrameProp/FrameProp.cpp
 Misc/targets.txt Misc/Misc.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
-SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp
+SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
@@ -74,7 +74,7 @@ ArrayGet/targets.txt ArrayGet/ArrayGet.cpp
 ArrayData/targets.txt ArrayData/ArrayData.cpp
 ArrayReplace/targets.txt ArrayReplace/ArrayReplace.cpp
 ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
-Keylist/targets.txt Keylist/Keylist.cpp
+Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
@@ -236,8 +236,11 @@ Qv/gen/targets_C_488820.txt Qv/gen/C_488820.cpp
 Qv/targets_tr.txt Qv/Translation.cpp
 Qv/gen/targets_C_483790.txt Qv/gen/C_483790.cpp
 Leaves/targets_qv.txt Leaves/Leaves.cpp
-Sim2/targets.txt Sim2/PlaceStep.cpp Sim2/PlaceStop.cpp Sim2/LocFree.cpp Sim2/PlaceClose.cpp Sim2/LocClose.cpp Sim2/LandWire.cpp Sim2/LocRewind.cpp Sim2/LandLoad.cpp Sim2/LandMake.cpp Sim2/LocInit.cpp Sim2/PlaceClear.cpp Sim2/PlaceSave.cpp Sim2/PlaceRun.cpp Sim2/PlaceVel.cpp Sim2/PlaceLoad.cpp Sim2/PlaceInit.cpp Sim2/PlaceCtor.cpp Sim2/LocCtor.cpp Sim2/TablePut.cpp Sim2/PointNear.cpp Sim2/CreatureIO.cpp Sim2/RegionLoad.cpp Sim2/RegionSave.cpp Sim2/RegionVel.cpp Sim2/RegionClear.cpp Sim2/LandInit.cpp Sim2/PlaceStart.cpp Sim2/LocCollide.cpp Sim2/RegionInit.cpp
+Sim2/targets.txt Sim2/PlaceStep.cpp Sim2/PlaceStop.cpp Sim2/LocFree.cpp Sim2/PlaceClose.cpp Sim2/LocClose.cpp Sim2/LandWire.cpp Sim2/LocRewind.cpp Sim2/LandLoad.cpp Sim2/LandMake.cpp Sim2/LocInit.cpp Sim2/PlaceClear.cpp Sim2/PlaceSave.cpp Sim2/PlaceRun.cpp Sim2/PlaceVel.cpp Sim2/PlaceLoad.cpp Sim2/PlaceInit.cpp Sim2/PlaceCtor.cpp Sim2/LocCtor.cpp Sim2/TablePut.cpp Sim2/PointNear.cpp Sim2/CreatureIO.cpp Sim2/RegionLoad.cpp Sim2/RegionSave.cpp Sim2/RegionVel.cpp Sim2/RegionClear.cpp Sim2/LandInit.cpp Sim2/PlaceStart.cpp Sim2/LocCollide.cpp Sim2/RegionInit.cpp Sim2/CharacterIO.cpp
 Qv/targets_gt.txt Qv/GetTypeId.cpp
 Qv/targets_fc.txt Qv/FieldDeriv.cpp
 Qv/targets_fd.txt Qv/FieldDerivB.cpp
 Qv/targets_fe.txt Qv/FieldDerivB.cpp
+Qv/targets_inter.txt Qv/Inter.cpp
+Qv/targets_pl.txt Qv/PList.cpp
+Qv/targets_rc.txt Qv/Ref.cpp
