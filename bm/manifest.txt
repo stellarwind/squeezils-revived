@@ -108,7 +108,7 @@ FunctionTweak/targets.txt FunctionTweak/FunctionTweak.cpp FunctionTweak/Function
 FunctionTweak/targets_tweaks.txt FunctionTweak/TweakClasses.cpp String/String.cpp
 FunctionIf/targets.txt FunctionIf/FunctionIf.cpp String/String.cpp
 FunctionIf/targets_ifs.txt FunctionIf/IfClasses.cpp FunctionIf/FunctionIf.cpp String/String.cpp
-FunctionIf/targets_surf.txt FunctionIf/IfSurface.cpp FunctionIf/FunctionIf.cpp FunctionIf/IfAbove.cpp String/String.cpp
+FunctionIf/targets_surf.txt FunctionIf/IfSurface.cpp FunctionIf/FunctionIf.cpp FunctionIf/IfAbove.cpp FunctionIf/IfFace.cpp String/String.cpp
 FunctionIf/targets_var.txt FunctionIf/IfVar.cpp FunctionIf/IfVarNZ.cpp FunctionIf/FunctionIf.cpp String/String.cpp
 FunctionMisc/targets.txt FunctionMisc/Misc.cpp String/String.cpp
 FunctionMisc/targets_misc.txt FunctionMisc/MiscClasses.cpp FunctionMisc/ExecClear.cpp FunctionMisc/ExecFade.cpp FunctionMisc/ExecCamOff.cpp FunctionMisc/ExecGoodie.cpp String/String.cpp
