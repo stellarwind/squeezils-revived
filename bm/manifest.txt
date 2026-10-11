@@ -259,3 +259,5 @@ Qv/targets_in7.txt Qv/Input7.cpp
 Qv/targets_cc.txt Qv/CharClass.cpp
 Qv/targets_dict.txt Qv/Dict.cpp
 Qv/targets_intern.txt Qv/Intern.cpp
+Qv/targets_list.txt Qv/List.cpp
+Qv/targets_str.txt Qv/Str.cpp
