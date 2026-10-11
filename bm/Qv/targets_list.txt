@@ -1,0 +1,7 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^\?\?0QvPList@@  482a60 pl_ctor
+^\?\?1QvPList@@  482a80 pl_dtor
+^\?Find@QvPList  482a90 pl_find
+^\?Remove@QvPList  482ac0 pl_remove
+^\?Grow@QvPList  482b10 pl_grow
+^\?QvWarn  482b80 warn
