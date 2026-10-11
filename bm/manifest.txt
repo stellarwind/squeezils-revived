@@ -137,4 +137,4 @@ FunctionProp/targets.txt FunctionProp/Prop.cpp FunctionProp/PropDtor.cpp Functio
 FunctionGoodie/targets.txt FunctionGoodie/Goodie.cpp String/String.cpp Vector3f/Vector3fCtor.cpp FunctionGoodie/GoodieExec.cpp FunctionGoodie/GoodieSpawn.cpp
 Behavior2/targets.txt Behavior2/Die.cpp Behavior2/Wander.cpp Behavior2/SimpleFly.cpp Behavior2/Chase.cpp Behavior2/Flee.cpp Behavior2/Death.cpp Behavior2/Pace.cpp Behavior2/Spit.cpp
 Behavior2/targets_snap.txt Behavior2/Snapshot.cpp
-Props2/targets.txt Props2/MeshProp.cpp Props2/AnimBody2.cpp Props2/AnimPose.cpp Props2/FrameHide.cpp Props2/NavHide.cpp Props2/FrameXform.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
+Props2/targets.txt Props2/MeshProp.cpp Props2/AnimBody2.cpp Props2/AnimPose.cpp Props2/FrameHide.cpp Props2/NavHide.cpp Props2/FrameXform.cpp Props2/FrameFind.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
