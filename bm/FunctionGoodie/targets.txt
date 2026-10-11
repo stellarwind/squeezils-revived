@@ -8,3 +8,4 @@
 ^\?DumpExtra@CreateGoodieAtPositionWithVelocityFunction  441200 cgv_dump 21
 ^\?Make@CreateGoodieAtPositionWithVelocityFunction  4412a0 cgv_make cc
 ^\?\?_GCreateGoodieAtPositionWithVelocityFunction  441470 cgv_sdd cc
+^\?Execute@CreateGoodieAtPositionFunction  440fa0 cg_exec 514
