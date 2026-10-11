@@ -9,3 +9,10 @@
 ^\?GetAngles@Body       41fd80 getangles 32
 ^\?SetMatrix@Body       41fcc0 setmatrix
 ^\?SetContact@Body      420060 setcontact
+^\?IsOnSurface@Body  431c40 isonsurface_d431c40
+^\?IsOnSurface@Body  4325d0 isonsurface_d4325d0
+^\?IsOnSurface@Body  432a80 isonsurface_d432a80
+^\?IsOnSurface@Body  4334c0 isonsurface_d4334c0
+^\?IsOnSurface@Body  433e90 isonsurface_d433e90
+^\?IsOnSurface@Body  434800 isonsurface_d434800
+^\?IsOnSurface@Body  4351d0 isonsurface_d4351d0

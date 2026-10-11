@@ -1,0 +1,68 @@
+^\?Name@ResetClawsFunction  4325e0 ResetClaws_name
+^\?ArgCount@ResetClawsFunction  4325d0 ResetClaws_argc
+^\?Make@ResetClawsFunction  432520 ResetClaws_make
+^\?\?_GResetClawsFunction  4325f0 ResetClaws_sdd auto
+^\?Name@SetClawsFunction  432120 SetClaws_name
+^\?ArgCount@SetClawsFunction  432110 SetClaws_argc
+^\?Make@SetClawsFunction  432060 SetClaws_make
+^\?\?_GSetClawsFunction  432130 SetClaws_sdd auto
+^\?Name@AccelerateFunction  4356e0 Accelerate_name
+^\?ArgCount@AccelerateFunction  4356d0 Accelerate_argc
+^\?Make@AccelerateFunction  435620 Accelerate_make
+^\?\?_GAccelerateFunction  4356f0 Accelerate_sdd auto
+^\?Name@ResetFrictionFunction  431c50 ResetFriction_name
+^\?ArgCount@ResetFrictionFunction  431c40 ResetFriction_argc
+^\?Make@ResetFrictionFunction  431b90 ResetFriction_make
+^\?\?_GResetFrictionFunction  431c60 ResetFriction_sdd auto
+^\?Name@SetFrictionFunction  431a50 SetFriction_name
+^\?ArgCount@SetFrictionFunction  431a40 SetFriction_argc
+^\?Make@SetFrictionFunction  431990 SetFriction_make
+^\?\?_GSetFrictionFunction  431a60 SetFriction_sdd auto
+^\?Name@BounceBackwardsFunction  4355a0 BounceBackwards_name
+^\?ArgCount@BounceBackwardsFunction  435590 BounceBackwards_argc
+^\?Make@BounceBackwardsFunction  4354e0 BounceBackwards_make
+^\?\?_GBounceBackwardsFunction  4355b0 BounceBackwards_sdd auto
+^\?Name@ResetJumpableFunction  434810 ResetJumpable_name
+^\?ArgCount@ResetJumpableFunction  434800 ResetJumpable_argc
+^\?Make@ResetJumpableFunction  434750 ResetJumpable_make
+^\?\?_GResetJumpableFunction  434820 ResetJumpable_sdd auto
+^\?Name@LaunchFromFaceNormalFunction  435460 LaunchFromFaceNormal_name
+^\?ArgCount@LaunchFromFaceNormalFunction  435450 LaunchFromFaceNormal_argc
+^\?Make@LaunchFromFaceNormalFunction  4353a0 LaunchFromFaceNormal_make
+^\?\?_GLaunchFromFaceNormalFunction  435470 LaunchFromFaceNormal_sdd auto
+^\?Name@SetJumpableFunction  434360 SetJumpable_name
+^\?ArgCount@SetJumpableFunction  434350 SetJumpable_argc
+^\?Make@SetJumpableFunction  4342a0 SetJumpable_make
+^\?\?_GSetJumpableFunction  434370 SetJumpable_sdd auto
+^\?Name@SetJumpFunction  4339d0 SetJump_name
+^\?ArgCount@SetJumpFunction  4339c0 SetJump_argc
+^\?Make@SetJumpFunction  433910 SetJump_make
+^\?\?_GSetJumpFunction  4339e0 SetJump_sdd auto
+^\?Name@SetMotionSpeedFunction  435320 SetMotionSpeed_name
+^\?ArgCount@SetMotionSpeedFunction  435310 SetMotionSpeed_argc
+^\?Make@SetMotionSpeedFunction  435260 SetMotionSpeed_make
+^\?\?_GSetMotionSpeedFunction  435330 SetMotionSpeed_sdd auto
+^\?Name@ResetJumpFunction  433ea0 ResetJump_name
+^\?ArgCount@ResetJumpFunction  433e90 ResetJump_argc
+^\?Make@ResetJumpFunction  433de0 ResetJump_make
+^\?\?_GResetJumpFunction  433eb0 ResetJump_sdd auto
+^\?Name@ResetWalkSpeedsFunction  4334d0 ResetWalkSpeeds_name
+^\?ArgCount@ResetWalkSpeedsFunction  4334c0 ResetWalkSpeeds_argc
+^\?Make@ResetWalkSpeedsFunction  433410 ResetWalkSpeeds_make 176
+^\?\?_GResetWalkSpeedsFunction  4334e0 ResetWalkSpeeds_sdd auto
+^\?Name@ResetHopFunction  4351e0 ResetHop_name
+^\?ArgCount@ResetHopFunction  4351d0 ResetHop_argc
+^\?Make@ResetHopFunction  435120 ResetHop_make
+^\?\?_GResetHopFunction  4351f0 ResetHop_sdd auto
+^\?Name@SetWalkSpeedsFunction  432ff0 SetWalkSpeeds_name
+^\?ArgCount@SetWalkSpeedsFunction  432fe0 SetWalkSpeeds_argc
+^\?Make@SetWalkSpeedsFunction  432f30 SetWalkSpeeds_make
+^\?\?_GSetWalkSpeedsFunction  433000 SetWalkSpeeds_sdd auto
+^\?Name@SetHopFunction  434d10 SetHop_name
+^\?ArgCount@SetHopFunction  434d00 SetHop_argc
+^\?Make@SetHopFunction  434c50 SetHop_make
+^\?\?_GSetHopFunction  434d20 SetHop_sdd auto
+^\?Name@SetClawsZeroFunction  432a90 SetClawsZero_name
+^\?ArgCount@SetClawsZeroFunction  432a80 SetClawsZero_argc
+^\?Make@SetClawsZeroFunction  4329d0 SetClawsZero_make
+^\?\?_GSetClawsZeroFunction  432aa0 SetClawsZero_sdd auto

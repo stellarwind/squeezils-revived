@@ -14,3 +14,4 @@
 ^\?\?0String@@QAE@XZ                    438370 ctor_default
 ^\?\?0String@@QAE@ABV0@@Z               4383b0 ctor_copy
 ^\?\?1String@@QAE@XZ                    4383d0 dtor
+^\?\?0String@@QAE@XZ  418b90 ctor_default_d418b90

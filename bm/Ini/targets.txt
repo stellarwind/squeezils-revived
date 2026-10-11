@@ -10,3 +10,4 @@ IniFindBlank             442710 findblank
 IniOpen              442fa0 iniopen 320
 IniCloseAll          4430e0 iniclose 64
 ^\?Load@IniFileCache   442aa0 cache_load 896
+^\?Keys@IniFileSection  41faf0 keys_d41faf0

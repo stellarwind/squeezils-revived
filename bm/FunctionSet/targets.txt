@@ -1,0 +1,9 @@
+^\?Create@SetToFunction  444130 set_create 256
+^\?Execute@SetToFunction  444340 set_exec 64
+^\?Print@SetToFunction  444300 set_print
+^\?Name@SetToFunction  444230 set_name 6
+^\?\?_GSetToFunction  444240 set_sdd 192
+^\?Create@AddToFunction  444380 add_create 256
+^\?Execute@AddToFunction  444590 add_exec 144
+^\?Print@AddToFunction  444550 add_print
+^\?Name@AddToFunction  444480 add_name 6

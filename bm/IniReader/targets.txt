@@ -13,3 +13,5 @@ IniParseFloats               443590 parsefloats
 ^\?GetIntList@IniReader      443350 getintlist
 ^\?GetKeys@IniReader         443470 getkeys 288
 ^\?ParseIntList@IniReader    4435f0 parseintlist 
+^\?GetPath@IniReader  40c6b0 getpath_d40c6b0
+^\?GetPath@IniReader  420c50 getpath_d420c50

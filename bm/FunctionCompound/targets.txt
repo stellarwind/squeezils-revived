@@ -1,0 +1,6 @@
+^\?\?1CompoundFunction  421b00 cp_dtor cc
+^\?\?_GCompoundFunction  421bb0 cp_sdd 32
+^\?Execute@CompoundFunction  421bd0 cp_exec 96
+^\?Create@CompoundFunction  421c30 cp_create 5
+^\?Print@CompoundFunction  421c40 cp_print 80
+^\?Name@CompoundFunction  421ba0 cp_name 6

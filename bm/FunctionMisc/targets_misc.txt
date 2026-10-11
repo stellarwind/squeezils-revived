@@ -1,0 +1,17 @@
+^\?Name@ClearTimerMessageFunction  440770 ClearTimerMessage_name
+^\?Create@ClearTimerMessageFunction  4406e0 ClearTimerMessage_create
+^\?Print@ClearTimerMessageFunction  4407f0 ClearTimerMessage_print
+^\?\?_GClearTimerMessageFunction  440780 ClearTimerMessage_sdd 98
+^\?\?1FadeScreenDownFunction  441b70 FadeScreenDown_dtor 125
+^\?Name@FadeScreenDownFunction  441bf0 FadeScreenDown_name
+^\?Create@FadeScreenDownFunction  441c20 FadeScreenDown_create
+^\?Print@FadeScreenDownFunction  441cc0 FadeScreenDown_print
+^\?\?_GFadeScreenDownFunction  441c00 FadeScreenDown_sdd 32
+^\?Name@RemoveCurrentGoodieFunction  4423a0 RemoveCurrentGoodie_name
+^\?Create@RemoveCurrentGoodieFunction  4422f0 RemoveCurrentGoodie_create
+^\?Print@RemoveCurrentGoodieFunction  442380 RemoveCurrentGoodie_print
+^\?\?_GRemoveCurrentGoodieFunction  4423b0 RemoveCurrentGoodie_sdd 104
+^\?Name@AnimateCameraPathOffFunction  44e6b0 AnimateCameraPathOff_name
+^\?Create@AnimateCameraPathOffFunction  44e610 AnimateCameraPathOff_create
+^\?Print@AnimateCameraPathOffFunction  44e760 AnimateCameraPathOff_print
+^\?\?_GAnimateCameraPathOffFunction  44e6c0 AnimateCameraPathOff_sdd 150

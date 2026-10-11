@@ -5,3 +5,4 @@
 ^\?SetTextureShades@Renderer  475080 settextureshades
 ^\?SetViewParams@Renderer  474f40 setviewparams
 ^\?GetScreenRect@Renderer  474fe0 getscreenrect
+^\?UpdateViewportPlanes@RendererVp 4757d0 viewplanes

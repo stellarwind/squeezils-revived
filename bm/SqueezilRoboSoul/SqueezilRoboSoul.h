@@ -8,6 +8,7 @@ struct AwarenessRecord {
     float distance;        // 0x10 how far it was
     int   stale;           // 0x14 1 after a reset
     void  Reset();         // 0x4483c0: stale = 1
+    void  Offer(const AwarenessRecord *other);   // 0x448370
 };
 
 struct CreatureTemplate {
@@ -34,4 +35,7 @@ struct SqueezilRoboSoul {
     void ClearSeen();      // 0x404900: lastSeen[0..2] = -1
     void ResetSenses();    // 0x4046f0: records[i].Reset() for i in 0..2
     int  IsNear(int kind); // 0x404770: the record's creature is within the sense radius
+    void Sense(const AwarenessRecord *seen);   // 0x404720
+    int  TargetGone(int kind);   // 0x4047c0
+    int  SenseState(int kind);   // 0x404920
 };
