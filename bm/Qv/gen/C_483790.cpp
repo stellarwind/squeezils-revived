@@ -39,21 +39,21 @@ QvNodeC483790::QvNodeC483790()
     if (firstInstance)
         fieldData->addField(this, "center", &m4);
     m4.SetOwner(this);
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[15] = 0x0;
-    ((int *)this)[16] = 0x0;
-    ((int *)this)[17] = 0x3f800000;
-    ((int *)this)[18] = 0x0;
-    ((int *)this)[24] = 0x3f800000;
-    ((int *)this)[23] = 0x3f800000;
-    ((int *)this)[22] = 0x3f800000;
-    ((int *)this)[28] = 0x0;
-    ((int *)this)[29] = 0x0;
-    ((int *)this)[30] = 0x3f800000;
-    ((int *)this)[31] = 0x0;
-    ((int *)this)[37] = 0x0;
-    ((int *)this)[36] = 0x0;
-    ((int *)this)[35] = 0x0;
+    ((int *)this)[0xb] = 0;
+    ((int *)this)[10] = 0;
+    ((int *)this)[9] = 0;
+    ((int *)this)[0xf] = 0;
+    ((int *)this)[0x10] = 0;
+    ((int *)this)[0x11] = 0x3f800000;
+    ((int *)this)[0x12] = 0;
+    ((int *)this)[0x18] = 0x3f800000;
+    ((int *)this)[0x17] = 0x3f800000;
+    ((int *)this)[0x16] = 0x3f800000;
+    ((int *)this)[0x1c] = 0;
+    ((int *)this)[0x1d] = 0;
+    ((int *)this)[0x1e] = 0x3f800000;
+    ((int *)this)[0x1f] = 0;
+    ((int *)this)[0x25] = 0;
+    ((int *)this)[0x24] = 0;
+    ((int *)this)[0x23] = 0;
 }

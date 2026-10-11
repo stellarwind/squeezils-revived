@@ -37,8 +37,8 @@ QvNodeC485fe0::QvNodeC485fe0()
     if (firstInstance)
         fieldData->addField(this, "value", &m0);
     m0.SetOwner(this);
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[12] = 0x0;
+    ((int *)this)[9] = 0;
+    ((int *)this)[10] = local_20;
+    ((int *)this)[0xb] = local_1c;
+    ((int *)this)[0xc] = local_14;
 }

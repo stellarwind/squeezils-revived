@@ -22,8 +22,8 @@ QvNodeC485350::QvNodeC485350()
     if (firstInstance)
         fieldData->addField(this, "rotation", &m0);
     m0.SetOwner(this);
-    ((int *)this)[11] = 0x3f800000;
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[12] = 0x0;
+    ((int *)this)[0xb] = 0x3f800000;
+    ((int *)this)[9] = 0;
+    ((int *)this)[10] = 0;
+    ((int *)this)[0xc] = 0;
 }

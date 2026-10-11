@@ -52,7 +52,7 @@ Misc/targets.txt Misc/Misc.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
-GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp
+GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
 Behavior/targets.txt Behavior/Behavior.cpp

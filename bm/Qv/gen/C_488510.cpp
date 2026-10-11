@@ -31,10 +31,10 @@ QvNodeC488510::QvNodeC488510()
     if (firstInstance)
         fieldData->addField(this, "height", &m2);
     m2.SetOwner(this);
-    ((int *)this)[9] = 0x3;
-    ((int *)this)[16] = 0x3f800000;
-    ((int *)this)[20] = 0x40000000;
-    ((int *)this)[10] = 0x0;
-    ((int *)this)[11] = 0x0;
-    ((int *)this)[12] = 0x0;
+    ((int *)this)[9] = 3;
+    ((int *)this)[0x10] = 0x3f800000;
+    ((int *)this)[0x14] = 0x40000000;
+    ((int *)this)[10] = local_20;
+    ((int *)this)[0xb] = local_1c;
+    ((int *)this)[0xc] = local_14;
 }

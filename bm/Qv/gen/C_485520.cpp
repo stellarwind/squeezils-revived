@@ -41,6 +41,6 @@ QvNodeC485520::QvNodeC485520()
     if (firstInstance)
         fieldData->addField(this, "numPoints", &m1);
     m1.SetOwner(this);
-    ((int *)this)[9] = 0x0;
-    ((int *)this)[13] = 0xffffffff;
+    ((int *)this)[9] = 0;
+    ((int *)this)[0xd] = 0xffffffff;
 }
