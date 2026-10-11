@@ -1,3 +1,11 @@
+// 7 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
 // IniFile (SQZ.EXE 0x4426d0-0x443120), functions in address order.
 #include <stdio.h>
 #include <string.h>

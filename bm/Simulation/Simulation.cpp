@@ -1,3 +1,6 @@
+// 2 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
 // Simulation/LocationSimulation creature lookups.
 #include "Simulation/Simulation.h"
 

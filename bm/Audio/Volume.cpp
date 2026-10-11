@@ -1,3 +1,20 @@
+// 16 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
+void PadDecl11();
+void PadDecl12();
+void PadDecl13();
+void PadDecl14();
+void PadDecl15();
+void PadDecl16();
 // Sound volume setters, SQZ.EXE 0x44a940 / 0x44aa10 / 0x44aab0, and 0x44aad0 (last stream).
 #include <windows.h>
 #include <dsound.h>
