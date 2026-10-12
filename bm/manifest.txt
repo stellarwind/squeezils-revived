@@ -280,3 +280,10 @@ Qv/gen/targets_C_484370.txt Qv/gen/C_484370.cpp
 Qv/gen/targets_C_484f30.txt Qv/gen/C_484f30.cpp
 Qv/gen/targets_C_4862d0.txt Qv/gen/C_4862d0.cpp
 Qv/gen/targets_C_486d70.txt Qv/gen/C_486d70.cpp
+Fam112/targets.txt Fam112/KeyGet.cpp
+Fam61/targets.txt Fam61/MemberDtor.cpp
+Fam48/targets.txt Fam48/BothSlots.cpp
+Qv/targets_store.txt Qv/Store.cpp
+Qv/targets_error.txt Qv/Error.cpp
+Fam68/targets.txt Fam68/TwoVecDtor.cpp
+Qv/targets_unk.txt Qv/Unknown.cpp
