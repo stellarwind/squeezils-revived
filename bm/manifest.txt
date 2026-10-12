@@ -138,6 +138,11 @@ FunctionGoodie/targets.txt FunctionGoodie/Goodie.cpp String/String.cpp Vector3f/
 Free2/targets_sdd.txt Free2/Sdd.cpp
 Behavior2/targets.txt Behavior2/Die.cpp Behavior2/Wander.cpp Behavior2/SimpleFly.cpp Behavior2/Chase.cpp Behavior2/Flee.cpp Behavior2/Death.cpp Behavior2/Pace.cpp Behavior2/Spit.cpp
 Behavior2/targets_snap.txt Behavior2/Snapshot.cpp
+Behavior2/targets_sd.txt Behavior2/SnapDtor.cpp
+Behavior2/targets_wd.txt Behavior2/WanderDtor.cpp Activity/Activity.cpp
+Behavior2/targets_db.txt Behavior2/DeathCtor.cpp Activity/DieRegen.cpp Activity/Activity.cpp
+Behavior2/targets_cc.txt Behavior2/ChaseCtor.cpp Activity/TurnTarget.cpp Activity/Activity.cpp
+Behavior2/targets_fd.txt Behavior2/FleeDtor.cpp Activity/TurnTarget.cpp Activity/Activity.cpp
 Persist/targets.txt Persist/Stream.cpp Persist/Registry.cpp Persist/Reserve.cpp Persist/WriteVec3.cpp Persist/WriteString.cpp Persist/WriteInt.cpp
 Container2/gen/targets_PA_s3.txt Container2/gen/PA_s3.cpp
 Container2/gen/targets_PA_i1.txt Container2/gen/PA_i1.cpp
@@ -321,3 +326,25 @@ Misc12/targets.txt Misc12/Small.cpp
 Misc12/targets_t.txt Misc12/Thunks.cpp
 Misc13/targets.txt Misc13/Free.cpp
 Misc14/targets.txt Misc14/Wrap.cpp
+Activity/targets.txt Activity/Activity.cpp
+Activity/targets_tt.txt Activity/TurnTarget.cpp Activity/Activity.cpp
+Activity/targets_dr.txt Activity/DieRegen.cpp Activity/Activity.cpp
+SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp
+Misc15/targets.txt Misc15/Find.cpp
+Misc15/targets_frame.txt Misc15/Frame.cpp
+Misc15/targets_tree.txt Misc15/Octree.cpp
+Misc15/targets_mesh.txt Misc15/Mesh.cpp
+Misc16/targets.txt Misc16/Small.cpp
+Fam112c/targets.txt Fam112c/StrGet.cpp
+FunctionArgs/targets2.txt FunctionArgs/FunctionArgs2.cpp FunctionArgs/FunctionArgs.cpp
+Misc16/targets_dm.txt Misc16/Timed2.cpp
+SoulDtor2/targets.txt SoulDtor2/CameraDtor.cpp
+SoulDtor2/targets_body.txt SoulDtor2/BodyDtor.cpp
+Misc16/targets_m2.txt Misc16/Misc2.cpp String/String.cpp
+Misc16/targets_win.txt Misc16/Win.cpp
+Misc16/targets_joy.txt Misc16/Joy.cpp
+FunctionIf/targets_vardtor.txt FunctionIf/IfVarDtor.cpp FunctionIf/IfVar.cpp FunctionIf/IfVarNZ.cpp FunctionIf/FunctionIf.cpp String/String.cpp
+Vector3f/targets_div.txt Vector3f/Vector3fDiv.cpp
+CameraSettings/targets.txt CameraSettings/Read.cpp CameraSettings/Blend.cpp CameraSettings/Physics.cpp IniReader/IniReader.cpp
+SoulDtor2/targets_sqsoul.txt SoulDtor2/SqueezilSoulDtor.cpp
+CameraSettings/targets_sqphys.txt CameraSettings/PhysicsBlock.cpp IniReader/IniReader.cpp

@@ -107,7 +107,6 @@ BOOL WINAPI DllMain(HINSTANCE inst, DWORD reason, LPVOID reserved)
         DisableThreadLibraryCalls(inst);
         if (!load_real_ddraw())
             return FALSE;
-        LoadLibraryA("sqzhook.dll");   // optional dev tool; silently ignored when the file is absent
     } else if (reason == DLL_PROCESS_DETACH) {
         if (g_realDDraw)
             FreeLibrary(g_realDDraw);

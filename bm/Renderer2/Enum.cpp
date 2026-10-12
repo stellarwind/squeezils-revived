@@ -21,12 +21,10 @@ HRESULT __stdcall EnumDeviceCallback(GUID *guid, LPSTR desc, LPSTR name, LPD3DDE
         r->hardware = 1;
         r->monoColorModel = d->dcmColorModel & 1;
     } else if (d != hw && r->hardware) {
-    } else if (d != hw && r->fmt.isPalettized != 0) {
-        if (d->dcmColorModel & 1) {
-            r->chosenDevice = r->deviceFound;
-            r->hardware = d == hw;
-            r->monoColorModel = 1;
-        }
+    } else if (d != hw && r->fmt.isPalettized != 0 && (d->dcmColorModel & 1)) {
+        r->chosenDevice = r->deviceFound;
+        r->hardware = d == hw;
+        r->monoColorModel = 1;
     } else if (!r->fmt.isPalettized) {
         if (d->dcmColorModel & 2) {
             r->chosenDevice = r->deviceFound;

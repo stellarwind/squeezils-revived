@@ -1,0 +1,3 @@
+^\?ReadCameraSettings@@YGXPBDPAUCameraSettings@@@Z 408600 readcamset 581
+^\?StartBlend@BlendCam 409c40 startblend 206
+^\?ReadPhysicsSettings@@ 446ed0 readphys 188

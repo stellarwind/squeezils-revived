@@ -1,0 +1,2 @@
+^??0DieActivity@@  401e60 die_ctor 144
+^??0RegenActivity@@  401f50 regen_ctor 128

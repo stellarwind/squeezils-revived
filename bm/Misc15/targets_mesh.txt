@@ -1,0 +1,10 @@
+^\?\?0MFace@@ 47ad20 mface_ctor 192
+^\?\?0Mesh@@ 47aec0 mesh_ctor
+^\?FreeAll@Mesh 47af00 freeall
+^\?Radius@Mesh 47af20 radius
+^\?AllocVerts@Mesh 47af30 allocv 192
+^\?AllocFaces@Mesh 47aff0 allocf 192
+^\?FreeVerts@Mesh 47b0b0 freev
+^\?FreeFaces@Mesh 47b0f0 freef
+^\?FreeArrays@Mesh 47b130 freea
+^\?FreeTree@Mesh 47b150 freet

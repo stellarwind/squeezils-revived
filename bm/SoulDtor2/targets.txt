@@ -1,0 +1,7 @@
+^\?\?1MMap 40b340 mmap_dtor 7
+^\?\?1Soul 40b380 soul_dtor 80
+^\?\?1SimulationSoul 40b440 simsoul_dtor 80
+^\?\?1CameraSoul 40b510 camera_dtor 208
+^??_GRegionCameraSoul 40b7c0 region_sdd 108
+^??_GPlaceCameraSoul 40b830 place_sdd 108
+^\?\?0PhysicalSoul@@ 446e30 physsoul_ctor 153

@@ -38,6 +38,9 @@ Renderer::Renderer()
     shades = 8;
     viewport = 0;
     monoColorModel = 1;
+    nearPlane = 1.0f;
+    farPlane = 1000.0f;
+    fovDegrees = 90.0f;
     sceneFrame = 0;
     cameraFrame = 0;
     field_078 = 0;
@@ -47,9 +50,6 @@ Renderer::Renderer()
     requestedWidth = 0;
     requestedHeight = 0;
     displayState = 0;
-    nearPlane = 1.0f;
-    farPlane = 1000.0f;
-    fovDegrees = 90.0f;
 }
 
 void Renderer::Close()

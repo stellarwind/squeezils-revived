@@ -18,6 +18,9 @@ extern VariableTable g_variables;       // 0x4c7060
 class IfVariableFunction : public IfFunction {
 public:
     IfVariableFunction() {}
+#ifdef IFVAR_DTORS
+    ~IfVariableFunction() {}                             // 0x4464b0 (scalar deleting 0x446520); only IfVarDtor.cpp defines it: in the other units it moves registers
+#endif
     virtual int Parse(ArgList *list);                    // 0x443fb0
     virtual void Dump();                                 // 0x444040
     virtual int Test(ScriptCall *args, int extra);       // 0x444060
@@ -28,6 +31,9 @@ public:
 class IfVariableValueFunction : public IfVariableFunction {
 public:
     IfVariableValueFunction() { value = 0; }
+#ifdef IFVAR_DTORS
+    ~IfVariableValueFunction() { delete value; }         // 0x446700
+#endif
     virtual int Parse(ArgList *list);                    // 0x4440b0
     virtual void Dump();                                 // 0x4440e0
     virtual int Check(int v, ScriptCall *args, int extra);   // 0x444100

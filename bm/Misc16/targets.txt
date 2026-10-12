@@ -1,0 +1,17 @@
+^\?Lookup@STable 461ea0 lookup
+^\?ReleaseSound@@ 449a80 releasesound
+^\?StepAll@@ 449a60 stepall
+^\?Set@Timed 42f200 timedset
+^\?Remember@Asker 42ee90 asker
+^\?\?1BufOwner 43d5e0 bufowner
+^\?\?1OwnerObj 448970 ownerobj
+^\?ResetGame@@ 4482e0 resetgame
+^\?Run@Asker2 43ad00 asker2
+^\?InitSubsystems@@ 422700 initsub
+^\?SetPaused@@ 43ed80 setpaused
+^?HostIsLittleEndian@@ 47c670 endian
+^?ReadWord16@@ 47c690 readword
+^\?Link@SlotOwner 4180e0 slotlink
+^\?Bind@Binder 41d990 bind
+^?DeleteList@@ 421d80 deletelist
+^?UpdateAll@@ 42d210 updateall

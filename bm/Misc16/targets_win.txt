@@ -1,0 +1,5 @@
+^\?OkDialogProc@@ 43edd0 okdlg
+^?ShowMenu@MenuHost 43c1b0 showmenu
+^?HideMenu@MenuHost 43c210 hidemenu
+^\?GetInFileData@@ 45bef0 readexact
+^\?Capture@MouseGrab 4592a0 mousegrab

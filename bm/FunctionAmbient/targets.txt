@@ -2,3 +2,4 @@
 ^\?Print@StartAmbientLoopFunction  43a480 sal_print 80
 ^\?Name@StartAmbientLoopFunction  43a360 sal_name 6
 ^\?\?_GStartAmbientLoopFunction  43a370 sal_sdd cc
+^\?Execute@StartAmbientLoopFunction  43a4d0 sal_exec 164

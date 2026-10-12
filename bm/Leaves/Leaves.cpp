@@ -176,10 +176,13 @@ int L::f_480810(int i)
     return ((int *)w[0])[i];
 }
 
+// 480820 came from a -G3/-G4 object (matches there with no pragma); favouring size here gives the same scheduling.
+#pragma optimize("t", off)
 int L::f_480820(int a, int i)
 {
     return ((int **)w[0])[i][1] + a;
 }
+#pragma optimize("", on)
 
 int L::f_4815d0()
 {

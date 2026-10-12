@@ -5,3 +5,4 @@
 ^\?SetTime@AnimatedBody      41e290 settime
 ^\?SetDirection@AnimatedBody 41e2d0 setdirection 32
 ^\?SetLoopMode@AnimatedBody  41e2f0 setloopmode 32
+^?GetBlendFraction@AnimatedBody2  41e2a0 blend

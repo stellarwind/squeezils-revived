@@ -8,10 +8,10 @@ struct LandSimulation {
     int pad;
     LandFirst *first;                                    // 0x04
     LandSecond *second;                                  // 0x08
-    LandStream &Load(LandStream &in);                    // slot 3
+    void Load(LandStream &in);                    // slot 3
 };
 
-LandStream &LandSimulation::Load(LandStream &in)
+void LandSimulation::Load(LandStream &in)
 {
     if (first)
         delete first;
@@ -20,5 +20,7 @@ LandStream &LandSimulation::Load(LandStream &in)
         s->Release();
         delete s;
     }
-    return in >> (Streamable **)&first >> (Streamable **)&second;
+    Streamable **pf = (Streamable **)&first;
+    Streamable **ps = (Streamable **)&second;
+    in >> pf >> ps;
 }

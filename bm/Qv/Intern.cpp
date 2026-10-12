@@ -23,8 +23,8 @@ void QvStrS::Reset(int freeIt)
 }
 unsigned QvHash(const char *s)
 {
-    unsigned h = 0;
     unsigned shift = 0;
+    unsigned h = 0;
     for (; *s; s++) {
         h ^= *s << shift;
         shift += 5;
