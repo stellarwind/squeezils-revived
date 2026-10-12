@@ -268,3 +268,4 @@ Qv/targets_setname.txt Qv/SetName.cpp
 Qv/targets_parse.txt Qv/Parse.cpp
 Qv/targets_parse2.txt Qv/Parse2.cpp
 Qv/targets_factory.txt Qv/Factory.cpp
+Qv/targets_parse3.txt Qv/Parse3.cpp

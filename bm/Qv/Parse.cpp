@@ -13,25 +13,35 @@ extern char kNullName[];                                         // 0x4c4068
 extern char kUseName[];                                          // 0x4c427c
 int QvReadUse(QvInputP *in);                                     // 0x47ed90
 int QvReadNodeBody(QvInputP *in, QvNameP *n, QvNodeP **out);     // 0x47ee40
-inline int Eq(const char *a, const char *b) { return *a == *b && strcmp(a, b) == 0; }
 int QvReadNode(QvInputP *in, QvNodeP **out)
 {
-    int result;
     QvNameP n;
+    int result;
+    int eq;
     if (!in->ReadName(&n, 1)) {
         *out = 0;
         result = in->ok;
     } else {
         char *s = n.e->str;
-        if (*s == 0 || Eq(s, kNullName)) {
-            result = 1;
-            *out = 0;
-        } else if (Eq(s, kUseName)) {
-            int r = QvReadUse(in);
-            *out = (QvNodeP *)r;
-            result = r != 0;
-        } else
-            result = QvReadNodeBody(in, &n, out);
+        if (*s == 0)
+            goto nullcase;
+        {
+            eq = (*s == kNullName[0] && strcmp(s, kNullName) == 0);
+            if (eq) {
+nullcase:
+                result = 1;
+                *out = 0;
+            } else {
+                s = n.e->str;
+                eq = (*s == kUseName[0] && strcmp(s, kUseName) == 0);
+                if (eq) {
+                    int r = QvReadUse(in);
+                    *out = (QvNodeP *)r;
+                    result = r != 0;
+                } else
+                    result = QvReadNodeBody(in, &n, out);
+            }
+        }
     }
     return result;
 }
