@@ -27,13 +27,13 @@ QvNodeQ *QvReadUse(QvInputQ *in)
     return result;
 }
 QvNodeQ *QvCreateNode(QvInputQ *in, QvNameQ *name);              // 0x47f090
-int QvReadNodeBody(QvInputQ *in, QvNameQ *name, QvNodeQ **out)
+int QvCreateAndRead(QvInputQ *in, QvNameQ *name, QvNameQ *kw, QvNodeQ **out)
 {
     QvNodeQ *node = QvCreateNode(in, name);
     *out = node;
     if (!node)
         return 0;
-    if (*name->e->str)
-        in->Register(name, node);
+    if (*kw->e->str)
+        in->Register(kw, node);
     return (*out)->Read(in);
 }
