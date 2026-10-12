@@ -7,6 +7,7 @@ struct RgInventory {
     char pad[8];
     String name;                                         // 0x08
     int current;                                         // 0x0c (overlaps the String slot's neighbour in the original layout)
+    inline void Clear() { name = String(""); current = -1; }
 };
 struct RgOwner { RgInventory *Inventory(); };            // 0x448990
 struct RgActor {
@@ -26,9 +27,7 @@ int RemoveCurrentGoodieFunction::Execute(ScriptCall *args, int extra)
     if (goodie != -1) {
         RgActor *actor = ((RgCall *)args)->Actor();
         actor->place->GetLevel()->RemoveGoodie(goodie);
-        RgInventory *inv = ((RgCall *)args)->Actor()->Soul()->Inventory();
-        inv->name = String("");
-        inv->current = -1;
+        ((RgCall *)args)->Actor()->Soul()->Inventory()->Clear();
     }
     return 1;
 }

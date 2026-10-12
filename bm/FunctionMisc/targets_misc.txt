@@ -18,4 +18,4 @@
 ^\?Execute@ClearTimerMessageFunction  440810 ClearTimerMessage_exec cc
 ^\?Execute@FadeScreenDownFunction  441cf0 FadeScreenDown_exec cc
 ^\?Execute@AnimateCameraPathOffFunction  44e790 CamOff_exec cc
-^\?Execute@RemoveCurrentGoodieFunction  440b40 rcg_exec 183
+^\?Execute@RemoveCurrentGoodieFunction  440b40 rcg_exec ehend

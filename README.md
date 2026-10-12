@@ -12,9 +12,9 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 
 | State | Functions |
 |---|---|
-| Nearly there (1-4 differing instructions) | 9 |
+| Nearly there (1-4 differing instructions) | 7 |
 | Close (5-20) | 73 |
-| Far (more than 20) | 87 |
+| Far (more than 20) | 89 |
 | Not started | 3042 |
 
-_Updated Mon Oct 12 20:15:58 2026. Game files are not included._
+_Updated Mon Oct 12 20:39:49 2026. Game files are not included._

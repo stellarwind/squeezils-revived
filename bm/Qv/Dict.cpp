@@ -76,15 +76,26 @@ QvDictEntry **QvDict::FindSlot(unsigned key)
     return p;
 }
 
-// name table initialisation (0x482340): 1999 buckets
-extern int g_nameBuckets;       // 0x4c8870
-extern void **g_nameTable;      // 0x4c8868
-extern int g_nameCount;         // 0x4c886c
+// name table initialisation (0x482340): 1999 buckets; the rest of the name module is in Intern.cpp
+struct QvEntry {
+    char *str; unsigned hash; QvEntry *next;
+    QvEntry(char *s, unsigned h, QvEntry *n) { str = s; hash = h; next = n; }
+};
+struct QvArena { char data[4000]; char *cur; int left; QvArena *prev; };
+extern int g_nameBuckets;          // 0x4c8870
+extern QvEntry **g_nameTable;      // 0x4c8868
+extern QvArena *g_arena;           // 0x4c886c
+unsigned QvHash(const char *s);    // 0x4827e0
+char *QvStrdup(const char *s);     // 0x49bd70
+QvEntry *QvIntern(const char *s);  // 0x482390
+struct QvStrS;                     // small string, 0x482730 / 0x482810 (Intern.cpp)
+void QvInitNames();                // 0x482340
+const int QvNameBuckets = 1999;
 void QvInitNames()
 {
-    g_nameBuckets = 1999;
-    g_nameTable = new void *[g_nameBuckets];
+    g_nameBuckets = QvNameBuckets;
+    g_nameTable = new QvEntry *[g_nameBuckets];
     for (int i = 0; i < g_nameBuckets; i++)
         g_nameTable[i] = 0;
-    g_nameCount = 0;
+    g_arena = 0;
 }
