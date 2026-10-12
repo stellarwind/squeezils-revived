@@ -287,3 +287,17 @@ Qv/targets_store.txt Qv/Store.cpp
 Qv/targets_error.txt Qv/Error.cpp
 Fam68/targets.txt Fam68/TwoVecDtor.cpp
 Qv/targets_unk.txt Qv/Unknown.cpp
+Fam112b/targets.txt Fam112b/ItemGet.cpp
+Qv/targets_str2.txt Qv/Str2.cpp
+Qv/targets_grp.txt Qv/Group.cpp
+Log2/targets.txt Log2/LogCallbacks.cpp
+Log2/targets_wrl.txt Log2/WrlLog.cpp
+Qv/targets_grp2.txt Qv/Group2.cpp
+Misc4/targets.txt Misc4/Copy9.cpp
+Misc5/targets.txt Misc5/ReadString.cpp
+Misc5/targets_a.txt Misc5/AddName.cpp
+Qv/targets_noderead.txt Qv/NodeRead.cpp
+Qv/targets_noderead.txt Qv/NodeRead.cpp
+Misc6/targets.txt Misc6/Small.cpp
+Misc7/targets.txt Misc7/Small.cpp
+Qv/targets_enum.txt Qv/Enum.cpp

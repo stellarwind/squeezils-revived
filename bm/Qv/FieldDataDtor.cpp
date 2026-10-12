@@ -18,15 +18,22 @@ struct QvFieldData {
 };
 QvFieldData::~QvFieldData()
 {
-    int i;
-    for (i = 0; i < fields.count; i++) {
+    int i = 0;
+    for (;;) {
+        if (i >= fields.count)
+            break;
         QvFieldEntry *e = (QvFieldEntry *)fields.items[i];
         if (e)
             delete e;
+        i++;
     }
-    for (i = 0; i < enums.count; i++) {
+    i = 0;
+    for (;;) {
+        if (i >= enums.count)
+            break;
         QvEnumType *t = (QvEnumType *)enums.items[i];
         if (t)
             delete t;
+        i++;
     }
 }
