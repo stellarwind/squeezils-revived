@@ -27,7 +27,8 @@ extern char kUnknownClass[];                             // 0x4c436c
 
 int QvStrNe(QvStrC *s, char *b)
 {
-    if (*b != *s->data || strcmp(s->data, b) != 0)
+    char *d = s->data;
+    if (*b != *d || strcmp(d, b) != 0)
         return 1;
     return 0;
 }

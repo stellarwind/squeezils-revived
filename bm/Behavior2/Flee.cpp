@@ -78,9 +78,7 @@ int FleeBehavior::Execute(int a, int b)
             d = rec->pos - p;
             dest = p + d * -10.0f;
             FleeSub *w = walk;
-            w->dest.x = dest.x;
-            w->dest.y = dest.y;
-            w->dest.z = dest.z;
+            w->dest = dest;
             mode++;
             break;
         }

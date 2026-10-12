@@ -18,6 +18,8 @@ int ChangeRoboResponseFunction::Execute(ScriptCall *args, int extra)
         DebugLog("WARNING: attempt to run ChangeRoboResponse on non-Robo creature (id %d).\n", ((RoboCall *)args)->Other());
         return 0;
     }
-    robo->responses->SetResponse(kind->Resolve(0), response->Get(0));
+    else {
+        robo->responses->SetResponse(kind->Resolve(0), response->Get(0));
+    }
     return 1;
 }
