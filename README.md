@@ -17,4 +17,4 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 | Far (more than 20) | 87 |
 | Not started | 3042 |
 
-_Updated Mon Oct 12 21:15:32 2026. Game files are not included._
+_Updated Mon Oct 12 21:24:01 2026. Game files are not included._
