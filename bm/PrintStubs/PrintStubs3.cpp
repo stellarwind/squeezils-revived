@@ -72,12 +72,15 @@ int Cached::Get(int arg)
     return cache;
 }
 
-extern volatile HMIDISTRM g_midiStream;   // 0x4c86b8 (volatile reproduces the original push ebx; the original reads it once)
+extern volatile HMIDISTRM g_midiStream;   // 0x4c86b8 (volatile reproduces the original push ebx)
 
 int PauseMidi()
 {
-    if (g_midiStream) {
-        if (midiStreamPause(g_midiStream)) {
+    // read through a non-volatile alias: the original loads g_midiStream once
+    MMRESULT r;
+    if (*(HMIDISTRM*)&g_midiStream) {
+        r = midiStreamPause(*(HMIDISTRM*)&g_midiStream);
+        if (r) {
             DebugLog("WARNING: midiStreamPause failed");
             return 0;
         }
