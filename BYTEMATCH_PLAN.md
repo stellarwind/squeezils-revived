@@ -2,6 +2,7 @@
 
 Assessment of the "compiler-in-the-loop search" architecture (compile cache → constraint extraction → feedback-guided
 search) against what the byte-match track actually does, plus the plan for the remaining ~4480 functions / ~502 KB.
+Scope: game logic 0x401000-0x47e600 only. The VRML importer QvLib (0x47e600-0x48e000) is output-matched, not byte-matched, and the C runtime (0x48e000+) is linked from `LIBC.LIB`, never ported. Milestone 1 is a functionally identical EXE, not a layout-identical one.
 The how-to is [BYTEMATCH_GUIDE.md](BYTEMATCH_GUIDE.md); the numbers live in [BYTEMATCH_STATUS.md](BYTEMATCH_STATUS.md).
 
 ## The one-sentence verdict

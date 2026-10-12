@@ -20,8 +20,7 @@ void FadeScreenDownFunction::Print()
 }
 FadeScreenDownFunction::~FadeScreenDownFunction()
 {
-    if (arg)
-        delete arg;
+    delete arg;
 }
 
 const char *RemoveCurrentGoodieFunction::Name() { return "RemoveCurrentGoodie"; }

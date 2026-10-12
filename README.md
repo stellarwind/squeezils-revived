@@ -4,17 +4,46 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 
 ## Current matching
 
-`███████████░░░░░░░░░░░░░░░░░░░` **37.9%**
+`███████████░░░░░░░░░░░░░░░░░░░` **36.7%**
 
-**1962 of 5170** functions in the game code are byte-exact (30.9% of the code bytes).
+**1693 of 4615** game-logic functions (0x401000-0x47e600) are byte-exact (27.9% of the code bytes).
 
-## Leftovers: 3208 functions
+## Map of the EXE
+
+```
+SQZ.EXE   Win32 executable, Visual C++ 4.1, 1996
+┌──────────────────────────────────────────────────────────────────┐
+│ .text    0x401000 - 0x49cfa0     CODE   638 KB                   │
+│ ┌──────────────────────────────────────────────────────────────┐ │
+│ │ ◆ MAIN GAME LOGIC            0x401000 - 0x47e600   502 KB    │ │
+│ │   Protozoa's own code: souls, behaviours, physics, scenes,   │ │
+│ │   menus, rendering glue.  4,615 functions.                   │ │
+│ │   GOAL: byte-match.   ███████░░░░░░░░░░░░░ 36.7%             │ │
+│ ├──────────────────────────────────────────────────────────────┤ │
+│ │ ◇ QvLib (VRML importer)      0x47e600 - 0x48e000    63 KB    │ │
+│ │   3rd-party parser, linked in.  Only its OUTPUT must match.  │ │
+│ ├──────────────────────────────────────────────────────────────┤ │
+│ │ ✗ C RUNTIME (LIBC.LIB)       0x48e000 - 0x49d000    60 KB    │ │
+│ │   Microsoft's malloc, printf, startup. Re-linked as is.      │ │
+│ └──────────────────────────────────────────────────────────────┘ │
+│ .rdata   0x49d000   111 KB   strings, vtables, constant tables   │
+│ .data    0x4b9000   215 KB   globals (53 KB initialised)         │
+│ .idata   0x4ef000     5 KB   import table (DLL function names)   │
+│ .rsrc    0x4f1000     8 KB   resources                           │
+│ .reloc   0x4f3000    56 KB   relocations (linker bookkeeping)    │
+└──────────────────────────────────────────────────────────────────┘
+      │  imports, resolved at run time
+      ▼  NOT part of the EXE, we never touch these
+  D3DRM.DLL   DDRAW.DLL   KERNEL32.DLL   USER32.DLL   WINMM.DLL ...
+```
+
+## Leftovers: 2922 functions
 
 | State | Functions |
 |---|---|
 | Nearly there (1-4 differing instructions) | 6 |
-| Close (5-20) | 73 |
-| Far (more than 20) | 87 |
-| Not started | 3042 |
+| Close (5-20) | 56 |
+| Far (more than 20) | 66 |
+| Not started | 2794 |
 
-_Updated Mon Oct 12 21:24:01 2026. Game files are not included._
+_Updated Mon Oct 12 21:54:13 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
