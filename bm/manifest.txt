@@ -312,3 +312,8 @@ Player/targets.txt Player/Stop.cpp
 Misc9/targets.txt Misc9/Getters.cpp
 Misc9/targets_b.txt Misc9/More.cpp
 Qv/targets_mfset.txt Qv/MFSetNum.cpp
+Misc10/targets.txt Misc10/Small.cpp
+Misc11/targets.txt Misc11/Small.cpp
+Qv/gen/targets_C_4880c0.txt Qv/gen/C_4880c0.cpp
+Qv/gen/targets_D_488280.txt Qv/gen/D_488280.cpp
+Qv/gen/targets_C_483630.txt Qv/gen/C_483630.cpp
