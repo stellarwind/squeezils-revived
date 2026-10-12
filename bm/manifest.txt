@@ -317,3 +317,7 @@ Misc11/targets.txt Misc11/Small.cpp
 Qv/gen/targets_C_4880c0.txt Qv/gen/C_4880c0.cpp
 Qv/gen/targets_D_488280.txt Qv/gen/D_488280.cpp
 Qv/gen/targets_C_483630.txt Qv/gen/C_483630.cpp
+Misc12/targets.txt Misc12/Small.cpp
+Misc12/targets_t.txt Misc12/Thunks.cpp
+Misc13/targets.txt Misc13/Free.cpp
+Misc14/targets.txt Misc14/Wrap.cpp
