@@ -1,0 +1,3 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^\?QvTrimName  480a50 trimname 240
+^\?getEnum@QvFieldDataE  480b50 getenum 190
