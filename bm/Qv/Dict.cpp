@@ -84,7 +84,7 @@ void QvInitNames()
 {
     g_nameBuckets = 1999;
     g_nameTable = new void *[g_nameBuckets];
-    for (int i = 0; g_nameBuckets > i; i++)
+    for (int i = 0; i < g_nameBuckets; i++)
         g_nameTable[i] = 0;
     g_nameCount = 0;
 }

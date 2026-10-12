@@ -1,8 +1,7 @@
 // Forwarding thunks: 0x412be0 (deref then call), 0x412c30 and 0x4143c0 (plain tail calls), 0x4153f0 (cdecl pass-through).
 #include "compat41.h"
 
-void __stdcall Inner(int v);                 // 0x412c10
-struct Holder { void DerefCall(int *p); };
+struct Holder { void Inner(int v); void DerefCall(int *p); };   // Inner: 0x412c10
 void Holder::DerefCall(int *p) { Inner(*p); }   // 0x412be0
 
 void Target1();                              // 0x412c40

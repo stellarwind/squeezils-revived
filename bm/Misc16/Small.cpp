@@ -170,8 +170,11 @@ extern Deletable **gList;                                          // 0x4c70c4
 void DeleteList()
 {
     for (int i = 0; i < gListCount; i++)
-        if (gList[i])
-            delete gList[i];
+    {
+        Deletable *p = gList[i];
+        if (p)
+            delete p;
+    }
 }
 
 // 0x42d210: tell every object of a global list to update

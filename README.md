@@ -4,16 +4,17 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 
 ## Current matching
 
-`████████████████████████████░░` **92.1%**
+`███████████░░░░░░░░░░░░░░░░░░░` **37.9%**
 
-**2052 of 2227** functions byte-exact.
+**1959 of 5170** functions in the game code are byte-exact (30.9% of the code bytes).
 
-## Leftovers: 175 functions
+## Leftovers: 3211 functions
 
-| Distance from exact | Functions |
+| State | Functions |
 |---|---|
-| 1-4 differing instructions | 15 |
-| 5-20 | 73 |
-| more than 20 | 87 |
+| Nearly there (1-4 differing instructions) | 9 |
+| Close (5-20) | 73 |
+| Far (more than 20) | 87 |
+| Not started | 3042 |
 
-_Updated Mon Oct 12 19:57:13 2026. Game files are not included._
+_Updated Mon Oct 12 20:15:58 2026. Game files are not included._
