@@ -270,3 +270,13 @@ Qv/targets_parse2.txt Qv/Parse2.cpp
 Qv/targets_factory.txt Qv/Factory.cpp
 Qv/targets_parse3.txt Qv/Parse3.cpp
 Qv/targets_create.txt Qv/Create.cpp
+Qv/gen/targets_C_484530.txt Qv/gen/C_484530.cpp
+Qv/gen/targets_C_485740.txt Qv/gen/C_485740.cpp
+Qv/gen/targets_C_487720.txt Qv/gen/C_487720.cpp
+Qv/gen/targets_C_487ab0.txt Qv/gen/C_487ab0.cpp
+Qv/gen/targets_C_482ed0.txt Qv/gen/C_482ed0.cpp
+Qv/gen/targets_C_483150.txt Qv/gen/C_483150.cpp
+Qv/gen/targets_C_484370.txt Qv/gen/C_484370.cpp
+Qv/gen/targets_C_484f30.txt Qv/gen/C_484f30.cpp
+Qv/gen/targets_C_4862d0.txt Qv/gen/C_4862d0.cpp
+Qv/gen/targets_C_486d70.txt Qv/gen/C_486d70.cpp

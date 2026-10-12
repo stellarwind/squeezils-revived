@@ -3,6 +3,7 @@
 struct QvF489a80 : QvField { QvF489a80(); ~QvF489a80(); char v[40]; };
 struct QvF48a400 : QvField { QvF48a400(); ~QvF48a400(); char v[12]; };
 struct QvF489cc0 : QvField { QvF489cc0(); ~QvF489cc0(); char v[16]; };
+struct QvInfo482840 { char b[12]; void Assign(const char *s); };
 class QvNodeC483f90 : public QvNode {
 public:
     QvNodeC483f90();
@@ -11,6 +12,7 @@ public:
     QvF48a400 m1;   // +0x4c
     QvF489cc0 m2;   // +0x64
     QvF489cc0 m3;   // +0x80
+    // info string at +0x24 (accessed by offset)
     static QvFieldData *fieldData;
     static int firstInstance;
 };
@@ -36,6 +38,7 @@ QvNodeC483f90::QvNodeC483f90()
     if (firstInstance)
         fieldData->addField(this, "wrapT", &m3);
     m3.SetOwner(this);
+    ((QvInfo482840 *)((char *)this + 36))->Assign("");
     ((int *)this)[0x17] = 0;
     ((int *)this)[0x18] = 0;
     ((int *)this)[0x1c] = 0;
