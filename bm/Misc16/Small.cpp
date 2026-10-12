@@ -142,14 +142,14 @@ struct ComThing { virtual long __stdcall v0(); virtual long __stdcall v1(); virt
                   virtual long __stdcall v12(); virtual long __stdcall v13(); virtual long __stdcall v14(); virtual long __stdcall v15();
                   virtual long __stdcall v16(); virtual long __stdcall v17(); virtual long __stdcall Apply(void *what); };   // slot 18 (+0x48)
 struct Registry { ComThing *Find(int id); };                        // 0x476f90
-struct Slot8 { int pad[2]; void *handle; };                         // 0x08
-Slot8 * __stdcall FindSlot(int key);                                // 0x472f60
+struct Slot8 { int pad[2]; void *handle;                            // 0x08
+               Slot8 *FindSlot(int key); };                         // 0x472f60 (thiscall on the slot list head)
 struct Level2 { char pad[0x2c]; int key; };
 extern Registry *gRegistry;                                         // 0x4c75e0
 extern Level2 *gLevel2;                                             // 0x4c75dc
 struct Binder {
     int pad0;
-    int active;                                                     // 0x04
+    Slot8 *slots;                                                   // 0x04 slot list (0 = inactive)
     Slot8 *slot;                                                    // 0x08
     ComThing *thing;                                                // 0x0c
     void Bind(int id);                                              // 0x41d990
@@ -157,8 +157,8 @@ struct Binder {
 void Binder::Bind(int id)
 {
     thing = gRegistry->Find(id);
-    if (active) {
-        slot = FindSlot(gLevel2->key);
+    if (slots) {
+        slot = slots->FindSlot(gLevel2->key);
         thing->Apply(slot->handle);
     }
 }
