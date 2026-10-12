@@ -42,17 +42,17 @@ QvNodeC484b00::QvNodeC484b00()
     if (firstInstance)
         fieldData->addEnum("VertexOrdering", "UNKNOWN_ORDERING", 0);
     if (firstInstance)
-        fieldData->addEnum("ShapeType", "UNKNOWN_SHAPE_TYPE", 0);
-    if (firstInstance)
-        fieldData->addEnum("FaceType", "UNKNOWN_FACE_TYPE", 0);
-    if (firstInstance)
         fieldData->addEnum("VertexOrdering", "CLOCKWISE", 1);
+    if (firstInstance)
+        fieldData->addEnum("VertexOrdering", "COUNTERCLOCKWISE", 2);
+    if (firstInstance)
+        fieldData->addEnum("ShapeType", "UNKNOWN_SHAPE_TYPE", 0);
     if (firstInstance)
         fieldData->addEnum("ShapeType", "SOLID", 1);
     if (firstInstance)
-        fieldData->addEnum("FaceType", "CONVEX", 1);
+        fieldData->addEnum("FaceType", "UNKNOWN_FACE_TYPE", 0);
     if (firstInstance)
-        fieldData->addEnum("VertexOrdering", "COUNTERCLOCKWISE", 2);
+        fieldData->addEnum("FaceType", "CONVEX", 1);
     {
         int local_20;
         int local_1c;
