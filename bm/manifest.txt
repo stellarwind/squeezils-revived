@@ -301,3 +301,14 @@ Qv/targets_noderead.txt Qv/NodeRead.cpp
 Misc6/targets.txt Misc6/Small.cpp
 Misc7/targets.txt Misc7/Small.cpp
 Qv/targets_enum.txt Qv/Enum.cpp
+Misc8/targets.txt Misc8/Transform.cpp
+Mouse/targets.txt Mouse/Mouse.cpp
+Qv/targets_mfield.txt Qv/MField.cpp
+Mouse/targets_c.txt Mouse/Center.cpp
+Mouse/targets_d.txt Mouse/Dispatch.cpp
+Qv/targets_factory2.txt Qv/Factory2.cpp
+Joy/targets.txt Joy/Joy.cpp
+Player/targets.txt Player/Stop.cpp
+Misc9/targets.txt Misc9/Getters.cpp
+Misc9/targets_b.txt Misc9/More.cpp
+Qv/targets_mfset.txt Qv/MFSetNum.cpp

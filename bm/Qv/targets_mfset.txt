@@ -1,0 +1,6 @@
+#FLAGS -GX -GR -Gy -O2 -G3 -ML
+^\?SetNum@QvMFA  48a0e0 mfset_48a0e0
+^\?SetNum@QvMFB  48ab90 mfset_48ab90
+^\?SetNum@QvMFC  48aff0 mfset_48aff0
+^\?SetNum@QvMFD  48b250 mfset_48b250
+^\?SetNum@QvMFE  48b480 mfset_48b480
