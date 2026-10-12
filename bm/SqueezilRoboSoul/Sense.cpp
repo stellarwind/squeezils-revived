@@ -62,14 +62,14 @@ int SqueezilRoboSoul::SenseState(int kind)
             }
         } else if (gone) {
             record->id = -1;
-            action = 1 + (*last == -1);
+            action = 2 - (*last != -1);
             *last = record->id;
         } else {
             action = 0;
             *last = record->id;
         }
     } else {
-        action = 1 + (*last == -1);
+        action = 2 - (*last != -1);
     }
     switch (action) {
     case 0:
@@ -88,5 +88,5 @@ int SqueezilRoboSoul::SenseState(int kind)
         senseKind = 999;
         return 0x13;
     }
-    return 0x13;
+    return onGround;
 }

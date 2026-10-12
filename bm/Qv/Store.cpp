@@ -17,8 +17,8 @@ int QvReadTop(QvInputT *in, QvNodeT **out)
     if (ok && *out == 0 && !in->AtEnd()) {
         char c;
         in->ReadChar(&c);
-        ok = 0;
         QvError(in, kBadChar, (int)c);
+        ok = 0;
     }
     return ok;
 }

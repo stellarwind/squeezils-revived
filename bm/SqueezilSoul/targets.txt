@@ -12,3 +12,4 @@
 ^\?GetPossessions@SqueezilSoul  450300 getpossessions
 ^\?TakePossessions@SqueezilSoul 450310 takepossessions
 ^\?GetDefaultPhysics@SqueezilSoul 404fe0 getdefaultphysics
+^\?Touch@SoulT@@  450430 ss_touch 192

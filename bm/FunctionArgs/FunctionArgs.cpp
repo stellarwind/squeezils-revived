@@ -12,9 +12,6 @@ FunctionArgument::FunctionArgument(const char *variable)
     name = String(variable);
 }
 
-FunctionArgument::~FunctionArgument()
-{
-}
 
 void FunctionArgument::Print() {}
 

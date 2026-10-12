@@ -6,3 +6,4 @@
 ^\?\?0CreatePropFunction  46f800 cp_ctor cc
 ^\?Execute@CreatePropFunction  46fb00 cp_exec cc
 ^\?Apply@CreatePropFunction  46f890 cp_apply cc
+^\?Apply@CreatePropFunction  447780 cp_apply_d447780 16

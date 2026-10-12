@@ -1,0 +1,16 @@
+^\?\?0FloatFunctionArgument@@QAE@M 421170 ffa_float auto
+^\?\?0FloatFunctionArgument@@QAE@PBD 4211e0 ffa_name auto
+^\?\?0Vector3fFunctionArgument@@QAE@ABUFaVec 421460 vfa_vec auto
+^\?\?0Vector3fFunctionArgument@@QAE@PBD 4214f0 vfa_name auto
+^\?\?0StringFunctionArgument 421890 sfa 167
+^\?\?0BehaviorTypeFunctionArgument 423230 bfa 101
+^\?\?0StimulusTypeFunctionArgument 423400 stfa 101
+^?Print@BehaviorTypeFunctionArgument 4232a0 bfa_print
+^?Print@StimulusTypeFunctionArgument 423470 stfa_print
+^\?ParseFloatArgument@@YAPAVFloatFunctionArgument 421250 parsefloat 432
+^\?ParseArgument@@YAPAVFunctionArgument 420ee0 parseint 347
+^\?Get@Vector3fFunctionArgument 421800 vfa_get 138
+^\?ParseBehaviorArgument@@ 4232c0 parsebeh 289
+^\?ParseStimulusArgument@@ 423490 parsestim 283
+^\?ParseStringArgument@@ 421940 parsestr 302
+^\?ParseVectorArgument@@ 421560 parsevec 604

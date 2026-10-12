@@ -7,3 +7,27 @@
 ^?Rewind@LocationSimulation  413f80 ls_rewind cc
 ^?Load@LandSimulation  41e910 land_load cc
 ^?Make@LandSimulation  41ea60 land_make cc
+^?Init@LocationSimulation  412f90 ls_init cc
+^?Clear@PlaceSimulation  439a50 pl_clear
+^?Save@PlaceSimulation  439db0 pl_save
+^?Run@PlaceSimulation  439b40 pl_run
+^?Velocity@PlaceSimulation  439e90 pl_vel cc
+^?Load@PlaceSimulation  439b70 pl_load cc
+^?Init@PlaceSimulation  438940 pl_init auto
+^??0PlaceSimulation@@  438850 pl_ctor cc
+^??0LocationSimulation@@  412e80 ls_ctor cc
+^?Put@CreatureTable  412da0 ct_put cc
+^?PointNearSegment@@  413100 pointnear cc
+^?Save@Creature  412cc0 cr_save
+^?Load@Creature  412cf0 cr_load
+^?NewCreature@@  412c40 cr_new cc
+^?Load@RegionSimulation  418680 rg_load cc
+^?Save@RegionSimulation  4188c0 rg_save
+^?Velocity@RegionSimulation  4189b0 rg_vel cc
+^?Clear@RegionSimulation  417600 rg_clear
+^?Init@LandSimulation  41e490 land_init auto
+^?Start@PlaceSimulation  438ee0 pl_start auto
+^?CollideCreatures@LocationSimulation  413280 ls_collide auto
+^?Init@RegionSimulation  416f50 rg_init auto
+^?Write@Character  4489c0 ch_write 16
+^?CreateCharacter@@  448a00 ch_create 111

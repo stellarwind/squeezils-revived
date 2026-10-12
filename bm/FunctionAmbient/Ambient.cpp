@@ -23,3 +23,11 @@ void StartAmbientLoopFunction::Print()
 }
 
 const char *StartAmbientLoopFunction::Name() { return "StartAmbientLoop"; }
+
+void PlayAmbientLoop(String name, int a, float b, float c);          // 0x44a5a0 (cdecl)
+
+int StartAmbientLoopFunction::Execute(ScriptCall *args, int extra)   // 0x43a4d0
+{
+    PlayAmbientLoop(sound, a->Get(extra), b->Get(extra), c->Get(extra));
+    return 1;
+}

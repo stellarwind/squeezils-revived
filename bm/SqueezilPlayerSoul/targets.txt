@@ -1,1 +1,12 @@
 ^\?GetKind@SqueezilPlayerSoul  41fb70 getkind
+^?Hit@SqueezilPlayerSoul  41fab0 hit
+^?OnEvent@EventTarget  41eff0 onevent
+^?ReadGroundInput@SqueezilPlayerSoul  41f1c0 gi
+^?Run@Soul@@  452bb0 slot_452bb0
+^?Run@Soul3@@  456500 slot_456500 39
+^\?Run@Soul4@@  4558a0 slot_4558a0 80
+^\?Run@Soul5@@  4564b0 slot_4564b0 80
+^\?Run@Soul6@@  456430 slot_456430 128
+^\?Run@Soul7@@  454ab0 slot_454ab0 144
+^\?Run@Soul8@@  456350 slot_456350 224
+^\?Run@Soul9@@  455a90 slot_455a90 329

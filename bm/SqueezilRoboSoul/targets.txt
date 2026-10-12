@@ -7,3 +7,4 @@
 ^?Sense@SqueezilRoboSoul   404720 sense
 ^?TargetGone@SqueezilRoboSoul 4047c0 targetgone
 ^\?SenseState@SqueezilRoboSoul 404920 sensestate
+^?Hit@SqueezilRoboSoul  404630 robo_hit

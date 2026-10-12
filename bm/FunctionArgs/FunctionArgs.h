@@ -8,8 +8,8 @@ class FunctionArgument {
 public:
     FunctionArgument();                      // 0x420d20
     FunctionArgument(const char *variable);  // 0x420c80
-    ~FunctionArgument();                     // 0x420e20 (non-virtual: only the String member)
     virtual void Print();                    // slot 0: 0x420d90 for the base
+    // no user dtor: the original 0x420e20 is the implicit one (no vptr store); declaring ~FunctionArgument() adds one
     int    literal;                          // 0x04
     String name;                             // 0x08
 };
