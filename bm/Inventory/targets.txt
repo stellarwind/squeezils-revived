@@ -1,4 +1,4 @@
-^\?\?0Inventory     415ef0 ctor auto
+^\?\?0Inventory     415ef0 ctor cc
 ^\?\?1Inventory     416030 dtor auto
 ^\?Add@Inventory    416110 add auto
 ^\?Remove@Inventory 416280 remove auto

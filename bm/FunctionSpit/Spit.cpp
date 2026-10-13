@@ -1,3 +1,8 @@
+// 4 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
 // AddSpitNutsFunction (SQZ.EXE 0x423b00-0x423d80).
 #include "FunctionSpit/Spit.h"
 

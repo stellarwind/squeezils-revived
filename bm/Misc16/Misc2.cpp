@@ -188,7 +188,8 @@ void ShutdownTable()
     for (;;) {
         if (!(i < GetBigTable()->count))
             break;
-        GetBigTable()->KeyAt(i).c_str();
+        else
+            GetBigTable()->KeyAt(i).c_str();
         GetBigTable()->items[i]->Release();
         i++;
     }
