@@ -17,6 +17,8 @@ void PadDecl13();
 void PadDecl14();
 #include "String/String.h"
 #define PB_STRING
+#define PB_READ_DIRECT
+#define PB_WRITE_TAIL
 #include "Container2/PrimBuf.h"
 
 template class PrimitiveArray<String, 13>;

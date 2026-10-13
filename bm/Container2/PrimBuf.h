@@ -82,10 +82,16 @@ void PrimitiveArray<T, ID>::Read(void *stream)
 {
     ByteStream *s = (ByteStream *)stream;
     s->ReadInt(&count);
+#ifdef PB_READ_DIRECT
+    // Same code without the Array<T> temporary; VC++ 4.1 then keeps the vtable in ebx (PrimitiveArray<String, 0>).
+    if (capacity < count)
+        Grow(count - capacity);
+#else
     if (capacity < count) {
         Array<T> *self = this;
         self->Grow(count - capacity);
     }
+#endif
     for (int i = 0; i < count; i++)
         ReadElem(s, &data[i]);
 }

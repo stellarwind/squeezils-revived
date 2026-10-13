@@ -1,3 +1,7 @@
+// Spare declarations: the symbol count steers register choice (padscan: 3 takes chase_ctor from 20 to 8).
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
 // ChaseBehavior constructor (SQZ.EXE 0x403b60, vtable 0x49d14c): a TurnTargetActivity and a StopActivity.
 #include "Activity/Activity.h"
 struct ChaseBehavior : Behavior {

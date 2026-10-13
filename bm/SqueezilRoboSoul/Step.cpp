@@ -1,3 +1,16 @@
+// 12 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
+void PadDecl11();
+void PadDecl12();
 // SqueezilRoboSoul 0x4045b0 / 0x4045f0: ask the soul's state, tell the soul (slots 41 / 42), then ask the behaviour for the answer.
 struct RoboBehavior {
     virtual int Execute(int a, int b);                   // slot 1 is Execute below
@@ -23,7 +36,7 @@ struct StepSoul {
 
 void StepSoul::StepGround(int arg, int *out)
 {
-    SetGround(GetState(), arg);
+    int s = GetState(); SetGround(s, arg);
     *out = behaviour->Execute(arg, 0);
 }
 
