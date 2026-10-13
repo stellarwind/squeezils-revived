@@ -24,13 +24,12 @@ void String::MakeUnique()
         rep->refs++;
         return;
     }
-    int *refs = &old->refs;
-    if (*refs <= 1) return;
+    if (rep->refs <= 1) return;
     rep = new StringRep;
     rep->Reserve(old->cap);
     strcpy(rep->buf, old->buf);
     rep->refs = 1;
-    (*refs)--;
+    old->refs--;
 }
 
 void String::Release()
