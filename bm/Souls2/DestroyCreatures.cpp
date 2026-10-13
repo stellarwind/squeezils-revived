@@ -33,6 +33,8 @@ struct LocationSimX {
 
 void LocationSimX::DestroyCreatures()
 {
+    if (ids.count <= 0)
+        return;
     int i;
     for (i = 0; i < ids.count; i++) {
         int index = creatures->IndexOf(ids.Get(i));
@@ -43,6 +45,6 @@ void LocationSimX::DestroyCreatures()
         delete creatures->data[index];
         creatures->RemoveAt(index);
     }
-    for (int j = ids.count - 1; j >= 0; j--)
-        ids.RemoveAt(j);
+    for (i = ids.count - 1; i >= 0; i--)
+        ids.RemoveAt(i);
 }
