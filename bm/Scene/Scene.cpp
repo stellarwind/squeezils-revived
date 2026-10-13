@@ -292,37 +292,37 @@ int Scene::BeginFrame()
         hr = renderer->backBuffer->Blt(0, 0, 0, 0x1000400, &fx2);
         if (hr < 0)
             renderer->Error("Blt failed for clear (back).\n%s", HResultToString(hr));
-        return 1;
-    }
-    EnsureWarpSurface();
-    {
-    DDSURFACEDESC desc;
-    memset(&desc, 0, sizeof(desc));
-    desc.dwSize = sizeof(desc);
-    hr = warpSurface->Lock(0, &desc, DDLOCK_WAIT, 0);
-    if (hr < 0) {
-        renderer->Error("Lock failed (warp).\n%s", HResultToString(hr));
-        return 0;
-    }
-    warp->SetOutput(desc.lpSurface);
-    SkyDraw();
-    hr = warpSurface->Unlock(desc.lpSurface);
-    if (hr < 0)
-        renderer->Error("Unlock failed (warp).\n%s", HResultToString(hr));
-    }
-    RECT src, dst;
-    src.left = 0;
-    src.top = 0;
-    src.right = warpWidth;
-    src.bottom = warpHeight;
-    dst.left = 0;
-    dst.top = 0;
-    dst.right = renderer->width;
-    dst.bottom = renderer->height;
-    hr = renderer->backBuffer->Blt(&dst, warpSurface, &src, 0x1000000, 0);
-    if (hr < 0) {
-        renderer->Error("Blt failed (warp).\n%s", HResultToString(hr));
-        return 0;
+    } else {
+        EnsureWarpSurface();
+        {
+        DDSURFACEDESC desc;
+        memset(&desc, 0, sizeof(desc));
+        desc.dwSize = sizeof(desc);
+        hr = warpSurface->Lock(0, &desc, DDLOCK_WAIT, 0);
+        if (hr < 0) {
+            renderer->Error("Lock failed (warp).\n%s", HResultToString(hr));
+            return 0;
+        }
+        warp->SetOutput(desc.lpSurface);
+        SkyDraw();
+        hr = warpSurface->Unlock(desc.lpSurface);
+        if (hr < 0)
+            renderer->Error("Unlock failed (warp).\n%s", HResultToString(hr));
+        }
+        RECT src, dst;
+        src.left = 0;
+        src.top = 0;
+        src.right = warpWidth;
+        src.bottom = warpHeight;
+        dst.left = 0;
+        dst.top = 0;
+        dst.right = renderer->width;
+        dst.bottom = renderer->height;
+        hr = renderer->backBuffer->Blt(&dst, warpSurface, &src, 0x1000000, 0);
+        if (hr < 0) {
+            renderer->Error("Blt failed (warp).\n%s", HResultToString(hr));
+            return 0;
+        }
     }
     return 1;
 }

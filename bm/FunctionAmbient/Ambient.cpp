@@ -25,9 +25,11 @@ void StartAmbientLoopFunction::Print()
 const char *StartAmbientLoopFunction::Name() { return "StartAmbientLoop"; }
 
 void PlayAmbientLoop(String name, int a, float b, float c);          // 0x44a5a0 (cdecl)
+struct AmbVec { float x, y, z; AmbVec() {} ~AmbVec(); };              // Vector3f, dtor 0x401660
 
 int StartAmbientLoopFunction::Execute(ScriptCall *args, int extra)   // 0x43a4d0
 {
+    AmbVec unused;                      // leftover local in the original
     PlayAmbientLoop(sound, a->Get(extra), b->Get(extra), c->Get(extra));
     return 1;
 }

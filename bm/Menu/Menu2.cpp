@@ -222,6 +222,18 @@ struct Prefs {
     CalObj *cal;               // +0x10
 };
 Prefs *GetPrefs();             // 0x4206b0
+// 11 spare declarations (symbol count, see padscan.sh)
+extern int g_pad1;
+extern int g_pad2;
+extern int g_pad3;
+extern int g_pad4;
+extern int g_pad5;
+extern int g_pad6;
+extern int g_pad7;
+extern int g_pad8;
+extern int g_pad9;
+extern int g_pad10;
+extern int g_pad11;
 
 int CALLBACK JoystickDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -288,6 +300,28 @@ int CALLBACK JoystickDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+// 21 spare declarations (symbol count, see padscan.sh)
+extern int g_qad1;
+extern int g_qad2;
+extern int g_qad3;
+extern int g_qad4;
+extern int g_qad5;
+extern int g_qad6;
+extern int g_qad7;
+extern int g_qad8;
+extern int g_qad9;
+extern int g_qad10;
+extern int g_qad11;
+extern int g_qad12;
+extern int g_qad13;
+extern int g_qad14;
+extern int g_qad15;
+extern int g_qad16;
+extern int g_qad17;
+extern int g_qad18;
+extern int g_qad19;
+extern int g_qad20;
+extern int g_qad21;
 extern char g_text[];      // 0x4c6468
 extern int g_dirty;        // 0x4b9510
 
