@@ -31,9 +31,9 @@ struct Movie {
 int Movie::Open(const char *file, int a, int b, int fatal)
 {
     int err = -1;
+    name = file;
     type = "avivideo";
     style = 0x40000000;
-    name = file;
     parent = g_mainWnd;
     while (err) {
         err = mciSendCommand(0, MCI_OPEN, 0x2202, (DWORD)&cb);

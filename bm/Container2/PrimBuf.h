@@ -58,9 +58,20 @@ template <class T, int ID>
 void PrimitiveArray<T, ID>::Write(void *stream)
 {
     ByteStream *s = (ByteStream *)stream;
+#ifdef PB_WRITE_TEMPS
+    // Same code; the extra named temporaries only shift VC++ 4.1's register choice (PrimitiveArray<String, 3>).
+    int *n = &count;
+    s->WriteInt(n);
+    for (int i = 0; i < count; i++) {
+        T *e = &data[i];
+        ByteStream *t = s;
+        WriteElem(t, e);
+    }
+#else
     s->WriteInt(&count);
     for (int i = 0; i < count; i++)
         WriteElem(s, &data[i]);
+#endif
 }
 
 template <class T, int ID>
@@ -68,9 +79,10 @@ void PrimitiveArray<T, ID>::Read(void *stream)
 {
     ByteStream *s = (ByteStream *)stream;
     s->ReadInt(&count);
-    Array<T> *self = this;
-    if (capacity < count)
+    if (capacity < count) {
+        Array<T> *self = this;
         self->Grow(count - capacity);
+    }
     for (int i = 0; i < count; i++)
         ReadElem(s, &data[i]);
 }

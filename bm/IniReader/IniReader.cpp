@@ -58,16 +58,18 @@ int IniReader::GetFloats(const char *key, float *out) const
 {
     const char *v = Lookup(section, key);
     if (v)
-        return IniParseFloats(v, out, 0);
+        return ParseFloats(v, out, 0);
     return 0;
 }
 
 float IniReader::GetFloat(const char *key, float def) const
 {
     const char *v = Lookup(section, key);
-    float r = def;
+    float r;
     if (v)
         r = (float)atof(v);
+    else
+        r = def;
     return r;
 }
 
@@ -108,7 +110,7 @@ StringList *IniReader::GetKeys() const
     return list;
 }
 
-int __stdcall IniParseFloats(const char *s, float *out, const char **end)
+int IniReader::ParseFloats(const char *s, float *out, const char **end) const
 {
     int n;
     for (n = 0; n < 3; n++) {
@@ -126,7 +128,7 @@ int __stdcall IniParseFloats(const char *s, float *out, const char **end)
 PrimitiveArray<int, 1> *IniReader::ParseIntList(const char *s) const
 {
     PrimitiveArray<int, 1> *list = new PrimitiveArray<int, 1>;
-    for (;;) {
+    do {
         while (*s == ' ' && *s != 0)
             s++;
         if (!*s)
@@ -134,6 +136,6 @@ PrimitiveArray<int, 1> *IniReader::ParseIntList(const char *s) const
         list->Insert(atoi(s), -1);
         while (*s != ' ' && *s != 0)
             s++;
-    }
+    } while (*s);
     return list;
 }

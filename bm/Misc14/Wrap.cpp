@@ -3,9 +3,7 @@
 #include "compat41.h"
 
 struct Item { int w[4]; ~Item(); };
-Item __stdcall HelperA(int id, void *sub, int x);              // 0x40d070
-Item __stdcall HelperB(int id, void *sub, int x);              // 0x40cb30
-Item __stdcall HelperC(int id, void *sub, int x, int zero);    // 0x40c8a0
+// HelperA/B/C are Source members: ecx stays this across the call.
 
 struct Source {
     char pad[4];
@@ -14,6 +12,9 @@ struct Source {
     Item GetA(int id);
     Item GetB(int id);
     Item GetC(int id);
+    Item HelperA(int id, void *sub, int x);           // 0x40d070
+    Item HelperB(int id, void *sub, int x);           // 0x40cb30
+    Item HelperC(int id, void *sub, int x, int zero); // 0x40c8a0
 };
 
 Item Source::GetA(int id)

@@ -20,6 +20,7 @@ public:
     String GetDirectory() const;                                      // 0x4433a0
     const char *GetPath() const;                                      // 0x443460
     StringList *GetKeys() const;                                      // 0x443470
+    int ParseFloats(const char *text, float *out, const char **end) const;   // 0x443590
     PrimitiveArray<int, 1> *ParseIntList(const char *text) const;     // 0x4435f0
 
     char *path;           // 0x0 255 byte buffer
@@ -27,4 +28,3 @@ public:
     IniFileCache *file;   // 0x8
 };
 
-int __stdcall IniParseFloats(const char *text, float *out, const char **end);   // 0x443590
