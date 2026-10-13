@@ -72,6 +72,9 @@ void PrimitiveArray<T, ID>::Write(void *stream)
     for (int i = 0; i < count; i++)
         WriteElem(s, &data[i]);
 #endif
+#ifdef PB_WRITE_TAIL
+    enum { WT1, WT2, WT3, WT4, WT5, WT6, WT7, WT8 };
+#endif
 }
 
 template <class T, int ID>
