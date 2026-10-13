@@ -74,13 +74,11 @@ void NutCounter::DrawNumber(int value, int px, int py)
 {
     int left, top;
     if (value >= 10) {
-        int tens = value / 10;
+        left = px - GetPanel()->digits[value % 10]->GetWidth() / 2 - GetPanel()->digits[value / 10]->GetWidth() / 2;
+        top = py - GetPanel()->digits[value / 10]->GetHeight() / 2;
+        GetPanel()->digits[value / 10]->DrawToBitmap(icon, left, top, 0, 0);
+        left += GetPanel()->digits[value / 10]->GetWidth();
         value = value % 10;
-        left = px - GetPanel()->digits[value]->GetWidth() / 2;
-        left -= GetPanel()->digits[tens]->GetWidth() / 2;
-        top = py - GetPanel()->digits[tens]->GetHeight() / 2;
-        GetPanel()->digits[tens]->DrawToBitmap(icon, left, top, 0, 0);
-        left += GetPanel()->digits[tens]->GetWidth();
     } else {
         left = px - GetPanel()->digits[value]->GetWidth() / 2;
         top = py - GetPanel()->digits[value]->GetHeight() / 2;

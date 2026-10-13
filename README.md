@@ -6,7 +6,7 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 
 `███████████░░░░░░░░░░░░░░░░░░░` **37.5%**
 
-**1731 of 4615** game-logic functions (0x401000-0x47e600) are byte-exact (29.2% of the code bytes).
+**1732 of 4615** game-logic functions (0x401000-0x47e600) are byte-exact (29.3% of the code bytes).
 
 ## Map of the EXE
 
@@ -37,13 +37,13 @@ SQZ.EXE   Win32 executable, Visual C++ 4.1, 1996
   D3DRM.DLL   DDRAW.DLL   KERNEL32.DLL   USER32.DLL   WINMM.DLL ...
 ```
 
-## Leftovers: 2884 functions
+## Leftovers: 2883 functions
 
 | State | Functions |
 |---|---|
 | Nearly there (1-4 differing instructions) | 6 |
-| Close (5-20) | 19 |
+| Close (5-20) | 18 |
 | Far (more than 20) | 65 |
 | Not started | 2794 |
 
-_Updated Tue Oct 13 15:31:43 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
+_Updated Tue Oct 13 15:37:50 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
