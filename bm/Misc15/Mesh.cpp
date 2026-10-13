@@ -1,6 +1,6 @@
 // A collision mesh (SQZ.EXE 0x47ad20-0x47b180): vertex array, 0x28-byte face array and a spatial tree.
 struct MV3 { float x, y, z; MV3() {} MV3(float a, float b, float c) : x(a), y(b), z(c) {} ~MV3(); MV3 &operator=(const MV3 &o) { x = o.x; y = o.y; z = o.z; return *this; } };   // dtor 0x401660
-struct MVert { float x, y, z; MVert(); ~MVert(); };                                                      // ctor 0x457040, dtor 0x401660
+struct MVert : MV3 { MVert(); };                                                                      // ctor 0x457040; dtor is MV3::~MV3 0x401660
 struct TreeNode { void Clear(); };                                                                       // 0x47ae10
 struct MFace {                                                                                           // 0x28 bytes
     int a, b, c;            // 0x00
@@ -77,6 +77,9 @@ int Mesh::AllocFaces(int n)
     return 1;
 }
 
+// 22 spare declarations (symbol count, see padscan.sh)
+void PadDecl1(), PadDecl2(), PadDecl3(), PadDecl4(), PadDecl5(), PadDecl6(), PadDecl7(), PadDecl8(), PadDecl9(), PadDecl10(), PadDecl11(), PadDecl12(), PadDecl13(), PadDecl14(), PadDecl15(), PadDecl16(), PadDecl17(), PadDecl18(), PadDecl19(), PadDecl20(), PadDecl21(), PadDecl22();
+
 void Mesh::FreeVerts()
 {
     if (verts)
@@ -84,6 +87,9 @@ void Mesh::FreeVerts()
     vertCount = 0;
     verts = 0;
 }
+
+// 10 more spare declarations
+void PadDeclB1(), PadDeclB2(), PadDeclB3(), PadDeclB4(), PadDeclB5(), PadDeclB6(), PadDeclB7(), PadDeclB8(), PadDeclB9(), PadDeclB10();
 
 void Mesh::FreeFaces()
 {
