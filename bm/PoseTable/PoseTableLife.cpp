@@ -8,19 +8,19 @@ PoseTable::PoseTable()
 
 PoseTable::~PoseTable()
 {
-    for (int i = 0; i < keys.count; i++) {
-        PartPose *p = values.data[i];
+    for (int i = 0; i < table.keys.count; i++) {
+        PartPose *p = table.values.data[i];
         delete p;
     }
 }
 
 PartPose *PoseTable::Find(const char *partName)
 {
-    return Get(String(partName));
+    return table.Get(String(partName));
 }
 
 void PoseTable::Assign(const PoseTable &o)
 {
     for (int i = 0; i < o.Count(); i++)
-        values.data[i]->Assign(*o.values.data[i]);
+        table.values.data[i]->Assign(*o.table.values.data[i]);
 }

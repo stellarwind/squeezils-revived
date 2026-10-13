@@ -4,9 +4,9 @@ Decompilation of **Squeezils** (Protozoa, 1997): readable C++ for `SQZ.EXE`, che
 
 ## Current matching
 
-`███████████░░░░░░░░░░░░░░░░░░░` **36.7%**
+`███████████░░░░░░░░░░░░░░░░░░░` **36.9%**
 
-**1693 of 4615** game-logic functions (0x401000-0x47e600) are byte-exact (27.9% of the code bytes).
+**1704 of 4615** game-logic functions (0x401000-0x47e600) are byte-exact (28.5% of the code bytes).
 
 ## Map of the EXE
 
@@ -18,7 +18,7 @@ SQZ.EXE   Win32 executable, Visual C++ 4.1, 1996
 │ │ ◆ MAIN GAME LOGIC            0x401000 - 0x47e600   502 KB    │ │
 │ │   Protozoa's own code: souls, behaviours, physics, scenes,   │ │
 │ │   menus, rendering glue.  4,615 functions.                   │ │
-│ │   GOAL: byte-match.   ███████░░░░░░░░░░░░░ 36.7%             │ │
+│ │   GOAL: byte-match.   ███████░░░░░░░░░░░░░ 36.9%             │ │
 │ ├──────────────────────────────────────────────────────────────┤ │
 │ │ ◇ QvLib (VRML importer)      0x47e600 - 0x48e000    63 KB    │ │
 │ │   3rd-party parser, linked in.  Only its OUTPUT must match.  │ │
@@ -37,13 +37,13 @@ SQZ.EXE   Win32 executable, Visual C++ 4.1, 1996
   D3DRM.DLL   DDRAW.DLL   KERNEL32.DLL   USER32.DLL   WINMM.DLL ...
 ```
 
-## Leftovers: 2922 functions
+## Leftovers: 2911 functions
 
 | State | Functions |
 |---|---|
-| Nearly there (1-4 differing instructions) | 6 |
-| Close (5-20) | 56 |
-| Far (more than 20) | 66 |
+| Nearly there (1-4 differing instructions) | 5 |
+| Close (5-20) | 47 |
+| Far (more than 20) | 65 |
 | Not started | 2794 |
 
-_Updated Mon Oct 12 21:54:13 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
+_Updated Tue Oct 13 08:39:33 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._

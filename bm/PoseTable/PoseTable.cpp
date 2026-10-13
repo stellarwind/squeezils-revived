@@ -3,10 +3,10 @@
 
 int PoseTable::Count() const
 {
-    return keys.count;
+    return table.keys.count;
 }
 
 PartPose *PoseTable::At(int index)
 {
-    return values.data[index];
+    return table.values.data[index];
 }

@@ -100,8 +100,7 @@ int PaceBehavior::Execute(int a, int b)
             turn.TurnY(turnDegrees * 0.0174533f);
             orient = turn * orient;
             dest = p + (*(Vector3f *)&orient.m[8]) * 10.0f;
-            PaceSub *w = walkB;
-            current = w;
+            PaceSub *w = current = walkB;
             w->dest = dest;
             mode++;
         }

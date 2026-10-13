@@ -1,7 +1,7 @@
 ^\?Contains@\?\$Set@VString@@\$0BH@  4626f0 contains
 ^\?IndexOf@\?\$Set@VString@@\$0BH@   462710 indexof
 ^\?RemoveKey@\?\$Set@VString@@\$0BH@ 4627c0 removekey
-^\?Replace@\?\$Set@VString@@\$0BH@   4627e0 replace
+^\?Replace@\?\$Set@VString@@\$0BH@   4627e0 replace 156
 ^\?Insert@\?\$Set@VString@@\$0BH@  462380 insert 831
 ^\?Contains@\?\$Set@VString@@\$0BH@  45f230 contains_d45f230
 ^\?RemoveKey@\?\$Set@VString@@\$0BH@  45f2c0 removekey_d45f2c0

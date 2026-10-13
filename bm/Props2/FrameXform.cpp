@@ -18,5 +18,9 @@ struct XFrame {                                          // FrameProp seen from 
 
 XMat XFrame::CurrentPose()
 {
-    return (*(XPose **)((char *)body + 0x40))->Find(kPoseName)->Transform();
+    // The single-case switch reproduces the original's EH tail order (handler stub before the unwind funclet).
+    switch (0) {
+    default:
+        return (*(XPose **)((char *)body + 0x40))->Find(kPoseName)->Transform();
+    }
 }

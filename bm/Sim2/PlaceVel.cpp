@@ -19,10 +19,14 @@ struct PlaceSimulation {
 Float3 PlaceSimulation::Velocity(Body *body)
 {
     if (!body->IsOnSurface())
-        {
-            Float3 zero;
-            return zero;
-        }
-    Face *face = GetSurfaces()->FaceOf(body->GetContact());
-    return face->Carried(body->GetMatrix() + 12);
+        goto none;
+    {
+        Face *face = GetSurfaces()->FaceOf(body->GetContact());
+        return face->Carried(body->GetMatrix() + 12);
+    }
+none:
+    {
+        Float3 zero;
+        return zero;
+    }
 }

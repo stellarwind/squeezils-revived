@@ -86,7 +86,12 @@ T *Array<T>::Data()
 template <class T>
 T Array<T>::Get(int i)
 {
+#ifdef ARRAY_GET_VIA_LOCAL
+    T *d = data;                                       // Array<String> (0x40ec10): data gets its own register, i stays in eax
+    return d[i];
+#else
     return data[i];
+#endif
 }
 
 template <class T>
