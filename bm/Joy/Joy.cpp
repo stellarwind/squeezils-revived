@@ -23,8 +23,9 @@ Joystick *Joystick::Init()
     f2c = 0;
     f18 = 0;
     f1c = 0;
-    present = 1;
-    if (joyGetPosEx(0, &info))
+    if (joyGetPosEx(0, &info) == JOYERR_NOERROR)
+        present = 1;
+    else
         present = 0;
     g_joystick = this;
     f44 = 0;

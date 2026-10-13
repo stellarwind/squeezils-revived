@@ -336,8 +336,10 @@ int Scene::LoadWarp(const char *name)
         warp->Init(warpHeight, warpWidth, renderer->fovDegrees, 1);
     }
     int format[6];
-    int tmp[6];
-    memcpy(format, renderer->GetPixelFormat(tmp), sizeof(format));
+    {
+        int tmp[6];
+        memcpy(format, renderer->GetPixelFormat(tmp), sizeof(format));
+    }
     unsigned char planes[768];
     if (!warp->Load(name, planes, format)) {
         if (warp) {

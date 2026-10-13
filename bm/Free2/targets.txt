@@ -1,2 +1,2 @@
 # regex-on-mangled-name  address  label
-^\?RayPlane   47d850 rayplane auto
+^\?RayPlane   47d850 rayplane cc
