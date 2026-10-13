@@ -1,3 +1,20 @@
+// 16 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
+void PadDecl11();
+void PadDecl12();
+void PadDecl13();
+void PadDecl14();
+void PadDecl15();
+void PadDecl16();
 // SqueezilPlayerSoul::JumpPressed (0x41f070): runs on the second base subobject (this = soul + 0x80).
 struct PBody {
     virtual void s0();
@@ -124,7 +141,8 @@ void PlayerSoulSub2::JumpReleased(float strength)
 void PlayerSoulSub2::SpitPressed()
 {
     PlayerSoulY *s = (PlayerSoulY *)((char *)this - 0x80);
-    s->SetState(s->SpitState(), 0);
+    int state = s->SpitState();
+    s->SetState(state, 0);
 }
 
 void PlayerSoulSub2::SpitReleased(float strength)

@@ -6,11 +6,11 @@ int Renderer::PositionWindowed(int w, int h)
     SetLastError(0);
     LONG style = GetWindowLong(hwnd, GWL_STYLE);
     int dw, dh, dbpp;
+    QueryDesktopMode(&dw, &dh, &dbpp);
     style |= WS_SYSMENU;
     style |= WS_MINIMIZEBOX;
     style |= WS_CAPTION;
     style |= WS_DLGFRAME;
-    QueryDesktopMode(&dw, &dh, &dbpp);
     if (!SetWindowLong(hwnd, GWL_STYLE, style))
         GetLastError();
     RECT r;

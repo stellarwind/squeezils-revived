@@ -27,17 +27,20 @@ struct Sighting {
     float distance;
     int stale;
     void Offer(const Sighting *o);
+    void Take(const Sighting *o)
+    {
+        id = o->id;
+        distance = o->distance;
+        w4 = o->w4;
+        w8 = o->w8;
+        int t = o->wc;
+        stale = 0;
+        wc = t;
+    }
 };
 
 void Sighting::Offer(const Sighting *o)
 {
-    if (stale == 0 && !(distance > o->distance))
-        return;
-    id = o->id;
-    distance = o->distance;
-    w4 = o->w4;
-    w8 = o->w8;
-    int t = o->wc;
-    stale = 0;
-    wc = t;
+    if (stale || distance > o->distance)
+        Take(o);
 }

@@ -4,7 +4,8 @@
 #include "String/String.h"
 #include "Container/ContainerSet.h"
 
-struct CreatureTemplate : PrimitiveArray<String, 3> {
+struct CreatureTemplate {
+    PrimitiveArray<String, 3> names;   // 0x00 StringList of stimulus function names
     float senseRadius[3];   // 0x14 SenseRadiusP/R/G
     int   bodyColor;        // 0x20
 

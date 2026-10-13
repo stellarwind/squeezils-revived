@@ -148,7 +148,7 @@ int L::f_43dc20(int i)
 
 void L::f_45de40(int i, int *p)
 {
-    ((int *)w[3])[i] = *p;
+    ((float *)w[3])[i] = *(float *)p;
 }
 
 int L::f_477ed0(int v)

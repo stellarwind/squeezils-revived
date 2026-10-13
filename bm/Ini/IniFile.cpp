@@ -1,4 +1,4 @@
-// 7 spare declarations (symbol count, see padscan.sh)
+// 11 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
 void PadDecl3();
@@ -6,6 +6,10 @@ void PadDecl4();
 void PadDecl5();
 void PadDecl6();
 void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
+void PadDecl11();
 // IniFile (SQZ.EXE 0x4426d0-0x443120), functions in address order.
 #include <stdio.h>
 #include <string.h>
@@ -66,7 +70,9 @@ StringList *IniFileSection::Keys()
 
 IniFileCache::~IniFileCache()
 {
-    for (int i = sections.keys.count - 1; i >= 0; i--) {
+    for (int i = sections.keys.count - 1; ; i--) {
+        if (i < 0)
+            break;
         IniFileSection *section = sections.values.data[i];
         if (section)
             delete section;
@@ -139,10 +145,12 @@ IniFileCache *IniOpen(const char *path)
 {
     if (g_iniFiles.Contains(String(path)))
         return g_iniFiles.Get(String(path));
-    IniFileCache *file = new IniFileCache;
-    file->Load(path);
-    g_iniFiles.Insert(String(path), file, -1);
-    return file;
+    else {
+        IniFileCache *file = new IniFileCache;
+        file->Load(path);
+        g_iniFiles.Insert(String(path), file, -1);
+        return file;
+    }
 }
 
 void IniCloseAll()
