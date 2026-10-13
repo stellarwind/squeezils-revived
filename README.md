@@ -46,4 +46,4 @@ SQZ.EXE   Win32 executable, Visual C++ 4.1, 1996
 | Far (more than 20) | 65 |
 | Not started | 2794 |
 
-_Updated Tue Oct 13 09:52:16 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
+_Updated Tue Oct 13 10:18:46 2026. Not counted: the VRML importer (QvLib), which is only checked by its output, and the Microsoft C runtime, which is linked from the original LIBC.LIB. Game files are not included._
