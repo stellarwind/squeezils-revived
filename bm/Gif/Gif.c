@@ -143,7 +143,7 @@ short rowWidth;
     short rowLeft;
     short rc;
     short code;
-    short oldCode;
+    int oldCode;
     short firstChar;
     unsigned short in;
     unsigned char *row, *rp, *sp;
@@ -203,9 +203,9 @@ short rowWidth;
                 in = oldCode;
                 *sp++ = (unsigned char)firstChar;
             }
-            while (gFirstFree <= in) {
-                *sp++ = gSuffix[in];
-                in = gPrefix[in];
+            while (gFirstFree <= (short)in) {
+                *sp++ = gSuffix[(short)in];
+                in = gPrefix[(short)in];
             }
             *sp++ = (unsigned char)in;
             if (gNextFree < gLimit) {
@@ -248,7 +248,7 @@ unsigned int *width;
 unsigned int *height;
 {
     int rc;
-    int i, c, done, pixels;
+    int c, done, pixels, i;
     unsigned int w, h;
     unsigned char head[13];
 
@@ -284,18 +284,20 @@ unsigned int *height;
     }
     done = 0;
     w = *(unsigned int *)head;
-    pixels = 0;
     do {
         c = ReadByte();
-        if (c == 0x21) {
+        switch (c) {
+        case 0x21:
             ReadByte();
             while ((c = ReadByte()) > 0) {
+                int n = c;
                 do {
                     ReadByte();
-                    c--;
-                } while (c != 0);
+                    n--;
+                } while (n != 0);
             }
-        } else if (c == 0x2c) {
+            break;
+        case 0x2c:
             i = 0;
             do {
                 c = ReadByte();
@@ -309,7 +311,7 @@ unsigned int *height;
             if (rc < 0) {
                 done = 1;
             } else {
-                w = *(unsigned short *)&head[4];
+                w = (head[5] << 8) | head[4];
                 h = (head[7] << 8) | head[6];
                 gHeight = w;
                 gOut = (unsigned char *)malloc(h * w);
@@ -319,15 +321,18 @@ unsigned int *height;
                     fclose(gFile);
                     return 0;
                 }
+                rc = Decode(w);
                 done = 1;
-                rc = Decode((short)w);
             }
-        } else if (c == 0x3b) {
+            break;
+        case 0x3b:
             done = 1;
             rc = 0;
-        } else {
+            break;
+        default:
             rc = -1;
             done = 1;
+            break;
         }
         free(gRow);
         fclose(gFile);

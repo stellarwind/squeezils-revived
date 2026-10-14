@@ -41,6 +41,15 @@ Vector3f *NearestPointOnLine(Vector3f *out, const Vector3f *point, const Vector3
 inline bool NonNegative(float v) { unsigned bits = *(unsigned *)&v; return bits <= 0x80000000u; }
 inline bool InUnitRange(float v) { int bits = *(int *)&v; return NonNegative(v) && bits <= 0x3f800000; }
 
+struct CollisionNeighbour {
+    int id;
+    Vector3f position;
+    float radius;
+    int active;
+    CollisionNeighbour() : id(-1), active(1) {}
+    ~CollisionNeighbour();                              // 0x4044c0
+};
+
 struct LocationSimulation {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
     virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11();
@@ -53,6 +62,7 @@ struct LocationSimulation {
     int IsMarked(int id) { return ids.Contains(id); }
     void DestroyCreatures();                             // 0x4141a0
     void CollideCreatures();
+    int PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq); // 0x413100; ECX carries this
 };
 
 void LocationSimulation::CollideCreatures()
@@ -69,7 +79,8 @@ void LocationSimulation::CollideCreatures()
         } while (--n);
     }
 
-    for (int i = 0; i < count - 1; i++) {
+    int i = 0;
+    if (count - 1 > 0) do {
         Body *a = creatures->values.AtU(i)->actor;
         float radiusA = *(float *)((char *)a + 0xb8);
         if (radiusA == 0.0f || !creatures->values.AtU(i)->soul->IsActive())
@@ -80,7 +91,8 @@ void LocationSimulation::CollideCreatures()
         if (!movingA)
             speedA = 0.0f;
 
-        for (int j = i + 1; j < count; j++) {
+        int j = i + 1;
+        if (j < count) do {
             Body *b = creatures->values.AtU(j)->actor;
             float radiusB = *(float *)((char *)b + 0xb8);
             if (radiusB == 0.0f || !creatures->values.AtU(j)->soul->IsActive())
@@ -99,13 +111,19 @@ void LocationSimulation::CollideCreatures()
             if (!movingA && !movingB)
                 continue;
 
-            Vector3f positionB = *(Vector3f *)&b->GetMatrix()[12];
-            Vector3f positionA = *(Vector3f *)&a->GetMatrix()[12];
+            CollisionNeighbour neighbourB, neighbourA;
+            neighbourB.position = *(Vector3f *)&b->GetMatrix()[12];
+            neighbourA.position = *(Vector3f *)&a->GetMatrix()[12];
             Vector3f apart = *(Vector3f *)&b->GetMatrix()[12] - *(Vector3f *)&a->GetMatrix()[12];
-            float distanceSquared = apart.LengthSq();
+            neighbourA.radius = neighbourB.radius = apart.LengthSq();
+            float distanceSquared = neighbourB.radius;
 
-            creatures->values.AtU(i)->soul->NoteNeighbour(&idB);
-            creatures->values.AtU(j)->soul->NoteNeighbour(&idA);
+            Soul *soulA = creatures->values.AtU(i)->soul;
+            Soul *soulB = creatures->values.AtU(j)->soul;
+            neighbourB.id = creatures->keys.Get(j);
+            neighbourA.id = creatures->keys.Get(i);
+            soulA->NoteNeighbour(&neighbourB.id);
+            soulB->NoteNeighbour(&neighbourA.id);
 
             float seconds = (float)FrameMilliseconds() * 0.001f;
             Vector3f motionA = *a->GetFacing() * speedA + velocityA;
@@ -120,10 +138,13 @@ void LocationSimulation::CollideCreatures()
             if (!(relative.Length() * seconds > reach)) {
                 hit = reachSquared > distanceSquared;
             } else {
-                if (!creatures->values.AtU(i)->soul->Collides() || !creatures->values.AtU(j)->soul->Collides())
+                if (!soulA->Collides() || !soulB->Collides())
                     continue;
-                Vector3f startA = positionA + Vector3f(a->GetMatrix()[4], a->GetMatrix()[5], a->GetMatrix()[6]) * radiusA;
-                Vector3f startB = positionB + Vector3f(b->GetMatrix()[4], b->GetMatrix()[5], b->GetMatrix()[6]) * radiusB;
+                Vector3f startA, startB;
+                startA = *(Vector3f *)&a->GetMatrix()[12] + *(Vector3f *)&a->GetMatrix()[4] * radiusA;
+                Vector3f offsetB;
+                offsetB = *(Vector3f *)&b->GetMatrix()[4] * radiusB;
+                startB = *(Vector3f *)&b->GetMatrix()[12] + offsetB;
                 Vector3f travelA = motionA * seconds;
                 Vector3f travelB = motionB * seconds;
                 Vector3f endA = startA + travelA;
@@ -160,11 +181,11 @@ void LocationSimulation::CollideCreatures()
             }
             if (hit) {
                 if (speedB < speedA)
-                    creatures->values.AtU(i)->soul->Touch(idB);
+                    soulA->Touch(creatures->keys.Get(j));
                 else
-                    creatures->values.AtU(j)->soul->Touch(idA);
+                    soulB->Touch(creatures->keys.Get(i));
             }
-        }
-    }
+        } while (count > ++j);
+    } while (++i < count - 1);
     DestroyCreatures();
 }

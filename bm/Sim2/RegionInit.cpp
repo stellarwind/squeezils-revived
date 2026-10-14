@@ -7,7 +7,7 @@ struct Float3 { float x, y, z; Float3() {} ~Float3(); };   // dtor 0x401660
 struct Matrix {
     float m[16];
     Matrix() {}
-    Matrix(const Float3 &t);                             // 0x47e330
+    Matrix &Translate(const Float3 &t);                             // 0x47e330
     void Identity() {
         m[0] = 1; m[1] = 0; m[2] = 0; m[3] = 0;
         m[4] = 0; m[5] = 1; m[6] = 0; m[7] = 0;
@@ -75,14 +75,17 @@ struct RegionSimulation {
 
 void RegionSimulation::Init()
 {
+    RegionSimulation *volatile self = this;
     g_splash->Load(2);
-    LocationInit();
+    self->LocationInit();
     IniReader gameIni;
     g_lodClip = gameIni.GetFloat("LODPropClipDistance", -1.0f);
     World *world = GetWorld();
-    location = 0;
-    char path[128];
-    strcpy(path, GetLand()->GetPlaceName(region));
+    RegionSimulation *regionSim = self;
+    int index = regionSim->region;
+    regionSim->location = 0;
+    char path[80];
+    strcpy(path, GetLand()->GetPlaceName(index));
     strcat(path, "\\region\\region.ini");
     GameLog("NOTE: RegionSimulation::initialize: loading '%s'\n", path);
     IniReader regionIni(path);
@@ -101,42 +104,48 @@ void RegionSimulation::Init()
 
     regionIni.SetSection("Defaults");
     const char *t1 = regionIni.GetString("UnblurredTreeSprite");
-    unblurredTree = FindPropTemplate(String(t1), 0, 0);
+    self->unblurredTree = FindPropTemplate(t1, 0, 0);
     const char *t2 = regionIni.GetString("UnblurredTreeSpriteNut");
-    unblurredNutTree = FindPropTemplate(String(t2), 0, 0);
+    self->unblurredNutTree = FindPropTemplate(t2, 0, 0);
     const char *t3 = regionIni.GetString("BlurredTreeSprite");
-    blurredTree = FindPropTemplate(String(t3), 0, 0);
+    self->blurredTree = FindPropTemplate(t3, 0, 0);
     const char *t4 = regionIni.GetString("BlurredTreeSpriteNut");
-    blurredNutTree = FindPropTemplate(String(t4), 0, 0);
-    ReadLocations(&regionIni);
+    self->blurredNutTree = FindPropTemplate(t4, 0, 0);
+    self->ReadLocations(&regionIni);
     g_splash->SetProgress(0.75f);
 
     IniReader defaults;
     GetWorld()->SetupLights(&defaults);
     GetWorld()->SetupLights(&regionIni);
-    Float3 start = GetPlace(location)->position;
+    Float3 start;
+    RegionSimulation *placeSim = self;
+    const Float3 &position = placeSim->GetPlace(placeSim->place)->position;
+    Matrix matrix;
+    start.x = position.x; start.y = position.y; start.z = position.z;
     defaults.SetSection("Defaults");
-    Matrix matrix(start);
+    matrix.Translate(start);
     SqueezilBody *body = new SqueezilBody(&matrix, ReadBodyColor(&defaults));
     GameLog("Done with geometry.  Initializing soul: ");
     g_splash->SetProgress(0.85f);
     Possessions *possessions = GetLand()->Lend(0);
-    RegionSoul *soul = new RegionSoul(body, possessions, this);
+    RegionSoul *soul = new RegionSoul(body, possessions, self);
     g_splash->SetProgress(0.9f);
     GameLog("OK.\nInitializing camera: ");
-    AddCreature(0, body, soul);
+    self->AddCreature(0, body, soul);
     matrix.Identity();
     CameraBody *cameraBody = new CameraBody(&matrix);
     CameraSoul *cameraSoul = new CameraSoul(cameraBody, body, soul);
-    AddCreature(1, cameraBody, cameraSoul);
-    GetApplication()->playerInput = soul ? (char *)soul + 0x80 : 0;
-    GetApplication()->cameraInput = cameraSoul ? (char *)cameraSoul + 4 : 0;
-    GetPanel()->ShowQuest(GetRegion());
+    self->AddCreature(1, cameraBody, cameraSoul);
+    void *playerInput = soul ? (char *)soul + 0x80 : 0;
+    GetApplication()->playerInput = playerInput;
+    void *cameraInput = cameraSoul ? (char *)cameraSoul + 4 : 0;
+    GetApplication()->cameraInput = cameraInput;
+    GetPanel()->ShowQuest(self->GetRegion());
     GetApplication()->SetFlag();
 
     regionIni.SetSection("Defaults");
     const char *midi = regionIni.GetString("MidiFile");
-    if (strcmp(midi, "") != 0 && !StartMidi(midi))
+    if (strcmp("", midi) != 0 && !StartMidi(midi))
         GameLog("Failure in midi manager initialization\n");
     g_splash->Step();
     g_splash->Hide();

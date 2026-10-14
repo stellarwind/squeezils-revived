@@ -47,7 +47,7 @@ struct SoulV {
 
 int SqueezilRoboSoul::SenseState(int kind)
 {
-    AwarenessRecord *record = &records[kind];
+    volatile AwarenessRecord *record = &records[kind];
     int *last = &lastSeen[kind];
     int onGround = ((SoulV *)this)->Body()->IsOnGround();
     int action;
@@ -62,31 +62,34 @@ int SqueezilRoboSoul::SenseState(int kind)
             }
         } else if (gone) {
             record->id = -1;
-            action = 2 - (*last != -1);
+            if (*last == -1) action = 2; else action = 1;
             *last = record->id;
         } else {
             action = 0;
             *last = record->id;
         }
     } else {
-        action = 2 - (*last != -1);
+        if (*last == -1) action = 2; else action = 1;
     }
+    int result = onGround;
     switch (action) {
     case 0:
-        senseKind = kind;
         switch (kind) {
-        case 0: return onGround ? 5 : 6;
-        case 1: return onGround ? 7 : 8;
-        case 2: return onGround ? 9 : 10;
+        case 0: result = onGround ? 5 : 6; break;
+        case 1: result = onGround ? 7 : 8; break;
+        case 2: result = onGround ? 9 : 10; break;
         }
-        return onGround;
+        senseKind = kind;
+        break;
     case 1:
         ClearSeen();
         senseKind = 999;
-        return onGround ? 0xb : 0xc;
+        result = onGround ? 0xb : 0xc;
+        break;
     case 2:
         senseKind = 999;
-        return 0x13;
+        result = 0x13;
+        break;
     }
-    return onGround;
+    return result;
 }

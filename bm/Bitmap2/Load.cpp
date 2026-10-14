@@ -21,6 +21,15 @@ void ImageConvertRow(void *dst, RenderFmt *fmt, const unsigned char *src, const 
 
 LPDIRECTDRAWSURFACE Bitmap::Load(const char *path)
 {
+    // These temporaries are used in successive stages of the load.
+    struct {
+        union { int tmp[6]; int paletteBytes; int pixelBytes; long pitch; };
+        BITMAPINFOHEADER bi;
+        unsigned char fh[14];
+        RenderFmt fmt;
+        DDSURFACEDESC ld;
+        unsigned char planes[768];
+    } v;
     HANDLE file = 0;
     int answer = 1;
     while (file == 0 || answer == 4) {
@@ -31,40 +40,38 @@ LPDIRECTDRAWSURFACE Bitmap::Load(const char *path)
                 return 0;
         }
     }
-    unsigned char fh[14];
-    BITMAPINFOHEADER bi;
     DWORD got;
     int rc;
-    READ_RETRY(fh, 14, )
-    READ_RETRY(&bi, 40, )
-    int paletteBytes = (1 << bi.biBitCount) * 4;
-    BITMAPINFOHEADER *info = (BITMAPINFOHEADER *)malloc(paletteBytes + 40);
+    READ_RETRY(v.fh, 14, )
+    READ_RETRY(&v.bi, 40, )
+    v.paletteBytes = (1 << v.bi.biBitCount) * 4;
+    BITMAPINFOHEADER *info = (BITMAPINFOHEADER *)malloc(v.paletteBytes + 40);
     if (!info) {
         renderer->FatalError("Can't allocate memory for\n%s", path);
         CloseHandle(file);
         return 0;
     }
-    info->biSize = bi.biSize;
-    info->biWidth = bi.biWidth;
-    info->biHeight = bi.biHeight;
-    info->biPlanes = bi.biPlanes;
-    info->biBitCount = bi.biBitCount;
-    info->biCompression = bi.biCompression;
-    info->biSizeImage = bi.biSizeImage;
-    info->biXPelsPerMeter = bi.biXPelsPerMeter;
-    info->biYPelsPerMeter = bi.biYPelsPerMeter;
-    info->biClrUsed = bi.biClrUsed;
-    info->biClrImportant = bi.biClrImportant;
-    READ_RETRY((unsigned char *)info + 40, paletteBytes, free(info);)
-    int pixelBytes = *(int *)(fh + 2) - *(int *)(fh + 10);
-    unsigned char *pixels = (unsigned char *)malloc(pixelBytes);
+    info->biSize = v.bi.biSize;
+    info->biWidth = v.bi.biWidth;
+    info->biHeight = v.bi.biHeight;
+    info->biPlanes = v.bi.biPlanes;
+    info->biBitCount = v.bi.biBitCount;
+    info->biCompression = v.bi.biCompression;
+    info->biSizeImage = v.bi.biSizeImage;
+    info->biXPelsPerMeter = v.bi.biXPelsPerMeter;
+    info->biYPelsPerMeter = v.bi.biYPelsPerMeter;
+    info->biClrUsed = v.bi.biClrUsed;
+    info->biClrImportant = v.bi.biClrImportant;
+    READ_RETRY((unsigned char *)info + 40, v.paletteBytes, free(info);)
+    v.pixelBytes = *(int *)(v.fh + 2) - *(int *)(v.fh + 10);
+    unsigned char *pixels = (unsigned char *)malloc(v.pixelBytes);
     if (!pixels) {
         renderer->FatalError("Can't allocate memory for\n%s", path);
         free(info);
         CloseHandle(file);
         return 0;
     }
-    READ_RETRY(pixels, pixelBytes, free(pixels); free(info);)
+    READ_RETRY(pixels, v.pixelBytes, free(pixels); free(info);)
     width = (short)info->biWidth;
     height = (short)info->biHeight;
     surface = CreateSurface();
@@ -75,9 +82,8 @@ LPDIRECTDRAWSURFACE Bitmap::Load(const char *path)
         return 0;
     }
     surface->Restore();
-    DDSURFACEDESC ld;
-    ld.dwSize = sizeof(ld);
-    if (surface->Lock(0, &ld, DDLOCK_WAIT, 0) != 0) {
+    v.ld.dwSize = sizeof(v.ld);
+    if (surface->Lock(0, &v.ld, DDLOCK_WAIT, 0) != 0) {
         renderer->FatalError("Can't lock surface for\n%s", path);
         surface->Release();
         surface = 0;
@@ -86,25 +92,27 @@ LPDIRECTDRAWSURFACE Bitmap::Load(const char *path)
         CloseHandle(file);
         return 0;
     }
-    int tmp[6];
-    RenderFmt fmt = *(RenderFmt *)renderer->GetPixelFormat(tmp);
-    unsigned char planes[768];
+    v.fmt = *(RenderFmt *)renderer->GetPixelFormat(v.tmp);
     unsigned char *entry = (unsigned char *)info + 40;
     for (int i = 0; i < 256; i++, entry += 4) {
-        planes[i] = entry[2];
-        planes[256 + i] = entry[1];
-        planes[512 + i] = entry[0];
+        v.planes[i] = entry[2];
+        v.planes[256 + i] = entry[1];
+        v.planes[512 + i] = entry[0];
     }
+    v.pitch = v.ld.lPitch;
     int stride = (width + 3) & ~3;
     int offset = 0;
-    for (int y = 0; y < height; y++) {
-        ImageConvertRow((unsigned char *)ld.lpSurface + offset, &fmt, pixels + (height - 1 - y) * stride, planes, width);
-        offset += ld.lPitch;
+    for (int y = 0; y < height;) {
+        unsigned char *src = pixels + (height - 1 - y) * stride;
+        y++;
+        ImageConvertRow((unsigned char *)v.ld.lpSurface + offset, &v.fmt, src, v.planes, width);
+        offset += v.pitch;
     }
-    surface->Unlock(ld.lpSurface);
+    surface->Unlock(v.ld.lpSurface);
     free(pixels);
     free(info);
     CloseHandle(file);
     SetColorKey(surface, 0xffffffff);
     return surface;
 }
+
