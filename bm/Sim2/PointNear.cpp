@@ -5,7 +5,8 @@ int __stdcall PointNearSegment(const Vector3f *point, const Vector3f *origin, co
 {
     Vector3f direction = *end - *origin;
     direction.Normalize();
-    float along = -((point->x * direction.x + point->y * direction.y + point->z * direction.z) - (origin->x * direction.x + origin->y * direction.y + origin->z * direction.z)) / (direction.y * direction.y + direction.z * direction.z + direction.x * direction.x);
+    float negativeDot = -(point->x * direction.x + point->y * direction.y + point->z * direction.z);
+    float along = -(negativeDot + (origin->z * direction.z + origin->y * direction.y + origin->x * direction.x)) / (direction.y * direction.y + direction.z * direction.z + direction.x * direction.x);
     if (along < 0.0f || along > 1.0f)
         return 0;
     Vector3f nearest = *origin + direction * along;

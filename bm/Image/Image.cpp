@@ -88,13 +88,15 @@ int ImageLoad(const char *path, const DisplayFormat *fmt, ImageAllocFn alloc, in
     if (!alloc)
         alloc = (ImageAllocFn)malloc;
     int stride = ((fmt->bpp / 8) * width + 3) & ~3;
-    unsigned char *dst = (unsigned char *)alloc(height * stride);
+    int size = height * stride;
+    unsigned char *dst = (unsigned char *)alloc(size);
     if (!dst)
         return 0;
     int y = 0;
     unsigned char *row = dst;
     for (; y < height; y++) {
-        ImageConvertRow(row, fmt, src + width * y, planes, width);
+        unsigned char *s = src + width * y;
+        ImageConvertRow(row, fmt, s, planes, width);
         row += stride;
     }
     free(src);

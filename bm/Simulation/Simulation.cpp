@@ -33,9 +33,12 @@ int Simulation::FindIdBySoul(void *soul)
 
 int Simulation::FindIdByActor(void *actor)
 {
-    for (int i = 0; i < creatures->keys.count; i++) {
+    int i;
+    for (i = 0; i < creatures->keys.count; i++) {
         if (creatures->data[i]->actor == actor)
-            return creatures->keys.Get(i);
+            goto found;
     }
     return -1;
+found:
+    return creatures->keys.Get(i);
 }

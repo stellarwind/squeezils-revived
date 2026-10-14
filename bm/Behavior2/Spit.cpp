@@ -53,11 +53,11 @@ struct SpitBehavior {
 int SpitBehavior::Execute(int a, int b)
 {
     SpitRecord *rec = &soul->records[soul->index];
+    int result = 0x18;
     SpitSub *s = aim;
     s->dest.x = rec->pos.x;
     s->dest.y = rec->pos.y;
     s->dest.z = rec->pos.z;
-    int result = 0x18;
     switch (mode) {
     case 0:
         current = aim;

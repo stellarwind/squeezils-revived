@@ -8,9 +8,11 @@ PoseTable::PoseTable()
 
 PoseTable::~PoseTable()
 {
-    for (int i = 0; i < table.keys.count; i++) {
-        PartPose *p = table.values.data[i];
-        delete p;
+    int i = 0;
+    for (;;) {
+        if (i >= table.keys.count) break;
+        delete table.values.data[i];
+        ++i;
     }
 }
 

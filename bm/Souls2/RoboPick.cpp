@@ -58,19 +58,19 @@ int RoboSoulFlat::PickState()
     if (!behaviour) {
         state = 0;
         wasOnGround = Body()->IsOnGround();
-        return state;
+    } else {
+        if (state == 0x15 || (state == 0x16 && onGround))
+            state = 3;
+        else if (state == 0x14 || (state == 0x16 && !onGround))
+            state = 4;
+        else if (wasOnGround && !onGround) {
+            wasOnGround = 0;
+            state = 1;
+        } else if (!wasOnGround && onGround) {
+            wasOnGround = 1;
+            state = 2;
+        } else
+            state = 0x13;
     }
-    if (state == 0x15 || (state == 0x16 && onGround))
-        state = 3;
-    else if (state == 0x14 || (state == 0x16 && !onGround))
-        state = 4;
-    else if (wasOnGround && !onGround) {
-        wasOnGround = 0;
-        state = 1;
-    } else if (!wasOnGround && onGround) {
-        wasOnGround = 1;
-        state = 2;
-    } else
-        state = 0x13;
     return state;
 }

@@ -8,10 +8,11 @@ int AddToFunction::Execute(ScriptCall *args, int extra)
         Variables *set = &g_vars;
         int v = value->Get(extra);
         set->Set(&name, &v, -1);
+        return 1;
     } else {
         int cur = g_vars.Get(&name);
-        int v = cur + value->Get(extra);
         Variables *set = &g_vars;
+        int v = cur + value->Get(extra);
         set->Set(&name, &v, -1);
     }
     return 1;

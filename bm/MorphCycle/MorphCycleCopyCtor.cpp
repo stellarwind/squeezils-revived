@@ -5,12 +5,13 @@ MorphCycle::MorphCycle(const MorphCycle &whole, int first, int last, int noLoop,
 {
     this->noLoop = noLoop;
     this->period = (period == -1.0f) ? ((MorphCycle &)whole).Period() : period;
-    this->firstSample = first;
-    this->sampleCount = last - first + 1;
-    this->speed = speed;
     this->startTime = (float)first * this->period;
+    this->sampleCount = last - first + 1;
+    this->firstSample = first;
+    this->speed = speed;
     this->duration = (float)(last - first) * this->period;
     this->times = whole.times;
     this->sharesData = 1;
     this->parts = whole.parts;
 }
+

@@ -183,7 +183,7 @@ struct Updatable { virtual void v0(); virtual void v1(); virtual void v2(); virt
 extern int gUpdCount;                                              // 0x4c71fc
 extern Updatable **gUpd;                                           // 0x4c7204
 void LockUpdates();                                                // 0x42d2b0
-void UpdateAll(int arg)
+void UpdateAll(volatile int arg)
 {
     LockUpdates();
     for (int i = 0; i < gUpdCount; i++)
