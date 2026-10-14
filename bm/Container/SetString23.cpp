@@ -4,4 +4,13 @@
 #include "Container/ContainerSet.h"
 #include "String/String.h"
 
+int Set<String, 23>::IndexOf(const String &v)
+{
+    int pos = Search(v);
+    if (count > pos && !StringLess(&v, &data[pos]) && !StringLess(&data[pos], &v))
+        return pos;
+    return -1;
+}
+
+
 template class Set<String, 23>;

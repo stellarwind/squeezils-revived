@@ -33,9 +33,7 @@ int Renderer::CreateSurfaces()
         Error("GetCaps failed.\n%s", HResultToString(hr));
         return 0;
     }
-    DDCAPS *caps = &helCaps;
-    if (hardware)
-        caps = &halCaps;
+    DDCAPS *caps = hardware ? &halCaps : &helCaps;
     DWORD zbd = caps->dwZBufferBitDepths;
     int zdepth = 0;
     if (zbd & DDBD_8)

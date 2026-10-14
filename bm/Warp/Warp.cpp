@@ -127,34 +127,41 @@ void Warp::UpdateCube(const float *m)
 
 int Warp::SelectFace(const float *m3)
 {
-    float ax = (float)fabs(m3[2]);
-    float ay = (float)fabs(m3[5]);
-    float az = (float)fabs(m3[8]);
+    float ax, ay;
+    ay = (float)fabs(m3[5]);
+    ax = (float)fabs(m3[2]);
     int axis;
     if (ax > ay) {
-        if (az < ax)
+        if (fabs(m3[8]) < ax)
             axis = 0;
         else
             axis = 2;
     } else {
-        if (az < ay)
+        if (fabs(m3[8]) < ay)
             axis = 1;
         else
             axis = 2;
     }
+    int face;
     switch (axis) {
     case 0:
-        if (*(int *)&m3[2] > 0)
-            return 4;
-        return 3;
+        if (m3[2] > 0.0f)
+            face = 4;
+        else
+            face = 3;
+        break;
     case 1:
-        if (*(int *)&m3[5] > 0)
-            return 5;
-        return 1;
+        if (m3[5] > 0.0f)
+            face = 5;
+        else
+            face = 1;
+        break;
     case 2:
-        if (*(unsigned *)&m3[8] > 0x80000000)
-            return 0;
-        return 2;
+        if (m3[8] < 0.0f)
+            face = 0;
+        else
+            face = 2;
+        break;
     }
-    return *(int *)&ax;
+    return face;
 }

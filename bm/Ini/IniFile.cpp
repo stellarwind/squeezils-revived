@@ -1,4 +1,4 @@
-// 11 spare declarations (symbol count, see padscan.sh)
+// 10 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
 void PadDecl3();
@@ -9,7 +9,6 @@ void PadDecl7();
 void PadDecl8();
 void PadDecl9();
 void PadDecl10();
-void PadDecl11();
 // IniFile (SQZ.EXE 0x4426d0-0x443120), functions in address order.
 #include <stdio.h>
 #include <string.h>
@@ -50,8 +49,10 @@ void IniFileSection::Add(char *line, const char *section)
 
     String k(key);
     String v(value);
-    if (values.Contains(k))
-        GameLog(kIniDuplicateMessage, key, section, values.Get(k).c_str(), value);
+    if (values.Contains(k)) {
+        const char *old = values.Get(k).c_str();
+        GameLog(kIniDuplicateMessage, key, section, old, value);
+    }
     values.Insert(k, v, -1);
     order.Insert(k, -1);
 }

@@ -23,7 +23,9 @@ struct Physics {
     float fwdTapFactor;                                  // 0x28c
     float rotTapFactor;                                  // 0x290
 };
-struct Vec { float x, y, z; };
+struct Vec { float x, y, z;
+    float Along(float *matrix) { return z * matrix[10] + y * matrix[9] + matrix[8] * x; }
+};
 struct Body {
     virtual void v0(); virtual void v1(); virtual void v2();
     virtual float *GetMatrix();                          // slot 3 (+0xc)
@@ -50,11 +52,12 @@ inline float Along(Vec *direction, float *matrix) { return direction->z * matrix
 
 void SqueezilPlayerSoul::ReadGroundInput(GroundControl *c, int *next)
 {
+    struct Input { float forward, speed, turn, forwardTap, turnTap; int run; } input;
     attackHeld = GetApplication()->attackHeld;
-    int run = GetApplication()->runHeld;
-    float turn = GetApplication()->TurnAxis();
-    float forward = GetApplication()->ForwardAxis();
-    float speed = GetBody()->GetSpeed();
+    input.run = GetApplication()->runHeld;
+    input.turn = GetApplication()->TurnAxis();
+    input.forward = GetApplication()->ForwardAxis();
+    input.speed = GetBody()->GetSpeed();
     int current = GetState();
     if (frozen) {
         c->ground = physics->walk;
@@ -63,27 +66,28 @@ void SqueezilPlayerSoul::ReadGroundInput(GroundControl *c, int *next)
         *next = 0;
         return;
     }
-    float forwardTap = GetApplication()->ForwardTap();
-    float turnTap = GetApplication()->TurnTap();
-    if (*(int *)&forwardTap & 0x7fffffff && fabs(forward) <= 0.01)
-        forward = physics->fwdTapFactor * forwardTap;
-    if (*(int *)&turnTap & 0x7fffffff && fabs(turn) <= 0.01)
-        turn = physics->rotTapFactor * turnTap;
+    input.forwardTap = GetApplication()->ForwardTap();
+    input.turnTap = GetApplication()->TurnTap();
+    if (input.forwardTap != 0.0f && fabs(input.forward) <= 0.01)
+        input.forward = physics->fwdTapFactor * input.forwardTap;
+    if (input.turnTap != 0.0f && fabs(input.turn) <= 0.01)
+        input.turn = physics->rotTapFactor * input.turnTap;
 
     int wish;
-    if (fabs(forward) > 0.01) {
+    if (fabs(input.forward) > 0.01) {
         if (attackHeld)
             wish = 7;
-        else if (*(unsigned *)&forward > 0x80000000u && *(int *)&speed > 0x3c23d70a && Along(GetBody()->GetFacing(), GetBody()->GetMatrix()) > 0.0f)
+        else if (input.forward < 0.0f && input.speed > 0.01f && GetBody()->GetFacing()->Along(GetBody()->GetMatrix()) > 0.0f)
             wish = 5;
         else
-            wish = run ? 4 : 3;
-        c->forward = forward;
+            wish = input.run ? 4 : 3;
+        c->forward = input.forward;
     } else {
         wish = 0;
         c->forward = 0.0f;
     }
-    *next = (wish == current) ? 0x18 : wish;
+    if (wish != current) *next = wish;
+    else *next = 0x18;
     GetGroundMotion(current, c);
-    c->turn = (fabs(turn) > 0.01 && current != 6) ? turn : 0.0f;
+    c->turn = (fabs(input.turn) > 0.01 && current != 6) ? input.turn : 0.0f;
 }

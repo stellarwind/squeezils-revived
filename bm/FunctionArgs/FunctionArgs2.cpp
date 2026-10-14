@@ -180,13 +180,13 @@ StringFunctionArgument *ParseStringArgument(ArgList *list)      // 0x421940
 
 Vector3fFunctionArgument *ParseVectorArgument(ArgList *list, FaVec fallback)   // 0x421560 (the caller passes the default by value)
 {
+    float f;
     FaVec v;
     Vector3fFunctionArgument *arg;
     if (!list->cursor) {
         arg = new Vector3fFunctionArgument(fallback);
     } else {
-        float probe;
-        int ok = list->ReadString(0).ToFloat(&probe);
+        int ok = list->ReadString(0).ToFloat(&f);
         if (!ok) {
             arg = new Vector3fFunctionArgument(list->ReadString(0).c_str());
         } else {
@@ -195,9 +195,8 @@ Vector3fFunctionArgument *ParseVectorArgument(ArgList *list, FaVec fallback)   /
                     DebugLog("WARNING: missing vector element, using 0.\n");
                     *p = 0;
                 } else {
-                    float f;
-                    int good = list->ReadString(0).ToFloat(&f);
-                    if (!good) {
+                    ok = list->ReadString(0).ToFloat(&f);
+                    if (!ok) {
                         DebugLog("WARNING: non-numeric vector element, using 0.\n");
                         *p = 0;
                     } else {
