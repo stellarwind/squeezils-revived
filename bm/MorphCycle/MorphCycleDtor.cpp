@@ -9,14 +9,15 @@ typedef Table<String, PartCycle *, Array<PartCycle *>, 0> PartCycleTable;
 MorphCycle::~MorphCycle()
 {
     if (sharesData == 0) {
-        for (int i = 0; i < ((PartCycleTable *)parts)->keys.count; i++) {
-            PartCycle *pc = ((PartCycleTable *)parts)->values.data[i];
-            if (pc != 0)
-                delete pc;
+        int offset = 0;
+        for (int i = 0; ; offset += 4, i++) {
+            if (i >= ((PartCycleTable *)parts)->keys.count) break;
+            PartCycle *pc = *(PartCycle **)((char *)((PartCycleTable *)parts)->values.data + offset);
+            if (pc != 0) delete pc;
         }
-        if (parts != 0)
-            delete (PartCycleTable *)parts;
-        if (times != 0)
-            delete (PrimitiveArray<float, 2> *)times;
+        delete (PartCycleTable *)parts;
+        delete (PrimitiveArray<float, 2> *)times;
     }
 }
+
+
