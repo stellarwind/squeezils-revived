@@ -7,7 +7,8 @@ extern HWND g_listWnd;         // 0x4c6950
 
 void AddDebugLine(const char *text)
 {
-    int vars[2]; int &i = vars[0];
+    int vars[3];
+    int &i = vars[0];
     int &n = vars[1];
     strcat(g_lineBuf, text);
     n = strlen(g_lineBuf);
@@ -18,7 +19,8 @@ void AddDebugLine(const char *text)
         }
     }
     if (n != i) {
-        int idx = SendMessage(g_listWnd, LB_ADDSTRING, -1, (LPARAM)g_lineBuf);
+        int &idx = vars[2];
+        idx = SendMessage(g_listWnd, LB_ADDSTRING, -1, (LPARAM)g_lineBuf);
         if (idx == -1)
             return;
         while (idx == -2) {
