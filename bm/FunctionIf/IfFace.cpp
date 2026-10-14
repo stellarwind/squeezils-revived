@@ -6,6 +6,24 @@
 struct FaceMat {                                         // 64 bytes, empty out-of-line destructor 0x402310
     float a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15;
     FaceMat() {}
+    FaceMat(const FaceMat &o) {
+        a0 = o.a0;
+        a1 = o.a1;
+        a2 = o.a2;
+        a3 = o.a3;
+        a4 = o.a4;
+        a5 = o.a5;
+        a6 = o.a6;
+        a7 = o.a7;
+        a8 = o.a8;
+        a9 = o.a9;
+        a10 = o.a10;
+        a11 = o.a11;
+        a12 = o.a12;
+        a13 = o.a13;
+        a14 = o.a14;
+        a15 = o.a15;
+    }
     ~FaceMat();
 };
 struct FacePlacement {                                   // 0x48 bytes, destructor 0x4031e0
@@ -13,13 +31,7 @@ struct FacePlacement {                                   // 0x48 bytes, destruct
     int pad;
     FaceMat at;
     FacePlacement() {}
-    FacePlacement(const FacePlacement &o) : prop(o.prop), pad(o.pad)
-    {
-        at.a0 = o.at.a0; at.a1 = o.at.a1; at.a2 = o.at.a2; at.a3 = o.at.a3;
-        at.a4 = o.at.a4; at.a5 = o.at.a5; at.a6 = o.at.a6; at.a7 = o.at.a7;
-        at.a8 = o.at.a8; at.a9 = o.at.a9; at.a10 = o.at.a10; at.a11 = o.at.a11;
-        at.a12 = o.at.a12; at.a13 = o.at.a13; at.a14 = o.at.a14; at.a15 = o.at.a15;
-    }
+    FacePlacement(const FacePlacement &o) : prop(o.prop), pad(o.pad), at(o.at) {}
     ~FacePlacement();
 };
 struct FaceTable { String FaceSetName(FacePlacement *where); };   // 0x40f3c0

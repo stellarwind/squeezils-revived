@@ -7,8 +7,8 @@ extern HWND g_listWnd;         // 0x4c6950
 
 void AddDebugLine(const char *text)
 {
-    int i;
-    int n;
+    int vars[2]; int &i = vars[0];
+    int &n = vars[1];
     strcat(g_lineBuf, text);
     n = strlen(g_lineBuf);
     for (i = 0; g_lineBuf[i]; i++) {

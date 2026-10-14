@@ -9,10 +9,8 @@ int Renderer::EnterDisplayMode(int w, int h)
     if (displayState == 2) {
         if (!fullscreen)
             return 0;
-        goto full;
     }
     if (fullscreen) {
-full:
         if (!SetCooperativeNormalExclusive(ddraw))
             return 0;
         hr = ddraw->SetDisplayMode(640, 480, fmt.bpp);
@@ -22,19 +20,19 @@ full:
         }
         PositionFullscreen();
         displayState = 1;
-        return hr;
-    }
-    int dw, dh, dbpp;
-    QueryDesktopMode(&dw, &dh, &dbpp);
-    if (savedWidth != dw || savedHeight != dh || fmt.bpp != dbpp) {
-        if (!SetCooperativeNormalExclusive(ddraw))
+    } else {
+        int dw, dh, dbpp;
+        QueryDesktopMode(&dw, &dh, &dbpp);
+        if (savedWidth != dw || savedHeight != dh || fmt.bpp != dbpp) {
+            if (!SetCooperativeNormalExclusive(ddraw))
+                return 0;
+            if (!SetDisplayModeChecked(savedWidth, savedHeight, fmt.bpp))
+                return 0;
+        }
+        if (!SetCooperativeNormal((int)ddraw))
             return 0;
-        if (!SetDisplayModeChecked(savedWidth, savedHeight, fmt.bpp))
-            return 0;
+        PositionWindowed(w, h);
+        displayState = 2;
     }
-    if (!SetCooperativeNormal((int)ddraw))
-        return 0;
-    PositionWindowed(w, h);
-    displayState = 2;
     return hr;
 }

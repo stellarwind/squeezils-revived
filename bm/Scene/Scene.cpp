@@ -173,18 +173,36 @@ int __stdcall DestroyFrame(LPDIRECT3DRMFRAME frame)
     return 1;
 }
 
+struct WarpSurfaceSize {
+    static int Width(Renderer *r) {
+        if (r->doubleSize) return r->width * 2;
+        return r->width;
+    }
+    static int Height(Renderer *r) {
+        if (r->doubleSize) return r->height * 2;
+        return r->height;
+    }
+    static void Get(Renderer *r, int &w, int &h) {
+        w = Width(r) / 2;
+        h = Height(r) / 2;
+    }
+};
+
 int Scene::EnsureWarpSurface()
 {
+    // Local symbol padding preserves VC4.1's register allocation.
+    int unused0;
+    int unused1;
+    int unused2;
     LPDIRECTDRAWSURFACE old = warpSurface;
+    if (old && WarpSurfaceSize::Width(renderer) / 2 == warpWidth
+        && WarpSurfaceSize::Height(renderer) / 2 == warpHeight)
+        return 1;
     if (old) {
-        if ((renderer->doubleSize ? renderer->width * 2 : renderer->width) / 2 == warpWidth
-            && (renderer->doubleSize ? renderer->height * 2 : renderer->height) / 2 == warpHeight)
-            return 1;
         old->Release();
         warpSurface = 0;
     }
-    warpWidth = (renderer->doubleSize ? renderer->width * 2 : renderer->width) / 2;
-    warpHeight = (renderer->doubleSize ? renderer->height * 2 : renderer->height) / 2;
+    WarpSurfaceSize::Get(renderer, warpWidth, warpHeight);
     if (warp)
         warp->Resize(warpWidth, warpHeight);
     DDSURFACEDESC desc;
