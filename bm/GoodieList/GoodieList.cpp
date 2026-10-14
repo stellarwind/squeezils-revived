@@ -1,3 +1,6 @@
+// 2 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
 // GoodieList (SQZ.EXE 0x4156c0-0x415ee0), functions in address order.
 #include <string.h>
 #include <stdio.h>
@@ -45,11 +48,13 @@ int GoodieList::Init(int px, int py)
     if (keys->count > 0)
         entries = (GoodieEntry *)operator new(keys->count * sizeof(GoodieEntry));
     for (int i = 0; i < keys->count; i++) {
-        int id = 0;
-        sscanf(keys->Get(i).c_str(), "%d", &id);
+        int id;
+        const char *keyText;
+        sscanf(keyText = keys->Get(i).c_str(), "%d", &id);
         ini.SetSection("GoodieList");
         char sectionName[20];
-        strcpy(sectionName, ini.GetString(keys->Get(i).c_str()));
+        const char *sectionValue = ini.GetString(keys->Get(i).c_str());
+        strcpy(sectionName, sectionValue);
         ini.SetSection(sectionName);
         char picture[20];
         strcpy(picture, ini.GetString("UIProp"));

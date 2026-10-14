@@ -16,7 +16,9 @@ void Renderer::UpdateScreenRect()
     p.y += originY;
     int w = doubleSize ? width * 2 : width;
     int h = doubleSize ? height * 2 : height;
-    SetRect(&screenRect, p.x, p.y, p.x + w - 1, p.y + h - 1);
+    int right = p.x + w - 1;
+    int bottom = p.y + h - 1;
+    SetRect(&screenRect, p.x, p.y, right, bottom);
 }
 
 void Renderer::GetClientRectInWindow(LONG out[4])
