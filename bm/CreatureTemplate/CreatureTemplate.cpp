@@ -3,18 +3,16 @@
 
 CreatureTemplate::CreatureTemplate()
 {
-    PrimitiveArray<String, 3> *list = this;
     for (int i = 0; i < 20; i++) {
-        String none("");
-        list->Insert(none, -1);
+        names.Insert(String(""), -1);
     }
     float *sr = senseRadius;
-    sr[0] = sr[1] = sr[2] = 0.0f;
+    sr[2] = sr[1] = sr[0] = 0.0f;
 }
 
 CreatureTemplate::~CreatureTemplate()
 {
-    PrimitiveArray<String, 3> *list = this;
+    PrimitiveArray<String, 3> *list = &names;
     for (int i = 19; i >= 0; i--)
         list->Remove(i);
 }
