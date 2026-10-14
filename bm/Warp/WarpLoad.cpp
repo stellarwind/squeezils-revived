@@ -27,8 +27,8 @@ int Warp::Load(const char *prefix, unsigned char *palette, const int *pixelForma
         f->zero08 = 0;
         f->zero0c = 0;
         f->one = 1.0f;
-        float ha = (float)extentA * 0.5f;
-        float hb = (float)extentB * 0.5f;
+        double ha = (float)extentA * 0.5f;
+        double hb = (float)extentB * 0.5f;
         f->halfA = ha;
         f->halfB = hb;
         f->halfA2 = ha;

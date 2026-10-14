@@ -23,10 +23,14 @@ Inventory::Inventory()
 
 Inventory::~Inventory()
 {
-    for (int i = 0; i < table->keys.count; i++) {
+    int i = 0;
+    for (;;) {
+        if (i >= table->keys.count)
+            break;
         IntList *list = table->values.data[i];
         if (list)
             delete list;
+        i++;
     }
     delete table;
 }

@@ -53,7 +53,8 @@ struct Soul9 {
 void Soul9::Run(int a, int b)
 {
     Base(a, b);
-    if (GetState() == 0x13) {
+    int state = GetState();
+    if (state == 0x13) {
         Slot24(0xd, 0);
         GetBody()->Slot21(0x27, 1, 0);
         float speed = GetBody()->GetFacingValue();

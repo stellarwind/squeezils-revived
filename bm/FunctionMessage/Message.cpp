@@ -37,9 +37,10 @@ Function *TimerMessageFunction::Create(ArgList *list)
     TimerMessageFunction *f = new TimerMessageFunction;
     MsgArgList *l = (MsgArgList *)list;
     int total = 0;
+    int i = 0;
     char buf[160];
     buf[0] = 0;
-    for (int i = 0; i < l->count; i++) {
+    for (; i < l->count; i++) {
         total += strlen(l->Item(i).c_str()) + 1;
         strcat(buf, l->Item(i).c_str());
         strcat(buf, " ");

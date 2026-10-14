@@ -35,8 +35,8 @@ void GoodieSoul::Hit(int knock, int unused, int byId)
         V3 *facing = body->GetFacing();
         direction.x = facing->x;
         direction.y = facing->y;
-        flightTime = 0.0f;
         direction.z = facing->z;
+        flightTime = 0.0f;
     }
     thrown = 0;
 }
