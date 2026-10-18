@@ -9,3 +9,12 @@ struct C6 : A6 {
     virtual void v0();
 };
 C6::C6() { f8 = 0; }
+
+// SQZ.EXE 0x446c70: sibling with another vtable (0x49e8fc), same layout.
+struct C14 : A6 {
+    Mem2 m;                     // +4
+    int f8;
+    C14();
+    virtual void v0();
+};
+C14::C14() { f8 = 0; }
