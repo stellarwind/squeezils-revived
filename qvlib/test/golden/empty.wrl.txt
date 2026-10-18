@@ -1,0 +1,4 @@
+VRML read error: File does not have a valid header string
+	Occurred at line   1
+READ 1 return=0
+OVERALL return=0 roots=0 unique_nodes=0

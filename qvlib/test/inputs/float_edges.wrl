@@ -1,0 +1,4 @@
+#VRML V1.0 ascii
+Translation { translation 1e-8 -0.0 16777217 }
+Material { shininess [ 0.1, 0.3333333333333, 1.17549435e-38 ] }
+Cube { width 1e8 height 3.4028234e38 depth 1.00000006 }
