@@ -348,3 +348,8 @@ Vector3f/targets_div.txt Vector3f/Vector3fDiv.cpp
 CameraSettings/targets.txt CameraSettings/Read.cpp CameraSettings/Blend.cpp CameraSettings/Physics.cpp IniReader/IniReader.cpp
 SoulDtor2/targets_sqsoul.txt SoulDtor2/SqueezilSoulDtor.cpp
 CameraSettings/targets_sqphys.txt CameraSettings/PhysicsBlock.cpp IniReader/IniReader.cpp
+AutoGPT/fn_414ae8/targets.txt AutoGPT/fn_414ae8/fn_414ae8.cpp
+AutoGPT/fn_457756/targets.txt AutoGPT/fn_457756/fn_457756.cpp
+AutoGPT/fn_40ed7b/targets.txt AutoGPT/fn_40ed7b/fn_40ed7b.cpp
+AutoGPT/fn_40ed89/targets.txt AutoGPT/fn_40ed89/fn_40ed89.cpp
+AutoGPT/fn_40ed97/targets.txt AutoGPT/fn_40ed97/fn_40ed97.cpp
