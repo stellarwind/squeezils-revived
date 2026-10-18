@@ -7,6 +7,6 @@ struct RS : SoulBase {
     Part b;      // +0xa4
     char rest[0x20];
     RS() {}
-    virtual ~RS() {}
+
 };
 RS *ForceRS() { return new RS; }

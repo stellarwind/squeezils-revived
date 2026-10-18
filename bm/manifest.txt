@@ -429,3 +429,6 @@ Misc18/targets_c12.txt Misc18/Ctor12.cpp
 Misc18/targets_key.txt Misc18/KeyMsg.cpp
 Misc18/targets_c15.txt Misc18/Dtor15.cpp
 Misc18/targets_c16.txt Misc18/Dtor16.cpp
+Misc18/targets_c18.txt Misc18/Sdd18.cpp
+Misc18/targets_c19.txt Misc18/Sdd19.cpp
+Misc18/targets_rs.txt Misc18/RegionSoulDtor.cpp
