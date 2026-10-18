@@ -1,0 +1,6 @@
+* text eol=lf
+include/** -text -whitespace
+src/** -text -whitespace
+COPYING -text -whitespace
+README -text -whitespace
+QvLib.lsm -text -whitespace
