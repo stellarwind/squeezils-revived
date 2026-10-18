@@ -38,10 +38,10 @@ template <class T>
 Array<T>::Array(int n, const T *src)
 {
     count = n;
-    capacity = n ? n : 2;
+    capacity = n == 0 ? 2 : n;
     data = new T[capacity];
     for (int i = 0; i < count; i++)
-        data[i] = src[i];
+        data[i] = *src++;
 }
 
 #ifdef ARRAY_COPY_CTOR
