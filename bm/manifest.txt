@@ -407,3 +407,5 @@ Misc18/targets.txt Misc18/Dlg.cpp Misc18/Ctor.cpp
 Misc18/targets_open.txt Misc18/Open.cpp
 Misc18/targets_clk.txt Misc18/Flush.cpp
 Misc18/targets_reg.txt Misc18/Reg.cpp
+Misc18/targets_pop.txt Misc18/Pop.cpp
+Misc18/targets_free.txt Misc18/Free.cpp
