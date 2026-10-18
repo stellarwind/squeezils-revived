@@ -1,0 +1,1 @@
+^\?RunPending@CreatureTemplate@@ 4487f0 creature_runpending

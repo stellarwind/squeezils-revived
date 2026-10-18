@@ -1,0 +1,1 @@
+^\?DrawItems@QuestPanel 42f760 qp_drawitems

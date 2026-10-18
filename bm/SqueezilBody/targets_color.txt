@@ -1,0 +1,2 @@
+^\?FindBodyColor@@ 458f20 find_body_color
+^\?ReadBodyColor@@ 458f60 read_body_color

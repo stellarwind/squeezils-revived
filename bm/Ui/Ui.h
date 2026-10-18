@@ -28,11 +28,4 @@ struct Scene {
     void *GetCameraFrame(); // 0x477390
 };
 
-struct Splash {
-    char pad0c[0x0c];
-    int  step;          // 0x0c
-    char pad10[0x1c - 0x10];
-    int  shown;         // 0x1c
-    int  IsShown();     // 0x44eea0
-    void Reset();       // 0x44f080
-};
+#include "Ui/Splash.h"

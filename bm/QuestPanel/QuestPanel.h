@@ -1,4 +1,4 @@
-// QuestPanel: the panel's quest items + places counter. Only the ctor is ported here.
+// QuestPanel: the panel's quest items + places counter.
 #pragma once
 #include "compat41.h"
 
@@ -16,6 +16,9 @@ struct QPQuestItems {
 
     QPQuestItems();
     ~QPQuestItems();
+    void Draw(int place); // 0x430440
+    void FreeCombined(); // 0x430340
+    int Init(int x, int y, int place); // 0x430150
 };
 
 struct QPNutCounter {
@@ -29,6 +32,9 @@ struct QPNutCounter {
 
     QPNutCounter();
     ~QPNutCounter();
+    int Init(const char *key, int x, int y, int mode); // 0x42f7d0
+    int Load();                                     // 0x42f900
+    void Draw(int gold, int diamond);                // 0x42f9f0
 };
 
 struct QuestPanel {
@@ -36,4 +42,10 @@ struct QuestPanel {
     QPNutCounter places;   // 0x68
 
     QuestPanel();          // 0x42f580
+    ~QuestPanel();         // 0x42f5f0
+    int Load();            // 0x42f660
+    int Draw(int force, int place); // 0x42f690
+    int LoadPlaces();      // 0x42f6c0
+    int DrawPlaces(int force); // 0x42f6d0
+    int DrawItems(int force, int place); // 0x42f760
 };

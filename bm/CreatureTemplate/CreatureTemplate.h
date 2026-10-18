@@ -3,6 +3,7 @@
 #pragma once
 #include "String/String.h"
 #include "Container/ContainerSet.h"
+struct PendingSoul;
 
 struct CreatureTemplate {
     PrimitiveArray<String, 3> names;   // 0x00 StringList of stimulus function names
@@ -11,4 +12,5 @@ struct CreatureTemplate {
 
     CreatureTemplate();     // 0x4483d0
     ~CreatureTemplate();    // 0x4484a0
+    void RunPending(PendingSoul *soul); // 0x4487f0
 };

@@ -21,6 +21,8 @@ struct ClientBitmap {
     int f10;   // 0x10
     int f14;   // 0x14
     ClientBitmap *Init();  // 0x478150
+    void Draw(int x, int y); // 0x4783e0
+    void Free(); // 0x478170
 };
 
 void UnloadResources();   // 0x448330

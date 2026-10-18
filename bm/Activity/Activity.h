@@ -63,6 +63,7 @@ struct AV3b { float x, y, z; AV3b() {} ~AV3b(); };   // dtor 0x401660
 struct TurnTargetActivity : MoveActivity {
     AV3b target;
     float cosAngle;
+    float AngleToTarget() const;                  // 0x4016e0
     TurnTargetActivity(ABody *b, ASoul *s);     // 0x401510
     virtual int StepGround(AGroundControl *out);   // 0x401700
 };

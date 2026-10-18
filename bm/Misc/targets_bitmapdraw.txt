@@ -1,0 +1,1 @@
+^\?Draw@ClientBitmap@@ 4783e0 client_bitmap_draw

@@ -1,0 +1,2 @@
+^\?Load@Panel@@ 42d9f0 panel_load
+^\?ShowStatus@Panel@@ 42dac0 panel_showstatus

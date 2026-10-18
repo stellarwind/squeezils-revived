@@ -1,0 +1,3 @@
+^\?Load@QuestPanel 42f660 qp_load
+^\?Draw@QuestPanel 42f690 qp_draw
+^\?LoadPlaces@QuestPanel 42f6c0 qp_loadplaces

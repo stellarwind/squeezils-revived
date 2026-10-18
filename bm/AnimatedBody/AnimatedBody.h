@@ -17,6 +17,7 @@ struct AnimatedBody {
     void        *rootFrame;      // 0x4c
 
     float GetTime();             // 0x41da70
+    void Destruct();             // 0x41dc70, non-deleting destructor
     float GetDuration();         // 0x41da80
     int   GetLoopMode();         // 0x41da90
     void *GetRootFrame();        // 0x41daa0

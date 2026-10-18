@@ -20,4 +20,5 @@ struct WaveSound {
 
     WaveSound();   // 0x448d90
     ~WaveSound();  // 0x448db0 (empty)
+    int Free();    // 0x4493a0
 };

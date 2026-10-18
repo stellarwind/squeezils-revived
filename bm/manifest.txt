@@ -36,6 +36,7 @@ PoseTable/targets.txt PoseTable/PoseTable.cpp PoseTable/PoseTableLife.cpp
 PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
 NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp
+NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp
 Body/targets.txt Body/Body.cpp
@@ -49,12 +50,15 @@ Simulation/targets.txt Simulation/Simulation.cpp
 PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
 FrameProp/targets.txt FrameProp/FrameProp.cpp
 Misc/targets.txt Misc/Misc.cpp
+Misc/targets_bitmapdraw.txt Misc/ClientBitmapDraw.cpp
+Misc/targets_bitmapfree.txt Misc/ClientBitmapFree.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
+Ui/targets_splashpump.txt Ui/SplashPump.cpp
 Behavior/targets.txt Behavior/Behavior.cpp
 Globals/targets.txt Globals/Globals.cpp
 Alloc/targets.txt Alloc/Alloc.cpp
@@ -63,6 +67,12 @@ SqueezilBodyVtbl/targets.txt SqueezilBodyVtbl/SqueezilBodyVtbl.cpp
 CycleProp/targets.txt CycleProp/CycleProp.cpp
 Function/targets.txt Function/Function.cpp
 Panel/targets.txt Panel/Panel.cpp
+Panel/targets_widgets.txt Panel/PanelWidgets.cpp
+Panel/targets_showquest.txt Panel/ShowQuest.cpp
+Panel/targets_background.txt Panel/DrawBackground.cpp
+Panel/targets_animation.txt Panel/StartGoodieAnimation.cpp
+StatusBar/targets_amo.txt StatusBar/UpdateAmo.cpp
+StatusBar/targets_food.txt StatusBar/UpdateFood.cpp
 WaveSound/targets.txt WaveSound/WaveSound.cpp
 QuestItems/targets.txt QuestItems/QuestItems.cpp
 LandSimulation/targets.txt LandSimulation/LandSimulation.cpp
@@ -80,6 +90,19 @@ GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
 Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
+QuestPanel/targets_wrappers.txt QuestPanel/QuestPanelWrappers.cpp
+QuestPanel/targets_drawitems.txt QuestPanel/DrawItems.cpp
+QuestPanel/targets_drawplaces.txt QuestPanel/DrawPlaces.cpp
+QuestPanel/targets_dtor.txt QuestPanel/QuestPanelDtor.cpp
+World/targets_dtor.txt World/WorldDtor.cpp
+World/targets_destroy.txt World/DestroyScene.cpp
+World/targets_surfaces.txt World/SurfacesOf.cpp
+World/targets_render.txt World/RenderFrame.cpp
+World/targets_decal.txt World/CreateDecal.cpp
+World/targets_ctor.txt World/WorldCtor.cpp
+World/targets_loadnav.txt World/LoadNavMesh.cpp
+World/targets_create.txt World/CreateScene.cpp
+World/targets_lights.txt World/SetupLights.cpp
 StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
 Renderer/targets.txt Renderer/Renderer.cpp Renderer/ViewportPlanes.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
@@ -310,6 +333,7 @@ Misc8/targets.txt Misc8/Transform.cpp
 Mouse/targets.txt Mouse/Mouse.cpp
 Qv/targets_mfield.txt Qv/MField.cpp
 Mouse/targets_c.txt Mouse/Center.cpp
+Mouse/targets_moveto.txt Mouse/MoveTo.cpp
 Mouse/targets_d.txt Mouse/Dispatch.cpp
 Qv/targets_factory2.txt Qv/Factory2.cpp
 Joy/targets.txt Joy/Joy.cpp
@@ -328,6 +352,7 @@ Misc13/targets.txt Misc13/Free.cpp
 Misc14/targets.txt Misc14/Wrap.cpp
 Activity/targets.txt Activity/Activity.cpp
 Activity/targets_tt.txt Activity/TurnTarget.cpp Activity/Activity.cpp
+Activity/targets_angle.txt Activity/AngleToTarget.cpp
 Activity/targets_dr.txt Activity/DieRegen.cpp Activity/Activity.cpp
 SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp
 Misc15/targets.txt Misc15/Find.cpp
@@ -338,6 +363,25 @@ Misc16/targets.txt Misc16/Small.cpp
 Fam112c/targets.txt Fam112c/StrGet.cpp
 FunctionArgs/targets2.txt FunctionArgs/FunctionArgs2.cpp FunctionArgs/FunctionArgs.cpp
 Misc16/targets_dm.txt Misc16/Timed2.cpp
+Misc16/targets_release_messages.txt Misc16/ReleaseMessages.cpp
+Misc16/targets_redraw.txt Misc16/RedrawWindows.cpp
+Misc16/targets_fillbackground.txt Misc16/FillBackground.cpp
+Texture/targets_destroyed.txt Texture/ImageDestroyed.cpp
+WindowCallbacks/targets.txt WindowCallbacks/WindowCallbacks.cpp
+WindowCallbacks/targets_pump.txt WindowCallbacks/PumpPending.cpp
+Input/targets_mode.txt Input/SetJoystickMode.cpp
+Input/targets_revert.txt Input/RevertBindings.cpp
+Input/targets_select.txt Input/SelectCommandValue.cpp
+NavMesh/targets_compare.txt NavMesh/CompareHits.cpp
+Audio/targets_stop.txt Audio/StopLoopingSounds.cpp
+SqueezilBody/targets_loadprotos.txt SqueezilBody/LoadProtoBodies.cpp
+SqueezilBody/targets_freeprotos.txt SqueezilBody/FreeProtoBodies.cpp
+PropList/targets_removeupdating.txt PropList/RemoveUpdatingProp.cpp
+PropList/targets_updatelevels.txt PropList/UpdateLevels.cpp
+PropList/targets_flush.txt PropList/FlushRemovedProps.cpp
+CreatureTemplate/targets_pending.txt CreatureTemplate/RunPending.cpp
+WaveSound/targets_free.txt WaveSound/Free.cpp
+SqueezilBody/targets_color.txt SqueezilBody/BodyColor.cpp
 SoulDtor2/targets.txt SoulDtor2/CameraDtor.cpp
 SoulDtor2/targets_body.txt SoulDtor2/BodyDtor.cpp
 Misc16/targets_m2.txt Misc16/Misc2.cpp String/String.cpp

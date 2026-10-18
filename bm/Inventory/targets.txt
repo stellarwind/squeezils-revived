@@ -1,6 +1,6 @@
 ^\?\?0Inventory     415ef0 ctor cc
 ^\?\?1Inventory     416030 dtor auto
-^\?Add@Inventory    416110 add auto
+^\?Add@Inventory    416110 add 364
 ^\?Remove@Inventory 416280 remove auto
 ^\?Count@Inventory  416300 count auto
 ^\?Items@Inventory  4163d0 items auto

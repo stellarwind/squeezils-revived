@@ -1,0 +1,1 @@
+^\?UpdateAmo@StatusBar@@ 42eec0 status_amo
