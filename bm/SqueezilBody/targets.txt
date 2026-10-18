@@ -8,3 +8,4 @@
 ^\?GetPitch@SqueezilBody      459030 getpitch
 ^\?GetRoll@SqueezilBody       459040 getroll
 ^\?BodyColorName              458fd0 bodycolorname
+^\?UpdateOrientation@XBody2  4579f0 updorient 208

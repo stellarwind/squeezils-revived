@@ -40,7 +40,7 @@ NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp BodyPart/BodyPartApply.cpp
 Body/targets.txt Body/Body.cpp
-SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp
+SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp SqueezilBody/UpdOrient.cpp
 GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
 Prop/targets.txt Prop/Prop.cpp
 RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
@@ -53,7 +53,7 @@ Misc/targets.txt Misc/Misc.cpp
 Misc/targets_bitmapdraw.txt Misc/ClientBitmapDraw.cpp
 Misc/targets_bitmapfree.txt Misc/ClientBitmapFree.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
-SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp SqueezilPlayerSoul/PostUpdate.cpp
+SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp SqueezilPlayerSoul/PostUpdate.cpp SqueezilPlayerSoul/SkihopAir.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
@@ -203,7 +203,7 @@ Container2/gen/targets_PA_s51.txt Container2/gen/PA_s51.cpp
 Container2/gen/targets_SC_s51.txt Container2/gen/SC_s51.cpp
 Free2/targets.txt Free2/RayPlane.cpp
 Qv/targets.txt Qv/Field.cpp Qv/FieldDtor.cpp
-Props2/targets.txt Props2/MeshProp.cpp Props2/AnimBody2.cpp Props2/AnimPose.cpp Props2/FrameHide.cpp Props2/NavHide.cpp Props2/FrameXform.cpp Props2/FrameFind.cpp Props2/PropMake.cpp Props2/MeshClone.cpp Props2/FrameClone.cpp Props2/LODClone.cpp Props2/NavClone.cpp Props2/CycleClone.cpp Props2/CycleShow.cpp Props2/LODShow.cpp Props2/FrameShow.cpp String/String.cpp Vector3f/Vector3fCtor.cpp
+Props2/targets.txt Props2/MeshProp.cpp Props2/AnimBody2.cpp Props2/AnimPose.cpp Props2/FrameHide.cpp Props2/NavHide.cpp Props2/FrameXform.cpp Props2/FrameFind.cpp Props2/PropMake.cpp Props2/MeshClone.cpp Props2/FrameClone.cpp Props2/LODClone.cpp Props2/NavClone.cpp Props2/CycleClone.cpp Props2/CycleShow.cpp Props2/LODShow.cpp Props2/FrameShow.cpp String/String.cpp Vector3f/Vector3fCtor.cpp Props2/SpriteClone.cpp Props2/SpriteBuild.cpp
 Qv/targets67.txt Qv/Field.cpp Qv/FieldDtor.cpp
 Qv/gen/targets_D_481f30.txt Qv/gen/D_481f30.cpp
 Qv/gen/targets_D_482e10.txt Qv/gen/D_482e10.cpp
@@ -471,3 +471,7 @@ Tiny4/targets29.txt Tiny4/F43bd20.cpp
 Tiny4/targets30.txt Tiny4/F43bc70.cpp
 Tiny4/targets31.txt Tiny4/F45ac40.cpp
 Tiny4/targets32.txt Tiny4/F447a30.cpp
+Container2/targets_tab.txt Container2/TabInt.cpp
+Container2/targets_tabobj.txt Container2/TabObj.cpp
+Container2/targets_glob.txt Container2/GlobTab.cpp
+Container/targets_vecat.txt Container/ArrayVecAt.cpp

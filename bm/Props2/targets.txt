@@ -18,3 +18,5 @@
 ^\?Show@CycleProp  428d80 cyc_show cc
 ^\?Show@LODProp  4283f0 lod_show 285
 ^\?Show@FrameProp  4271f0 frame_show 285
+^\?Clone@SpriteProp  4269a0 sprite_clone 208
+^\?BuildFrame@SpriteProp  426b00 sprite_build 256

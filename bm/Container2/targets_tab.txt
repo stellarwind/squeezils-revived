@@ -1,0 +1,6 @@
+^\?Create@\?\$BufferObjectTable@HH  460540 tab_hh 352
+^\?Create@\?\$BufferObjectTable@VString@@HV  4612d0 tab_sh 432
+^\?Create@\?\$BufferObjectTable@VString@@MV  461f40 tab_sm 432
+^\?Create@\?\$BufferObjectTable@HVString@@  4639b0 tab_hs 432
+^\?Create@\?\$BufferObjectTable@MVString@@  464570 tab_ms 432
+^\?Create@\?\$BufferObjectTable@VString@@V1  462dc0 tab_ss 496
