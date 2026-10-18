@@ -404,3 +404,6 @@ Misc17/targets.txt Misc17/V.cpp Misc17/P.cpp
 Misc17/targets_dt2.txt Misc17/Dt2.cpp
 Keylist/targets_find.txt Keylist/Find.cpp
 Misc18/targets.txt Misc18/Dlg.cpp Misc18/Ctor.cpp
+Misc18/targets_open.txt Misc18/Open.cpp
+Misc18/targets_clk.txt Misc18/Flush.cpp
+Misc18/targets_reg.txt Misc18/Reg.cpp
