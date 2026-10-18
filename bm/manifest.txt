@@ -454,3 +454,11 @@ Tiny4/targets12.txt Tiny4/F448f70.cpp
 Tiny4/targets13.txt Tiny4/F448170.cpp
 Tiny4/targets14.txt Tiny4/F4499e0.cpp
 Tiny4/targets15.txt Tiny4/F47a8f0.cpp
+Tiny4/targets16.txt Tiny4/F459090.cpp
+Tiny4/targets17.txt Tiny4/F46a400.cpp
+Tiny4/targets18.txt Tiny4/F41c4b0.cpp
+Tiny4/targets19.txt Tiny4/ObjArrayCreate.cpp
+Tiny4/targets20.txt Tiny4/F447890.cpp
+Tiny4/targets21.txt Tiny4/F43a6a0.cpp
+Tiny4/targets22.txt Tiny4/F459320.cpp
+Tiny4/targets23.txt Tiny4/F448060.cpp
