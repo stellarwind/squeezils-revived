@@ -4,7 +4,7 @@
 ^\?SampleCount@MorphCycle 41ba30 samplecount
 ^\?NoLoop@MorphCycle     41ba40 noloop
 ^\?TimeAt@MorphCycle     41ba50 timeat
-^\?\?1MorphCycle         41b940 dtor
+^\?\?1MorphCycle         41b940 dtor 192
 ^\?\?0MorphCycle@@QAE@H  41b7b0 ctor
 ^\?\?0MorphCycle@@QAE@ABU0 41b8b0 copyctor
 ^\?NoLoop@MorphCycle  420c60 noloop_d420c60

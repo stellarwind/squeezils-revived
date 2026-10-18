@@ -22,6 +22,6 @@
 ^\?ApplyFrameTransform@@YG  4770d0 applytransform
 ^\?SetFrameDecalSize@@YG  477540 decalsize
 ^\?CreateAmbientLight@SceneL  477700 ambient
-^\?CreateDirectionalLight@SceneL  4775c0 directional
+^\?CreateDirectionalLight@SceneL  4775c0 directional 320
 ^\?BeginFrame@Scene  476af0 beginframe
 ^\?LoadWarp@Scene  4769a0 loadwarp
