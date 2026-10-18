@@ -401,3 +401,4 @@ Guards/targets.txt Guards/Guards.cpp
 Guards/targets_init.txt Guards/Init.cpp
 Guards/targets_thunk2.txt Guards/Thunk2.cpp
 Misc17/targets.txt Misc17/V.cpp Misc17/P.cpp
+Misc17/targets_dt2.txt Misc17/Dt2.cpp
