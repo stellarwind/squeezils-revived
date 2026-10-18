@@ -409,3 +409,6 @@ Misc18/targets_clk.txt Misc18/Flush.cpp
 Misc18/targets_reg.txt Misc18/Reg.cpp
 Misc18/targets_pop.txt Misc18/Pop.cpp
 Misc18/targets_free.txt Misc18/Free.cpp
+Misc18/targets_parr.txt Misc18/PArr.cpp
+Misc18/targets_parr24.txt Misc18/PArr24.cpp
+Misc18/targets_com.txt Misc18/ComHolder.cpp
