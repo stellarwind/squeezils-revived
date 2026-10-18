@@ -426,3 +426,4 @@ Misc18/targets_c10.txt Misc18/Dtor10.cpp
 Misc18/targets_fwd.txt Misc18/Fwd.cpp
 Misc18/targets_c11.txt Misc18/Ctor11.cpp
 Misc18/targets_c12.txt Misc18/Ctor12.cpp
+Misc18/targets_key.txt Misc18/KeyMsg.cpp

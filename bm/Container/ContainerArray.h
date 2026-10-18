@@ -7,6 +7,9 @@ class Array {
 public:
     Array();
     Array(int n, const T *src);
+#ifdef ARRAY_COPY_CTOR
+    Array(const Array &o);                             // 0x45dc70 for Array<int>
+#endif
     ~Array();
     virtual T Get(int i);                              // slot 0
     virtual int Insert(const T &v, int at);            // slot 1
@@ -40,6 +43,18 @@ Array<T>::Array(int n, const T *src)
     for (int i = 0; i < count; i++)
         data[i] = src[i];
 }
+
+#ifdef ARRAY_COPY_CTOR
+template <class T>
+Array<T>::Array(const Array &o)
+{
+    count = o.count;
+    capacity = o.capacity;
+    data = new T[capacity];
+    for (int i = 0; i < count; i++)
+        data[i] = o.data[i];
+}
+#endif
 
 template <class T>
 Array<T>::~Array()
