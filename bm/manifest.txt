@@ -423,3 +423,6 @@ Misc18/targets_c6.txt Misc18/Ctor6.cpp
 Misc18/targets_c7.txt Misc18/Ctor7.cpp
 Misc18/targets_c9.txt Misc18/Ctor9.cpp
 Misc18/targets_c10.txt Misc18/Dtor10.cpp
+Misc18/targets_fwd.txt Misc18/Fwd.cpp
+Misc18/targets_c11.txt Misc18/Ctor11.cpp
+Misc18/targets_c12.txt Misc18/Ctor12.cpp
