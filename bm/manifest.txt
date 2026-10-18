@@ -402,3 +402,5 @@ Guards/targets_init.txt Guards/Init.cpp
 Guards/targets_thunk2.txt Guards/Thunk2.cpp
 Misc17/targets.txt Misc17/V.cpp Misc17/P.cpp
 Misc17/targets_dt2.txt Misc17/Dt2.cpp
+Keylist/targets_find.txt Keylist/Find.cpp
+Misc18/targets.txt Misc18/Dlg.cpp Misc18/Ctor.cpp
