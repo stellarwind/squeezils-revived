@@ -1,0 +1,8 @@
+#VRML V1.0 ascii
+DEF custom Extension {
+  fields [ SFString label, SFLong count, MFVec3f points ]
+  label "extension" count 7 points [ 0 1 2, 3 4 5 ]
+  Cube { depth 0.25 }
+}
+ExtensionEmpty { fields [ ] }
+USE custom

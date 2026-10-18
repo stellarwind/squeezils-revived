@@ -1,0 +1,15 @@
+READ 1 return=1
+NODE id=1 class="Extension" DEF="custom"
+  FIELD "label" type=SFString default=0 value="extension"
+  FIELD "count" type=SFLong default=0 value=7
+  FIELD "points" type=MFVec3f default=0 value=num=2 [0 1 2 3 4 5]
+  NODE id=2 class="Cube" DEF=""
+    FIELD "width" type=SFFloat default=1 value=2
+    FIELD "height" type=SFFloat default=1 value=2
+    FIELD "depth" type=SFFloat default=0 value=0.25
+READ 2 return=1
+NODE id=3 class="ExtensionEmpty" DEF=""
+READ 3 return=1
+USE id=1
+READ 4 return=1
+OVERALL return=1 roots=3 unique_nodes=3

@@ -1,0 +1,24 @@
+--- VC4 CRT (raw %.9g + IEEE bits)
++++ MinGW CRT (raw %.9g + IEEE bits)
+@@ -1,18 +1,18 @@
+ READ 1 return=1
+ NODE id=1 class="Translation" DEF=""
+-  FIELD "translation" type=SFVec3f default=0 value=[9.99999994e-009{0x322bcc77} 0{0x80000000} 16777216{0x4b800000}]
++  FIELD "translation" type=SFVec3f default=0 value=[9.99999994e-09{0x322bcc77} -0{0x80000000} 16777216{0x4b800000}]
+ READ 2 return=1
+ NODE id=2 class="Material" DEF=""
+   FIELD "ambientColor" type=MFColor default=1 value=num=1 [0.200000003{0x3e4ccccd} 0.200000003{0x3e4ccccd} 0.200000003{0x3e4ccccd}]
+   FIELD "diffuseColor" type=MFColor default=1 value=num=1 [0.200000003{0x3e4ccccd} 0.200000003{0x3e4ccccd} 0.200000003{0x3e4ccccd}]
+   FIELD "specularColor" type=MFColor default=1 value=num=1 [0{0x00000000} 0{0x00000000} 0{0x00000000}]
+   FIELD "emissiveColor" type=MFColor default=1 value=num=1 [0{0x00000000} 0{0x00000000} 0{0x00000000}]
+-  FIELD "shininess" type=MFFloat default=0 value=num=3 [0.100000001{0x3dcccccd} 0.333333343{0x3eaaaaab} 1.17549435e-038{0x00800000}]
++  FIELD "shininess" type=MFFloat default=0 value=num=3 [0.100000001{0x3dcccccd} 0.333333343{0x3eaaaaab} 1.17549435e-38{0x00800000}]
+   FIELD "transparency" type=MFFloat default=1 value=num=1 [0{0x00000000}]
+ READ 3 return=1
+ NODE id=3 class="Cube" DEF=""
+   FIELD "width" type=SFFloat default=0 value=100000000{0x4cbebc20}
+-  FIELD "height" type=SFFloat default=0 value=3.40282347e+038{0x7f7fffff}
++  FIELD "height" type=SFFloat default=0 value=3.40282347e+38{0x7f7fffff}
+   FIELD "depth" type=SFFloat default=0 value=1.00000012{0x3f800001}
+ READ 4 return=1
+ OVERALL return=1 roots=3 unique_nodes=3

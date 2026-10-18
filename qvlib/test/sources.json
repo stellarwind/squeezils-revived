@@ -1,0 +1,14 @@
+{
+  "AllNodes.wrl": {
+    "source": "archive/qvlib_download/src/QvLib-1.0/test/AllNodes.wrl",
+    "sha256": "1b40d8d930a5deb6385977def96296a6ea7286285655b1a84f86e9a99aade020"
+  },
+  "Sample.wrl": {
+    "source": "archive/qvlib_download/src/QvLib-1.0/test/Sample.wrl",
+    "sha256": "a4b8dc88f94c50e95e168e2f859659ace3f7cdfb1ee1ebd28fa31ddc92105745"
+  },
+  "NUT2.WRL": {
+    "source": "SqueezilsGameFiles/SQZ/GOODIES/NUT2.WRL",
+    "sha256": "406bb92d26f4f0668b6a3ff08495c5d2aa74aa2eba3754d344c077701a0622dd"
+  }
+}

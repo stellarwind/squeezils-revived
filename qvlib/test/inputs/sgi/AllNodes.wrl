@@ -1,0 +1,239 @@
+#VRML V1.0 ascii
+
+##################################################################
+#
+# This file includes 1 of each supported node, each with all
+# of its fields set to some value, most of which are the default
+# values.
+#
+##################################################################
+
+DEF Root Separator {
+
+    renderCulling AUTO
+
+    AsciiText {
+	string         [ "Hello", "there" ] # MFString
+	spacing        1
+	justification  LEFT
+	width          0
+    }
+
+    Cone {
+	parts	ALL
+	bottomRadius	1
+	height	2
+    }
+
+    Coordinate3 {
+	point	[ 0 0 0, 1 1 1.4 ]	# MFVec3f 
+    }
+
+    Cube {
+	width	2
+	height	2
+	depth	2
+    }
+
+    Cylinder {
+	parts	ALL
+	radius	1
+	height	2
+    }
+
+    DirectionalLight {
+	on	TRUE
+	intensity	1
+	color	1 1 1
+	direction	0 0 -1
+    }
+
+    FontStyle {
+	size     10
+	family   SERIF
+	style    NONE
+    }
+
+    Group {
+    }
+
+    IndexedFaceSet {
+	coordIndex	[ 0, 1, 2, 3 ]	# MFLong
+	materialIndex	[ -1 ]
+	normalIndex	[ -1 ]
+	textureCoordIndex	[ -1 ]
+    }
+
+    IndexedLineSet {
+	coordIndex	[ 0 ]
+	materialIndex	[ -1 ]
+	normalIndex	[ -1 ]
+	textureCoordIndex	[ -1 ]
+    }
+
+    Info {
+	string	"<Undefined info>"
+    }
+
+    LOD {
+	range		[ 0, 100, 200.3 ]		# MFFloat
+	center		0 0 0
+    }
+
+    Material {
+	ambientColor	[ 0.2 0.2 0.2, .3 .3 .3 ]	# MFColor
+	diffuseColor	[ 0.8 0.8 0.8 ]
+	specularColor	[ 0 0 0 ]
+	emissiveColor	[ 0 0 0 ]
+	shininess	[ 0.2 ]
+	transparency	[ 0 ]
+    }
+
+    MaterialBinding {
+	value	DEFAULT
+    }
+
+    MatrixTransform {
+	matrix	1 0 0 0
+	0 1 0 0
+	0 0 1 0
+	0 0 0 1
+    }
+
+    Normal {
+	vector	[ 0 0 1 ]
+    }
+
+    NormalBinding {
+	value	DEFAULT
+    }
+
+    OrthographicCamera {
+	position	0 0 1
+	orientation	0 0 1  0
+	focalDistance	5
+	height	2
+    }
+
+    PerspectiveCamera {
+	position	0 0 1
+	orientation	0 0 1  0
+	focalDistance	5
+	heightAngle	0.785398
+    }
+
+    PointLight {
+	on	TRUE
+	intensity	1
+	color	1 1 1
+	location	0 0 1
+    }
+
+    PointSet {
+	startIndex	0
+	numPoints	-1
+    }
+
+    Rotation {
+	rotation	0 0 1  0
+    }
+
+    Scale {
+	scaleFactor	1 1 1
+    }
+
+    ShapeHints {
+	vertexOrdering	UNKNOWN_ORDERING
+	shapeType	UNKNOWN_SHAPE_TYPE
+	faceType	CONVEX
+	creaseAngle	0.5
+    }
+
+    Sphere {
+	radius	1
+    }
+
+    SpotLight {
+	on	TRUE
+	intensity	1
+	color	1 1 1
+	location	0 0 1
+	direction	0 0 -1
+	dropOffRate	0
+	cutOffAngle	0.785398
+    }
+
+    Switch {
+	whichChild	-1
+    }
+
+    Texture2 {
+	filename	""
+	image	0 0 0
+	wrapS	REPEAT
+	wrapT	REPEAT
+    }
+
+    Texture2Transform {
+	translation	0 0
+	rotation	0
+	scaleFactor	1 1
+	center	0 0
+    }
+
+    TextureCoordinate2 {
+	point	[ 0 0, 1.1 2.2 ]		# MFVec2f
+    }
+
+    Transform {
+	translation	0 0 0
+	rotation	0 0 1  0
+	scaleFactor	1 1 1
+	scaleOrientation	0 0 1  0
+	center	0 0 0
+    }
+
+    TransformSeparator {
+    }
+
+    Translation {
+	translation	0 0 0
+    }
+
+    WWWAnchor {
+	name		"some URL"
+	description	"A description of the scene"
+	map		NONE
+    }
+
+    WWWInline {
+	name		"some URL"
+	bboxSize	0 0 0	
+	bboxCenter	0 0 0	
+    }
+
+    # Test instancing
+    DEF Xyz Cube {}
+    USE Xyz
+
+    # Test ignoring fields in a built-in node
+    Cone {
+	fields	[SFFloat bottomRadius, SFFloat height]
+	bottomRadius 1.2
+	height 1.9
+    }
+
+    # Test reading an extender node (twice, for luck)
+    Squid {
+	fields [MFString isA, SFFloat size, MFVec2f spotCenters]
+	isA ["Cylinder"]
+	size	12.3
+	spotCenters [ 0 0, 1 1, 2.1 3.2]
+    }
+    Squid {
+	fields [MFString isA, SFFloat size, MFVec2f spotCenters]
+	isA ["Cylinder"]
+	size	12.3
+	spotCenters [ 0 0, 1 1, 2.1 3.2]
+    }
+}
