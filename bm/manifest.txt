@@ -437,3 +437,20 @@ Settings/targets.txt Settings/Assign.cpp
 SqueezilRoboSoul/targets_dtor.txt SqueezilRoboSoul/RoboDtor.cpp
 Sim2/targets_ct.txt Sim2/CreatureTableDtor.cpp Sim2/LoadCombined.cpp
 ErrorBox/targets.txt ErrorBox/ErrorBox.cpp ErrorBox/FileOpen.cpp
+Tiny1/targets.txt Tiny1/Tiny1.cpp
+Tiny3/targets.txt Tiny3/F43ae70.cpp
+Tiny4/targets.txt Tiny4/F43bf10.cpp
+Tiny4/targets2.txt Tiny4/F41bcf0.cpp
+Tiny4/targets3.txt Tiny4/F43bf80.cpp
+Tiny4/targets4.txt Tiny4/F43bb10.cpp
+Tiny4/targets5.txt Tiny4/F46a4e0.cpp
+Tiny4/targets6.txt Tiny4/Names.cpp
+Tiny4/targets7.txt Tiny4/F459220.cpp
+Tiny4/targets9.txt Tiny4/F457ad0.cpp
+Tiny4/targets10.txt Tiny4/ObjArray.cpp
+Tiny4/targets11r.txt Tiny4/ObjArray2r.cpp
+Tiny4/targets11w.txt Tiny4/ObjArray2w.cpp
+Tiny4/targets12.txt Tiny4/F448f70.cpp
+Tiny4/targets13.txt Tiny4/F448170.cpp
+Tiny4/targets14.txt Tiny4/F4499e0.cpp
+Tiny4/targets15.txt Tiny4/F47a8f0.cpp
