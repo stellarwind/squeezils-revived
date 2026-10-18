@@ -416,3 +416,8 @@ Misc18/targets_axis.txt Misc18/Axis.cpp
 Misc18/targets_get.txt Misc18/Getter.cpp
 Misc18/targets_get2.txt Misc18/Getter2.cpp
 Misc18/targets_lookup.txt Misc18/Lookup.cpp
+Misc18/targets_c3.txt Misc18/Ctor3.cpp
+Misc18/targets_c4.txt Misc18/Ctor4.cpp
+Misc18/targets_c5.txt Misc18/Ctor5.cpp
+Misc18/targets_c6.txt Misc18/Ctor6.cpp
+Misc18/targets_c7.txt Misc18/Ctor7.cpp
