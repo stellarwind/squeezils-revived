@@ -1,4 +1,4 @@
-#FLAGS -GX -Gy -O2 -G3 -ML -D__ANSI_CPP__ -ID:/Decomp/Squeezil/Repo-qvlib/qvlib/shim -ID:/Decomp/Squeezil/Repo-qvlib/qvlib/include -ID:/Decomp/Squeezil/Repo-qvlib/qvlib/src
+#FLAGS -GX -Gy -O2 -G3 -ML -D__ANSI_CPP__ -ID:/Decomp/Squeezil/Repo/qvlib/shim -ID:/Decomp/Squeezil/Repo/qvlib/include -ID:/Decomp/Squeezil/Repo/qvlib/src
 ^\?\?0QvNode\@\@QAE\@XZ$ 47e660 qv_47e660 143
 ^\?\?_GQvNode\@\@UAEPAXI\@Z$ 47e6f0 qv_47e6f0 30
 ^\?\?1QvNode\@\@UAE\@XZ$ 47e710 qv_47e710 49
