@@ -15,13 +15,13 @@ Container/gen/targets_TableDtor.txt Container/gen/TableDtor.cpp
 Ini/targets.txt Ini/IniFile.cpp
 IniReader/targets.txt IniReader/IniReader.cpp
 ListenerTable/targets.txt ListenerTable/ListenerTable.cpp
-GameClock/targets.txt GameClock/GameClock.cpp
+GameClock/targets.txt GameClock/GameClock.cpp GameClock/RunFrame.cpp
 NutCounter/targets.txt NutCounter/NutCounter.cpp
 GoodieList/targets.txt GoodieList/GoodieList.cpp
 Inventory/targets.txt Inventory/Inventory.cpp
 Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
 NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp NavMesh/NavMeshCtor.cpp
-CompassRuler/targets.txt CompassRuler/CompassRuler.cpp
+CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
 VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
 PropList/targets.txt PropList/PropList.cpp
@@ -35,10 +35,10 @@ MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp
 PoseTable/targets.txt PoseTable/PoseTable.cpp PoseTable/PoseTableLife.cpp
 PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
-NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp
+NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp NavSurface/DestroyLoaded.cpp NavSurface/LoadedDtor.cpp
 NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
-BodyPart/targets.txt BodyPart/BodyPart.cpp
+BodyPart/targets.txt BodyPart/BodyPart.cpp BodyPart/BodyPartApply.cpp
 Body/targets.txt Body/Body.cpp
 SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp
 GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
@@ -53,7 +53,7 @@ Misc/targets.txt Misc/Misc.cpp
 Misc/targets_bitmapdraw.txt Misc/ClientBitmapDraw.cpp
 Misc/targets_bitmapfree.txt Misc/ClientBitmapFree.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
-SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp
+SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp SqueezilPlayerSoul/PostUpdate.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
@@ -66,7 +66,7 @@ Input/targets.txt Input/Input.cpp
 SqueezilBodyVtbl/targets.txt SqueezilBodyVtbl/SqueezilBodyVtbl.cpp
 CycleProp/targets.txt CycleProp/CycleProp.cpp
 Function/targets.txt Function/Function.cpp
-Panel/targets.txt Panel/Panel.cpp
+Panel/targets.txt Panel/Panel.cpp Panel/Update.cpp
 Panel/targets_widgets.txt Panel/PanelWidgets.cpp
 Panel/targets_showquest.txt Panel/ShowQuest.cpp
 Panel/targets_background.txt Panel/DrawBackground.cpp
@@ -75,7 +75,7 @@ StatusBar/targets_amo.txt StatusBar/UpdateAmo.cpp
 StatusBar/targets_food.txt StatusBar/UpdateFood.cpp
 WaveSound/targets.txt WaveSound/WaveSound.cpp
 QuestItems/targets.txt QuestItems/QuestItems.cpp
-LandSimulation/targets.txt LandSimulation/LandSimulation.cpp
+LandSimulation/targets.txt LandSimulation/LandSimulation.cpp LandSimulation/LandCtor.cpp
 SimulationAddId/targets.txt SimulationAddId/SimulationAddId.cpp
 SimulationAddCreature/targets.txt SimulationAddCreature/SimulationAddCreature.cpp
 TableGet/targets.txt TableGet/TableGet.cpp
@@ -85,7 +85,7 @@ ArrayData/targets.txt ArrayData/ArrayData.cpp
 ArrayReplace/targets.txt ArrayReplace/ArrayReplace.cpp
 ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
 Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
-StatusBar/targets.txt StatusBar/StatusBar.cpp
+StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp
 Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp
@@ -354,7 +354,7 @@ Activity/targets.txt Activity/Activity.cpp
 Activity/targets_tt.txt Activity/TurnTarget.cpp Activity/Activity.cpp
 Activity/targets_angle.txt Activity/AngleToTarget.cpp
 Activity/targets_dr.txt Activity/DieRegen.cpp Activity/Activity.cpp
-SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp
+SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp SqueezilRoboSoul/StepAI.cpp
 Misc15/targets.txt Misc15/Find.cpp
 Misc15/targets_frame.txt Misc15/Frame.cpp
 Misc15/targets_tree.txt Misc15/Octree.cpp
@@ -432,3 +432,8 @@ Misc18/targets_c16.txt Misc18/Dtor16.cpp
 Misc18/targets_c18.txt Misc18/Sdd18.cpp
 Misc18/targets_c19.txt Misc18/Sdd19.cpp
 Misc18/targets_rs.txt Misc18/RegionSoulDtor.cpp
+Release/targets.txt Release/ReleaseB.cpp Release/FontFound.cpp Release/Shutdown.cpp Release/LinkOpen.cpp
+Settings/targets.txt Settings/Assign.cpp
+SqueezilRoboSoul/targets_dtor.txt SqueezilRoboSoul/RoboDtor.cpp
+Sim2/targets_ct.txt Sim2/CreatureTableDtor.cpp Sim2/LoadCombined.cpp
+ErrorBox/targets.txt ErrorBox/ErrorBox.cpp ErrorBox/FileOpen.cpp

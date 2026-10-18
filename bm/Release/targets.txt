@@ -1,0 +1,4 @@
+^\?ReleaseB@@  422b00 releaseb
+^\?FontFound@@  42e710 fontfound
+^\?Shutdown@@  4205a0 shutdown
+^\?LinkOpen@SqueezilRegionSoul@@  437e40 linkopen

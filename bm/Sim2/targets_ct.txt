@@ -1,0 +1,2 @@
+^\?\?1CreatureTable@@  412d20 ctdtor 128
+^\?LoadCombined@QuestItemsQ@@  430360 loadcombined 208

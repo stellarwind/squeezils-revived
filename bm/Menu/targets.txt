@@ -26,3 +26,4 @@
 ^\?LoadItemBitmap@MenuL  406aa0 loadbmp
 ^\?ActionLoadGame@@  406760 loadgame
 ^\?OpenSaveFile@@  406dc0 savefile
+^\?\?1MenuK  405f90 menu_dtor

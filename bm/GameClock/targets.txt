@@ -11,3 +11,4 @@
 ^\?RenderStep@GameClock      41ed50 renderstep
 ^\?SimStep@GameClock         41ed60 simstep
 ^\?Balance@GameClock         41ed70 balance
+^\?RunFrame@@  4206e0 runframe 128
