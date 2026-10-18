@@ -462,3 +462,12 @@ Tiny4/targets20.txt Tiny4/F447890.cpp
 Tiny4/targets21.txt Tiny4/F43a6a0.cpp
 Tiny4/targets22.txt Tiny4/F459320.cpp
 Tiny4/targets23.txt Tiny4/F448060.cpp
+Tiny4/targets24.txt Tiny4/F43afb0.cpp
+Tiny4/targets25.txt Tiny4/F43dc40.cpp
+Tiny4/targets26.txt Tiny4/F43ecf0.cpp
+Tiny4/targets27.txt Tiny4/F43de80.cpp
+Tiny4/targets28.txt Tiny4/F43eb30.cpp
+Tiny4/targets29.txt Tiny4/F43bd20.cpp
+Tiny4/targets30.txt Tiny4/F43bc70.cpp
+Tiny4/targets31.txt Tiny4/F45ac40.cpp
+Tiny4/targets32.txt Tiny4/F447a30.cpp
