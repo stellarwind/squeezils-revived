@@ -1,3 +1,5 @@
 ^\?UpdateSprites@CompassRuler  4153e0 updatesprites
 ^\?UpdateRegionSprites@Panel   42e2a0 updateregionsprites
 ^\?UpdateSpritesReal@CompassRulerR  414af0 updatereal 288
+^\?Load@CompassL@@  414c10 compassload 384
+^\?LoadPair@CompassP@@  414d90 loadpair 528

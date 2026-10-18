@@ -1,1 +1,2 @@
 ^\?\?0MoodFace  405430 ctor
+^\?FindAnimation@MoodFaceF@@  405d10 findanim 376

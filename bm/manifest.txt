@@ -21,7 +21,7 @@ GoodieList/targets.txt GoodieList/GoodieList.cpp
 Inventory/targets.txt Inventory/Inventory.cpp
 Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
 NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp NavMesh/NavMeshCtor.cpp
-CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp
+CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp CompassRuler/Load.cpp CompassRuler/LoadPair.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
 VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
 PropList/targets.txt PropList/PropList.cpp
@@ -87,7 +87,7 @@ ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
 Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
-MoodFace/targets.txt MoodFace/MoodFace.cpp
+MoodFace/targets.txt MoodFace/MoodFace.cpp MoodFace/FindAnimation.cpp
 Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
 QuestPanel/targets_wrappers.txt QuestPanel/QuestPanelWrappers.cpp
@@ -354,7 +354,7 @@ Activity/targets.txt Activity/Activity.cpp
 Activity/targets_tt.txt Activity/TurnTarget.cpp Activity/Activity.cpp
 Activity/targets_angle.txt Activity/AngleToTarget.cpp
 Activity/targets_dr.txt Activity/DieRegen.cpp Activity/Activity.cpp
-SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp SqueezilRoboSoul/StepAI.cpp
+SqueezilRoboSoul/targets_step.txt SqueezilRoboSoul/Step.cpp SqueezilRoboSoul/StepAI.cpp SqueezilRoboSoul/UpdateRobo.cpp
 Misc15/targets.txt Misc15/Find.cpp
 Misc15/targets_frame.txt Misc15/Frame.cpp
 Misc15/targets_tree.txt Misc15/Octree.cpp

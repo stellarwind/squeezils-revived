@@ -1,3 +1,4 @@
 ^?StepGround@StepSoul 4045b0 stepg
 ^?StepAir@StepSoul 4045f0 stepa
 ^\?StepAI@RoboAI@@  404a80 stepai 134
+^\?UpdateRobo@RoboU@@  404df0 updaterobo 288
