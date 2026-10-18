@@ -44,8 +44,18 @@ int Renderer::CreateSurfaces()
         zdepth = 24;
     if (zbd & DDBD_16)
         zdepth = 16;
-    if (zdepth == 0)
+    if (zdepth == 0) {
+#ifdef SQZ_FIX_BUGS
+        // SQZ_FIX_BUGS: playable-build fix. The stock EXE gives up here when the driver reports no z-buffer depths
+        // (modern drivers report none). Exported/SQZ.EXE patches the 6 bytes at 0x475db7, the start of
+        // the FatalError call below (68 80 18 4c 00 56 = push "This display..."; push this), into
+        // bd 10 00 00 00 eb 14 = mov ebp,16; jmp 0x475dd2: the depth defaults to 16 bits and setup goes on.
         zdepth = 16;
+#else
+        FatalError("This display does not support a depth buffer.");
+        return 0;
+#endif
+    }
     memset(&sd, 0, sizeof(sd));
     sd.dwSize = sizeof(sd);
     sd.dwWidth = width;
