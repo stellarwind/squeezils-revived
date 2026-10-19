@@ -493,3 +493,4 @@ Misc18/targets_midifile.txt Misc18/ReleaseMidiFile.cpp
 FunctionExec/targets_context_ctor.txt FunctionExec/DelayedContextCtor.cpp
 NavSurface/targets_near.txt NavSurface/IsNear.cpp
 Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
+FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
