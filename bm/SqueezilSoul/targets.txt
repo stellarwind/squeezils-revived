@@ -28,3 +28,4 @@
 ^?WouldSlip@SqueezilSoul 452900 wouldslip ehend
 ^?SpitNut@SqueezilSoul 4530f0 spitnut ehend
 ^?SpitStanding@SqueezilSoul 455f10 spitstand ehend
+^?StartJump@SqueezilSoul 452be0 startjump ehend
