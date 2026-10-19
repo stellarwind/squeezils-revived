@@ -2,16 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "NavSurface/SurfaceFileReader.h"
 
 extern const char kSurfaceReadMode[];             // 0x4ba008
 extern const char kSurfaceOpenError[];            // 0x4c3e54
 extern const char kSurfaceHeaderError[];          // 0x4c3e30
 extern const char *gSurfaceAsciiHeader;           // 0x4c3e28
 extern const char *gSurfaceBinaryHeader;          // 0x4c3e2c
-
-struct SurfaceFileReader {
-    int DetectFormat(const char *path);
-};
 
 int SurfaceFileReader::DetectFormat(const char *path)
 {
