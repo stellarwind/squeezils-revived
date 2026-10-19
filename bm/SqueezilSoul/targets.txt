@@ -30,3 +30,4 @@
 ^?SpitStanding@SqueezilSoul 455f10 spitstand ehend
 ^?StartJump@SqueezilSoul 452be0 startjump ehend
 ^?Steer@SqueezilSoul 451a50 steer ehend
+^?Update@SqueezilSoul 450e90 update 992
