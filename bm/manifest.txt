@@ -489,3 +489,4 @@ CreatureTemplate/targets_setfunction.txt CreatureTemplate/SetFunction.cpp
 NavMesh/targets_findleaf.txt NavMesh/FindLeaf.cpp
 FunctionExec/targets_schedule.txt FunctionExec/ScheduleDelayed.cpp
 Container2/targets_idctor.txt Container2/IdListCtor.cpp
+Misc18/targets_midifile.txt Misc18/ReleaseMidiFile.cpp
