@@ -1,0 +1,2 @@
+#FLAGS -GX -Gy -O2 -G3 -ML
+^?QvInitNameDict@@ 47e5d0 init_name_dict cc

@@ -1,4 +1,4 @@
-// SqgModel: a model loaded from an .SQG file. Only the zeroing constructor is ported here.
+// SqgModel: a model loaded from an .SQG or .WRL file.
 #pragma once
 #include "compat41.h"
 
@@ -16,4 +16,5 @@ struct SqgModel {
     void *deltaLists;       // 0x28
 
     SqgModel *SqgModelConstruct();   // 0x4719d0 (thiscall)
+    int LoadWrl(const char *path, int flag); // 0x472480
 };

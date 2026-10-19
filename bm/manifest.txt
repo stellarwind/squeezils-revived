@@ -112,6 +112,10 @@ World/targets_lights.txt World/SetupLights.cpp
 StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
 Renderer/targets.txt Renderer/Renderer.cpp Renderer/ViewportPlanes.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
+SqgModel/targets_wrl.txt SqgModel/LoadWrl.cpp
+Script/targets_register.txt Script/RegisterFunction.cpp
+Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
+Container2/targets_register_collections.txt Container2/RegisterCollections.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
 GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp
@@ -297,6 +301,7 @@ Qv/targets_list.txt Qv/List.cpp
 Qv/targets_str.txt Qv/Str.cpp
 Qv/targets_ver.txt Qv/Version.cpp
 Qv/targets_names.txt Qv/Names.cpp
+Qv/targets_initnames.txt Qv/InitNameDict.cpp
 Misc3/targets.txt Misc3/Lists.cpp
 Qv/targets_setname.txt Qv/SetName.cpp
 Qv/targets_parse.txt Qv/Parse.cpp
