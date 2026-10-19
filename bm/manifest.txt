@@ -536,3 +536,8 @@ Fn43bfe0/targets.txt Fn43bfe0/F.cpp
 Fn43d680/targets.txt Fn43d680/F.cpp
 Fn478070/targets.txt Fn478070/F.cpp
 Fn47dbf0/targets.txt Fn47dbf0/F.cpp
+Fn40ec90/targets.txt Fn40ec90/F.cpp
+Fn425c00/targets.txt Fn425c00/F.cpp
+Fn45e6c0/targets.txt Fn45e6c0/F.cpp
+Fn44ea30/targets.txt Fn44ea30/F.cpp
+Fn476630/targets.txt Fn476630/F.cpp
