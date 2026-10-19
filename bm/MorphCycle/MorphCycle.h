@@ -3,6 +3,9 @@
 // ctors/dtor/TimeAt/SamplePose/BlendPose are larger and not ported yet.
 #pragma once
 #include "compat41.h"
+#ifdef MORPH_CYCLE_SAMPLE_INTERFACE
+struct PoseTable;
+#endif
 
 struct MorphCycle {
     float duration;                 // 0x00
@@ -25,6 +28,9 @@ struct MorphCycle {
     int   SampleCount();            // 0x41ba30
     int   NoLoop();                 // 0x41ba40
     float TimeAt(int sample);       // 0x41ba50
+#ifdef MORPH_CYCLE_SAMPLE_INTERFACE
+    int SamplePose(PoseTable *pose, float time, int flag); // 0x41bbf0
+#endif
 #ifdef MORPH_CYCLE_LOAD_INTERFACE
     // Opt in to preserve the symbol count in existing byte-match units.
     int Load(const char *filename); // 0x41bd60
