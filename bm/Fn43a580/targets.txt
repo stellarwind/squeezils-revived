@@ -1,0 +1,1 @@
+^\?RegisterAudioFunctions  43a580 regaudio 288

@@ -549,3 +549,13 @@ Fn456f40/targets.txt Fn456f40/F.cpp
 Fn42d880/targets.txt Fn42d880/F.cpp
 Container/gen/targets_TableCtor.txt Container/gen/TableCtor.cpp
 Fn448510/targets.txt Fn448510/F.cpp IniReader/IniReader.cpp
+Fn44e7f0/targets.txt Fn44e7f0/F.cpp String/String.cpp
+Fn4490f0/targets.txt Fn4490f0/F.cpp
+Fn448fe0/targets.txt Fn448fe0/F.cpp
+Fn40d530/targets.txt Fn40d530/F.cpp
+Fn41fb90/targets.txt Fn41fb90/F.cpp
+Fn43a580/targets.txt Fn43a580/F.cpp String/String.cpp
+Fn423e60/targets.txt Fn423e60/F.cpp String/String.cpp
+Fn4311c0/targets.txt Fn4311c0/F.cpp String/String.cpp
+Fn470680/targets.txt Fn470680/F.cpp String/String.cpp
+Fn441d20/targets.txt Fn441d20/F.cpp String/String.cpp
