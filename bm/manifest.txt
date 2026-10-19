@@ -128,6 +128,9 @@ Container2/targets_render_table_ctors.txt Container2/RenderTableCtors.cpp
 Container2/targets_texture_table_ctor.txt Container2/TextureTableCtor.cpp
 Container2/targets_prop_table_ctor.txt Container2/PropTableCtor.cpp
 Container2/targets_morph_table_ctor.txt Container2/MorphTableCtor.cpp
+Container2/targets_int_string_ctor.txt Container2/IntStringTableCtor.cpp
+Container2/targets_float_string_ctor.txt Container2/FloatStringTableCtor.cpp
+Container2/targets_string_int_ctor.txt Container2/StringIntTableCtor.cpp
 Container2/targets_orientation_ctor.txt Container2/OrientationArrayCtor.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
