@@ -480,3 +480,4 @@ ForwardThunks/targets.txt ForwardThunks/ForwardThunks.cpp
 Fam68/targets_ctor.txt Fam68/TwoVecCtor.cpp
 Input/targets_assignkey.txt Input/AssignKey.cpp
 Input/targets_keyslot.txt Input/SetKeySlot.cpp
+NavMesh/targets_before.txt NavMesh/ToWorldBefore.cpp
