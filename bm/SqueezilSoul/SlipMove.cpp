@@ -19,27 +19,32 @@ struct Vector3f {
     float Normalize();                      // 0x47d630
 };
 
+struct Matrix {                             // the body's matrix
+    float m[16];
+};
+
 struct Matrix16 {                           // 64 bytes
     float v[16];
     Matrix16() {}
-    Matrix16(const Matrix16 &o)
+    Matrix16(const Matrix16 &o);            // 0x4099e0
+    Matrix16(const Matrix &o)
     {
-        v[0] = o.v[0];
-        v[1] = o.v[1];
-        v[2] = o.v[2];
-        v[3] = o.v[3];
-        v[4] = o.v[4];
-        v[5] = o.v[5];
-        v[6] = o.v[6];
-        v[7] = o.v[7];
-        v[8] = o.v[8];
-        v[9] = o.v[9];
-        v[10] = o.v[10];
-        v[11] = o.v[11];
-        v[12] = o.v[12];
-        v[13] = o.v[13];
-        v[14] = o.v[14];
-        v[15] = o.v[15];
+        v[0] = o.m[0];
+        v[1] = o.m[1];
+        v[2] = o.m[2];
+        v[3] = o.m[3];
+        v[4] = o.m[4];
+        v[5] = o.m[5];
+        v[6] = o.m[6];
+        v[7] = o.m[7];
+        v[8] = o.m[8];
+        v[9] = o.m[9];
+        v[10] = o.m[10];
+        v[11] = o.m[11];
+        v[12] = o.m[12];
+        v[13] = o.m[13];
+        v[14] = o.m[14];
+        v[15] = o.m[15];
     }
     ~Matrix16();                            // 0x402310
     Vector3f &Row(int i) { return *(Vector3f *)&v[i * 4]; }
@@ -71,7 +76,7 @@ Clock *GetClock();                          // 0x4206d0
 
 struct SoulBody {
     virtual void b0(); virtual void b1(); virtual void b2();
-    virtual Matrix16 *GetMatrix();          // slot 3, +0xc
+    virtual Matrix *GetMatrix();            // slot 3, +0xc
     virtual float   *Direction();           // slot 4, +0x10
     virtual float Speed();                  // slot 5, +0x14
     virtual float Mass();                   // slot 6, +0x18
