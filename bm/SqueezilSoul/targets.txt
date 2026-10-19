@@ -29,3 +29,4 @@
 ^?SpitNut@SqueezilSoul 4530f0 spitnut ehend
 ^?SpitStanding@SqueezilSoul 455f10 spitstand ehend
 ^?StartJump@SqueezilSoul 452be0 startjump ehend
+^?Steer@SqueezilSoul 451a50 steer ehend
