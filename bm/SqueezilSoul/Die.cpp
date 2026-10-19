@@ -1,5 +1,5 @@
 // SqueezilSoul: dying (0x450a00).
-// 12 spare declarations (symbol count, see padscan.sh)
+// 23 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
 void PadDecl3();
@@ -12,6 +12,17 @@ void PadDecl9();
 void PadDecl10();
 void PadDecl11();
 void PadDecl12();
+void PadDecl13();
+void PadDecl14();
+void PadDecl15();
+void PadDecl16();
+void PadDecl17();
+void PadDecl18();
+void PadDecl19();
+void PadDecl20();
+void PadDecl21();
+void PadDecl22();
+void PadDecl23();
 #include "Soul.h"
 
 // @00450a00 how: 0 at once (no clip), 1 faint, 2 drown, 3 shudder, 9 keep the current clip; 4-8 only start dying.

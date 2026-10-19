@@ -16,3 +16,5 @@
 ^\?Die@SqueezilSoul 450a00 die
 ^\?ResetSurface@SqueezilSoul 451500 resetsurface cc
 ^\?Spit@SqueezilSoul 4569c0 spit cc
+^\?Skid@SqueezilSoul 456800 skid cc
+^\?Land@SqueezilSoul 4565e0 land cc
