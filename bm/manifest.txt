@@ -109,6 +109,8 @@ World/targets_ctor.txt World/WorldCtor.cpp
 World/targets_loadnav.txt World/LoadNavMesh.cpp
 World/targets_create.txt World/CreateScene.cpp
 World/targets_lights.txt World/SetupLights.cpp
+World/targets_default_sprite.txt World/ReadDefaultPropSprite.cpp
+Fn438020/targets.txt Fn438020/F.cpp
 StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
 Renderer/targets.txt Renderer/Renderer.cpp Renderer/ViewportPlanes.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
