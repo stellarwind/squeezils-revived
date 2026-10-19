@@ -20,8 +20,10 @@ int InitClips()
 {
     IniReader ini;
     ini.SetSection(kClipSection);
-    MorphCycle **slot = g_baseCycles;
-    ClipDef *def = g_baseClips;
+    MorphCycle **slot;
+    ClipDef *def;
+    def = g_baseClips;
+    slot = g_baseCycles;
     do {
         if (!LoadBaseClip(&ini, def->name, def, slot))
             return 0;
