@@ -1,0 +1,1 @@
+^?SetKeySlot@SqzInputManager@@ 43ad80 set_key_slot 112

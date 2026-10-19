@@ -44,7 +44,7 @@ SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp SqueezilBody/UpdOrient.cp
 GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
 Prop/targets.txt Prop/Prop.cpp
 RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
-SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp
+SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp SqueezilSoul/Die.cpp SqueezilSoul/Surface.cpp SqueezilSoul/Move.cpp SqueezilSoul/Spit.cpp SqueezilSoul/Nuts.cpp SqueezilSoul/Grant.cpp SqueezilSoul/Turn.cpp SqueezilSoul/Adjust.cpp SqueezilSoul/Rotate.cpp SqueezilSoul/Attack.cpp SqueezilSoul/Slip.cpp SqueezilSoul/SpitNut.cpp SqueezilSoul/SpitStand.cpp SqueezilSoul/Jump.cpp SqueezilSoul/Steer.cpp SqueezilSoul/Update.cpp SqueezilSoul/Ground.cpp SqueezilSoul/MoveGround.cpp SqueezilSoul/SlipMove.cpp SqueezilSoul/Fly.cpp
 NavProp/targets.txt NavProp/NavProp.cpp
 Simulation/targets.txt Simulation/Simulation.cpp
 PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
@@ -475,3 +475,22 @@ Container2/targets_tab.txt Container2/TabInt.cpp
 Container2/targets_tabobj.txt Container2/TabObj.cpp
 Container2/targets_glob.txt Container2/GlobTab.cpp
 Container/targets_vecat.txt Container/ArrayVecAt.cpp
+
+ForwardThunks/targets.txt ForwardThunks/ForwardThunks.cpp
+Fam68/targets_ctor.txt Fam68/TwoVecCtor.cpp
+Input/targets_assignkey.txt Input/AssignKey.cpp
+Input/targets_keyslot.txt Input/SetKeySlot.cpp
+NavMesh/targets_before.txt NavMesh/ToWorldBefore.cpp
+Container2/targets_get_intstring.txt Container2/GetIntString.cpp
+Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
+NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp
+Input/targets_resetdefault.txt Input/ResetCommandDefault.cpp
+CreatureTemplate/targets_setfunction.txt CreatureTemplate/SetFunction.cpp
+NavMesh/targets_findleaf.txt NavMesh/FindLeaf.cpp
+FunctionExec/targets_schedule.txt FunctionExec/ScheduleDelayed.cpp
+Container2/targets_idctor.txt Container2/IdListCtor.cpp
+Misc18/targets_midifile.txt Misc18/ReleaseMidiFile.cpp
+FunctionExec/targets_context_ctor.txt FunctionExec/DelayedContextCtor.cpp
+NavSurface/targets_near.txt NavSurface/IsNear.cpp
+Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
+FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
