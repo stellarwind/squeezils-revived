@@ -44,7 +44,7 @@ SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp SqueezilBody/UpdOrient.cp
 GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
 Prop/targets.txt Prop/Prop.cpp
 RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
-SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp SqueezilSoul/Die.cpp SqueezilSoul/Surface.cpp SqueezilSoul/Move.cpp SqueezilSoul/Spit.cpp SqueezilSoul/Nuts.cpp SqueezilSoul/Grant.cpp SqueezilSoul/Turn.cpp SqueezilSoul/Adjust.cpp SqueezilSoul/Rotate.cpp SqueezilSoul/Attack.cpp SqueezilSoul/Slip.cpp SqueezilSoul/SpitNut.cpp SqueezilSoul/SpitStand.cpp SqueezilSoul/Jump.cpp SqueezilSoul/Steer.cpp SqueezilSoul/Update.cpp SqueezilSoul/Ground.cpp
+SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp SqueezilSoul/Die.cpp SqueezilSoul/Surface.cpp SqueezilSoul/Move.cpp SqueezilSoul/Spit.cpp SqueezilSoul/Nuts.cpp SqueezilSoul/Grant.cpp SqueezilSoul/Turn.cpp SqueezilSoul/Adjust.cpp SqueezilSoul/Rotate.cpp SqueezilSoul/Attack.cpp SqueezilSoul/Slip.cpp SqueezilSoul/SpitNut.cpp SqueezilSoul/SpitStand.cpp SqueezilSoul/Jump.cpp SqueezilSoul/Steer.cpp SqueezilSoul/Update.cpp SqueezilSoul/Ground.cpp SqueezilSoul/MoveGround.cpp
 NavProp/targets.txt NavProp/NavProp.cpp
 Simulation/targets.txt Simulation/Simulation.cpp
 PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
