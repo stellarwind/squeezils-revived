@@ -523,3 +523,7 @@ Fn40f610/targets.txt Fn40f610/F.cpp
 Behavior2/targets_pd.txt Behavior2/PaceDtor.cpp Activity/Activity.cpp
 Behavior2/targets_td.txt Behavior2/Fn403820.cpp Activity/Activity.cpp
 Fn42cdb0/targets.txt Fn42cdb0/F.cpp
+Fn41e3a0/targets.txt Fn41e3a0/F.cpp
+Fn457380/targets.txt Fn457380/F.cpp
+Fn45e0e0/targets.txt Fn45e0e0/F.cpp
+Fn45a850/targets.txt Fn45a850/F.cpp

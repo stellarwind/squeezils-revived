@@ -82,3 +82,25 @@ float Holder10::Find(int *key)
         return reg.Get(name)->value;
     return gDefaultF;
 }
+
+// 0x40f9b0: same lookup returning the entry's string (empty string when missing).
+struct EntryS { String Str(); };                         // 0x40fab0
+struct RegS { virtual int v0(); virtual int Has(String &k); EntryS *Get(String &k); };
+struct HolderS {
+    char pad[0x134];
+    ListC c;
+    char pad2[0x16c - 0x138];
+    RegS reg;
+    String Part(int *key);
+    String Find(int *key);
+};
+String HolderS::Find(int *key)
+{
+    String part = Part(key);
+    String name = c.Get(*key)->GetProperties()->NameOf(part);
+    if (reg.Has(name)) {
+        EntryS *e = reg.Get(name);
+        return e->Str();
+    }
+    return String("");
+}

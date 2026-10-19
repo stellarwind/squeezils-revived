@@ -1,3 +1,21 @@
+// spare declarations: the compiler's register choices follow the symbol count (tools/flagsearch/padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
+void PadDecl11();
+void PadDecl12();
+void PadDecl13();
+void PadDecl14();
+void PadDecl15();
+void PadDecl16();
+void PadDecl17();
 // FrameProp::~FrameProp (SQZ.EXE 0x427100): deletes the children, then the body, then the members and the Prop base.
 struct Child { virtual ~Child(); };
 struct ChildList {
