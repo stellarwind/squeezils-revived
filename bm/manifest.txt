@@ -155,6 +155,7 @@ Audio/targets_resume.txt Audio/ResumeSounds.cpp
 Audio/targets_stop_midi.txt Audio/StopMidi.cpp
 NavSurface/targets_detect_format.txt NavSurface/DetectFormat.cpp
 NavSurface/targets_load_file.txt NavSurface/LoadSurfaceFile.cpp
+Level/targets_findbrain.txt Level/FindBrain.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
 Audio/targets.txt Audio/Volume.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
