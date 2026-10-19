@@ -61,6 +61,7 @@ GoodieSoul/targets_grantto.txt GoodieSoul/GrantTo.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
 Ui/targets_splashpump.txt Ui/SplashPump.cpp
+Ui/targets_splashprogress.txt Ui/SplashProgress.cpp
 Behavior/targets.txt Behavior/Behavior.cpp
 Globals/targets.txt Globals/Globals.cpp
 Alloc/targets.txt Alloc/Alloc.cpp

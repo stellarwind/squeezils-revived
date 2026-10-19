@@ -1,0 +1,1 @@
+^?DrawProgress@Splash@@ 44ef30 splash_progress 224
