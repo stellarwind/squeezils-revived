@@ -113,6 +113,7 @@ StatusBarCtor/targets.txt StatusBarCtor/StatusBarCtor.cpp
 Renderer/targets.txt Renderer/Renderer.cpp Renderer/ViewportPlanes.cpp
 SqgModel/targets.txt SqgModel/SqgModel.cpp
 SqgModel/targets_wrl.txt SqgModel/LoadWrl.cpp
+SqgModel/targets_read_wrl.txt SqgModel/ReadWrl.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
 Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
 Container2/targets_register_collections.txt Container2/RegisterCollections.cpp
