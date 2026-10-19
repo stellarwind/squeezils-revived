@@ -155,6 +155,7 @@ struct SqueezilSoul {
     Place *place;                           // 0x70
 
     void Die(int how);                      // 0x450a00 slot 13
+    void SprayNuts();                       // 0x450740 slot 39
     void ResetSurface();                    // 0x451500 slot 21
     void HopStart(GroundControl *c, int next);  // 0x4558f0 slot 46
     void Land(GroundControl *c, int next);  // 0x4565e0 slot 52

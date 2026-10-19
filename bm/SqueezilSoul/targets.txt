@@ -19,3 +19,4 @@
 ^\?Skid@SqueezilSoul 456800 skid cc
 ^\?Land@SqueezilSoul 4565e0 land cc
 ^\?HopStart@SqueezilSoul 4558f0 hopstart
+^\?SprayNuts@SqueezilSoul 450740 spraynuts cc
