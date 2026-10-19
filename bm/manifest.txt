@@ -117,6 +117,7 @@ SqgModel/targets.txt SqgModel/SqgModel.cpp
 SqgModel/targets_wrl.txt SqgModel/LoadWrl.cpp
 SqgModel/targets_read_wrl.txt SqgModel/ReadWrl.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
+Release/targets_shutdown_props.txt Release/ShutdownProps.cpp
 Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
 Container2/targets_register_collections.txt Container2/RegisterCollections.cpp
 Container2/targets_register_objects.txt Container2/RegisterObjectTables.cpp
