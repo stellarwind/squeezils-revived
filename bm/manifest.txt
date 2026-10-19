@@ -149,6 +149,7 @@ Bitmap2/targets.txt Bitmap2/Bitmap2.cpp Bitmap2/Blit.cpp Bitmap2/Load.cpp
 Scene/targets.txt Scene/Scene.cpp Scene/Quality.cpp Scene/Lights.cpp
 Scene/targets_decal_frame.txt Scene/CreateDecalFrame.cpp
 Joy/targets_calibrate_centre.txt Joy/CalibrateCentre.cpp
+Audio/targets_resume.txt Audio/ResumeSounds.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
 Audio/targets.txt Audio/Volume.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
