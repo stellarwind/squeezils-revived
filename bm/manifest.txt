@@ -116,6 +116,9 @@ SqgModel/targets_wrl.txt SqgModel/LoadWrl.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
 Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
 Container2/targets_register_collections.txt Container2/RegisterCollections.cpp
+Container2/targets_register_objects.txt Container2/RegisterObjectTables.cpp
+Container2/targets_vector_grow.txt Container2/VectorArrayGrow.cpp
+Container2/targets_string_set_ctor.txt Container2/StringSetCtor.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
 GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp

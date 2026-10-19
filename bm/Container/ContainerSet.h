@@ -53,6 +53,9 @@ inline int Same(const T &a, const T &b)
 template <class T, int ID>
 class Set : public PrimitiveArray<T, ID> {
 public:
+#ifdef SET_DEFAULT_CTOR_OUTOFLINE
+    Set();
+#endif
     virtual int Insert(const T &v, int hint);          // slot 1
     virtual void Replace(int i, const T &v);           // slot 3
     virtual int Contains(const T &v);                  // slot 6
