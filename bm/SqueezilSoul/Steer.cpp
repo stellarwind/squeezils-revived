@@ -1,5 +1,3 @@
-// SqueezilSoul::Steer (0x451a50): self-contained (vector and matrix locals with out-of-line dtors).
-// 13 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
 void PadDecl3();
@@ -10,9 +8,8 @@ void PadDecl7();
 void PadDecl8();
 void PadDecl9();
 void PadDecl10();
-void PadDecl11();
-void PadDecl12();
-void PadDecl13();
+// 10 spare declarations stabilize VC4.1 register allocation (padscan period 32).
+// SqueezilSoul::Steer (0x451a50): self-contained (vector and matrix locals with out-of-line dtors).
 #include "compat41.h"
 
 struct Vector3f {
@@ -133,7 +130,8 @@ void SqueezilSoul::Steer(AirControl *c, float levelTo, Matrix16 *m, float second
             pitchStep = c->climbAngle * c->pitch;
         else
             pitchStep = c->diveAngle * c->pitch;
-        pitchStep = AngleStep(pitch, c->diveAdjustRate, pitchStep, seconds);
+        float rate = c->diveAdjustRate;
+        pitchStep = AngleStep(pitch, rate, pitchStep, seconds);
         float speed = Body()->Speed();
         float forwardSpeed = DotRow2(Body()->Direction(), Body()->GetMatrix()) * speed;
         if (forwardSpeed < c->controlCutoff) {          // too slow to steer fully: fades out over the last unit of speed
@@ -153,7 +151,9 @@ void SqueezilSoul::Steer(AirControl *c, float levelTo, Matrix16 *m, float second
     float pitchChange = levelStep + pitchStep;
     pitch += pitchChange;
 
-    float rollChange = AngleStep(roll, c->turnRate, -(yawRate / c->turnRate) * c->bank, seconds);
+    float bank = (-yawRate / c->turnRate) * c->bank;
+    float rate = c->turnRate;
+    float rollChange = AngleStep(roll, rate, bank, seconds);
     roll += rollChange;
     if (roll > 180.0f)                      // (half a turn, not a whole one; kept as the original has it)
         roll -= 180.0f;
