@@ -25,4 +25,8 @@ struct MorphCycle {
     int   SampleCount();            // 0x41ba30
     int   NoLoop();                 // 0x41ba40
     float TimeAt(int sample);       // 0x41ba50
+#ifdef MORPH_CYCLE_LOAD_INTERFACE
+    // Opt in to preserve the symbol count in existing byte-match units.
+    int Load(const char *filename); // 0x41bd60
+#endif
 };
