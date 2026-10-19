@@ -18,3 +18,4 @@
 ^\?Spit@SqueezilSoul 4569c0 spit cc
 ^\?Skid@SqueezilSoul 456800 skid cc
 ^\?Land@SqueezilSoul 4565e0 land cc
+^\?HopStart@SqueezilSoul 4558f0 hopstart

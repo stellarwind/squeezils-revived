@@ -1,4 +1,15 @@
 // SqueezilSoul: spitting (0x4569c0).
+// 10 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
+void PadDecl4();
+void PadDecl5();
+void PadDecl6();
+void PadDecl7();
+void PadDecl8();
+void PadDecl9();
+void PadDecl10();
 #include "Soul.h"
 
 // @004569c0 Standing still starts a spit (its strength comes later, SetSpitStrength); walking and attacking start a full one;

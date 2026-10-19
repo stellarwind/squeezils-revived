@@ -60,7 +60,7 @@ struct SoulBody {
     virtual void b6();
     virtual Contact *GetContact();          // slot 7, +0x1c
     virtual void b8(); virtual void b9();
-    virtual void SetVelocity(Vector3f *dir, float speed);  // slot 10, +0x28
+    virtual void SetVelocity(float *dir, float speed);     // slot 10, +0x28
     virtual void b11();
     virtual void b12(); virtual void b13(); virtual void b14();
     virtual int  IsOnGround();              // slot 15, +0x3c
@@ -83,8 +83,21 @@ struct Possessions {
 extern int kLoopingSoundPlaying;            // 0x4bd960
 void StopLoopingSounds();                   // 0x44a8f0
 
+struct GroundMotion {
+    float acceleration, deceleration, speed;
+    float turnAccel, turnDecel, turnRate;
+};
+
+struct JumpModel {
+    float upSpeed, fwdSpeed, upDistance;
+};
+
 struct SqueezilPhysics {
-    char  pad[0x270];
+    char  pad[0x24];
+    GroundMotion walk;                      // 0x24
+    char  pad3c[0x1c0 - 0x3c];
+    JumpModel hop;                          // 0x1c0
+    char  pad1cc[0x270 - 0x1cc];
     float maxLandingSpeed;                  // 0x270
     char  pad274[0x278 - 0x274];
     float spitVelocity;                     // 0x278
@@ -95,6 +108,7 @@ struct SqueezilPhysics {
 struct GroundControl {
     float forward;                          // 0x00 -1 (back) .. 1 (forward)
     float turn;                             // 0x04
+    GroundMotion ground;                    // 0x08
 };
 
 
@@ -117,7 +131,8 @@ struct SqueezilSoul {
     virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33();
     virtual void s34(); virtual void s35();
     virtual void SpitNut(float speed);      // slot 36, +0x90
-    virtual void s37(); virtual void s38(); virtual void s39();
+    virtual void StartJump(float up, float fwd, float upDistance);   // slot 37, +0x94
+    virtual void s38(); virtual void s39();
     virtual void s40(); virtual void s41(); virtual void s42();
     virtual void GroundMove(GroundControl *c, int next);   // slot 43, +0xac
     char pad04[0x8 - 4];
@@ -130,7 +145,8 @@ struct SqueezilSoul {
     char pad3c[0x44 - 0x3c];
     int  frozen;                            // 0x44
     SqueezilPhysics *physics;               // 0x48
-    char pad4c[0x54 - 0x4c];
+    char pad4c[0x50 - 0x4c];
+    float hopStrength;                      // 0x50
     float spitStrength;                     // 0x54
     int   spitRequested;                    // 0x58
     char pad5c[0x60 - 0x5c];
@@ -140,6 +156,7 @@ struct SqueezilSoul {
 
     void Die(int how);                      // 0x450a00 slot 13
     void ResetSurface();                    // 0x451500 slot 21
+    void HopStart(GroundControl *c, int next);  // 0x4558f0 slot 46
     void Land(GroundControl *c, int next);  // 0x4565e0 slot 52
     void Skid(GroundControl *c, int next);  // 0x456800 slot 54
     int  Spit();                            // 0x4569c0 slot 29

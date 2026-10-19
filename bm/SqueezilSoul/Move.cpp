@@ -1,6 +1,57 @@
 // SqueezilSoul: ground movement states (0x451630-0x4569c0).
+// 3 spare declarations (symbol count, see padscan.sh)
+void PadDecl1();
+void PadDecl2();
+void PadDecl3();
 #include <math.h>
 #include "Soul.h"
+
+// @004558f0 Crouch (hop clip 35), hold (36) until the hop is let go (hopStrength set), leap (37): the hop's speeds times the
+// strength. Clip 39 is the landing crouch, after which the speed picks the ground state. Meanwhile the squeezil walks.
+void SqueezilSoul::HopStart(GroundControl *c, int next)
+{
+    switch (Body()->GetMode()) {
+    case 35:
+        if (Body()->ClipEnded())
+            Body()->SetMode(36, 0, 0);
+        next = 24;
+        break;
+    case 36:
+        if (hopStrength != -1.0f)
+            Body()->SetMode(37, 0, 0);
+        next = 24;
+        break;
+    case 37:
+        if (Body()->ClipEnded()) {
+            float up = physics->hop.upSpeed * hopStrength, fwd = physics->hop.fwdSpeed * hopStrength;
+            hopStrength = -1.0f;
+            StartJump(up, fwd, physics->hop.upDistance);
+            SetState(14, 0);
+            return;
+        }
+        next = 24;
+        break;
+    case 39:
+        if (next == 0)
+            Body()->SetVelocity(Body()->Direction(), 0.0f);
+        if (Body()->ClipEnded()) {
+            if (next == 24)
+                next = GroundStateForSpeed(Body()->Speed());
+            if (!CanEnter(next))
+                next = 0;
+            SetState(next, 0);
+            break;
+        }
+        next = 24;
+        break;
+    default:
+        next = 24;
+        break;
+    }
+    if (next == 24)
+        c->ground = physics->walk;
+    GroundMove(c, next);
+}
 
 // @004565e0 Touched down: going forward it keeps the forward part of its speed (at most MaxLandingSpeed, unless it tumbled in,
 // and MaxRunSpeed when running) and picks walk, run or stumble from it; going sideways it slips; else it stops.
@@ -32,10 +83,10 @@ void SqueezilSoul::Land(GroundControl *c, int next)
         limitLanding = -1;
         if (to == 4 && physics->maxRunSpeed < speed)
             speed = physics->maxRunSpeed;
-        Body()->SetVelocity(&forward, speed);
+        Body()->SetVelocity(&forward.x, speed);
     } else {
         SetState(0, 1);
-        Body()->SetVelocity(&direction, 0.0f);
+        Body()->SetVelocity(&direction.x, 0.0f);
         speed = 0.0f;
     }
     Body()->SetClipSpeed(speed);
