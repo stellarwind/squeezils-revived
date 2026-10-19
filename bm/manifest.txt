@@ -486,3 +486,4 @@ Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
 NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp
 Input/targets_resetdefault.txt Input/ResetCommandDefault.cpp
 CreatureTemplate/targets_setfunction.txt CreatureTemplate/SetFunction.cpp
+NavMesh/targets_findleaf.txt NavMesh/FindLeaf.cpp
