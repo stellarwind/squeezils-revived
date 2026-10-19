@@ -20,3 +20,4 @@
 ^\?Land@SqueezilSoul 4565e0 land cc
 ^\?HopStart@SqueezilSoul 4558f0 hopstart
 ^\?SprayNuts@SqueezilSoul 450740 spraynuts cc
+^?Grant@SqueezilSoul 4504f0 grant ehend
