@@ -122,6 +122,8 @@ Container2/targets_register_collections.txt Container2/RegisterCollections.cpp
 Container2/targets_register_objects.txt Container2/RegisterObjectTables.cpp
 Container2/targets_vector_grow.txt Container2/VectorArrayGrow.cpp
 Container2/targets_string_set_ctor.txt Container2/StringSetCtor.cpp
+Container2/targets_place_table_ctor.txt Container2/PlaceTableCtor.cpp
+Container2/targets_orientation_ctor.txt Container2/OrientationArrayCtor.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
 GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp
