@@ -34,3 +34,4 @@
 ^?GroundMove@SqueezilSoul 4540c0 groundmove ehend
 ^?MoveOnGround@SqueezilSoul 451fd0 moveground 2160
 ^?Slip@SqueezilSoul 453580 slip 2877
+^?Fly@SqueezilSoul 454b40 fly 3417
