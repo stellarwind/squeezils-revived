@@ -1,0 +1,1 @@
+^?SetFunction@CreatureTemplate@@ 448640 set_stimulus_function 160
