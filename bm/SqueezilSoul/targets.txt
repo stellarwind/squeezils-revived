@@ -13,3 +13,6 @@
 ^\?TakePossessions@SqueezilSoul 450310 takepossessions
 ^\?GetDefaultPhysics@SqueezilSoul 404fe0 getdefaultphysics
 ^\?Touch@SoulT@@  450430 ss_touch 192
+^\?Die@SqueezilSoul 450a00 die
+^\?ResetSurface@SqueezilSoul 451500 resetsurface cc
+^\?Spit@SqueezilSoul 4569c0 spit cc
