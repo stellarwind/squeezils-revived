@@ -10,3 +10,5 @@
 ^\?HalfH@View  4482c0 halfh 32
 ^\?RunPass@@  448300 runpass 48
 ^\?Set@Slot  4489a0 slotset 32
+^\?GetAxes@PadG@@  43bdc0 getaxes 336
+^\?Calibrate@JoyCal@@  447f00 joycal 352

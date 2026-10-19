@@ -3,3 +3,4 @@
 ^\?UpdateSpritesReal@CompassRulerR  414af0 updatereal 288
 ^\?Load@CompassL@@  414c10 compassload 384
 ^\?LoadPair@CompassP@@  414d90 loadpair 528
+^\?DrawRow@RowPanel  430440 drawrow 240
