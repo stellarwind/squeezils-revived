@@ -139,6 +139,7 @@ Sky/targets.txt Sky/SkyMath.cpp
 Renderer2/targets.txt Renderer2/Screen.cpp Renderer2/Quality.cpp Renderer2/Setup.cpp Renderer2/Position.cpp Renderer2/Misc.cpp Renderer2/DisplayMode.cpp Renderer2/Enter.cpp Renderer2/Palette.cpp Renderer2/LoadPal.cpp Renderer2/Fade.cpp Renderer2/PutText.cpp Renderer2/Enum.cpp Renderer2/Ctor.cpp Renderer2/Shutdown.cpp Renderer2/Init.cpp Renderer2/Surfaces.cpp
 Bitmap2/targets.txt Bitmap2/Bitmap2.cpp Bitmap2/Blit.cpp Bitmap2/Load.cpp
 Scene/targets.txt Scene/Scene.cpp Scene/Quality.cpp Scene/Lights.cpp
+Scene/targets_decal_frame.txt Scene/CreateDecalFrame.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
 Audio/targets.txt Audio/Volume.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp

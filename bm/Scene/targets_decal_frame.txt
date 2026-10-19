@@ -1,0 +1,1 @@
+^?CreateDecalFrame@Scene@@ 477400 create_decal_frame cc

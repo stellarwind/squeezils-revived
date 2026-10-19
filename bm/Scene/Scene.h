@@ -23,6 +23,9 @@ struct RendererV : public Renderer {
     void SetViewParams(float nearPlane, float farPlane, float fov);   // 0x474f40
 };
 
+struct WorldVector;
+struct WorldDecalSettings;
+
 class Scene {
 public:
     Scene();                                                              // 0x476720
@@ -43,6 +46,8 @@ public:
     int  DeleteSceneChild();                                              // 0x477340
     LPDIRECT3DRMFRAME GetSceneChild();                                    // 0x477290
     LPDIRECT3DRMFRAME GetCameraFrame();                                   // 0x477390
+    LPDIRECT3DRMFRAME CreateDecalFrame(LPDIRECT3DRMTEXTURE texture, WorldVector position,
+        WorldDecalSettings settings, LPDIRECT3DRMFRAME parent);            // 0x477400
 
     Renderer *renderer;                // +0
     LPDIRECTDRAWSURFACE warpSurface;   // +4
