@@ -24,3 +24,4 @@
 ^?Turn@SqueezilSoul 4548a0 turn ehend
 ^?AdjustNextState@SqueezilSoul 450c20 adjust ehend
 ^?RotateOnSurface@SqueezilSoul 4517e0 rotate ehend
+^?Attack@SqueezilSoul 4560d0 attack ehend
