@@ -12,8 +12,8 @@
 class IfVariableNonZeroFunction : public IfVariableFunction {
 public:
     virtual int Check(int value, ScriptCall *args, int extra);
-    virtual void Print();
     virtual const char *Name();
+    virtual IfFunction *Make();
 };
 void RegisterFunction(Function *f);                      // 0x421d00 (cdecl)
 
