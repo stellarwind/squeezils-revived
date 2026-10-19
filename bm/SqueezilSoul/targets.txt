@@ -22,3 +22,4 @@
 ^\?SprayNuts@SqueezilSoul 450740 spraynuts cc
 ^?Grant@SqueezilSoul 4504f0 grant ehend
 ^?Turn@SqueezilSoul 4548a0 turn ehend
+^?AdjustNextState@SqueezilSoul 450c20 adjust ehend
