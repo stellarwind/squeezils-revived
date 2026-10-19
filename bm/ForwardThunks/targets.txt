@@ -1,0 +1,3 @@
+^?IniCloseAllThunk@@ 443260 ini_close_thunk 5
+^?RegisterBufferPrototypeThunk_45d260@@ 45d260 prototype_thunk_45d260 5
+^?RegisterBufferPrototypeThunk_45d420@@ 45d420 prototype_thunk_45d420 5

@@ -475,3 +475,5 @@ Container2/targets_tab.txt Container2/TabInt.cpp
 Container2/targets_tabobj.txt Container2/TabObj.cpp
 Container2/targets_glob.txt Container2/GlobTab.cpp
 Container/targets_vecat.txt Container/ArrayVecAt.cpp
+
+ForwardThunks/targets.txt ForwardThunks/ForwardThunks.cpp
