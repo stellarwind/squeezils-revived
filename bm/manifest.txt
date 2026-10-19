@@ -124,6 +124,10 @@ Container2/targets_register_objects.txt Container2/RegisterObjectTables.cpp
 Container2/targets_vector_grow.txt Container2/VectorArrayGrow.cpp
 Container2/targets_string_set_ctor.txt Container2/StringSetCtor.cpp
 Container2/targets_place_table_ctor.txt Container2/PlaceTableCtor.cpp
+Container2/targets_render_table_ctors.txt Container2/RenderTableCtors.cpp
+Container2/targets_texture_table_ctor.txt Container2/TextureTableCtor.cpp
+Container2/targets_prop_table_ctor.txt Container2/PropTableCtor.cpp
+Container2/targets_morph_table_ctor.txt Container2/MorphTableCtor.cpp
 Container2/targets_orientation_ctor.txt Container2/OrientationArrayCtor.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
