@@ -3,7 +3,7 @@
 #include "IniReader/IniReader.h"
 
 struct SoundScope { SoundScope(); char body[0x28]; };    // 0x468210
-struct ScopeStack { void Insert(SoundScope **item, int at); };   // 0x467f00
+struct ScopeStack { void Insert(SoundScope *const &item, int at); };   // 0x467f00
 extern ScopeStack gSoundScopes;                          // 0x4c7810
 extern int g_audioOn;                                    // 0x4bd95c
 extern const char kSoundSection[];                       // 0x4b9d64
@@ -15,14 +15,12 @@ void LoadSoundScopes(IniReader *ini)
 {
     if (!g_audioOn)
         return;
-    {
-        SoundScope *scope = new SoundScope;
-        gSoundScopes.Insert(&scope, -1);
-    }
+    gSoundScopes.Insert(new SoundScope, -1);
     LoadScope(ini);
     ini->SetSection(kSoundSection);
     StringList *keys = ini->GetKeys();
-    for (int i = 0; i < keys->count; i++) {
+    int i = 0;
+    for (; i < keys->count; i++) {
         String name(ini->GetString(keys->Get(i).c_str()));
         if (strlen(name.c_str())) {
             IniReader sub(name.c_str());
