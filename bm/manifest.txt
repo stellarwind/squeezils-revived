@@ -492,3 +492,4 @@ Container2/targets_idctor.txt Container2/IdListCtor.cpp
 Misc18/targets_midifile.txt Misc18/ReleaseMidiFile.cpp
 FunctionExec/targets_context_ctor.txt FunctionExec/DelayedContextCtor.cpp
 NavSurface/targets_near.txt NavSurface/IsNear.cpp
+Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
