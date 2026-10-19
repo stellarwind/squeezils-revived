@@ -1,0 +1,1 @@
+^\?Load@CreatureTemplate  448510 ct_load 291

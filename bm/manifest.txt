@@ -542,3 +542,10 @@ Fn45e6c0/targets.txt Fn45e6c0/F.cpp
 Fn44ea30/targets.txt Fn44ea30/F.cpp
 Fn476630/targets.txt Fn476630/F.cpp
 Fn405e90/targets.txt Fn405e90/F.cpp IniReader/IniReader.cpp
+Fn4589a0/targets.txt Fn4589a0/F.cpp
+Fn44bc40/targets.txt Fn44bc40/F.cpp
+Fn4043a0/targets.txt Fn4043a0/F.cpp
+Fn456f40/targets.txt Fn456f40/F.cpp
+Fn42d880/targets.txt Fn42d880/F.cpp
+Container/gen/targets_TableCtor.txt Container/gen/TableCtor.cpp
+Fn448510/targets.txt Fn448510/F.cpp IniReader/IniReader.cpp

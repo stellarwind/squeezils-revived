@@ -13,4 +13,5 @@ struct CreatureTemplate {
     CreatureTemplate();     // 0x4483d0
     ~CreatureTemplate();    // 0x4484a0
     void RunPending(PendingSoul *soul); // 0x4487f0
+    int Load(String &section, class IniReader *ini);   // 0x448510
 };
