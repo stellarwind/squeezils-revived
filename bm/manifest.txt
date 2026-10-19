@@ -161,6 +161,7 @@ Level/targets_findbrain.txt Level/FindBrain.cpp
 PropLoader/targets_paths.txt PropLoader/ReadPaths.cpp
 Input/targets_compatible.txt Input/CompatibleBindings.cpp
 Activity/targets_regen_step.txt Activity/RegenStep.cpp
+Input/targets_savebindings.txt Input/SaveBindings.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
 Audio/targets.txt Audio/Volume.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
