@@ -484,3 +484,4 @@ NavMesh/targets_before.txt NavMesh/ToWorldBefore.cpp
 Container2/targets_get_intstring.txt Container2/GetIntString.cpp
 Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
 NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp
+Input/targets_resetdefault.txt Input/ResetCommandDefault.cpp
