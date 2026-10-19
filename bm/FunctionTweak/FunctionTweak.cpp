@@ -16,4 +16,8 @@ void TweakFloatFunction::Print()
 
 TweakFloatFunction::~TweakFloatFunction()
 {
+    for (int i = args.count - 1; i >= 0; --i) {
+        delete args.Get(i);
+        args.Remove(i);
+    }
 }

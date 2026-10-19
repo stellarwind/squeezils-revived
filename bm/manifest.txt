@@ -56,6 +56,7 @@ CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp SqueezilPlayerSoul/PostUpdate.cpp SqueezilPlayerSoul/SkihopAir.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
 GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
+GoodieSoul/targets_grantto.txt GoodieSoul/GrantTo.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
 Ui/targets_splashpump.txt Ui/SplashPump.cpp
@@ -99,6 +100,10 @@ World/targets_destroy.txt World/DestroyScene.cpp
 World/targets_surfaces.txt World/SurfacesOf.cpp
 World/targets_render.txt World/RenderFrame.cpp
 World/targets_decal.txt World/CreateDecal.cpp
+World/targets_copydecal.txt World/CopyDecalSettings.cpp
+Resources/targets_initgeometry.txt Resources/InitGeometry.cpp
+Resources/targets_find.txt Resources/FindResources.cpp
+Script/targets_find.txt Script/FindFunction.cpp
 World/targets_ctor.txt World/WorldCtor.cpp
 World/targets_loadnav.txt World/LoadNavMesh.cpp
 World/targets_create.txt World/CreateScene.cpp
@@ -364,6 +369,7 @@ Fam112c/targets.txt Fam112c/StrGet.cpp
 FunctionArgs/targets2.txt FunctionArgs/FunctionArgs2.cpp FunctionArgs/FunctionArgs.cpp
 Misc16/targets_dm.txt Misc16/Timed2.cpp
 Misc16/targets_release_messages.txt Misc16/ReleaseMessages.cpp
+Misc16/targets_advance_messages.txt Misc16/AdvanceMessages.cpp
 Misc16/targets_redraw.txt Misc16/RedrawWindows.cpp
 Misc16/targets_fillbackground.txt Misc16/FillBackground.cpp
 Texture/targets_destroyed.txt Texture/ImageDestroyed.cpp
@@ -400,6 +406,7 @@ AutoGPT/fn_40ed97/targets.txt AutoGPT/fn_40ed97/fn_40ed97.cpp
 Guards/targets.txt Guards/Guards.cpp
 Guards/targets_init.txt Guards/Init.cpp
 Guards/targets_thunk2.txt Guards/Thunk2.cpp
+Guards/targets_physicsgravity.txt Guards/PhysicsGravity.cpp
 Misc17/targets.txt Misc17/V.cpp Misc17/P.cpp
 Misc17/targets_dt2.txt Misc17/Dt2.cpp
 Keylist/targets_find.txt Keylist/Find.cpp
@@ -485,6 +492,7 @@ Container2/targets_get_intstring.txt Container2/GetIntString.cpp
 Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
 NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp
 Input/targets_resetdefault.txt Input/ResetCommandDefault.cpp
+Input/targets_releasekeys.txt Input/ReleaseKeys.cpp
 CreatureTemplate/targets_setfunction.txt CreatureTemplate/SetFunction.cpp
 NavMesh/targets_findleaf.txt NavMesh/FindLeaf.cpp
 FunctionExec/targets_schedule.txt FunctionExec/ScheduleDelayed.cpp
@@ -492,5 +500,6 @@ Container2/targets_idctor.txt Container2/IdListCtor.cpp
 Misc18/targets_midifile.txt Misc18/ReleaseMidiFile.cpp
 FunctionExec/targets_context_ctor.txt FunctionExec/DelayedContextCtor.cpp
 NavSurface/targets_near.txt NavSurface/IsNear.cpp
+NavSurface/targets_wasnear.txt NavSurface/WasNear.cpp
 Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
 FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
