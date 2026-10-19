@@ -55,7 +55,7 @@ Misc/targets_bitmapfree.txt Misc/ClientBitmapFree.cpp
 CameraSoul/targets.txt CameraSoul/CameraSoul.cpp
 SqueezilPlayerSoul/targets.txt SqueezilPlayerSoul/SqueezilPlayerSoul.cpp SqueezilPlayerSoul/Hit.cpp SqueezilPlayerSoul/OnEvent.cpp SqueezilPlayerSoul/GroundInput.cpp SqueezilPlayerSoul/Slots2.cpp SqueezilPlayerSoul/Slots3.cpp SqueezilPlayerSoul/Slots4.cpp SqueezilPlayerSoul/Slots5.cpp SqueezilPlayerSoul/Slots6.cpp SqueezilPlayerSoul/Slots7.cpp SqueezilPlayerSoul/Slots8.cpp SqueezilPlayerSoul/Slots9.cpp SqueezilPlayerSoul/PostUpdate.cpp SqueezilPlayerSoul/SkihopAir.cpp
 SqueezilRoboSoul/targets.txt SqueezilRoboSoul/SqueezilRoboSoul.cpp SqueezilRoboSoul/AwarenessRecordReset.cpp SqueezilRoboSoul/Sense.cpp SqueezilRoboSoul/Hit.cpp
-GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp
+GoodieSoul/targets.txt GoodieSoul/GoodieSoul.cpp GoodieSoul/Touch.cpp GoodieSoul/Hit.cpp GoodieSoul/Launch.cpp
 GoodieSoul/targets_grantto.txt GoodieSoul/GrantTo.cpp
 Possessions/targets.txt Possessions/Possessions.cpp
 Ui/targets.txt Ui/Ui.cpp
@@ -506,3 +506,16 @@ NavSurface/targets_wasnear.txt NavSurface/WasNear.cpp
 Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
 Audio/targets_find.txt Audio/FindSound.cpp
 FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
+Dtor44f590/targets.txt Dtor44f590/D.cpp
+Fn450b90/targets.txt Fn450b90/D.cpp
+Init446d00/targets.txt Init446d00/D.cpp
+Init425d50/targets.txt Init425d50/D.cpp
+Dtor44dfa0/targets.txt Dtor44dfa0/D.cpp
+Level44df00/targets.txt Level44df00/D.cpp
+FrameProp2/targets.txt FrameProp2/FpDtor.cpp
+Fn471a00/targets.txt Fn471a00/F.cpp
+Fn452840/targets.txt Fn452840/F.cpp
+Fn43b980/targets.txt Fn43b980/F.cpp
+Fn456da0/targets.txt Fn456da0/F.cpp
+Fn44e0f0/targets.txt Fn44e0f0/F.cpp
+Fn47aa50/targets.txt Fn47aa50/F.cpp

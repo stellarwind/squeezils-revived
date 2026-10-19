@@ -6,3 +6,4 @@
 ^\?GrantSlot3@GoodieSoulGrant 459990 grantslot3
 ^?Touch@GoodieSoul  4599b0 gs_touch
 ^?Hit@GoodieSoul  459a80 gs_hit
+^?Launch@GoodieSoul  459ed0 gs_launch 176
