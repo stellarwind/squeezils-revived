@@ -153,6 +153,7 @@ Scene/targets_decal_frame.txt Scene/CreateDecalFrame.cpp
 Joy/targets_calibrate_centre.txt Joy/CalibrateCentre.cpp
 Audio/targets_resume.txt Audio/ResumeSounds.cpp
 Audio/targets_stop_midi.txt Audio/StopMidi.cpp
+NavSurface/targets_detect_format.txt NavSurface/DetectFormat.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
 Audio/targets.txt Audio/Volume.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
