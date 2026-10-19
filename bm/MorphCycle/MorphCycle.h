@@ -35,4 +35,7 @@ struct MorphCycle {
     // Opt in to preserve the symbol count in existing byte-match units.
     int Load(const char *filename); // 0x41bd60
 #endif
+#ifdef MORPH_CYCLE_PATH_INTERFACE
+    int LoadPath(class IniReader *ini, const char *name); // 0x41c530
+#endif
 };
