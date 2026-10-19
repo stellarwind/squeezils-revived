@@ -104,6 +104,7 @@ World/targets_copydecal.txt World/CopyDecalSettings.cpp
 Resources/targets_initgeometry.txt Resources/InitGeometry.cpp
 Resources/targets_find.txt Resources/FindResources.cpp
 Script/targets_find.txt Script/FindFunction.cpp
+Sim2/targets_placerecord.txt Sim2/PlaceDescriptor.cpp
 World/targets_ctor.txt World/WorldCtor.cpp
 World/targets_loadnav.txt World/LoadNavMesh.cpp
 World/targets_create.txt World/CreateScene.cpp
@@ -502,4 +503,5 @@ FunctionExec/targets_context_ctor.txt FunctionExec/DelayedContextCtor.cpp
 NavSurface/targets_near.txt NavSurface/IsNear.cpp
 NavSurface/targets_wasnear.txt NavSurface/WasNear.cpp
 Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
+Audio/targets_find.txt Audio/FindSound.cpp
 FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp

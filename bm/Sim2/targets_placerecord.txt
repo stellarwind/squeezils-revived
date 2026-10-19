@@ -1,0 +1,2 @@
+^??0PlaceDescriptor@@ 416c60 place_record_ctor 222
+^??1PlaceDescriptor@@ 416d40 place_record_dtor 262
