@@ -2,10 +2,7 @@
 #define V3_COPYCTOR_OUTOFLINE
 #include "Vector3f/Vector3f.h"
 #include "String/String.h"
-struct CollisionMatrix { Vector3f *Position(); }; // 0x41faf0
-struct CollisionBody {
-    virtual void v0(); virtual void v1(); virtual void v2(); virtual CollisionMatrix *GetMatrix();
-};
+#include "CollisionBody.h"
 struct CollisionSoul {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3();
     virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7();

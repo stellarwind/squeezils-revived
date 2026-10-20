@@ -26,7 +26,11 @@ struct Vector3f {
 #else
     Vector3f(float ax, float ay, float az) : x(ax), y(ay), z(az) {}   // inlined by the operators
 #endif
+#ifdef V3_DTOR_OUTOFLINE
+    ~Vector3f();                                  // 0x401660
+#else
     ~Vector3f() {}
+#endif
 #ifdef V3_COPYCTOR_OUTOFLINE
     Vector3f(const Vector3f &o);                         // out-of-line copy constructor (0x4183c0 doubles as the copy)
 #elif defined(V3_COPYCTOR)

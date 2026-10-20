@@ -1,0 +1,1 @@
+^\?Init@CompassC@@ 414490 compass_init 1632

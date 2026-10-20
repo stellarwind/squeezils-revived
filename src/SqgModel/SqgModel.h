@@ -1,6 +1,7 @@
 // SqgModel: a model loaded from an .SQG or .WRL file.
 #pragma once
 #include "compat41.h"
+struct PZMorphMesh;
 
 struct SqgModel {
     int   textureCount;     // 0x00
@@ -17,4 +18,6 @@ struct SqgModel {
 
     SqgModel *SqgModelConstruct();   // 0x4719d0 (thiscall)
     int LoadWrl(const char *path, int flag); // 0x472480
+    int Load(const char *path, int mirror); // 0x472560
+    void Morph(PZMorphMesh *instance, int count, const float *weights); // 0x4734e0
 };

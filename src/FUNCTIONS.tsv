@@ -96,8 +96,8 @@
 4053e0	61	bm	0	c4053e0	Misc17/targets_dt2.txt	
 405430	96	bm	0	ctor	MoodFace/targets.txt	
 405490	144	bm	0	freeall	Misc18/targets_free.txt	
-405520	1196	todo	-	-	-	
-4059e0	816	todo	-	-	-	
+405520	1196	func	165	mood_load	MoodFace/targets_load.txt	
+4059e0	816	func	51	mood_draw	MoodFace/targets_draw.txt	
 405d10	384	bm	0	findanim	MoodFace/targets.txt	
 405e90	243	bm	0	menuc_ctor	Fn405e90/targets.txt	
 405f90	96	func	999	menu_dtor	Menu/targets.txt	
@@ -131,7 +131,7 @@
 407d40	1744	todo	-	-	-	
 408410	496	bm	0	volumedlg	Menu/targets.txt	
 408600	565	bm	0	readcamset	CameraSettings/targets.txt	
-408850	3264	todo	-	-	-	
+408850	3264	func	259	camera_view	CameraSoul/targets_view.txt	
 409620	947	func	-	-	CameraSoul/targets_blendmatrix.txt	
 4099e0	112	bm	0	mi16b	Souls2/targets.txt	
 409a50	496	bm	0	start_path	CameraSoul/targets_startpath.txt	
@@ -232,7 +232,7 @@
 40f9b0	221	bm	0	finds	Fn40f610/targets.txt	
 40fab0	112	bm	0	name20	Fam112c/targets.txt	
 40fb20	200	func	14	find10	Fn40f610/targets.txt	
-40fc10	1175	todo	-	-	-	
+40fc10	1175	func	119	surface_load	NavSurface/targets_load.txt	
 4100b0	570	func	-	-	Fn4100b0/targets.txt	
 4102f0	32	bm	0	fw2	Misc3/targets.txt	
 410310	30	bm	0	fw3	Misc3/targets.txt	
@@ -285,13 +285,13 @@
 414380	64	bm	0	zeroed	Souls2/targets.txt	
 4143c0	16	bm	0	thunk2	Misc12/targets_t.txt	
 4143d0	192	bm	0	freeall	Misc13/targets.txt	
-414490	1620	todo	-	-	-	
+414490	1620	func	14	compass_init	CompassRuler/targets_init.txt	
 414af0	288	bm	0	updatereal	CompassRuler/targets.txt	
 414c10	384	bm	0	compassload	CompassRuler/targets.txt	
 414d90	528	bm	0	loadpair	CompassRuler/targets.txt	
 414fa0	16	bm	0	runall	Misc9/targets_b.txt	
-414fb0	256	func	-	-	CompassRuler/targets_stuck.txt	
-4150b0	816	todo	-	-	-	
+414fb0	256	func	6	setcompass	CompassRuler/targets_stuck.txt	
+4150b0	816	func	186	compass_compose	CompassRuler/targets_compose.txt	
 4153e0	16	bm	0	updatesprites	CompassRuler/targets.txt	
 4153f0	16	bm	0	passthrough	Misc12/targets_t.txt	
 415400	64	bm	0	image_destroyed	Texture/targets_destroyed.txt	
@@ -730,7 +730,7 @@
 429fa0	749	func	-	-	Fn429fa0/targets.txt	
 42a290	651	func	20	readprops	Fn42a290/targets.txt	
 42a520	6831	todo	-	-	-	
-42bfd0	1835	todo	-	-	-	
+42bfd0	1835	func	43	read_placement	PropLoader/targets_placement.txt	
 42c700	375	func	34	read_paths	PropLoader/targets_paths.txt	
 42c8b0	851	func	80	find_prop_template	PropLoader/targets_findtemplate.txt	
 42cc10	405	func	-	-	Fn42cc10/targets.txt	
@@ -939,7 +939,7 @@
 436710	681	func	-	-	Fn436710/targets.txt	
 4369c0	99	bm	0	rs_sdd	Misc18/targets_rs.txt	SqueezilRegionSoul
 436a60	144	func	-	-	Sim2/targets_stuck.txt	
-436af0	786	todo	-	-	-	SqueezilRegionSoul
+436af0	786	func	30	region_enter	RegionSoul/targets_enter.txt	SqueezilRegionSoul
 436e10	389	func	-	-	Fn436e10/targets.txt	SqueezilRegionSoul
 436fc0	781	func	-	-	Sim2/targets_bridgequad.txt	
 437360	112	bm	0	h5_get	Misc18/targets_get2.txt	
@@ -1031,7 +1031,7 @@
 43afb0	176	func	50	f43afb0	Tiny4/targets24.txt	
 43b060	112	bm	0	onpad	Misc18/targets_key.txt	
 43b0d0	80	bm	0	dispatch	Mouse/targets_d.txt	
-43b120	1151	todo	-	-	-	
+43b120	1151	func	60	mapped_input	Mouse/targets_mapped.txt	
 43b5a0	544	bm	0	key	Fn43b5a0/targets.txt	
 43b7c0	448	bm	0	press	Fn43b7c0/targets.txt	
 43b980	192	bm	0	setactive	Fn43b980/targets.txt	
@@ -1336,7 +1336,7 @@
 446e30	160	bm	0	physsoul_ctor	SoulDtor2/targets.txt	
 446ed0	174	bm	0	readphys	CameraSettings/targets.txt	
 446fa0	16	bm	0	cansave_d446fa0	RegionSimulation/targets.txt	SqueezilSoul
-446fb0	814	todo	-	-	-	
+446fb0	814	func	69	attack_impulse	PhysicalCollision/targets_attack.txt	
 4472e0	561	func	-	-	Fn4472e0/targets.txt	
 447590	496	func	36	physical_collision	PhysicalCollision/targets.txt	
 447780	16	bm	0	cp_apply_d447780	FunctionProp/targets.txt	PhysicalSoul
@@ -1418,7 +1418,7 @@
 449500	112	todo	-	-	-	
 449570	16	bm	0	r449570	Guards/targets_init.txt	
 449580	85	todo	-	-	-	
-4495e0	1001	todo	-	-	-	
+4495e0	1001	func	71	initialize_sound	Audio/targets_initialize.txt	
 4499e0	128	func	13	f4499e0	Tiny4/targets14.txt	
 449a60	32	bm	0	stepall	Misc16/targets.txt	
 449a80	32	bm	0	releasesound	Misc16/targets.txt	
@@ -1624,7 +1624,7 @@
 459bf0	16	bm	0	getkind	GoodieSoul/targets.txt	GoodieSoul
 459c00	717	todo	-	-	-	
 459ed0	141	bm	0	gs_launch	GoodieSoul/targets.txt	
-459f80	2122	todo	-	-	-	GoodieSoul
+459f80	2122	func	488	goodie_update	GoodieSoul/targets_update.txt	GoodieSoul
 45a7d0	16	todo	-	-	-	GoodieSoul
 45a7e0	16	func	5	goodie_adapter	Adjustors/targets.txt	GoodieSoul
 45a7f0	16	bm	0	r0a1c	CameraSoul/targets.txt	GoodieSoul
@@ -1644,10 +1644,10 @@
 45aba0	64	bm	0	pausemidi	PrintStubs/targets.txt	
 45abe0	96	bm	0	resumemidi	Misc16/targets_joy.txt	
 45ac40	160	func	33	f45ac40	Tiny4/targets31.txt	
-45ace0	432	todo	-	-	-	
+45ace0	432	bm	0	midi_callback	Audio/targets_callback.txt	
 45ae90	1088	func	-	-	Audio/targets_initmidi.txt	
 45b2d0	176	bm	0	release_midi_file	Misc18/targets_midifile.txt	
-45b380	336	todo	-	-	-	
+45b380	336	func	68	prime_midi_tracks	Audio/targets_prime.txt	
 45b4d0	720	func	-	-	Fn45b4d0/targets_stuck.txt	
 45b7a0	224	func	15	fillbuf	Fn45b7a0/targets.txt	
 45b880	528	func	999	midiev	Audio/targets.txt	
@@ -2456,11 +2456,11 @@
 471b20	2400	todo	-	-	-	
 472480	187	bm	0	load_wrl	SqgModel/targets_wrl.txt	
 472550	16	bm	0	d472550	Tiny1/targets.txt	
-472560	1584	todo	-	-	-	
+472560	1584	func	222	sqg_load	SqgModel/targets_load.txt	
 472b90	976	func	-	-	Fn472f60/targets_sqgsave.txt	
 472f60	656	func	-	-	Fn472f60/targets.txt	
 4731f0	752	func	-	-	Fn4731f0/targets.txt	
-4734e0	488	todo	-	-	-	
+4734e0	488	func	153	morph	SqgModel/targets_morph.txt	
 4736f0	16	bm	0	sqgseterrorcallback	Globals/targets.txt	
 473700	16	bm	0	sqgsettexturelookup	Globals/targets.txt	
 473710	80	bm	0	sqglog	Log2/targets.txt	

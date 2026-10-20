@@ -22,6 +22,7 @@ struct Contact {
 };
 
 struct NavSurfaceList {
+    int Load(IniReader *ini, const char *navFile, const char *natFile); // 0x40fc10
     char                         pad1[0x124];   // 0x00 .. 0x124
     Array<LoadedSurface *>       loaded;        // 0x124
     Array<InstancedSurface *>    instances;     // 0x134
