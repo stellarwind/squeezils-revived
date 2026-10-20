@@ -25,7 +25,7 @@ extern MidiTrack *gMidiTracks;              // 0x4c86a0
 extern unsigned gMidiTrackCount;            // 0x4c869c
 extern int gMidiAllocs;                     // 0x4bf448
 extern const char kNoTracks[], kReadFail[], kConvertFail[];   // 0x4bf6c8 0x4bf69c 0x4bf704
-void DebugLog(const char *format, ...);     // 0x419290
+int DebugLogAll(const char *format, ...);     // 0x419290
 void FreeBlock(void *p);                    // 0x490540
 int PrimeMidiTracks();                      // 0x45b380
 int ReadMidiEvent(MidiTrack *t, MidiEvent *ev);   // 0x45ba90 (cdecl)
@@ -67,7 +67,7 @@ int FillMidiBuffer(unsigned flags, MidiBuf *out)
                         return 0;
                     }
                     if (r != -105) {
-                        DebugLog(kConvertFail);
+                        DebugLogAll(kConvertFail);
                         DROP_EVENT()
                         return 1;
                     }
@@ -79,7 +79,7 @@ int FillMidiBuffer(unsigned flags, MidiBuf *out)
         gBestTrack = 0;
         gMinDelta = 0xffffffff;
         if (!gMidiTracks) {
-            DebugLog(kNoTracks);
+            DebugLogAll(kNoTracks);
             return -101;
         }
         gScanTrack = gMidiTracks;
@@ -96,7 +96,7 @@ int FillMidiBuffer(unsigned flags, MidiBuf *out)
         }
         if (ReadMidiEvent(gBestTrack, &gMidiEvent)) {
             gMidiFlags |= 2;
-            DebugLog(kReadFail);
+            DebugLogAll(kReadFail);
             return -101;
         }
         if (gMidiEvent.status == 0xff && gMidiEvent.d1 == 0x2f) {
@@ -112,7 +112,7 @@ int FillMidiBuffer(unsigned flags, MidiBuf *out)
         }
         if (r == -105)
             continue;
-        DebugLog(kConvertFail);
+        DebugLogAll(kConvertFail);
         DROP_EVENT()
         return 1;
     }

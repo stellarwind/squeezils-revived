@@ -23,7 +23,7 @@ struct NatMesh {
 struct NatApp;
 extern NatApp *g_app;                                   // 0x4c75dc
 int FatalErrorApp(NatApp *app, const char *fmt, ...);   // 0x475510
-void DebugLog(const char *format, ...);                 // 0x419290
+int DebugLogAll(const char *format, ...);                 // 0x419290
 extern const char *kNatHeader;                          // 0x4b9b34 -> "Nat V1.0 ascii"
 extern const char kReadMode[];                          // 0x4ba008
 extern const char kCouldNotReadFile[];                  // 0x4b9fec
@@ -44,7 +44,7 @@ int __stdcall LoadSurfaceTypes(NatMesh *mesh, void *unused, const char *file, Na
     while (!f) {
         f = fopen(file, kReadMode);
         if (!f && FatalErrorApp(g_app, kCouldNotReadFile, file) == 2) {
-            DebugLog(kCouldNotOpen, file);
+            DebugLogAll(kCouldNotOpen, file);
             return 0;
         }
     }
@@ -67,12 +67,12 @@ int __stdcall LoadSurfaceTypes(NatMesh *mesh, void *unused, const char *file, Na
                 unsigned face;
                 char name[64];
                 if (!fgets(line, 0xff, f)) {
-                    DebugLog(kNoEntry, i);
+                    DebugLogAll(kNoEntry, i);
                     fclose(f);
                     return 0;
                 }
                 if (sscanf(line, kEntryFormat, &face, name) != 2) {
-                    DebugLog(kNoEntry, i);
+                    DebugLogAll(kNoEntry, i);
                     fclose(f);
                     return 0;
                 }
@@ -92,7 +92,7 @@ int __stdcall LoadSurfaceTypes(NatMesh *mesh, void *unused, const char *file, Na
         }
         error = kInvalidFaceCount;
     }
-    DebugLog(error);
+    DebugLogAll(error);
     fclose(f);
     return 0;
 }

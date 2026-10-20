@@ -18,13 +18,13 @@ struct AppT { char pad[0x2c]; PpmLoader *loader; };
 extern AppT *g_app;                                      // 0x4c75dc
 extern char gColorKey[];                                 // 0x4c7168
 extern const char kLoadingTexture[], kPpm[], kEmpty2[], kFailed[], kOk[];   // 0x4bb83c 0x4bb834 0x4bb5f4 0x4ba08c 0x4b9dbc
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 Texture *LoadTextureFile(const char *file, Vector3f *key, char *color, const char *extra);   // 0x415440 (cdecl)
 TexTableT *TopTable();                                   // 0x425bf0
 
 Texture *LoadTexture(const char *name, const char *file)
 {
-    DebugLog(kLoadingTexture, name, file);
+    DebugLogAll(kLoadingTexture, name, file);
     Texture *tex = 0;
     if (strstr(file, kPpm))
         g_app->loader->LoadPpm(file, &tex);
@@ -33,10 +33,10 @@ Texture *LoadTexture(const char *name, const char *file)
         tex = LoadTextureFile(file, &key, gColorKey, kEmpty2);
     }
     if (!tex) {
-        DebugLog(kFailed);
+        DebugLogAll(kFailed);
         return 0;
     }
-    DebugLog(kOk);
+    DebugLogAll(kOk);
     if (TopTable()->Contains(String(name)))
         TopTable()->Get(String(name))->Release();
     TexTableT *top;

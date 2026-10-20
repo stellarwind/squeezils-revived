@@ -27,7 +27,7 @@ int MessageFunction::Execute(ScriptCall *args, int extra)
 
 void MessageFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
+    DebugLogAll("%s %s", Name(), text.c_str());
 }
 
 const char *MessageFunction::Name() { return "Message"; }
@@ -57,7 +57,7 @@ int TimerMessageFunction::Execute(ScriptCall *args, int extra)
 
 void TimerMessageFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
+    DebugLogAll("%s %s", Name(), text.c_str());
 }
 
 const char *TimerMessageFunction::Name() { return "TimerMessage"; }

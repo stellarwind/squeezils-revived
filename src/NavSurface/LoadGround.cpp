@@ -9,7 +9,7 @@
 struct NavMesh;
 struct GroundWorld { char pad[0xc]; NavMesh *navMesh; };   // 0x0c
 GroundWorld *GetWorld();                                     // 0x4206a0
-void DebugLog(const char *format, ...);                      // 0x419290
+int DebugLogAll(const char *format, ...);                      // 0x419290
 extern int g_debugSurfaceTypeOutput;                         // 0x4b9b30
 
 struct GroundLoaded {                                        // 0x58 bytes
@@ -57,7 +57,7 @@ int NavSurfaceList::LoadGround(IniReader *ini)
             strcpy(path, ini->GetDirectory().c_str());
             strcat(path, "\\");
             strcat(path, name.c_str());
-            DebugLog("...surface file name relative, setting to %s.\n", path);
+            DebugLogAll("...surface file name relative, setting to %s.\n", path);
         }
         GroundWorld *world = GetWorld();
         faces = LoadSurfaceTypes(world->navMesh, ini->GetDirectory().c_str(), path, types);
@@ -93,7 +93,7 @@ int NavSurfaceList::LoadGround(IniReader *ini)
     delete properties;
 
     if (!ReadSurfaceList(ini))
-        DebugLog("Error reading surface list.\n");
+        DebugLogAll("Error reading surface list.\n");
     ini->SetSection("Defaults");
     return 1;
 }

@@ -10,7 +10,7 @@ Function *AddSpitNutsFunction::Create(ArgList *list)
 {
     IntFunctionArgument *arg = (IntFunctionArgument *)ParseArgument(list);
     if (arg->Get(0) <= 0) {
-        DebugLog("WARNING: AddSpitNuts n must be positive.\n");
+        DebugLogAll("WARNING: AddSpitNuts n must be positive.\n");
         return 0;
     }
     AddSpitNutsFunction *f = new AddSpitNutsFunction;
@@ -23,7 +23,7 @@ int AddSpitNutsFunction::Execute(ScriptCall *args, int extra)
     SpitCall *c = (SpitCall *)args;
     Squeezil *s = c->Actor();
     if (!s) {
-        DebugLog("WARNING: attempt to run AddSpitNuts on non-Squeezil %s", c->Busy());
+        DebugLogAll("WARNING: attempt to run AddSpitNuts on non-Squeezil %s", c->Busy());
         return 0;
     }
     s->AddSpitNuts(n->Get(0));
@@ -32,9 +32,9 @@ int AddSpitNutsFunction::Execute(ScriptCall *args, int extra)
 
 void AddSpitNutsFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     n->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *AddSpitNutsFunction::Name() { return "AddSpitNuts"; }

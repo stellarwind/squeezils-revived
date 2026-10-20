@@ -4,7 +4,7 @@
 struct MidiApp;
 extern MidiApp *g_app;                       // 0x4c75dc
 int FatalErrorApp(MidiApp *app, const char *fmt, ...);   // 0x475510
-void DebugLog(const char *format, ...);      // 0x419290
+int DebugLogAll(const char *format, ...);      // 0x419290
 void FreeMidiTracks();                       // 0x45b2d0
 int ReadExact(void *out, unsigned size);     // 0x45bef0
 int ReadMidiVarLen(MidiReader *t, unsigned *out);   // 0x45be20
@@ -30,14 +30,14 @@ int InitMidiConverter(const char *file)
     while (gDataFile == INVALID_HANDLE_VALUE) {
         gDataFile = CreateFile(file, GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
         if (gDataFile == INVALID_HANDLE_VALUE && FatalErrorApp(g_app, kCouldNotReadFile, file) == 2) {
-            DebugLog(kMidiOpenFailed, file);
+            DebugLogAll(kMidiOpenFailed, file);
             FreeMidiTracks();
             return 1;
         }
     }
     gMidiInfo.size = GetFileSize(gDataFile, 0);
     if (gMidiInfo.size == 0xffffffff) {
-        DebugLog(kMidiSizeFailed);
+        DebugLogAll(kMidiSizeFailed);
         FreeMidiTracks();
         return 1;
     }
@@ -45,7 +45,7 @@ int InitMidiConverter(const char *file)
     WORD header[4];
     if (ReadExact(&tag, 4) || tag != 0x6468544d || ReadExact(&length, 4)
         || (length = SWAP32(length)) < 6 || ReadExact(header, length)) {
-        DebugLog(kMidiBadHeader);
+        DebugLogAll(kMidiBadHeader);
         FreeMidiTracks();
         return 1;
     }
@@ -54,7 +54,7 @@ int InitMidiConverter(const char *file)
     gMidiInfo.timeDivision = SWAP16(header[2]);
     gMidiInfo.tracks = (MidiReader *)GlobalLock(GlobalAlloc(GMEM_ZEROINIT, gMidiInfo.trackCount * sizeof(MidiReader)));
     if (!gMidiInfo.tracks) {
-        DebugLog(kMidiNoTracks);
+        DebugLogAll(kMidiNoTracks);
         FreeMidiTracks();
         return 1;
     }
@@ -62,12 +62,12 @@ int InitMidiConverter(const char *file)
     for (unsigned i = 0; i < gMidiInfo.trackCount; i++, t++) {
         t->buffer = (unsigned char *)GlobalLock(GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, 0x400));
         if (!t->buffer) {
-            DebugLog(kMidiNoBuffer);
+            DebugLogAll(kMidiNoBuffer);
             FreeMidiTracks();
             return 1;
         }
         if (ReadExact(&tag, 4) || tag != 0x6b72544d || ReadExact(&length, 4)) {
-            DebugLog(kMidiBadTrack);
+            DebugLogAll(kMidiBadTrack);
             FreeMidiTracks();
             return 1;
         }
@@ -79,7 +79,7 @@ int InitMidiConverter(const char *file)
             want = t->length;
         DWORD got;
         if (!ReadFile(gDataFile, t->buffer, want, &got, 0) || want != got) {
-            DebugLog(kMidiReadFailed);
+            DebugLogAll(kMidiReadFailed);
             FreeMidiTracks();
             return 1;
         }
@@ -94,7 +94,7 @@ int InitMidiConverter(const char *file)
             t->flags |= 1;
         } else {
             if (ReadMidiVarLen(t, &t->delta)) {
-                DebugLog(kMidiReadFailed);
+                DebugLogAll(kMidiReadFailed);
                 FreeMidiTracks();
                 return 1;
             }

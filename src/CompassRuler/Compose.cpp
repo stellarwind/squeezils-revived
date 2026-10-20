@@ -1,7 +1,7 @@
 // SQZ.EXE 0x4150b0: wrap the compass pictures across both edges of the strip.
 #include "CompassC.h"
 #include <math.h>
-void GameLog(const char *format, ...);           // 0x419290
+int DebugLogAll(const char *format, ...);           // 0x419290
 extern const char kCompassCopyFailed[];          // 0x4ba288
 
 int CompassC::Compose(int a, int b, float fraction, float roll)
@@ -22,7 +22,7 @@ int CompassC::Compose(int a, int b, float fraction, float roll)
     dst.right = left;
     dst.bottom = src.bottom - src.top;
     if (left > 0 && !picture[11]->CopyRectFrom((StripBitmap *)sprite[a], src, dst)) {
-        GameLog(kCompassCopyFailed);
+        DebugLogAll(kCompassCopyFailed);
         return 0;
     }
     if (right <= 0) return 1;
@@ -38,7 +38,7 @@ int CompassC::Compose(int a, int b, float fraction, float roll)
     nextDst.right = left + right;
     nextDst.bottom = nextSrc.bottom - nextSrc.top;
     if (!picture[11]->CopyRectFrom((StripBitmap *)sprite[b], nextSrc, nextDst)) {
-        GameLog(kCompassCopyFailed);
+        DebugLogAll(kCompassCopyFailed);
         return 0;
     }
     if ((*(unsigned *)&roll & 0x7fffffffU) == 0) return 1;
@@ -53,7 +53,7 @@ int CompassC::Compose(int a, int b, float fraction, float roll)
     dst.right = left;
     dst.bottom = ((StripBitmap *)sprite[a])->GetHeight();
     if (left > 0 && !picture[11]->CopyRectFrom((StripBitmap *)sprite[a], src, dst)) {
-        GameLog(kCompassCopyFailed);
+        DebugLogAll(kCompassCopyFailed);
         return 0;
     }
     if (right <= 0) return 1;
@@ -68,7 +68,7 @@ int CompassC::Compose(int a, int b, float fraction, float roll)
     dst.right = left + right;
     dst.bottom = ((StripBitmap *)sprite[b])->GetHeight();
     if (!picture[11]->CopyRectFrom((StripBitmap *)sprite[b], src, dst)) {
-        GameLog(kCompassCopyFailed);
+        DebugLogAll(kCompassCopyFailed);
         return 0;
     }
     return 1;

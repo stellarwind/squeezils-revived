@@ -16,7 +16,7 @@ struct EffectBufferArray { void Remove(int index); }; // 0x468120
 struct AudioClock { unsigned SimRate(); }; // 0x41ec00
 AudioClock *TheClock(); // 0x4206d0
 AmbientSample *FindSound(const char *name); // 0x449c30
-void DebugLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 extern int g_audioOn; // 0x4bd95c
 extern int gActiveSoundCount; // 0x4c77e4
 extern LPDIRECTSOUNDBUFFER *gActiveSounds; // 0x4c77ec
@@ -33,7 +33,7 @@ int AudioUpdate()
     DWORD status;
     for (int i = 0; i < gActiveSoundCount; ++i) {
         if (gActiveSounds[i]->GetStatus(&status) < 0) {
-            DebugLog(kEffectStatusError);
+            DebugLogAll(kEffectStatusError);
             return -1;
         }
         if (status != 1 && status != 4) {
@@ -46,14 +46,14 @@ int AudioUpdate()
         if (sample->oneShot == 1) {
             HRESULT result = g_streams[j]->GetStatus(&status);
             if (result < 0) {
-                DebugLog(kAmbientStatusError);
+                DebugLogAll(kAmbientStatusError);
                 return -1;
             }
             if (status != 1) {
                 if (*(int *)&sample->delay == (int)0xbf800000) {
                     // Retain the original's redundant error check.
                     if (result < 0)
-                        DebugLog(kAmbientStopError, gAmbientNames.Get(j).c_str());
+                        DebugLogAll(kAmbientStopError, gAmbientNames.Get(j).c_str());
                     if (sample->minimumDelay == sample->maximumDelay)
                         sample->delay = sample->minimumDelay;
                     else {

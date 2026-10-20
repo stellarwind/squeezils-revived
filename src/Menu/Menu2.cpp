@@ -172,7 +172,7 @@ extern const float kFromSlider;   // 0x49d298
 void SetVolumeA(float v);   // 0x44aa10
 void SetVolumeB(float v);   // 0x44a940
 void SetVolumeC(float v);   // 0x44aab0
-void DebugLog(const char *fmt, ...);   // 0x419290
+int DebugLogAll(const char *fmt, ...);   // 0x419290
 
 int CALLBACK VolumeDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -194,7 +194,7 @@ int CALLBACK VolumeDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             SetVolumeA((float)v * kFromSlider);
             DWORD w = SendMessage(s3, 0x400, 0, 0);
             float f = (float)w * kFromSlider;
-            DebugLog("settingpercent: %f pos:%d \n", (double)f, w);
+            DebugLogAll("settingpercent: %f pos:%d \n", (double)f, w);
             SetVolumeB(f);
             DWORD x = SendMessage(s2, 0x400, 0, 0);
             SetVolumeC((float)x * kFromSlider);

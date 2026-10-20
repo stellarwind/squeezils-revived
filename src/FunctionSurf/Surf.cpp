@@ -11,10 +11,10 @@ SetSurfaceTypeFunction::~SetSurfaceTypeFunction()
 
 void SetSurfaceTypeFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     first->Print();
     second->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *SetSurfaceTypeFunction::Name() { return "SetSurfaceType"; }

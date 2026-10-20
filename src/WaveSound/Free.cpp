@@ -11,16 +11,16 @@ void WaveFreePad8();
 void WaveFreePad9();
 #include <windows.h>
 #include "WaveSound/WaveSound.h"
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 int WaveSound::Free()
 {
     if (format && LocalFree(format)) {
-        GameLog("Error deallocating wave format structure.\n");
+        DebugLogAll("Error deallocating wave format structure.\n");
         return 0;
     }
     if (data && LocalFree(data)) {
-        GameLog("Error deallocating wave buffer.\n");
+        DebugLogAll("Error deallocating wave buffer.\n");
         return 0;
     }
     return 1;

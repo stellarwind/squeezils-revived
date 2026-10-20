@@ -15,7 +15,7 @@ extern LPDIRECTSOUNDBUFFER *g_streams;              // 0x4c77dc
 extern const char kAmbientRestartError[];          // 0x4be184
 int ResumeMidi();                                 // 0x45abe0
 WaveSound *FindSound(const char *name);             // 0x449c30
-void GameLog(const char *format, ...);             // 0x419290
+int DebugLogAll(const char *format, ...);             // 0x419290
 
 void ResumeSounds()
 {
@@ -32,6 +32,6 @@ void ResumeSounds()
     for (int j = 0; j < g_streamCount; j++) {
         WaveSound *sound = FindSound(gAmbientNames.Get(j).c_str());
         if (g_streams[j]->Play(0, 0, sound->oneShot == 1 ? 0 : DSBPLAY_LOOPING) < 0)
-            GameLog(kAmbientRestartError, gAmbientNames.Get(j).c_str());
+            DebugLogAll(kAmbientRestartError, gAmbientNames.Get(j).c_str());
     }
 }

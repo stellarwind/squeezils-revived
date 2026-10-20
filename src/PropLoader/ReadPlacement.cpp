@@ -25,7 +25,7 @@ struct PlacementMatrix {
     PlacementMatrix &TurnZ(float angle);              // 0x47dd70
     PlacementMatrix operator*(const PlacementMatrix &o) const; // 0x47dea0
 };
-void GameLog(const char *format, ...);                // 0x419290
+int DebugLogAll(const char *format, ...);                // 0x419290
 
 int ReadPlacement(IniReader *ini, const char *prefix, PlacementVector *position,
                   PlacementVector *scale, PlacementVector *direction, PlacementVector *up)
@@ -34,7 +34,7 @@ int ReadPlacement(IniReader *ini, const char *prefix, PlacementVector *position,
     strcpy(key, prefix ? prefix : "");
     strcat(key, "Position");
     if (strlen(ini->GetString(key)) == 0) {
-        GameLog("WARNING: no position for prop.\n");
+        DebugLogAll("WARNING: no position for prop.\n");
         *position = PlacementVector(0.0f, 0.0f, 0.0f);
     } else ini->GetFloats(key, (float *)position);
 

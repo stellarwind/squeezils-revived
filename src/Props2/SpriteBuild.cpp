@@ -14,7 +14,7 @@ struct SpriteWorld {
     SpriteFrame *CreateDecal(SpriteTexture *tex, Vector3f position, DecalSettings settings, SpriteFrame *parent);   // 0x435bb0
 };
 SpriteTexture *FindTexture(const char *name);            // 0x425220
-void GameLog(const char *fmt, ...);                      // 0x419290
+int DebugLogAll(const char *fmt, ...);                      // 0x419290
 SpriteWorld *GetWorld();                                 // 0x4206a0
 
 struct SpriteProp {
@@ -37,7 +37,7 @@ SpriteFrame *SpriteProp::BuildFrame(SpriteFrame *parent)
     const char *textureName = name.c_str();
     SpriteTexture *texture = FindTexture(name.c_str());
     if (texture == 0) {
-        GameLog("ERROR: sprite %s not loaded from textureResources\n", textureName);
+        DebugLogAll("ERROR: sprite %s not loaded from textureResources\n", textureName);
         return 0;
     }
     SpriteFrame *decal = GetWorld()->CreateDecal(texture, position, settings, parent);

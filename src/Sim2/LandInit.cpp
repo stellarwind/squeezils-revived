@@ -8,7 +8,7 @@ struct PossTable : TableBase, BufObj {
 };
 struct IdList { char pad[0x14]; IdList(); };                                         // 0x45eef0
 struct Possessions { char pad[8]; Possessions(); };                                  // 0x4488d0
-void GameLog(const char *fmt);                                                       // 0x419290 (cdecl)
+int DebugLogAll(const char *fmt, ...);                                                       // 0x419290 (cdecl)
 struct LandSimulation {
     int vtbl, pad;
     PossTable *table;                                                                // 0x08
@@ -30,7 +30,7 @@ void LandSimulation::Init()
     ini.SetSection("RegionList");
     StringList *keys = ini.GetKeys();
     if (keys->count == 0) {
-        GameLog("Error: no RegionList entry in sqz.ini!\n");
+        DebugLogAll("Error: no RegionList entry in sqz.ini!\n");
         return;
     }
     regionCount = keys->count;

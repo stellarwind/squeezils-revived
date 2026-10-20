@@ -1,7 +1,7 @@
 // WaveFile::Load (0x4490f0, ret 4): opens a .wav file, finds its data chunk and reads the samples into a global buffer.
 #include <windows.h>
 #include <mmsystem.h>
-void DebugLog(const char *fmt, ...);     // 0x419290
+int DebugLogAll(const char *fmt, ...);     // 0x419290
 struct WaveFile {
     char pad[0x1c];
     HMMIO hmmio;            // 0x1c
@@ -16,7 +16,7 @@ struct WaveFile {
 };
 #define WAVE_FAIL(msg) \
     do { \
-        DebugLog(msg); \
+        DebugLogAll(msg); \
         if (hmmio) { \
             mmioClose(hmmio, 0); \
             hmmio = 0; \

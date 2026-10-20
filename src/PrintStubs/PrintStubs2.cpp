@@ -1,5 +1,5 @@
 // Value print methods of the script-function classes: log a constant operand, or the base's own (fallback 0x420d90).
-void DebugLog(const char *fmt, ...);   // 0x419290
+int DebugLogAll(const char *fmt, ...);   // 0x419290
 
 extern const char *g_names1[];   // 0x49ec60
 extern const char *g_names2[];   // 0x49ec10
@@ -20,13 +20,13 @@ struct V {
 
 void V::Fallback()
 {
-    DebugLog("%d", id);
+    DebugLogAll("%d", id);
 }
 
 void V::PrintInt()
 {
     if (has)
-        DebugLog("%d", a.i);
+        DebugLogAll("%d", a.i);
     else
         Fallback();
 }
@@ -34,7 +34,7 @@ void V::PrintInt()
 void V::PrintFloat()
 {
     if (has)
-        DebugLog("%f", (double)a.f);
+        DebugLogAll("%f", (double)a.f);
     else
         Fallback();
 }
@@ -42,17 +42,17 @@ void V::PrintFloat()
 void V::PrintVec()
 {
     if (has)
-        DebugLog("%f %f %f", (double)a.f, (double)y, (double)z);
+        DebugLogAll("%f %f %f", (double)a.f, (double)y, (double)z);
     else
         Fallback();
 }
 
 void V::PrintName1()
 {
-    DebugLog("%s", g_names1[a.idx]);
+    DebugLogAll("%s", g_names1[a.idx]);
 }
 
 void V::PrintName2()
 {
-    DebugLog("%s", g_names2[a.idx]);
+    DebugLogAll("%s", g_names2[a.idx]);
 }

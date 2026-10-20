@@ -8,7 +8,7 @@ int SetCyclePropFunction::Execute(ScriptCall *args, int extra)
         CycleProp *prop = (CycleProp *)DynamicCast(found, 0, kPropType, kCyclePropType, 0);
         return Apply(prop, args, extra);
     }
-    DebugLog("WARNING: SetCyclePropFunction couldn't find prop %s", name.c_str());
+    DebugLogAll("WARNING: SetCyclePropFunction couldn't find prop %s", name.c_str());
     return 1;
 }
 
@@ -26,5 +26,5 @@ void SetCyclePropFunction::Print()
 {
     const char *s = name.c_str();
     float v = value->Get(0);
-    DebugLog("%s %s %0.02f\n", Name(), s, (double)v);
+    DebugLogAll("%s %s %0.02f\n", Name(), s, (double)v);
 }

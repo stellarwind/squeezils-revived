@@ -26,7 +26,7 @@ public:
 // ---- the Function base (RTTI vtable 0x49dabc) ----
 struct ArgList;                          // what a script command's text was parsed into (0x420ee0 reads it)
 FunctionArgument *ParseArgument(ArgList *list);   // 0x420ee0 (cdecl)
-void DebugLog(const char *fmt, ...);     // 0x419290
+int DebugLogAll(const char *fmt, ...);     // 0x419290
 
 struct ScriptCall {                      // the small record PostFunction passes as `args`
     int pad[2];

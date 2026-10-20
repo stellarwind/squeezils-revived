@@ -37,7 +37,7 @@ void SqgErrorLog(const char *message);                         // 0x4241b0
 struct Resource;
 Resource *OpenResource(const char *name);                      // 0x424010
 LPDIRECT3DRMFRAME OpenFile(LPDIRECT3DRM d3drm, const char *path, Resource *(*lookup)(const char *));   // 0x47a580
-void DebugLog(const char *format, ...);                        // 0x419290
+int DebugLogAll(const char *format, ...);                        // 0x419290
 extern const char kLoadingGeom[], kSqgifyAllFiles[], kUseMeshForGeom[], kSqgExt[], kLoadedSqg[],
     kSavedToSqg[], kCouldNotSqgify[], kFailed[], kOk[];
     // 0x4bb6c8 0x4bb6b8 0x4bb6a0 0x4bb698 0x4bb688 0x4bb678 0x4bb658 0x4ba08c 0x4b9dbc
@@ -52,7 +52,7 @@ LPDIRECT3DRMFRAME LoadGeometry(const char *key, const char *value)
             break;
     if (i < (int)strlen(path))
         path[i] = 0;
-    DebugLog(kLoadingGeom, key, path);
+    DebugLogAll(kLoadingGeom, key, path);
     g_splash->Step();
     IniReader ini;
     int sqgify = ini.GetInt(kSqgifyAllFiles, 0);
@@ -66,7 +66,7 @@ LPDIRECT3DRMFRAME LoadGeometry(const char *key, const char *value)
         char *name = (char *)sqgName.c_str();
         strcpy(name + strlen(name) - 4, kSqgExt);
         if (model->Load(name, 0)) {
-            DebugLog(kLoadedSqg);
+            DebugLogAll(kLoadedSqg);
             if (useMesh) {
                 frame = g_scene->CreateFrameUnder(0);
                 SqgMesh *mesh = model->CreateMesh(g_renderer->d3drm);
@@ -77,7 +77,7 @@ LPDIRECT3DRMFRAME LoadGeometry(const char *key, const char *value)
                 frame = model->BuildFrame(g_renderer->d3drm);
             }
         } else if (model->Import(path, 0)) {
-            DebugLog(kSavedToSqg);
+            DebugLogAll(kSavedToSqg);
             model->Save(name);
             if (useMesh) {
                 frame = g_scene->CreateFrameUnder(0);
@@ -89,7 +89,7 @@ LPDIRECT3DRMFRAME LoadGeometry(const char *key, const char *value)
                 frame = model->BuildFrame(g_renderer->d3drm);
             }
         } else {
-            DebugLog(kCouldNotSqgify);
+            DebugLogAll(kCouldNotSqgify);
             frame = OpenFile(g_renderer->d3drm, path, OpenResource);
         }
         if (model)
@@ -98,10 +98,10 @@ LPDIRECT3DRMFRAME LoadGeometry(const char *key, const char *value)
         frame = OpenFile(g_renderer->d3drm, path, OpenResource);
     }
     if (!frame) {
-        DebugLog(kFailed);
+        DebugLogAll(kFailed);
         return 0;
     }
-    DebugLog(kOk);
+    DebugLogAll(kOk);
     if (TopGeometryTable()->Contains(String(key)))
         TopGeometryTable()->Get(String(key))->Release();
     TopGeometryTable()->Insert(String(key), frame, -1);

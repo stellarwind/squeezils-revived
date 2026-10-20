@@ -8,6 +8,7 @@ import collections
 import argparse
 import hashlib
 import json
+import os
 import pathlib
 import re
 import shlex
@@ -80,22 +81,53 @@ def inventory_ownership():
     return 0
 
 
-def diagnose_existing():
+def link_arguments(response):
+    """Expand our one-argument-per-line inventory outside VC4's fragile parser.
+
+    The full @file aborts during Pass1; the same inputs supplied directly with
+    relative paths complete the diagnostic. Keep the response as the inventory.
+    """
+    args = []
+    for line in response.read_text().splitlines():
+        if not line.strip():
+            continue
+        if not re.fullmatch(r'(?:[^"\s]+|"[^"]*")+', line):
+            raise ValueError("Expected one quoted argument per response line: " + line)
+        arg = line.replace('"', '')
+        prefix = next((p for p in ("-out:", "-map:") if arg.startswith(p)), "")
+        path = arg[len(prefix):]
+        if pathlib.Path(path).is_absolute():
+            arg = prefix + os.path.relpath(path, OUT)
+        args.append(arg)
+    return args
+
+
+def launch_link(linker, response, log):
+    command = [linker, *link_arguments(response)]
+    if os.name == "nt" and len(subprocess.list2cmdline(command)) >= 32767:
+        raise ValueError("Direct linker command exceeds Windows' limit; shorten input paths")
+    with log.open("wb") as stream:
+        return subprocess.run(command, cwd=OUT, stdout=stream, stderr=subprocess.STDOUT)
+
+
+def diagnose_existing(response=None):
     """Link saved successful objects for diagnostics; never retain an EXE.
 
     This mode does not validate or rebuild cached objects. Its output is not
     evidence of a complete build, even if the diagnostic link succeeds.
     """
     summary = json.loads((OUT / "summary.json").read_text())
-    with (OUT / "partial-link.log").open("wb") as stream:
-        result = subprocess.run([summary["linker"], "@" + str(OUT / "link.rsp")],
-                                cwd=OUT, stdout=stream, stderr=subprocess.STDOUT)
+    response = pathlib.Path(response).resolve() if response else OUT / "link.rsp"
+    response.relative_to(OUT)  # Diagnostic inventories must live under the build directory.
+    destination = response.parent
+    result = launch_link(summary["linker"], response, destination / "partial-link.log")
     (OUT / "SQZ.exe").unlink(missing_ok=True)
-    log = (OUT / "partial-link.log").read_text(errors="replace")
+    log = (destination / "partial-link.log").read_text(errors="replace")
     unresolved = collections.Counter(
         line.split("unresolved external symbol ", 1)[-1]
         for line in log.splitlines() if "LNK2001" in line)
     report = dict(diagnostic_only=True, cached_objects_verified=False,
+                  response=str(response), launcher="direct arguments, relative paths",
                   omitted_failed_sources=summary["failed"],
                   link_returncode=result.returncode,
                   internal_linker_error="Internal error" in log,
@@ -103,8 +135,8 @@ def diagnose_existing():
                   diagnostic_pass_completed=result.returncode == 0 or "LNK1120" in log,
                   unique_unresolved_messages=(len(unresolved) if result.returncode == 0
                                               or "LNK1120" in log else None))
-    (OUT / "partial-link-summary.json").write_text(json.dumps(report, indent=2))
-    (OUT / "unresolved-grouped.json").write_text(json.dumps(dict(unresolved.most_common()), indent=2))
+    (destination / "partial-link-summary.json").write_text(json.dumps(report, indent=2))
+    (destination / "unresolved-grouped.json").write_text(json.dumps(dict(unresolved.most_common()), indent=2))
     print(json.dumps(report, indent=2))
     return result.returncode
 
@@ -189,7 +221,9 @@ def run():
     data = REPO / "data" / "data.obj"
     res = REPO / "data" / "resources.res"
     qv = REPO / "qvlib" / "obj" / "QvLib.lib"
-    inputs = [data, res, qv]
+    alias = OUT / "data_alias.obj"   # tools/data_aliases.py: weak externals, readable name -> data.obj symbol
+    entry_alias = OUT / "entry_alias.obj"  # tools/entry_aliases.py: verified entry pointers only
+    inputs = [data, res, qv] + [p for p in (alias, entry_alias) if p.exists()]
     missing = [str(p) for p in inputs if not p.exists()]
     definitions = collections.defaultdict(list)
     references = collections.defaultdict(list)
@@ -216,9 +250,7 @@ def run():
     rsp.write_text("\n".join(args) + "\n", encoding="ascii")
     link_result = None
     if not failed and not missing:
-        with (OUT / "link.log").open("wb") as stream:
-            result = subprocess.run([link, "@" + str(rsp)], cwd=OUT,
-                                    stdout=stream, stderr=subprocess.STDOUT)
+        result = launch_link(link, rsp, OUT / "link.log")
         link_result = result.returncode
     else:
         (OUT / "link.log").write_text("Link skipped: failed compilations or missing inputs.\n")
@@ -248,7 +280,11 @@ if __name__ == "__main__":
                         help="Link saved inputs for diagnostics only; retain no EXE")
     parser.add_argument("--inventory-ownership", action="store_true",
                         help="Map target addresses to compiled external symbols")
+    parser.add_argument("--diagnostic-response", type=pathlib.Path,
+                        help="Saved response inventory under build/integration (diagnostic mode only)")
     options = parser.parse_args()
+    if options.diagnostic_response and not options.diagnose_existing_link:
+        parser.error("--diagnostic-response requires --diagnose-existing-link")
     if options.inventory_ownership:
         raise SystemExit(inventory_ownership())
-    raise SystemExit(diagnose_existing() if options.diagnose_existing_link else run())
+    raise SystemExit(diagnose_existing(options.diagnostic_response) if options.diagnose_existing_link else run())

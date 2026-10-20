@@ -3,10 +3,10 @@
 
 void CreatePropFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     name->Print();
     position->Print();
     direction->Print();
     DumpExtra();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }

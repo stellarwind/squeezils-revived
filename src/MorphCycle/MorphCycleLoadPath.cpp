@@ -15,7 +15,7 @@
 typedef Table<String, PartCycle *, Array<PartCycle *>, 0> PartCycleTable;
 typedef PrimitiveArray<float, 2> TimeList;
 typedef PrimitiveArray<Vector3f, 4> PositionList;
-void DebugLog(const char *format, ...);               // 0x419290
+int DebugLogAll(const char *format, ...);               // 0x419290
 
 // SIZE 0x40
 struct PathMatrix {
@@ -133,7 +133,7 @@ int MorphCycle::LoadPath(IniReader *ini, const char *name)
             orientations.Replace(orientations.count - 1, orientation);
         } else {
             const char *bad = keys->Get(i).c_str();
-            DebugLog("WARNING: couldn't parse path entry named %s.\n", bad);
+            DebugLogAll("WARNING: couldn't parse path entry named %s.\n", bad);
         }
     }
     delete keys;

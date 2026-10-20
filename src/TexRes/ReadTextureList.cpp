@@ -20,7 +20,7 @@ extern const char kTextureResources[];                   // 0x4bb8e0
 extern const char kExtA[], kExtB[];                      // 0x4bb62c 0x4bb834
 extern const char kSharedEntry[];                        // 0x4bb8b8
 extern const char kNoEntryToShare[];                     // 0x4bb708
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 Texture *LoadTexture(const char *name, const char *file);   // 0x425070
 Texture *FindTexture(const char *name);                  // 0x425220
 TexTableT *TopTable();                                   // 0x425bf0
@@ -50,10 +50,10 @@ void ReadTextureList(IniReader *ini)
             }
         } else {
             const char *name = keys->Get(i).c_str();
-            DebugLog(kSharedEntry, name, value);
+            DebugLogAll(kSharedEntry, name, value);
             Texture *tex = FindTexture(value);
             if (!tex) {
-                DebugLog(kNoEntryToShare, value);
+                DebugLogAll(kNoEntryToShare, value);
             } else {
                 TopTable()->Insert(keys->Get(i), tex, -1);
                 tex->AddRef();

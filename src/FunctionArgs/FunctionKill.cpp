@@ -34,7 +34,7 @@ Function *KillSqueezilFunction::Create(ArgList *list)
 
 void KillSqueezilFunction::Print()
 {
-    DebugLog("%s %d", Name(), arg->Get(0));
+    DebugLogAll("%s %d", Name(), arg->Get(0));
 }
 
 const char *KillSqueezilFunction::Name()

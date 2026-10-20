@@ -76,7 +76,7 @@ void SetPlaceIni(const char *file);                                     // 0x438
 void OpenLog();                                                         // 0x419250
 void EnableConsole();                                                   // 0x419280
 void CreateDebugWindow(HWND parent, HINSTANCE instance);                // 0x419160
-void DebugLogAll(const char *text);                                     // 0x419290
+int DebugLogAll(const char *text, ...);                                     // 0x419290
 void FillBackground(HDC dc, RECT *rect, int color);                     // 0x475380
 int  LoadPaletteFile(const char *name, unsigned char *rgba);            // 0x474ca0
 LRESULT CALLBACK ChainProc(HWND, UINT, WPARAM, LPARAM);                 // 0x478070

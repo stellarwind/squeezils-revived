@@ -15,7 +15,7 @@ int ChangeRoboResponseFunction::Execute(ScriptCall *args, int extra)
 {
     RoboCreature *robo = ((RoboCall *)args)->Creature();
     if (!robo) {
-        DebugLog("WARNING: attempt to run ChangeRoboResponse on non-Robo creature (id %d).\n", ((RoboCall *)args)->Other());
+        DebugLogAll("WARNING: attempt to run ChangeRoboResponse on non-Robo creature (id %d).\n", ((RoboCall *)args)->Other());
         return 0;
     }
     else {

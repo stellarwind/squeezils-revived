@@ -40,7 +40,7 @@ int IfVariableFunction::Parse(ArgList *list)
 
 void IfVariableFunction::Dump()
 {
-    DebugLog("%s", name.c_str());
+    DebugLogAll("%s", name.c_str());
 }
 
 int IfVariableFunction::Test(ScriptCall *args, int extra)

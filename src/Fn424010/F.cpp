@@ -6,7 +6,7 @@
 struct Resource;
 Resource *FindResource(const char *name);               // 0x425220
 Resource *LoadResource(const char *a, const char *b);   // 0x425070
-void DebugLog(const char *format, ...);                 // 0x419290
+int DebugLogAll(const char *format, ...);                 // 0x419290
 extern char g_dataDir[];                                // 0x4c70e8
 extern const char kResExt[], kResFound[], kResMissing[];   // 0x4bb62c 0x4bb618 0x4bb5f8
 
@@ -24,12 +24,12 @@ Resource *OpenResource(const char *name)
     if (strlen(p))
         res = FindResource(p);
     if (res) {
-        DebugLog(kResFound, p);
+        DebugLogAll(kResFound, p);
         return res;
     }
     res = FindResource(name);
     if (res) {
-        DebugLog(kResFound, name);
+        DebugLogAll(kResFound, name);
         return res;
     }
     char saved[0x80];
@@ -41,9 +41,9 @@ Resource *OpenResource(const char *name)
     if (strlen(g_dataDir))
         SetCurrentDirectory(saved);
     if (res) {
-        DebugLog(kResFound, p);
+        DebugLogAll(kResFound, p);
         return res;
     }
-    DebugLog(kResMissing, name);
+    DebugLogAll(kResMissing, name);
     return 0;
 }

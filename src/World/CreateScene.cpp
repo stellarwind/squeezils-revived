@@ -10,7 +10,7 @@ struct WorldRenderer {
 };
 extern WorldRenderer *gWorldRenderer; // 0x4c75dc
 int LoadPaletteFile(const char *name, unsigned char *colors); // 0x474ca0
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 void World::CreateScene(IniReader *a, IniReader *b)
 {
@@ -23,18 +23,18 @@ void World::CreateScene(IniReader *a, IniReader *b)
         unsigned char colors[1024];
         if (LoadPaletteFile(palette, colors)) {
             gWorldRenderer->SetPaletteEntries(0, 256, colors);
-            GameLog("Loaded palette from: \"%s\"\n", palette);
+            DebugLogAll("Loaded palette from: \"%s\"\n", palette);
         } else {
-            GameLog("Cannot load palette from: \"%s\"\n", palette);
+            DebugLogAll("Cannot load palette from: \"%s\"\n", palette);
         }
     } else {
-        GameLog("Palette not specified, using existing palette.\n");
+        DebugLogAll("Palette not specified, using existing palette.\n");
     }
     const char *warp = reader->GetString("WarpPrefix");
     if (!strlen(warp)) {
-        GameLog("WARNING: World::CreateScene: no warp indicated in .ini file.\n");
+        DebugLogAll("WARNING: World::CreateScene: no warp indicated in .ini file.\n");
     } else {
-        GameLog("Loading warp background %s: ", warp);
+        DebugLogAll("Loading warp background %s: ", warp);
         char savedDirectory[128];
         strcpy(savedDirectory, kEmptyString);
         if (!strchr(warp, '\\')) {
@@ -42,9 +42,9 @@ void World::CreateScene(IniReader *a, IniReader *b)
             SetCurrentDirectoryA(reader->GetDirectory().c_str());
         }
         if (gWorldScene->LoadWarp(warp))
-            GameLog("OK.\n");
+            DebugLogAll("OK.\n");
         else
-            GameLog("failed!\n");
+            DebugLogAll("failed!\n");
         if (strlen(savedDirectory))
             SetCurrentDirectoryA(savedDirectory);
     }

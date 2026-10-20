@@ -10,7 +10,7 @@ extern int gMidiLoaded;            // 0x4bf458
 extern int gMidiQueued;            // 0x4bf460
 extern char gQueuedMidiFile[];     // 0x4c86e0
 extern const char kMidiStopError[], kMidiResetError[], kMidiWaitError[], kMidiCloseError[];
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 void ReleaseMidiFile();            // 0x45b2d0
 void ReleaseMidiBuffers();         // 0x45c250
 int StartMidi(const char *file);   // 0x45aa00
@@ -25,14 +25,14 @@ int StopMidi()
             gMidiClock = 100;
         if (gMidiStream) {
             if (midiStreamStop(gMidiStream))
-                GameLog(kMidiStopError);
+                DebugLogAll(kMidiStopError);
             if (midiOutReset((HMIDIOUT)gMidiStream))
-                GameLog(kMidiResetError);
+                DebugLogAll(kMidiResetError);
         }
         DWORD waitResult = WaitForSingleObject(gMidiCallbackEvent, 2000);
         state = gMidiClock;
         if (waitResult == WAIT_TIMEOUT) {
-            GameLog(kMidiWaitError);
+            DebugLogAll(kMidiWaitError);
             state = 200;
         }
     }
@@ -43,7 +43,7 @@ int StopMidi()
         ReleaseMidiBuffers();
         if (gMidiStream) {
             if (midiStreamClose(gMidiStream))
-                GameLog(kMidiCloseError);
+                DebugLogAll(kMidiCloseError);
             gMidiStream = 0;
         }
     }

@@ -4,7 +4,7 @@
 #include "Container/ContainerSet.h"
 #include "Container/ContainerTable.h"
 #include <stdlib.h>
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 
 struct PlaceDescriptor {
     char pad[0x10];
@@ -30,7 +30,7 @@ void RegionSimulation::LoadLocations(IniReader *ini)
         const char *key = names->Get(i).c_str();
         int id = atoi(key);
         const char *name = ini->GetString(key);
-        DebugLog("Parsing location %d, named %s: ", id, name);
+        DebugLogAll("Parsing location %d, named %s: ", id, name);
         PlaceDescriptor *place = MakePlace(ini, name, id);
         places.Insert(id, place, -1);
     }
@@ -42,7 +42,7 @@ void RegionSimulation::LoadLocations(IniReader *ini)
         for (j = 0; j < links->count; j++) {
             if (!places.Contains(links->Get(j))) {
                 bad.Insert(j, -1);
-                DebugLog("Warning: place %d links to bad place %d!\n", places.keys.Get(i), links->Get(j));
+                DebugLogAll("Warning: place %d links to bad place %d!\n", places.keys.Get(i), links->Get(j));
             }
         }
         for (j = bad.count - 1; j >= 0; j--)

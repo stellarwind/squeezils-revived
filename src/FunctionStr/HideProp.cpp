@@ -7,6 +7,6 @@ int HidePropFunction::Execute(ScriptCall *args, int extra)
     if (p)
         p->Hide();
     else
-        DebugLog("WARNING: HideProp couldn't find prop %s", text.c_str());
+        DebugLogAll("WARNING: HideProp couldn't find prop %s", text.c_str());
     return 1;
 }

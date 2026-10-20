@@ -21,12 +21,12 @@ Function *CreateGoodieAtPositionFunction::Create(ArgList *list)
 
 void CreateGoodieAtPositionFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     name->Print();
     position->Print();
     direction->Print();
     DumpExtra();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *CreateGoodieAtPositionFunction::Name() { return "CreateGoodieAtPosition"; }

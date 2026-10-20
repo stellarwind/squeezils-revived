@@ -35,7 +35,7 @@ char *IniFindBlank(char *s)
     return s;
 }
 
-void GameLog(const char *format, ...);          // 0x419290
+int DebugLogAll(const char *format, ...);          // 0x419290
 extern const char kIniDuplicateMessage[];
 extern const char kIniParsingMessage[];
 
@@ -51,7 +51,7 @@ void IniFileSection::Add(char *line, const char *section)
     String v(value);
     if (values.Contains(k)) {
         const char *old = values.Get(k).c_str();
-        GameLog(kIniDuplicateMessage, key, section, old, value);
+        DebugLogAll(kIniDuplicateMessage, key, section, old, value);
     }
     values.Insert(k, v, -1);
     order.Insert(k, -1);
@@ -86,7 +86,7 @@ int IniFileCache::Load(const char *path)
     FILE *f = fopen(path, "r");
     if (!f)
         return 0;
-    GameLog(kIniParsingMessage, path);
+    DebugLogAll(kIniParsingMessage, path);
 
     IniFileSection *current = 0;
     String currentName;

@@ -39,8 +39,8 @@ for my $c (@cls) {
   push @h, "class $n : public Function {\npublic:\n" . ($kind eq 'float' ? "    $n() { arg = 0; }\n" : '') . $declDtor . "    virtual int Execute(ScriptCall *args, int extra);\n    virtual Function *Create(ArgList *list);\n    virtual void Print();\n    virtual const char *Name();\n$member};\n";
   my $b = '';
   $b .= "const char *$n\::Name() { return \"$str\"; }\n";
-  if ($kind eq 'noarg') { $b .= "Function *$n\::Create(ArgList *list) { return new $n; }\nvoid $n\::Print() { DebugLog(\"%s\", Name()); }\n"; }
-  else { $b .= "Function *$n\::Create(ArgList *list)\n{\n    $n *f = new $n;\n    f->arg = ParseFloatArgument(list);\n    return f;\n}\nvoid $n\::Print()\n{\n    DebugLog(\"%s\", Name());\n    arg->Print();\n    DebugLog(\"" . chr(92) . "n\");\n}\n"; }
+  if ($kind eq 'noarg') { $b .= "Function *$n\::Create(ArgList *list) { return new $n; }\nvoid $n\::Print() { DebugLogAll(\"%s\", Name()); }\n"; }
+  else { $b .= "Function *$n\::Create(ArgList *list)\n{\n    $n *f = new $n;\n    f->arg = ParseFloatArgument(list);\n    return f;\n}\nvoid $n\::Print()\n{\n    DebugLogAll(\"%s\", Name());\n    arg->Print();\n    DebugLogAll(\"" . chr(92) . "n\");\n}\n"; }
   if ($dtorExt) { $b .= "$n\::~$n()\n{\n    if (arg)\n        delete arg;\n}\n"; push @t, $q . $bs . "?1$n" . "  " . sprintf("%x", $dtorExt) . " ${short}_dtor " . sddsize($dtorExt - 0) . "\n"; }
   push @c, $b;
   push @t, $q . "Name\@$n  " . sprintf("%x", $name) . " ${short}_name\n" . $q . "Create\@$n  " . sprintf("%x", $create) . " ${short}_create" . '' . "\n" . $q . "Print\@$n  " . sprintf("%x", $print) . " ${short}_print\n" . $q . $bs . "?_G$n  " . sprintf("%x", $sdd) . " ${short}_sdd " . sddsize($sdd) . "\n";

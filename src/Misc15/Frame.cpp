@@ -8,7 +8,7 @@ FrameScene *GetFrameScene();                               // 0x4206a0
 void UpdateInput();                                        // 0x423050
 void UpdateCreatures();                                    // 0x42d250
 
-void RunFrame()
+void RunFrame2()
 {
     gFrameTimer->Start();
     UpdateInput();

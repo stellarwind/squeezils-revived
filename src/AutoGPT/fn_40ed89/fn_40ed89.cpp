@@ -19,4 +19,4 @@ extern "C" void __cdecl fn_40ed89(CleanupObject *object)
     object->vectorAtDC.~Vector3f();
 }
 
-Vector3f::~Vector3f() {}
+// Vector3f::~Vector3f (0x401660) is defined in AutoGPT/fn_40ed7b.

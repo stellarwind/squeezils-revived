@@ -2,5 +2,5 @@
 #include "FunctionMisc/Misc.h"
 
 Function *GoToRegionFunction::Create(ArgList *list) { return new GoToRegionFunction; }
-void GoToRegionFunction::Print() { DebugLog("%s", Name()); }
+void GoToRegionFunction::Print() { DebugLogAll("%s", Name()); }
 const char *GoToRegionFunction::Name() { return "GoToRegion"; }

@@ -5,7 +5,7 @@
 extern Renderer *g_renderer;                               // 0x4c75dc
 extern int g_fontFound;                                    // 0x4bbea0
 int CALLBACK FontFound(const LOGFONT *lf, const TEXTMETRIC *tm, DWORD type, LPARAM out);   // 0x42e710
-void DebugLog(const char *format, ...);                    // 0x419290
+int DebugLogAll(const char *format, ...);                    // 0x419290
 struct Vec3 { float x, y, z; Vec3() {} ~Vec3(); };         // 0x401660
 struct MemA { char d[0x38c]; MemA(); ~MemA(); };           // 0x42ea70 / 0x42eb40
 struct MemB { char d[0x94]; MemB(); ~MemB(); };            // 0x42f580 / 0x42f5f0
@@ -99,7 +99,7 @@ void Overlay::Layout()
         font = CreateFontIndirect(&lf);
         lineHeight = abs(lf.lfHeight) + 5;
     } else {
-        DebugLog("ERROR: could not find font %s!\n", fontName);
+        DebugLogAll("ERROR: could not find font %s!\n", fontName);
         EnumFontFamilies(dc, "System", (FONTENUMPROC)FontFound, (LPARAM)&lf);
         if (g_fontFound) {
             int h = (int)pixels;

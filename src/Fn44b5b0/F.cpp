@@ -12,7 +12,7 @@ struct BrainTable {
 };
 extern const char kBrainList[];                          // 0x4be210
 extern const char kBrainError[];                         // 0x4be1ec
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 
 struct BrainSet {
     char pad[0x2cc];
@@ -30,7 +30,7 @@ int BrainSet::LoadList(IniReader *ini)
         name = String(ini->GetString(keys->Get(i).c_str()));
         RoboBrain *brain = new RoboBrain;
         if (!brain->Load(name, ini)) {
-            DebugLog(kBrainError, *(char **)&name);
+            DebugLogAll(kBrainError, *(char **)&name);
             delete brain;
         } else {
             table.Insert(name, brain, -1);

@@ -18,7 +18,7 @@ public:
 };
 StringList *SplitWords(const char *text);              // 0x421db0
 Function *ParseFunction(ArgList *list);                // 0x421f50
-void DebugLog(const char *format, ...);                // 0x419290
+int DebugLogAll(const char *format, ...);                // 0x419290
 extern const char kParsingFunction[];                  // 0x4bb1d0
 extern const char kClass[];                            // 0x4b9e28
 extern const char kFunctionClass[];                    // 0x4bb1c4
@@ -28,11 +28,11 @@ extern const char kParsedOk[];                         // 0x4bb180
 
 Function *LoadFunction(IniReader *ini, const char *name)
 {
-    DebugLog(kParsingFunction, name);
+    DebugLogAll(kParsingFunction, name);
     String section(ini->section);
     ini->SetSection(name);
     if (strcmp(ini->GetString(kClass), kFunctionClass))
-        DebugLog(kNotAFunction, name);
+        DebugLogAll(kNotAFunction, name);
     LoadedCompound *compound = new LoadedCompound;
     StringList *keys = ini->GetKeys();
     int i = 0;
@@ -47,7 +47,7 @@ Function *LoadFunction(IniReader *ini, const char *name)
             if (words)
                 delete words;
             if (!fn) {
-                DebugLog(kParseFailed);
+                DebugLogAll(kParseFailed);
                 if (compound)
                     delete compound;
                 ini->SetSection(section.c_str());
@@ -61,7 +61,7 @@ Function *LoadFunction(IniReader *ini, const char *name)
     if (keys)
         delete keys;
     ini->SetSection(section.c_str());
-    DebugLog(kParsedOk);
+    DebugLogAll(kParsedOk);
     compound->Print();
     return compound;
 }

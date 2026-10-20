@@ -3,7 +3,7 @@
 #include <d3drm.h>
 #include <string.h>
 #include "IniReader/IniReader.h"
-void GameLog(const char *format, ...);                         // 0x419290
+int DebugLogAll(const char *format, ...);                         // 0x419290
 extern char gSavedDirectory[];                                 // 0x4c70e8
 struct GeomTable { virtual int Insert(const String &k, IDirect3DRMFrame **v, int at); };   // slot 0
 GeomTable *TopGeometryTable();                                 // 0x424dc0
@@ -20,7 +20,7 @@ void ReadGeometryList(IniReader *ini)
             const char *key = keys->Get(i).c_str();
             const char *value = ini->GetString(key);
             if (strlen(value) == 0)
-                GameLog("ERROR: geom resource %s has no filename entry!\n", key);
+                DebugLogAll("ERROR: geom resource %s has no filename entry!\n", key);
             bare = strchr(value, 92) == 0;
             if (bare && ((strlen(value) == 0) > 5 || stricmp(value + strlen(value) - 4, ".wrl") != 0))
                 share = 1;
@@ -33,10 +33,10 @@ void ReadGeometryList(IniReader *ini)
                 SetCurrentDirectory(ini->GetDirectory().c_str());
             }
             if (share) {
-                GameLog("Shared geom entry: %s shares %s.\n", key, value);
+                DebugLogAll("Shared geom entry: %s shares %s.\n", key, value);
                 IDirect3DRMFrame *frame = FindGeometry(value);
                 if (frame == 0) {
-                    GameLog("ERROR: no entry %s to share!\n");
+                    DebugLogAll("ERROR: no entry %s to share!\n");
                 } else {
                     TopGeometryTable()->Insert(String(key), &frame, -1);
                     frame->AddRef();

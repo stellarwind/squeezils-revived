@@ -10,21 +10,21 @@ void PadDecl6();
 #include "Persist/Stream.h"
 #include "Container/ContainerArray.h"
 
-struct ObjArray : Array<BufferObject *>, BufferObject {
+struct ObjArray2R : Array<BufferObject *>, BufferObject {
     virtual const char *TypeName();
     virtual BufferObject *Create();
     virtual void Write(ByteStream *s);
     virtual void Read(ByteStream *s);
 };
 
-void ObjArray::Write(ByteStream *s)
+void ObjArray2R::Write(ByteStream *s)
 {
     s->WriteInt(&count);
     for (int i = 0; i < count; i++)
         s->WriteObject(data[i]);
 }
 
-void ObjArray::Read(ByteStream *s)
+void ObjArray2R::Read(ByteStream *s)
 {
     s->ReadInt(&count);
     if (capacity < count)

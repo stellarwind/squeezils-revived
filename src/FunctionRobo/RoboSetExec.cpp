@@ -23,7 +23,7 @@ int SetRoboBehaviorFunction::Execute(ScriptCall *args, int extra)
 {
     RoboBody *robo = ((RoboCall2 *)args)->Creature();
     if (!robo) {
-        DebugLog("WARNING: attempt to run SetRoboBehavior on non-Robo creature (id %d).\n", ((RoboCall2 *)args)->Other());
+        DebugLogAll("WARNING: attempt to run SetRoboBehavior on non-Robo creature (id %d).\n", ((RoboCall2 *)args)->Other());
         return 0;
     }
     robo->SetBehavior(behavior->Resolve(0), values);

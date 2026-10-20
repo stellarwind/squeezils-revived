@@ -1,7 +1,7 @@
 // 0x40f450: NavSurfaceList::SetFaceSet - bind a face set of the contact's surface copy to a surface type.
 #include "String/String.h"
 #include "Container/ContainerArray.h"
-void GameLog(const char *format, ...);                      // 0x419290
+int DebugLogAll(const char *format, ...);                      // 0x419290
 int StringEquals(const String &a, const String &b);         // 0x438720 (cdecl)
 struct Contact { int face; };
 struct Props {                                              // the copy's property table
@@ -30,11 +30,11 @@ void Holder::SetFaceSet(String faceSet, String type, const Contact *contact)
     const char *typeText = type.c_str();
     Props *p = c.Get(contact->face)->GetProperties();
     if (!p->Has(faceSet)) {
-        GameLog("ERROR: can't set nonexistent face set %s to surface type %s.\n", faceSetText, typeText);
+        DebugLogAll("ERROR: can't set nonexistent face set %s to surface type %s.\n", faceSetText, typeText);
         return;
     }
     if (!types.Has(type)) {
-        GameLog("ERROR: can't set face set %s to nonexistent surface type %s.\n", faceSetText, typeText);
+        DebugLogAll("ERROR: can't set face set %s to nonexistent surface type %s.\n", faceSetText, typeText);
         return;
     }
     p->Insert(faceSet, type, -1);

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-void DebugLog(const char *format, ...);                                     // 0x419290
+int DebugLogAll(const char *format, ...);                                     // 0x419290
 struct App;
 int FatalErrorApp(App *app, const char *fmt, ...);                          // 0x475510 (Renderer::FatalError; 2 = give up)
 extern App *g_app;                                                          // 0x4c75dc
@@ -109,7 +109,7 @@ int PlaceLevel::ReadGoodieList()
         ini.SetSection(name.c_str());
         String prop(ini.GetString("Prop"));
         if (strlen(prop.c_str()) == 0) {
-            DebugLog("ERROR: no Prop entry, ignoring goodie!\n");
+            DebugLogAll("ERROR: no Prop entry, ignoring goodie!\n");
         } else {
             goodieIndex.Insert(name, goodieNames.count, -1);
             goodieNames.Insert(name, -1);
@@ -154,40 +154,40 @@ int PlaceLevel::Read(IniReader *ini)
         file = fopen(path, "r");
         // the original passes the (NULL) file, not the path, to both messages
         if (file == NULL && FatalErrorApp(g_app, "Could not read file %s.\n", file) == 2) {
-            DebugLog("Could not open level file %d.\n", file);
+            DebugLogAll("Could not open level file %d.\n", file);
             return 0;
         }
     }
 
     char line[256];
     if (fgets(line, 255, file) == NULL) {
-        DebugLog("ERROR: Could not read first line.\n");
+        DebugLogAll("ERROR: Could not read first line.\n");
         fclose(file);
         return 0;
     }
     if (strstr(line, g_lvlHeaderV12) != NULL) {
         version = 2;
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("ERROR: Could not read number of goodies.\n");
+            DebugLogAll("ERROR: Could not read number of goodies.\n");
             fclose(file);
             return 0;
         }
     } else if (strstr(line, g_lvlHeaderV11) != NULL) {
         version = 1;
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("ERROR: Could not read number of goodies.\n");
+            DebugLogAll("ERROR: Could not read number of goodies.\n");
             fclose(file);
             return 0;
         }
     } else if (strstr(line, g_lvlHeaderV10) != NULL) {
         version = 0;
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("ERROR: Could not read number of goodies.\n");
+            DebugLogAll("ERROR: Could not read number of goodies.\n");
             fclose(file);
             return 0;
         }
     } else {
-        DebugLog("ERROR: File has invalid header.\n");
+        DebugLogAll("ERROR: File has invalid header.\n");
         fclose(file);
         return 0;
     }
@@ -198,20 +198,20 @@ int PlaceLevel::Read(IniReader *ini)
     for (i = 0; i < count; i++) {
         _GoodieSpotInfo *goodie = new _GoodieSpotInfo;
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("Could not read goodie instance %d.\n", i);
+            DebugLogAll("Could not read goodie instance %d.\n", i);
             fclose(file);
             return 0;
         }
         if (version == 0) {
             if (sscanf(line, "%d %f %f %f %f %f %f", &goodie->kind, &goodie->position.x, &goodie->position.y,
                        &goodie->position.z, &goodie->up.x, &goodie->up.y, &goodie->up.z) != 7) {
-                DebugLog("Could not read goodie spot %d information.\n", i);
+                DebugLogAll("Could not read goodie spot %d information.\n", i);
                 fclose(file);
                 delete goodie;
                 return 0;
             }
             if ((unsigned)goodie->kind >= (unsigned)goodieNames.count) {
-                DebugLog("WARNING:  Goodie value %d does not exist, using 0\n", goodie->kind);
+                DebugLogAll("WARNING:  Goodie value %d does not exist, using 0\n", goodie->kind);
                 goodie->kind = 0;
             }
             strcpy(goodie->name, goodieNames.Get(goodie->kind).c_str());
@@ -223,13 +223,13 @@ int PlaceLevel::Read(IniReader *ini)
                            &goodie->position.x, &goodie->position.y, &goodie->position.z,
                            &goodie->up.x, &goodie->up.y, &goodie->up.z,
                            &goodie->direction.x, &goodie->direction.y, &goodie->direction.z) != 10) {
-                    DebugLog("Could not read goodie spot %d information.\n", i);
+                    DebugLogAll("Could not read goodie spot %d information.\n", i);
                     fclose(file);
                     delete goodie;
                     return 0;
                 }
                 if ((unsigned)goodie->kind >= (unsigned)goodieNames.count) {
-                    DebugLog("WARNING:  Goodie value %d does not exist, using 0\n", goodie->kind);
+                    DebugLogAll("WARNING:  Goodie value %d does not exist, using 0\n", goodie->kind);
                     goodie->kind = 0;
                 }
                 strcpy(goodie->name, goodieNames.Get(goodie->kind).c_str());
@@ -238,13 +238,13 @@ int PlaceLevel::Read(IniReader *ini)
                            &goodie->position.x, &goodie->position.y, &goodie->position.z,
                            &goodie->up.x, &goodie->up.y, &goodie->up.z,
                            &goodie->direction.x, &goodie->direction.y, &goodie->direction.z) != 10) {
-                    DebugLog("Could not read goodie spot %d information.\n", i);
+                    DebugLogAll("Could not read goodie spot %d information.\n", i);
                     fclose(file);
                     delete goodie;
                     return 0;
                 }
                 if (!goodieProps.Contains(String(goodie->name))) {
-                    DebugLog("WARNING:  Goodie type %s does not exist, using %s\n", goodie->name,
+                    DebugLogAll("WARNING:  Goodie type %s does not exist, using %s\n", goodie->name,
                              goodieProps.KeyAt(0).c_str());
                     strcpy(goodie->name, goodieProps.KeyAt(0).c_str());
                     goodie->kind = 0;
@@ -262,19 +262,19 @@ int PlaceLevel::Read(IniReader *ini)
 
     // the enter spot (V1.0 files carry a spot count first, always 1)
     if (version == 0 && fgets(line, 255, file) == NULL) {
-        DebugLog("Could not read enter spot count from level file.\n");
+        DebugLogAll("Could not read enter spot count from level file.\n");
         fclose(file);
         return 0;
     }
     if (fgets(line, 255, file) == NULL) {
-        DebugLog("Could not read enter spot %d.\n", i);
+        DebugLogAll("Could not read enter spot %d.\n", i);
         fclose(file);
         return 0;
     }
     if (version == 0) {
         int unused;
         if (sscanf(line, "%d %d", &unused, &start.contact.second) != 2) {
-            DebugLog("Could not read enter spot information.\n");
+            DebugLogAll("Could not read enter spot information.\n");
             fclose(file);
             return 0;
         }
@@ -286,7 +286,7 @@ int PlaceLevel::Read(IniReader *ini)
                    &start.position.x, &start.position.y, &start.position.z,
                    &start.up.x, &start.up.y, &start.up.z,
                    &start.direction.x, &start.direction.y, &start.direction.z) != 10) {
-            DebugLog("Could not read enter spot information.\n");
+            DebugLogAll("Could not read enter spot information.\n");
             fclose(file);
             return 0;
         }
@@ -296,7 +296,7 @@ int PlaceLevel::Read(IniReader *ini)
                    &start.position.x, &start.position.y, &start.position.z,
                    &start.up.x, &start.up.y, &start.up.z,
                    &start.direction.x, &start.direction.y, &start.direction.z) != 11) {
-            DebugLog("Could not read enter spot information.\n");
+            DebugLogAll("Could not read enter spot information.\n");
             fclose(file);
             return 0;
         }
@@ -308,14 +308,14 @@ int PlaceLevel::Read(IniReader *ini)
     int n, j;
     if (version == 0) {
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("Could not read exit spot count from level file.\n");
+            DebugLogAll("Could not read exit spot count from level file.\n");
             fclose(file);
             return 0;
         }
         n = atoi(line);
         for (j = 0; j < n; j++) {
             if (fgets(line, 255, file) == NULL) {
-                DebugLog("Could not read exit spot %d.\n", j);
+                DebugLogAll("Could not read exit spot %d.\n", j);
                 fclose(file);
                 return 0;
             }
@@ -323,14 +323,14 @@ int PlaceLevel::Read(IniReader *ini)
     }
     if (version == 0) {
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("Could not read rebirth spot count from level file.\n");
+            DebugLogAll("Could not read rebirth spot count from level file.\n");
             fclose(file);
             return 0;
         }
         n = atoi(line);
         for (j = 0; j < n; j++) {
             if (fgets(line, 255, file) == NULL) {
-                DebugLog("Could not read rebirth spot %d.\n", j);
+                DebugLogAll("Could not read rebirth spot %d.\n", j);
                 fclose(file);
                 return 0;
             }
@@ -338,14 +338,14 @@ int PlaceLevel::Read(IniReader *ini)
     }
     if (version == 0) {
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("Could not read landing spot count from level file.\n");
+            DebugLogAll("Could not read landing spot count from level file.\n");
             fclose(file);
             return 0;
         }
         n = atoi(line);
         for (j = 0; j < n; j++) {
             if (fgets(line, 255, file) == NULL) {
-                DebugLog("Could not read landing spot %d.\n", j);
+                DebugLogAll("Could not read landing spot %d.\n", j);
                 fclose(file);
                 return 0;
             }
@@ -354,7 +354,7 @@ int PlaceLevel::Read(IniReader *ini)
 
     // robo spots: V1.0 "x face", V1.1 "kind face pos up dir", V1.2 "name surface face pos up dir"
     if (fgets(line, 255, file) == NULL) {
-        DebugLog("Could not read robo spots count from level file.\n");
+        DebugLogAll("Could not read robo spots count from level file.\n");
         fclose(file);
         return 0;
     }
@@ -362,7 +362,7 @@ int PlaceLevel::Read(IniReader *ini)
     for (i = 0; i < count; i++) {
         _SqueezilSpotInfo *robo = new _SqueezilSpotInfo;
         if (fgets(line, 255, file) == NULL) {
-            DebugLog("Could not read robo instance %d.\n", i);
+            DebugLogAll("Could not read robo instance %d.\n", i);
             fclose(file);
             delete robo;
             return 0;
@@ -370,7 +370,7 @@ int PlaceLevel::Read(IniReader *ini)
         if (version == 0) {
             int unused;
             if (sscanf(line, "%d %d", &unused, &robo->contact.second) != 2) {
-                DebugLog("Could not read robo spot %d information.\n", i);
+                DebugLogAll("Could not read robo spot %d information.\n", i);
                 fclose(file);
                 delete robo;
                 return 0;
@@ -385,7 +385,7 @@ int PlaceLevel::Read(IniReader *ini)
                        &robo->position.x, &robo->position.y, &robo->position.z,
                        &robo->up.x, &robo->up.y, &robo->up.z,
                        &robo->direction.x, &robo->direction.y, &robo->direction.z) != 11) {
-                DebugLog("Could not read robo spot %d information.\n", i);
+                DebugLogAll("Could not read robo spot %d information.\n", i);
                 fclose(file);
                 delete robo;
                 return 0;
@@ -397,7 +397,7 @@ int PlaceLevel::Read(IniReader *ini)
                        &robo->contact.second, &robo->position.x, &robo->position.y, &robo->position.z,
                        &robo->up.x, &robo->up.y, &robo->up.z,
                        &robo->direction.x, &robo->direction.y, &robo->direction.z) != 12) {
-                DebugLog("Could not read robo spot %d information.\n", i);
+                DebugLogAll("Could not read robo spot %d information.\n", i);
                 fclose(file);
                 delete robo;
                 return 0;

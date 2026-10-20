@@ -15,8 +15,8 @@ void SetToFunction::Print()
 {
     const char *s = name.c_str();
     int v = value->Get(0);
-    DebugLog("%s %s %d", Name(), s, v);
-    DebugLog("\n");
+    DebugLogAll("%s %s %d", Name(), s, v);
+    DebugLogAll("\n");
 }
 
 const char *SetToFunction::Name() { return "SetTo"; }
@@ -35,8 +35,8 @@ void AddToFunction::Print()
 {
     const char *s = name.c_str();
     int v = value->Get(0);
-    DebugLog("%s %s %d", Name(), s, v);
-    DebugLog("\n");
+    DebugLogAll("%s %s %d", Name(), s, v);
+    DebugLogAll("\n");
 }
 
 const char *AddToFunction::Name() { return "AddTo"; }

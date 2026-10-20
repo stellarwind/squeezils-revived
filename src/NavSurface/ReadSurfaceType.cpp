@@ -5,7 +5,7 @@
 #include "NavSurface/SurfaceTypeDescription.h"
 
 typedef Table<String, SurfaceTypeDescription *, Array<SurfaceTypeDescription *>, 0> SurfaceTypeTable;
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 int NavSurfaceList::ReadSurfaceType(IniReader *ini, const char *name)
 {
@@ -35,7 +35,7 @@ int NavSurfaceList::ReadSurfaceType(IniReader *ini, const char *name)
     SurfaceTypeDescription *description = new SurfaceTypeDescription(
         walkable, bounce, slippery, flyThrough, rebud, activate.c_str(), deactivate.c_str());
     types.Insert(String(name), description, -1);
-    GameLog("OK.\n");
+    DebugLogAll("OK.\n");
     ini->SetSection(saved.c_str());
     return 1;
 }

@@ -6,7 +6,7 @@
 #pragma intrinsic(strcmp, strlen)
 #include "IniReader/IniReader.h"
 #include "Container/ContainerSet.h"
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 
 typedef PrimitiveArray<int, 1> IntList;
 struct LocVector {
@@ -68,7 +68,7 @@ PlaceDescriptor *RegionSimulation::ReadLocation(IniReader *ini, const char *name
     String type(ini->GetString("Type"));
     if (strcmp(type.c_str(), "place") && strcmp(type.c_str(), "portal") && strcmp(type.c_str(), "navspot") &&
         strcmp(type.c_str(), "key") && strcmp(type.c_str(), "relic")) {
-        DebugLog("error: type %s not recognized!\n", type.rep);
+        DebugLogAll("error: type %s not recognized!\n", type.rep);
         return place;
     }
 
@@ -93,7 +93,7 @@ PlaceDescriptor *RegionSimulation::ReadLocation(IniReader *ini, const char *name
 
     if (!strcmp(type.c_str(), "place") || !strcmp(type.c_str(), "portal")) {
         if (strlen(ini->GetString("Destination")) == 0) {
-            DebugLog("error: no Destination entry!\n");
+            DebugLogAll("error: no Destination entry!\n");
             place->destinations = new IntList;
             incomplete = 1;
         } else {
@@ -103,7 +103,7 @@ PlaceDescriptor *RegionSimulation::ReadLocation(IniReader *ini, const char *name
         place->destinations = new IntList;
     }
     if (strlen(ini->GetString("Links")) == 0) {
-        DebugLog("error: no Links entry!\n");
+        DebugLogAll("error: no Links entry!\n");
         place->links = new IntList;                       // leaked: replaced right below, as in the original
         incomplete = 1;
     }
@@ -112,7 +112,7 @@ PlaceDescriptor *RegionSimulation::ReadLocation(IniReader *ini, const char *name
     if (strlen(function))
         place->function = String(function);
     if (!incomplete)
-        DebugLog("data OK,\n  ");
+        DebugLogAll("data OK,\n  ");
 
     if (!strcmp(type.c_str(), "place")) {
         LocMatrix m;
@@ -136,13 +136,13 @@ PlaceDescriptor *RegionSimulation::ReadLocation(IniReader *ini, const char *name
 
     String prop(ini->GetString("Prop"));
     if (strlen(prop.c_str()) == 0) {
-        DebugLog("warning: no prop.\n");
+        DebugLogAll("warning: no prop.\n");
         return place;
     }
     LocProp *shown = LoadProp(ini, 0, placeName.c_str(), "Prop");
     if (shown)
         shown->Show(g_scene->GetChild());
     else
-        DebugLog("ERROR: couldn't locate prop %s at location!\n", prop.c_str());
+        DebugLogAll("ERROR: couldn't locate prop %s at location!\n", prop.c_str());
     return place;
 }

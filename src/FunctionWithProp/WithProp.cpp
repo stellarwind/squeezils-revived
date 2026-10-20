@@ -26,7 +26,7 @@ int ExecuteWithPropFunction::Execute(ScriptCall *args, int extra)
 
 void ExecuteWithPropFunction::Print()
 {
-    DebugLog("%s %s ", Name(), name.c_str());
+    DebugLogAll("%s %s ", Name(), name.c_str());
     child->Print();
 }
 

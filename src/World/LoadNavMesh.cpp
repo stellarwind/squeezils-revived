@@ -4,18 +4,18 @@
 #include "World/World.h"
 #include "IniReader/IniReader.h"
 #include "World/WorldNavMesh.h"
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 void World::LoadNavMesh(IniReader *reader)
 {
     reader->SetSection("Defaults");
     const char *name = reader->GetString("NavMesh");
     if (strlen(name) == 0) {
-        GameLog("No nav surface defined.\n");
+        DebugLogAll("No nav surface defined.\n");
         return;
     }
     navMesh = new NavMesh;
-    GameLog("Loading nav surface %s: ", name);
+    DebugLogAll("Loading nav surface %s: ", name);
     char savedDirectory[128];
     strcpy(savedDirectory, kEmptyString);
     if (!strchr(name, '\\')) {
@@ -23,13 +23,13 @@ void World::LoadNavMesh(IniReader *reader)
         SetCurrentDirectoryA(reader->GetDirectory().c_str());
     }
     if (!navMesh->Load(name)) {
-        GameLog("failed!\n");
+        DebugLogAll("failed!\n");
         delete navMesh;
         navMesh = 0;
         if (strlen(savedDirectory))
             SetCurrentDirectoryA(savedDirectory);
     } else {
-        GameLog("OK.\n");
+        DebugLogAll("OK.\n");
         if (strlen(savedDirectory))
             SetCurrentDirectoryA(savedDirectory);
     }

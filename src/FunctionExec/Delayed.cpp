@@ -24,10 +24,10 @@ int DelayedExecuteFunction::Execute(ScriptCall *args, int extra)
 
 void DelayedExecuteFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     delay->Print();
     name->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *DelayedExecuteFunction::Name() { return "DelayedExecute"; }

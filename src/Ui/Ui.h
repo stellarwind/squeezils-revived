@@ -1,18 +1,6 @@
-// Bitmap / Scene / Splash trivial getters (SQZ.EXE 0x4738b0-0x4739c0, 0x477290, 0x477390, 0x44eea0).
+// Scene / Splash trivial getters (SQZ.EXE 0x4738b0-0x4739c0, 0x477290, 0x477390, 0x44eea0).
 #pragma once
 #include "compat41.h"
-
-struct Bitmap {
-    char  pad74[0x74];
-    void *surface;      // 0x74
-    int   width;        // 0x78
-    int   height;       // 0x7c
-
-    void *GetSurface(); // 0x4738b0
-    int   GetWidth();   // 0x4739b0
-    int   GetHeight();  // 0x4739c0
-    void  ReportError(int hr);  // 0x474350 (does nothing)
-};
 
 struct Renderer {
     char  pad990[0x990];

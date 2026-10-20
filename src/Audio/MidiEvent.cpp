@@ -20,7 +20,7 @@ extern unsigned gMidiTempo;                 // 0x4c8688
 extern unsigned gMidiDivision;              // 0x4c8694
 extern int gMidiAllocs;                     // 0x4bf448
 extern const char kMidiSysex[];             // 0x4bf74c
-void DebugLog(const char *format, ...);     // 0x419290
+int DebugLogAll(const char *format, ...);     // 0x419290
 void FreeBlock(void *p);                    // 0x490540
 
 int ConvertMidiEvent(MidiEvent *ev, MidiBuf *out)
@@ -47,7 +47,7 @@ int ConvertMidiEvent(MidiEvent *ev, MidiBuf *out)
         return 0;
     }
     if (ev->status == 0xf0 || ev->status == 0xf7) {
-        DebugLog(kMidiSysex);
+        DebugLogAll(kMidiSysex);
         if (gMidiAllocs) {
             FreeBlock(ev->data);
             gMidiAllocs--;

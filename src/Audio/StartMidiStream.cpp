@@ -22,7 +22,7 @@ extern int gMidiHeadersPrepared;              // 0x4bf450
 extern const char kOpenError[], kAllocError[], kInitError[], kCloseInitError[], kPropertyError[],
     kClosePropertyError[], kConvertError[], kCloseConvertError[], kPrepareError[], kClosePrepareError[];
     // 0x4bf934 0x4bf90c 0x4bf8ec 0x4bf8b4 0x4bf894 0x4bf85c 0x4bf838 0x4bf7fc 0x4bf7d8 0x4bf798
-void DebugLog(const char *format, ...);       // 0x419290
+int DebugLogAll(const char *format, ...);       // 0x419290
 void CALLBACK MidiCallback(HMIDIOUT out, UINT msg, DWORD instance, DWORD p1, DWORD p2);   // 0x45ace0
 int InitMidiConverter(const char *file);      // 0x45ae90
 void FreeMidiTracks();                        // 0x45b2d0
@@ -33,7 +33,7 @@ int StartMidiStream()
 {
     int done = 0;
     if (!gMidiStream && midiStreamOpen(&gMidiStream, &gMidiDevice, 1, (DWORD)MidiCallback, 0, CALLBACK_FUNCTION)) {
-        DebugLog(kOpenError);
+        DebugLogAll(kOpenError);
         return 1;
     }
     int i = 0;
@@ -42,16 +42,16 @@ int StartMidiStream()
         buffer->header.dwBufferLength = 0x400;
         buffer->header.lpData = (LPSTR)GlobalLock(GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, 0x400));
         if (!buffer->header.lpData) {
-            DebugLog(kAllocError, i);
+            DebugLogAll(kAllocError, i);
             return -1;
         }
         buffer++;
         i++;
     } while (buffer < gMidiBuffers + 32);
     if (InitMidiConverter(gMidiFile)) {
-        DebugLog(kInitError);
+        DebugLogAll(kInitError);
         if (midiStreamClose(gMidiStream))
-            DebugLog(kCloseInitError);
+            DebugLogAll(kCloseInitError);
         gMidiStream = 0;
         FreeMidiConverter();
         return 1;
@@ -60,9 +60,9 @@ int StartMidiStream()
     division.cbStruct = 8;
     division.dwTimeDiv = gMidiTimeDivision;
     if (midiStreamProperty(gMidiStream, (LPBYTE)&division, MIDIPROP_SET | MIDIPROP_TIMEDIV)) {
-        DebugLog(kPropertyError);
+        DebugLogAll(kPropertyError);
         if (midiStreamClose(gMidiStream))
-            DebugLog(kClosePropertyError);
+            DebugLogAll(kClosePropertyError);
         gMidiStream = 0;
         FreeMidiTracks();
         FreeMidiConverter();
@@ -79,9 +79,9 @@ int StartMidiStream()
         int result = FillMidiBuffer(first, &gMidiBuffers[gMidiBuffer]);
         if (result) {
             if (result != -0x67) {
-                DebugLog(kConvertError);
+                DebugLogAll(kConvertError);
                 if (midiStreamClose(gMidiStream))
-                    DebugLog(kCloseConvertError);
+                    DebugLogAll(kCloseConvertError);
                 gMidiStream = 0;
                 FreeMidiTracks();
                 FreeMidiConverter();
@@ -92,9 +92,9 @@ int StartMidiStream()
         gMidiBuffers[gMidiBuffer].header.dwBytesRecorded = gMidiBuffers[gMidiBuffer].used;
         if (!gMidiHeadersPrepared
             && midiOutPrepareHeader((HMIDIOUT)gMidiStream, &gMidiBuffers[gMidiBuffer].header, sizeof(MIDIHDR))) {
-            DebugLog(kPrepareError);
+            DebugLogAll(kPrepareError);
             if (midiStreamClose(gMidiStream))
-                DebugLog(kClosePrepareError);
+                DebugLogAll(kClosePrepareError);
             gMidiStream = 0;
             FreeMidiTracks();
             FreeMidiConverter();

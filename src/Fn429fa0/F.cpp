@@ -6,7 +6,7 @@ struct PropTable;
 struct PathRegistry;
 void ReadPaths(IniReader *ini, PathRegistry *paths);        // 0x42c700 (cdecl)
 void ReadProps(IniReader *ini, PropTable *props);           // 0x42a290 (cdecl)
-void DebugLog(const char *format, ...);                     // 0x419290
+int DebugLogAll(const char *format, ...);                     // 0x419290
 struct Splash { virtual void SetProgress(float p); virtual void Step(); };
 extern Splash *g_splash;                                    // 0x4c75e8
 
@@ -20,10 +20,10 @@ void ReadPropFiles(IniReader *ini, PropTable *props, PathRegistry *paths)
         String name(ini->GetString(files->Get(i).c_str()));
         if (strlen(name.c_str())) {
             IniReader file(name.c_str());
-            DebugLog("Reading paths from %s...\n", file.GetPath());
+            DebugLogAll("Reading paths from %s...\n", file.GetPath());
             ReadPaths(&file, paths);
         } else {
-            DebugLog("ERROR: no input file numbered %d.\n", i);
+            DebugLogAll("ERROR: no input file numbered %d.\n", i);
         }
     }
     ReadPaths(ini, paths);
@@ -38,13 +38,13 @@ void ReadPropFiles(IniReader *ini, PropTable *props, PathRegistry *paths)
         String name(ini->GetString(files->Get(i).c_str()));
         if (strlen(name.c_str())) {
             IniReader file(name.c_str());
-            DebugLog("Reading props from %s...\n", file.GetPath());
+            DebugLogAll("Reading props from %s...\n", file.GetPath());
             ReadProps(&file, props);
             if (loaded % every == 0 || every == 1)
                 g_splash->Step();
             loaded++;
         } else {
-            DebugLog("ERROR: no input file numbered %d.\n", i);
+            DebugLogAll("ERROR: no input file numbered %d.\n", i);
         }
     }
     delete files;

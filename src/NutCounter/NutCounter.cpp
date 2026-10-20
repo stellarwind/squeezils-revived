@@ -9,7 +9,7 @@ extern char kInterfaceSection[];         // "Interface" 0x4b9474
 extern char kCouldNotCopy[];             // 0x4bc020
 extern Renderer *g_renderer;             // 0x4c75dc
 Panel *GetPanel();                       // 0x4206c0
-void GameLog(const char *format, ...);   // 0x419290
+int DebugLogAll(const char *format, ...);   // 0x419290
 
 NutCounter::NutCounter()
 {
@@ -57,7 +57,7 @@ void NutCounter::Draw(int value, int value2)
 {
     lastValue = value;
     if (!icon->CopyFrom(original))
-        GameLog(kCouldNotCopy);
+        DebugLogAll(kCouldNotCopy);
     if (mode != 1) {
         DrawNumber(value, icon->GetWidth() / 2, icon->GetHeight() / 2);
     } else {

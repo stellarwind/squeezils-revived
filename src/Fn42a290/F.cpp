@@ -5,7 +5,7 @@ struct PropTable;
 struct SceneH { void *GetChild(); };                              // 0x477290
 extern SceneH *gScene;                                            // 0x4c75e0
 Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, int extra);   // 0x42a520 (cdecl)
-void GameLog(const char *format, ...);                            // 0x419290
+int DebugLogAll(const char *format, ...);                            // 0x419290
 void ReadProps(IniReader *ini, PropTable *props)
 {
     StringList *entries;
@@ -18,9 +18,9 @@ void ReadProps(IniReader *ini, PropTable *props)
             const char *key = entries->Get(i).c_str();
             String name(ini->GetString(key));
             if (LoadProp(ini, props, name.c_str(), 0))
-                GameLog(" OK.\n");
+                DebugLogAll(" OK.\n");
             else
-                GameLog("ERROR: couldn't find prop %s in BackstagePropList.\n", name.c_str());
+                DebugLogAll("ERROR: couldn't find prop %s in BackstagePropList.\n", name.c_str());
         }
     }
     if (entries)
@@ -35,9 +35,9 @@ void ReadProps(IniReader *ini, PropTable *props)
             Prop *prop = LoadProp(ini, props, name.c_str(), 0);
             if (prop) {
                 prop->Show(gScene->GetChild());
-                GameLog(" OK.\n");
+                DebugLogAll(" OK.\n");
             } else {
-                GameLog("ERROR: couldn't find prop %s in PropList.\n", name.c_str());
+                DebugLogAll("ERROR: couldn't find prop %s in PropList.\n", name.c_str());
             }
         }
     }

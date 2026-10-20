@@ -13,12 +13,12 @@ Function *AnimateCameraPathFunction::Create(ArgList *list)
 
 void AnimateCameraPathFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     a->Print();
     b->Print();
     c->Print();
-    DebugLog("%s", path.c_str());
-    DebugLog("\n");
+    DebugLogAll("%s", path.c_str());
+    DebugLogAll("\n");
 }
 
 const char *AnimateCameraPathFunction::Name() { return "AnimateCameraPath"; }

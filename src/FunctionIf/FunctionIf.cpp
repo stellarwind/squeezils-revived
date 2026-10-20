@@ -24,7 +24,7 @@ Function *IfFunction::Create(ArgList *list)
 
 void IfFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     Dump();
     child->Print();
 }

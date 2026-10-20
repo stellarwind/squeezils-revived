@@ -6,7 +6,7 @@ struct Function {
     virtual ~Function();
     virtual void vf1() = 0;
 };
-Function::~Function() {}
+// Function::~Function is defined in FnDtor.cpp.
 
 struct String {
     void *rep;

@@ -8,9 +8,9 @@ const char *SetRoboBehaviorFunction::Name() { return "SetRoboBehavior"; }
 
 void SetRoboBehaviorFunction::Print()
 {
-    DebugLog("%s ", Name());
+    DebugLogAll("%s ", Name());
     behavior->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 Function *SetRoboBehaviorFunction::Create(ArgList *list)
@@ -22,7 +22,7 @@ Function *SetRoboBehaviorFunction::Create(ArgList *list)
     f->behavior = b;
     int n = ((CountedList *)list)->count;
     if (n > 3) {
-        DebugLog("WARNING: too many arguments to SetRoboBehavior function.\n");
+        DebugLogAll("WARNING: too many arguments to SetRoboBehavior function.\n");
         n = 3;
     }
     for (int i = 0; i < n; i++) {

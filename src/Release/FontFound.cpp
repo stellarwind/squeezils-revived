@@ -1,13 +1,13 @@
 // EnumFontFamilies callback (SQZ.EXE 0x42e710): keep the first font found, but prefer one whose style is "bold".
 #include <windows.h>
 #include <string.h>
-void DebugLog(const char *format, ...);   // 0x419290
+int DebugLogAll(const char *format, ...);   // 0x419290
 int g_fontFound;                          // 0x4bbea0
 
 int CALLBACK FontFound(const LOGFONT *font, const TEXTMETRIC *, DWORD, LPARAM param)
 {
     const ENUMLOGFONT *found = (const ENUMLOGFONT *)font;
-    DebugLog("MESSAGE DEBUG: EnumFamCallBack, fullName %s, style %s.\n", found->elfFullName, found->elfStyle);
+    DebugLogAll("MESSAGE DEBUG: EnumFamCallBack, fullName %s, style %s.\n", found->elfFullName, found->elfStyle);
     ENUMLOGFONT *keep = (ENUMLOGFONT *)param;
     if (!g_fontFound) {
         memcpy(keep, found, sizeof(ENUMLOGFONT));

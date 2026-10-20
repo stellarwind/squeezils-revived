@@ -4,7 +4,7 @@
 
 extern const char kSoundSection[];                       // 0x4b9d64
 extern const char kLoadingSub[], kBadKey[];              // 0x4be220 0x4b9d40
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 
 struct SubLoader {
     int Load(IniReader *ini);                            // 0x44b5b0
@@ -23,10 +23,10 @@ int SubLoader::LoadAll()
         name = String(ini.GetString(keys->Get(i).c_str()));
         if (strlen(name.c_str())) {
             IniReader sub(name.c_str());
-            DebugLog(kLoadingSub, sub.GetPath());
+            DebugLogAll(kLoadingSub, sub.GetPath());
             Load(&sub);
         } else
-            DebugLog(kBadKey, i);
+            DebugLogAll(kBadKey, i);
     }
     Load(&ini);
     if (keys)

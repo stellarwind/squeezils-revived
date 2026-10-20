@@ -35,7 +35,7 @@ extern const float kEffectDistanceThreshold; // 0x49eca0 (0.0f)
 extern const char kEffectMissing[], kEffectDuplicateFailed[]; // 0x4be034, 0x4be004
 extern const char kAmbBadVolume[], kEffectBadPan[], kAmbBadPlay[]; // 0x4bdfe4, 0x4bdfc8, 0x4bdfb0
 WaveSound *FindSound(const char *name); // 0x449c30
-void DebugLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 void PlayEffectAt(String name, Vector3f position)
 {
@@ -43,12 +43,12 @@ void PlayEffectAt(String name, Vector3f position)
         return;
     WaveSound *sound = FindSound(name.c_str());
     if (!sound) {
-        DebugLog(kEffectMissing, name.c_str());
+        DebugLogAll(kEffectMissing, name.c_str());
         return;
     }
     LPDIRECTSOUNDBUFFER buffer;
     if (g_directSound->DuplicateSoundBuffer((LPDIRECTSOUNDBUFFER)sound->buffer, &buffer) < 0) {
-        DebugLog(kEffectDuplicateFailed);
+        DebugLogAll(kEffectDuplicateFailed);
         return;
     }
     EffectListener *listener = GetEffectSimulation()->Listener(0);
@@ -68,17 +68,17 @@ void PlayEffectAt(String name, Vector3f position)
     double volume = distance < kEffectDistanceThreshold ? g_musicVolume * 10000.0f - 10000.0f
                                   : g_musicVolume * 10000.0f - 10000.0f;
     if (buffer->SetVolume((int)volume) < 0) {
-        DebugLog(kAmbBadVolume, volume);
+        DebugLogAll(kAmbBadVolume, volume);
         return;
     }
     Vector3f right = listener->Transform()->right;
     direction.Normalize();
     double pan = (right.x * direction.x + right.z * direction.z + right.y * direction.y) * 10000.0f;
     if (buffer->SetPan((int)pan) < 0) {
-        DebugLog(kEffectBadPan, pan);
+        DebugLogAll(kEffectBadPan, pan);
         return;
     }
     gEffectBuffers.Insert(&buffer, -1);
     if (buffer->Play(0, 0, 0) < 0)
-        DebugLog(kAmbBadPlay);
+        DebugLogAll(kAmbBadPlay);
 }

@@ -20,6 +20,6 @@ Function *ParseFunction(ArgList *list)
         list->Skip(0);
         return gFunctionPrototypes.Get(name)->Create(list);
     }
-    DebugLog(kUnrecognizedFunctionFormat, name.c_str());
+    DebugLogAll(kUnrecognizedFunctionFormat, name.c_str());
     return 0;
 }

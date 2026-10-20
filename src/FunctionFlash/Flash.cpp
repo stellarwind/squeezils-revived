@@ -19,10 +19,10 @@ int FlashGoodieFunction::Execute(ScriptCall *args, int extra)
 
 void FlashGoodieFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     kind->Print();
     seconds->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *FlashGoodieFunction::Name() { return "FlashGoodie"; }

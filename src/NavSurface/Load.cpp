@@ -22,14 +22,14 @@ struct LoadedSurface {
 };
 int __stdcall LoadSurfaceTypes(NavMesh *mesh, const char *folder,
     const char *file, StringList *names);        // 0x40eec0
-void DebugLog(const char *format, ...);          // 0x419290
+int DebugLogAll(const char *format, ...);          // 0x419290
 extern const char kLoadingSurface[], kSurfaceAlreadyLoaded[], kSurfaceLoadFailed[], kSurfaceLoadOk[], kNone[];
     // 0x4ba0ac, 0x4ba098, 0x4ba08c, 0x4b9dbc, 0x4b9ef4
 
 int NavSurfaceList::Load(IniReader *ini, const char *navFile, const char *natFile)
 {
     String folder = ini->GetDirectory();
-    DebugLog(kLoadingSurface, navFile, natFile, folder.c_str());
+    DebugLogAll(kLoadingSurface, navFile, natFile, folder.c_str());
     for (int i = 0; i < loaded.count; ++i) {
         String current = ini->GetDirectory();
         String knownDirectory = loaded.Get(i)->directory;
@@ -37,7 +37,7 @@ int NavSurfaceList::Load(IniReader *ini, const char *navFile, const char *natFil
         const char *currentText = current.c_str();
         const char *knownText = knownDirectory.c_str();
         if (!strcmp(currentText, knownText) && !strcmp(natFile, knownFile.c_str())) {
-            DebugLog(kSurfaceAlreadyLoaded);
+            DebugLogAll(kSurfaceAlreadyLoaded);
             return i;
         }
     }
@@ -49,12 +49,12 @@ int NavSurfaceList::Load(IniReader *ini, const char *navFile, const char *natFil
     }
     NavMesh *mesh = new NavMesh;
     if (!mesh->Load(navFile)) {
-        DebugLog(kSurfaceLoadFailed);
+        DebugLogAll(kSurfaceLoadFailed);
         delete mesh;
         if (strlen(saved)) SetCurrentDirectoryA(saved);
         return 0;
     }
-    DebugLog(kSurfaceLoadOk);
+    DebugLogAll(kSurfaceLoadOk);
     StringList types;
     types.Insert(String(kNone), -1);
     int faces = LoadSurfaceTypes(mesh, ini->GetDirectory().c_str(), natFile, &types);

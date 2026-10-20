@@ -3,7 +3,7 @@
 
 const char *ClearTimerMessageFunction::Name() { return "ClearTimerMessage"; }
 Function *ClearTimerMessageFunction::Create(ArgList *list) { return new ClearTimerMessageFunction; }
-void ClearTimerMessageFunction::Print() { DebugLog("%s", Name()); }
+void ClearTimerMessageFunction::Print() { DebugLogAll("%s", Name()); }
 
 const char *FadeScreenDownFunction::Name() { return "FadeScreenDown"; }
 Function *FadeScreenDownFunction::Create(ArgList *list)
@@ -14,9 +14,9 @@ Function *FadeScreenDownFunction::Create(ArgList *list)
 }
 void FadeScreenDownFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     arg->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 FadeScreenDownFunction::~FadeScreenDownFunction()
 {
@@ -25,7 +25,7 @@ FadeScreenDownFunction::~FadeScreenDownFunction()
 
 const char *RemoveCurrentGoodieFunction::Name() { return "RemoveCurrentGoodie"; }
 Function *RemoveCurrentGoodieFunction::Create(ArgList *list) { return new RemoveCurrentGoodieFunction; }
-void RemoveCurrentGoodieFunction::Print() { DebugLog("%s", Name()); }
+void RemoveCurrentGoodieFunction::Print() { DebugLogAll("%s", Name()); }
 
 const char *AnimateCameraPathOffFunction::Name() { return "AnimateCameraPathOff"; }
 Function *AnimateCameraPathOffFunction::Create(ArgList *list)
@@ -36,7 +36,7 @@ Function *AnimateCameraPathOffFunction::Create(ArgList *list)
 }
 void AnimateCameraPathOffFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     arg->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }

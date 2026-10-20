@@ -22,9 +22,9 @@ int PlayMovieFunction::Execute(ScriptCall *args, int extra)
 
 void PlayMovieFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     fade->Print();
-    DebugLog("%s", file.c_str());
+    DebugLogAll("%s", file.c_str());
 }
 
 const char *PlayMovieFunction::Name() { return "PlayMovie"; }

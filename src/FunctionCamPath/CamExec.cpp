@@ -14,6 +14,6 @@ int AnimateCameraPathFunction::Execute(ScriptCall *args, int extra)
         cam->FollowPath(FindPath(path.c_str()), a->Get(extra), b->Get(extra), c->Get(extra));
         return 1;
     }
-    DebugLog("Error:  path %s does not exist.\n", path.c_str());
+    DebugLogAll("Error:  path %s does not exist.\n", path.c_str());
     return 0;
 }

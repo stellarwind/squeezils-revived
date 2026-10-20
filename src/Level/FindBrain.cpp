@@ -15,13 +15,13 @@ struct BrainLookupLevel {
     void *FindBrain(String name);
 };
 extern const char kMissingBrainWarning[];        // 0x4be66c
-void GameLog(const char *format, ...);           // 0x419290
+int DebugLogAll(const char *format, ...);           // 0x419290
 
 void *BrainLookupLevel::FindBrain(String name)
 {
     if (!brains.Contains(name)) {
         String attempted = name;
-        GameLog(kMissingBrainWarning, attempted.c_str(), brains.KeyAt(0).c_str());
+        DebugLogAll(kMissingBrainWarning, attempted.c_str(), brains.KeyAt(0).c_str());
         return brains.values[0];
     }
     return brains.Get(name);

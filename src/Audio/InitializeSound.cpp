@@ -23,7 +23,7 @@ extern const char kSoundInitFailed[], kSoundCooperativeFailed[], kPrimaryCreateF
     kFormatSizeFailed[], kFormatAllocFailed[], kPrimaryFormatFailed[], kPrimaryPlayFailed[];
     // 0x4bdd68, 0x4bdd3c, 0x4bdd1c, 0x4bdcec, 0x4bdcbc, 0x4bdc90, 0x4bdc70
 int FatalErrorApp(MidiApp *app, const char *fmt, ...); // 0x475510
-void DebugLog(const char *format, ...);          // 0x419290
+int DebugLogAll(const char *format, ...);          // 0x419290
 
 void InitializeSound()
 {
@@ -49,7 +49,7 @@ void InitializeSound()
             return;
     }
     if (g_directSound->SetCooperativeLevel(g_mainWnd, DSSCL_PRIORITY) < 0) {
-        DebugLog(kSoundCooperativeFailed);
+        DebugLogAll(kSoundCooperativeFailed);
         g_directSound->Release();
         return;
     }
@@ -59,18 +59,18 @@ void InitializeSound()
     g_primarySoundDesc.dwSize = 0x14;
     g_primarySoundDesc.dwFlags = 0x81;
     if (g_directSound->CreateSoundBuffer(&g_primarySoundDesc, &g_primarySound, 0) < 0) {
-        DebugLog(kPrimaryCreateFailed);
+        DebugLogAll(kPrimaryCreateFailed);
         g_directSound->Release();
         return;
     }
     DWORD formatSize;
     if (acmMetrics(0, ACM_METRIC_MAX_SIZE_FORMAT, &formatSize)) {
-        DebugLog(kFormatSizeFailed);
+        DebugLogAll(kFormatSizeFailed);
         return;
     }
     g_sampleFormat = (WAVEFORMATEX *)GlobalLock(GlobalAlloc(GMEM_ZEROINIT, formatSize));
     if (!g_sampleFormat) {
-        DebugLog(kFormatAllocFailed);
+        DebugLogAll(kFormatAllocFailed);
         return;
     }
     g_sampleFormat->wFormatTag = WAVE_FORMAT_PCM;
@@ -81,7 +81,7 @@ void InitializeSound()
     g_sampleFormat->wBitsPerSample = 16;
     g_sampleFormat->cbSize = 0;
     if (g_primarySound->SetFormat(g_sampleFormat) < 0) {
-        DebugLog(kPrimaryFormatFailed);
+        DebugLogAll(kPrimaryFormatFailed);
         GlobalUnlock(GlobalHandle(g_sampleFormat));
         GlobalFree(GlobalHandle(g_sampleFormat));
         g_directSound->Release();
@@ -95,7 +95,7 @@ void InitializeSound()
     attenuation = (1.0 - g_sfxVolume) * 100.0;
     g_sfxDb = -(int)(attenuation * attenuation);
     if (g_primarySound->Play(0, 0, DSBPLAY_LOOPING) < 0) {
-        DebugLog(kPrimaryPlayFailed);
+        DebugLogAll(kPrimaryPlayFailed);
         GlobalUnlock(GlobalHandle(g_sampleFormat));
         GlobalFree(GlobalHandle(g_sampleFormat));
         g_directSound->Release();

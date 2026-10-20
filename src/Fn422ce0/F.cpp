@@ -20,7 +20,7 @@ struct RunStack {
 };
 extern RunStack gFunctionStack;                          // 0x4c7090
 RunFunction *FindFunction(const char *name);             // 0x423130 (cdecl)
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 extern const char kNoFunction[];                         // 0x4bb21c
 
 int CallFunction(const char *name, CallArg *args, int extra, int topOnly)
@@ -31,7 +31,7 @@ int CallFunction(const char *name, CallArg *args, int extra, int topOnly)
     else if (gFunctionStack.At(gFunctionStack.count - 1)->Contains(String(name)))
         fn = gFunctionStack.At(gFunctionStack.count - 1)->Get(String(name));
     if (!fn) {
-        DebugLog(kNoFunction, name);
+        DebugLogAll(kNoFunction, name);
         return 0;
     }
     fn->Run(args, extra);

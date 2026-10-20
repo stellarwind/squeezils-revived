@@ -7,9 +7,9 @@ void PadDecl3();
 
 void CompoundFunction::Print()
 {
-    DebugLog("compound");
+    DebugLogAll("compound");
     for (int i = 0; i < items.count; i++) {
-        DebugLog("  ");
+        DebugLogAll("  ");
         items.Get(i)->Print();
     }
 }

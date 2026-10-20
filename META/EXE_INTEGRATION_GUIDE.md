@@ -469,6 +469,82 @@ symbol baseline remains the last completed full diagnostic.
 
 This also narrows the earlier launcher hypothesis: a Git Bash launch can abort
 internally too. Native Python launching alone does not explain the failure.
-The next session should investigate the old linker's Pass1 failure on the
-current input set before expanding ownership rules. Preserve the response
-files and per-object inventory to make that investigation reproducible.
+The launcher investigation below supersedes that blocker. Preserve the
+response files and per-object inventory.
+
+## Completed String-container diagnostic (2026-10-21)
+
+Passing the same ordered inputs directly as command-line arguments with paths
+relative to `build/integration` completes the diagnostic link. IniReader alone
+and the first 18 original/projected objects also complete diagnostics. Turning
+off incremental linking did not help. Shortening paths inside a full response
+file moved the crash from object 0017 to 0044. These observations isolate a
+response-file launch problem; its internal cause is not established.
+
+`integration.py` now expands its generated one-argument-per-line inventory,
+shortens absolute paths, and launches the linker directly. It rejects commands
+at the Windows command-line length limit. Normal and diagnostic modes use this
+launcher; normal mode remains untested past the failed Qv constructor.
+
+From the workspace root, with the VC4 environment sourced:
+
+```bash
+python Repo/tools/integration.py --diagnose-existing-link
+python Repo/tools/integration.py --diagnose-existing-link --diagnostic-response Repo/build/integration/containers/link.rsp
+```
+
+Both commands completed diagnostics using the saved inputs:
+
+| Measurement | Original inputs | String-container projections |
+| --- | --- | --- |
+| Internal linker error | No | No |
+| LNK2005 duplicate-definition messages | 69 | 27 |
+| LNK2001 unresolved-reference messages | 8,900 | 8,900 |
+| LNK1120 unique unresolved symbols | 7,329 | 7,329 |
+
+This validates removal of the previously inventoried 42 duplicate definitions
+against the actual linker. Logs, summary JSON and grouped unresolved names
+are written beside the chosen response file. Diagnostic mode retains no EXE.
+The inputs are cached and unverified, and omit `Qv/gen/C_4864b0.cpp`; these
+are incomplete-build diagnostics, not a playable build.
+
+The next bounded job can address one remaining collision family using
+`containers/partial-link.log` and `ownership.json`. Examples include
+`Function::~Function`, `Bitmap::GetWidth/GetHeight`, and
+`PrimitiveArray<String,23>::Read`. Prove address identity and ABI before
+choosing an owner or renaming.
+- 2026-10-21 integration: removed duplicate Bitmap (struct+GetSurface/GetWidth/GetHeight/ReportError) from Repo/src/Ui; Bitmap2 owns it. Relink diagnostic not re-run. Next family: Function::~Function, Vector3f::~Vector3f, ObjArray::Read/Write.
+- 2026-10-21 DebugLog aliases (0x419290) unified to DebugLogAll(int) across 78 files. New Repo/tools/data_aliases.py: weak-external COFF mapping 505 readable global names (from 'extern ... // 0xADDR' comments) to data.obj address symbols; diagnostic link with it: unique unresolved 7,329 -> 6,824 (LNK2001 8,900 -> 8,161), LNK2005 27. Output skipped list: build/integration/data_alias.json (555 names: no/ambiguous address). Qv* LNK2005 are source-vs-QvLib.lib: needs owner decision.
+- 2026-10-21 later: Qv::FieldData::addField signature fixed (QvNode*/QvField*), QvField::SetOwner defined (Qv/FieldOwner.cpp, 0x488ba0). Diagnostic link now: LNK2005 18, LNK2001 7,982, unique unresolved 6,816 (from 7,329). Remaining unresolved are mostly undecompiled functions/CRT (DynamicCast 0x48f060, ~V3, Matrix16 dtor, SaveSlotN, ReadElem/WriteElem(String) address unverified), plus Qv* vs QvLib.lib duplicates (owner decision).
+
+## Integration continuation (2026-10-21)
+
+- Full manifest compile now succeeds: 1,136/1,136 sources, no omitted failures.
+  Repaired generated Qv MatrixTransform constructor 0x4864b0: SFMatrix owns
+  sixteen floats (field size 0x4c, node size 0x64), initialized to the identity
+  at node+0x24. Original assembly and upstream QvMatrixTransform agree.
+  match.sh score 17; differences are integer stores versus equivalent float
+  constant loads and register/scheduling choices. Preserve this manual repair
+  if tools/genQvCtors.pl is run again; that generator still emits the bad body.
+- Separated RunFrame (0x4206e0) and RunFrame2 (0x420760), including StepGame's
+  calls and the target regex. RunFrame2 and StepGame both still score zero.
+- data_aliases.py now preserves earlier candidates and revalidates their
+  addresses. Two consecutive runs produced the same 505 aliases and object hash.
+- Added tools/entry_aliases.py for extracted data's _fn_ADDRESS pointers.
+  It requires one target symbol at one original address, checks that the
+  inventoried owners actually define it, and excludes AutoGPT funclet adapters.
+  It does not map interior addresses, invent offsets or provide ABI wrappers.
+  Current result: 65 aliases, 3,835 skipped ambiguous/interior/unmapped names.
+  integration.py includes entry_alias.obj when present, like data_alias.obj.
+- Reproduction after compiling: run integration.py --inventory-ownership,
+  data_aliases.py, entry_aliases.py; regenerate the link input inventory to
+  include the alias objects, then run link_containers.py and diagnose the
+  containers/link.rsp inventory. No generated alias objects are tracked.
+- Fresh projected diagnostic: 17 LNK2005, 7,901 LNK2001 messages, 6,751 unique
+  unresolved symbols; no internal linker error and no omitted source files.
+  Plain full link still has 59 duplicates; the verified String projections
+  remove 42. No playable EXE yet. Cached data/resources/QvLib remain unverified.
+  Remaining work includes QvLib ownership, Function/container duplicates,
+  ordinary ABI/name mismatches, skipped data and interior code references.
+- All earlier working-tree edits (DebugLogAll/global aliases, Bitmap ownership,
+  ObjArray names and Qv field-owner/signature work) are included in this push.

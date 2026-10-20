@@ -9,7 +9,7 @@ extern int g_audioOn;                                    // 0x4bd95c
 extern const char kSoundSection[];                       // 0x4b9d64
 extern const char kLoadingScope[];                       // 0x4bdeec
 void LoadScope(IniReader *ini);                          // 0x449ee0 (cdecl)
-void DebugLog(const char *format, ...);                  // 0x419290
+int DebugLogAll(const char *format, ...);                  // 0x419290
 
 void LoadSoundScopes(IniReader *ini)
 {
@@ -24,7 +24,7 @@ void LoadSoundScopes(IniReader *ini)
         String name(ini->GetString(keys->Get(i).c_str()));
         if (strlen(name.c_str())) {
             IniReader sub(name.c_str());
-            DebugLog(kLoadingScope, sub.GetPath());
+            DebugLogAll(kLoadingScope, sub.GetPath());
             LoadScope(&sub);
         }
     }

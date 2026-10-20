@@ -50,7 +50,7 @@ Sim *GetSimulation();                                    // 0x420690
 struct ScriptCaller { char pad[0x18]; ScriptCaller(void *soul, int id, int zero); };   // 0x420bc0
 void PostFunction(const char *name, ScriptCaller *caller, int a, int b);   // 0x422ce0 (cdecl)
 int ReadBodyColor(IniReader *ini);                       // 0x458f60 (cdecl)
-void GameLog(const char *fmt, ...);                      // 0x419290 (cdecl)
+int DebugLogAll(const char *fmt, ...);                      // 0x419290 (cdecl)
 void ReadFunctionList(IniReader *ini);                   // 0x422730 (cdecl)
 void LoadResources(IniReader *ini);                      // 0x448300 (cdecl)
 void *FindPropTemplate(String name, int a, int b);       // 0x42c8b0 (cdecl)
@@ -87,7 +87,7 @@ void RegionSimulation::Init()
     char path[80];
     strcpy(path, GetLand()->GetPlaceName(index));
     strcat(path, "\\region\\region.ini");
-    GameLog("NOTE: RegionSimulation::initialize: loading '%s'\n", path);
+    DebugLogAll("NOTE: RegionSimulation::initialize: loading '%s'\n", path);
     IniReader regionIni(path);
     float clip = regionIni.GetFloat("LODPropClipDistance", -1.0f);
     if (g_lodClip == -1.0f)
@@ -125,12 +125,12 @@ void RegionSimulation::Init()
     defaults.SetSection("Defaults");
     matrix.Translate(start);
     SqueezilBody *body = new SqueezilBody(&matrix, ReadBodyColor(&defaults));
-    GameLog("Done with geometry.  Initializing soul: ");
+    DebugLogAll("Done with geometry.  Initializing soul: ");
     g_splash->SetProgress(0.85f);
     Possessions *possessions = GetLand()->Lend(0);
     RegionSoul *soul = new RegionSoul(body, possessions, self);
     g_splash->SetProgress(0.9f);
-    GameLog("OK.\nInitializing camera: ");
+    DebugLogAll("OK.\nInitializing camera: ");
     self->AddCreature(0, body, soul);
     matrix.Identity();
     CameraBody *cameraBody = new CameraBody(&matrix);
@@ -146,7 +146,7 @@ void RegionSimulation::Init()
     regionIni.SetSection("Defaults");
     const char *midi = regionIni.GetString("MidiFile");
     if (strcmp("", midi) != 0 && !StartMidi(midi))
-        GameLog("Failure in midi manager initialization\n");
+        DebugLogAll("Failure in midi manager initialization\n");
     g_splash->Step();
     g_splash->Hide();
     RunFrame();
@@ -163,5 +163,5 @@ void RegionSimulation::Init()
     else
         g_audioFlag = 0;
     GetApplication()->FlushInput();
-    GameLog("OK.\n");
+    DebugLogAll("OK.\n");
 }

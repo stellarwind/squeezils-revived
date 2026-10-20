@@ -22,7 +22,7 @@ struct MotionActor {
 int BounceBackwardsFunction::Execute(ScriptCall *a, int extra)
 {
     if (!((MotionActor *)((CallActor *)a)->Actor())->Body()->OnGround()) {
-        DebugLog("WARNING: BounceBackwards on a creature that is not moving.\n");
+        DebugLogAll("WARNING: BounceBackwards on a creature that is not moving.\n");
         return 1;
     }
     MotionBody *body = ((MotionActor *)((CallActor *)a)->Actor())->Body();

@@ -4,7 +4,7 @@
 #include <string.h>
 
 extern LPDIRECTSOUND g_directSound;         // 0x4bd95c
-void DebugLog(const char *format, ...);     // 0x419290
+int DebugLogAll(const char *format, ...);     // 0x419290
 extern const char kNoSecondary[], kNoLock[], kNoUnlock[], kNoVolume[], kNoPan[];   // 0x4bdbf8 0x4bdbd4 0x4bdbb0 0x4bdb98 0x4bdb84
 
 struct SoundObj {
@@ -29,11 +29,11 @@ int SoundObj::CreateSecondary()
     desc.lpwfxFormat = format;
     desc.dwFlags = 0xe2;
     if (g_directSound->CreateSoundBuffer(&desc, &buffer, 0) < 0) {
-        DebugLog(kNoSecondary);
+        DebugLogAll(kNoSecondary);
         return 0;
     }
     if (buffer->Lock(0, size, &p1, &n1, &p2, &n2, 0) < 0) {
-        DebugLog(kNoLock);
+        DebugLogAll(kNoLock);
         if (buffer) {
             buffer->Release();
             buffer = 0;
@@ -42,7 +42,7 @@ int SoundObj::CreateSecondary()
     }
     memcpy(p1, data, size);
     if (buffer->Unlock(p1, size, 0, 0) < 0) {
-        DebugLog(kNoUnlock);
+        DebugLogAll(kNoUnlock);
         if (buffer) {
             buffer->Release();
             buffer = 0;
@@ -51,7 +51,7 @@ int SoundObj::CreateSecondary()
     }
     p1 = 0;
     if (buffer->SetVolume(0) < 0) {
-        DebugLog(kNoVolume);
+        DebugLogAll(kNoVolume);
         if (buffer) {
             buffer->Release();
             buffer = 0;
@@ -59,7 +59,7 @@ int SoundObj::CreateSecondary()
         return 0;
     }
     if (buffer->SetPan(0) < 0) {
-        DebugLog(kNoPan);
+        DebugLogAll(kNoPan);
         if (buffer) {
             buffer->Release();
             buffer = 0;

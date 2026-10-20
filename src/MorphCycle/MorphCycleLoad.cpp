@@ -16,7 +16,7 @@ typedef Table<String, PartCycle *, Array<PartCycle *>, 0> PartCycleTable;
 typedef PrimitiveArray<float, 2> TimeList;
 void *GameAlloc(unsigned n);                          // 0x448350
 void GameFree(void *memory);                          // 0x448360
-void DebugLog(const char *format, ...);               // 0x419290
+int DebugLogAll(const char *format, ...);               // 0x419290
 
 int MorphCycle::Load(const char *filename)
 {
@@ -26,32 +26,32 @@ int MorphCycle::Load(const char *filename)
     char header[20];
     fread(header, strlen("#SQA V1.0 binary") + 1, 1, f);
     if (ferror(f)) {
-        DebugLog("Can't read file header\n");
+        DebugLogAll("Can't read file header\n");
         fclose(f);
         return 0;
     }
     if (strcmp((char *)header, "#SQA V1.0 binary")) {
-        DebugLog("File header is wrong for SQA file %s", filename);
+        DebugLogAll("File header is wrong for SQA file %s", filename);
         fclose(f);
         return 0;
     }
     int partCount;
     fread(&partCount, 4, 1, f);
     if (ferror(f)) {
-        DebugLog("Can't read part count\n");
+        DebugLogAll("Can't read part count\n");
         fclose(f);
         return 0;
     }
     fread(&duration, 4, 1, f);
     if (ferror(f)) {
-        DebugLog("Can't read duration\n");
+        DebugLogAll("Can't read duration\n");
         fclose(f);
         return 0;
     }
     int count;
     fread(&count, 4, 1, f);
     if (ferror(f)) {
-        DebugLog("Can't read time sample count\n");
+        DebugLogAll("Can't read time sample count\n");
         fclose(f);
         return 0;
     }
@@ -64,7 +64,7 @@ int MorphCycle::Load(const char *filename)
     float *samples = (float *)GameAlloc(total * 4);
     fread(samples, 4, count, f);
     if (ferror(f)) {
-        DebugLog("Can't read time samples\n");
+        DebugLogAll("Can't read time samples\n");
         fclose(f);
         return 0;
     }
@@ -92,19 +92,19 @@ int MorphCycle::Load(const char *filename)
         unsigned flags;
         fread(&nameLength, 4, 1, f);
         if (ferror(f)) {
-            DebugLog("Can't read part string header\n");
+            DebugLogAll("Can't read part string header\n");
             fclose(f);
             return 0;
         }
         fread(name, nameLength, 1, f);
         if (ferror(f)) {
-            DebugLog("Can't read part string name\n");
+            DebugLogAll("Can't read part string name\n");
             fclose(f);
             return 0;
         }
         fread(&flags, 4, 1, f);
         if (ferror(f)) {
-            DebugLog("Can't read part flags\n");
+            DebugLogAll("Can't read part flags\n");
             fclose(f);
             return 0;
         }
@@ -115,7 +115,7 @@ int MorphCycle::Load(const char *filename)
             positionCount = count;
             fread(positions, 0xc, count, f);
             if (ferror(f)) {
-                DebugLog("Can't read part positions\n");
+                DebugLogAll("Can't read part positions\n");
                 fclose(f);
                 return 0;
             }
@@ -128,7 +128,7 @@ int MorphCycle::Load(const char *filename)
             orientationCount = count;
             fread(orientations, 0x18, count, f);
             if (ferror(f)) {
-                DebugLog("Can't read part orientations\n");
+                DebugLogAll("Can't read part orientations\n");
                 fclose(f);
                 return 0;
             }
@@ -142,7 +142,7 @@ int MorphCycle::Load(const char *filename)
             unsigned weightCount;
             fread(&weightCount, 4, 1, f);
             if (ferror(f)) {
-                DebugLog("Can't read morph vector count\n");
+                DebugLogAll("Can't read morph vector count\n");
                 fclose(f);
                 return 0;
             }
@@ -151,7 +151,7 @@ int MorphCycle::Load(const char *filename)
             for (int i = 0; i < count; i++) {
                 fread(weights, 4, weightCount, f);
                 if (ferror(f)) {
-                    DebugLog("Can't read morph value data\n");
+                    DebugLogAll("Can't read morph value data\n");
                     fclose(f);
                     return 0;
                 }

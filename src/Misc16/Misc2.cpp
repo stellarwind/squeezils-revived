@@ -4,8 +4,8 @@
 // 0x43ee10: one step of the main loop unless paused
 struct Clock { int Tick(); };                                      // 0x41ed40
 Clock *GetClock();                                                 // 0x4206d0
-void FrameIdle();                                                  // 0x4206e0
-void RunFrame();                                                   // 0x420760
+void RunFrame();                                                   // 0x4206e0
+void RunFrame2();                                                  // 0x420760
 extern int gPausedFlag;                                            // 0x4c7700
 extern int gWindowHook;                                            // 0x4c76f4
 int StepGame()
@@ -13,10 +13,10 @@ int StepGame()
     if (gPausedFlag)
         return 0;
     if (gWindowHook || !GetClock()->Tick())
-        FrameIdle();
+        RunFrame();
     if (!gWindowHook && !GetClock()->Tick())
         return 0;
-    RunFrame();
+    RunFrame2();
     return 0;
 }
 

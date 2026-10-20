@@ -18,7 +18,7 @@ extern int g_ambientDb;                                 // 0x4c77f0
 extern const char kAmbBadVolume[], kAmbBadPlay[], kAmbBadStop[], kAmbMissing[];   // 0x4bdfe4 0x4bdfb0 0x4be050 0x4be068
 int StringEquals(const String &a, const String &b);     // 0x438720 (cdecl)
 AmbSound *FindSound(const char *name);                  // 0x449c30 (cdecl)
-void DebugLog(const char *format, ...);                 // 0x419290
+int DebugLogAll(const char *format, ...);                 // 0x419290
 
 void StartAmbient(String name)
 {
@@ -35,20 +35,20 @@ void StartAmbient(String name)
         sound->f10 = 0xbf800000;
         LPDIRECTSOUNDBUFFER *slot = &sound->buffer;
         if ((*slot)->SetVolume(g_ambientDb) < 0) {
-            DebugLog(kAmbBadVolume, g_ambientDb);
+            DebugLogAll(kAmbBadVolume, g_ambientDb);
             return;
         }
         if ((*slot)->Play(0, 0, DSBPLAY_LOOPING) < 0) {
-            DebugLog(kAmbBadPlay);
+            DebugLogAll(kAmbBadPlay);
             return;
         }
         if ((*slot)->Stop() < 0) {
-            DebugLog(kAmbBadStop);
+            DebugLogAll(kAmbBadStop);
             return;
         }
         gStreamBuffers.Insert(slot, -1);
         gAmbientNames.Insert(name, -1);
         g_streamOn = 1;
     } else
-        DebugLog(kAmbMissing, name.c_str());
+        DebugLogAll(kAmbMissing, name.c_str());
 }

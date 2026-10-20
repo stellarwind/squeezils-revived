@@ -1,5 +1,5 @@
 // Panel::Update (SQZ.EXE 0x42db10, ret 4): once a frame, redraw what changed (everything when forced or dirty).
-void DebugLog(const char *format, ...);   // 0x419290
+int DebugLogAll(const char *format, ...);   // 0x419290
 struct Renderer { char pad[0x78]; int suspended; };
 extern Renderer *g_app;                   // 0x4c75dc
 extern int g_panelDrawn;                  // 0x4bbe90
@@ -64,7 +64,7 @@ int PanelU::Update(int force)
             ClearEvent();
         if (redraw) {
             if (!faceState) {
-                DebugLog(kSetting, message);
+                DebugLogAll(kSetting, message);
                 DrawMessage(message);
             }
             if (strlen(note))

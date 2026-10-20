@@ -9,7 +9,7 @@ struct SoundScope { virtual int Insert(const String &name, WaveSound *const &sou
 SoundScope *CurrentSoundScope();                            // 0x44aad0
 WaveSound *FindSound(const char *name);                     // 0x449c30 (cdecl)
 int LoadSound(const char *name, const char *file);          // 0x449aa0 (cdecl)
-void DebugLog(const char *format, ...);                     // 0x419290
+int DebugLogAll(const char *format, ...);                     // 0x419290
 
 void LoadScope(IniReader *ini)
 {
@@ -21,12 +21,12 @@ void LoadScope(IniReader *ini)
             if (!strchr(file, '\\'))
                 SetCurrentDirectory(ini->GetDirectory().c_str());
             if (!LoadSound(keys->Get(i).c_str(), file))
-                DebugLog("Warning: Sample %s not loaded properly, skipping.\n", file);
+                DebugLogAll("Warning: Sample %s not loaded properly, skipping.\n", file);
         } else {
-            DebugLog("Shared effect entry: %s shares %s.\n", keys->Get(i).c_str(), file);
+            DebugLogAll("Shared effect entry: %s shares %s.\n", keys->Get(i).c_str(), file);
             WaveSound *sound = FindSound(file);
             if (!sound) {
-                DebugLog("Error looking up shared audio resource %s\n", file);
+                DebugLogAll("Error looking up shared audio resource %s\n", file);
                 delete sound;
                 return;
             }

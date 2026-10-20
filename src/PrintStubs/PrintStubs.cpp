@@ -1,5 +1,5 @@
 // Print/dump methods of the script-function classes (SQZ.EXE 0x421a70-0x470400): log the class name and its operands.
-void DebugLog(const char *fmt, ...);   // 0x419290
+int DebugLogAll(const char *fmt, ...);   // 0x419290
 
 struct Text { int v; const char *Get(); };     // 0x438530 (thiscall)
 struct Child {
@@ -43,121 +43,121 @@ struct T {
 
 void T::f_423e00()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
 }
 
 void T::f_4406a0()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
 }
 
 void T::f_4407f0()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
 }
 
 void T::f_442380()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
 }
 
 void T::f_442630()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
 }
 
 void T::f_444740()
 {
-    DebugLog("%s", Name()); DebugLog("\n");
+    DebugLogAll("%s", Name()); DebugLogAll("\n");
 }
 
 void T::f_4237d0()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("\n");
 }
 
 void T::f_423c70()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("\n");
 }
 
 void T::f_441cc0()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("\n");
 }
 
 void T::f_444930()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("\n");
 }
 
 void T::f_44e760()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("\n");
 }
 
 void T::f_423a10()
 {
-    DebugLog("%s", Name()); a->M0(); b->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); b->M0(); DebugLogAll("\n");
 }
 
 void T::f_4409f0()
 {
-    DebugLog("%s", Name()); a->M0(); b->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); b->M0(); DebugLogAll("\n");
 }
 
 void T::f_441800()
 {
-    DebugLog("%s", Name()); a->M0(); b->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); b->M0(); DebugLogAll("\n");
 }
 
 void T::f_444e90()
 {
-    DebugLog("%s", Name()); a->M0(); b->M0(); DebugLog("\n");
+    DebugLogAll("%s", Name()); a->M0(); b->M0(); DebugLogAll("\n");
 }
 
 void T::f_441a60()
 {
-    DebugLog("%s", Name()); a->M0(); DebugLog("%s", f8.Get());
+    DebugLogAll("%s", Name()); a->M0(); DebugLogAll("%s", f8.Get());
 }
 
 void T::f_444040()
 {
-    DebugLog("%s", f8.Get());
+    DebugLogAll("%s", f8.Get());
 }
 
 void T::f_421a70()
 {
-    DebugLog("%s", f12.Get());
+    DebugLogAll("%s", f12.Get());
 }
 
 void T::f_440060()
 {
-    DebugLog("%s %s", Name(), f4.Get());
+    DebugLogAll("%s %s", Name(), f4.Get());
 }
 
 void T::f_440330()
 {
-    DebugLog("%s %s", Name(), f4.Get());
+    DebugLogAll("%s %s", Name(), f4.Get());
 }
 
 void T::f_4404f0()
 {
-    DebugLog("%s %s", Name(), f4.Get());
+    DebugLogAll("%s %s", Name(), f4.Get());
 }
 
 void T::f_4424c0()
 {
-    DebugLog("%s %d", Name(), n4->Idx(0));
+    DebugLogAll("%s %d", Name(), n4->Idx(0));
 }
 
 void T::f_444300()
 {
-    const char *s = f4.Get(); DebugLog("%s %s %d", Name(), s, n8->Idx(0)); DebugLog("\n");
+    const char *s = f4.Get(); DebugLogAll("%s %s %d", Name(), s, n8->Idx(0)); DebugLogAll("\n");
 }
 
 void T::f_444550()
 {
-    const char *s = f4.Get(); DebugLog("%s %s %d", Name(), s, n8->Idx(0)); DebugLog("\n");
+    const char *s = f4.Get(); DebugLogAll("%s %s %d", Name(), s, n8->Idx(0)); DebugLogAll("\n");
 }
 

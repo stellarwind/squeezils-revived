@@ -76,11 +76,11 @@ void *FindPropTemplate(String name, int level, int how); // 0x42c8b0
 StringList *SplitString(const char *text);               // 0x421db0
 int ReadPlacement(IniReader *ini, const char *prefix, Vector3f *position,
                   Vector3f *scale, Vector3f *direction, Vector3f *up);   // 0x42bfd0
-void GameLog(const char *format, ...);                   // 0x419290
+int DebugLogAll(const char *format, ...);                   // 0x419290
 
 Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *prefix)
 {
-    GameLog("Loading prop %s: ", name);
+    DebugLogAll("Loading prop %s: ", name);
     String section(name);
     const char *propName = section.c_str();
     if (props == 0)
@@ -116,7 +116,7 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
     if (stricmp(type.c_str(), "Mesh") == 0) {
         String mesh(ini->GetString("Mesh"));
         if (strlen(mesh.c_str()) == 0) {
-            GameLog("error, no Mesh entry!\n");
+            DebugLogAll("error, no Mesh entry!\n");
             return 0;
         }
         ReadPlacement(ini, "", &position, &scale, &direction, &up);
@@ -124,7 +124,7 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
     } else if (stricmp(type.c_str(), "Sprite") == 0) {
         String sprite(ini->GetString("Sprite"));
         if (strlen(sprite.c_str()) == 0) {
-            GameLog("error, no Sprite entry!\n");
+            DebugLogAll("error, no Sprite entry!\n");
             return 0;
         }
         WorldDecalSettings defaults = GetDefaultDecalSettings();
@@ -134,18 +134,18 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
     } else if (stricmp(type.c_str(), "Prop") != 0 && stricmp(type.c_str(), "Frame") != 0
                && stricmp(type.c_str(), "LODProp") != 0 && stricmp(type.c_str(), "Cycle") != 0
                && stricmp(type.c_str(), "Nav") != 0) {
-        GameLog("error: unknown type %s!\n", type.c_str());
+        DebugLogAll("error: unknown type %s!\n", type.c_str());
     } else {
         StringList names;
         String child(ini->GetString("Prop"));
         child.c_str();
         if (strlen(child.c_str()) == 0)
-            GameLog("WARNING: no Prop entry.\n");
+            DebugLogAll("WARNING: no Prop entry.\n");
         else {
             names.Insert(child, -1);
             if (FindPropTemplate(child, 0, 0) == 0
                 && LoadProp(ini, props, child.c_str(), 0) == 0)
-                GameLog("ERROR: couldn't find child prop %s.\n", child.c_str());
+                DebugLogAll("ERROR: couldn't find child prop %s.\n", child.c_str());
         }
         ini->SetSection(section.c_str());
         int childCount = ini->GetInt("ChildCount", 0);
@@ -156,12 +156,12 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
             ini->SetSection(section.c_str());
             String entry(ini->GetString(key));
             if (strlen(entry.c_str()) == 0)
-                GameLog("WARNING: no entry for child number %d, skipping...\n", i);
+                DebugLogAll("WARNING: no entry for child number %d, skipping...\n", i);
             else {
                 names.Insert(entry, -1);
                 if (FindPropTemplate(entry, 0, 0) == 0
                     && LoadProp(ini, props, entry.c_str(), 0) == 0)
-                    GameLog("ERROR: couldn't find child prop %s.\n", entry.c_str());
+                    DebugLogAll("ERROR: couldn't find child prop %s.\n", entry.c_str());
             }
         }
 
@@ -181,7 +181,7 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
                 StringList *parts = SplitString(value.c_str());
                 if (parts->count != 2) {
                     const char *bad = keys->Get(i).c_str();   // the original logs through a dead temporary
-                    GameLog("WARNING: path function entry %s doesn't have proper form.\n", bad);
+                    DebugLogAll("WARNING: path function entry %s doesn't have proper form.\n", bad);
                     if (parts)
                         delete parts;
                 } else {
@@ -233,7 +233,7 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
                     StringList *parts = SplitString(value.c_str());
                     if (parts->count != 2) {
                         const char *bad = keys->Get(i).c_str();
-                        GameLog("WARNING: path function entry %s doesn't have proper form.\n", bad);
+                        DebugLogAll("WARNING: path function entry %s doesn't have proper form.\n", bad);
                         if (parts)
                             delete parts;
                     } else {
@@ -264,7 +264,7 @@ Prop *LoadProp(IniReader *ini, PropTable *props, const char *name, const char *p
                         StringList *parts = SplitString(value.c_str());
                         if (parts->count != 2) {
                             const char *bad = keys->Get(i).c_str();
-                            GameLog("WARNING: surface binding entry %s doesn't have form 'face-set-name surface-type'.\n", bad);
+                            DebugLogAll("WARNING: surface binding entry %s doesn't have form 'face-set-name surface-type'.\n", bad);
                             if (parts)
                                 delete parts;
                         } else {

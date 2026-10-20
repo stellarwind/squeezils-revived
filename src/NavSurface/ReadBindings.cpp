@@ -1,9 +1,9 @@
 // 0x40e2e0: load the surface-type bindings from an INI section.
 #include "IniReader/IniReader.h"
-void BindingLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 void __stdcall ReadSurfaceBindings(IniReader *ini, IniValueTable *out)
 {
-    BindingLog("Reading surface bindings: ");
+    DebugLogAll("Reading surface bindings: ");
     ini->SetSection("SurfaceBindingList");
     StringList *keys = ini->GetKeys();
     if (keys->count == 0) {
@@ -17,6 +17,6 @@ void __stdcall ReadSurfaceBindings(IniReader *ini, IniValueTable *out)
         value = String(ini->GetString(key.c_str()));
         out->Insert(key, value, -1);
     }
-    BindingLog("OK.\n");
+    DebugLogAll("OK.\n");
     delete keys;
 }

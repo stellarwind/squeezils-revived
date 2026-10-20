@@ -76,8 +76,8 @@ StimulusTypeFunctionArgument::StimulusTypeFunctionArgument(int v)
 
 extern const char *const kBehaviorNames[];                       // 0x49ec60
 extern const char *const kStimulusNames[];                       // 0x49ec10
-void BehaviorTypeFunctionArgument::Print() { DebugLog("%s ", kBehaviorNames[value]); }     // 0x4232a0
-void StimulusTypeFunctionArgument::Print() { DebugLog("%s ", kStimulusNames[value]); }     // 0x423470
+void BehaviorTypeFunctionArgument::Print() { DebugLogAll("%s ", kBehaviorNames[value]); }     // 0x4232a0
+void StimulusTypeFunctionArgument::Print() { DebugLogAll("%s ", kStimulusNames[value]); }     // 0x423470
 
 struct ArgList {
     virtual String ReadString(int flag);                         // slot 0
@@ -89,7 +89,7 @@ struct ArgList {
 FloatFunctionArgument *ParseFloatArgument(ArgList *list)         // 0x421250
 {
     if (!list->cursor) {
-        DebugLog("WARNING: missing float argument\n");
+        DebugLogAll("WARNING: missing float argument\n");
         return new FloatFunctionArgument(0.0f);
     }
     float v;
@@ -106,7 +106,7 @@ FloatFunctionArgument *ParseFloatArgument(ArgList *list)         // 0x421250
 FunctionArgument *ParseArgument(ArgList *list)                   // 0x420ee0
 {
     if (!list->cursor) {
-        DebugLog("WARNING: missing int argument, using 0.\n");
+        DebugLogAll("WARNING: missing int argument, using 0.\n");
         return new IntFunctionArgument(0);
     }
     float v;
@@ -116,7 +116,7 @@ FunctionArgument *ParseArgument(ArgList *list)                   // 0x420ee0
         arg = new IntFunctionArgument(list->ReadString(0).c_str());
     } else {
         if ((float)(int)v != v)
-            DebugLog("WARNING: truncating expected integer argument %s\n", list->ReadString(0).c_str());
+            DebugLogAll("WARNING: truncating expected integer argument %s\n", list->ReadString(0).c_str());
         arg = new IntFunctionArgument((int)v);
     }
     list->Skip(0);
@@ -138,13 +138,13 @@ int BehaviorIndex(const char *name);                             // 0x448850 (-1
 BehaviorTypeFunctionArgument *ParseBehaviorArgument(ArgList *list)   // 0x4232c0
 {
     if (!list->cursor) {
-        DebugLog("WARNING: missing Robo Behavior arguments, using \"BEH_NONE\".\n");
+        DebugLogAll("WARNING: missing Robo Behavior arguments, using \"BEH_NONE\".\n");
         return new BehaviorTypeFunctionArgument(7);
     }
     String word = list->ReadString(0);
     int type = BehaviorIndex(word.c_str());
     if (type == -1)
-        DebugLog("WARNING: unrecognized Robo Behavior name \"%s\".\n", word.rep);
+        DebugLogAll("WARNING: unrecognized Robo Behavior name \"%s\".\n", word.rep);
     BehaviorTypeFunctionArgument *arg = new BehaviorTypeFunctionArgument(type);
     list->Skip(0);
     return arg;
@@ -155,14 +155,14 @@ int StimulusIndex(const char *name);                             // 0x448890 (-1
 StimulusTypeFunctionArgument *ParseStimulusArgument(ArgList *list)   // 0x423490
 {
     if (!list->cursor) {
-        DebugLog("WARNING: missing Stimulus arguments, using \"STIM_NONE\".\n");
+        DebugLogAll("WARNING: missing Stimulus arguments, using \"STIM_NONE\".\n");
         return new StimulusTypeFunctionArgument(0x13);
     }
     String word = list->ReadString(0);
     list->Skip(0);
     int type = StimulusIndex(word.c_str());
     if (type == -1)
-        DebugLog("WARNING: unrecognized Robo Stimulus name \"%s\".\n", word.rep);
+        DebugLogAll("WARNING: unrecognized Robo Stimulus name \"%s\".\n", word.rep);
     StimulusTypeFunctionArgument *arg = new StimulusTypeFunctionArgument(type);
     return arg;
 }
@@ -170,7 +170,7 @@ StimulusTypeFunctionArgument *ParseStimulusArgument(ArgList *list)   // 0x423490
 StringFunctionArgument *ParseStringArgument(ArgList *list)      // 0x421940
 {
     if (!list->cursor) {
-        DebugLog("WARNING: missing string arguments, using \"BLANK\".\n");
+        DebugLogAll("WARNING: missing string arguments, using \"BLANK\".\n");
         return new StringFunctionArgument("BLANK");
     }
     StringFunctionArgument *arg = new StringFunctionArgument(list->ReadString(0).c_str());
@@ -192,12 +192,12 @@ Vector3fFunctionArgument *ParseVectorArgument(ArgList *list, FaVec fallback)   /
         } else {
             for (float *p = &v.x; p < &v.x + 3; p++) {
                 if (!list->cursor) {
-                    DebugLog("WARNING: missing vector element, using 0.\n");
+                    DebugLogAll("WARNING: missing vector element, using 0.\n");
                     *p = 0;
                 } else {
                     ok = list->ReadString(0).ToFloat(&f);
                     if (!ok) {
-                        DebugLog("WARNING: non-numeric vector element, using 0.\n");
+                        DebugLogAll("WARNING: non-numeric vector element, using 0.\n");
                         *p = 0;
                     } else {
                         *p = f;

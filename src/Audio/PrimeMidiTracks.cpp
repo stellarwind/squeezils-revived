@@ -4,7 +4,7 @@
 
 extern const char kMidiRewindFailed[];       // 0x4bf680
 int ReadMidiVarLen(MidiReader *t, unsigned *out); // 0x45be20
-void DebugLog(const char *format, ...);      // 0x419290
+int DebugLogAll(const char *format, ...);      // 0x419290
 
 int PrimeMidiTracks()
 {
@@ -17,7 +17,7 @@ int PrimeMidiTracks()
             want = track->length;
         DWORD got;
         if (!ReadFile(gDataFile, track->buffer, want, &got, 0) || got != want) {
-            DebugLog(kMidiRewindFailed);
+            DebugLogAll(kMidiRewindFailed);
             return 1;
         }
         track->left = track->length - got;
@@ -31,7 +31,7 @@ int PrimeMidiTracks()
             track->flags |= 1;
         } else {
             if (ReadMidiVarLen(track, &track->delta)) {
-                DebugLog(kMidiRewindFailed);
+                DebugLogAll(kMidiRewindFailed);
                 return 1;
             }
             SetFilePointer(gDataFile, track->length + track->start, 0, FILE_BEGIN);

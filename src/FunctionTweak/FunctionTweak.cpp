@@ -8,10 +8,10 @@ int TweakFloatFunction::ArgCount()
 
 void TweakFloatFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     for (int i = 0; i < ArgCount(); i++)
         args.Get(i)->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 TweakFloatFunction::~TweakFloatFunction()

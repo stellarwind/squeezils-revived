@@ -51,7 +51,7 @@ void MenuHost::HideMenu()
 }
 
 // 0x45bef0: read exactly n bytes from the open data file; nonzero on failure
-void DebugLog(const char *fmt, ...);                               // 0x419290
+int DebugLogAll(const char *fmt, ...);                               // 0x419290
 extern HANDLE gDataFile;                                           // 0x4bf444
 int GetInFileData(void *buf, DWORD n);
 int GetInFileData(void *buf, DWORD n)
@@ -59,7 +59,7 @@ int GetInFileData(void *buf, DWORD n)
     DWORD got;
     if (ReadFile(gDataFile, buf, n, &got, NULL) && got == n)
         return 0;
-    DebugLog("GetInFileData failed\n");
+    DebugLogAll("GetInFileData failed\n");
     return 1;
 }
 

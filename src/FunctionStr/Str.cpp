@@ -9,8 +9,8 @@ Function *ShowPropFunction::Create(ArgList *list)
 }
 void ShowPropFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
-    DebugLog("\n");
+    DebugLogAll("%s %s", Name(), text.c_str());
+    DebugLogAll("\n");
 }
 const char *ShowPropFunction::Name() { return "ShowProp"; }
 
@@ -22,8 +22,8 @@ Function *HidePropFunction::Create(ArgList *list)
 }
 void HidePropFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
-    DebugLog("\n");
+    DebugLogAll("%s %s", Name(), text.c_str());
+    DebugLogAll("\n");
 }
 const char *HidePropFunction::Name() { return "HideProp"; }
 
@@ -35,8 +35,8 @@ Function *PlayAudioEffectFunction::Create(ArgList *list)
 }
 void PlayAudioEffectFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
-    DebugLog("\n");
+    DebugLogAll("%s %s", Name(), text.c_str());
+    DebugLogAll("\n");
 }
 const char *PlayAudioEffectFunction::Name() { return "PlayAudioEffect"; }
 
@@ -48,6 +48,6 @@ Function *TimerTimeMessageFunction::Create(ArgList *list)
 }
 void TimerTimeMessageFunction::Print()
 {
-    DebugLog("%s %s", Name(), text.c_str());
+    DebugLogAll("%s %s", Name(), text.c_str());
 }
 const char *TimerTimeMessageFunction::Name() { return "TimerTimeMessage"; }

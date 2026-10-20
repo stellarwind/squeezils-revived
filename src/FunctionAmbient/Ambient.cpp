@@ -15,11 +15,11 @@ Function *StartAmbientLoopFunction::Create(ArgList *list)
 
 void StartAmbientLoopFunction::Print()
 {
-    DebugLog("%s %s ", Name(), sound.c_str());
+    DebugLogAll("%s %s ", Name(), sound.c_str());
     a->Print();
     b->Print();
     c->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 const char *StartAmbientLoopFunction::Name() { return "StartAmbientLoop"; }

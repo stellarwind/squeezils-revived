@@ -2,7 +2,7 @@
 #include <string.h>
 #include "SqueezilBody/BodyColor.h"
 #include "IniReader/IniReader.h"
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 int FindBodyColor(const char *name)
 {
@@ -19,12 +19,12 @@ int ReadBodyColor(IniReader *ini)
     const char *name = ini->GetString("BodyColor");
     if (strlen(name) == 0) {
         name = "RED1";
-        GameLog("WARNING: no body color specified, using %s.\n", name);
+        DebugLogAll("WARNING: no body color specified, using %s.\n", name);
     }
     int color = FindBodyColor(name);
     if (color == 8) {
         color = 6;
-        GameLog("WARNING: unrecognized body color %s specified, using %s.\n",
+        DebugLogAll("WARNING: unrecognized body color %s specified, using %s.\n",
             name, BodyColorName(color));
     }
     return color;

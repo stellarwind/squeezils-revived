@@ -5,7 +5,7 @@
 #include "IniReader/IniReader.h"
 
 typedef Set<String, 11> SurfaceReadNames;
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 int NavSurfaceList::ReadSurfaceList(IniReader *ini)
 {
@@ -21,7 +21,7 @@ int NavSurfaceList::ReadSurfaceList(IniReader *ini)
         ini->SetSection("InputFiles");
         String file(ini->GetString(keys->Get(i).c_str()));
         if (strlen(file.c_str()) == 0) {
-            GameLog("ERROR: no input file numbered %d.\n", i);
+            DebugLogAll("ERROR: no input file numbered %d.\n", i);
         } else {
             IniReader other(file.c_str());
             ReadSurfaceNames(&other, names);

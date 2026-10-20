@@ -1,7 +1,7 @@
 // 0x45b7a0: refills a 1 KB read buffer from the data file (seek to the saved position, read up to 0x400 bytes).
 #include <windows.h>
 extern HANDLE gDataFile;                                  // 0x4bf444
-void Error(const char *msg);                              // 0x419290
+int DebugLogAll(const char *msg, ...);                              // 0x419290
 struct Stream {
     int pad0[2];
     unsigned chunk;     // 0x08
@@ -18,7 +18,7 @@ int FillBuffer(Stream *s)
         s->cur = s->buf;
         DWORD at = SetFilePointer(gDataFile, s->pos, 0, 0);
         if (at == 0xffffffff) {
-            Error("Seek error");
+            DebugLogAll("Seek error");
             return 1;
         }
         unsigned *n = &s->chunk;
@@ -32,7 +32,7 @@ int FillBuffer(Stream *s)
         *n = got;
         if (ok && got)
             return 0;
-        Error("Read error");
+        DebugLogAll("Read error");
         *n = got;
         return 1;
     }

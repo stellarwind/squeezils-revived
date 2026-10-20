@@ -2,7 +2,7 @@
 #include "NavSurface/NavSurfaceList.h"
 #include "IniReader/IniReader.h"
 
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 int NavSurfaceList::ReadSurfaceNames(IniReader *ini, Set<String, 11> *names)
 {
@@ -19,7 +19,7 @@ int NavSurfaceList::ReadSurfaceNames(IniReader *ini, Set<String, 11> *names)
         String name;
         name = String(ini->GetString(keys->Get(i).c_str()));
         if (knownNames.Contains(name))
-            GameLog("ERROR: surface name %s already present in surface type list!\n", name.c_str());
+            DebugLogAll("ERROR: surface name %s already present in surface type list!\n", name.c_str());
         knownNames.Insert(name, -1);
         names->Insert(name, -1);
         name.c_str();

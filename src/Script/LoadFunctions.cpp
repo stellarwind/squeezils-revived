@@ -14,7 +14,7 @@ extern Splash *g_splash;                               // 0x4c75e8
 struct ScriptFunction;
 ScriptFunction *LoadFunction(IniReader *ini, const char *name);   // 0x422010 (cdecl)
 void RegisterFunction(const char *name, ...);          // 0x422be0
-void DebugLog(const char *format, ...);                // 0x419290
+int DebugLogAll(const char *format, ...);                // 0x419290
 extern const char kInputFiles[];                       // 0x4b9d64
 extern const char kFunctionList[];                     // 0x4bb1e8
 extern const char kReadingFunctionList[];              // 0x4bb1f8
@@ -32,7 +32,7 @@ void LoadFunctions(IniReader *ini)
         String file(ini->GetString(files->Get(i).c_str()));
         if (strlen(file.c_str())) {
             IniReader sub(file.c_str());
-            DebugLog(kReadingFunctionList, sub.GetPath());
+            DebugLogAll(kReadingFunctionList, sub.GetPath());
             sub.SetSection(kFunctionList);
             StringList *names = sub.GetKeys();
             int j = 0;
@@ -49,7 +49,7 @@ void LoadFunctions(IniReader *ini)
             if (names)
                 delete names;
         } else {
-            DebugLog(kNoInputFile, i);
+            DebugLogAll(kNoInputFile, i);
         }
     }
     if (files)

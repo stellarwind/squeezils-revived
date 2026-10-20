@@ -23,7 +23,7 @@ extern HANDLE gMidiCallbackEvent;            // 0x4c86cc
 extern HWND g_mainWnd;                       // 0x4c73cc
 extern const char kMidiCallbackConvertError[]; // 0x4bf558
 int FillMidiBuffer(int first, MidiStreamBuf *buffer); // 0x45b4d0
-void DebugLog(const char *format, ...);      // 0x419290
+int DebugLogAll(const char *format, ...);      // 0x419290
 int StopMidi();                             // 0x45aa70
 void FreeMidiTracks();                      // 0x45b2d0
 
@@ -59,7 +59,7 @@ void CALLBACK MidiCallback(HMIDIOUT out, UINT msg, DWORD instance, DWORD p1, DWO
                 gMidiDrainCount = 31;
                 gMidiClock = 300;
             } else {
-                DebugLog(kMidiCallbackConvertError);
+                DebugLogAll(kMidiCallbackConvertError);
                 gMidiQueued = 1;
                 StopMidi();
             }

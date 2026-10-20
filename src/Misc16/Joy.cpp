@@ -24,7 +24,7 @@ int Joystick::Capture(int on)
 }
 
 // 0x45abe0: restart the MIDI stream
-void DebugLog(const char *fmt, ...);                               // 0x419290
+int DebugLogAll(const char *fmt, ...);                               // 0x419290
 extern volatile HMIDISTRM gMidiStream;                                      // 0x4c86b8
 extern volatile int gMidiStopped;                                           // 0x4bf45c
 extern int gMidiClock;                                             // 0x4c86d8
@@ -35,7 +35,7 @@ int ResumeMidi()
         return 0;
     gMidiClock = 0;
     if (midiStreamRestart(gMidiStream)) {
-        DebugLog("Error resuming stream\n");
+        DebugLogAll("Error resuming stream\n");
         return 0;
     }
     gMidiPlaying = 1;

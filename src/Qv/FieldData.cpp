@@ -14,11 +14,12 @@ struct QvEntryList {
     QvFieldEntry **items; int count; int cap;
     void Grow(int n);                                 // 0x482b10
 };
+class QvNode; class QvField;
 struct QvFieldData {
     QvEntryList fields;
-    void addField(void *node, const char *name, void *field);
+    void addField(QvNode *node, const char *name, QvField *field);
 };
-void QvFieldData::addField(void *node, const char *name, void *field)
+void QvFieldData::addField(QvNode *node, const char *name, QvField *field)
 {
     QvFieldEntry *e = new QvFieldEntry;
     e->name = QvName(QvIntern(name));

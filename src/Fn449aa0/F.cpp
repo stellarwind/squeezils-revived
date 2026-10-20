@@ -19,7 +19,7 @@ struct SoundScope {
 struct Renderer { int FatalError(const char *fmt, ...); };   // 0x475510
 extern Renderer *g_app;                     // 0x4c75dc
 extern int g_audioOn;                       // 0x4bd95c
-void DebugLog(const char *format, ...);     // 0x419290
+int DebugLogAll(const char *format, ...);     // 0x419290
 SoundScope *CurrentSoundScope();            // 0x44aad0
 extern const char kLoadingSound[], kSoundRetry[], kNoSecondaryBuffer[], kNoFill[], kSoundOk[];   // 0x4bdecc 0x4bdeb4 0x4bde8c 0x4bde70 0x4b9dbc
 
@@ -28,7 +28,7 @@ int LoadSound(const char *name, int flag)
     if (!g_audioOn)
         return 0;
     WaveSound *w = new WaveSound;
-    DebugLog(kLoadingSound, name, flag);
+    DebugLogAll(kLoadingSound, name, flag);
     int ok = 0;
     while (!ok) {
         ok = w->Load(flag);
@@ -36,18 +36,18 @@ int LoadSound(const char *name, int flag)
             return 0;
     }
     if (!w->CreateSecondary()) {
-        DebugLog(kNoSecondaryBuffer);
+        DebugLogAll(kNoSecondaryBuffer);
         if (w)
             delete w;
         return 0;
     }
     if (!w->Free()) {
-        DebugLog(kNoFill);
+        DebugLogAll(kNoFill);
         if (w)
             delete w;
         return 0;
     }
-    DebugLog(kSoundOk);
+    DebugLogAll(kSoundOk);
     CurrentSoundScope()->Add(String(name), w, -1);
     w->useCount++;
     return 1;

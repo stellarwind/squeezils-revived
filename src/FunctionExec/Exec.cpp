@@ -22,9 +22,9 @@ Function *ExecuteFunction::Create(ArgList *list)
 
 void ExecuteFunction::Print()
 {
-    DebugLog("%s", Name());
+    DebugLogAll("%s", Name());
     name->Print();
-    DebugLog("\n");
+    DebugLogAll("\n");
 }
 
 int ExecuteFunction::Execute(ScriptCall *args, int extra)

@@ -22,7 +22,7 @@ struct PlaceCameraSoul : CameraSoul {
     virtual void Input();
 };
 
-MMap::~MMap() {}
+// MMap::~MMap (0x40b340) is defined in SoulDtor/SoulDtor.cpp.
 Soul::~Soul() {}
 SimulationSoul::~SimulationSoul() {}
 CameraSoul::~CameraSoul() {}

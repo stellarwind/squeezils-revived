@@ -23,7 +23,7 @@ struct ProtoLoadModels {
     void Insert(ProtoLoadModel *const &model, int at); // 0x46b180
 };
 extern ProtoLoadModels gBodyModels; // 0x4c7b98
-void GameLog(const char *format, ...); // 0x419290
+int DebugLogAll(const char *format, ...); // 0x419290
 
 AnimatedBody *LoadProtoBody(const char *color)
 {
@@ -43,23 +43,23 @@ AnimatedBody *LoadProtoBody(const char *color)
         char key[80];
         const char *partName = parts.Get(i).c_str();
         sprintf(key, "%s_%s", color, partName);
-        GameLog("\tLoading morph body part %s... ", key);
+        DebugLogAll("\tLoading morph body part %s... ", key);
         const char *filename = ini.GetString(key);
         if (strlen(filename) == 0) {
-            GameLog("ERROR: no filename entry!\n");
+            DebugLogAll("ERROR: no filename entry!\n");
             delete body;
             delete model;
             return 0;
         }
         if (!model->Load(filename, 0)) {
-            GameLog("ERROR: Failed to load %s from %s!\n", key, filename);
+            DebugLogAll("ERROR: Failed to load %s from %s!\n", key, filename);
             delete body;
             delete model;
             return 0;
         }
         ProtoLoadPart *part = new ProtoLoadPart(model);
         body->AddPart(parts.Get(i).c_str(), part);
-        GameLog("OK.\n");
+        DebugLogAll("OK.\n");
         gBodyModels.Insert(model, -1);
     }
     return body;

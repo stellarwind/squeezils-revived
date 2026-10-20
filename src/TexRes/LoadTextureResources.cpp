@@ -18,7 +18,7 @@ struct Splash {
 extern TextureStack g_textureStack;          // 0x4c7180
 extern Splash *g_splash;                     // 0x4c75e8
 extern int g_textureBytes;
-void GameLog(const char *fmt, ...);          // 0x419290
+int DebugLogAll(const char *fmt, ...);          // 0x419290
 void ReadTextureList(IniReader *ini);        // 0x425500
 
 void LoadTextureResources(IniReader *ini)
@@ -31,7 +31,7 @@ void LoadTextureResources(IniReader *ini)
         String file(ini->GetString(lists->Get(i).c_str()));
         if (strlen(file.c_str()) != 0) {
             IniReader list(file.c_str());
-            GameLog("Reading texture resource list from %s...\n", list.GetPath());
+            DebugLogAll("Reading texture resource list from %s...\n", list.GetPath());
             ReadTextureList(&list);
             if (i % 2 == 0)
                 g_splash->Step();
@@ -40,5 +40,5 @@ void LoadTextureResources(IniReader *ini)
     delete lists;
 
     ReadTextureList(ini);
-    GameLog("MELTDOWN DEBUG: total texture size now %d (%x).\n", g_textureBytes, g_textureBytes);
+    DebugLogAll("MELTDOWN DEBUG: total texture size now %d (%x).\n", g_textureBytes, g_textureBytes);
 }

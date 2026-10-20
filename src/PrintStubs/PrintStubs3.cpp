@@ -11,7 +11,7 @@ void PadDecl8();
 #include <windows.h>
 #include <mmsystem.h>
 
-void DebugLog(const char *fmt, ...);   // 0x419290
+int DebugLogAll(const char *fmt, ...);   // 0x419290
 
 struct Item {
     virtual void s0(); virtual void s1(); virtual void s2();
@@ -29,9 +29,9 @@ struct Compound {
 
 void Compound::DumpAll()
 {
-    DebugLog("compound");
+    DebugLogAll("compound");
     for (int i = 0; i < items.count; i++) {
-        DebugLog("  ");
+        DebugLogAll("  ");
         items.Get(i)->Dump();
     }
 }
@@ -48,7 +48,7 @@ int __stdcall RunTarget(Target *t, int unused)
 {
     int *self = t->Self();
     if (!self) {
-        DebugLog("WARNING: attempt to run %s", t->Name());
+        DebugLogAll("WARNING: attempt to run %s", t->Name());
         return 0;
     }
     self[0x94 / 4] = 1;
@@ -68,7 +68,7 @@ int Cached::Get(int arg)
     if (!cache)
         cache = Create(arg);
     else
-        DebugLog("WARNING: tried to show already-visible prop.");
+        DebugLogAll("WARNING: tried to show already-visible prop.");
     return cache;
 }
 
@@ -81,7 +81,7 @@ int PauseMidi()
     if (*(HMIDISTRM*)&g_midiStream) {
         r = midiStreamPause(*(HMIDISTRM*)&g_midiStream);
         if (r) {
-            DebugLog("WARNING: midiStreamPause failed");
+            DebugLogAll("WARNING: midiStreamPause failed");
             return 0;
         }
         return 1;
