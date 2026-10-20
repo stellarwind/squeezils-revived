@@ -21,6 +21,65 @@ OUT = REPO / "build" / "integration"
 DEFAULT = "-GX -GR -Gy -O2 -G5 -ML"
 
 
+def inventory_ownership():
+    """Map scoring targets to actual external definitions, without guessing aliases."""
+    units = json.loads((OUT / "units.json").read_text())
+    by_source, definitions = {}, collections.defaultdict(list)
+    for unit in units:
+        if unit["returncode"]:
+            continue
+        names = {name for name, kind in coff_symbols(pathlib.Path(unit["object"]))
+                 if kind != "undefined"}
+        by_source[unit["source"]] = names
+        for name in names:
+            definitions[name].append(unit["source"])
+    addresses = collections.defaultdict(list)
+    unmatched, invalid = [], []
+    symbol_addresses = collections.defaultdict(set)
+    for row in (SRC / "manifest.txt").read_text().splitlines():
+        if not row.strip() or row.lstrip().startswith("#"):
+            continue
+        target, *sources = row.split()
+        for number, line in enumerate((SRC / target).read_text().splitlines(), 1):
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            fields = line.split()
+            if len(fields) < 3:
+                invalid.append([target, number, "missing fields"])
+                continue
+            expression, address, label = fields[:3]
+            try:
+                address = "%08x" % int(address, 16)
+                # Perl (used by flagsearch.pl) permits optional anchors; Python
+                # requires grouping them. Preserve that matching behavior.
+                expression = re.sub(r"(?<!\\)\^(\?\??)", r"(?:^)\1", expression)
+                pattern = re.compile(expression)
+            except (ValueError, re.error) as error:
+                invalid.append([target, number, str(error)])
+                continue
+            matches = [(source, name) for source in sources
+                       for name in by_source.get(source, ()) if pattern.search(name)]
+            if not matches:
+                unmatched.append([target, number, address, label])
+            for source, name in matches:
+                entry = dict(symbol=name, source=source, target=target, label=label)
+                if entry not in addresses[address]:
+                    addresses[address].append(entry)
+                symbol_addresses[name].add(address)
+    symbol_addresses = {name: sorted(values) for name, values in symbol_addresses.items()}
+    report = dict(addresses=dict(sorted(addresses.items())),
+                  symbol_addresses=symbol_addresses,
+                  definitions=dict(sorted(definitions.items())),
+                  unmatched=unmatched, invalid=invalid,
+                  warning="Target regex matches are candidates, not ABI or ownership proof.")
+    (OUT / "ownership.json").write_text(json.dumps(report, indent=2))
+    summary = dict(mapped_addresses=len(addresses), targeted_symbols=len(symbol_addresses),
+                   unmatched_target_lines=len(unmatched), invalid_lines=len(invalid),
+                   symbols_targeting_multiple_addresses=sum(len(v) > 1 for v in symbol_addresses.values()))
+    print(json.dumps(summary, indent=2))
+    return 0
+
+
 def diagnose_existing():
     """Link saved successful objects for diagnostics; never retain an EXE.
 
@@ -187,5 +246,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--diagnose-existing-link", action="store_true",
                         help="Link saved inputs for diagnostics only; retain no EXE")
+    parser.add_argument("--inventory-ownership", action="store_true",
+                        help="Map target addresses to compiled external symbols")
     options = parser.parse_args()
+    if options.inventory_ownership:
+        raise SystemExit(inventory_ownership())
     raise SystemExit(diagnose_existing() if options.diagnose_existing_link else run())

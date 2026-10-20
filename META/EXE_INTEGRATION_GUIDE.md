@@ -387,3 +387,88 @@ declarations, and remove redundant integration definitions. Then repeat the
 affected checks. Reconcile QvLib ownership and regenerate data before claiming
 a complete build. Broad automatic renaming without address/ABI evidence would
 make these diagnostics smaller without necessarily making the game correct.
+
+## First ownership family: String containers
+
+The preparation was committed and pushed as `dca4947`, with the user's message
+`Preparing for linking. Resolving naming. Testing compilation`. Since the
+workspace's top-level META directory is outside the Git checkout, the guide
+also has a tracked copy at `Repo/META/EXE_INTEGRATION_GUIDE.md`.
+
+The next bounded integration pass adds:
+
+```bash
+python Repo/tools/integration.py --inventory-ownership
+python Repo/tools/link_containers.py
+```
+
+The inventory reads the compiled objects and target mappings. Its first report
+maps 2,957 original addresses to 2,595 distinct targeted symbols, including
+QvLib addresses outside game-logic scope. It flags 87 symbols that target
+multiple addresses: these must not be automatically treated as one identity.
+It also reports 90 malformed/fragmented target lines and four unmatched lines.
+Three unmatched entries are startup-initialization targets, and one is the
+known failed Qv constructor. The report covers external COFF symbols, not all
+static labels or implicit startup entry points. It is an inventory, not proof
+of complete function coverage. The Python matcher explicitly handles Perl's
+optional-anchor syntax used by some target regexes.
+
+Two symbols have unique target addresses and explicit source owners:
+
+| Symbol | Original address | Owner |
+| --- | --- | --- |
+| `Array<String>::Grow(int)` | `0045e370` | `Container/ArrayString.cpp` |
+| `Set<String,23>::IndexOf(const String &)` | `00462710` | `Container/SetString23.cpp` |
+
+Other units instantiate templates and emit incidental copies: 38 extra Grow
+definitions and four extra IndexOf definitions across 38 objects. VC4 did not
+suppress those emissions with a specialization declaration, and it rejects
+modern `template <>` syntax. Those exploratory header changes were reverted.
+
+`link_containers.py` instead writes **diagnostic object projections** under
+`Repo/build/integration/containers/`. The original source and compiled inputs
+remain unchanged. This deliberately narrow rule is not an automatic general
+alias mechanism:
+
+1. Require each selected symbol to map to exactly its known original address,
+   with the target-owning source present in the ownership report.
+2. Keep the owner's compiled definition. For incidental copies, turn the
+   external definition into an undefined reference to that owner.
+3. Remove its COMDAT code section and associated metadata from the link input.
+   The projection uses an empty non-COMDAT `.sqzdrop` section marked
+   `IMAGE_SCN_LNK_REMOVE`; leaving the COMDAT flag set after undefining its
+   symbol makes the old linker reject the object.
+4. Reject a section containing an unexpected additional external definition,
+   a nonzero entry offset, or a retained relocation to an internal label in
+   discarded code. Follow associative COMDAT metadata when selecting sections.
+5. Re-read the generated objects and require exactly one surviving definition
+   per selected symbol across the entire projected loose-object collection.
+   Record input/output hashes and each redirected symbol in `projection.json`.
+
+Kept machine-code bytes are not rewritten. Calls through the selected symbol
+become ordinary linker references to the selected source implementation. This
+does not use original EXE code, dummy bodies, or `/FORCE:MULTIPLE`. It still
+requires a completed link and runtime validation before becoming a supported
+whole-program build path.
+
+The generated `containers/link.rsp` substitutes only these projected objects.
+To attempt its incomplete diagnostic link from Git Bash at the workspace root:
+
+```bash
+source tools/flagsearch/env.sh
+cd Repo/build/integration
+link @containers/link.rsp > containers/link.log 2>&1
+```
+
+The attempt stopped with `Internal error during Pass1` on
+`obj/0017/unit.obj`, which the inventory identifies as `IniReader/IniReader.cpp`.
+It produced no complete unresolved-symbol or duplicate-error totals. Therefore
+42 definitions were removed in the **verified object inventory**, but no claim
+is made that the full-link error count improved. The original 7,329 unresolved
+symbol baseline remains the last completed full diagnostic.
+
+This also narrows the earlier launcher hypothesis: a Git Bash launch can abort
+internally too. Native Python launching alone does not explain the failure.
+The next session should investigate the old linker's Pass1 failure on the
+current input set before expanding ownership rules. Preserve the response
+files and per-object inventory to make that investigation reproducible.

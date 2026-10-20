@@ -8,6 +8,7 @@
 
 # Build output
 build/
+__pycache__/
 
 # Game files and exported decompilation are copyrighted: keep them out
 SqueezilsGameFiles/
