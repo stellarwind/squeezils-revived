@@ -673,6 +673,7 @@ Fn47ca10/targets.txt Fn47ca10/F.cpp
 Fn43aa50/targets.txt Fn43aa50/F.cpp
 Fn42a290/targets.txt Fn42a290/F.cpp
 PartCycle/targets_newpose.txt PartCycle/NewPose.cpp
+PartCycle/targets_sample.txt PartCycle/Sample.cpp
 Loader/targets.txt Loader/OpenFile.cpp
 TexDefaults/targets.txt TexDefaults/InitTextureDefaults.cpp
 TexRes/targets.txt TexRes/LoadTextureResources.cpp

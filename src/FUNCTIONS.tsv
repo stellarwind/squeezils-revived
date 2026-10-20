@@ -364,7 +364,7 @@
 419750	224	bm	0	ctor	PartCycle/targets.txt	
 419830	61	bm	0	holder_dtor_d419830	Fam61/targets.txt	
 419880	161	bm	0	dtor	PartCycle/targets.txt	
-419960	2536	todo	-	-	-	
+419960	2536	func	260	sample	PartCycle/targets_sample.txt	
 41a350	160	bm	0	cross	Vector3f/targets.txt	
 41a3f0	426	func	22	newpose	PartCycle/targets_newpose.txt	
 41a5d0	3272	todo	-	-	-	
