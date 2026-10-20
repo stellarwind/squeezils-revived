@@ -589,6 +589,7 @@ NavMesh/targets_matrixworld.txt NavMesh/MatrixToWorld.cpp
 NavMesh/targets_matrixlocal.txt NavMesh/MatrixToLocal.cpp
 NavMesh/targets_carried.txt NavMesh/Carried.cpp
 NavMesh/targets_move.txt NavMesh/MoveSurface.cpp
+NavMesh/targets_navmove.txt NavMesh/NavMove.cpp
 Container2/targets_get_intstring.txt Container2/GetIntString.cpp
 Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
 NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp
@@ -713,6 +714,7 @@ Container2/targets_settings_cleanup.txt Container2/SettingsCleanup.cpp
 Misc16/targets_mainwindow.txt Misc16/MainWindowProc.cpp
 Guards/targets_settings_initializers.txt Guards/SettingsInitializers.cpp
 Fn409d10/targets_update.txt Fn409d10/Update.cpp
+Fn409d10/targets_placeupdate.txt Fn409d10/PlaceUpdate.cpp
 NavSurface/targets_loadground.txt NavSurface/LoadGround.cpp
 FunctionTweak/targets_launch.txt FunctionTweak/exec/Exec_LaunchFromFaceNormal.cpp
 Fn4178e0/targets.txt Fn4178e0/F.cpp

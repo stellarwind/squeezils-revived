@@ -13,12 +13,15 @@ struct CamMatData {                                                // the plain 
         return *this;
     }
 };
+struct CamVec;
 struct CamMat {
     CamMatData d;
     CamMat() {}
     CamMat(const CamMat &o);                                       // 0x4099e0
     ~CamMat();                                                     // 0x402310
     CamMat &operator=(const CamMat &o);                            // 0x402340
+    CamMat operator*(const CamMat &o) const;                       // 0x47dea0
+    CamMat &SetTranslation(const CamVec &v);                       // 0x47e330
 };
 // SIZE 0x60
 struct CameraSettings {
@@ -29,6 +32,7 @@ struct CameraSettings {
     float returnToBaseTime;                                        // 0x5c
 };
 extern CameraSettings gRegionSettings;                             // 0x4c64e8
+extern CameraSettings gPlaceSettings;                              // 0x4c6488 [PlaceCamera]
 extern float gCamInterpTime;                                       // 0x4c6480 [Camera] CamInterpTime
 
 struct GameClock { unsigned SimRate(); };                          // 0x41ec00: milliseconds this frame
@@ -37,6 +41,10 @@ GameClock *TheClock();                                             // 0x4206d0
 struct CamBodyC {
     virtual void v0(); virtual void v1(); virtual void v2();
     virtual CamMatData *GetMatrix();                               // vtable+0x0c
+    virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
+    virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13();
+    virtual void v14();
+    virtual int IsOnGround();                                      // vtable+0x3c
     char pad4[0xc0 - 4];
     CamMatData lastMatrix;                                         // 0xc0 the matrix of the previous frame
 };
@@ -44,6 +52,20 @@ struct CamViewC {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
     virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8();
     virtual void SetMatrix(CamMat *m);                             // vtable+0x24
+};
+
+struct CamVec {
+    float x, y, z;
+    ~CamVec();                                                     // 0x401660
+    CamVec operator+(const CamVec &o) const;                       // 0x403070
+};
+struct CamPose { CamMat Transform(); };                            // 0x4195b0 PartPose: the part's 4x4 placement
+struct CamPoseTable { CamPose *Find(const char *partName); };      // 0x41b6e0
+struct CamPathC {                                                  // PathAnimation (see CameraSoul/StartPath.cpp)
+    virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
+    virtual void Advance(float dt, int flag);                      // vtable+0x14
+    char pad4[0x40 - 4];
+    CamPoseTable *poses;                                           // 0x40
 };
 
 struct CamSoulC { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();

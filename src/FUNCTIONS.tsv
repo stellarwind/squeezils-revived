@@ -141,7 +141,7 @@
 40a5e0	64	bm	0	handlera	Souls2/targets.txt	RegionCameraSoul
 40a620	16	bm	0	v6b	CameraSoul/targets.txt	RegionCameraSoul
 40a630	378	func	-	-	Fn40a630/targets.txt	
-40a820	2759	todo	-	-	-	PlaceCameraSoul
+40a820	2759	func	50	placecam_update	Fn409d10/targets_placeupdate.txt	PlaceCameraSoul
 40b2f0	64	bm	0	handlerb	Souls2/targets.txt	PlaceCameraSoul
 40b330	16	bm	0	v6c	CameraSoul/targets.txt	PlaceCameraSoul
 40b340	16	bm	0	messagemap_dtor	VirtualDtor/targets.txt	
@@ -2619,7 +2619,7 @@
 47b130	32	bm	0	freea	Misc15/targets_mesh.txt	
 47b150	48	bm	0	freet	Misc15/targets_mesh.txt	
 47b180	713	func	-	-	Fn47b180/targets.txt	
-47b490	3590	todo	-	-	-	
+47b490	3590	func	831	navmove	NavMesh/targets_navmove.txt	
 47c2a0	781	func	-	-	NavMesh/targets_insideface.txt	
 47c630	64	bm	0	nav_comparehits	NavMesh/targets_compare.txt	
 47c670	32	bm	0	endian	Misc16/targets.txt	
