@@ -717,3 +717,4 @@ FunctionTweak/targets_launch.txt FunctionTweak/exec/Exec_LaunchFromFaceNormal.cp
 Fn4178e0/targets.txt Fn4178e0/F.cpp
 Fn407d40/targets.txt Fn407d40/F.cpp
 MorphCycle/targets_load.txt MorphCycle/MorphCycleLoad.cpp
+NavSurface/targets_flighthits.txt NavSurface/FlightHits.cpp

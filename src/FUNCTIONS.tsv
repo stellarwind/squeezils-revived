@@ -240,7 +240,7 @@
 410660	128	bm	0	h4_get	Misc18/targets_get.txt	
 4106e0	341	bm	0	flush_removed	NavSurface/targets_flushremoved.txt	
 410890	80	bm	0	ineither	Souls2/targets.txt	
-4108e0	1988	todo	-	-	-	
+4108e0	1988	func	376	flight_hits	NavSurface/targets_flighthits.txt	
 4110b0	108	bm	0	getb	Misc14/targets.txt	
 411120	5889	todo	-	-	-	
 412830	110	bm	0	makematrix	Souls2/targets.txt	
