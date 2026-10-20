@@ -643,7 +643,7 @@
 425d50	96	bm	0	e425d50	Init425d50/targets.txt	
 425db0	16	bm	0	r425db0	Guards/targets_init.txt	
 425dc0	134	todo	-	-	-	
-425e50	258	bm	0	prop_constructor	Prop/targets_constructor.txt	
+425e50	258	func	77	prop_constructor	Prop/targets_constructor.txt	
 425fa0	179	bm	0	pm_place	Props2/targets.txt	Prop
 426080	100	bm	0	prop_destruct	Destruct/targets.txt	
 426120	64	bm	0	cachedget	PrintStubs/targets.txt	Prop
@@ -675,11 +675,11 @@
 427100	174	bm	0	fp_dtor	FrameProp2/targets.txt	
 4271f0	285	func	55	frame_show	Props2/targets.txt	FrameProp
 427320	96	bm	0	fp_hide	Props2/targets.txt	FrameProp
-427380	754	bm	0	build_own_frame	FrameProp/targets_buildown.txt	
+427380	754	func	175	build_own_frame	FrameProp/targets_buildown.txt	
 4276b0	113	bm	0	valued	Misc16/targets_m2.txt	
 427740	920	func	96	update_frame_prop	FrameProp/targets_update.txt	FrameProp
 427ae0	112	bm	0	item_d427ae0	Fam112b/targets.txt	
-427b50	721	func	214	fire_time_messages	FrameProp/targets_messages.txt	
+427b50	721	func	188	fire_time_messages	FrameProp/targets_messages.txt	
 427e30	32	bm	0	setcycletime	FrameProp/targets.txt	FrameProp
 427e50	32	bm	0	setcycledirection	FrameProp/targets.txt	FrameProp
 427e70	32	bm	0	setcycleloopmode	FrameProp/targets.txt	FrameProp
@@ -1561,10 +1561,10 @@
 457050	781	todo	-	-	-	
 457360	32	bm	0	squeezilbody	Destroy/targets.txt	SqueezilBody
 457380	211	bm	0	sqbody_dtor	Fn457380/targets.txt	
-4574b0	590	todo	-	-	-	
+4574b0	590	bm	0	blended_matrix	SqueezilBody/targets_blendedmatrix.txt	
 457780	48	bm	0	setorientation	SqueezilBody/targets.txt	SqueezilBody
 4577b0	48	bm	0	getorientation	SqueezilBody/targets.txt	SqueezilBody
-4577e0	480	todo	-	-	-	
+4577e0	480	func	30	place_body	SqueezilBody/targets_place.txt	
 4579f0	208	bm	0	updorient	SqueezilBody/targets.txt	SqueezilBody
 457ac0	16	bm	0	getmode	SqueezilBody/targets.txt	SqueezilBody
 457ad0	64	bm	0	f457ad0	Tiny4/targets9.txt	SqueezilBody

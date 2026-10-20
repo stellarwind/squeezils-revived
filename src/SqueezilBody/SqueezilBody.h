@@ -3,6 +3,8 @@
 #pragma once
 #include "Body/Body.h"
 
+struct BodyPlacement;
+
 struct SqueezilBody : Body {
     float  collisionRadius;    // 0xb8
     float  collisionSpeedAmp;  // 0xbc
@@ -33,6 +35,7 @@ struct SqueezilBody : Body {
     float GetClipSpeed();                       // 0x459020 slot 25
     float GetPitch();                           // 0x459030 slot 26
     float GetRoll();                            // 0x459040 slot 27
+    void Place(BodyPlacement placement);        // 0x4577e0
 };
 
 const char *BodyColorName(int color);           // 0x458fd0

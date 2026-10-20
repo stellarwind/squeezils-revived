@@ -166,6 +166,8 @@ SqgModel/targets_read_wrl.txt SqgModel/ReadWrl.cpp
 SqueezilBody/targets_loadcycle.txt SqueezilBody/LoadCycle.cpp
 SqueezilBody/targets_setmode.txt SqueezilBody/SetMode.cpp
 SqueezilBody/targets_update.txt SqueezilBody/Update.cpp
+SqueezilBody/targets_blendedmatrix.txt SqueezilBody/BlendedMatrix.cpp
+SqueezilBody/targets_place.txt SqueezilBody/Place.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
 Release/targets_shutdown_props.txt Release/ShutdownProps.cpp
 Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
