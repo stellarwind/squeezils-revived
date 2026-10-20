@@ -5,6 +5,8 @@
 #   func!  func that has been checked in gameplay testing
 #   todo   no real source yet (use to demote a placeholder / partial body that has a target but would misbehave)
 # Default without an override: score 0 -> bm, score > 0 or unscored target -> func, no target -> todo ("stub" = EH unwind funclet, never a state here).
+45ff70 func # Shared Set<int> insertion matches original machine code on 2520/2520 fixtures (empty/nonempty, duplicates, all valid hints); enabled previously omitted generated Set insertion bodies; no gameplay validation (2026-10-20).
+4290b0 func # Fixed String hidden-result ABI/lifetime and GetOwner/Find argument ABI; removed spurious Ref destructor; VC4.1 score 113, 9/9 production-source regression fixtures; original unreachable upward branch preserved; no gameplay validation (2026-10-20).
 47d940 func # Native-original closest-point differential: 4096/4096 bit-exact fixtures, including 586 degenerate lines; wrong-argument control fails 3511; VC4.1 score 37, scheduling only; no gameplay validation (2026-10-20).
 47dea0 func # Native-original matrix differential: 8192/8192 bit-exact results for finite fixtures; reversed-order control fails 3584/4096; VC4.1 score 201, x87 scheduling; not gameplay tested (2026-10-20).
 424e20 func # Fixed 3-word buffer passed to 6-word renderer getter and used shared declaration; VC4.1 64/64 override-mask cases pass, stack/register diff only; not gameplay tested (2026-10-20).

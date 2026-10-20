@@ -1,17 +1,21 @@
-// 0x4290b0: CycleProp::FireStepMessages - going down from..to, run the script named for each number that has one.
+// 0x4290b0: CycleProp::FireStepMessages. Preserve the original direction predicate,
+// including its unreachable upward path (the computed direction is only -1/+1).
 #include "String/String.h"
-struct Base { virtual ~Base(); };
+// SIZE 0x04
+struct Base { virtual ~Base(); /* vtable+0x00 */ };
 struct Target : Base { };
-struct Events { virtual int v0(); virtual int Has(int *k); String *Get(int *k); };      // slot 1 (+4); 0x4638b0
-struct Ref { int d[6]; Ref(int handle, void *owner); Ref(Target *t, int handle, void *owner); ~Ref(); };   // 0x4207a0 / 0x420900
+// SIZE 0x04
+struct Events { virtual int v0(); virtual int Has(int *k); /* vtable+0x04 */ String Get(int *k); }; // 0x4638b0, hidden result
+// SIZE 0x18
+struct Ref { int d[6]; /* 0x00 */ Ref(int handle, void *owner); Ref(Target *t, int handle, void *owner); }; // 0x4207a0 / 0x420900
 int RunCommand(const char *name, Ref *r, int a, int b);              // 0x422ce0 (cdecl)
 struct Owner;
-Owner *__stdcall GetOwner(int a);                                              // 0x420690 (stdcall)
-struct Owner { Base *Find(); };                                      // 0x414080
+Owner *GetOwner(); // 0x420690
+struct Owner { Base *Find(int handle); }; // 0x414080, thiscall ret 4
 struct CycleProp {
-    char pad[0x9c];
+    char pad[0x9c];          // 0x00
     int handle;             // 0x9c
-    char pad2[0xac - 0xa0];
+    char pad2[0xac - 0xa0]; // 0xa0
     Events events;          // 0xac
     void FireStepMessages(int from, int to);
 };
@@ -26,12 +30,12 @@ void CycleProp::FireStepMessages(int from, int to)
             do {
                 if (ev->Has(&number)) {
                     if (handle != -1) {
-                        Target *t = dynamic_cast<Target *>(GetOwner(handle)->Find());
+                        Target *t = dynamic_cast<Target *>(GetOwner()->Find(handle));
                         Ref ref(t, handle, this);
-                        { String *name = ev->Get(&number); RunCommand(name->c_str(), &ref, 0, 0); }
+                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
                     } else {
                         Ref ref(-1, this);
-                        { String *name = ev->Get(&number); RunCommand(name->c_str(), &ref, 0, 0); }
+                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
                     }
                 }
                 number++;
@@ -44,12 +48,12 @@ void CycleProp::FireStepMessages(int from, int to)
             do {
                 if (ev->Has(&number)) {
                     if (handle != -1) {
-                        Target *t = dynamic_cast<Target *>(GetOwner(handle)->Find());
+                        Target *t = dynamic_cast<Target *>(GetOwner()->Find(handle));
                         Ref ref(t, handle, this);
-                        { String *name = ev->Get(&number); RunCommand(name->c_str(), &ref, 0, 0); }
+                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
                     } else {
                         Ref ref(-1, this);
-                        { String *name = ev->Get(&number); RunCommand(name->c_str(), &ref, 0, 0); }
+                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
                     }
                 }
                 number--;

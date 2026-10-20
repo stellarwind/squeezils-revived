@@ -18,6 +18,12 @@ int CheckDesktopDepth(int *width, int *height)
     QueryDesktopMode(width, height, &bpp);
     if (bpp >= 8 && bpp <= 16)
         return 1;
+#ifdef SQZ_FIX_BUGS
+    // TEMP: allow direct launch on true-color desktops without 16BITCOLOR/256COLOR
+    // compatibility mode. Texture rendering still has issues at these depths.
+    if (bpp == 24 || bpp == 32)
+        return 1;
+#endif
     MessageBox(0, "This application requires that your Display Properties\nare set to either 256 Colors or High Color (16-bit).\nPlease update your Display Properties with the Display Control Panel.", "Error", MB_OK);
     return 0;
 }

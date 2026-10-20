@@ -1,4 +1,7 @@
 # Every byte-match unit: <targets file> <source files...>   (paths relative to Repo/src). Run: tools/flagsearch/status.sh
+Fn4290b0/targets.txt Fn4290b0/F.cpp
+Activity/targets_step.txt Activity/TurnStep.cpp
+Activity/targets_fly.txt Activity/FlyStep.cpp
 String/targets.txt String/String.cpp
 Gif/targets.txt Gif/Gif.c
 Container/targets_int.txt Container/ArrayInt.cpp
@@ -21,7 +24,7 @@ GoodieList/targets.txt GoodieList/GoodieList.cpp
 Inventory/targets.txt Inventory/Inventory.cpp
 Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
 NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp NavMesh/NavMeshCtor.cpp
-CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp CompassRuler/Load.cpp CompassRuler/LoadPair.cpp
+CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp CompassRuler/Load.cpp CompassRuler/LoadPair.cpp CompassRuler/DrawRow.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
 VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
 PropList/targets.txt PropList/PropList.cpp
@@ -139,7 +142,7 @@ ArrayData/targets.txt ArrayData/ArrayData.cpp
 ArrayReplace/targets.txt ArrayReplace/ArrayReplace.cpp
 ArrayRemove/targets.txt ArrayRemove/ArrayRemove.cpp
 Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
-StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp
+StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp StatusBar/UpdateStatus.cpp StatusBar/Init.cpp StatusBar/Sub.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp MoodFace/FindAnimation.cpp
 Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp Menu/MenuDtor.cpp Menu/LoadGameDlg.cpp
@@ -219,7 +222,7 @@ Activity/targets_regen_step.txt Activity/RegenStep.cpp
 Input/targets_savebindings.txt Input/SaveBindings.cpp
 Input/targets_translate_key.txt Input/TranslateKey.cpp
 Warp/targets.txt Warp/Warp.cpp Warp/WarpLoad.cpp
-Audio/targets.txt Audio/Volume.cpp
+Audio/targets.txt Audio/Volume.cpp Audio/CreateSecondary.cpp Audio/MidiEvent.cpp
 DebugLog/targets.txt DebugLog/DebugLog.cpp DebugLog/Movie.cpp DebugLog/MovieOpen.cpp DebugLog/MoviePlay.cpp DebugLog/PlayMovie.cpp DebugLog/AddLine.cpp DebugLog/DebugWnd.cpp
 PrintStubs/targets.txt PrintStubs/PrintStubs.cpp PrintStubs/PrintStubs2.cpp PrintStubs/PrintStubs3.cpp
 Thunks/targets.txt Thunks/Thunks.cpp
@@ -440,7 +443,7 @@ Player/targets.txt Player/Stop.cpp
 Misc9/targets.txt Misc9/Getters.cpp
 Misc9/targets_b.txt Misc9/More.cpp
 Qv/targets_mfset.txt Qv/MFSetNum.cpp
-Misc10/targets.txt Misc10/Small.cpp
+Misc10/targets.txt Misc10/Small.cpp Misc10/GetAxes.cpp Misc10/JoyCalibrate.cpp
 Misc11/targets.txt Misc11/Small.cpp
 Qv/gen/targets_C_4880c0.txt Qv/gen/C_4880c0.cpp
 Qv/gen/targets_D_488280.txt Qv/gen/D_488280.cpp
@@ -541,7 +544,7 @@ Sim2/targets_ct.txt Sim2/CreatureTableDtor.cpp Sim2/LoadCombined.cpp
 ErrorBox/targets.txt ErrorBox/ErrorBox.cpp ErrorBox/FileOpen.cpp
 Tiny1/targets.txt Tiny1/Tiny1.cpp
 Tiny3/targets.txt Tiny3/F43ae70.cpp
-Tiny4/targets.txt Tiny4/F43bf10.cpp
+Tiny4/targets.txt Tiny4/F43bf10.cpp Tiny4/F448dc0.cpp
 Tiny4/targets2.txt Tiny4/F41bcf0.cpp
 Tiny4/targets3.txt Tiny4/F43bf80.cpp
 Tiny4/targets4.txt Tiny4/F43bb10.cpp
@@ -733,3 +736,146 @@ SqgModel/targets_faceset.txt SqgModel/AddFaceSet.cpp
 WinMain/targets.txt WinMain/WinMain.cpp
 Keylist/targets_ctor.txt Keylist/Ctor.cpp
 Fn44b2e0/targets.txt Fn44b2e0/F.cpp
+CameraBody/targets.txt CameraBody/CamUpdate.cpp
+Fn4023b0/targets.txt Fn4023b0/F.cpp
+Fn402930/targets_stuck.txt Fn402930/F.cpp
+Fn403650/targets.txt Fn403650/F.cpp
+Fn404b10/targets.txt Fn404b10/F.cpp
+Fn40a630/targets.txt Fn40a630/F.cpp
+Fn40c8a0/targets.txt Fn40c8a0/F.cpp
+Fn4100b0/targets.txt Fn4100b0/F.cpp
+Fn417680/targets.txt Fn417680/F.cpp
+Fn418170/targets.txt Fn418170/F.cpp
+Fn4183e0/targets.txt Fn4183e0/F.cpp
+Fn4195b0/targets_stuck.txt Fn4195b0/F.cpp
+Fn41ee30/targets.txt Fn41ee30/F.cpp
+Fn41f7f0/targets.txt Fn41f7f0/F.cpp
+Fn4207a0/targets.txt Fn4207a0/F.cpp
+Fn421db0/targets_stuck.txt Fn421db0/F.cpp
+Fn422ce0/targets.txt Fn422ce0/F.cpp
+Fn424010/targets_stuck.txt Fn424010/F.cpp
+Fn4247e0/targets.txt Fn4247e0/F.cpp
+Fn429fa0/targets.txt Fn429fa0/F.cpp
+Fn42cc10/targets.txt Fn42cc10/F.cpp
+Fn42f2c0/targets.txt Fn42f2c0/F.cpp
+Fn436710/targets.txt Fn436710/F.cpp
+Fn436e10/targets.txt Fn436e10/F.cpp
+Fn4373d0/targets.txt Fn4373d0/F.cpp
+Fn438110/targets.txt Fn438110/F.cpp
+Fn43c250/targets.txt Fn43c250/F.cpp
+Fn43dcd0/targets.txt Fn43dcd0/F.cpp
+Fn4472e0/targets.txt Fn4472e0/F.cpp
+Fn447af0/targets.txt Fn447af0/F.cpp
+Fn449aa0/targets_stuck.txt Fn449aa0/F.cpp
+Fn449d20/targets.txt Fn449d20/F.cpp
+Fn449ee0/targets.txt Fn449ee0/F.cpp
+Fn44a5a0/targets.txt Fn44a5a0/F.cpp
+Fn44a750/targets.txt Fn44a750/F.cpp
+Fn44b5b0/targets.txt Fn44b5b0/F.cpp
+Fn44b780/targets.txt Fn44b780/F.cpp
+Fn44eb20/targets.txt Fn44eb20/F.cpp
+Fn458590/targets_stuck.txt Fn458590/F.cpp
+Fn458aa0/targets.txt Fn458aa0/F.cpp
+Fn4731f0/targets.txt Fn4731f0/F.cpp
+Fn477120/targets_stuck.txt Fn477120/F.cpp
+Fn4777b0/targets.txt Fn4777b0/F.cpp
+Fn47aad0/targets.txt Fn47aad0/F.cpp
+Fn47b180/targets.txt Fn47b180/F.cpp
+Fn47cfe0/targets.txt Fn47cfe0/F.cpp
+Fn47d2b0/targets.txt Fn47d2b0/F.cpp
+Fn47d680/targets.txt Fn47d680/F.cpp
+Fn47e350/targets.txt Fn47e350/F.cpp
+PhysicsTable/targets.txt PhysicsTable/PhysicsTable.cpp
+PlayerSoulDtor/targets.txt PlayerSoulDtor/PlayerSoulDtor.cpp
+Container/gen/targets_Array05.txt Container/gen/Array05.cpp
+Container/gen/targets_Array19.txt Container/gen/Array19.cpp
+Container/gen/targets_Array20.txt Container/gen/Array20.cpp
+Container/gen/targets_Array23.txt Container/gen/Array23.cpp
+Container/gen/targets_Array24.txt Container/gen/Array24.cpp
+Container/gen/targets_Array25.txt Container/gen/Array25.cpp
+Container/gen/targets_Array27.txt Container/gen/Array27.cpp
+Container/gen/targets_Array30.txt Container/gen/Array30.cpp
+Container/gen/targets_Array31.txt Container/gen/Array31.cpp
+Container/gen/targets_Array32.txt Container/gen/Array32.cpp
+Container/gen/targets_Array34.txt Container/gen/Array34.cpp
+Container/gen/targets_Array35.txt Container/gen/Array35.cpp
+Container/gen/targets_Array38.txt Container/gen/Array38.cpp
+Container/gen/targets_Array39.txt Container/gen/Array39.cpp
+Container/gen/targets_Array42.txt Container/gen/Array42.cpp
+Container/gen/targets_Array43.txt Container/gen/Array43.cpp
+Container/gen/targets_Array44.txt Container/gen/Array44.cpp
+Container/gen/targets_Array46.txt Container/gen/Array46.cpp
+Container/gen/targets_Array47.txt Container/gen/Array47.cpp
+Container/gen/targets_Array49.txt Container/gen/Array49.cpp
+Container/gen/targets_Array51.txt Container/gen/Array51.cpp
+Container/gen/targets_Array52.txt Container/gen/Array52.cpp
+Container/gen/targets_Array54.txt Container/gen/Array54.cpp
+Container/gen/targets_Array55.txt Container/gen/Array55.cpp
+Container/gen/targets_Array58.txt Container/gen/Array58.cpp
+Container/gen/targets_Array59.txt Container/gen/Array59.cpp
+Container/gen/targets_Array60.txt Container/gen/Array60.cpp
+Container/gen/targets_Array61.txt Container/gen/Array61.cpp
+Container/gen/targets_Array62.txt Container/gen/Array62.cpp
+Container/gen/targets_Array63.txt Container/gen/Array63.cpp
+Container/gen/targets_Array64.txt Container/gen/Array64.cpp
+Container/gen/targets_Table06.txt Container/gen/Table06.cpp
+Audio/targets_initmidi.txt Audio/InitMidiConverter.cpp
+Audio/targets_readmidievent.txt Audio/ReadMidiEvent.cpp
+Audio/targets_startmidi.txt Audio/StartMidiStream.cpp
+CameraSoul/targets_blendmatrix.txt CameraSoul/BlendMatrix.cpp
+CycleProp/targets_stuck.txt CycleProp/Update.cpp
+Fam112/targets_stuck.txt Fam112/PopTable.cpp
+Fn409d10/targets.txt Fn409d10/F.cpp
+Fn4249a0/targets.txt Fn4249a0/F.cpp
+Fn4249a0/targets_loadgeom.txt Fn4249a0/LoadGeometry.cpp
+Fn459590/targets.txt Fn459590/F.cpp
+Fn459590/targets_read_stuck.txt Fn459590/Read.cpp
+Fn472f60/targets.txt Fn472f60/F.cpp
+Fn472f60/targets_sqgsave.txt Fn472f60/SqgSave.cpp
+Inventory/targets_load.txt Inventory/Load.cpp
+Inventory/targets_save.txt Inventory/Save.cpp
+LandSimulation/targets_stuck.txt LandSimulation/PlaceCompleted.cpp
+Menu/targets_menuload.txt Menu/MenuLoad.cpp
+Menu/targets_stuck.txt Menu/OnMessage.cpp
+Misc18/targets_arrcopy.txt Misc18/ArrCopy.cpp
+Misc18/targets_chk.txt Misc18/Check.cpp
+Misc18/targets_d21.txt Misc18/Sdd21.cpp
+Misc18/targets_d40.txt Misc18/Sdd20.cpp
+Misc18/targets_midi.txt Misc18/Midi.cpp
+NavMesh/targets_insideface.txt NavMesh/InsideFace.cpp
+NavProp/targets_constructorfile.txt NavProp/ConstructorFile.cpp
+NavSurface/targets_loadnat.txt NavSurface/LoadSurfaceTypes.cpp
+NavSurface/targets_readasciibox.txt NavSurface/ReadAsciiBox.cpp
+Panel/targets_drawmessage.txt Panel/DrawMessage.cpp
+PartCycle/targets_stuck.txt PartCycle/FindSegment.cpp
+PropList/targets_stuck.txt PropList/ClearWorld.cpp
+PropLoader/targets_loadprop.txt PropLoader/LoadProp.cpp
+RegionSimulation/targets_stuck.txt RegionSimulation/LocationState.cpp
+Release/targets_stuck.txt Release/DecalSize.cpp
+Script/targets_loadfunction.txt Script/LoadFunction.cpp
+Script/targets_loadfunctions.txt Script/LoadFunctions.cpp
+Sim2/targets_bridgequad.txt Sim2/BridgeQuad.cpp
+Sim2/targets_startgame.txt Sim2/StartGame.cpp
+Sim2/targets_stuck.txt Sim2/StartFunction.cpp Sim2/BeenTo.cpp
+SoulDtor2/targets_sqctor.txt SoulDtor2/SqueezilSoulCtor.cpp
+SqueezilBody/targets_headpos.txt SqueezilBody/HeadPos.cpp
+TexRes/targets_readlist.txt TexRes/ReadTextureList.cpp
+Texture/targets_create.txt Texture/CreateTexture.cpp
+Ui/targets_splashshow.txt Ui/SplashShow.cpp
+World/targets_readdecal.txt World/ReadDecalSettings.cpp
+NavSurface/targets_movealong.txt NavSurface/MoveAlong.cpp
+Container/gen/targets_Set09.txt Container/gen/Set09.cpp
+Container/gen/targets_Set10.txt Container/gen/Set10.cpp
+Container/gen/targets_Set11.txt Container/gen/Set11.cpp
+Container/gen/targets_Set13.txt Container/gen/Set13.cpp
+Container/gen/targets_Set14.txt Container/gen/Set14.cpp
+Container/gen/targets_Set16.txt Container/gen/Set16.cpp
+Container/gen/targets_Set17.txt Container/gen/Set17.cpp
+Container/gen/targets_Set18.txt Container/gen/Set18.cpp
+Container/gen/targets_Set21.txt Container/gen/Set21.cpp
+Container/gen/targets_Set28.txt Container/gen/Set28.cpp
+Container/gen/targets_Set40.txt Container/gen/Set40.cpp
+Container/gen/targets_Set56.txt Container/gen/Set56.cpp
+Container/gen/targets_Set66.txt Container/gen/Set66.cpp
+Container/gen/targets_Set69.txt Container/gen/Set69.cpp
+Container/targets.txt Container/Container.cpp

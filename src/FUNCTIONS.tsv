@@ -7,12 +7,12 @@
 401670	32	bm	0	assign_d401670	Vector3f/targets.txt	
 401690	61	bm	0	c401690	Misc17/targets_dt2.txt	
 4016e0	32	bm	0	angle_to_target	Activity/targets_angle.txt	
-401700	861	func	-	-	Activity/targets_step.txt	
+401700	861	func	91	tt_step	Activity/targets_step.txt	
 401ae0	128	bm	0	minus	Vector3f/targets.txt	
 401b60	128	bm	0	times	Vector3f/targets.txt	
 401be0	80	bm	0	stepstand	Souls2/targets.txt	
 401c30	48	bm	0	dims	Misc12/targets.txt	
-401c60	460	func	-	-	Activity/targets_fly.txt	FlyTargetActivity
+401c60	460	func	10	ft_step	Activity/targets_fly.txt	FlyTargetActivity
 401e60	144	bm	0	die_ctor	Activity/targets_dr.txt	
 401ef0	96	bm	0	die_exec	Behavior2/targets.txt	
 401f50	128	bm	0	regen_ctor	Activity/targets_dr.txt	
@@ -23,12 +23,12 @@
 402310	16	bm	0	v0_d402310	CameraSoul/targets.txt	
 402320	32	bm	0	behavior	Destroy/targets.txt	Behavior
 402340	112	bm	0	mi16	Souls2/targets.txt	
-4023b0	512	func	-	-	Fn4023b0/targets.txt	
+4023b0	512	bm	0	wanderctor	Fn4023b0/targets.txt	
 4025b0	32	bm	0	wanderbehavior	Destroy/targets.txt	WanderBehavior
 4025d0	204	bm	0	wander_dtor	Behavior2/targets_wd.txt	
 4026e0	387	func	6	pick_target	Behavior2/targets_picktarget.txt	
 4028a0	144	bm	0	wander_exec	Behavior2/targets.txt	
-402930	619	func	-	-	Fn402930/targets_stuck.txt	
+402930	619	func	85	paceector	Fn402930/targets_stuck.txt	
 402ba0	32	bm	0	pacebehavior	Destroy/targets.txt	PaceBehavior
 402bc0	204	bm	0	pace_dtor	Behavior2/targets_pd.txt	
 402cd0	916	bm	0	pace_exec	Behavior2/targets.txt	
@@ -41,7 +41,7 @@
 4034b0	32	bm	0	simpleflybehavior	Destroy/targets.txt	SimpleFlyBehavior
 4034d0	122	bm	0	sf_dtor	Behavior2/targets_fd.txt	
 403580	184	bm	0	simplefly_exec	Behavior2/targets.txt	
-403650	464	func	-	-	Fn403650/targets.txt	
+403650	464	bm	0	threebeh	Fn403650/targets.txt	
 403800	31	bm	0	chasebehavior	Destroy/targets.txt	ChaseBehavior
 403820	204	bm	0	tab_dtor	Behavior2/targets_td.txt	
 403930	478	bm	0	chase_exec	Behavior2/targets.txt	
@@ -70,7 +70,7 @@
 404900	32	bm	0	clearseen	SqueezilRoboSoul/targets.txt	
 404920	352	func	37	sensestate	SqueezilRoboSoul/targets.txt	
 404a80	144	bm	0	stepai	SqueezilRoboSoul/targets_step.txt	
-404b10	736	func	-	-	Fn404b10/targets.txt	
+404b10	736	func	83	setbehavior	Fn404b10/targets.txt	
 404df0	288	bm	0	updaterobo	SqueezilRoboSoul/targets_step.txt	SqueezilRoboSoul
 404f10	112	bm	0	rec_ctor	Misc18/targets.txt	
 404f80	16	bm	0	thunka	Misc12/targets.txt	SqueezilRoboSoul
@@ -100,8 +100,8 @@
 405d10	384	bm	0	findanim	MoodFace/targets.txt	
 405e90	243	bm	0	menuc_ctor	Fn405e90/targets.txt	
 405f90	96	func	30	menu_dtor	Menu/targets.txt	
-405ff0	1054	func	-	-	Menu/targets_menuload.txt	
-406420	480	func	-	-	Menu/targets_stuck.txt	
+405ff0	1054	func	34	menuload	Menu/targets_menuload.txt	
+406420	480	func	162	onmessage	Menu/targets_stuck.txt	
 406600	112	bm	0	setactions	Menu/targets.txt	
 406670	32	bm	0	help1	Menu/targets.txt	
 406690	32	bm	0	help2	Menu/targets.txt	
@@ -131,16 +131,16 @@
 408410	496	bm	0	volumedlg	Menu/targets.txt	
 408600	565	bm	0	readcamset	CameraSettings/targets.txt	
 408850	3264	func	259	camera_view	CameraSoul/targets_view.txt	
-409620	947	func	-	-	CameraSoul/targets_blendmatrix.txt	
+409620	947	func	175	blendmatrix	CameraSoul/targets_blendmatrix.txt	
 4099e0	112	bm	0	mi16b	Souls2/targets.txt	
 409a50	496	bm	0	start_path	CameraSoul/targets_startpath.txt	
 409c40	206	bm	0	stoppath	Souls2/targets.txt	
-409d10	487	func	-	-	Fn409d10/targets.txt	
+409d10	487	bm	0	regcamctor	Fn409d10/targets.txt	
 409f00	1048	bm	0	setrows	Matrix4/targets_setrows.txt	
 409f70	1637	func	126	regcam_update	Fn409d10/targets_update.txt	RegionCameraSoul
 40a5e0	64	bm	0	handlera	Souls2/targets.txt	RegionCameraSoul
 40a620	16	bm	0	v6b	CameraSoul/targets.txt	RegionCameraSoul
-40a630	378	func	-	-	Fn40a630/targets.txt	
+40a630	378	bm	0	placecamctor	Fn40a630/targets.txt	
 40a820	2759	func	50	placecam_update	Fn409d10/targets_placeupdate.txt	PlaceCameraSoul
 40b2f0	64	bm	0	handlerb	Souls2/targets.txt	PlaceCameraSoul
 40b330	16	bm	0	v6c	CameraSoul/targets.txt	PlaceCameraSoul
@@ -167,13 +167,13 @@
 40b6a0	16	bm	0	v1d	CameraSoul/targets.txt	CameraSoul
 40b6b0	16	bm	0	v0e	CameraSoul/targets.txt	CameraSoul
 40b6c0	16	bm	0	v1e	CameraSoul/targets.txt	
-40b6d0	147	func	-	-	Misc18/targets_d40.txt	CameraSoul
+40b6d0	147	bm	0	d40_sdd	Misc18/targets_d40.txt	CameraSoul
 40b7c0	99	bm	0	region_sdd	SoulDtor2/targets.txt	RegionCameraSoul
 40b830	99	bm	0	place_sdd	SoulDtor2/targets.txt	PlaceCameraSoul
 40b8a0	112	bm	0	camerabody_ctor	SoulDtor2/targets_body.txt	
 40b910	86	bm	0	cam_sdd	Misc18/targets_c19.txt	CameraBody
 40b980	16	bm	0	v0_d40b980	CameraSoul/targets.txt	CameraBody
-40b990	205	func	-	-	CameraBody/targets.txt	CameraBody
+40b990	205	func	10	camupdate	CameraBody/targets.txt	CameraBody
 40ba70	112	bm	0	matset	Souls2/targets.txt	CameraBody
 40bae0	90	bm	0	body_dtor	SoulDtor2/targets_body.txt	
 40bb70	16	bm	0	getfacing	Body/targets.txt	CameraBody
@@ -197,7 +197,7 @@
 40c700	152	func	4	surface_is_near	NavSurface/targets_near.txt	
 40c7b0	152	bm	0	surface_was_near	NavSurface/targets_wasnear.txt	
 40c860	64	bm	0	cmp64	Souls2/targets.txt	
-40c8a0	648	func	-	-	Fn40c8a0/targets.txt	
+40c8a0	648	func	204	pointlocal	Fn40c8a0/targets.txt	
 40cb30	695	bm	0	matrix_to_local	NavMesh/targets_matrixlocal.txt	
 40ce30	575	func	90	point_to_world	NavMesh/targets_pointworld.txt	
 40d070	684	bm	0	matrix_to_world	NavMesh/targets_matrixworld.txt	
@@ -211,12 +211,12 @@
 40e160	333	bm	0	unload_file	NavSurface/targets_unloadfile.txt	
 40e2e0	413	func	24	read_bindings	NavSurface/targets_bindings.txt	
 40e480	1925	func	168	loadground	NavSurface/targets_loadground.txt	
-40ec10	112	bm	0	str_get	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
+40ec10	112	func	8	str_get	Container/targets.txt	?$PrimitiveArray@VSqzString@@$02
 40ec80	16	bm	0	int_get	Container/targets_int.txt	?$PrimitiveArray@H$00
 40ec90	235	bm	0	clear	Fn40ec90/targets.txt	
 40ede0	112	bm	0	destroyloaded	NavSurface/targets.txt	
 40ee50	112	bm	0	keyat	Fam112/targets.txt	
-40eec0	984	func	-	-	NavSurface/targets_loadnat.txt	
+40eec0	984	func	159	loadnat	NavSurface/targets_loadnat.txt	
 40f2a0	112	bm	0	item	Fam112b/targets.txt	
 40f310	112	bm	0	nameat	Fam112c/targets.txt	
 40f380	32	bm	0	facetype	NavSurface/targets_facetype.txt	
@@ -232,7 +232,7 @@
 40fab0	112	bm	0	name20	Fam112c/targets.txt	
 40fb20	200	func	14	find10	Fn40f610/targets.txt	
 40fc10	1175	func	119	surface_load	NavSurface/targets_load.txt	
-4100b0	570	func	-	-	Fn4100b0/targets.txt	
+4100b0	570	func	72	addsurface	Fn4100b0/targets.txt	
 4102f0	32	bm	0	fw2	Misc3/targets.txt	
 410310	30	bm	0	fw3	Misc3/targets.txt	
 410330	605	func	132	move_carried	NavSurface/targets_movecarried.txt	
@@ -242,7 +242,7 @@
 410890	80	bm	0	ineither	Souls2/targets.txt	
 4108e0	1988	func	376	flight_hits	NavSurface/targets_flighthits.txt	
 4110b0	108	bm	0	getb	Misc14/targets.txt	
-411120	5889	todo	-	-	-	
+411120	5889	func	1638	move_along	NavSurface/targets_movealong.txt	
 412830	110	bm	0	makematrix	Souls2/targets.txt	
 4128a0	128	bm	0	to_world_before	NavMesh/targets_before.txt	
 412920	514	func	83	type_changed	NavSurface/targets_typechanged.txt	
@@ -294,7 +294,7 @@
 4153e0	16	bm	0	updatesprites	CompassRuler/targets.txt	
 4153f0	16	bm	0	passthrough	Misc12/targets_t.txt	
 415400	64	bm	0	image_destroyed	Texture/targets_destroyed.txt	
-415440	640	func	-	-	Texture/targets_create.txt	
+415440	640	func	240	create_texture	Texture/targets_create.txt	
 4156c0	16	bm	0	ctor	GoodieList/targets.txt	
 4156d0	128	bm	0	dtor	GoodieList/targets.txt	
 415750	956	func	16	init	GoodieList/targets.txt	
@@ -312,9 +312,9 @@
 4165b0	32	bm	0	allrelics	Inventory/targets.txt	
 4165d0	16	bm	0	v1j	CameraSoul/targets.txt	Inventory
 4165e0	32	bm	0	read	Inventory/targets.txt	Inventory
-416600	407	func	-	-	Inventory/targets_save.txt	
+416600	407	func	22	invsave	Inventory/targets_save.txt	
 4167b0	112	bm	0	keyat_d4167b0	Fam112/targets.txt	
-416820	952	func	-	-	Inventory/targets_load.txt	
+416820	952	func	59	invload	Inventory/targets_load.txt	
 416be0	16	bm	0	rinv	CameraSoul/targets.txt	Inventory
 416bf0	112	bm	0	newmade	Misc16/targets_m2.txt	Inventory
 416c60	222	bm	0	place_record_ctor	Sim2/targets_placerecord.txt	
@@ -323,7 +323,7 @@
 416ee0	74	bm	0	regionsimulation_destruct	Destruct/targets.txt	
 416f50	1609	func	61	rg_init	Sim2/targets.txt	RegionSimulation
 417600	128	bm	0	rg_clear	Sim2/targets.txt	RegionSimulation
-417680	564	func	-	-	Fn417680/targets.txt	
+417680	564	func	67	loadlocations	Fn417680/targets.txt	
 4178e0	2034	func	100	readlocation	Fn4178e0/targets.txt	
 4180e0	48	bm	0	slotlink	Misc16/targets.txt	
 418110	16	bm	0	placecount	RegionSimulation/targets.txt	
@@ -331,11 +331,11 @@
 418140	14	bm	0	getplace	RegionSimulation/targets.txt	
 418150	16	bm	0	getlocation	RegionSimulation/targets.txt	
 418160	16	bm	0	getregion	RegionSimulation/targets.txt	
-418170	538	func	-	-	Fn418170/targets.txt	
+418170	538	func	24	setlocation	Fn418170/targets.txt	
 4183c0	32	bm	0	assign	Vector3f/targets.txt	
-4183e0	400	func	-	-	Fn4183e0/targets.txt	
+4183e0	400	bm	0	spawnrep	Fn4183e0/targets.txt	
 418570	32	bm	0	v3ctor	Vector3f/targets.txt	
-418590	240	func	-	-	RegionSimulation/targets_stuck.txt	
+418590	240	func	18	locstate	RegionSimulation/targets_stuck.txt	
 418680	576	bm	0	rg_load	Sim2/targets.txt	RegionSimulation
 4188c0	224	bm	0	rg_save	Sim2/targets.txt	RegionSimulation
 4189a0	16	bm	0	cansave	RegionSimulation/targets.txt	RegionSimulation
@@ -360,7 +360,7 @@
 4193c0	288	bm	0	ctor	PartPose/targets.txt	
 4194e0	61	bm	0	holder_dtor_d4194e0	Fam61/targets.txt	
 419530	128	bm	0	assign	PartPose/targets.txt	
-4195b0	375	func	-	-	Fn4195b0/targets_stuck.txt	
+4195b0	375	func	124	lookmat	Fn4195b0/targets_stuck.txt	
 419750	224	bm	0	ctor	PartCycle/targets.txt	
 419830	61	bm	0	holder_dtor_d419830	Fam61/targets.txt	
 419880	161	bm	0	dtor	PartCycle/targets.txt	
@@ -368,7 +368,7 @@
 41a350	160	bm	0	cross	Vector3f/targets.txt	
 41a3f0	426	func	22	newpose	PartCycle/targets_newpose.txt	
 41a5d0	3272	func	155	blend	PartCycle/targets_blend.txt	
-41b2a0	336	func	-	-	PartCycle/targets_stuck.txt	
+41b2a0	336	func	22	findsegment	PartCycle/targets_stuck.txt	
 41b3f0	76	bm	0	ctor	PoseTable/targets.txt	
 41b440	421	bm	0	pose_copyctor	PoseTable/targets_copyctor.txt	
 41b5f0	162	bm	0	dtor	PoseTable/targets.txt	
@@ -390,7 +390,7 @@
 41bbf0	214	func	31	sample_pose	MorphCycle/targets_sample_pose.txt	
 41bcf0	112	bm	0	f41bcf0	Tiny4/targets2.txt	
 41bd60	1818	func	255	mc_load	MorphCycle/targets_load.txt	
-41c4a0	16	func	-	-	Container/gen/targets_Array05.txt	?$Array@M
+41c4a0	16	bm	0	get	Container/gen/targets_Array05.txt	?$Array@M
 41c4b0	128	bm	0	vget	Tiny4/targets18.txt	?$Array@VVector3f@@
 41c530	4523	func	291	load_path	MorphCycle/targets_loadpath.txt	
 41d6e0	176	bm	0	pget	Tiny4/targets18.txt	?$Array@U_tag_PartOrientation@@
@@ -435,7 +435,7 @@
 41e8c0	16	bm	0	getplacename	LandSimulation/targets.txt	
 41e8d0	64	bm	0	land_wire	Sim2/targets.txt	LandSimulation
 41e910	144	bm	0	land_load	Sim2/targets.txt	
-41e9b0	144	func	-	-	LandSimulation/targets_stuck.txt	
+41e9b0	144	func	30	placecompleted	LandSimulation/targets_stuck.txt	
 41ea40	16	bm	0	v0k	CameraSoul/targets.txt	LandSimulation
 41ea50	16	bm	0	rland	CameraSoul/targets.txt	LandSimulation
 41ea60	128	bm	0	land_make	Sim2/targets.txt	LandSimulation
@@ -455,9 +455,9 @@
 41ed60	16	bm	0	simstep	GameClock/targets.txt	
 41ed70	16	bm	0	balance	GameClock/targets.txt	
 41ed80	176	bm	0	fileopen	ErrorBox/targets.txt	
-41ee30	289	func	-	-	Fn41ee30/targets.txt	
+41ee30	289	bm	0	playerctor	Fn41ee30/targets.txt	
 41ef60	32	bm	0	squeezilplayersoul	Destroy/targets.txt	SqueezilPlayerSoul
-41ef80	94	func	-	-	PlayerSoulDtor/targets.txt	
+41ef80	94	bm	0	dtor	PlayerSoulDtor/targets.txt	
 41eff0	128	bm	0	onevent	SqueezilPlayerSoul/targets.txt	SqueezilPlayerSoul
 41f070	240	bm	0	jumppressed	Souls2/targets.txt	SqueezilPlayerSoul
 41f160	32	bm	0	jumpreleased	Souls2/targets.txt	SqueezilPlayerSoul
@@ -468,7 +468,7 @@
 41f5a0	432	bm	0	player_update	SqueezilPlayerSoul/targets_update.txt	SqueezilPlayerSoul
 41f750	144	bm	0	postupdate	SqueezilPlayerSoul/targets.txt	
 41f7e0	16	bm	0	v1h	CameraSoul/targets.txt	SqueezilPlayerSoul
-41f7f0	704	func	-	-	Fn41f7f0/targets.txt	
+41f7f0	704	func	116	finishplace	Fn41f7f0/targets.txt	
 41fab0	48	bm	0	hit	SqueezilPlayerSoul/targets.txt	SqueezilPlayerSoul
 41fae0	16	func	5	player_del_adapter	Adjustors/targets.txt	SqueezilPlayerSoul
 41faf0	16	bm	0	keys_d41faf0	Ini/targets.txt	
@@ -488,7 +488,7 @@
 41fd80	628	bm	0	getangles	Body/targets.txt	CameraBody
 420060	158	bm	0	setcontact	Body/targets.txt	SqueezilBody
 420100	112	bm	0	v3div	Vector3f/targets_div.txt	
-420170	1050	func	-	-	Sim2/targets_startgame.txt	
+420170	1050	func	12	startgame	Sim2/targets_startgame.txt	
 4205a0	208	bm	0	shutdown	Release/targets.txt	
 420670	16	bm	0	setcurrentsimulation	Globals/targets.txt	
 420680	16	bm	0	getland	Globals/targets.txt	
@@ -499,9 +499,9 @@
 4206d0	16	bm	0	getgameclock	Globals/targets.txt	
 4206e0	128	bm	0	runframe	GameClock/targets.txt	
 420760	64	bm	0	runframe	Misc15/targets_frame.txt	
-4207a0	346	func	-	-	Fn4207a0/targets.txt	
-420900	349	func	-	-	Fn4207a0/targets.txt	
-420a60	348	func	-	-	Fn4207a0/targets.txt	
+4207a0	346	bm	0	refctor1	Fn4207a0/targets.txt	
+420900	349	bm	0	refctor2	Fn4207a0/targets.txt	
+420a60	348	bm	0	refctor3	Fn4207a0/targets.txt	
 420bc0	48	bm	0	rng3	Misc10/targets.txt	
 420bf0	48	bm	0	rec6	Misc10/targets.txt	
 420c20	16	bm	0	gettable_d420c20	LandSimulation/targets.txt	
@@ -546,9 +546,9 @@
 421ce0	32	bm	0	g421ce0	Guards/targets.txt	
 421d00	95	bm	0	regname	Misc5/targets_a.txt	
 421d80	48	bm	0	deletelist	Misc16/targets.txt	
-421db0	404	func	-	-	Fn421db0/targets_stuck.txt	
+421db0	404	func	6	splitwords	Fn421db0/targets_stuck.txt	
 421f50	177	bm	0	parse_function	FunctionArgs/targets_parsefunction.txt	
-422010	860	func	-	-	Script/targets_loadfunction.txt	
+422010	860	bm	0	loadfunction	Script/targets_loadfunction.txt	
 422370	187	bm	0	delayed_context_ctor	FunctionExec/targets_context_ctor.txt	
 422450	84	bm	0	dm_dtor	Misc16/targets_dm.txt	
 4224b0	96	bm	0	dm_tick	Misc16/targets_dm.txt	
@@ -566,13 +566,13 @@
 422690	16	bm	0	r422690	Guards/targets_init.txt	
 4226a0	85	bm	0	script_settings_cleanup	Container2/targets_settings_cleanup.txt	
 422700	48	bm	0	initsub	Misc16/targets.txt	
-422730	873	func	-	-	Script/targets_loadfunctions.txt	
+422730	873	func	136	loadfunctions	Script/targets_loadfunctions.txt	
 422b00	128	bm	0	releaseb	Release/targets.txt	
 422b80	64	bm	0	release_messages	Misc16/targets_release_messages.txt	
 422bc0	16	bm	0	setflaga	Misc10/targets.txt	
 422bd0	16	bm	0	globalvalue	Misc9/targets.txt	
 422be0	207	bm	0	register_function	Script/targets_register.txt	
-422ce0	282	func	-	-	Fn422ce0/targets.txt	
+422ce0	282	bm	0	callfn	Fn422ce0/targets.txt	
 422e00	160	bm	0	schedule_delayed	FunctionExec/targets_schedule.txt	
 422ea0	16	bm	0	dtor	Function/targets.txt	
 422eb0	30	bm	0	sdd	Function/targets.txt	Function
@@ -609,13 +609,13 @@
 423e00	32	bm	0	print_423e00	PrintStubs/targets.txt	ClearSenseTargetsFunction
 423e20	64	bm	0	runtarget	PrintStubs/targets.txt	ClearSenseTargetsFunction
 423e60	432	bm	0	regrobo	Fn423e60/targets.txt	
-424010	393	func	-	-	Fn424010/targets_stuck.txt	
+424010	393	func	16	openres	Fn424010/targets_stuck.txt	
 4241b0	32	bm	0	sqgerrorlog	Misc/targets.txt	
 4241d0	200	bm	0	init_geometry_loading	Resources/targets_initgeometry.txt	
-4242b0	1074	func	-	-	Fn4249a0/targets_loadgeom.txt	
+4242b0	1074	func	117	loadgeom	Fn4249a0/targets_loadgeom.txt	
 4246f0	202	bm	0	find_geometry	Resources/targets_find.txt	
-4247e0	435	func	-	-	Fn4247e0/targets.txt	
-4249a0	672	func	-	-	Fn4249a0/targets.txt	
+4247e0	435	bm	0	loadres	Fn4247e0/targets.txt	
+4249a0	672	func	105	geom	Fn4249a0/targets.txt	
 424c80	196	func	12	shutdowntable	Misc16/targets_m2.txt	
 424d50	112	bm	0	keyat_d424d50	Fam112/targets.txt	
 424dc0	32	bm	0	stacktop_d424dc0	Misc9/targets.txt	
@@ -626,11 +626,11 @@
 425070	419	func	8	load_texture	Resources/targets_loadtexture.txt	
 425220	202	bm	0	find_texture	Resources/targets_find.txt	
 425310	486	func	4	loadtex	TexRes/targets.txt	
-425500	804	func	-	-	TexRes/targets_readlist.txt	
+425500	804	func	88	readtexlist	TexRes/targets_readlist.txt	
 425870	235	bm	0	read_default_prop_sprite	World/targets_default_sprite.txt	
 425970	192	bm	0	decal_settings_copy	World/targets_copydecal.txt	
 425a30	84	bm	0	threevecs	Misc16/targets_m2.txt	
-425ab0	196	func	-	-	Fam112/targets_stuck.txt	
+425ab0	196	func	16	poptex	Fam112/targets_stuck.txt	
 425b80	112	bm	0	keyat_d425b80	Fam112/targets.txt	
 425bf0	16	bm	0	stacktop_d425bf0	Misc9/targets.txt	
 425c00	240	bm	0	getbig	Fn425c00/targets.txt	
@@ -666,7 +666,7 @@
 4269a0	208	bm	0	sprite_clone	Props2/targets.txt	SpriteProp
 426a70	90	bm	0	spriteprop_destruct	Destruct/targets.txt	
 426b00	256	bm	0	sprite_build	Props2/targets.txt	SpriteProp
-426c00	88	func	-	-	Release/targets_stuck.txt	SpriteProp
+426c00	88	func	4	decalsizev	Release/targets_stuck.txt	SpriteProp
 426c70	755	func	22	frame_ctor	Props2/targets_framector.txt	
 426f70	32	bm	0	frameprop	Destroy/targets.txt	FrameProp
 426f90	61	bm	0	holder_dtor_d426f90	Fam61/targets.txt	
@@ -704,13 +704,13 @@
 428bd0	320	bm	0	cyc_clone	Props2/targets.txt	CycleProp
 428d10	74	bm	0	cycleprop_destruct	Destruct/targets.txt	
 428d80	252	bm	0	cyc_show	Props2/targets.txt	CycleProp
-428e90	320	func	-	-	CycleProp/targets_stuck.txt	CycleProp
+428e90	320	func	108	cycleupdate	CycleProp/targets_stuck.txt	CycleProp
 428fd0	224	bm	0	setcur	Fn428fd0/targets.txt	
-4290b0	665	func	-	-	Fn4290b0/targets.txt	
+4290b0	665	func	113	fire	Fn4290b0/targets.txt	
 429350	16	bm	0	setstep	CycleProp/targets.txt	CycleProp
 429360	16	bm	0	setmode	CycleProp/targets.txt	NavProp
 429370	16	bm	0	setcurrentthin	CycleProp/targets.txt	CycleProp
-429380	778	func	-	-	NavProp/targets_constructorfile.txt	
+429380	778	func	12	nav_ctor_file	NavProp/targets_constructorfile.txt	
 429690	16	bm	0	getsurface	NavProp/targets.txt	NavProp
 4296a0	16	bm	0	getinstance	NavProp/targets.txt	
 4296b0	32	bm	0	navprop	Destroy/targets.txt	NavProp
@@ -726,16 +726,16 @@
 429f40	32	bm	0	readpropfiles1	PropLoader/targets.txt	
 429f60	32	bm	0	readpropfiles2	PropLoader/targets.txt	
 429f80	32	bm	0	readpropfiles3	PropLoader/targets.txt	
-429fa0	749	func	-	-	Fn429fa0/targets.txt	
+429fa0	749	bm	0	readpropfiles	Fn429fa0/targets.txt	
 42a290	651	func	20	readprops	Fn42a290/targets.txt	
-42a520	6831	func	-	-	PropLoader/targets_loadprop.txt	
+42a520	6831	func	1069	load_prop	PropLoader/targets_loadprop.txt	
 42bfd0	1835	func	43	read_placement	PropLoader/targets_placement.txt	
 42c700	375	func	34	read_paths	PropLoader/targets_paths.txt	
 42c8b0	851	func	80	find_prop_template	PropLoader/targets_findtemplate.txt	
-42cc10	405	func	-	-	Fn42cc10/targets.txt	
+42cc10	405	bm	0	lookupname	Fn42cc10/targets.txt	
 42cdb0	203	bm	0	split	Fn42cdb0/targets.txt	
 42cea0	336	func	80	walk_path	PropLoader/targets_walkpath.txt	
-42d010	368	func	-	-	PropList/targets_stuck.txt	
+42d010	368	func	20	clearworld	PropList/targets_stuck.txt	
 42d180	32	bm	0	addupdatingprop	PropList/targets.txt	
 42d1a0	80	bm	0	remove_updating_prop	PropList/targets_removeupdating.txt	
 42d1f0	32	bm	0	destroyproplater	PropList/targets.txt	
@@ -789,7 +789,7 @@
 42dc50	128	bm	0	panel_background	Panel/targets_background.txt	
 42dcd0	48	bm	0	clearnote	Panel/targets.txt	
 42dd00	48	bm	0	clearmessage	Panel/targets.txt	
-42dd30	944	func	-	-	Panel/targets_drawmessage.txt	
+42dd30	944	func	242	draw_message	Panel/targets_drawmessage.txt	
 42e0e0	448	func	109	draw_note	Panel/targets_drawnote.txt	
 42e2a0	16	bm	0	updateregionsprites	CompassRuler/targets.txt	
 42e2b0	592	bm	0	follow	Fn42e2b0/targets.txt	
@@ -800,18 +800,18 @@
 42ea60	16	bm	0	clearevent	Panel/targets.txt	
 42ea70	208	bm	0	ctor	StatusBarCtor/targets.txt	
 42eb40	146	bm	0	sbdtor	StatusBar/targets.txt	
-42ec10	352	func	999	statusinit	StatusBar/targets.txt	
-42ed70	288	func	999	statusupd	StatusBar/targets.txt	
+42ec10	352	bm	0	statusinit	StatusBar/targets.txt	
+42ed70	288	bm	0	statusupd	StatusBar/targets.txt	
 42ee90	48	bm	0	asker	Misc16/targets.txt	
 42eec0	128	bm	0	status_amo	StatusBar/targets_amo.txt	
 42ef40	16	bm	0	setfoodgoal	StatusBar/targets.txt	
 42ef50	240	func	19	status_food	StatusBar/targets_food.txt	
-42f050	396	func	999	statussub	StatusBar/targets.txt	
+42f050	396	bm	0	statussub	StatusBar/targets.txt	
 42f1f0	16	bm	0	thunk42f1f0	Guards/targets_thunk2.txt	
 42f200	46	bm	0	timedset	Misc16/targets.txt	
 42f230	112	bm	0	name8	Fam112c/targets.txt	
 42f2a0	32	bm	0	leaf_42f2a0	Leaves/targets.txt	
-42f2c0	679	func	-	-	Fn42f2c0/targets.txt	
+42f2c0	679	bm	0	loadmessages	Fn42f2c0/targets.txt	
 42f580	112	bm	0	ctor	QuestPanel/targets.txt	
 42f5f0	68	bm	0	qp_dtor	QuestPanel/targets_dtor.txt	
 42f660	48	bm	0	qp_load	QuestPanel/targets_wrappers.txt	
@@ -829,7 +829,7 @@
 430150	478	bm	0	quest_initialize	QuestItems/targets_initialize.txt	
 430340	32	bm	0	ownerfree	Misc10/targets.txt	
 430360	224	bm	0	loadcombined	Sim2/targets_ct.txt	
-430440	240	func	999	drawrow	CompassRuler/targets.txt	
+430440	240	bm	0	drawrow	CompassRuler/targets.txt	
 430530	163	bm	0	tw_dtor	FunctionTweak/targets.txt	
 430600	32	bm	0	tweakfloatfunction	Destroy/targets.txt	TweakFloatFunction
 430620	112	bm	0	tw_create	FunctionTweak/targets.txt	TweakFloatFunction
@@ -928,27 +928,27 @@
 435b30	128	bm	0	world_destroy	World/targets_destroy.txt	
 435bb0	157	bm	0	world_decal	World/targets_decal.txt	
 435c70	32	bm	0	setdecalsize	Misc/targets.txt	
-435c90	928	func	-	-	World/targets_readdecal.txt	
+435c90	928	bm	0	readdecal	World/targets_readdecal.txt	
 436040	532	func	2	world_lights	World/targets_lights.txt	
 4362a0	208	bm	0	world_render	World/targets_render.txt	
 436370	48	bm	0	worldreadpropfiles	PropLoader/targets.txt	
 4363a0	497	bm	0	world_loadnav	World/targets_loadnav.txt	
 4365a0	140	bm	0	world_surfaces	World/targets_surfaces.txt	
 436640	182	bm	0	face_to_world	World/targets_face_to_world.txt	
-436710	681	func	-	-	Fn436710/targets.txt	
+436710	681	func	8	regionsoulctor	Fn436710/targets.txt	
 4369c0	99	bm	0	rs_sdd	Misc18/targets_rs.txt	SqueezilRegionSoul
-436a60	144	func	-	-	Sim2/targets_stuck.txt	
+436a60	144	func	6	startfunction	Sim2/targets_stuck.txt	
 436af0	786	func	30	region_enter	RegionSoul/targets_enter.txt	SqueezilRegionSoul
-436e10	389	func	-	-	Fn436e10/targets.txt	SqueezilRegionSoul
-436fc0	781	func	-	-	Sim2/targets_bridgequad.txt	
+436e10	389	bm	0	regmsg	Fn436e10/targets.txt	SqueezilRegionSoul
+436fc0	781	func	79	bridgequad	Sim2/targets_bridgequad.txt	
 437360	112	bm	0	h5_get	Misc18/targets_get2.txt	
-4373d0	2664	func	-	-	Fn4373d0/targets.txt	SqueezilRegionSoul
+4373d0	2664	func	686	update	Fn4373d0/targets.txt	SqueezilRegionSoul
 437e40	256	bm	0	linkopen	Release/targets.txt	
-437f40	192	func	-	-	Sim2/targets_stuck.txt	
+437f40	192	func	30	beento	Sim2/targets_stuck.txt	
 438000	16	bm	0	v0o	CameraSoul/targets.txt	SqueezilRegionSoul
 438010	16	bm	0	v1n	CameraSoul/targets.txt	SqueezilRegionSoul
 438020	240	bm	0	toggle_place	Fn438020/targets.txt	
-438110	409	func	-	-	Fn438110/targets.txt	
+438110	409	bm	0	showcursor	Fn438110/targets.txt	
 4382b0	16	func	5	region_del_adapter	Adjustors/targets.txt	SqueezilRegionSoul
 4382c0	16	bm	0	region_adapter	Adjustors/targets.txt	SqueezilRegionSoul
 4382d0	16	bm	0	v1k	CameraSoul/targets.txt	SqueezilRegionSoul
@@ -1046,7 +1046,7 @@
 43bc40	48	bm	0	takey	Misc10/targets.txt	
 43bc70	176	bm	0	f43bc70	Tiny4/targets30.txt	
 43bd20	160	bm	0	f43bd20	Tiny4/targets29.txt	
-43bdc0	336	func	999	getaxes	Misc10/targets.txt	
+43bdc0	336	bm	0	getaxes	Misc10/targets.txt	
 43bf10	112	func	16	ramp1	Misc18/targets_ramp.txt	
 43bf80	96	func	14	ramp2	Misc18/targets_ramp.txt	
 43bfe0	224	func	4	stickish	Fn43bfe0/targets.txt	
@@ -1054,7 +1054,7 @@
 43c1a0	16	bm	0	applicationrunning	Input/targets.txt	
 43c1b0	96	bm	0	showmenu	Misc16/targets_win.txt	
 43c210	64	bm	0	hidemenu	Misc16/targets_win.txt	
-43c250	621	func	-	-	Fn43c250/targets.txt	
+43c250	621	bm	0	loadsettings	Fn43c250/targets.txt	
 43c4d0	384	bm	0	save_bindings	Input/targets_savebindings.txt	
 43c650	336	func	62	compatible_bindings	Input/targets_compatible.txt	
 43c7a0	16	bm	0	inputjoystickpresent	Input/targets.txt	
@@ -1082,9 +1082,9 @@
 43dc00	32	bm	0	leaf_43dc00	Leaves/targets.txt	
 43dc20	32	bm	0	leaf_43dc20	Leaves/targets.txt	
 43dc40	144	bm	0	f43dc40	Tiny4/targets25.txt	
-43dcd0	409	func	-	-	Fn43dcd0/targets.txt	
+43dcd0	409	bm	0	mousebtn	Fn43dcd0/targets.txt	
 43de80	142	bm	0	f43de80	Tiny4/targets27.txt	
-43df10	3104	func	-	-	PhysicsTable/targets.txt	
+43df10	3104	func	410	inittable	PhysicsTable/targets.txt	
 43eb30	142	bm	0	f43eb30	Tiny4/targets28.txt	
 43ebc0	159	bm	0	reset_command_default	Input/targets_resetdefault.txt	
 43ec70	128	bm	0	reg_read	Misc18/targets_reg.txt	
@@ -1335,7 +1335,7 @@
 446ed0	174	bm	0	readphys	CameraSettings/targets.txt	
 446fa0	16	bm	0	cansave_d446fa0	RegionSimulation/targets.txt	SqueezilSoul
 446fb0	814	func	69	attack_impulse	PhysicalCollision/targets_attack.txt	
-4472e0	561	func	-	-	Fn4472e0/targets.txt	
+4472e0	561	func	30	bouncebodies	Fn4472e0/targets.txt	
 447590	496	func	36	physical_collision	PhysicalCollision/targets.txt	
 447780	16	bm	0	cp_apply_d447780	FunctionProp/targets.txt	PhysicalSoul
 447790	16	bm	0	v0_d447790	CameraSoul/targets.txt	PhysicalSoul
@@ -1347,10 +1347,10 @@
 4479c0	16	bm	0	check	Calibration/targets.txt	
 4479d0	96	bm	0	joycap	Misc16/targets_joy.txt	
 447a30	192	bm	0	f447a30	Tiny4/targets32.txt	
-447af0	656	func	-	-	Fn447af0/targets.txt	
+447af0	656	func	149	joyproc	Fn447af0/targets.txt	
 447d80	96	bm	0	dlgproc	Misc18/targets.txt	
 447de0	288	func	6	calibrate_centre	Joy/targets_calibrate_centre.txt	
-447f00	352	func	999	joycal	Misc10/targets.txt	
+447f00	352	bm	0	joycal	Misc10/targets.txt	
 448060	272	func	16	f448060	Tiny4/targets23.txt	
 448170	128	bm	0	f448170	Tiny4/targets13.txt	
 4481f0	80	bm	0	joyread	Joy/targets.txt	
@@ -1394,11 +1394,11 @@
 448d20	112	bm	0	find	Persist/targets.txt	
 448d90	32	bm	0	ctor	WaveSound/targets.txt	
 448db0	16	bm	0	dtor	WaveSound/targets.txt	
-448dc0	432	func	999	waveopen	Tiny4/targets.txt	
+448dc0	432	bm	0	waveopen	Tiny4/targets.txt	
 448f70	112	bm	0	f448f70	Tiny4/targets12.txt	
 448fe0	272	bm	0	wave_read	Fn448fe0/targets.txt	
 4490f0	272	bm	0	wave_load	Fn4490f0/targets.txt	
-449200	416	func	999	creatsec	Audio/targets.txt	
+449200	416	bm	0	creatsec	Audio/targets.txt	
 4493a0	96	bm	0	wave_free	WaveSound/targets_free.txt	
 449400	16	bm	0	i449400	Guards/targets_init.txt	
 449410	16	bm	0	thunk449410	Thunks/targets.txt	
@@ -1420,26 +1420,26 @@
 4499e0	128	func	13	f4499e0	Tiny4/targets14.txt	
 449a60	32	bm	0	stepall	Misc16/targets.txt	
 449a80	32	bm	0	releasesound	Misc16/targets.txt	
-449aa0	361	func	-	-	Fn449aa0/targets_stuck.txt	
+449aa0	361	func	18	loadsound	Fn449aa0/targets_stuck.txt	
 449c30	202	bm	0	find_sound	Audio/targets_find.txt	
-449d20	393	func	-	-	Fn449d20/targets.txt	
-449ee0	702	func	-	-	Fn449ee0/targets.txt	
+449d20	393	bm	0	loadscopes	Fn449d20/targets.txt	
+449ee0	702	func	99	loadscope	Fn449ee0/targets.txt	
 44a1a0	176	bm	0	release_sound_scope	Audio/targets_releasescope.txt	
 44a250	732	func	115	play_effect	Audio/targets_playeffect.txt	
-44a5a0	418	func	-	-	Fn44a5a0/targets.txt	
-44a750	411	func	-	-	Fn44a750/targets.txt	
+44a5a0	418	bm	0	startstream	Fn44a5a0/targets.txt	
+44a750	411	bm	0	startamb	Fn44a750/targets.txt	
 44a8f0	80	bm	0	stop_looping_sounds	Audio/targets_stop.txt	
 44a940	208	bm	0	music	Audio/targets.txt	
 44aa10	160	bm	0	sfx	Audio/targets.txt	
 44aab0	32	bm	0	setsensitivity2	Misc/targets.txt	
 44aad0	16	bm	0	stacktop_d44aad0	Misc9/targets.txt	
 44aae0	605	func	57	audio_update	Audio/targets_update.txt	
-44ad60	112	func	-	-	Misc18/targets_chk.txt	
+44ad60	112	func	8	f44ad60	Misc18/targets_chk.txt	
 44add0	313	func	42	resume_sounds	Audio/targets_resume.txt	
 44af30	944	func	4	placelevel_ctor	Fn44b2e0/targets.txt	
 44b2e0	449	func	39	placelevel_dtor	Fn44b2e0/targets.txt	
-44b5b0	409	func	-	-	Fn44b5b0/targets.txt	
-44b780	404	func	-	-	Fn44b780/targets.txt	
+44b5b0	409	bm	0	brainlist	Fn44b5b0/targets.txt	
+44b780	404	bm	0	subloadall	Fn44b780/targets.txt	
 44b950	672	func	37	readgoodielist	Fn44b2e0/targets.txt	
 44bc40	241	func	8	run	Fn44bc40/targets.txt	
 44bd60	5418	func	1300	placelevel_read	Fn44b2e0/targets.txt	
@@ -1470,8 +1470,8 @@
 44e900	224	bm	0	splash_ctor	Fn44e900/targets.txt	
 44e9e0	80	bm	0	twoowner	Misc16/targets_m2.txt	
 44ea30	240	bm	0	splashload	Fn44ea30/targets.txt	
-44eb20	673	func	-	-	Fn44eb20/targets.txt	
-44edd0	112	func	-	-	Ui/targets_splashshow.txt	
+44eb20	673	func	23	findimage	Fn44eb20/targets.txt	
+44edd0	112	func	27	splash_show	Ui/targets_splashshow.txt	
 44ee40	96	bm	0	stop	Player/targets.txt	
 44eea0	16	bm	0	isshown	Ui/targets.txt	
 44eeb0	80	bm	0	splash_pump	Ui/targets_splashpump.txt	
@@ -1487,7 +1487,7 @@
 44f170	16	bm	0	thunk44f170	Thunks/targets.txt	
 44f180	16	bm	0	r44f180	Guards/targets_init.txt	
 44f190	16	bm	0	thunk44f190	Guards/targets_thunk2.txt	
-44f1a0	968	func	-	-	SoulDtor2/targets_sqctor.txt	
+44f1a0	968	func	220	sqsoul_ctor	SoulDtor2/targets_sqctor.txt	
 44f570	32	bm	0	squeezilsoul	Destroy/targets.txt	SqueezilSoul
 44f590	68	bm	0	d44f590	Dtor44f590/targets.txt	
 44f600	254	bm	0	sqsoul_dtor	SoulDtor2/targets_sqsoul.txt	
@@ -1566,7 +1566,7 @@
 4579f0	208	bm	0	updorient	SqueezilBody/targets.txt	SqueezilBody
 457ac0	16	bm	0	getmode	SqueezilBody/targets.txt	SqueezilBody
 457ad0	64	bm	0	f457ad0	Tiny4/targets9.txt	SqueezilBody
-457b10	166	func	-	-	SqueezilBody/targets_headpos.txt	SqueezilBody
+457b10	166	func	25	headpos	SqueezilBody/targets_headpos.txt	SqueezilBody
 457bc0	1081	bm	0	update_body	SqueezilBody/targets_update.txt	SqueezilBody
 458000	16	bm	0	i458000	Guards/targets_init.txt	
 458010	16	bm	0	thunk458010	Thunks/targets.txt	
@@ -1575,11 +1575,11 @@
 458050	80	bm	0	load_proto_bodies	SqueezilBody/targets_loadprotos.txt	
 4580a0	144	func	15	free_proto_bodies	SqueezilBody/targets_freeprotos.txt	
 458130	968	func	93	load_proto_body	SqueezilBody/targets_loadproto.txt	
-458590	344	func	-	-	Fn458590/targets_stuck.txt	
+458590	344	func	4	initclips	Fn458590/targets_stuck.txt	
 458700	288	bm	0	load_body_cycle	SqueezilBody/targets_loadcycle.txt	
 458820	347	func	40	set_mode	SqueezilBody/targets_setmode.txt	SqueezilBody
 4589a0	238	func	10	near9	Fn4589a0/targets.txt	
-458aa0	553	func	-	-	Fn458aa0/targets.txt	
+458aa0	553	func	134	ground	Fn458aa0/targets.txt	
 458cd0	496	bm	0	air	Fn458cd0/targets.txt	
 458ec0	96	bm	0	halt	Misc16/targets_m2.txt	SqueezilBody
 458f20	64	bm	0	find_body_color	SqueezilBody/targets_color.txt	
@@ -1610,9 +1610,9 @@
 4594d0	96	bm	0	goodie_settings_init	Guards/targets_settings_initializers.txt	
 459530	16	bm	0	r459530	Guards/targets_init.txt	
 459540	69	bm	0	goodie_settings_cleanup	Guards/targets_settings_cleanup.txt	
-459590	324	func	-	-	Fn459590/targets.txt	
-4596e0	194	func	-	-	Misc18/targets_d21.txt	GoodieSoul
-4597b0	412	func	-	-	Fn459590/targets_read_stuck.txt	
+459590	324	bm	0	goodiector	Fn459590/targets.txt	
+4596e0	194	bm	0	d21_sdd	Misc18/targets_d21.txt	GoodieSoul
+4597b0	412	func	26	goodieread	Fn459590/targets_read_stuck.txt	
 459960	32	bm	0	getinterface	GoodieSoul/targets.txt	GoodieSoul
 459980	16	bm	0	isloose	GoodieSoul/targets.txt	GoodieSoul
 459990	32	bm	0	grantslot3	GoodieSoul/targets.txt	GoodieSoul
@@ -1643,18 +1643,18 @@
 45abe0	96	bm	0	resumemidi	Misc16/targets_joy.txt	
 45ac40	160	func	33	f45ac40	Tiny4/targets31.txt	
 45ace0	432	bm	0	midi_callback	Audio/targets_callback.txt	
-45ae90	1088	func	-	-	Audio/targets_initmidi.txt	
+45ae90	1088	func	145	initmidi	Audio/targets_initmidi.txt	
 45b2d0	176	bm	0	release_midi_file	Misc18/targets_midifile.txt	
 45b380	336	func	68	prime_midi_tracks	Audio/targets_prime.txt	
 45b4d0	720	func	61	fillmidi	Fn45b4d0/targets_stuck.txt	
 45b7a0	224	func	15	fillbuf	Fn45b7a0/targets.txt	
-45b880	528	func	999	midiev	Audio/targets.txt	
-45ba90	912	func	-	-	Audio/targets_readmidievent.txt	
+45b880	528	bm	0	midiev	Audio/targets.txt	
+45ba90	912	func	170	readmidievent	Audio/targets_readmidievent.txt	
 45be20	144	bm	0	varint	Misc18/targets_varint.txt	
 45beb0	64	bm	0	getbyte	Misc6/targets.txt	
 45bef0	80	bm	0	readexact	Misc16/targets_win.txt	
-45bf40	784	func	-	-	Audio/targets_startmidi.txt	
-45c250	128	func	-	-	Misc18/targets_midi.txt	
+45bf40	784	func	79	startmidi	Audio/targets_startmidi.txt	
+45c250	128	func	16	midi_free	Misc18/targets_midi.txt	
 45c2d0	16	bm	0	prototype_thunk_45c2d0	ForwardThunks/targets.txt	
 45c2e0	208	bm	0	register_integer_array	Container2/targets_register_primitives.txt	
 45c3b0	16	bm	0	prototype_thunk_45c3b0	ForwardThunks/targets.txt	
@@ -1707,7 +1707,7 @@
 45d8c0	16	bm	0	ag20	ArrayGet/targets.txt	?$Array@PAVSurfaceTypeDescription@@
 45d8d0	48	bm	0	int_ctor	Container/targets_int.txt	
 45d900	32	bm	0	int_dtor	Container/targets_int.txt	
-45d920	112	bm	0	int_insert	Container/targets_int.txt	?$PrimitiveArray@H$00
+45d920	112	func	4	int_insert	Container/targets.txt	?$PrimitiveArray@H$00
 45d990	64	bm	0	int_remove	Container/targets_int.txt	?$PrimitiveArray@H$00
 45d9d0	32	bm	0	int_set	Container/targets_int.txt	?$PrimitiveArray@H$00
 45d9f0	16	bm	0	int_data	Container/targets_int.txt	?$PrimitiveArray@H$00
@@ -1716,15 +1716,15 @@
 45db10	192	bm	0	create	Container2/gen/targets_PA_i1.txt	?$PrimitiveArray@H$00
 45dbd0	96	bm	0	read	Container2/gen/targets_PA_i1.txt	
 45dc30	64	bm	0	write	Container2/gen/targets_PA_i1.txt	?$PrimitiveArray@H$00
-45dc70	96	func	-	-	Misc18/targets_arrcopy.txt	
-45dcd0	112	func	-	-	Misc18/targets_arrcopy.txt	
+45dc70	96	func	22	ia_copy	Misc18/targets_arrcopy.txt	
+45dcd0	112	func	14	ia_n	Misc18/targets_arrcopy.txt	
 45dd40	48	bm	0	arrflt_ctor	Container/gen/targets_ArrayDtor.txt	
 45dd70	32	bm	0	arrflt_dtor	Container/gen/targets_ArrayDtor.txt	
-45dd90	112	func	-	-	Container/gen/targets_Array05.txt	?$Array@M
+45dd90	112	bm	0	insert	Container/gen/targets_Array05.txt	?$Array@M
 45de00	64	bm	0	arm01	ArrayRemove/targets.txt	?$Array@M
 45de40	32	bm	0	leaf_45de40	Leaves/targets.txt	?$Array@M
 45de60	16	bm	0	ad04	ArrayData/targets.txt	?$Array@M
-45de70	128	func	-	-	Container/gen/targets_Array05.txt	?$Set@M$0BJ@
+45de70	128	bm	0	grow	Container/gen/targets_Array05.txt	?$Set@M$0BJ@
 45def0	144	bm	0	tn	Container2/gen/targets_PA_f2.txt	?$PrimitiveArray@M$01
 45df80	192	bm	0	create	Container2/gen/targets_PA_f2.txt	?$PrimitiveArray@M$01
 45e040	96	func	10	read	Container2/gen/targets_PA_f2.txt	
@@ -1736,7 +1736,7 @@
 45e300	64	bm	0	str_remove	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
 45e340	32	bm	0	str_set	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
 45e360	16	bm	0	str_data	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
-45e370	288	bm	0	str_grow	Container/targets_string.txt	?$Set@VSqzString@@$0L@
+45e370	288	func	46	str_grow	Container/targets.txt	?$Set@VSqzString@@$0L@
 45e490	144	bm	0	tn	Container2/gen/targets_PA_s3.txt	?$PrimitiveArray@VSqzString@@$02
 45e520	256	bm	0	create	Container2/gen/targets_PA_s3.txt	?$PrimitiveArray@VSqzString@@$02
 45e620	96	bm	0	read	Container2/gen/targets_PA_s3.txt	
@@ -1758,11 +1758,11 @@
 45eeb0	64	bm	0	write	Container2/gen/targets_PA_i10.txt	?$PrimitiveArray@H$09
 45eef0	176	bm	0	id_list_ctor	Container2/targets_idctor.txt	
 45efa0	74	bm	0	setint10_dtor	Container/gen/targets_SetDtor.txt	
-45f000	560	func	-	-	Container/gen/targets_Set09.txt	?$Set@H$09
+45f000	560	func	124	insert	Container/gen/targets_Set09.txt	?$Set@H$09
 45f230	32	bm	0	contains_d45f230	Container/targets_set23.txt	?$Set@H$09
-45f250	112	func	-	-	Container/gen/targets_Set09.txt	?$Set@H$09
+45f250	112	func	40	indexof	Container/gen/targets_Set09.txt	?$Set@H$09
 45f2c0	32	bm	0	removekey_d45f2c0	Container/targets_set23.txt	
-45f2e0	48	func	-	-	Container/gen/targets_Set09.txt	?$Set@H$09
+45f2e0	48	bm	0	replace	Container/gen/targets_Set09.txt	?$Set@H$09
 45f310	208	bm	0	create	Container2/gen/targets_SC_i10.txt	?$Set@H$09
 45f3e0	144	bm	0	tn	Container2/gen/targets_PA_s11.txt	?$PrimitiveArray@VSqzString@@$0L@
 45f470	256	bm	0	create	Container2/gen/targets_PA_s11.txt	?$PrimitiveArray@VSqzString@@$0L@
@@ -1770,21 +1770,21 @@
 45f5d0	64	bm	0	write	Container2/gen/targets_PA_s11.txt	?$PrimitiveArray@VSqzString@@$0L@
 45f610	240	bm	0	string_set_ctor	Container2/targets_string_set_ctor.txt	
 45f700	74	bm	0	setstr11_dtor	Container/gen/targets_SetDtor.txt	
-45f760	878	func	-	-	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
+45f760	878	func	266	insert	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
 45fad0	32	bm	0	contains_d45fad0	Container/targets_set23.txt	?$Set@VSqzString@@$0L@
-45faf0	176	func	-	-	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
+45faf0	176	func	75	indexof	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
 45fba0	32	bm	0	removekey_d45fba0	Container/targets_set23.txt	
-45fbc0	144	func	-	-	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
+45fbc0	144	func	8	replace	Container/gen/targets_Set10.txt	?$Set@VSqzString@@$0L@
 45fc60	288	bm	0	create	Container2/gen/targets_SC_s11.txt	?$Set@VSqzString@@$0L@
 45fd80	144	bm	0	tn	Container2/gen/targets_PA_i20.txt	?$PrimitiveArray@H$0BE@
 45fe10	192	bm	0	create	Container2/gen/targets_PA_i20.txt	?$PrimitiveArray@H$0BE@
 45fed0	96	bm	0	read	Container2/gen/targets_PA_i20.txt	
 45ff30	64	bm	0	write	Container2/gen/targets_PA_i20.txt	?$PrimitiveArray@H$0BE@
-45ff70	560	func	-	-	Container/gen/targets_Set11.txt	?$Set@H$0BE@
+45ff70	560	func	131	insert	Container/gen/targets_Set11.txt	?$Set@H$0BE@
 4601a0	32	bm	0	contains_d4601a0	Container/targets_set23.txt	?$Set@H$0BE@
-4601c0	112	func	-	-	Container/gen/targets_Set11.txt	?$Set@H$0BE@
+4601c0	112	func	40	indexof	Container/gen/targets_Set11.txt	?$Set@H$0BE@
 460230	32	bm	0	removekey_d460230	Container/targets_set23.txt	
-460250	48	func	-	-	Container/gen/targets_Set11.txt	?$Set@H$0BE@
+460250	48	bm	0	replace	Container/gen/targets_Set11.txt	?$Set@H$0BE@
 460280	208	bm	0	create	Container2/gen/targets_SC_i20.txt	?$Set@H$0BE@
 460350	74	bm	0	table1_dtor	Container/gen/targets_TableDtor.txt	
 4603c0	96	func	12	insert_d4603c0	Container/targets_table50.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
@@ -1799,11 +1799,11 @@
 460790	256	func	28	create	Container2/gen/targets_PA_s21.txt	?$PrimitiveArray@VSqzString@@$0BF@
 460890	96	bm	0	read	Container2/gen/targets_PA_s21.txt	
 4608f0	64	bm	0	write	Container2/gen/targets_PA_s21.txt	?$PrimitiveArray@VSqzString@@$0BF@
-460930	878	func	-	-	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
+460930	878	func	266	insert	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
 460ca0	32	bm	0	contains_d460ca0	Container/targets_set23.txt	?$Set@VSqzString@@$0BF@
-460cc0	176	func	-	-	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
+460cc0	176	func	75	indexof	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
 460d70	32	bm	0	removekey_d460d70	Container/targets_set23.txt	
-460d90	144	func	-	-	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
+460d90	144	func	8	replace	Container/gen/targets_Set13.txt	?$Set@VSqzString@@$0BF@
 460e30	288	bm	0	create	Container2/gen/targets_SC_s21.txt	?$Set@VSqzString@@$0BF@
 460f50	368	bm	0	string_int_table_ctor	Container2/targets_string_int_ctor.txt	
 4610c0	74	bm	0	table2_dtor	Container/gen/targets_TableDtor.txt	
@@ -1821,17 +1821,17 @@
 461570	256	bm	0	create	Container2/gen/targets_PA_s22.txt	?$PrimitiveArray@VSqzString@@$0BG@
 461670	96	bm	0	read	Container2/gen/targets_PA_s22.txt	
 4616d0	64	bm	0	write	Container2/gen/targets_PA_s22.txt	?$PrimitiveArray@VSqzString@@$0BG@
-461710	878	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
+461710	878	func	276	insert	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
 461a80	32	bm	0	contains_d461a80	Container/targets_set23.txt	?$Set@VSqzString@@$0BG@
-461aa0	176	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
+461aa0	176	func	57	indexof	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
 461b50	32	func	10	f461b50	Misc17/targets.txt	
-461b70	142	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
+461b70	142	func	20	replace	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
 461c10	288	bm	0	create	Container2/gen/targets_SC_s22.txt	?$Set@VSqzString@@$0BG@
 461d30	74	bm	0	table3_dtor	Container/gen/targets_TableDtor.txt	
-461da0	96	bm	0	insert_d461da0	Container/targets_table23.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
+461da0	96	func	12	insert	Container/gen/targets_Table06.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
 461e00	32	bm	0	contains_d461e00	Container/targets_table23.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
 461e20	32	bm	0	indexof_d461e20	Container/targets_table23.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
-461e40	48	func	-	-	Container/gen/targets_Table06.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
+461e40	48	func	16	removeat	Container/gen/targets_Table06.txt	?$Table@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
 461e70	48	bm	0	removekey_d461e70	Container/targets_table23.txt	
 461ea0	32	bm	0	lookup	Misc16/targets.txt	
 461ec0	128	func	14	n461ec0	Tiny4/targets6.txt	?$BufferObjectTable@VSqzString@@MV?$PrimitiveArray@M$01@@$0BG@
@@ -1864,11 +1864,11 @@
 4630a0	192	bm	0	create	Container2/gen/targets_PA_i24.txt	?$PrimitiveArray@H$0BI@
 463160	96	bm	0	read	Container2/gen/targets_PA_i24.txt	
 4631c0	64	bm	0	write	Container2/gen/targets_PA_i24.txt	?$PrimitiveArray@H$0BI@
-463200	560	func	-	-	Container/gen/targets_Set16.txt	?$Set@H$0BI@
+463200	560	func	131	insert	Container/gen/targets_Set16.txt	?$Set@H$0BI@
 463430	32	bm	0	contains_d463430	Container/targets_set23.txt	?$Set@H$0BI@
-463450	112	func	-	-	Container/gen/targets_Set16.txt	?$Set@H$0BI@
+463450	112	func	40	indexof	Container/gen/targets_Set16.txt	?$Set@H$0BI@
 4634c0	32	bm	0	removekey_d4634c0	Container/targets_set23.txt	
-4634e0	48	func	-	-	Container/gen/targets_Set16.txt	?$Set@H$0BI@
+4634e0	48	bm	0	replace	Container/gen/targets_Set16.txt	?$Set@H$0BI@
 463510	208	bm	0	create	Container2/gen/targets_SC_i24.txt	?$Set@H$0BI@
 4635e0	352	bm	0	int_string_table_ctor	Container2/targets_int_string_ctor.txt	
 463740	74	bm	0	table5_dtor	Container/gen/targets_TableDtor.txt	
@@ -1886,11 +1886,11 @@
 463c50	192	bm	0	create	Container2/gen/targets_PA_f25.txt	?$PrimitiveArray@M$0BJ@
 463d10	96	bm	0	read	Container2/gen/targets_PA_f25.txt	
 463d70	64	bm	0	write	Container2/gen/targets_PA_f25.txt	?$Set@M$0BJ@
-463db0	656	func	-	-	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
+463db0	656	func	244	insert	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
 464040	32	bm	0	contains_d464040	Container/targets_set23.txt	?$Set@M$0BJ@
-464060	144	func	-	-	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
+464060	144	func	55	indexof	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
 4640f0	32	bm	0	removekey_d4640f0	Container/targets_set23.txt	
-464110	64	func	-	-	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
+464110	64	func	10	replace	Container/gen/targets_Set17.txt	?$Set@M$0BJ@
 464150	208	bm	0	create	Container2/gen/targets_SC_f25.txt	?$Set@M$0BJ@
 464220	352	bm	0	float_string_table_ctor	Container2/targets_float_string_ctor.txt	
 464380	74	bm	0	table6_dtor	Container/gen/targets_TableDtor.txt	
@@ -1907,18 +1907,18 @@
 464810	192	bm	0	create	Container2/gen/targets_PA_i5.txt	?$PrimitiveArray@H$04
 4648d0	96	bm	0	read	Container2/gen/targets_PA_i5.txt	
 464930	64	bm	0	write	Container2/gen/targets_PA_i5.txt	?$PrimitiveArray@H$04
-464970	560	func	-	-	Container/gen/targets_Set18.txt	?$Set@H$04
+464970	560	func	126	insert	Container/gen/targets_Set18.txt	?$Set@H$04
 464ba0	32	bm	0	contains_d464ba0	Container/targets_set23.txt	?$Set@H$04
-464bc0	112	func	-	-	Container/gen/targets_Set18.txt	?$Set@H$04
+464bc0	112	func	38	indexof	Container/gen/targets_Set18.txt	?$Set@H$04
 464c30	32	bm	0	removekey_d464c30	Container/targets_set23.txt	
-464c50	48	func	-	-	Container/gen/targets_Set18.txt	?$Set@H$04
+464c50	48	bm	0	replace	Container/gen/targets_Set18.txt	?$Set@H$04
 464c80	208	bm	0	create	Container2/gen/targets_SC_i5.txt	?$Set@H$04
 464d50	32	bm	0	arr1_dtor	Container/gen/targets_ArrayDtor.txt	
-464d70	112	func	-	-	Container/targets.txt	?$BufferObjectArray@PAVCharacter@@$04
+464d70	112	func	4	int_insert_d464d70	Container/targets.txt	?$BufferObjectArray@PAVCharacter@@$04
 464de0	64	bm	0	arm02	ArrayRemove/targets.txt	?$BufferObjectArray@PAVCharacter@@$04
 464e20	32	bm	0	ar01	ArrayReplace/targets.txt	?$BufferObjectArray@PAVCharacter@@$04
 464e40	16	bm	0	ad06	ArrayData/targets.txt	?$BufferObjectArray@PAVCharacter@@$04
-464e50	128	func	-	-	Container/gen/targets_Array19.txt	
+464e50	128	bm	0	grow	Container/gen/targets_Array19.txt	
 464ed0	128	func	14	n464ed0	Tiny4/targets6.txt	?$BufferObjectArray@PAVCharacter@@$04
 464f50	192	bm	0	oc_create	Tiny4/targets19.txt	?$BufferObjectArray@PAVCharacter@@$04
 465010	96	bm	0	oa_read	Tiny4/targets10.txt	
@@ -1940,17 +1940,17 @@
 465780	256	bm	0	create	Container2/gen/targets_PA_s6.txt	?$PrimitiveArray@VSqzString@@$05
 465880	96	bm	0	read	Container2/gen/targets_PA_s6.txt	
 4658e0	64	bm	0	write	Container2/gen/targets_PA_s6.txt	?$Set@VSqzString@@$05
-465920	878	func	-	-	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
+465920	878	func	276	insert	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
 465c90	32	bm	0	contains_d465c90	Container/targets_set23.txt	?$Set@VSqzString@@$05
-465cb0	176	func	-	-	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
-465d60	32	func	-	-	Container/gen/targets_Set21.txt	
-465d80	144	func	-	-	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
+465cb0	176	func	79	indexof	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
+465d60	32	func	10	removekey	Container/gen/targets_Set21.txt	
+465d80	144	func	8	replace	Container/gen/targets_Set21.txt	?$Set@VSqzString@@$05
 465e20	288	bm	0	create	Container2/gen/targets_SC_s6.txt	?$Set@VSqzString@@$05
-465f40	112	func	-	-	Container/targets.txt	?$Array@PAV?$PrimitiveArray@H$00@@
+465f40	112	func	4	insert	Container/gen/targets_Array23.txt	?$Array@PAV?$PrimitiveArray@H$00@@
 465fb0	64	bm	0	arm03	ArrayRemove/targets.txt	?$Array@PAV?$PrimitiveArray@H$00@@
 465ff0	32	bm	0	ar02	ArrayReplace/targets.txt	?$Array@PAV?$PrimitiveArray@H$00@@
 466010	16	bm	0	ad07	ArrayData/targets.txt	?$Array@PAV?$PrimitiveArray@H$00@@
-466020	128	func	-	-	Container/gen/targets_Array23.txt	
+466020	128	func	25	grow	Container/gen/targets_Array23.txt	
 4660a0	74	bm	0	table8_dtor	Container/gen/targets_TableDtor.txt	
 466110	96	func	12	insert_d466110	Container/targets_table50.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
 466170	32	bm	0	t02_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
@@ -1959,11 +1959,11 @@
 4661e0	48	bm	0	t02_RemoveKey	TableFwd/targets.txt	
 466210	32	bm	0	get_inventory	TableGet/targets.txt	
 466230	32	bm	0	arr2_dtor	Container/gen/targets_ArrayDtor.txt	
-466250	112	func	-	-	Container/targets.txt	?$BufferObjectArray@PAVCreature@@$09
+466250	112	func	4	int_insert_d466250	Container/targets.txt	?$BufferObjectArray@PAVCreature@@$09
 4662c0	64	bm	0	arm04	ArrayRemove/targets.txt	?$BufferObjectArray@PAVCreature@@$09
 466300	32	bm	0	ar03	ArrayReplace/targets.txt	?$BufferObjectArray@PAVCreature@@$09
 466320	16	bm	0	ad08	ArrayData/targets.txt	?$BufferObjectArray@PAVCreature@@$09
-466330	128	func	-	-	Container/gen/targets_Array20.txt	
+466330	128	func	25	grow	Container/gen/targets_Array20.txt	
 4663b0	128	func	14	n4663b0	Tiny4/targets6.txt	?$BufferObjectArray@PAVCreature@@$09
 466430	192	bm	0	od_create	Tiny4/targets19.txt	?$BufferObjectArray@PAVCreature@@$09
 4664f0	96	bm	0	oa2_read	Tiny4/targets11r.txt	
@@ -1981,35 +1981,35 @@
 466a50	48	bm	0	both48_d466a50	Fam48/targets.txt	
 466a80	48	bm	0	arr1_ctor	Container/gen/targets_ArrayDtor.txt	
 466ab0	32	bm	0	arr3_dtor	Container/gen/targets_ArrayDtor.txt	
-466ad0	112	func	-	-	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@@@
+466ad0	112	func	4	int_insert_d466ad0	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@@@
 466b40	64	bm	0	arm05	ArrayRemove/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@@@
 466b80	32	bm	0	ar04	ArrayReplace/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@@@
 466ba0	16	bm	0	ad09	ArrayData/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@@@
-466bb0	128	func	-	-	Container/gen/targets_Array24.txt	
+466bb0	128	func	19	grow	Container/gen/targets_Array24.txt	
 466c30	48	bm	0	arr2_ctor	Container/gen/targets_ArrayDtor.txt	
 466c60	32	bm	0	arr4_dtor	Container/gen/targets_ArrayDtor.txt	
-466c80	112	func	-	-	Container/gen/targets_Array25.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
+466c80	112	func	4	insert	Container/gen/targets_Array25.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
 466cf0	64	bm	0	arm06	ArrayRemove/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
 466d30	32	bm	0	ar05	ArrayReplace/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
 466d50	16	bm	0	ad10	ArrayData/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
-466d60	128	func	-	-	Container/gen/targets_Array25.txt	
+466d60	128	func	25	grow	Container/gen/targets_Array25.txt	
 466de0	320	func	42	frame_table_ctor	Container2/targets_render_table_ctors.txt	
 466f20	16	bm	0	ag22	ArrayGet/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 466f30	144	bm	0	tn	Container2/gen/targets_PA_s0.txt	?$PrimitiveArray@VSqzString@@$0A@
 466fc0	256	func	28	create	Container2/gen/targets_PA_s0.txt	?$PrimitiveArray@VSqzString@@$0A@
 4670c0	96	bm	0	read	Container2/gen/targets_PA_s0.txt	
 467120	64	bm	0	write	Container2/gen/targets_PA_s0.txt	?$PrimitiveArray@VSqzString@@$0A@
-467160	878	func	-	-	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
+467160	878	func	276	insert	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
 4674d0	32	bm	0	contains_d4674d0	Container/targets_set23.txt	?$Set@VSqzString@@$0A@
-4674f0	176	func	-	-	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
+4674f0	176	func	79	indexof	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
 4675a0	32	bm	0	removekey_d4675a0	Container/targets_set23.txt	
-4675c0	144	func	-	-	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
+4675c0	144	func	8	replace	Container/gen/targets_Set28.txt	?$Set@VSqzString@@$0A@
 467660	288	bm	0	create	Container2/gen/targets_SC_s0.txt	?$Set@VSqzString@@$0A@
-467780	112	func	-	-	Container/targets.txt	?$Array@PAUIDirect3DRMFrame@@
+467780	112	func	4	int_insert_d467780	Container/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 4677f0	64	bm	0	arm07	ArrayRemove/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 467830	32	bm	0	ar06	ArrayReplace/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 467850	16	bm	0	ad11	ArrayData/targets.txt	?$Array@PAUIDirect3DRMFrame@@
-467860	128	func	-	-	Container/gen/targets_Array27.txt	
+467860	128	bm	0	grow	Container/gen/targets_Array27.txt	
 4678e0	74	bm	0	table10_dtor	Container/gen/targets_TableDtor.txt	
 467950	96	func	12	insert_d467950	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
 4679b0	32	bm	0	t04_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
@@ -2019,11 +2019,11 @@
 467a50	32	bm	0	get_b	TableGet/targets.txt	
 467a70	320	func	42	texture_table_ctor	Container2/targets_texture_table_ctor.txt	
 467bb0	16	bm	0	ag23	ArrayGet/targets.txt	?$Array@PAUIDirect3DRMTexture@@
-467bc0	112	func	-	-	Container/targets.txt	?$Array@PAUIDirect3DRMTexture@@
+467bc0	112	func	4	int_insert_d467bc0	Container/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467c30	64	bm	0	arm08	ArrayRemove/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467c70	32	bm	0	ar07	ArrayReplace/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467c90	16	bm	0	ad12	ArrayData/targets.txt	?$Array@PAUIDirect3DRMTexture@@
-467ca0	128	func	-	-	Container/gen/targets_Array30.txt	
+467ca0	128	bm	0	grow	Container/gen/targets_Array30.txt	
 467d20	74	bm	0	table11_dtor	Container/gen/targets_TableDtor.txt	
 467d90	96	func	12	insert_d467d90	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
 467df0	32	bm	0	t05_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
@@ -2033,25 +2033,25 @@
 467e90	32	bm	0	get_c	TableGet/targets.txt	
 467eb0	48	bm	0	arr3_ctor	Container/gen/targets_ArrayDtor.txt	
 467ee0	32	bm	0	arr5_dtor	Container/gen/targets_ArrayDtor.txt	
-467f00	112	func	-	-	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@
+467f00	112	func	4	int_insert_d467f00	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@
 467f70	64	bm	0	arm09	ArrayRemove/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@
 467fb0	32	bm	0	ar08	ArrayReplace/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@
 467fd0	16	bm	0	ad13	ArrayData/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@
-467fe0	128	func	-	-	Container/gen/targets_Array31.txt	
+467fe0	128	bm	0	grow	Container/gen/targets_Array31.txt	
 468060	48	bm	0	arr4_ctor	Container/gen/targets_ArrayDtor.txt	
 468090	32	bm	0	arr6_dtor	Container/gen/targets_ArrayDtor.txt	
-4680b0	112	func	-	-	Container/gen/targets_Array32.txt	?$Array@PAUIDirectSoundBuffer@@
+4680b0	112	func	4	insert	Container/gen/targets_Array32.txt	?$Array@PAUIDirectSoundBuffer@@
 468120	64	bm	0	arm10	ArrayRemove/targets.txt	?$Array@PAUIDirectSoundBuffer@@
 468160	32	bm	0	ar09	ArrayReplace/targets.txt	?$Array@PAUIDirectSoundBuffer@@
 468180	16	bm	0	ad14	ArrayData/targets.txt	?$Array@PAUIDirectSoundBuffer@@
-468190	128	func	-	-	Container/gen/targets_Array32.txt	
+468190	128	func	19	grow	Container/gen/targets_Array32.txt	
 468210	320	bm	0	tctor_s468210	Container/gen/targets_TableCtorS.txt	
 468350	16	bm	0	ag24	ArrayGet/targets.txt	?$Array@PAVAudioSample@@
-468360	112	func	-	-	Container/gen/targets_Array34.txt	?$Array@PAVAudioSample@@
+468360	112	func	4	insert	Container/gen/targets_Array34.txt	?$Array@PAVAudioSample@@
 4683d0	64	bm	0	arm11	ArrayRemove/targets.txt	?$Array@PAVAudioSample@@
 468410	32	bm	0	ar10	ArrayReplace/targets.txt	?$Array@PAVAudioSample@@
 468430	16	bm	0	ad15	ArrayData/targets.txt	?$Array@PAVAudioSample@@
-468440	128	func	-	-	Container/gen/targets_Array34.txt	
+468440	128	bm	0	grow	Container/gen/targets_Array34.txt	
 4684c0	74	bm	0	table12_dtor	Container/gen/targets_TableDtor.txt	
 468530	96	func	12	insert_d468530	Container/targets_table50.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
 468590	32	bm	0	t06_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
@@ -2061,11 +2061,11 @@
 468630	32	bm	0	get_d	TableGet/targets.txt	
 468650	48	bm	0	arr5_ctor	Container/gen/targets_ArrayDtor.txt	
 468680	32	bm	0	arr7_dtor	Container/gen/targets_ArrayDtor.txt	
-4686a0	112	func	-	-	Container/targets.txt	?$Array@PAVProp@@
+4686a0	112	func	4	int_insert_d4686a0	Container/targets.txt	?$Array@PAVProp@@
 468710	64	bm	0	arm12	ArrayRemove/targets.txt	?$Array@PAVProp@@
 468750	32	bm	0	ar11	ArrayReplace/targets.txt	?$Array@PAVProp@@
 468770	16	bm	0	ad16	ArrayData/targets.txt	?$Array@PAVProp@@
-468780	128	func	-	-	Container/gen/targets_Array35.txt	
+468780	128	func	19	grow	Container/gen/targets_Array35.txt	
 468800	320	func	42	prop_table_ctor	Container2/targets_prop_table_ctor.txt	
 468940	74	bm	0	table13_dtor	Container/gen/targets_TableDtor.txt	
 4689b0	96	func	12	insert_d4689b0	Container/targets_table50.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
@@ -2076,11 +2076,11 @@
 468ab0	32	bm	0	get_e	TableGet/targets.txt	
 468ad0	320	func	42	morph_table_ctor	Container2/targets_morph_table_ctor.txt	
 468c10	16	bm	0	ag25	ArrayGet/targets.txt	?$Array@PAVMorphCycle@@
-468c20	112	func	-	-	Container/targets.txt	?$Array@PAVMorphCycle@@
+468c20	112	func	4	int_insert_d468c20	Container/targets.txt	?$Array@PAVMorphCycle@@
 468c90	64	bm	0	arm13	ArrayRemove/targets.txt	?$Array@PAVMorphCycle@@
 468cd0	32	bm	0	ar12	ArrayReplace/targets.txt	?$Array@PAVMorphCycle@@
 468cf0	16	bm	0	ad17	ArrayData/targets.txt	?$Array@PAVMorphCycle@@
-468d00	128	func	-	-	Container/gen/targets_Array38.txt	
+468d00	128	bm	0	grow	Container/gen/targets_Array38.txt	
 468d80	74	bm	0	table14_dtor	Container/gen/targets_TableDtor.txt	
 468df0	96	func	12	insert_d468df0	Container/targets_table50.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
 468e50	32	bm	0	t08_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
@@ -2090,27 +2090,27 @@
 468ef0	32	bm	0	get_f	TableGet/targets.txt	
 468f10	48	bm	0	arr6_ctor	Container/gen/targets_ArrayDtor.txt	
 468f40	32	bm	0	arr8_dtor	Container/gen/targets_ArrayDtor.txt	
-468f60	112	func	-	-	Container/gen/targets_Array39.txt	?$Array@PAVFrameProp@@
+468f60	112	func	4	insert	Container/gen/targets_Array39.txt	?$Array@PAVFrameProp@@
 468fd0	64	bm	0	arm14	ArrayRemove/targets.txt	?$Array@PAVFrameProp@@
 469010	32	bm	0	ar13	ArrayReplace/targets.txt	?$Array@PAVFrameProp@@
 469030	16	bm	0	ad18	ArrayData/targets.txt	?$Array@PAVFrameProp@@
-469040	128	func	-	-	Container/gen/targets_Array39.txt	
+469040	128	func	19	grow	Container/gen/targets_Array39.txt	
 4690c0	256	bm	0	place_table_ctor	Container2/targets_place_table_ctor.txt	
 4691c0	16	bm	0	ag26	ArrayGet/targets.txt	?$Array@PAVPlaceDescriptor@@
 4691d0	144	bm	0	tn	Container2/gen/targets_PA_i9.txt	?$PrimitiveArray@H$08
 469260	192	bm	0	create	Container2/gen/targets_PA_i9.txt	?$PrimitiveArray@H$08
 469320	96	bm	0	read	Container2/gen/targets_PA_i9.txt	
 469380	64	bm	0	write	Container2/gen/targets_PA_i9.txt	?$PrimitiveArray@H$08
-4693c0	560	func	-	-	Container/gen/targets_Set40.txt	?$Set@H$08
+4693c0	560	func	129	insert	Container/gen/targets_Set40.txt	?$Set@H$08
 4695f0	32	bm	0	contains_d4695f0	Container/targets_set23.txt	?$Set@H$08
-469610	144	func	-	-	Container/gen/targets_Set40.txt	?$Set@H$08
-4696a0	48	func	-	-	Container/gen/targets_Set40.txt	?$Set@H$08
+469610	144	func	40	indexof	Container/gen/targets_Set40.txt	?$Set@H$08
+4696a0	48	bm	0	replace	Container/gen/targets_Set40.txt	?$Set@H$08
 4696d0	208	bm	0	create	Container2/gen/targets_SC_i9.txt	?$Set@H$08
-4697a0	112	func	-	-	Container/gen/targets_Array42.txt	?$Array@PAVPlaceDescriptor@@
+4697a0	112	func	4	insert	Container/gen/targets_Array42.txt	?$Array@PAVPlaceDescriptor@@
 469810	64	bm	0	arm15	ArrayRemove/targets.txt	?$Array@PAVPlaceDescriptor@@
 469850	32	bm	0	ar14	ArrayReplace/targets.txt	?$Array@PAVPlaceDescriptor@@
 469870	16	bm	0	ad19	ArrayData/targets.txt	?$Array@PAVPlaceDescriptor@@
-469880	128	func	-	-	Container/gen/targets_Array42.txt	
+469880	128	bm	0	grow	Container/gen/targets_Array42.txt	
 469900	74	bm	0	table15_dtor	Container/gen/targets_TableDtor.txt	
 469970	96	func	12	insert_d469970	Container/targets_table50.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
 4699d0	32	bm	0	t09_Contains	TableFwd/targets.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
@@ -2120,25 +2120,25 @@
 469a70	32	bm	0	get_place	TableGet/targets.txt	
 469a90	48	bm	0	arr7_ctor	Container/gen/targets_ArrayDtor.txt	
 469ac0	32	bm	0	arr9_dtor	Container/gen/targets_ArrayDtor.txt	
-469ae0	112	func	-	-	Container/targets.txt	?$Array@PAU_GoodieSpotInfo@@
+469ae0	112	func	4	int_insert_d469ae0	Container/targets.txt	?$Array@PAU_GoodieSpotInfo@@
 469b50	64	bm	0	arm16	ArrayRemove/targets.txt	?$Array@PAU_GoodieSpotInfo@@
 469b90	32	bm	0	ar15	ArrayReplace/targets.txt	?$Array@PAU_GoodieSpotInfo@@
 469bb0	16	bm	0	ad20	ArrayData/targets.txt	?$Array@PAU_GoodieSpotInfo@@
-469bc0	128	func	-	-	Container/gen/targets_Array43.txt	
+469bc0	128	bm	0	grow	Container/gen/targets_Array43.txt	
 469c40	48	bm	0	arr8_ctor	Container/gen/targets_ArrayDtor.txt	
 469c70	32	bm	0	arr10_dtor	Container/gen/targets_ArrayDtor.txt	
-469c90	112	func	-	-	Container/gen/targets_Array44.txt	?$Array@PAU_SqueezilSpotInfo@@
+469c90	112	func	4	insert	Container/gen/targets_Array44.txt	?$Array@PAU_SqueezilSpotInfo@@
 469d00	64	bm	0	arm17	ArrayRemove/targets.txt	?$Array@PAU_SqueezilSpotInfo@@
 469d40	32	bm	0	ar16	ArrayReplace/targets.txt	?$Array@PAU_SqueezilSpotInfo@@
 469d60	16	bm	0	ad21	ArrayData/targets.txt	?$Array@PAU_SqueezilSpotInfo@@
-469d70	128	func	-	-	Container/gen/targets_Array44.txt	
+469d70	128	func	19	grow	Container/gen/targets_Array44.txt	
 469df0	320	bm	0	tctor_s469df0	Container/gen/targets_TableCtorS.txt	
 469f30	16	bm	0	ag27	ArrayGet/targets.txt	?$Array@PAVRoboBrain@@
-469f40	112	func	-	-	Container/gen/targets_Array46.txt	?$Array@PAVRoboBrain@@
+469f40	112	func	4	insert	Container/gen/targets_Array46.txt	?$Array@PAVRoboBrain@@
 469fb0	64	bm	0	arm18	ArrayRemove/targets.txt	?$Array@PAVRoboBrain@@
 469ff0	32	bm	0	ar17	ArrayReplace/targets.txt	?$Array@PAVRoboBrain@@
 46a010	16	bm	0	ad22	ArrayData/targets.txt	?$Array@PAVRoboBrain@@
-46a020	128	func	-	-	Container/gen/targets_Array46.txt	
+46a020	128	bm	0	grow	Container/gen/targets_Array46.txt	
 46a0a0	74	bm	0	table16_dtor	Container/gen/targets_TableDtor.txt	
 46a110	96	func	12	insert_d46a110	Container/targets_table50.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
 46a170	32	bm	0	t10_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
@@ -2156,18 +2156,18 @@
 46a590	304	bm	0	grow24	Fn46a590/targets.txt	
 46a6c0	112	func	36	float_array_copy_ctor	Container/targets_float_array_copy.txt	
 46a730	32	bm	0	arr11_dtor	Container/gen/targets_ArrayDtor.txt	
-46a750	112	func	-	-	Container/gen/targets_Array47.txt	?$Array@PAV?$PrimitiveArray@M$01@@
+46a750	112	bm	0	insert	Container/gen/targets_Array47.txt	?$Array@PAV?$PrimitiveArray@M$01@@
 46a7c0	64	bm	0	arm19	ArrayRemove/targets.txt	?$Array@PAV?$PrimitiveArray@M$01@@
 46a800	32	bm	0	ar18	ArrayReplace/targets.txt	?$Array@PAV?$PrimitiveArray@M$01@@
 46a820	16	bm	0	ad24	ArrayData/targets.txt	?$Array@PAV?$PrimitiveArray@M$01@@
-46a830	128	func	-	-	Container/gen/targets_Array47.txt	
+46a830	128	bm	0	grow	Container/gen/targets_Array47.txt	
 46a8b0	320	bm	0	tctor_s46a8b0	Container/gen/targets_TableCtorS.txt	
 46a9f0	16	bm	0	ag28	ArrayGet/targets.txt	?$Array@PAVPartPose@@
-46aa00	112	func	-	-	Container/gen/targets_Array49.txt	?$Array@PAVPartPose@@
+46aa00	112	func	4	insert	Container/gen/targets_Array49.txt	?$Array@PAVPartPose@@
 46aa70	64	bm	0	arm20	ArrayRemove/targets.txt	?$Array@PAVPartPose@@
 46aab0	32	bm	0	ar19	ArrayReplace/targets.txt	?$Array@PAVPartPose@@
 46aad0	16	bm	0	ad25	ArrayData/targets.txt	?$Array@PAVPartPose@@
-46aae0	128	func	-	-	Container/gen/targets_Array49.txt	
+46aae0	128	bm	0	grow	Container/gen/targets_Array49.txt	
 46ab60	74	bm	0	table17_dtor	Container/gen/targets_TableDtor.txt	
 46abd0	96	bm	0	insert_d46abd0	Container/targets_table23.txt	?$Table@VSqzString@@PAVPartPose@@V?$Array@PAVPartPose@@@@$0A@
 46ac30	32	bm	0	t11_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVPartPose@@V?$Array@PAVPartPose@@@@$0A@
@@ -2177,11 +2177,11 @@
 46acd0	32	bm	0	get_h	TableGet/targets.txt	
 46acf0	320	bm	0	tctor_s46acf0	Container/gen/targets_TableCtorS.txt	
 46ae30	16	bm	0	ag29	ArrayGet/targets.txt	?$Array@PAVBodyPart@@
-46ae40	112	func	-	-	Container/gen/targets_Array51.txt	?$Array@PAVBodyPart@@
+46ae40	112	func	4	insert	Container/gen/targets_Array51.txt	?$Array@PAVBodyPart@@
 46aeb0	64	bm	0	arm21	ArrayRemove/targets.txt	?$Array@PAVBodyPart@@
 46aef0	32	bm	0	ar20	ArrayReplace/targets.txt	?$Array@PAVBodyPart@@
 46af10	16	bm	0	ad26	ArrayData/targets.txt	?$Array@PAVBodyPart@@
-46af20	128	func	-	-	Container/gen/targets_Array51.txt	
+46af20	128	func	25	grow	Container/gen/targets_Array51.txt	
 46afa0	74	bm	0	table18_dtor	Container/gen/targets_TableDtor.txt	
 46b010	96	bm	0	insert_d46b010	Container/targets_table23.txt	?$Table@VSqzString@@PAVBodyPart@@V?$Array@PAVBodyPart@@@@$0A@
 46b070	32	bm	0	t12_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVBodyPart@@V?$Array@PAVBodyPart@@@@$0A@
@@ -2191,18 +2191,18 @@
 46b110	32	bm	0	get_i	TableGet/targets.txt	
 46b130	48	bm	0	arr9_ctor	Container/gen/targets_ArrayDtor.txt	
 46b160	32	bm	0	arr12_dtor	Container/gen/targets_ArrayDtor.txt	
-46b180	112	func	-	-	Container/targets.txt	?$Array@PAVPZMorph@@
+46b180	112	func	4	int_insert_d46b180	Container/targets.txt	?$Array@PAVPZMorph@@
 46b1f0	64	bm	0	arm22	ArrayRemove/targets.txt	?$Array@PAVPZMorph@@
 46b230	32	bm	0	ar21	ArrayReplace/targets.txt	?$Array@PAVPZMorph@@
 46b250	16	bm	0	ad27	ArrayData/targets.txt	?$Array@PAVPZMorph@@
-46b260	128	func	-	-	Container/gen/targets_Array52.txt	
+46b260	128	bm	0	grow	Container/gen/targets_Array52.txt	
 46b2e0	320	bm	0	tctor_s46b2e0	Container/gen/targets_TableCtorS.txt	
 46b420	16	bm	0	ag30	ArrayGet/targets.txt	?$Array@PAVPartCycle@@
-46b430	112	func	-	-	Container/targets.txt	?$Array@PAVPartCycle@@
+46b430	112	func	4	int_insert_d46b430	Container/targets.txt	?$Array@PAVPartCycle@@
 46b4a0	64	bm	0	arm23	ArrayRemove/targets.txt	?$Array@PAVPartCycle@@
 46b4e0	32	bm	0	ar22	ArrayReplace/targets.txt	?$Array@PAVPartCycle@@
 46b500	16	bm	0	ad28	ArrayData/targets.txt	?$Array@PAVPartCycle@@
-46b510	128	func	-	-	Container/gen/targets_Array54.txt	
+46b510	128	func	25	grow	Container/gen/targets_Array54.txt	
 46b590	74	bm	0	table19_dtor	Container/gen/targets_TableDtor.txt	
 46b600	96	bm	0	insert_d46b600	Container/targets_table23.txt	?$Table@VSqzString@@PAVPartCycle@@V?$Array@PAVPartCycle@@@@$0A@
 46b660	32	bm	0	contains_d46b660	Container/targets_table23.txt	?$Table@VSqzString@@PAVPartCycle@@V?$Array@PAVPartCycle@@@@$0A@
@@ -2212,21 +2212,21 @@
 46b700	128	bm	0	get_vector_variable	Container2/targets_get_vector.txt	
 46b780	48	bm	0	arr10_ctor	Container/gen/targets_ArrayDtor.txt	
 46b7b0	32	bm	0	arr13_dtor	Container/gen/targets_ArrayDtor.txt	
-46b7d0	112	func	-	-	Container/targets.txt	?$Array@PAVFunction@@
+46b7d0	112	func	4	int_insert_d46b7d0	Container/targets.txt	?$Array@PAVFunction@@
 46b840	64	bm	0	arm24	ArrayRemove/targets.txt	?$Array@PAVFunction@@
 46b880	32	bm	0	ar23	ArrayReplace/targets.txt	?$Array@PAVFunction@@
 46b8a0	16	bm	0	ad29	ArrayData/targets.txt	?$Array@PAVFunction@@
-46b8b0	128	func	-	-	Container/gen/targets_Array55.txt	
+46b8b0	128	func	19	grow	Container/gen/targets_Array55.txt	
 46b930	320	bm	0	tctor_s46b930	Container/gen/targets_TableCtorS.txt	
 46ba70	144	bm	0	tn	Container2/gen/targets_PA_s13.txt	?$PrimitiveArray@VSqzString@@$0N@
 46bb00	256	bm	0	create	Container2/gen/targets_PA_s13.txt	?$PrimitiveArray@VSqzString@@$0N@
 46bc00	96	bm	0	read	Container2/gen/targets_PA_s13.txt	
 46bc60	64	bm	0	write	Container2/gen/targets_PA_s13.txt	?$PrimitiveArray@VSqzString@@$0N@
-46bca0	878	func	-	-	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
+46bca0	878	func	276	insert	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
 46c010	32	bm	0	contains_d46c010	Container/targets_set23.txt	?$Set@VSqzString@@$0N@
-46c030	176	func	-	-	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
+46c030	176	func	75	indexof	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
 46c0e0	32	bm	0	removekey_d46c0e0	Container/targets_set23.txt	
-46c100	144	func	-	-	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
+46c100	144	func	8	replace	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
 46c1a0	288	bm	0	create	Container2/gen/targets_SC_s13.txt	?$Set@VSqzString@@$0N@
 46c2c0	74	bm	0	table20_dtor	Container/gen/targets_TableDtor.txt	
 46c330	96	func	12	insert_d46c330	Container/targets_table50.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
@@ -2237,52 +2237,52 @@
 46c430	32	bm	0	get_j	TableGet/targets.txt	
 46c450	48	bm	0	arr11_ctor	Container/gen/targets_ArrayDtor.txt	
 46c480	32	bm	0	arr14_dtor	Container/gen/targets_ArrayDtor.txt	
-46c4a0	112	func	-	-	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@
+46c4a0	112	func	4	int_insert_d46c4a0	Container/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@
 46c510	64	bm	0	arm25	ArrayRemove/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@
 46c550	32	bm	0	ar24	ArrayReplace/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@
 46c570	16	bm	0	ad30	ArrayData/targets.txt	?$Array@PAV?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@
-46c580	128	func	-	-	Container/gen/targets_Array58.txt	
+46c580	128	func	25	grow	Container/gen/targets_Array58.txt	
 46c600	48	bm	0	arr12_ctor	Container/gen/targets_ArrayDtor.txt	
 46c630	32	bm	0	arr15_dtor	Container/gen/targets_ArrayDtor.txt	
-46c650	112	func	-	-	Container/gen/targets_Array59.txt	?$Array@PAVDelayedExecutionContext@@
+46c650	112	func	4	insert	Container/gen/targets_Array59.txt	?$Array@PAVDelayedExecutionContext@@
 46c6c0	64	bm	0	arm26	ArrayRemove/targets.txt	?$Array@PAVDelayedExecutionContext@@
 46c700	32	bm	0	ar25	ArrayReplace/targets.txt	?$Array@PAVDelayedExecutionContext@@
 46c720	16	bm	0	ad31	ArrayData/targets.txt	?$Array@PAVDelayedExecutionContext@@
-46c730	128	func	-	-	Container/gen/targets_Array59.txt	
+46c730	128	func	25	grow	Container/gen/targets_Array59.txt	
 46c7b0	48	bm	0	arr13_ctor	Container/gen/targets_ArrayDtor.txt	
 46c7e0	32	bm	0	arr16_dtor	Container/gen/targets_ArrayDtor.txt	
-46c800	112	func	-	-	Container/targets.txt	?$Array@PAVFloatFunctionArgument@@
+46c800	112	func	4	int_insert_d46c800	Container/targets.txt	?$Array@PAVFloatFunctionArgument@@
 46c870	64	bm	0	arm27	ArrayRemove/targets.txt	?$Array@PAVFloatFunctionArgument@@
 46c8b0	32	bm	0	ar26	ArrayReplace/targets.txt	?$Array@PAVFloatFunctionArgument@@
 46c8d0	16	bm	0	ad32	ArrayData/targets.txt	?$Array@PAVFloatFunctionArgument@@
-46c8e0	128	func	-	-	Container/gen/targets_Array60.txt	
+46c8e0	128	bm	0	grow	Container/gen/targets_Array60.txt	
 46c960	48	bm	0	arr14_ctor	Container/gen/targets_ArrayDtor.txt	
 46c990	32	bm	0	arr17_dtor	Container/gen/targets_ArrayDtor.txt	
-46c9b0	112	func	-	-	Container/targets.txt	?$Array@PAV?$Set@VSqzString@@$0L@@@
+46c9b0	112	func	4	insert	Container/gen/targets_Array61.txt	?$Array@PAV?$Set@VSqzString@@$0L@@@
 46ca20	64	bm	0	arm28	ArrayRemove/targets.txt	?$Array@PAV?$Set@VSqzString@@$0L@@@
 46ca60	32	bm	0	ar27	ArrayReplace/targets.txt	?$Array@PAV?$Set@VSqzString@@$0L@@@
 46ca80	16	bm	0	ad33	ArrayData/targets.txt	?$Array@PAV?$Set@VSqzString@@$0L@@@
-46ca90	128	func	-	-	Container/gen/targets_Array61.txt	
+46ca90	128	bm	0	grow	Container/gen/targets_Array61.txt	
 46cb10	48	bm	0	arr15_ctor	Container/gen/targets_ArrayDtor.txt	
 46cb40	32	bm	0	arr18_dtor	Container/gen/targets_ArrayDtor.txt	
-46cb60	112	func	-	-	Container/gen/targets_Array62.txt	?$Array@PAVLoadedSurface@@
+46cb60	112	func	4	insert	Container/gen/targets_Array62.txt	?$Array@PAVLoadedSurface@@
 46cbd0	64	bm	0	arm29	ArrayRemove/targets.txt	?$Array@PAVLoadedSurface@@
 46cc10	32	bm	0	ar28	ArrayReplace/targets.txt	?$Array@PAVLoadedSurface@@
 46cc30	16	bm	0	ad34	ArrayData/targets.txt	?$Array@PAVLoadedSurface@@
-46cc40	128	func	-	-	Container/gen/targets_Array62.txt	
+46cc40	128	bm	0	grow	Container/gen/targets_Array62.txt	
 46ccc0	48	bm	0	arr16_ctor	Container/gen/targets_ArrayDtor.txt	
 46ccf0	32	bm	0	arr19_dtor	Container/gen/targets_ArrayDtor.txt	
-46cd10	112	func	-	-	Container/targets.txt	?$Array@PAVInstancedSurface@@
+46cd10	112	func	4	int_insert_d46cd10	Container/targets.txt	?$Array@PAVInstancedSurface@@
 46cd80	64	bm	0	arm30	ArrayRemove/targets.txt	?$Array@PAVInstancedSurface@@
 46cdc0	32	bm	0	ar29	ArrayReplace/targets.txt	?$Array@PAVInstancedSurface@@
 46cde0	16	bm	0	ad35	ArrayData/targets.txt	?$Array@PAVInstancedSurface@@
-46cdf0	128	func	-	-	Container/gen/targets_Array63.txt	
+46cdf0	128	func	25	grow	Container/gen/targets_Array63.txt	
 46ce70	32	bm	0	arr20_dtor	Container/gen/targets_ArrayDtor.txt	
-46ce90	112	func	-	-	Container/targets.txt	?$Array@PAVSurfaceTypeDescription@@
+46ce90	112	func	4	int_insert_d46ce90	Container/targets.txt	?$Array@PAVSurfaceTypeDescription@@
 46cf00	64	bm	0	arm31	ArrayRemove/targets.txt	?$Array@PAVSurfaceTypeDescription@@
 46cf40	32	bm	0	ar30	ArrayReplace/targets.txt	?$Array@PAVSurfaceTypeDescription@@
 46cf60	16	bm	0	ad36	ArrayData/targets.txt	?$Array@PAVSurfaceTypeDescription@@
-46cf70	128	func	-	-	Container/gen/targets_Array64.txt	
+46cf70	128	func	25	grow	Container/gen/targets_Array64.txt	
 46cff0	320	bm	0	tctor_s46cff0	Container/gen/targets_TableCtorS.txt	
 46d130	74	bm	0	table21_dtor	Container/gen/targets_TableDtor.txt	
 46d1a0	96	bm	0	insert_d46d1a0	Container/targets_table23.txt	?$Table@VSqzString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@
@@ -2297,11 +2297,11 @@
 46d4a0	256	bm	0	create	Container2/gen/targets_PA_s50.txt	?$PrimitiveArray@VSqzString@@$0DC@
 46d5a0	96	bm	0	read	Container2/gen/targets_PA_s50.txt	
 46d600	64	bm	0	write	Container2/gen/targets_PA_s50.txt	?$PrimitiveArray@VSqzString@@$0DC@
-46d640	878	func	-	-	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
+46d640	878	func	266	insert	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
 46d9b0	32	bm	0	contains_d46d9b0	Container/targets_set23.txt	?$Set@VSqzString@@$0DC@
-46d9d0	176	func	-	-	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
+46d9d0	176	func	75	indexof	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
 46da80	32	bm	0	removekey_d46da80	Container/targets_set23.txt	
-46daa0	144	func	-	-	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
+46daa0	144	func	8	replace	Container/gen/targets_Set66.txt	?$Set@VSqzString@@$0DC@
 46db40	288	bm	0	create	Container2/gen/targets_SC_s50.txt	?$Set@VSqzString@@$0DC@
 46dc60	112	bm	0	sec_insert	Container/targets_inisection.txt	?$Array@PAVIniFileSection@@
 46dcd0	64	bm	0	sec_remove	Container/targets_inisection.txt	?$Array@PAVIniFileSection@@
@@ -2321,11 +2321,11 @@
 46e130	256	bm	0	create	Container2/gen/targets_PA_s51.txt	?$PrimitiveArray@VSqzString@@$0DD@
 46e230	96	bm	0	read	Container2/gen/targets_PA_s51.txt	
 46e290	64	bm	0	write	Container2/gen/targets_PA_s51.txt	?$PrimitiveArray@VSqzString@@$0DD@
-46e2d0	882	func	-	-	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
+46e2d0	882	func	275	insert	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
 46e650	32	bm	0	contains_d46e650	Container/targets_set23.txt	?$Set@VSqzString@@$0DD@
-46e670	176	func	-	-	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
+46e670	176	func	79	indexof	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
 46e720	32	bm	0	removekey_d46e720	Container/targets_set23.txt	
-46e740	142	func	-	-	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
+46e740	142	func	20	replace	Container/gen/targets_Set69.txt	?$Set@VSqzString@@$0DD@
 46e7e0	288	bm	0	create	Container2/gen/targets_SC_s51.txt	?$Set@VSqzString@@$0DD@
 46e900	112	bm	0	cache_insert	Container/targets_inicache.txt	?$Array@PAVIniFileCache@@
 46e970	64	bm	0	cache_remove	Container/targets_inicache.txt	?$Array@PAVIniFileCache@@
@@ -2455,9 +2455,9 @@
 472480	187	bm	0	load_wrl	SqgModel/targets_wrl.txt	
 472550	16	bm	0	d472550	Tiny1/targets.txt	
 472560	1584	func	222	sqg_load	SqgModel/targets_load.txt	
-472b90	976	func	-	-	Fn472f60/targets_sqgsave.txt	
-472f60	656	func	-	-	Fn472f60/targets.txt	
-4731f0	752	func	-	-	Fn4731f0/targets.txt	
+472b90	976	bm	0	sqgsave	Fn472f60/targets_sqgsave.txt	
+472f60	656	func	138	createmesh	Fn472f60/targets.txt	
+4731f0	752	func	112	buildframe	Fn4731f0/targets.txt	
 4734e0	488	func	153	morph	SqgModel/targets_morph.txt	
 4736f0	16	bm	0	sqgseterrorcallback	Globals/targets.txt	
 473700	16	bm	0	sqgsettexturelookup	Globals/targets.txt	
@@ -2536,7 +2536,7 @@
 476ff0	80	bm	0	destroyframe	Scene/targets.txt	
 477040	144	func	30	setframetransform	Scene/targets.txt	
 4770d0	80	func	26	applytransform	Scene/targets.txt	
-477120	311	func	-	-	Fn477120/targets_stuck.txt	
+477120	311	func	49	nodemat	Fn477120/targets_stuck.txt	
 477290	16	bm	0	getscenechild	Ui/targets.txt	
 4772a0	48	bm	0	getframeparent	Scene/targets.txt	
 4772d0	112	bm	0	setscenechild	Scene/targets.txt	
@@ -2549,7 +2549,7 @@
 477540	128	bm	0	decalsize	Scene/targets.txt	
 4775c0	268	func	16	directional	Scene/targets.txt	
 477700	153	func	34	ambient	Scene/targets.txt	
-4777b0	668	func	-	-	Fn4777b0/targets.txt	
+4777b0	668	bm	0	createquadframe	Fn4777b0/targets.txt	
 477a90	560	func	52	convertrow	Image/targets.txt	
 477cc0	416	func	16	load	Image/targets.txt	
 477e60	64	bm	0	callbacks_ctor	WindowCallbacks/targets.txt	
@@ -2602,7 +2602,7 @@
 47a8f0	160	func	16	p_base	Tiny4/targets15.txt	
 47a990	160	func	15	restore_scene	Loader/targets_restore.txt	
 47aa50	128	func	3	gtrav	Fn47aa50/targets.txt	
-47aad0	448	func	-	-	Fn47aad0/targets.txt	
+47aad0	448	func	124	visit	Fn47aad0/targets.txt	
 47ac90	144	func	31	unknown_node_dispatch	Qv47ac90/targets.txt	
 47ad20	160	bm	0	mface_ctor	Misc15/targets_mesh.txt	
 47ade0	48	bm	0	tn_ctor	Misc15/targets_tree.txt	
@@ -2618,9 +2618,9 @@
 47b0f0	64	bm	0	freef	Misc15/targets_mesh.txt	
 47b130	32	bm	0	freea	Misc15/targets_mesh.txt	
 47b150	48	bm	0	freet	Misc15/targets_mesh.txt	
-47b180	713	func	-	-	Fn47b180/targets.txt	
+47b180	713	func	224	raycast	Fn47b180/targets.txt	
 47b490	3590	func	831	navmove	NavMesh/targets_navmove.txt	
-47c2a0	781	func	-	-	NavMesh/targets_insideface.txt	
+47c2a0	781	func	177	insideface	NavMesh/targets_insideface.txt	
 47c630	64	bm	0	nav_comparehits	NavMesh/targets_compare.txt	
 47c670	32	bm	0	endian	Misc16/targets.txt	
 47c690	96	bm	0	readword	Misc16/targets.txt	
@@ -2629,15 +2629,15 @@
 47c7b0	304	bm	0	detect_surface_format	NavSurface/targets_detect_format.txt	
 47c8e0	304	func	24	load_surface_file	NavSurface/targets_load_file.txt	
 47ca10	591	bm	0	ascii	Fn47ca10/targets.txt	
-47cc60	896	func	-	-	NavSurface/targets_readasciibox.txt	
-47cfe0	720	func	-	-	Fn47cfe0/targets.txt	
-47d2b0	576	func	-	-	Fn47d2b0/targets.txt	
+47cc60	896	func	24	readasciibox	NavSurface/targets_readasciibox.txt	
+47cfe0	720	func	183	binary	Fn47cfe0/targets.txt	
+47d2b0	576	func	101	readbinarybox	Fn47d2b0/targets.txt	
 47d4f0	112	bm	0	outcode	NavMesh/targets.txt	
 47d560	142	bm	0	find_leaf	NavMesh/targets_findleaf.txt	
 47d5f0	32	bm	0	length	Vector3f/targets.txt	
 47d610	32	bm	0	lengthsq	Vector3f/targets.txt	
 47d630	80	bm	0	normalize	Vector3f/targets.txt	
-47d680	415	func	-	-	Fn47d680/targets.txt	
+47d680	415	func	32	closest	Fn47d680/targets.txt	
 47d850	205	bm	0	rayplane	Free2/targets.txt	
 47d940	284	func	37	closest_on_line	VectorMath/targets_closestline.txt	
 47da80	334	func	8	slerp	VectorMath/targets_slerp.txt	
@@ -2649,6 +2649,6 @@
 47dea0	814	func	201	mul	Fn47dea0/targets.txt	
 47e1e0	281	bm	0	xform	Misc8/targets.txt	
 47e330	32	bm	0	settrans	Matrix4/targets.txt	
-47e350	361	func	-	-	Fn47e350/targets.txt	
+47e350	361	bm	0	orthonorm	Fn47e350/targets.txt	
 47e500	352	func	31	matrix_angles	MatrixAngles/targets.txt	
 47e5d0	129	bm	0	init_name_dict	Qv/targets_initnames.txt	
