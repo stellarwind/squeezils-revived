@@ -1094,7 +1094,7 @@
 43ee10	80	bm	0	stepgame	Misc16/targets_m2.txt	
 43ee60	64	bm	0	redraw_windows_above	Misc16/targets_redraw.txt	
 43eea0	1129	func	113	main_window_messages	Misc16/targets_mainwindow.txt	
-43f310	2745	todo	-	-	-	
+43f310	2745	func	368	winmain	WinMain/targets.txt	
 43fde0	446	func	43	msg_create	FunctionMessage/targets.txt	MessageFunction
 43ffd0	16	bm	0	msg_name	FunctionMessage/targets.txt	
 43ffe0	91	bm	0	msg_sdd	FunctionMessage/targets.txt	MessageFunction

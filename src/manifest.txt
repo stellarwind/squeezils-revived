@@ -720,3 +720,4 @@ Fn407d40/targets.txt Fn407d40/F.cpp
 MorphCycle/targets_load.txt MorphCycle/MorphCycleLoad.cpp
 NavSurface/targets_flighthits.txt NavSurface/FlightHits.cpp
 SqgModel/targets_faceset.txt SqgModel/AddFaceSet.cpp
+WinMain/targets.txt WinMain/WinMain.cpp
