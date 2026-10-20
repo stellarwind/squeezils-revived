@@ -942,7 +942,7 @@
 436e10	389	func	-	-	Fn436e10/targets.txt	SqueezilRegionSoul
 436fc0	781	func	-	-	Sim2/targets_bridgequad.txt	
 437360	112	bm	0	h5_get	Misc18/targets_get2.txt	
-4373d0	2664	todo	-	-	-	SqueezilRegionSoul
+4373d0	2664	func	-	-	Fn4373d0/targets.txt	SqueezilRegionSoul
 437e40	256	bm	0	linkopen	Release/targets.txt	
 437f40	192	func	-	-	Sim2/targets_stuck.txt	
 438000	16	bm	0	v0o	CameraSoul/targets.txt	SqueezilRegionSoul
