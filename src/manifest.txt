@@ -707,6 +707,8 @@ Loader/targets_restore.txt Loader/Restore.cpp
 Guards/targets_prop_vectors.txt Guards/PropVectors.cpp
 Guards/targets_settings_cleanup.txt Guards/SettingsCleanup.cpp
 Loader/targets_decal.txt Loader/Decal.cpp
+Loader/targets_faceset.txt Loader/FaceSet.cpp
 Container2/targets_settings_cleanup.txt Container2/SettingsCleanup.cpp
 Misc16/targets_mainwindow.txt Misc16/MainWindowProc.cpp
 Guards/targets_settings_initializers.txt Guards/SettingsInitializers.cpp
+Fn409d10/targets_update.txt Fn409d10/Update.cpp

@@ -2,7 +2,6 @@
 #include "String/String.h"
 #define BUFFEROBJECT_SIGNATURES
 #include "Container/ContainerSet.h"
-#include <new.h>
 
 // Expand only the wrapper; Array<String>'s allocation stays out of line.
 inline PrimitiveArray<String, 3>::PrimitiveArray() {}
@@ -13,7 +12,7 @@ extern AmbientNames gAmbientNames; // storage at 0x4c77b0
 // Guards/Init.cpp calls this entry and separately registers G449580.
 void Thunk449500()
 {
-    new (&gAmbientNames) AmbientNames;
+    gAmbientNames.AmbientNames::PrimitiveArray(); // explicit ctor call: no placement-new null test
 }
 
 extern unsigned char f_4c780c; // shared audio shutdown guards

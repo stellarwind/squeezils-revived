@@ -1,2 +1,6 @@
 ^\?ReturnNull@RegionSoulAdapter@@ 4382c0 region_adapter 16
 ^\?GetInterface@GoodieSoulAdapter@@ 45a7e0 goodie_adapter 16
+^\?Delete@PlayerSoulDeleteAdapter@@ 41fae0 player_del_adapter 16
+^\?Delete@RegionSoulDeleteAdapter@@ 4382b0 region_del_adapter 16
+^\?Delete@SqueezilSoulDeleteAdapter@@ 456d90 squeezil_del_adapter 16
+^\?Delete@GoodieSoulDeleteAdapter@@ 45a7d0 goodie_del_adapter 16

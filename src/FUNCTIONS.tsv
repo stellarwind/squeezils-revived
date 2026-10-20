@@ -71,7 +71,6 @@
 404920	352	func	37	sensestate	SqueezilRoboSoul/targets.txt	
 404a80	144	bm	0	stepai	SqueezilRoboSoul/targets_step.txt	
 404b10	736	func	-	-	Fn404b10/targets.txt	
-404dd0	30	todo	-	-	-	
 404df0	288	bm	0	updaterobo	SqueezilRoboSoul/targets_step.txt	SqueezilRoboSoul
 404f10	112	bm	0	rec_ctor	Misc18/targets.txt	
 404f80	16	bm	0	thunka	Misc12/targets.txt	SqueezilRoboSoul
@@ -138,7 +137,7 @@
 409c40	206	bm	0	stoppath	Souls2/targets.txt	
 409d10	487	func	-	-	Fn409d10/targets.txt	
 409f00	1048	bm	0	setrows	Matrix4/targets_setrows.txt	
-409f70	1637	todo	-	-	-	RegionCameraSoul
+409f70	1637	func	126	regcam_update	Fn409d10/targets_update.txt	RegionCameraSoul
 40a5e0	64	bm	0	handlera	Souls2/targets.txt	RegionCameraSoul
 40a620	16	bm	0	v6b	CameraSoul/targets.txt	RegionCameraSoul
 40a630	378	func	-	-	Fn40a630/targets.txt	
@@ -471,7 +470,7 @@
 41f7e0	16	bm	0	v1h	CameraSoul/targets.txt	SqueezilPlayerSoul
 41f7f0	704	func	-	-	Fn41f7f0/targets.txt	
 41fab0	48	bm	0	hit	SqueezilPlayerSoul/targets.txt	SqueezilPlayerSoul
-41fae0	16	todo	-	-	-	SqueezilPlayerSoul
+41fae0	16	func	5	player_del_adapter	Adjustors/targets.txt	SqueezilPlayerSoul
 41faf0	16	bm	0	keys_d41faf0	Ini/targets.txt	
 41fb00	16	bm	0	r1a1	CameraSoul/targets.txt	SqueezilSoul
 41fb10	16	bm	0	v0f	CameraSoul/targets.txt	SqueezilPlayerSoul
@@ -950,7 +949,7 @@
 438010	16	bm	0	v1n	CameraSoul/targets.txt	SqueezilRegionSoul
 438020	240	bm	0	toggle_place	Fn438020/targets.txt	
 438110	409	func	-	-	Fn438110/targets.txt	
-4382b0	16	todo	-	-	-	SqueezilRegionSoul
+4382b0	16	func	5	region_del_adapter	Adjustors/targets.txt	SqueezilRegionSoul
 4382c0	16	bm	0	region_adapter	Adjustors/targets.txt	SqueezilRegionSoul
 4382d0	16	bm	0	v1k	CameraSoul/targets.txt	SqueezilRegionSoul
 4382e0	16	bm	0	v0m	CameraSoul/targets.txt	SqueezilRegionSoul
@@ -1071,7 +1070,6 @@
 43d680	208	bm	0	ringstep	Fn43d680/targets.txt	
 43d750	80	func	12	input_selectvalue	Input/targets_select.txt	
 43d7a0	384	func	73	translate_key	Input/targets_translate_key.txt	
-43d8e0	60	todo	-	-	-	
 43d920	96	bm	0	kt_prefix	Keylist/targets.txt	Keylist
 43d980	48	bm	0	kt_code	Keylist/targets.txt	Keylist
 43d9b0	80	bm	0	kt_name	Keylist/targets.txt	Keylist
@@ -1415,7 +1413,7 @@
 4494c0	16	bm	0	r4494c0	Guards/targets_init.txt	
 4494d0	32	bm	0	g4494d0	Guards/targets.txt	
 4494f0	16	bm	0	i4494f0	Guards/targets_init.txt	
-449500	112	todo	5	ambient_names_init	Audio/targets_ambient_names.txt	
+449500	112	bm	0	ambient_names_init	Audio/targets_ambient_names.txt	
 449570	16	bm	0	r449570	Guards/targets_init.txt	
 449580	85	bm	0	ambient_names_cleanup	Audio/targets_ambient_names.txt	
 4495e0	1001	func	71	initialize_sound	Audio/targets_initialize.txt	
@@ -1552,7 +1550,7 @@
 456b40	80	bm	0	givenuts	Misc16/targets_m2.txt	
 456b90	272	bm	0	getgroundmotion	GetGroundMotion/targets.txt	SqueezilSoul
 456ca0	240	bm	0	getairmotion	GetAirMotion/targets.txt	SqueezilSoul
-456d90	16	todo	-	-	-	SqueezilSoul
+456d90	16	func	5	squeezil_del_adapter	Adjustors/targets.txt	SqueezilSoul
 456da0	192	bm	0	dh_ctor	Fn456da0/targets.txt	
 456e60	128	bm	0	c10_dtor	Misc18/targets_c10.txt	
 456ef0	80	bm	0	dirclear	Souls2/targets.txt	
@@ -1625,7 +1623,7 @@
 459c00	717	func	2	goodie_spray	GoodieSoul/targets_spray.txt	
 459ed0	141	bm	0	gs_launch	GoodieSoul/targets.txt	
 459f80	2122	func	488	goodie_update	GoodieSoul/targets_update.txt	GoodieSoul
-45a7d0	16	todo	-	-	-	GoodieSoul
+45a7d0	16	func	5	goodie_del_adapter	Adjustors/targets.txt	GoodieSoul
 45a7e0	16	func	5	goodie_adapter	Adjustors/targets.txt	GoodieSoul
 45a7f0	16	bm	0	r0a1c	CameraSoul/targets.txt	GoodieSoul
 45a800	16	bm	0	v1i	CameraSoul/targets.txt	GoodieSoul
@@ -2588,7 +2586,7 @@
 479af0	32	bm	0	f479af0	Misc17/targets.txt	
 479b10	96	func	16	p_ex	Tiny4/targets15.txt	
 479b70	16	bm	0	d479b70	Tiny1/targets.txt	
-479b80	1392	todo	-	-	-	
+479b80	1392	func	423	load_faceset	Loader/targets_faceset.txt	
 47a0f0	48	bm	0	ch_ctor	Misc18/targets_com.txt	
 47a120	144	func	-	-	Misc18/targets_push.txt	
 47a1b0	80	bm	0	popframe	Misc18/targets_pop.txt	
