@@ -17,18 +17,18 @@ extern const char kHelpFile[];     // 0x4b9558 ".\help\sqz.hlp"
 int CALLBACK Proc406cb0(HWND, UINT, WPARAM, LPARAM);
 int CALLBACK Proc406d60(HWND, UINT, WPARAM, LPARAM);
 int CALLBACK Proc4078e0(HWND, UINT, WPARAM, LPARAM);
-int CALLBACK Proc407d40(HWND, UINT, WPARAM, LPARAM);
+int CALLBACK KeysDlgProc(HWND, UINT, WPARAM, LPARAM);
 int CALLBACK Proc408410(HWND, UINT, WPARAM, LPARAM);
 
 int ActionHelp1()
 {
-    WinHelp(g_app->hwnd, ".\help\sqz.hlp", 1, 1);
+    WinHelp(g_app->hwnd, ".\\help\\sqz.hlp", 1, 1);
     return 0;
 }
 
 int ActionHelp2()
 {
-    WinHelp(g_app->hwnd, ".\help\sqz.hlp", 1, 2);
+    WinHelp(g_app->hwnd, ".\\help\\sqz.hlp", 1, 2);
     return 0;
 }
 
@@ -41,7 +41,7 @@ int ShowJoystick(HWND parent)
 
 int ShowDialog6a(HWND parent)
 {
-    DialogBoxParam(g_hInstance, MAKEINTRESOURCE(0x6a), parent, (DLGPROC)Proc407d40, 0);
+    DialogBoxParam(g_hInstance, MAKEINTRESOURCE(0x6a), parent, (DLGPROC)KeysDlgProc, 0);
     RedrawWindow(parent, 0, 0, 0x585);
     return 0;
 }

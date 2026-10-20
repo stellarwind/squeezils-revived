@@ -127,7 +127,7 @@
 4077c0	288	bm	0	namedlg	Menu/targets.txt	
 4078e0	944	bm	0	joystickdlg	Menu/targets.txt	
 407c90	176	bm	0	optionsdlg	Menu/targets.txt	
-407d40	1744	todo	-	-	-	
+407d40	1744	func	372	keysdlg	Fn407d40/targets.txt	
 408410	496	bm	0	volumedlg	Menu/targets.txt	
 408600	565	bm	0	readcamset	CameraSettings/targets.txt	
 408850	3264	func	259	camera_view	CameraSoul/targets_view.txt	
@@ -210,7 +210,7 @@
 40dd30	1059	func	64	read_surface_type	NavSurface/targets_readtype.txt	
 40e160	333	bm	0	unload_file	NavSurface/targets_unloadfile.txt	
 40e2e0	413	func	24	read_bindings	NavSurface/targets_bindings.txt	
-40e480	1925	todo	-	-	-	
+40e480	1925	func	168	loadground	NavSurface/targets_loadground.txt	
 40ec10	112	bm	0	str_get	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
 40ec80	16	bm	0	int_get	Container/targets_int.txt	?$PrimitiveArray@H$00
 40ec90	235	bm	0	clear	Fn40ec90/targets.txt	
@@ -324,7 +324,7 @@
 416f50	1609	func	67	rg_init	Sim2/targets.txt	RegionSimulation
 417600	128	bm	0	rg_clear	Sim2/targets.txt	RegionSimulation
 417680	564	func	-	-	Fn417680/targets.txt	
-4178e0	2034	todo	-	-	-	
+4178e0	2034	func	100	readlocation	Fn4178e0/targets.txt	
 4180e0	48	bm	0	slotlink	Misc16/targets.txt	
 418110	16	bm	0	placecount	RegionSimulation/targets.txt	
 418120	32	bm	0	hasplace	RegionSimulation/targets.txt	
@@ -389,7 +389,7 @@
 41bb80	112	bm	0	keyat_d41bb80	Fam112/targets.txt	
 41bbf0	214	func	31	sample_pose	MorphCycle/targets_sample_pose.txt	
 41bcf0	112	bm	0	f41bcf0	Tiny4/targets2.txt	
-41bd60	1818	todo	-	-	-	
+41bd60	1818	func	255	mc_load	MorphCycle/targets_load.txt	
 41c4a0	16	func	-	-	Container/gen/targets_Array05.txt	?$Array@M
 41c4b0	128	bm	0	vget	Tiny4/targets18.txt	?$Array@VVector3f@@
 41c530	4523	todo	-	-	-	
@@ -835,7 +835,7 @@
 430620	112	bm	0	tw_create	FunctionTweak/targets.txt	TweakFloatFunction
 430690	96	bm	0	tw_print	FunctionTweak/targets.txt	TweakFloatFunction
 4306f0	175	bm	0	setmotion_exec	FunctionTweak/targets_exec.txt	SetMotionSpeedFunction
-4307b0	1896	todo	-	-	-	LaunchFromFaceNormalFunction
+4307b0	1896	func	290	launch_exec	FunctionTweak/targets_launch.txt	LaunchFromFaceNormalFunction
 430f20	303	bm	0	bounce_exec	FunctionTweak/targets_exec.txt	BounceBackwardsFunction
 431080	282	bm	0	accel_exec	FunctionTweak/targets_exec.txt	AccelerateFunction
 4311c0	1904	bm	0	reg4311c0	Fn4311c0/targets.txt	
