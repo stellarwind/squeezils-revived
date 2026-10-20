@@ -1,0 +1,1 @@
+^\?Init@QuestItems@@ 430150 quest_initialize 490

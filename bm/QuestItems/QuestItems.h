@@ -15,4 +15,7 @@ struct QuestItems {
     int   y;                 // 0x64
 
     QuestItems();            // 0x42fc30
+    int Init(int a, int b, int index); // 0x430150
+    int LoadCombined(int index); // 0x430360
+    int LoadKeys();          // 0x42fca0
 };

@@ -40,6 +40,13 @@ PartCycle/targets.txt PartCycle/PartCycle.cpp
 NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp NavSurface/DestroyLoaded.cpp NavSurface/LoadedDtor.cpp
 NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
+AnimatedBody/targets_copyctor.txt AnimatedBody/CopyCtor.cpp
+PoseTable/targets_copyctor.txt PoseTable/CopyCtor.cpp
+Props2/targets_meshctor.txt Props2/MeshCtor.cpp
+Props2/targets_spritector.txt Props2/SpriteCtor.cpp
+Props2/targets_lodctor.txt Props2/LODCtor.cpp
+Props2/targets_cyclector.txt Props2/CycleCtor.cpp
+Props2/targets_framector.txt Props2/FrameCtor.cpp
 BodyPart/targets.txt BodyPart/BodyPart.cpp BodyPart/BodyPartApply.cpp
 Body/targets.txt Body/Body.cpp
 SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp SqueezilBody/UpdOrient.cpp
@@ -48,6 +55,33 @@ Prop/targets.txt Prop/Prop.cpp
 RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
 SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp SqueezilSoul/Die.cpp SqueezilSoul/Surface.cpp SqueezilSoul/Move.cpp SqueezilSoul/Spit.cpp SqueezilSoul/Nuts.cpp SqueezilSoul/Grant.cpp SqueezilSoul/Turn.cpp SqueezilSoul/Adjust.cpp SqueezilSoul/Rotate.cpp SqueezilSoul/Attack.cpp SqueezilSoul/Slip.cpp SqueezilSoul/SpitNut.cpp SqueezilSoul/SpitStand.cpp SqueezilSoul/Jump.cpp SqueezilSoul/Steer.cpp SqueezilSoul/Update.cpp SqueezilSoul/Ground.cpp SqueezilSoul/MoveGround.cpp SqueezilSoul/SlipMove.cpp SqueezilSoul/Fly.cpp
 NavProp/targets.txt NavProp/NavProp.cpp
+NavProp/targets_update.txt NavProp/Update.cpp
+NavProp/targets_constructor.txt NavProp/Constructor.cpp
+Adjustors/targets.txt Adjustors/Forward.cpp
+MatrixAngles/targets.txt MatrixAngles/MatrixAngles.cpp
+CameraSoul/targets_startpath.txt CameraSoul/StartPath.cpp
+SqueezilPlayerSoul/targets_update.txt SqueezilPlayerSoul/Update.cpp
+SqueezilPlayerSoul/targets_airinput.txt SqueezilPlayerSoul/AirInput.cpp
+Input/targets_initialize.txt Input/Initialize.cpp
+PhysicalCollision/targets.txt PhysicalCollision/Collision.cpp
+VectorMath/targets_slerp.txt VectorMath/Slerp.cpp
+NavProp/targets_buildframe.txt NavProp/BuildFrame.cpp
+PropLoader/targets_walkpath.txt PropLoader/WalkPath.cpp
+NavSurface/targets_bindings.txt NavSurface/ReadBindings.cpp
+NavSurface/targets_loadedctor.txt NavSurface/LoadedCtor.cpp
+NavSurface/targets_unloadfile.txt NavSurface/UnloadFile.cpp
+NavSurface/targets_flushremoved.txt NavSurface/FlushRemoved.cpp
+NavSurface/targets_listdtor.txt NavSurface/ListDtor.cpp
+Panel/targets_drawnote.txt Panel/DrawNote.cpp
+Panel/targets_loadbitmaps.txt Panel/LoadBitmaps.cpp
+QuestItems/targets_initialize.txt QuestItems/Initialize.cpp
+QuestItems/targets_loadkeys.txt QuestItems/LoadKeys.cpp
+Resources/targets_loadtexture.txt Resources/LoadTexture.cpp
+Props2/targets_meshbuild.txt Props2/MeshBuildFrame.cpp
+Props2/targets_lodupdate.txt Props2/LODUpdate.cpp
+Props2/targets_lodselect.txt Props2/LODSelect.cpp
+Behavior2/targets_picktarget.txt Behavior2/PickTarget.cpp
+FunctionIf/targets_surftest.txt FunctionIf/IfSurfaceTest.cpp
 Simulation/targets.txt Simulation/Simulation.cpp
 PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
 FrameProp/targets.txt FrameProp/FrameProp.cpp
