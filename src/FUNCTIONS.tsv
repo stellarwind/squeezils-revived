@@ -1415,9 +1415,9 @@
 4494c0	16	bm	0	r4494c0	Guards/targets_init.txt	
 4494d0	32	bm	0	g4494d0	Guards/targets.txt	
 4494f0	16	bm	0	i4494f0	Guards/targets_init.txt	
-449500	112	todo	-	-	-	
+449500	112	todo	5	ambient_names_init	Audio/targets_ambient_names.txt	
 449570	16	bm	0	r449570	Guards/targets_init.txt	
-449580	85	todo	-	-	-	
+449580	85	bm	0	ambient_names_cleanup	Audio/targets_ambient_names.txt	
 4495e0	1001	func	71	initialize_sound	Audio/targets_initialize.txt	
 4499e0	128	func	13	f4499e0	Tiny4/targets14.txt	
 449a60	32	bm	0	stepall	Misc16/targets.txt	
@@ -1622,7 +1622,7 @@
 459a80	244	func	22	gs_hit	GoodieSoul/targets.txt	GoodieSoul
 459b80	106	bm	0	grant_to	GoodieSoul/targets_grantto.txt	
 459bf0	16	bm	0	getkind	GoodieSoul/targets.txt	GoodieSoul
-459c00	717	todo	-	-	-	
+459c00	717	bm	0	goodie_spray	GoodieSoul/targets_spray.txt	
 459ed0	141	bm	0	gs_launch	GoodieSoul/targets.txt	
 459f80	2122	func	488	goodie_update	GoodieSoul/targets_update.txt	GoodieSoul
 45a7d0	16	todo	-	-	-	GoodieSoul
@@ -2432,7 +2432,7 @@
 471010	86	bm	0	cpa_sdd	FunctionProp/targets_cls.txt	CreatePropAtPositionFunction
 471080	128	bm	0	c6_ctor	Misc18/targets_c6.txt	
 471100	118	bm	0	cp_dtor	FunctionCycle/targets.txt	
-4711a0	141	todo	-	-	-	SetCyclePropFunction
+4711a0	141	bm	0	cp_delete	FunctionCycle/targets.txt	SetCyclePropFunction
 471260	16	bm	0	PathDir_name	FunctionCycle/targets_cycle.txt	SetCyclePropPathDirFunction
 471270	262	bm	0	PathDir_make	FunctionCycle/targets_cycle.txt	
 471390	16	bm	0	PathWrap_name	FunctionCycle/targets_cycle.txt	SetCyclePropPathWrapFunction

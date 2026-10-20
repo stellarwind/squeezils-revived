@@ -1,0 +1,2 @@
+^\?Thunk449500@@ 449500 ambient_names_init 112
+^\?G449580@@ 449580 ambient_names_cleanup cc

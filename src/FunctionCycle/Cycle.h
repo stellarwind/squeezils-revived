@@ -23,7 +23,7 @@ extern const char kCyclePropType[];      // 0x4bb9c0
 class SetCyclePropFunction : public Function {
 public:
     SetCyclePropFunction() { value = 0; }
-    ~SetCyclePropFunction();                             // 0x471100 (out of line)
+    ~SetCyclePropFunction() { delete value; }            // 0x471100; also expanded in scalar deleting dtor
     virtual int Execute(ScriptCall *args, int extra);    // 0x470440
     virtual Function *Create(ArgList *list);             // 0x470360
     virtual void Print();                                // 0x470400

@@ -5,3 +5,4 @@
 #   func!  func that has been checked in gameplay testing
 #   todo   no real source yet (use to demote a placeholder / partial body that has a target but would misbehave)
 # Default without an override: score 0 -> bm, score > 0 or unscored target -> func, no target -> todo ("stub" = EH unwind funclet, never a state here).
+449500 todo Explicit startup avoids duplicate automatic destruction; placement new adds a fixed-global null branch, so strict shape-only validation is pending.
