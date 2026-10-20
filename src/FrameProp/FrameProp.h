@@ -34,6 +34,11 @@ struct FrameProp {
     void  SetActor(int index);             // 0x427f10 slot 20
     void  SetHideAtEnd(int hide);          // 0x427f30 slot 21
     int   HasBody();                       // 0x427f40 (not virtual)
+    void FireTimeMessages(float from, float to); // 0x427b50
+    void Update(float seconds);                 // 0x427740
+#ifdef FRAMEPROP_BUILD_OWN
+    void BuildOwnFrame(void *parent);           // 0x427380
+#endif
 #ifdef FRAMEPROP_HIDE
     void Hide();                           // slot 5  0x427320
 #endif

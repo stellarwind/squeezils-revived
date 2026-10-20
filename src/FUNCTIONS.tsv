@@ -414,9 +414,9 @@
 41dd30	91	bm	0	say	Misc16/targets_m2.txt	AnimatedBody
 41dda0	80	bm	0	ab_attach	Props2/targets.txt	AnimatedBody
 41ddf0	48	bm	0	ab_detach	Props2/targets.txt	AnimatedBody
-41de20	240	todo	-	-	-	AnimatedBody
+41de20	240	func	15	set_cycle	AnimatedBody/targets_setcycle.txt	AnimatedBody
 41df10	64	bm	0	ab_pose	Props2/targets.txt	AnimatedBody
-41df50	736	todo	-	-	-	AnimatedBody
+41df50	736	func	57	advance	AnimatedBody/targets_advance.txt	AnimatedBody
 41e230	96	bm	0	roottransform	Souls2/targets.txt	AnimatedBody
 41e290	16	bm	0	settime	AnimatedBody/targets.txt	
 41e2a0	48	bm	0	blend	AnimatedBody/targets.txt	AnimatedBody
@@ -643,7 +643,7 @@
 425d50	96	bm	0	e425d50	Init425d50/targets.txt	
 425db0	16	bm	0	r425db0	Guards/targets_init.txt	
 425dc0	134	todo	-	-	-	
-425e50	258	todo	-	-	-	
+425e50	258	bm	0	prop_constructor	Prop/targets_constructor.txt	
 425fa0	179	bm	0	pm_place	Props2/targets.txt	Prop
 426080	100	bm	0	prop_destruct	Destruct/targets.txt	
 426120	64	bm	0	cachedget	PrintStubs/targets.txt	Prop
@@ -675,11 +675,11 @@
 427100	174	bm	0	fp_dtor	FrameProp2/targets.txt	
 4271f0	285	func	55	frame_show	Props2/targets.txt	FrameProp
 427320	96	bm	0	fp_hide	Props2/targets.txt	FrameProp
-427380	754	todo	-	-	-	
+427380	754	bm	0	build_own_frame	FrameProp/targets_buildown.txt	
 4276b0	113	bm	0	valued	Misc16/targets_m2.txt	
-427740	920	todo	-	-	-	FrameProp
+427740	920	func	96	update_frame_prop	FrameProp/targets_update.txt	FrameProp
 427ae0	112	bm	0	item_d427ae0	Fam112b/targets.txt	
-427b50	721	todo	-	-	-	
+427b50	721	func	214	fire_time_messages	FrameProp/targets_messages.txt	
 427e30	32	bm	0	setcycletime	FrameProp/targets.txt	FrameProp
 427e50	32	bm	0	setcycledirection	FrameProp/targets.txt	FrameProp
 427e70	32	bm	0	setcycleloopmode	FrameProp/targets.txt	FrameProp
@@ -732,7 +732,7 @@
 42a520	6831	todo	-	-	-	
 42bfd0	1835	todo	-	-	-	
 42c700	375	func	34	read_paths	PropLoader/targets_paths.txt	
-42c8b0	851	todo	-	-	-	
+42c8b0	851	func	80	find_prop_template	PropLoader/targets_findtemplate.txt	
 42cc10	405	func	-	-	Fn42cc10/targets.txt	
 42cdb0	203	bm	0	split	Fn42cdb0/targets.txt	
 42cea0	336	func	80	walk_path	PropLoader/targets_walkpath.txt	
@@ -1059,7 +1059,7 @@
 43c4d0	384	bm	0	save_bindings	Input/targets_savebindings.txt	
 43c650	336	func	62	compatible_bindings	Input/targets_compatible.txt	
 43c7a0	16	bm	0	inputjoystickpresent	Input/targets.txt	
-43c7b0	448	todo	-	-	-	
+43c7b0	448	func	14	action_name	Input/targets_actionname.txt	
 43c970	112	bm	0	clk_reset	Misc18/targets_clk.txt	
 43c9e0	3072	todo	-	-	-	
 43d5e0	32	bm	0	bufowner	Misc16/targets.txt	
@@ -1427,7 +1427,7 @@
 449d20	393	func	-	-	Fn449d20/targets.txt	
 449ee0	702	todo	-	-	-	
 44a1a0	176	bm	0	release_sound_scope	Audio/targets_releasescope.txt	
-44a250	732	todo	-	-	-	
+44a250	732	func	115	play_effect	Audio/targets_playeffect.txt	
 44a5a0	418	func	-	-	Fn44a5a0/targets.txt	
 44a750	411	func	-	-	Fn44a750/targets.txt	
 44a8f0	80	bm	0	stop_looping_sounds	Audio/targets_stop.txt	
@@ -1435,7 +1435,7 @@
 44aa10	160	bm	0	sfx	Audio/targets.txt	
 44aab0	32	bm	0	setsensitivity2	Misc/targets.txt	
 44aad0	16	bm	0	stacktop_d44aad0	Misc9/targets.txt	
-44aae0	605	todo	-	-	-	
+44aae0	605	func	57	audio_update	Audio/targets_update.txt	
 44ad60	112	func	-	-	Misc18/targets_chk.txt	
 44add0	313	func	42	resume_sounds	Audio/targets_resume.txt	
 44af30	944	todo	-	-	-	
@@ -1445,7 +1445,7 @@
 44b950	672	todo	-	-	-	
 44bc40	241	func	8	run	Fn44bc40/targets.txt	
 44bd60	5418	todo	-	-	-	
-44d290	534	todo	-	-	-	
+44d290	534	func	116	spawn_record	Spawn/targets_record.txt	
 44d4f0	498	func	59	spawnat	Spawn/targets_at.txt	
 44d750	464	func	4	spawn	Spawn/targets.txt	
 44d990	537	func	4	spawnvel	Spawn/targets_vel.txt	
@@ -1569,7 +1569,7 @@
 457ac0	16	bm	0	getmode	SqueezilBody/targets.txt	SqueezilBody
 457ad0	64	bm	0	f457ad0	Tiny4/targets9.txt	SqueezilBody
 457b10	166	func	-	-	SqueezilBody/targets_headpos.txt	SqueezilBody
-457bc0	1081	todo	-	-	-	SqueezilBody
+457bc0	1081	bm	0	update_body	SqueezilBody/targets_update.txt	SqueezilBody
 458000	16	bm	0	i458000	Guards/targets_init.txt	
 458010	16	bm	0	thunk458010	Thunks/targets.txt	
 458020	16	bm	0	r458020	Guards/targets_init.txt	
@@ -1579,7 +1579,7 @@
 458130	968	todo	-	-	-	
 458590	344	func	-	-	Fn458590/targets_stuck.txt	
 458700	288	bm	0	load_body_cycle	SqueezilBody/targets_loadcycle.txt	
-458820	347	todo	-	-	-	SqueezilBody
+458820	347	func	40	set_mode	SqueezilBody/targets_setmode.txt	SqueezilBody
 4589a0	238	func	10	near9	Fn4589a0/targets.txt	
 458aa0	553	func	-	-	Fn458aa0/targets.txt	
 458cd0	496	bm	0	air	Fn458cd0/targets.txt	
@@ -2567,7 +2567,7 @@
 478170	96	bm	0	client_bitmap_free	Misc/targets_bitmapfree.txt	
 4781d0	528	func	4	attach	Fn4781d0/targets.txt	
 4783e0	80	bm	0	client_bitmap_draw	Misc/targets_bitmapdraw.txt	
-478430	2128	todo	-	-	-	
+478430	2128	bm	0	hresult_to_string	Renderer2/targets_hresult.txt	
 478c80	48	bm	0	ctor	Warp/targets.txt	
 478cb0	48	bm	0	dtor	Warp/targets.txt	
 478ce0	192	bm	0	init	Warp/targets.txt	
@@ -2641,7 +2641,7 @@
 47d630	80	bm	0	normalize	Vector3f/targets.txt	
 47d680	415	func	-	-	Fn47d680/targets.txt	
 47d850	205	bm	0	rayplane	Free2/targets.txt	
-47d940	284	todo	-	-	-	
+47d940	284	func	37	closest_on_line	VectorMath/targets_closestline.txt	
 47da80	334	func	8	slerp	VectorMath/targets_slerp.txt	
 47dbf0	206	bm	0	transpose	Fn47dbf0/targets.txt	
 47dcd0	80	bm	0	turnx	Matrix4/targets.txt	

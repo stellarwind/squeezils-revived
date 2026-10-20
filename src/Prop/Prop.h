@@ -2,17 +2,27 @@
 #pragma once
 #include "compat41.h"
 
+#ifdef PROP_CONSTRUCTOR
+#include "Vector3f/Vector3f.h"
+typedef Vector3f PropVector3;
+#else
 struct Float3 { float x, y, z; };
+typedef Float3 PropVector3;
+#endif
 
 struct Prop {
     void  **vtbl;       // 0x00
-    Float3 position;    // 0x04
-    Float3 scale;       // 0x10
-    Float3 direction;   // 0x1c
-    Float3 up;          // 0x28
+    PropVector3 position;    // 0x04
+    PropVector3 scale;       // 0x10
+    PropVector3 direction;   // 0x1c
+    PropVector3 up;          // 0x28
     void  *frame;       // 0x34 (NULL while hidden)
     void  *owner;       // 0x38
     int    isInstance;  // 0x3c
+
+#ifdef PROP_CONSTRUCTOR
+    Prop(Vector3f position, Vector3f scale, Vector3f direction, Vector3f up); // 0x425e50
+#endif
 
     int IsShown();         // 0x426160 slot 14
     void *GetOwner();      // 0x426220 slot 9

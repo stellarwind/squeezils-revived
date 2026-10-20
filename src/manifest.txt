@@ -41,6 +41,8 @@ NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurface
 NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 AnimatedBody/targets_copyctor.txt AnimatedBody/CopyCtor.cpp
+AnimatedBody/targets_setcycle.txt AnimatedBody/SetCycle.cpp
+AnimatedBody/targets_advance.txt AnimatedBody/Advance.cpp
 PoseTable/targets_copyctor.txt PoseTable/CopyCtor.cpp
 Props2/targets_meshctor.txt Props2/MeshCtor.cpp
 Props2/targets_spritector.txt Props2/SpriteCtor.cpp
@@ -52,6 +54,7 @@ Body/targets.txt Body/Body.cpp
 SqueezilBody/targets.txt SqueezilBody/SqueezilBody.cpp SqueezilBody/UpdOrient.cpp
 GoodieBody/targets.txt GoodieBody/GoodieBody.cpp
 Prop/targets.txt Prop/Prop.cpp
+Prop/targets_constructor.txt Prop/Constructor.cpp
 RegionSimulation/targets.txt RegionSimulation/RegionSimulation.cpp
 SqueezilSoul/targets.txt SqueezilSoul/SqueezilSoul.cpp SqueezilSoul/Touch.cpp SqueezilSoul/Die.cpp SqueezilSoul/Surface.cpp SqueezilSoul/Move.cpp SqueezilSoul/Spit.cpp SqueezilSoul/Nuts.cpp SqueezilSoul/Grant.cpp SqueezilSoul/Turn.cpp SqueezilSoul/Adjust.cpp SqueezilSoul/Rotate.cpp SqueezilSoul/Attack.cpp SqueezilSoul/Slip.cpp SqueezilSoul/SpitNut.cpp SqueezilSoul/SpitStand.cpp SqueezilSoul/Jump.cpp SqueezilSoul/Steer.cpp SqueezilSoul/Update.cpp SqueezilSoul/Ground.cpp SqueezilSoul/MoveGround.cpp SqueezilSoul/SlipMove.cpp SqueezilSoul/Fly.cpp
 NavProp/targets.txt NavProp/NavProp.cpp
@@ -65,6 +68,8 @@ SqueezilPlayerSoul/targets_airinput.txt SqueezilPlayerSoul/AirInput.cpp
 Input/targets_initialize.txt Input/Initialize.cpp
 PhysicalCollision/targets.txt PhysicalCollision/Collision.cpp
 VectorMath/targets_slerp.txt VectorMath/Slerp.cpp
+VectorMath/targets_closestline.txt VectorMath/ClosestOnLine.cpp
+Renderer2/targets_hresult.txt Renderer2/HResultToString.cpp
 NavProp/targets_buildframe.txt NavProp/BuildFrame.cpp
 PropLoader/targets_walkpath.txt PropLoader/WalkPath.cpp
 NavSurface/targets_bindings.txt NavSurface/ReadBindings.cpp
@@ -85,6 +90,10 @@ FunctionIf/targets_surftest.txt FunctionIf/IfSurfaceTest.cpp
 Simulation/targets.txt Simulation/Simulation.cpp
 PlaceSimulation/targets.txt PlaceSimulation/PlaceSimulation.cpp
 FrameProp/targets.txt FrameProp/FrameProp.cpp
+FrameProp/targets_messages.txt FrameProp/FireTimeMessages.cpp
+FrameProp/targets_update.txt FrameProp/Update.cpp
+FrameProp/targets_buildown.txt FrameProp/BuildOwnFrame.cpp
+PropLoader/targets_findtemplate.txt PropLoader/FindTemplate.cpp
 Misc/targets.txt Misc/Misc.cpp
 Misc/targets_bitmapdraw.txt Misc/ClientBitmapDraw.cpp
 Misc/targets_bitmapfree.txt Misc/ClientBitmapFree.cpp
@@ -155,6 +164,8 @@ SqgModel/targets.txt SqgModel/SqgModel.cpp
 SqgModel/targets_wrl.txt SqgModel/LoadWrl.cpp
 SqgModel/targets_read_wrl.txt SqgModel/ReadWrl.cpp
 SqueezilBody/targets_loadcycle.txt SqueezilBody/LoadCycle.cpp
+SqueezilBody/targets_setmode.txt SqueezilBody/SetMode.cpp
+SqueezilBody/targets_update.txt SqueezilBody/Update.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
 Release/targets_shutdown_props.txt Release/ShutdownProps.cpp
 Container2/targets_register_integer_set.txt Container2/RegisterIntegerSet.cpp
@@ -559,6 +570,7 @@ Container/targets_vecat.txt Container/ArrayVecAt.cpp
 ForwardThunks/targets.txt ForwardThunks/ForwardThunks.cpp
 Fam68/targets_ctor.txt Fam68/TwoVecCtor.cpp
 Input/targets_assignkey.txt Input/AssignKey.cpp
+Input/targets_actionname.txt Input/ActionName.cpp
 Input/targets_keyslot.txt Input/SetKeySlot.cpp
 NavMesh/targets_before.txt NavMesh/ToWorldBefore.cpp
 Container2/targets_get_intstring.txt Container2/GetIntString.cpp
@@ -577,6 +589,8 @@ NavSurface/targets_near.txt NavSurface/IsNear.cpp
 NavSurface/targets_wasnear.txt NavSurface/WasNear.cpp
 Audio/targets_releasescope.txt Audio/ReleaseSoundScope.cpp
 Audio/targets_find.txt Audio/FindSound.cpp
+Audio/targets_playeffect.txt Audio/PlayEffect.cpp
+Audio/targets_update.txt Audio/UpdateSounds.cpp
 FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
 Dtor44f590/targets.txt Dtor44f590/D.cpp
 Fn450b90/targets.txt Fn450b90/D.cpp
@@ -650,3 +664,4 @@ Spawn/targets.txt Spawn/Spawn44d750.cpp
 Spawn/targets_at.txt Spawn/Spawn44d4f0.cpp
 Spawn/targets_nut.txt Spawn/Spawn44dc30.cpp
 Spawn/targets_vel.txt Spawn/Spawn44d990.cpp
+Spawn/targets_record.txt Spawn/SpawnRecord.cpp
