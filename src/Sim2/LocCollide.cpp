@@ -1,4 +1,5 @@
-// LocationSimulation slot 8 (SQZ.EXE 0x413280): one frame of creature-against-creature collisions (draft, see BYTEMATCH_STATUS.md).
+// LocationSimulation slot 8 (SQZ.EXE 0x413280): one frame of creature-against-creature collisions.
+// Differential regression against original machine code: tools/flagsearch/test_collision.sh.
 #include "Vector3f/Vector3f.h"
 #include "GameClock/GameClock.h"
 #include "Globals/Globals.h"

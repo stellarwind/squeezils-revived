@@ -99,7 +99,7 @@
 4059e0	816	func	51	mood_draw	MoodFace/targets_draw.txt	
 405d10	384	bm	0	findanim	MoodFace/targets.txt	
 405e90	243	bm	0	menuc_ctor	Fn405e90/targets.txt	
-405f90	96	func	999	menu_dtor	Menu/targets.txt	
+405f90	96	func	30	menu_dtor	Menu/targets.txt	
 405ff0	1054	func	-	-	Menu/targets_menuload.txt	
 406420	480	func	-	-	Menu/targets_stuck.txt	
 406600	112	bm	0	setactions	Menu/targets.txt	
@@ -321,7 +321,7 @@
 416d40	195	bm	0	place_record_dtor	Sim2/targets_placerecord.txt	
 416e50	144	bm	0	c7_ctor	Misc18/targets_c7.txt	
 416ee0	74	bm	0	regionsimulation_destruct	Destruct/targets.txt	
-416f50	1609	func	67	rg_init	Sim2/targets.txt	RegionSimulation
+416f50	1609	func	61	rg_init	Sim2/targets.txt	RegionSimulation
 417600	128	bm	0	rg_clear	Sim2/targets.txt	RegionSimulation
 417680	564	func	-	-	Fn417680/targets.txt	
 4178e0	2034	func	100	readlocation	Fn4178e0/targets.txt	
@@ -392,7 +392,7 @@
 41bd60	1818	func	255	mc_load	MorphCycle/targets_load.txt	
 41c4a0	16	func	-	-	Container/gen/targets_Array05.txt	?$Array@M
 41c4b0	128	bm	0	vget	Tiny4/targets18.txt	?$Array@VVector3f@@
-41c530	4523	func	285	load_path	MorphCycle/targets_loadpath.txt	
+41c530	4523	func	291	load_path	MorphCycle/targets_loadpath.txt	
 41d6e0	176	bm	0	pget	Tiny4/targets18.txt	?$Array@U_tag_PartOrientation@@
 41d790	68	bm	0	pair_dtor_d41d790	Fam68/targets.txt	
 41d800	112	bm	0	keyat_d41d800	Fam112/targets.txt	
@@ -622,7 +622,7 @@
 424de0	16	bm	0	thunk424de0	Thunks/targets.txt	
 424df0	16	bm	0	r424df0	Guards/targets_init.txt	
 424e00	32	bm	0	g424e00	Guards/targets.txt	
-424e20	535	func	40	inittex	TexDefaults/targets.txt	
+424e20	535	func	42	inittex	TexDefaults/targets.txt	
 425070	419	func	8	load_texture	Resources/targets_loadtexture.txt	
 425220	202	bm	0	find_texture	Resources/targets_find.txt	
 425310	486	func	4	loadtex	TexRes/targets.txt	
@@ -667,7 +667,7 @@
 426a70	90	bm	0	spriteprop_destruct	Destruct/targets.txt	
 426b00	256	bm	0	sprite_build	Props2/targets.txt	SpriteProp
 426c00	88	func	-	-	Release/targets_stuck.txt	SpriteProp
-426c70	755	bm	0	frame_ctor	Props2/targets_framector.txt	
+426c70	755	func	22	frame_ctor	Props2/targets_framector.txt	
 426f70	32	bm	0	frameprop	Destroy/targets.txt	FrameProp
 426f90	61	bm	0	holder_dtor_d426f90	Fam61/targets.txt	
 426fe0	288	bm	0	frame_clone	Props2/targets.txt	FrameProp
@@ -778,7 +778,7 @@
 42d5b0	16	bm	0	thunk42d5b0	Thunks/targets.txt	
 42d5c0	16	bm	0	r42d5c0	Guards/targets_init.txt	
 42d5d0	32	bm	0	g42d5d0	Guards/targets.txt	
-42d5f0	652	func	4	overlay_ctor	Fn42d880/targets.txt	
+42d5f0	652	func	32	overlay_ctor	Fn42d880/targets.txt	
 42d880	228	bm	0	overlay_dtor	Fn42d880/targets.txt	
 42d9f0	64	bm	0	panel_load	Panel/targets_widgets.txt	
 42da30	48	bm	0	winorigin	Misc9/targets_b.txt	
@@ -1184,7 +1184,7 @@
 4429b0	16	bm	0	r4429b0	Guards/targets_init.txt	
 4429c0	32	bm	0	g4429c0	Guards/targets.txt	
 4429e0	147	bm	0	cache_dtor	Ini/targets.txt	
-442aa0	805	bm	0	cache_load	Ini/targets.txt	
+442aa0	805	func	6	cache_load	Ini/targets.txt	
 442e20	152	bm	0	cache_keys	Ini/targets.txt	
 442ee0	156	bm	0	cache_find	Ini/targets.txt	
 442fa0	313	bm	0	iniopen	Ini/targets.txt	
@@ -1203,7 +1203,7 @@
 4433a0	185	bm	0	getdirectory	IniReader/targets.txt	
 443460	16	bm	0	getpath	IniReader/targets.txt	
 443470	251	bm	0	getkeys	IniReader/targets.txt	
-443590	96	bm	0	parsefloats	IniReader/targets.txt	
+443590	96	func	32	parsefloats	IniReader/targets.txt	
 4435f0	240	bm	0	parseintlist	IniReader/targets.txt	
 4436e0	64	bm	0	if_create	FunctionIf/targets.txt	IfFunction
 443720	48	bm	0	if_print	FunctionIf/targets.txt	IfFunction
@@ -1436,13 +1436,13 @@
 44aae0	605	func	57	audio_update	Audio/targets_update.txt	
 44ad60	112	func	-	-	Misc18/targets_chk.txt	
 44add0	313	func	42	resume_sounds	Audio/targets_resume.txt	
-44af30	944	func	-	-	Fn44b2e0/targets.txt	
-44b2e0	449	func	-	-	Fn44b2e0/targets.txt	
+44af30	944	func	4	placelevel_ctor	Fn44b2e0/targets.txt	
+44b2e0	449	func	39	placelevel_dtor	Fn44b2e0/targets.txt	
 44b5b0	409	func	-	-	Fn44b5b0/targets.txt	
 44b780	404	func	-	-	Fn44b780/targets.txt	
-44b950	672	func	-	-	Fn44b2e0/targets.txt	
+44b950	672	func	37	readgoodielist	Fn44b2e0/targets.txt	
 44bc40	241	func	8	run	Fn44bc40/targets.txt	
-44bd60	5418	todo	-	-	-	
+44bd60	5418	func	1300	placelevel_read	Fn44b2e0/targets.txt	
 44d290	534	func	116	spawn_record	Spawn/targets_record.txt	
 44d4f0	498	func	59	spawnat	Spawn/targets_at.txt	
 44d750	464	func	4	spawn	Spawn/targets.txt	
@@ -1454,7 +1454,7 @@
 44e020	80	bm	0	clearmatching	Souls2/targets.txt	
 44e070	64	bm	0	addall	Misc11/targets.txt	
 44e0b0	62	bm	0	absorb	Misc16/targets_m2.txt	
-44e0f0	192	func	42	tick	Fn44e0f0/targets.txt	
+44e0f0	192	func	66	tick	Fn44e0f0/targets.txt	
 44e1b0	257	bm	0	find_brain	Level/targets_findbrain.txt	
 44e2c0	275	bm	0	acp_create	FunctionCamPath/targets.txt	AnimateCameraPathFunction
 44e3e0	16	bm	0	acp_name	FunctionCamPath/targets.txt	
@@ -1574,7 +1574,7 @@
 458030	32	bm	0	g458030	Guards/targets.txt	
 458050	80	bm	0	load_proto_bodies	SqueezilBody/targets_loadprotos.txt	
 4580a0	144	func	15	free_proto_bodies	SqueezilBody/targets_freeprotos.txt	
-458130	968	func	97	load_proto_body	SqueezilBody/targets_loadproto.txt	
+458130	968	func	93	load_proto_body	SqueezilBody/targets_loadproto.txt	
 458590	344	func	-	-	Fn458590/targets_stuck.txt	
 458700	288	bm	0	load_body_cycle	SqueezilBody/targets_loadcycle.txt	
 458820	347	func	40	set_mode	SqueezilBody/targets_setmode.txt	SqueezilBody
@@ -1646,7 +1646,7 @@
 45ae90	1088	func	-	-	Audio/targets_initmidi.txt	
 45b2d0	176	bm	0	release_midi_file	Misc18/targets_midifile.txt	
 45b380	336	func	68	prime_midi_tracks	Audio/targets_prime.txt	
-45b4d0	720	func	-	-	Fn45b4d0/targets_stuck.txt	
+45b4d0	720	func	61	fillmidi	Fn45b4d0/targets_stuck.txt	
 45b7a0	224	func	15	fillbuf	Fn45b7a0/targets.txt	
 45b880	528	func	999	midiev	Audio/targets.txt	
 45ba90	912	func	-	-	Audio/targets_readmidievent.txt	
@@ -1787,7 +1787,7 @@
 460250	48	func	-	-	Container/gen/targets_Set11.txt	?$Set@H$0BE@
 460280	208	bm	0	create	Container2/gen/targets_SC_i20.txt	?$Set@H$0BE@
 460350	74	bm	0	table1_dtor	Container/gen/targets_TableDtor.txt	
-4603c0	96	bm	0	insert_d4603c0	Container/targets_table50.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
+4603c0	96	func	12	insert_d4603c0	Container/targets_table50.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
 460420	32	bm	0	contains_d460420	Container/targets_table23.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
 460440	32	bm	0	indexof_d460440	Container/targets_table23.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
 460460	48	bm	0	removeat_d460460	Container/targets_table23.txt	?$BufferObjectTable@HHV?$PrimitiveArray@H$00@@$0BE@
@@ -1807,14 +1807,14 @@
 460e30	288	bm	0	create	Container2/gen/targets_SC_s21.txt	?$Set@VSqzString@@$0BF@
 460f50	368	bm	0	string_int_table_ctor	Container2/targets_string_int_ctor.txt	
 4610c0	74	bm	0	table2_dtor	Container/gen/targets_TableDtor.txt	
-461130	96	bm	0	insert_d461130	Container/targets_table50.txt	?$Table@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
+461130	96	func	12	insert_d461130	Container/targets_table50.txt	?$Table@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 461190	32	bm	0	contains_d461190	Container/targets_table23.txt	?$Table@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 4611b0	32	bm	0	indexof_d4611b0	Container/targets_table23.txt	?$Table@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 4611d0	48	bm	0	removeat_d4611d0	Container/targets_table23.txt	?$Table@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 461200	48	bm	0	removekey_d461200	Container/targets_table23.txt	
 461230	32	bm	0	get_m	TableGet/targets.txt	
 461250	128	func	14	n461250	Tiny4/targets6.txt	?$BufferObjectTable@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
-4612d0	432	bm	0	tab_sh	Container2/targets_tab.txt	?$BufferObjectTable@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
+4612d0	432	func	14	tab_sh	Container2/targets_tab.txt	?$BufferObjectTable@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 461480	48	bm	0	both2_461480	Fam48/targets.txt	?$BufferObjectTable@VSqzString@@HV?$PrimitiveArray@H$00@@$0BF@
 4614b0	48	bm	0	both48_d4614b0	Fam48/targets.txt	
 4614e0	144	bm	0	tn	Container2/gen/targets_PA_s22.txt	?$PrimitiveArray@VSqzString@@$0BG@
@@ -1824,7 +1824,7 @@
 461710	878	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
 461a80	32	bm	0	contains_d461a80	Container/targets_set23.txt	?$Set@VSqzString@@$0BG@
 461aa0	176	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
-461b50	32	func	999	f461b50	Misc17/targets.txt	
+461b50	32	func	10	f461b50	Misc17/targets.txt	
 461b70	142	func	-	-	Container/gen/targets_Set14.txt	?$Set@VSqzString@@$0BG@
 461c10	288	bm	0	create	Container2/gen/targets_SC_s22.txt	?$Set@VSqzString@@$0BG@
 461d30	74	bm	0	table3_dtor	Container/gen/targets_TableDtor.txt	
@@ -1925,7 +1925,7 @@
 465070	64	bm	0	oa_write	Tiny4/targets10.txt	?$BufferObjectArray@PAVCharacter@@$04
 4650b0	288	bm	0	table_ctor_a	Container/gen/targets_TableCtor.txt	
 4651d0	74	bm	0	table7_dtor	Container/gen/targets_TableDtor.txt	
-465240	96	bm	0	insert_d465240	Container/targets_table50.txt	?$Table@HPAVCharacter@@V?$BufferObjectArray@PAVCharacter@@$04@@$04
+465240	96	func	12	insert_d465240	Container/targets_table50.txt	?$Table@HPAVCharacter@@V?$BufferObjectArray@PAVCharacter@@$04@@$04
 4652a0	32	bm	0	t01_Contains	TableFwd/targets.txt	?$Table@HPAVCharacter@@V?$BufferObjectArray@PAVCharacter@@$04@@$04
 4652c0	32	bm	0	t01_IndexOf	TableFwd/targets.txt	?$Table@HPAVCharacter@@V?$BufferObjectArray@PAVCharacter@@$04@@$04
 4652e0	48	bm	0	t01_RemoveAt	TableFwd/targets.txt	?$Table@HPAVCharacter@@V?$BufferObjectArray@PAVCharacter@@$04@@$04
@@ -1952,7 +1952,7 @@
 466010	16	bm	0	ad07	ArrayData/targets.txt	?$Array@PAV?$PrimitiveArray@H$00@@
 466020	128	func	-	-	Container/gen/targets_Array23.txt	
 4660a0	74	bm	0	table8_dtor	Container/gen/targets_TableDtor.txt	
-466110	96	bm	0	insert_d466110	Container/targets_table50.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
+466110	96	func	12	insert_d466110	Container/targets_table50.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
 466170	32	bm	0	t02_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
 466190	32	bm	0	t02_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
 4661b0	48	bm	0	t02_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$05
@@ -1993,7 +1993,7 @@
 466d30	32	bm	0	ar05	ArrayReplace/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
 466d50	16	bm	0	ad10	ArrayData/targets.txt	?$Array@PAV?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@@@
 466d60	128	func	-	-	Container/gen/targets_Array25.txt	
-466de0	320	bm	0	frame_table_ctor	Container2/targets_render_table_ctors.txt	
+466de0	320	func	42	frame_table_ctor	Container2/targets_render_table_ctors.txt	
 466f20	16	bm	0	ag22	ArrayGet/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 466f30	144	bm	0	tn	Container2/gen/targets_PA_s0.txt	?$PrimitiveArray@VSqzString@@$0A@
 466fc0	256	func	28	create	Container2/gen/targets_PA_s0.txt	?$PrimitiveArray@VSqzString@@$0A@
@@ -2011,13 +2011,13 @@
 467850	16	bm	0	ad11	ArrayData/targets.txt	?$Array@PAUIDirect3DRMFrame@@
 467860	128	func	-	-	Container/gen/targets_Array27.txt	
 4678e0	74	bm	0	table10_dtor	Container/gen/targets_TableDtor.txt	
-467950	96	bm	0	insert_d467950	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
+467950	96	func	12	insert_d467950	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
 4679b0	32	bm	0	t04_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
 4679d0	32	bm	0	t04_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
 4679f0	48	bm	0	t04_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMFrame@@V?$Array@PAUIDirect3DRMFrame@@@@$0A@
 467a20	48	bm	0	t04_RemoveKey	TableFwd/targets.txt	
 467a50	32	bm	0	get_b	TableGet/targets.txt	
-467a70	320	bm	0	texture_table_ctor	Container2/targets_texture_table_ctor.txt	
+467a70	320	func	42	texture_table_ctor	Container2/targets_texture_table_ctor.txt	
 467bb0	16	bm	0	ag23	ArrayGet/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467bc0	112	func	-	-	Container/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467c30	64	bm	0	arm08	ArrayRemove/targets.txt	?$Array@PAUIDirect3DRMTexture@@
@@ -2025,7 +2025,7 @@
 467c90	16	bm	0	ad12	ArrayData/targets.txt	?$Array@PAUIDirect3DRMTexture@@
 467ca0	128	func	-	-	Container/gen/targets_Array30.txt	
 467d20	74	bm	0	table11_dtor	Container/gen/targets_TableDtor.txt	
-467d90	96	bm	0	insert_d467d90	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
+467d90	96	func	12	insert_d467d90	Container/targets_table50.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
 467df0	32	bm	0	t05_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
 467e10	32	bm	0	t05_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
 467e30	48	bm	0	t05_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAUIDirect3DRMTexture@@V?$Array@PAUIDirect3DRMTexture@@@@$0A@
@@ -2053,7 +2053,7 @@
 468430	16	bm	0	ad15	ArrayData/targets.txt	?$Array@PAVAudioSample@@
 468440	128	func	-	-	Container/gen/targets_Array34.txt	
 4684c0	74	bm	0	table12_dtor	Container/gen/targets_TableDtor.txt	
-468530	96	bm	0	insert_d468530	Container/targets_table50.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
+468530	96	func	12	insert_d468530	Container/targets_table50.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
 468590	32	bm	0	t06_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
 4685b0	32	bm	0	t06_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
 4685d0	48	bm	0	t06_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@
@@ -2066,15 +2066,15 @@
 468750	32	bm	0	ar11	ArrayReplace/targets.txt	?$Array@PAVProp@@
 468770	16	bm	0	ad16	ArrayData/targets.txt	?$Array@PAVProp@@
 468780	128	func	-	-	Container/gen/targets_Array35.txt	
-468800	320	bm	0	prop_table_ctor	Container2/targets_prop_table_ctor.txt	
+468800	320	func	42	prop_table_ctor	Container2/targets_prop_table_ctor.txt	
 468940	74	bm	0	table13_dtor	Container/gen/targets_TableDtor.txt	
-4689b0	96	bm	0	insert_d4689b0	Container/targets_table50.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
+4689b0	96	func	12	insert_d4689b0	Container/targets_table50.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
 468a10	32	bm	0	t07_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
 468a30	32	bm	0	t07_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
 468a50	48	bm	0	t07_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAVProp@@V?$Array@PAVProp@@@@$0A@
 468a80	48	bm	0	t07_RemoveKey	TableFwd/targets.txt	
 468ab0	32	bm	0	get_e	TableGet/targets.txt	
-468ad0	320	bm	0	morph_table_ctor	Container2/targets_morph_table_ctor.txt	
+468ad0	320	func	42	morph_table_ctor	Container2/targets_morph_table_ctor.txt	
 468c10	16	bm	0	ag25	ArrayGet/targets.txt	?$Array@PAVMorphCycle@@
 468c20	112	func	-	-	Container/targets.txt	?$Array@PAVMorphCycle@@
 468c90	64	bm	0	arm13	ArrayRemove/targets.txt	?$Array@PAVMorphCycle@@
@@ -2082,7 +2082,7 @@
 468cf0	16	bm	0	ad17	ArrayData/targets.txt	?$Array@PAVMorphCycle@@
 468d00	128	func	-	-	Container/gen/targets_Array38.txt	
 468d80	74	bm	0	table14_dtor	Container/gen/targets_TableDtor.txt	
-468df0	96	bm	0	insert_d468df0	Container/targets_table50.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
+468df0	96	func	12	insert_d468df0	Container/targets_table50.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
 468e50	32	bm	0	t08_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
 468e70	32	bm	0	t08_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
 468e90	48	bm	0	t08_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAVMorphCycle@@V?$Array@PAVMorphCycle@@@@$0A@
@@ -2112,7 +2112,7 @@
 469870	16	bm	0	ad19	ArrayData/targets.txt	?$Array@PAVPlaceDescriptor@@
 469880	128	func	-	-	Container/gen/targets_Array42.txt	
 469900	74	bm	0	table15_dtor	Container/gen/targets_TableDtor.txt	
-469970	96	bm	0	insert_d469970	Container/targets_table50.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
+469970	96	func	12	insert_d469970	Container/targets_table50.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
 4699d0	32	bm	0	t09_Contains	TableFwd/targets.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
 4699f0	32	bm	0	t09_IndexOf	TableFwd/targets.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
 469a10	48	bm	0	t09_RemoveAt	TableFwd/targets.txt	?$Table@HPAVPlaceDescriptor@@V?$Array@PAVPlaceDescriptor@@@@$08
@@ -2140,7 +2140,7 @@
 46a010	16	bm	0	ad22	ArrayData/targets.txt	?$Array@PAVRoboBrain@@
 46a020	128	func	-	-	Container/gen/targets_Array46.txt	
 46a0a0	74	bm	0	table16_dtor	Container/gen/targets_TableDtor.txt	
-46a110	96	bm	0	insert_d46a110	Container/targets_table50.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
+46a110	96	func	12	insert_d46a110	Container/targets_table50.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
 46a170	32	bm	0	t10_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
 46a190	32	bm	0	t10_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
 46a1b0	48	bm	0	t10_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAVRoboBrain@@V?$Array@PAVRoboBrain@@@@$0A@
@@ -2229,7 +2229,7 @@
 46c100	144	func	-	-	Container/gen/targets_Set56.txt	?$Set@VSqzString@@$0N@
 46c1a0	288	bm	0	create	Container2/gen/targets_SC_s13.txt	?$Set@VSqzString@@$0N@
 46c2c0	74	bm	0	table20_dtor	Container/gen/targets_TableDtor.txt	
-46c330	96	bm	0	insert_d46c330	Container/targets_table50.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
+46c330	96	func	12	insert_d46c330	Container/targets_table50.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
 46c390	32	bm	0	t13_Contains	TableFwd/targets.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
 46c3b0	32	bm	0	t13_IndexOf	TableFwd/targets.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
 46c3d0	48	bm	0	t13_RemoveAt	TableFwd/targets.txt	?$Table@VSqzString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@
@@ -2309,7 +2309,7 @@
 46dd30	16	bm	0	sec_data	Container/targets_inisection.txt	?$Array@PAVIniFileSection@@
 46dd40	128	bm	0	sec_grow	Container/targets_inisection.txt	
 46ddc0	74	bm	0	dtor	Container/targets_table50.txt	
-46de30	96	bm	0	insert	Container/targets_table50.txt	?$Table@VSqzString@@PAVIniFileSection@@V?$Array@PAVIniFileSection@@@@$0DC@
+46de30	96	func	12	insert	Container/targets_table50.txt	?$Table@VSqzString@@PAVIniFileSection@@V?$Array@PAVIniFileSection@@@@$0DC@
 46de90	32	bm	0	contains	Container/targets_table50.txt	?$Table@VSqzString@@PAVIniFileSection@@V?$Array@PAVIniFileSection@@@@$0DC@
 46deb0	32	bm	0	indexof	Container/targets_table50.txt	?$Table@VSqzString@@PAVIniFileSection@@V?$Array@PAVIniFileSection@@@@$0DC@
 46ded0	48	bm	0	removeat	Container/targets_table50.txt	?$Table@VSqzString@@PAVIniFileSection@@V?$Array@PAVIniFileSection@@@@$0DC@
@@ -2333,7 +2333,7 @@
 46e9d0	16	bm	0	cache_data	Container/targets_inicache.txt	?$Array@PAVIniFileCache@@
 46e9e0	128	bm	0	cache_grow	Container/targets_inicache.txt	
 46ea60	74	bm	0	dtor	Container/targets_table51.txt	
-46ead0	96	bm	0	insert	Container/targets_table51.txt	?$Table@VSqzString@@PAVIniFileCache@@V?$Array@PAVIniFileCache@@@@$0DD@
+46ead0	96	func	12	insert	Container/targets_table51.txt	?$Table@VSqzString@@PAVIniFileCache@@V?$Array@PAVIniFileCache@@@@$0DD@
 46eb30	32	bm	0	contains	Container/targets_table51.txt	?$Table@VSqzString@@PAVIniFileCache@@V?$Array@PAVIniFileCache@@@@$0DD@
 46eb50	32	bm	0	indexof	Container/targets_table51.txt	?$Table@VSqzString@@PAVIniFileCache@@V?$Array@PAVIniFileCache@@@@$0DD@
 46eb70	48	bm	0	removeat	Container/targets_table51.txt	?$Table@VSqzString@@PAVIniFileCache@@V?$Array@PAVIniFileCache@@@@$0DD@
@@ -2592,7 +2592,7 @@
 47a1b0	80	bm	0	popframe	Misc18/targets_pop.txt	
 47a200	880	func	218	load_decal	Loader/targets_decal.txt	
 47a570	16	bm	0	leaf_47a570	Leaves/targets.txt	
-47a580	496	func	75	openfile	Loader/targets.txt	
+47a580	496	func	53	openfile	Loader/targets.txt	
 47a770	16	bm	0	setflagb	Misc10/targets.txt	
 47a780	16	bm	0	f47a780	Tiny1/targets.txt	
 47a790	16	bm	0	wrlsetlogcallback	Globals/targets.txt	
@@ -2646,7 +2646,7 @@
 47dd20	80	bm	0	turny	Matrix4/targets.txt	
 47dd70	80	bm	0	turnz	Matrix4/targets.txt	
 47ddc0	224	func	24	turnaxis	Matrix4/targets.txt	
-47dea0	814	func	-	-	Fn47dea0/targets.txt	
+47dea0	814	func	201	mul	Fn47dea0/targets.txt	
 47e1e0	281	bm	0	xform	Misc8/targets.txt	
 47e330	32	bm	0	settrans	Matrix4/targets.txt	
 47e350	361	func	-	-	Fn47e350/targets.txt	

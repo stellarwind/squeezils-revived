@@ -3,23 +3,24 @@
 #include <string.h>
 #include <d3drm.h>
 
+// SIZE 0x370
 struct Loader {
     int pad0;
-    void *result;
+    int ok; // 0x04
     char pad8[0x368];
     Loader(const char *path, const char *dir, const char *file, IDirect3DRM *rm, void *callback, IDirect3DRMFrame *frame);  // 0x479b10
     ~Loader();                                                          // 0x479b70
     void *operator new(unsigned size);                                  // 0x48ea00
     void operator delete(void *p);                                      // 0x48e9f0
+    IUnknown *Result();                                                 // 0x47a570 (thiscall; field 0x314)
 };
 extern Loader *g_current;                                               // 0x4c3c44
 extern char g_stdin[];                                                  // 0x4c3c38
 extern char g_defaultDir[];                                             // 0x4bd220
-void DefaultCallback();                                                 // 0x479af0
+int DefaultCallback(const char *name);                                   // 0x479af0
 void SetCurrent(Loader *l);                                             // 0x47a770
 void ClearCurrent();                                                    // 0x47a780
 void Restore(const char *path);                                         // 0x47a990
-IUnknown *Result(Loader *l);                                            // 0x47a570
 
 IUnknown *OpenFile(IDirect3DRM *rm, const char *path, void *callback)
 {
@@ -47,13 +48,13 @@ IUnknown *OpenFile(IDirect3DRM *rm, const char *path, void *callback)
     }
     SetCurrent(l);
     Restore(path);
-    IUnknown *r = Result(l);
-    if (l->result == 0) {
-        Result(l)->Release();
+    int ok = l->ok;
+    IUnknown *r = l->Result();
+    if (ok == 0) {
+        l->Result()->Release();
         r = 0;
     }
     if (l) {
-        l->~Loader();
         delete l;
     }
     ClearCurrent();

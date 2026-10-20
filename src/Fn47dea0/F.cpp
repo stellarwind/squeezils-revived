@@ -1,5 +1,6 @@
 // 0x47dea0: Matrix4 product (this * o), returned by value.
 #include "compat41.h"
+// SIZE 0x40; m starts at 0x00
 struct M4 { float m[16]; M4() {} ~M4() {} M4 operator*(const M4 &o) const; };
 M4 M4::operator*(const M4 &o) const
 {

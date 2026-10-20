@@ -5,6 +5,11 @@
 #   func!  func that has been checked in gameplay testing
 #   todo   no real source yet (use to demote a placeholder / partial body that has a target but would misbehave)
 # Default without an override: score 0 -> bm, score > 0 or unscored target -> func, no target -> todo ("stub" = EH unwind funclet, never a state here).
+47d940 func # Native-original closest-point differential: 4096/4096 bit-exact fixtures, including 586 degenerate lines; wrong-argument control fails 3511; VC4.1 score 37, scheduling only; no gameplay validation (2026-10-20).
+47dea0 func # Native-original matrix differential: 8192/8192 bit-exact results for finite fixtures; reversed-order control fails 3584/4096; VC4.1 score 201, x87 scheduling; not gameplay tested (2026-10-20).
+424e20 func # Fixed 3-word buffer passed to 6-word renderer getter and used shared declaration; VC4.1 64/64 override-mask cases pass, stack/register diff only; not gameplay tested (2026-10-20).
+413280 func # Original-machine-code differential: 2000/2000 fixtures, identical callback order/data; bad-clock control fails 363; shared geometry helpers; no gameplay validation (2026-10-20).
+44e0f0 func # Original x87 C0 predicate retained for NaN; VC4.1 production-code runtime test 10/10 (old source 7/10); not gameplay tested (2026-10-20).
 47a120 func # Fixed ret 8 and stdcall COM dispatch; VC4.1 score 47, remaining register/save/scheduling differences (2026-10-20).
 43bf10 func # Restored single-precision return rounding; VC4.1 score 16, stack layout only (2026-10-20).
 43bf80 func # Restored running elapsed-time subtraction and float return rounding; VC4.1 score 14, stack layout only (2026-10-20).

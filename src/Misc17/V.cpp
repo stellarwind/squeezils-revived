@@ -7,5 +7,8 @@ struct V {
     int F(int a);
 };
 int V::F(int a) {
-    int r = Slot7(a); if (r != -1) Slot2(r);
+    int r = Slot7(a);
+    if (r != -1)
+        return Slot2(r);
+    return r;
 }

@@ -142,7 +142,7 @@ Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp MoodFace/FindAnimation.cpp
-Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp Menu/LoadGameDlg.cpp
+Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp Menu/MenuDtor.cpp Menu/LoadGameDlg.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
 QuestPanel/targets_wrappers.txt QuestPanel/QuestPanelWrappers.cpp
 QuestPanel/targets_drawitems.txt QuestPanel/DrawItems.cpp
@@ -707,6 +707,8 @@ Audio/targets_ambient_names.txt Audio/AmbientNames.cpp
 Misc18/targets_push.txt Misc18/Push.cpp
 Misc18/targets_ramp.txt Misc18/Ramp.cpp
 Misc18/targets_varint.txt Misc18/VarInt.cpp
+Fn45b4d0/targets_stuck.txt Fn45b4d0/F.cpp
+Fn47dea0/targets.txt Fn47dea0/F.cpp
 GoodieSoul/targets_spray.txt GoodieSoul/Spray.cpp
 Container/targets_float_array_copy.txt Container/ArrayFloatArrayCopy.cpp
 Qv47ac90/targets.txt Qv47ac90/D.cpp
@@ -730,3 +732,4 @@ NavSurface/targets_flighthits.txt NavSurface/FlightHits.cpp
 SqgModel/targets_faceset.txt SqgModel/AddFaceSet.cpp
 WinMain/targets.txt WinMain/WinMain.cpp
 Keylist/targets_ctor.txt Keylist/Ctor.cpp
+Fn44b2e0/targets.txt Fn44b2e0/F.cpp

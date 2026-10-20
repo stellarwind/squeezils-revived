@@ -15,6 +15,7 @@ public:
     virtual void RemoveKey(const K &k);                     // slot 4
     V At(int i);                                            // non-virtual: values.At(i) (0x40f2a0 for String)
     V Get(const K &k);                                      // non-virtual: no check for a missing key (0x462cc0)
+    K KeyAt(int i);                                         // non-virtual: keys.Get(i) (0x40ee50, 0x44de90 ...)
 
     Set<K, ID> keys;
     VArray values;
@@ -81,6 +82,12 @@ template <class K, class V, class VArray, int ID>
 V Table<K, V, VArray, ID>::Get(const K &k)
 {
     return At(keys.IndexOf(k));
+}
+
+template <class K, class V, class VArray, int ID>
+K Table<K, V, VArray, ID>::KeyAt(int i)
+{
+    return keys.Get(i);
 }
 #endif
 
