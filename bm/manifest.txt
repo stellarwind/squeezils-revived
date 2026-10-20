@@ -633,3 +633,11 @@ Fn470680/targets.txt Fn470680/F.cpp String/String.cpp
 Fn441d20/targets.txt Fn441d20/F.cpp String/String.cpp
 Fn46a590/targets.txt Fn46a590/F.cpp
 Container/gen/targets_TableCtorS.txt Container/gen/TableCtorS.cpp
+Fn40f450/targets.txt Fn40f450/F.cpp
+Fn4781d0/targets.txt Fn4781d0/F.cpp
+Fn43b5a0/targets.txt Fn43b5a0/F.cpp
+Fn43b7c0/targets.txt Fn43b7c0/F.cpp
+Fn458cd0/targets.txt Fn458cd0/F.cpp
+Fn42e2b0/targets.txt Fn42e2b0/F.cpp
+Fn47ca10/targets.txt Fn47ca10/F.cpp
+Fn43aa50/targets.txt Fn43aa50/F.cpp
