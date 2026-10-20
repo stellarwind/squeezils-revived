@@ -1,6 +1,6 @@
 // MorphCycle: a named animation clip over shared samples (SQZ.EXE 0x41b7b0-0x41c000), VC++ 4.1 dialect.
 // Layout from Repo/legacy_gcc/Animation.h. This unit holds the five trivial getters (0x41ba00-0x41ba40); the
-// ctors/dtor/TimeAt/SamplePose/BlendPose are larger and not ported yet.
+// larger members live in their own files (MorphCycleLoad.cpp, MorphCycleLoadPath.cpp, ...).
 #pragma once
 #include "compat41.h"
 #ifdef MORPH_CYCLE_SAMPLE_INTERFACE
