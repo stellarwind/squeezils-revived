@@ -46,6 +46,8 @@ public:
     int  DeleteSceneChild();                                              // 0x477340
     LPDIRECT3DRMFRAME GetSceneChild();                                    // 0x477290
     LPDIRECT3DRMFRAME GetCameraFrame();                                   // 0x477390
+    LPDIRECT3DRMFRAME CreateQuadFrame(WorldVector a, WorldVector b, WorldVector c, WorldVector d,      // 0x4777b0
+        WorldVector normal, double red, double green, double blue);
     LPDIRECT3DRMFRAME CreateDecalFrame(LPDIRECT3DRMTEXTURE texture, WorldVector position,
         WorldDecalSettings settings, LPDIRECT3DRMFRAME parent);            // 0x477400
 
