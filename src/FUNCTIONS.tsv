@@ -2451,7 +2451,7 @@
 471af0	16	bm	0	v2_d471af0	CameraSoul/targets.txt	
 471b00	16	bm	0	reporterror_d471b00	Bitmap2/targets.txt	
 471b10	16	bm	0	v2_d471b10	CameraSoul/targets.txt	
-471b20	2400	todo	-	-	-	
+471b20	2400	func	786	add_faceset	SqgModel/targets_faceset.txt	
 472480	187	bm	0	load_wrl	SqgModel/targets_wrl.txt	
 472550	16	bm	0	d472550	Tiny1/targets.txt	
 472560	1584	func	222	sqg_load	SqgModel/targets_load.txt	
