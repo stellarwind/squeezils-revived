@@ -9,8 +9,18 @@ struct PhysicalSettings {
     float gravityStrength, kineticFriction, staticFriction;
 };
 extern PhysicalSettings gPhysicalSettings;              // 0x4c7768
+extern unsigned char f_4c778c;
 
 void DestroyPhysicsGravity()
 {
     gPhysicalSettings.gravity.~PhysicsVector();
+}
+
+// 0x446d60: destroy down, then gravity, preserving EH cleanup and the shared guard.
+void G446d60()
+{
+    if (!(f_4c778c & 1)) {
+        f_4c778c |= 1;
+        gPhysicalSettings.~PhysicalSettings();
+    }
 }

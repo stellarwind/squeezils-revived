@@ -1,1 +1,2 @@
 ^?DestroyPhysicsGravity@@ 446d40 destroy_physics_gravity 10
+^\?G446d60@@ 446d60 physics_settings_cleanup cc

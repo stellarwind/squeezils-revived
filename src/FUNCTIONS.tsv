@@ -565,7 +565,7 @@
 422610	16	bm	0	i422610	Guards/targets_init.txt	
 422620	112	bm	0	glob_settings_init	Container2/targets_glob.txt	
 422690	16	bm	0	r422690	Guards/targets_init.txt	
-4226a0	85	todo	-	-	-	
+4226a0	85	bm	0	script_settings_cleanup	Container2/targets_settings_cleanup.txt	
 422700	48	bm	0	initsub	Misc16/targets.txt	
 422730	873	func	-	-	Script/targets_loadfunctions.txt	
 422b00	128	bm	0	releaseb	Release/targets.txt	
@@ -642,7 +642,7 @@
 425d40	16	bm	0	i425d40	Guards/targets_init.txt	
 425d50	96	bm	0	e425d50	Init425d50/targets.txt	
 425db0	16	bm	0	r425db0	Guards/targets_init.txt	
-425dc0	134	todo	-	-	-	
+425dc0	134	bm	0	prop_vectors_cleanup	Guards/targets_prop_vectors.txt	
 425e50	258	func	77	prop_constructor	Prop/targets_constructor.txt	
 425fa0	179	bm	0	pm_place	Props2/targets.txt	Prop
 426080	100	bm	0	prop_destruct	Destruct/targets.txt	
@@ -1095,7 +1095,7 @@
 43edd0	64	bm	0	okdlg	Misc16/targets_win.txt	
 43ee10	80	bm	0	stepgame	Misc16/targets_m2.txt	
 43ee60	64	bm	0	redraw_windows_above	Misc16/targets_redraw.txt	
-43eea0	1129	todo	-	-	-	
+43eea0	1129	func	113	main_window_messages	Misc16/targets_mainwindow.txt	
 43f310	2745	todo	-	-	-	
 43fde0	446	func	43	msg_create	FunctionMessage/targets.txt	MessageFunction
 43ffd0	16	bm	0	msg_name	FunctionMessage/targets.txt	
@@ -1331,7 +1331,7 @@
 446d00	80	bm	0	e446d00	Init446d00/targets.txt	
 446d40	10	bm	0	destroy_physics_gravity	Guards/targets_physicsgravity.txt	
 446d50	16	bm	0	r446d50	Guards/targets_init.txt	
-446d60	108	todo	-	-	-	
+446d60	108	bm	0	physics_settings_cleanup	Guards/targets_physicsgravity.txt	
 446dd0	96	bm	0	setgravity	Souls2/targets.txt	
 446e30	160	bm	0	physsoul_ctor	SoulDtor2/targets.txt	
 446ed0	174	bm	0	readphys	CameraSettings/targets.txt	
@@ -1482,9 +1482,9 @@
 44f010	112	bm	0	settarget	Souls2/targets.txt	Splash
 44f080	16	bm	0	reset	Ui/targets.txt	
 44f090	16	bm	0	i44f090	Guards/targets_init.txt	
-44f0a0	96	todo	-	-	-	
+44f0a0	96	bm	0	squeezil_settings_init	Guards/targets_settings_initializers.txt	
 44f100	16	bm	0	r44f100	Guards/targets_init.txt	
-44f110	69	todo	-	-	-	
+44f110	69	bm	0	squeezil_settings_cleanup	Guards/targets_settings_cleanup.txt	
 44f160	16	bm	0	i44f160	Guards/targets_init.txt	
 44f170	16	bm	0	thunk44f170	Thunks/targets.txt	
 44f180	16	bm	0	r44f180	Guards/targets_init.txt	
@@ -1609,9 +1609,9 @@
 4593d0	128	bm	0	axisy	Misc18/targets_axis.txt	
 459450	112	bm	0	axisx	Misc18/targets_axis.txt	
 4594c0	16	bm	0	i4594c0	Guards/targets_init.txt	
-4594d0	96	todo	-	-	-	
+4594d0	96	bm	0	goodie_settings_init	Guards/targets_settings_initializers.txt	
 459530	16	bm	0	r459530	Guards/targets_init.txt	
-459540	69	todo	-	-	-	
+459540	69	bm	0	goodie_settings_cleanup	Guards/targets_settings_cleanup.txt	
 459590	324	func	-	-	Fn459590/targets.txt	
 4596e0	194	func	-	-	Misc18/targets_d21.txt	GoodieSoul
 4597b0	412	func	-	-	Fn459590/targets_read_stuck.txt	
@@ -1622,7 +1622,7 @@
 459a80	244	func	22	gs_hit	GoodieSoul/targets.txt	GoodieSoul
 459b80	106	bm	0	grant_to	GoodieSoul/targets_grantto.txt	
 459bf0	16	bm	0	getkind	GoodieSoul/targets.txt	GoodieSoul
-459c00	717	bm	0	goodie_spray	GoodieSoul/targets_spray.txt	
+459c00	717	func	2	goodie_spray	GoodieSoul/targets_spray.txt	
 459ed0	141	bm	0	gs_launch	GoodieSoul/targets.txt	
 459f80	2122	func	488	goodie_update	GoodieSoul/targets_update.txt	GoodieSoul
 45a7d0	16	todo	-	-	-	GoodieSoul
@@ -2156,7 +2156,7 @@
 46a540	64	bm	0	recset	Misc11/targets.txt	?$Array@U_tag_PartOrientation@@
 46a580	16	bm	0	ad23	ArrayData/targets.txt	?$Array@U_tag_PartOrientation@@
 46a590	304	bm	0	grow24	Fn46a590/targets.txt	
-46a6c0	112	todo	-	-	-	
+46a6c0	112	func	36	float_array_copy_ctor	Container/targets_float_array_copy.txt	
 46a730	32	bm	0	arr11_dtor	Container/gen/targets_ArrayDtor.txt	
 46a750	112	func	-	-	Container/gen/targets_Array47.txt	?$Array@PAV?$PrimitiveArray@M$01@@
 46a7c0	64	bm	0	arm19	ArrayRemove/targets.txt	?$Array@PAV?$PrimitiveArray@M$01@@
@@ -2592,7 +2592,7 @@
 47a0f0	48	bm	0	ch_ctor	Misc18/targets_com.txt	
 47a120	144	func	-	-	Misc18/targets_push.txt	
 47a1b0	80	bm	0	popframe	Misc18/targets_pop.txt	
-47a200	880	todo	-	-	-	
+47a200	880	func	218	load_decal	Loader/targets_decal.txt	
 47a570	16	bm	0	leaf_47a570	Leaves/targets.txt	
 47a580	496	func	75	openfile	Loader/targets.txt	
 47a770	16	bm	0	setflagb	Misc10/targets.txt	
@@ -2602,10 +2602,10 @@
 47a7b0	80	bm	0	wrllog	Log2/targets_wrl.txt	
 47a800	227	func	8	read_wrl_file	SqgModel/targets_read_wrl.txt	
 47a8f0	160	func	16	p_base	Tiny4/targets15.txt	
-47a990	160	todo	-	-	-	
+47a990	160	func	15	restore_scene	Loader/targets_restore.txt	
 47aa50	128	func	3	gtrav	Fn47aa50/targets.txt	
 47aad0	448	func	-	-	Fn47aad0/targets.txt	
-47ac90	144	todo	-	-	-	
+47ac90	144	func	31	unknown_node_dispatch	Qv47ac90/targets.txt	
 47ad20	160	bm	0	mface_ctor	Misc15/targets_mesh.txt	
 47ade0	48	bm	0	tn_ctor	Misc15/targets_tree.txt	
 47ae10	64	bm	0	nrelease	Misc6/targets.txt	

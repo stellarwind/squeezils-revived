@@ -701,3 +701,12 @@ GoodieSoul/targets_update.txt GoodieSoul/Update.cpp
 NavSurface/targets_load.txt NavSurface/Load.cpp
 Audio/targets_ambient_names.txt Audio/AmbientNames.cpp
 GoodieSoul/targets_spray.txt GoodieSoul/Spray.cpp
+Container/targets_float_array_copy.txt Container/ArrayFloatArrayCopy.cpp
+Qv47ac90/targets.txt Qv47ac90/D.cpp
+Loader/targets_restore.txt Loader/Restore.cpp
+Guards/targets_prop_vectors.txt Guards/PropVectors.cpp
+Guards/targets_settings_cleanup.txt Guards/SettingsCleanup.cpp
+Loader/targets_decal.txt Loader/Decal.cpp
+Container2/targets_settings_cleanup.txt Container2/SettingsCleanup.cpp
+Misc16/targets_mainwindow.txt Misc16/MainWindowProc.cpp
+Guards/targets_settings_initializers.txt Guards/SettingsInitializers.cpp

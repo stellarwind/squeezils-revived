@@ -1,0 +1,2 @@
+^\?Thunk44f0a0@@ 44f0a0 squeezil_settings_init cc
+^\?Thunk4594d0@@ 4594d0 goodie_settings_init cc
