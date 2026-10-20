@@ -142,7 +142,7 @@ Keylist/targets.txt Keylist/Keylist.cpp Keylist/KeyTable.cpp
 StatusBar/targets.txt StatusBar/StatusBar.cpp StatusBar/Dtor.cpp
 GoodieListCtor/targets.txt GoodieListCtor/GoodieListCtor.cpp
 MoodFace/targets.txt MoodFace/MoodFace.cpp MoodFace/FindAnimation.cpp
-Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp
+Menu/targets.txt Menu/Menu.cpp Menu/Menu2.cpp Menu/SetActions.cpp Menu/MenuDraw.cpp Menu/MenuMouse.cpp Menu/MenuLoadBmp.cpp Menu/MenuLoadGame.cpp Menu/MenuSaveFile.cpp Menu/LoadGameDlg.cpp
 QuestPanel/targets.txt QuestPanel/QuestPanel.cpp QuestPanel/QuestPanelMembers.cpp
 QuestPanel/targets_wrappers.txt QuestPanel/QuestPanelWrappers.cpp
 QuestPanel/targets_drawitems.txt QuestPanel/DrawItems.cpp

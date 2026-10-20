@@ -122,7 +122,7 @@
 406cb0	176	bm	0	menudlg	Menu/targets.txt	
 406d60	96	bm	0	confirmdlg	Menu/targets.txt	
 406dc0	240	bm	0	savefile	Menu/targets.txt	
-406eb0	2176	todo	-	-	-	
+406eb0	2176	func	331	loadgamedlg	Menu/targets.txt	
 407730	144	bm	0	isalnum	Menu/targets.txt	
 4077c0	288	bm	0	namedlg	Menu/targets.txt	
 4078e0	944	bm	0	joystickdlg	Menu/targets.txt	
