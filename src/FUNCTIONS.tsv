@@ -101,7 +101,7 @@
 405d10	384	bm	0	findanim	MoodFace/targets.txt	
 405e90	243	bm	0	menuc_ctor	Fn405e90/targets.txt	
 405f90	96	func	999	menu_dtor	Menu/targets.txt	
-405ff0	1054	todo	-	-	-	
+405ff0	1054	func	-	-	Menu/targets_menuload.txt	
 406420	480	func	-	-	Menu/targets_stuck.txt	
 406600	112	bm	0	setactions	Menu/targets.txt	
 406670	32	bm	0	help1	Menu/targets.txt	
@@ -489,7 +489,7 @@
 41fd80	628	bm	0	getangles	Body/targets.txt	CameraBody
 420060	158	bm	0	setcontact	Body/targets.txt	SqueezilBody
 420100	112	bm	0	v3div	Vector3f/targets_div.txt	
-420170	1050	todo	-	-	-	
+420170	1050	func	-	-	Sim2/targets_startgame.txt	
 4205a0	208	bm	0	shutdown	Release/targets.txt	
 420670	16	bm	0	setcurrentsimulation	Globals/targets.txt	
 420680	16	bm	0	getland	Globals/targets.txt	
@@ -613,7 +613,7 @@
 424010	393	func	-	-	Fn424010/targets_stuck.txt	
 4241b0	32	bm	0	sqgerrorlog	Misc/targets.txt	
 4241d0	200	bm	0	init_geometry_loading	Resources/targets_initgeometry.txt	
-4242b0	1074	todo	-	-	-	
+4242b0	1074	func	-	-	Fn4249a0/targets_loadgeom.txt	
 4246f0	202	bm	0	find_geometry	Resources/targets_find.txt	
 4247e0	435	func	-	-	Fn4247e0/targets.txt	
 4249a0	672	func	-	-	Fn4249a0/targets.txt	
@@ -2457,7 +2457,7 @@
 472480	187	bm	0	load_wrl	SqgModel/targets_wrl.txt	
 472550	16	bm	0	d472550	Tiny1/targets.txt	
 472560	1584	todo	-	-	-	
-472b90	976	todo	-	-	-	
+472b90	976	func	-	-	Fn472f60/targets_sqgsave.txt	
 472f60	656	func	-	-	Fn472f60/targets.txt	
 4731f0	752	func	-	-	Fn4731f0/targets.txt	
 4734e0	488	todo	-	-	-	
