@@ -137,7 +137,7 @@
 409a50	496	bm	0	start_path	CameraSoul/targets_startpath.txt	
 409c40	206	bm	0	stoppath	Souls2/targets.txt	
 409d10	487	func	-	-	Fn409d10/targets.txt	
-409f00	1048	todo	-	-	-	
+409f00	1048	bm	0	setrows	Matrix4/targets_setrows.txt	
 409f70	1637	todo	-	-	-	RegionCameraSoul
 40a5e0	64	bm	0	handlera	Souls2/targets.txt	RegionCameraSoul
 40a620	16	bm	0	v6b	CameraSoul/targets.txt	RegionCameraSoul
@@ -190,7 +190,7 @@
 40bf90	1074	todo	-	-	-	
 40c3d0	61	bm	0	c40c3d0	Misc17/targets_dt2.txt	
 40c420	61	bm	0	c40c420	Misc17/targets_dt2.txt	
-40c470	530	todo	-	-	-	
+40c470	530	func	6	move_surface	NavMesh/targets_move.txt	
 40c6b0	16	bm	0	getpath_d40c6b0	IniReader/targets.txt	
 40c6c0	16	bm	0	leaf_40c6c0	Leaves/targets.txt	
 40c6d0	16	bm	0	fw0	Misc3/targets.txt	
@@ -199,15 +199,15 @@
 40c7b0	152	bm	0	surface_was_near	NavSurface/targets_wasnear.txt	
 40c860	64	bm	0	cmp64	Souls2/targets.txt	
 40c8a0	648	func	-	-	Fn40c8a0/targets.txt	
-40cb30	695	todo	-	-	-	
-40ce30	575	todo	-	-	-	
-40d070	684	todo	-	-	-	
-40d370	372	todo	-	-	-	
+40cb30	695	bm	0	matrix_to_local	NavMesh/targets_matrixlocal.txt	
+40ce30	575	func	90	point_to_world	NavMesh/targets_pointworld.txt	
+40d070	684	bm	0	matrix_to_world	NavMesh/targets_matrixworld.txt	
+40d370	372	bm	0	carried	NavMesh/targets_carried.txt	
 40d520	16	bm	0	getproperties	NavSurface/targets.txt	
 40d530	272	bm	0	holder7_ctor	Fn40d530/targets.txt	
 40d640	360	func	8	nav_list_dtor	NavSurface/targets_listdtor.txt	
-40d870	606	todo	-	-	-	
-40dad0	595	todo	-	-	-	
+40d870	606	bm	0	read_surface_list	NavSurface/targets_readlist.txt	
+40dad0	595	bm	0	read_surface_names	NavSurface/targets_readnames.txt	
 40dd30	1059	todo	-	-	-	
 40e160	333	bm	0	unload_file	NavSurface/targets_unloadfile.txt	
 40e2e0	413	func	24	read_bindings	NavSurface/targets_bindings.txt	
@@ -236,7 +236,7 @@
 4100b0	570	todo	-	-	-	
 4102f0	32	bm	0	fw2	Misc3/targets.txt	
 410310	30	bm	0	fw3	Misc3/targets.txt	
-410330	605	todo	-	-	-	
+410330	605	func	132	move_carried	NavSurface/targets_movecarried.txt	
 4105f0	108	bm	0	geta	Misc14/targets.txt	
 410660	128	bm	0	h4_get	Misc18/targets_get.txt	
 4106e0	341	bm	0	flush_removed	NavSurface/targets_flushremoved.txt	
@@ -246,7 +246,7 @@
 411120	5889	todo	-	-	-	
 412830	110	bm	0	makematrix	Souls2/targets.txt	
 4128a0	128	bm	0	to_world_before	NavMesh/targets_before.txt	
-412920	514	todo	-	-	-	
+412920	514	func	83	type_changed	NavSurface/targets_typechanged.txt	
 412b50	112	bm	0	name24	Fam112c/targets.txt	
 412bc0	30	bm	0	fw4	Misc3/targets.txt	
 412be0	16	bm	0	derefcall	Misc12/targets_t.txt	
@@ -1558,10 +1558,10 @@
 456ef0	80	bm	0	dirclear	Souls2/targets.txt	
 456f40	226	bm	0	dh_add	Fn456f40/targets.txt	
 457040	16	bm	0	v3_empty_ctor	Vector3fEmpty/targets.txt	
-457050	781	todo	-	-	-	
+457050	781	bm	0	body_ctor	SqueezilBody/targets_constructor.txt	
 457360	32	bm	0	squeezilbody	Destroy/targets.txt	SqueezilBody
 457380	211	bm	0	sqbody_dtor	Fn457380/targets.txt	
-4574b0	590	bm	0	blended_matrix	SqueezilBody/targets_blendedmatrix.txt	
+4574b0	590	func	32	blended_matrix	SqueezilBody/targets_blendedmatrix.txt	
 457780	48	bm	0	setorientation	SqueezilBody/targets.txt	SqueezilBody
 4577b0	48	bm	0	getorientation	SqueezilBody/targets.txt	SqueezilBody
 4577e0	480	func	30	place_body	SqueezilBody/targets_place.txt	
@@ -1576,7 +1576,7 @@
 458030	32	bm	0	g458030	Guards/targets.txt	
 458050	80	bm	0	load_proto_bodies	SqueezilBody/targets_loadprotos.txt	
 4580a0	144	func	15	free_proto_bodies	SqueezilBody/targets_freeprotos.txt	
-458130	968	todo	-	-	-	
+458130	968	func	97	load_proto_body	SqueezilBody/targets_loadproto.txt	
 458590	344	func	-	-	Fn458590/targets_stuck.txt	
 458700	288	bm	0	load_body_cycle	SqueezilBody/targets_loadcycle.txt	
 458820	347	func	40	set_mode	SqueezilBody/targets_setmode.txt	SqueezilBody
@@ -2647,7 +2647,7 @@
 47dcd0	80	bm	0	turnx	Matrix4/targets.txt	
 47dd20	80	bm	0	turny	Matrix4/targets.txt	
 47dd70	80	bm	0	turnz	Matrix4/targets.txt	
-47ddc0	224	bm	0	turnaxis	Matrix4/targets.txt	
+47ddc0	224	func	24	turnaxis	Matrix4/targets.txt	
 47dea0	814	func	-	-	Fn47dea0/targets.txt	
 47e1e0	281	bm	0	xform	Misc8/targets.txt	
 47e330	32	bm	0	settrans	Matrix4/targets.txt	

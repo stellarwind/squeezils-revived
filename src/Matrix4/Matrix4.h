@@ -19,6 +19,8 @@ struct Matrix4 {
     float m[16];
 
     Matrix4 &SetTranslation(const float *t);   // 0x47e330
+    Matrix4 &SetRows(const Vec3 &right, const Vec3 &up,
+                     const Vec3 &forward, const Vec3 &position); // 0x409f00
     Matrix4 &TurnX(float angle);               // 0x47dcd0
     Matrix4 &TurnY(float angle);               // 0x47dd20
     Matrix4 &TurnZ(float angle);               // 0x47dd70

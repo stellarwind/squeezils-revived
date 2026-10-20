@@ -29,6 +29,7 @@ PropLoader/targets.txt PropLoader/PropLoader.cpp
 Vector3fEmpty/targets.txt Vector3fEmpty/Vector3fEmpty.cpp
 Destruct/targets.txt Destruct/Destruct.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
+Matrix4/targets_setrows.txt Matrix4/SetRows.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
 MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp MorphCycle/MorphCycleCtor.cpp MorphCycle/MorphCycleCopyCtor.cpp MorphCycle/MorphCycleDtor.cpp
@@ -39,6 +40,10 @@ PartPose/targets.txt PartPose/PartPose.cpp
 PartCycle/targets.txt PartCycle/PartCycle.cpp
 NavSurface/targets.txt NavSurface/NavSurfaceList.cpp NavSurface/InstancedSurfaceProperties.cpp NavSurface/DestroyLoaded.cpp NavSurface/LoadedDtor.cpp
 NavSurface/targets_facetype.txt NavSurface/FaceType.cpp
+NavSurface/targets_typechanged.txt NavSurface/TypeChanged.cpp
+NavSurface/targets_movecarried.txt NavSurface/MoveCarried.cpp
+NavSurface/targets_readlist.txt NavSurface/ReadSurfaceList.cpp
+NavSurface/targets_readnames.txt NavSurface/ReadSurfaceNames.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 AnimatedBody/targets_copyctor.txt AnimatedBody/CopyCtor.cpp
 AnimatedBody/targets_setcycle.txt AnimatedBody/SetCycle.cpp
@@ -167,6 +172,7 @@ SqueezilBody/targets_loadcycle.txt SqueezilBody/LoadCycle.cpp
 SqueezilBody/targets_setmode.txt SqueezilBody/SetMode.cpp
 SqueezilBody/targets_update.txt SqueezilBody/Update.cpp
 SqueezilBody/targets_blendedmatrix.txt SqueezilBody/BlendedMatrix.cpp
+SqueezilBody/targets_constructor.txt SqueezilBody/Constructor.cpp
 SqueezilBody/targets_place.txt SqueezilBody/Place.cpp
 Script/targets_register.txt Script/RegisterFunction.cpp
 Release/targets_shutdown_props.txt Release/ShutdownProps.cpp
@@ -467,6 +473,7 @@ Input/targets_select.txt Input/SelectCommandValue.cpp
 NavMesh/targets_compare.txt NavMesh/CompareHits.cpp
 Audio/targets_stop.txt Audio/StopLoopingSounds.cpp
 SqueezilBody/targets_loadprotos.txt SqueezilBody/LoadProtoBodies.cpp
+SqueezilBody/targets_loadproto.txt SqueezilBody/LoadProtoBody.cpp
 SqueezilBody/targets_freeprotos.txt SqueezilBody/FreeProtoBodies.cpp
 PropList/targets_removeupdating.txt PropList/RemoveUpdatingProp.cpp
 PropList/targets_updatelevels.txt PropList/UpdateLevels.cpp
@@ -575,6 +582,11 @@ Input/targets_assignkey.txt Input/AssignKey.cpp
 Input/targets_actionname.txt Input/ActionName.cpp
 Input/targets_keyslot.txt Input/SetKeySlot.cpp
 NavMesh/targets_before.txt NavMesh/ToWorldBefore.cpp
+NavMesh/targets_pointworld.txt NavMesh/PointToWorld.cpp
+NavMesh/targets_matrixworld.txt NavMesh/MatrixToWorld.cpp
+NavMesh/targets_matrixlocal.txt NavMesh/MatrixToLocal.cpp
+NavMesh/targets_carried.txt NavMesh/Carried.cpp
+NavMesh/targets_move.txt NavMesh/MoveSurface.cpp
 Container2/targets_get_intstring.txt Container2/GetIntString.cpp
 Container2/targets_get_vector.txt Container2/GetVectorVariable.cpp
 NavMesh/targets_readint.txt NavMesh/ReadInt32.cpp

@@ -5,6 +5,10 @@
 
 struct LoadedSurface;
 struct NavMesh;
+struct SurfaceTypeInfo;
+class IniReader;
+class String;
+template <class T, int ID> class Set;
 
 struct InstancedSurface {
     char pad98[0x98];
@@ -27,4 +31,10 @@ struct NavSurfaceList {
     void *Properties(const Contact *c);             // 0x40f3a0
     NavMesh *FaceMesh(const Contact *c);             // 0x412bc0
     int FaceType(const Contact *c);                 // 0x40f380
+    void MoveCarried();                            // 0x410330
+    int ReadSurfaceList(IniReader *ini);            // 0x40d870
+    int ReadSurfaceNames(IniReader *ini, Set<String, 11> *names); // 0x40dad0
+    int ReadSurfaceType(IniReader *ini, const char *name); // 0x40dd30
+    void TypeChanged(void *soul, const Contact *contact,
+                     const SurfaceTypeInfo *oldInfo, const SurfaceTypeInfo *newInfo); // 0x412920
 };
