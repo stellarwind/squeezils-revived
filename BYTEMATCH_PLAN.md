@@ -88,7 +88,7 @@ Ordered by leverage. The top of the list is *not* more search machinery.
 first draft already lands near-exact. Do, in address order and one original source file per `.cpp`, with minimal includes,
 scoring in isolation first:
 1. **Mine the trivial leaves first** — `{ return field; }` getters, field setters, no-op/`return 0` vtable slots. Already proven
-   first-try exact and cheap (the 2026-10-09 sweep gained +28 exact this way). There are more in `Repo/src/*.h` and in the
+   first-try exact and cheap (the 2026-10-09 sweep gained +28 exact this way). There are more in `Repo/legacy_gcc/*.h` and in the
    still-unmapped regions.
 2. Port the already-identified independent areas in BYTEMATCH_STATUS.md "Not written yet" / "Next candidates": remaining
    container instantiations, the INI classes (0x4426d0–0x443700), Matrix4 turns/`TurnAxis`, `BufferObject` slots, `Array<String>`
@@ -118,5 +118,5 @@ codegen (the docs already depend on that fact for exact matches).
 ## Automation status (2026-10-09)
 
 - **C1 divergence triager — done.** `tools/flagsearch/triage.pl` (classify one ref/got pair), `triage.sh` (run match.sh then classify every non-zero function), `triage_all.sh` (loop the whole manifest). Labels: `allocator-register-swap`, `allocator-register-move`, `eh-funclet-boundary`, `reorder` (x87/operand), `length±N` (helper/intrinsic/EH-frame), `structural` (source-fixable candidate); each line also reports the first divergence line and prologue-vs-body. First concrete win: it flagged `Body::SetMatrix`/`SetContact` as `length-N` (ours `rep movs` vs the original's unrolled `mov` stores) → unrolled them to explicit per-field stores → 46/49 → 0. The full `triage_all.sh` sweep confirmed the rest of the Close list is allocator/reorder/EH artifacts (documented in BYTEMATCH_STATUS.md), except a few still-open `length-N` leads.
-- **C2 compile cache — done (v1).** `tools/flagsearch/cache.sh` = match.sh with a disk cache keyed on the targets file + source files + `env.sh` + `FS_FLAGS` (md5). `FS_CACHE=` sets the cache dir (default `tools/flagsearch/.cache`). Limitation: it does **not** hash the shared `Repo/bm` headers, so a header-only edit needs the cache cleared (`rm -rf tools/flagsearch/.cache`); the header-tree hash turned out to be non-deterministic/slow, so it was dropped. Verified miss→compile+cache→hit (instant).
+- **C2 compile cache — done (v1).** `tools/flagsearch/cache.sh` = match.sh with a disk cache keyed on the targets file + source files + `env.sh` + `FS_FLAGS` (md5). `FS_CACHE=` sets the cache dir (default `tools/flagsearch/.cache`). Limitation: it does **not** hash the shared `Repo/src` headers, so a header-only edit needs the cache cleared (`rm -rf tools/flagsearch/.cache`); the header-tree hash turned out to be non-deterministic/slow, so it was dropped. Verified miss→compile+cache→hit (instant).
 - **C3 diverse beam + pre-screen — not yet.** `ptry.sh`/`tryfn.sh` still keep only the single best candidate.

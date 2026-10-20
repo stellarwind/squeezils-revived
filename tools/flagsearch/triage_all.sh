@@ -1,9 +1,9 @@
 #!/bin/bash
-# triage_all.sh -- run the divergence triager over every unit in Repo/bm/manifest.txt.
+# triage_all.sh -- run the divergence triager over every unit in Repo/src/manifest.txt.
 # Prints, per unit, one classification line for each non-zero function.
 cd "$(dirname "$0")/../.." || exit 1
 HERE="$(pwd)"
-BM="$HERE/Repo/bm"
+BM="$HERE/Repo/src"
 while read -r tgt rest; do
   [ -n "$tgt" ] || continue
   case "$tgt" in \#*) continue;; esac

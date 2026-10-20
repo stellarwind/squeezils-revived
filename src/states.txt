@@ -1,0 +1,7 @@
+# Manual overrides for the per-function state in FUNCTIONS.tsv (read by tools/flagsearch/progress.pl --states / --fline).
+# Format: <addr> <state> [note]
+#   bm     byte-exact (normally derived from score 0; do not set by hand)
+#   func   source compiles and is believed to behave like the original, not byte-exact
+#   func!  func that has been checked in gameplay testing
+#   stub   no real source yet (use to demote a placeholder / partial body that has a target but would misbehave)
+# Default without an override: score 0 -> bm, score > 0 or unscored target -> func, no target -> stub.

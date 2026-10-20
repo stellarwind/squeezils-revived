@@ -119,7 +119,7 @@ def main():
     # Seed hints are imported by address. Renamed reconstruction classes are
     # translated through exact body candidates, then the call graph resolves them.
     hints = collections.defaultdict(list)
-    paths = list((ROOT/'Repo/bm/Qv').glob('targets*.txt')) + list((ROOT/'Repo/bm/Qv/gen').glob('targets_*.txt')) + [ROOT/'Repo/bm/Leaves/targets_qv.txt']
+    paths = list((ROOT/'Repo/src/Qv').glob('targets*.txt')) + list((ROOT/'Repo/src/Qv/gen').glob('targets_*.txt')) + [ROOT/'Repo/src/Leaves/targets_qv.txt']
     for path in paths:
         for line in path.read_text().splitlines():
             if line.startswith('#') or not line.strip(): continue

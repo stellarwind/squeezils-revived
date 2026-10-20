@@ -2,7 +2,7 @@
 # cache.sh targets.txt src.cpp...  -- like match.sh, but with a disk-backed compile cache.
 # Prints the same "label=score" lines as match.sh. The key covers the targets file, the source files,
 # the build env (env.sh, which pins the compiler + SDK + include roots) and FS_FLAGS, so any of those
-# changing invalidates the entry. Note: it does NOT hash the shared headers under Repo/bm, so a header-only
+# changing invalidates the entry. Note: it does NOT hash the shared headers under Repo/src, so a header-only
 # edit needs `rm -rf tools/flagsearch/.cache` (or FS_CACHE=... elsewhere). It also does not cache the diffs.
 HERE="$(cd "$(dirname "$0")" && pwd)"
 CACHE="${FS_CACHE:-$HERE/.cache}"; mkdir -p "$CACHE"
