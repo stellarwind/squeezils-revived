@@ -1,5 +1,7 @@
 // LocationSimulation slot 8 (SQZ.EXE 0x413280): one frame of creature-against-creature collisions (draft, see BYTEMATCH_STATUS.md).
 #include "Vector3f/Vector3f.h"
+#include "GameClock/GameClock.h"
+#include "Globals/Globals.h"
 #include <math.h>
 #include <string.h>
 struct Soul {
@@ -34,10 +36,9 @@ struct CreatureTable {
 };
 struct IdSet { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
                virtual int Contains(const int &id); };   // slot 6
-unsigned FrameMilliseconds();                            // 0x4206d0 -> 0x41ec00 (cdecl)
 int __stdcall PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq);   // 0x413100
 int ClosestLineParams(const Vector3f *p1, const Vector3f *p2, const Vector3f *p3, const Vector3f *p4, float *s, float *t);   // 0x47d680
-Vector3f *NearestPointOnLine(Vector3f *out, const Vector3f *point, const Vector3f *a, const Vector3f *b);   // 0x47d940
+Vector3f ClosestOnLine(const Vector3f &point, const Vector3f &a, const Vector3f &b);   // 0x47d940, hidden result pointer
 inline bool NonNegative(float v) { unsigned bits = *(unsigned *)&v; return bits <= 0x80000000u; }
 inline bool InUnitRange(float v) { int bits = *(int *)&v; return NonNegative(v) && bits <= 0x3f800000; }
 
@@ -62,7 +63,6 @@ struct LocationSimulation {
     int IsMarked(int id) { return ids.Contains(id); }
     void DestroyCreatures();                             // 0x4141a0
     void CollideCreatures();
-    int PointNearSegment(const Vector3f *point, const Vector3f *origin, const Vector3f *end, float maxDistSq); // 0x413100; ECX carries this
 };
 
 void LocationSimulation::CollideCreatures()
@@ -115,7 +115,7 @@ void LocationSimulation::CollideCreatures()
             neighbourB.position = *(Vector3f *)&b->GetMatrix()[12];
             neighbourA.position = *(Vector3f *)&a->GetMatrix()[12];
             Vector3f apart = *(Vector3f *)&b->GetMatrix()[12] - *(Vector3f *)&a->GetMatrix()[12];
-            neighbourA.radius = neighbourB.radius = apart.LengthSq();
+            neighbourA.radius = neighbourB.radius = apart.y * apart.y + apart.z * apart.z + apart.x * apart.x;
             float distanceSquared = neighbourB.radius;
 
             Soul *soulA = creatures->values.AtU(i)->soul;
@@ -125,7 +125,7 @@ void LocationSimulation::CollideCreatures()
             soulA->NoteNeighbour(&neighbourB.id);
             soulB->NoteNeighbour(&neighbourA.id);
 
-            float seconds = (float)FrameMilliseconds() * 0.001f;
+            float seconds = (float)(unsigned)((GameClock *)GetGameClock())->SimRate() * 0.001f;
             Vector3f motionA = *a->GetFacing() * speedA + velocityA;
             Vector3f motionB = *b->GetFacing() * speedB + velocityB;
             Vector3f relative = motionA - motionB;
@@ -155,8 +155,7 @@ void LocationSimulation::CollideCreatures()
                 } else if (!movingB) {
                     hit = PointNearSegment(&startB, &startA, &endA, reachSquared);
                 } else if (!ClosestLineParams(&startA, &endA, &startB, &endB, &sA, &sB)) {
-                    Vector3f nearest;
-                    NearestPointOnLine(&nearest, &startA, &startB, &endB);
+                    Vector3f nearest = ClosestOnLine(startA, startB, endB);
                     hit = (startA - nearest).LengthSq() < reachSquared;
                 } else {
                     bool inA = InUnitRange(sA), inB = InUnitRange(sB);

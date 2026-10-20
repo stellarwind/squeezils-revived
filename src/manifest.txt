@@ -662,6 +662,7 @@ Fn423e60/targets.txt Fn423e60/F.cpp String/String.cpp
 Fn4311c0/targets.txt Fn4311c0/F.cpp String/String.cpp
 Fn470680/targets.txt Fn470680/F.cpp String/String.cpp
 Fn441d20/targets.txt Fn441d20/F.cpp String/String.cpp
+Fn445150/targets.txt Fn445150/F.cpp String/String.cpp
 Fn46a590/targets.txt Fn46a590/F.cpp
 Container/gen/targets_TableCtorS.txt Container/gen/TableCtorS.cpp
 Fn40f450/targets.txt Fn40f450/F.cpp
@@ -703,6 +704,9 @@ CompassRuler/targets_init.txt CompassRuler/Init.cpp
 GoodieSoul/targets_update.txt GoodieSoul/Update.cpp
 NavSurface/targets_load.txt NavSurface/Load.cpp
 Audio/targets_ambient_names.txt Audio/AmbientNames.cpp
+Misc18/targets_push.txt Misc18/Push.cpp
+Misc18/targets_ramp.txt Misc18/Ramp.cpp
+Misc18/targets_varint.txt Misc18/VarInt.cpp
 GoodieSoul/targets_spray.txt GoodieSoul/Spray.cpp
 Container/targets_float_array_copy.txt Container/ArrayFloatArrayCopy.cpp
 Qv47ac90/targets.txt Qv47ac90/D.cpp

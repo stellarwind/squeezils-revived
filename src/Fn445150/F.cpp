@@ -9,11 +9,13 @@
 #include "FunctionIf/IfVar.h"
 #include "FunctionMisc/Noarg2.h"
 #include "FunctionSet/Set.h"
+#include "FunctionWithProp/WithProp.h"
+// SIZE 0x0c
 class IfVariableNonZeroFunction : public IfVariableFunction {
 public:
-    virtual int Check(int value, ScriptCall *args, int extra);
-    virtual const char *Name();
-    virtual IfFunction *Make();
+    virtual int Check(int value, ScriptCall *args, int extra); // vtable+0x24
+    virtual const char *Name();                              // vtable+0x10
+    virtual IfFunction *Make();                              // vtable+0x20
 };
 void RegisterFunction(Function *f);                      // 0x421d00 (cdecl)
 
@@ -24,7 +26,7 @@ void RegisterFunctionsC()
     RegisterFunction(new IfOnFaceSetFunction);
     RegisterFunction(new IfOnTreeFunction);
     RegisterFunction(new IfPlayerDeadFunction);
-    RegisterFunction(new IfPlayerDeadFunction);
+    RegisterFunction(new IfPlayerFunction);
     RegisterFunction(new IfHasAllKeysFunction);
     RegisterFunction(new IfCompletedPlaceFunction);
     RegisterFunction(new IfVariableNonZeroFunction);
@@ -35,8 +37,8 @@ void RegisterFunctionsC()
     RegisterFunction(new AddToFunction);
     RegisterFunction(new SetToFunction);
     RegisterFunction(new AbortFunction);
-    RegisterFunction(new AbortFunction);
-    RegisterFunction(new AbortFunction);
-    RegisterFunction(new AbortFunction);
+    RegisterFunction(new ExecuteFunction);
+    RegisterFunction(new ExecuteWithPropFunction);
+    RegisterFunction(new DelayedExecuteFunction);
     RegisterFunction(new RenderDelayedExecuteFunction);
 }

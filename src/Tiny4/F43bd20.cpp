@@ -1,6 +1,7 @@
 // 0x43bd20: current input value of a control, from whichever source (timed ramp, joystick, mouse) its mode selects.
 struct Mouse459 { float Axis(); void M4591b0(int); };          // 0x459450, 0x4591b0
 struct Stick447 { int Active(); };                              // 0x4479c0
+// SIZE 0x9c (fields used here)
 struct Control43bd20 {
     char pad[8];
     Mouse459 *mouse;            // 0x08
@@ -20,7 +21,7 @@ struct Control43bd20 {
 };
 float Control43bd20::Value()
 {
-    float r;
+    volatile float r;
     if (disabled)
         return 0.0f;
     if (!timed) {

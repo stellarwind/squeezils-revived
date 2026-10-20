@@ -1,6 +1,7 @@
 // 0x43bc70: sibling of Control43bd20::Value for the other input channel.
 struct Mouse459 { float Axis2(); void M4591b0(int); };         // 0x4593d0, 0x4591b0
 struct Stick447 { int Active(); };                              // 0x4479c0
+// SIZE 0x9c (fields used here)
 struct Control43bc70 {
     char pad[8];
     Mouse459 *mouse;            // 0x08
@@ -21,7 +22,7 @@ struct Control43bc70 {
 };
 float Control43bc70::Value()
 {
-    float r;
+    volatile float r;
     if (disabled)
         return 0.0f;
     if (!timed) {

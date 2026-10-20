@@ -5,3 +5,7 @@
 #   func!  func that has been checked in gameplay testing
 #   todo   no real source yet (use to demote a placeholder / partial body that has a target but would misbehave)
 # Default without an override: score 0 -> bm, score > 0 or unscored target -> func, no target -> todo ("stub" = EH unwind funclet, never a state here).
+47a120 func # Fixed ret 8 and stdcall COM dispatch; VC4.1 score 47, remaining register/save/scheduling differences (2026-10-20).
+43bf10 func # Restored single-precision return rounding; VC4.1 score 16, stack layout only (2026-10-20).
+43bf80 func # Restored running elapsed-time subtraction and float return rounding; VC4.1 score 14, stack layout only (2026-10-20).
+445150 func # Registrar corrected: IfPlayer/Execute/ExecuteWithProp/DelayedExecute; VC4.1 score 42, register-only diff; all 40 vtable stores and call destinations checked against original (2026-10-20).

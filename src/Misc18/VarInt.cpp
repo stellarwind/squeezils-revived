@@ -1,4 +1,5 @@
-// SQZ.EXE 0x45be20: read a 7-bit-per-byte variable-length integer (high bit = continue) from a stream; returns 1 on error (read failure latches the error flag).
+// SQZ.EXE 0x45be20: read a 7-bit-per-byte variable-length integer (high bit = continue) from a stream; returns 1 on error (missing source latches the error flag).
+// SIZE 0x28 (fields used here)
 struct Stream {
     unsigned flags;             // bit 0 = error
     int pad4;
@@ -19,7 +20,6 @@ int ReadVarInt(Stream *s, unsigned *out)
             return 1;
         }
         if (ReadByte(s, &b)) {
-            s->flags |= 1;
             return 1;
         }
         v = (v << 7) | (b & 0x7f);

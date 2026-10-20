@@ -266,7 +266,7 @@
 4130e0	16	bm	0	v0_d4130e0	CameraSoul/targets.txt	LocationSimulation
 4130f0	16	bm	0	v0_d4130f0	CameraSoul/targets.txt	LocationSimulation
 413100	321	func	8	pointnear	Sim2/targets.txt	
-413280	2905	func	648	ls_collide	Sim2/targets.txt	LocationSimulation
+413280	2905	func	609	ls_collide	Sim2/targets.txt	LocationSimulation
 413f80	144	bm	0	ls_rewind	Sim2/targets.txt	LocationSimulation
 414010	64	bm	0	touchactors	Souls2/targets.txt	LocationSimulation
 414050	48	bm	0	getactor	Simulation/targets.txt	
@@ -728,7 +728,7 @@
 429f80	32	bm	0	readpropfiles3	PropLoader/targets.txt	
 429fa0	749	func	-	-	Fn429fa0/targets.txt	
 42a290	651	func	20	readprops	Fn42a290/targets.txt	
-42a520	6831	todo	-	-	-	
+42a520	6831	func	-	-	PropLoader/targets_loadprop.txt	
 42bfd0	1835	func	43	read_placement	PropLoader/targets_placement.txt	
 42c700	375	func	34	read_paths	PropLoader/targets_paths.txt	
 42c8b0	851	func	80	find_prop_template	PropLoader/targets_findtemplate.txt	
@@ -1044,11 +1044,11 @@
 43bbf0	32	bm	0	leaf_43bbf0	Leaves/targets.txt	
 43bc10	48	bm	0	takex	Misc10/targets.txt	
 43bc40	48	bm	0	takey	Misc10/targets.txt	
-43bc70	176	func	2	f43bc70	Tiny4/targets30.txt	
-43bd20	160	func	2	f43bd20	Tiny4/targets29.txt	
+43bc70	176	bm	0	f43bc70	Tiny4/targets30.txt	
+43bd20	160	bm	0	f43bd20	Tiny4/targets29.txt	
 43bdc0	336	func	999	getaxes	Misc10/targets.txt	
-43bf10	112	bm	0	f43bf10	Tiny4/targets.txt	
-43bf80	96	bm	0	f43bf80	Tiny4/targets3.txt	
+43bf10	112	func	16	ramp1	Misc18/targets_ramp.txt	
+43bf80	96	func	14	ramp2	Misc18/targets_ramp.txt	
 43bfe0	224	func	4	stickish	Fn43bfe0/targets.txt	
 43c0c0	224	func	4	vertical	Fn43bfe0/targets.txt	
 43c1a0	16	bm	0	applicationrunning	Input/targets.txt	
@@ -1269,7 +1269,7 @@
 445030	92	bm	0	renderdelayedexecute_sdd	SoulDtor/targets.txt	RenderDelayedExecuteFunction
 4450a0	136	func	2	rde_exec	FunctionExec/targets_delayed.txt	RenderDelayedExecuteFunction
 445140	16	bm	0	rde_name	FunctionExec/targets_delayed.txt	
-445150	2192	func	-	-	Fn445150/targets.txt	
+445150	2192	func	42	reg445150	Fn445150/targets.txt	
 4459e0	96	bm	0	iff	Function/targets.txt	
 445a40	16	bm	0	r1a1_d445a40	CameraSoul/targets.txt	IfOnTreeFunction
 445a50	16	bm	0	v0_d445a50	CameraSoul/targets.txt	IfOnTreeFunction
@@ -1650,7 +1650,7 @@
 45b7a0	224	func	15	fillbuf	Fn45b7a0/targets.txt	
 45b880	528	func	999	midiev	Audio/targets.txt	
 45ba90	912	func	-	-	Audio/targets_readmidievent.txt	
-45be20	144	func	-	-	Misc18/targets_varint.txt	
+45be20	144	bm	0	varint	Misc18/targets_varint.txt	
 45beb0	64	bm	0	getbyte	Misc6/targets.txt	
 45bef0	80	bm	0	readexact	Misc16/targets_win.txt	
 45bf40	784	func	-	-	Audio/targets_startmidi.txt	
@@ -2588,7 +2588,7 @@
 479b70	16	bm	0	d479b70	Tiny1/targets.txt	
 479b80	1392	func	423	load_faceset	Loader/targets_faceset.txt	
 47a0f0	48	bm	0	ch_ctor	Misc18/targets_com.txt	
-47a120	144	func	-	-	Misc18/targets_push.txt	
+47a120	144	func	47	pushframe	Misc18/targets_push.txt	
 47a1b0	80	bm	0	popframe	Misc18/targets_pop.txt	
 47a200	880	func	218	load_decal	Loader/targets_decal.txt	
 47a570	16	bm	0	leaf_47a570	Leaves/targets.txt	
