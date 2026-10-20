@@ -367,7 +367,7 @@
 419960	2536	func	260	sample	PartCycle/targets_sample.txt	
 41a350	160	bm	0	cross	Vector3f/targets.txt	
 41a3f0	426	func	22	newpose	PartCycle/targets_newpose.txt	
-41a5d0	3272	todo	-	-	-	
+41a5d0	3272	func	155	blend	PartCycle/targets_blend.txt	
 41b2a0	336	func	-	-	PartCycle/targets_stuck.txt	
 41b3f0	76	bm	0	ctor	PoseTable/targets.txt	
 41b440	421	bm	0	pose_copyctor	PoseTable/targets_copyctor.txt	
