@@ -70,8 +70,8 @@
 404900	32	bm	0	clearseen	SqueezilRoboSoul/targets.txt	
 404920	352	func	37	sensestate	SqueezilRoboSoul/targets.txt	
 404a80	144	bm	0	stepai	SqueezilRoboSoul/targets_step.txt	
-404b10	736	stub	-	-	-	
-404dd0	30	stub	-	-	-	
+404b10	736	todo	-	-	-	
+404dd0	30	todo	-	-	-	
 404df0	288	bm	0	updaterobo	SqueezilRoboSoul/targets_step.txt	SqueezilRoboSoul
 404f10	112	bm	0	rec_ctor	Misc18/targets.txt	
 404f80	16	bm	0	thunka	Misc12/targets.txt	SqueezilRoboSoul
@@ -96,12 +96,12 @@
 4053e0	61	bm	0	c4053e0	Misc17/targets_dt2.txt	
 405430	96	bm	0	ctor	MoodFace/targets.txt	
 405490	144	bm	0	freeall	Misc18/targets_free.txt	
-405520	1196	stub	-	-	-	
-4059e0	816	stub	-	-	-	
+405520	1196	todo	-	-	-	
+4059e0	816	todo	-	-	-	
 405d10	384	bm	0	findanim	MoodFace/targets.txt	
 405e90	243	bm	0	menuc_ctor	Fn405e90/targets.txt	
 405f90	96	func	999	menu_dtor	Menu/targets.txt	
-405ff0	1054	stub	-	-	-	
+405ff0	1054	todo	-	-	-	
 406420	480	func	-	-	Menu/targets_stuck.txt	
 406600	112	bm	0	setactions	Menu/targets.txt	
 406670	32	bm	0	help1	Menu/targets.txt	
@@ -123,26 +123,26 @@
 406cb0	176	bm	0	menudlg	Menu/targets.txt	
 406d60	96	bm	0	confirmdlg	Menu/targets.txt	
 406dc0	240	bm	0	savefile	Menu/targets.txt	
-406eb0	2176	stub	-	-	-	
+406eb0	2176	todo	-	-	-	
 407730	144	bm	0	isalnum	Menu/targets.txt	
 4077c0	288	bm	0	namedlg	Menu/targets.txt	
 4078e0	944	bm	0	joystickdlg	Menu/targets.txt	
 407c90	176	bm	0	optionsdlg	Menu/targets.txt	
-407d40	1744	stub	-	-	-	
+407d40	1744	todo	-	-	-	
 408410	496	bm	0	volumedlg	Menu/targets.txt	
 408600	565	bm	0	readcamset	CameraSettings/targets.txt	
-408850	3264	stub	-	-	-	
-409620	947	stub	-	-	-	
+408850	3264	todo	-	-	-	
+409620	947	todo	-	-	-	
 4099e0	112	bm	0	mi16b	Souls2/targets.txt	
 409a50	496	bm	0	start_path	CameraSoul/targets_startpath.txt	
 409c40	206	bm	0	stoppath	Souls2/targets.txt	
 409d10	487	func	-	-	Fn409d10/targets.txt	
-409f00	1048	stub	-	-	-	
-409f70	1637	stub	-	-	-	RegionCameraSoul
+409f00	1048	todo	-	-	-	
+409f70	1637	todo	-	-	-	RegionCameraSoul
 40a5e0	64	bm	0	handlera	Souls2/targets.txt	RegionCameraSoul
 40a620	16	bm	0	v6b	CameraSoul/targets.txt	RegionCameraSoul
 40a630	378	func	-	-	Fn40a630/targets.txt	
-40a820	2759	stub	-	-	-	PlaceCameraSoul
+40a820	2759	todo	-	-	-	PlaceCameraSoul
 40b2f0	64	bm	0	handlerb	Souls2/targets.txt	PlaceCameraSoul
 40b330	16	bm	0	v6c	CameraSoul/targets.txt	PlaceCameraSoul
 40b340	16	bm	0	messagemap_dtor	VirtualDtor/targets.txt	
@@ -187,10 +187,10 @@
 40be40	61	bm	0	c40be40	Misc17/targets_dt2.txt	
 40be90	61	bm	0	c40be90	Misc17/targets_dt2.txt	
 40bee0	113	bm	0	loadeddtor	NavSurface/targets.txt	
-40bf90	1074	stub	-	-	-	
+40bf90	1074	todo	-	-	-	
 40c3d0	61	bm	0	c40c3d0	Misc17/targets_dt2.txt	
 40c420	61	bm	0	c40c420	Misc17/targets_dt2.txt	
-40c470	530	stub	-	-	-	
+40c470	530	todo	-	-	-	
 40c6b0	16	bm	0	getpath_d40c6b0	IniReader/targets.txt	
 40c6c0	16	bm	0	leaf_40c6c0	Leaves/targets.txt	
 40c6d0	16	bm	0	fw0	Misc3/targets.txt	
@@ -199,25 +199,25 @@
 40c7b0	152	bm	0	surface_was_near	NavSurface/targets_wasnear.txt	
 40c860	64	bm	0	cmp64	Souls2/targets.txt	
 40c8a0	648	func	-	-	Fn40c8a0/targets.txt	
-40cb30	695	stub	-	-	-	
-40ce30	575	stub	-	-	-	
-40d070	684	stub	-	-	-	
-40d370	372	stub	-	-	-	
+40cb30	695	todo	-	-	-	
+40ce30	575	todo	-	-	-	
+40d070	684	todo	-	-	-	
+40d370	372	todo	-	-	-	
 40d520	16	bm	0	getproperties	NavSurface/targets.txt	
 40d530	272	bm	0	holder7_ctor	Fn40d530/targets.txt	
 40d640	360	func	8	nav_list_dtor	NavSurface/targets_listdtor.txt	
-40d870	606	stub	-	-	-	
-40dad0	595	stub	-	-	-	
-40dd30	1059	stub	-	-	-	
+40d870	606	todo	-	-	-	
+40dad0	595	todo	-	-	-	
+40dd30	1059	todo	-	-	-	
 40e160	333	bm	0	unload_file	NavSurface/targets_unloadfile.txt	
 40e2e0	413	func	24	read_bindings	NavSurface/targets_bindings.txt	
-40e480	1925	stub	-	-	-	
+40e480	1925	todo	-	-	-	
 40ec10	112	bm	0	str_get	Container/targets_string.txt	?$PrimitiveArray@VSqzString@@$02
 40ec80	16	bm	0	int_get	Container/targets_int.txt	?$PrimitiveArray@H$00
 40ec90	235	bm	0	clear	Fn40ec90/targets.txt	
 40ede0	112	bm	0	destroyloaded	NavSurface/targets.txt	
 40ee50	112	bm	0	keyat	Fam112/targets.txt	
-40eec0	984	stub	-	-	-	
+40eec0	984	todo	-	-	-	
 40f2a0	112	bm	0	item	Fam112b/targets.txt	
 40f310	112	bm	0	nameat	Fam112c/targets.txt	
 40f380	32	bm	0	facetype	NavSurface/targets_facetype.txt	
@@ -232,21 +232,21 @@
 40f9b0	221	bm	0	finds	Fn40f610/targets.txt	
 40fab0	112	bm	0	name20	Fam112c/targets.txt	
 40fb20	200	func	14	find10	Fn40f610/targets.txt	
-40fc10	1175	stub	-	-	-	
-4100b0	570	stub	-	-	-	
+40fc10	1175	todo	-	-	-	
+4100b0	570	todo	-	-	-	
 4102f0	32	bm	0	fw2	Misc3/targets.txt	
 410310	30	bm	0	fw3	Misc3/targets.txt	
-410330	605	stub	-	-	-	
+410330	605	todo	-	-	-	
 4105f0	108	bm	0	geta	Misc14/targets.txt	
 410660	128	bm	0	h4_get	Misc18/targets_get.txt	
 4106e0	341	bm	0	flush_removed	NavSurface/targets_flushremoved.txt	
 410890	80	bm	0	ineither	Souls2/targets.txt	
-4108e0	1988	stub	-	-	-	
+4108e0	1988	todo	-	-	-	
 4110b0	108	bm	0	getb	Misc14/targets.txt	
-411120	5889	stub	-	-	-	
+411120	5889	todo	-	-	-	
 412830	110	bm	0	makematrix	Souls2/targets.txt	
 4128a0	128	bm	0	to_world_before	NavMesh/targets_before.txt	
-412920	514	stub	-	-	-	
+412920	514	todo	-	-	-	
 412b50	112	bm	0	name24	Fam112c/targets.txt	
 412bc0	30	bm	0	fw4	Misc3/targets.txt	
 412be0	16	bm	0	derefcall	Misc12/targets_t.txt	
@@ -285,13 +285,13 @@
 414380	64	bm	0	zeroed	Souls2/targets.txt	
 4143c0	16	bm	0	thunk2	Misc12/targets_t.txt	
 4143d0	192	bm	0	freeall	Misc13/targets.txt	
-414490	1620	stub	-	-	-	
+414490	1620	todo	-	-	-	
 414af0	288	bm	0	updatereal	CompassRuler/targets.txt	
 414c10	384	bm	0	compassload	CompassRuler/targets.txt	
 414d90	528	bm	0	loadpair	CompassRuler/targets.txt	
 414fa0	16	bm	0	runall	Misc9/targets_b.txt	
 414fb0	256	func	-	-	CompassRuler/targets_stuck.txt	
-4150b0	816	stub	-	-	-	
+4150b0	816	todo	-	-	-	
 4153e0	16	bm	0	updatesprites	CompassRuler/targets.txt	
 4153f0	16	bm	0	passthrough	Misc12/targets_t.txt	
 415400	64	bm	0	image_destroyed	Texture/targets_destroyed.txt	
@@ -315,7 +315,7 @@
 4165e0	32	bm	0	read	Inventory/targets.txt	Inventory
 416600	407	func	-	-	Inventory/targets_save.txt	
 4167b0	112	bm	0	keyat_d4167b0	Fam112/targets.txt	
-416820	952	stub	-	-	-	
+416820	952	todo	-	-	-	
 416be0	16	bm	0	rinv	CameraSoul/targets.txt	Inventory
 416bf0	112	bm	0	newmade	Misc16/targets_m2.txt	Inventory
 416c60	222	bm	0	place_record_ctor	Sim2/targets_placerecord.txt	
@@ -324,15 +324,15 @@
 416ee0	74	bm	0	regionsimulation_destruct	Destruct/targets.txt	
 416f50	1609	func	67	rg_init	Sim2/targets.txt	RegionSimulation
 417600	128	bm	0	rg_clear	Sim2/targets.txt	RegionSimulation
-417680	564	stub	-	-	-	
-4178e0	2034	stub	-	-	-	
+417680	564	todo	-	-	-	
+4178e0	2034	todo	-	-	-	
 4180e0	48	bm	0	slotlink	Misc16/targets.txt	
 418110	16	bm	0	placecount	RegionSimulation/targets.txt	
 418120	32	bm	0	hasplace	RegionSimulation/targets.txt	
 418140	14	bm	0	getplace	RegionSimulation/targets.txt	
 418150	16	bm	0	getlocation	RegionSimulation/targets.txt	
 418160	16	bm	0	getregion	RegionSimulation/targets.txt	
-418170	538	stub	-	-	-	
+418170	538	todo	-	-	-	
 4183c0	32	bm	0	assign	Vector3f/targets.txt	
 4183e0	400	func	-	-	Fn4183e0/targets.txt	
 418570	32	bm	0	v3ctor	Vector3f/targets.txt	
@@ -365,10 +365,10 @@
 419750	224	bm	0	ctor	PartCycle/targets.txt	
 419830	61	bm	0	holder_dtor_d419830	Fam61/targets.txt	
 419880	161	bm	0	dtor	PartCycle/targets.txt	
-419960	2536	stub	-	-	-	
+419960	2536	todo	-	-	-	
 41a350	160	bm	0	cross	Vector3f/targets.txt	
 41a3f0	426	func	22	newpose	PartCycle/targets_newpose.txt	
-41a5d0	3272	stub	-	-	-	
+41a5d0	3272	todo	-	-	-	
 41b2a0	336	func	-	-	PartCycle/targets_stuck.txt	
 41b3f0	76	bm	0	ctor	PoseTable/targets.txt	
 41b440	421	bm	0	pose_copyctor	PoseTable/targets_copyctor.txt	
@@ -390,10 +390,10 @@
 41bb80	112	bm	0	keyat_d41bb80	Fam112/targets.txt	
 41bbf0	214	func	31	sample_pose	MorphCycle/targets_sample_pose.txt	
 41bcf0	112	bm	0	f41bcf0	Tiny4/targets2.txt	
-41bd60	1818	stub	-	-	-	
+41bd60	1818	todo	-	-	-	
 41c4a0	16	func	-	-	Container/gen/targets_Array05.txt	?$Array@M
 41c4b0	128	bm	0	vget	Tiny4/targets18.txt	?$Array@VVector3f@@
-41c530	4523	stub	-	-	-	
+41c530	4523	todo	-	-	-	
 41d6e0	176	bm	0	pget	Tiny4/targets18.txt	?$Array@U_tag_PartOrientation@@
 41d790	68	bm	0	pair_dtor_d41d790	Fam68/targets.txt	
 41d800	112	bm	0	keyat_d41d800	Fam112/targets.txt	
@@ -414,9 +414,9 @@
 41dd30	91	bm	0	say	Misc16/targets_m2.txt	AnimatedBody
 41dda0	80	bm	0	ab_attach	Props2/targets.txt	AnimatedBody
 41ddf0	48	bm	0	ab_detach	Props2/targets.txt	AnimatedBody
-41de20	240	stub	-	-	-	AnimatedBody
+41de20	240	todo	-	-	-	AnimatedBody
 41df10	64	bm	0	ab_pose	Props2/targets.txt	AnimatedBody
-41df50	736	stub	-	-	-	AnimatedBody
+41df50	736	todo	-	-	-	AnimatedBody
 41e230	96	bm	0	roottransform	Souls2/targets.txt	AnimatedBody
 41e290	16	bm	0	settime	AnimatedBody/targets.txt	
 41e2a0	48	bm	0	blend	AnimatedBody/targets.txt	AnimatedBody
@@ -469,9 +469,9 @@
 41f5a0	432	bm	0	player_update	SqueezilPlayerSoul/targets_update.txt	SqueezilPlayerSoul
 41f750	144	bm	0	postupdate	SqueezilPlayerSoul/targets.txt	
 41f7e0	16	bm	0	v1h	CameraSoul/targets.txt	SqueezilPlayerSoul
-41f7f0	704	stub	-	-	-	
+41f7f0	704	todo	-	-	-	
 41fab0	48	bm	0	hit	SqueezilPlayerSoul/targets.txt	SqueezilPlayerSoul
-41fae0	16	stub	-	-	-	SqueezilPlayerSoul
+41fae0	16	todo	-	-	-	SqueezilPlayerSoul
 41faf0	16	bm	0	keys_d41faf0	Ini/targets.txt	
 41fb00	16	bm	0	r1a1	CameraSoul/targets.txt	SqueezilSoul
 41fb10	16	bm	0	v0f	CameraSoul/targets.txt	SqueezilPlayerSoul
@@ -489,7 +489,7 @@
 41fd80	628	bm	0	getangles	Body/targets.txt	CameraBody
 420060	158	bm	0	setcontact	Body/targets.txt	SqueezilBody
 420100	112	bm	0	v3div	Vector3f/targets_div.txt	
-420170	1050	stub	-	-	-	
+420170	1050	todo	-	-	-	
 4205a0	208	bm	0	shutdown	Release/targets.txt	
 420670	16	bm	0	setcurrentsimulation	Globals/targets.txt	
 420680	16	bm	0	getland	Globals/targets.txt	
@@ -549,7 +549,7 @@
 421d80	48	bm	0	deletelist	Misc16/targets.txt	
 421db0	404	func	-	-	Fn421db0/targets_stuck.txt	
 421f50	177	bm	0	parse_function	FunctionArgs/targets_parsefunction.txt	
-422010	860	stub	-	-	-	
+422010	860	todo	-	-	-	
 422370	187	bm	0	delayed_context_ctor	FunctionExec/targets_context_ctor.txt	
 422450	84	bm	0	dm_dtor	Misc16/targets_dm.txt	
 4224b0	96	bm	0	dm_tick	Misc16/targets_dm.txt	
@@ -565,9 +565,9 @@
 422610	16	bm	0	i422610	Guards/targets_init.txt	
 422620	112	bm	0	glob_settings_init	Container2/targets_glob.txt	
 422690	16	bm	0	r422690	Guards/targets_init.txt	
-4226a0	85	stub	-	-	-	
+4226a0	85	todo	-	-	-	
 422700	48	bm	0	initsub	Misc16/targets.txt	
-422730	873	stub	-	-	-	
+422730	873	todo	-	-	-	
 422b00	128	bm	0	releaseb	Release/targets.txt	
 422b80	64	bm	0	release_messages	Misc16/targets_release_messages.txt	
 422bc0	16	bm	0	setflaga	Misc10/targets.txt	
@@ -613,7 +613,7 @@
 424010	393	func	-	-	Fn424010/targets_stuck.txt	
 4241b0	32	bm	0	sqgerrorlog	Misc/targets.txt	
 4241d0	200	bm	0	init_geometry_loading	Resources/targets_initgeometry.txt	
-4242b0	1074	stub	-	-	-	
+4242b0	1074	todo	-	-	-	
 4246f0	202	bm	0	find_geometry	Resources/targets_find.txt	
 4247e0	435	func	-	-	Fn4247e0/targets.txt	
 4249a0	672	func	-	-	Fn4249a0/targets.txt	
@@ -627,7 +627,7 @@
 425070	419	func	8	load_texture	Resources/targets_loadtexture.txt	
 425220	202	bm	0	find_texture	Resources/targets_find.txt	
 425310	486	func	4	loadtex	TexRes/targets.txt	
-425500	804	stub	-	-	-	
+425500	804	todo	-	-	-	
 425870	235	bm	0	read_default_prop_sprite	World/targets_default_sprite.txt	
 425970	192	bm	0	decal_settings_copy	World/targets_copydecal.txt	
 425a30	84	bm	0	threevecs	Misc16/targets_m2.txt	
@@ -642,8 +642,8 @@
 425d40	16	bm	0	i425d40	Guards/targets_init.txt	
 425d50	96	bm	0	e425d50	Init425d50/targets.txt	
 425db0	16	bm	0	r425db0	Guards/targets_init.txt	
-425dc0	134	stub	-	-	-	
-425e50	258	stub	-	-	-	
+425dc0	134	todo	-	-	-	
+425e50	258	todo	-	-	-	
 425fa0	179	bm	0	pm_place	Props2/targets.txt	Prop
 426080	100	bm	0	prop_destruct	Destruct/targets.txt	
 426120	64	bm	0	cachedget	PrintStubs/targets.txt	Prop
@@ -675,11 +675,11 @@
 427100	174	bm	0	fp_dtor	FrameProp2/targets.txt	
 4271f0	285	func	55	frame_show	Props2/targets.txt	FrameProp
 427320	96	bm	0	fp_hide	Props2/targets.txt	FrameProp
-427380	754	stub	-	-	-	
+427380	754	todo	-	-	-	
 4276b0	113	bm	0	valued	Misc16/targets_m2.txt	
-427740	920	stub	-	-	-	FrameProp
+427740	920	todo	-	-	-	FrameProp
 427ae0	112	bm	0	item_d427ae0	Fam112b/targets.txt	
-427b50	721	stub	-	-	-	
+427b50	721	todo	-	-	-	
 427e30	32	bm	0	setcycletime	FrameProp/targets.txt	FrameProp
 427e50	32	bm	0	setcycledirection	FrameProp/targets.txt	FrameProp
 427e70	32	bm	0	setcycleloopmode	FrameProp/targets.txt	FrameProp
@@ -711,7 +711,7 @@
 429350	16	bm	0	setstep	CycleProp/targets.txt	CycleProp
 429360	16	bm	0	setmode	CycleProp/targets.txt	NavProp
 429370	16	bm	0	setcurrentthin	CycleProp/targets.txt	CycleProp
-429380	778	stub	-	-	-	
+429380	778	todo	-	-	-	
 429690	16	bm	0	getsurface	NavProp/targets.txt	NavProp
 4296a0	16	bm	0	getinstance	NavProp/targets.txt	
 4296b0	32	bm	0	navprop	Destroy/targets.txt	NavProp
@@ -727,12 +727,12 @@
 429f40	32	bm	0	readpropfiles1	PropLoader/targets.txt	
 429f60	32	bm	0	readpropfiles2	PropLoader/targets.txt	
 429f80	32	bm	0	readpropfiles3	PropLoader/targets.txt	
-429fa0	749	stub	-	-	-	
+429fa0	749	todo	-	-	-	
 42a290	651	func	20	readprops	Fn42a290/targets.txt	
-42a520	6831	stub	-	-	-	
-42bfd0	1835	stub	-	-	-	
+42a520	6831	todo	-	-	-	
+42bfd0	1835	todo	-	-	-	
 42c700	375	func	34	read_paths	PropLoader/targets_paths.txt	
-42c8b0	851	stub	-	-	-	
+42c8b0	851	todo	-	-	-	
 42cc10	405	func	-	-	Fn42cc10/targets.txt	
 42cdb0	203	bm	0	split	Fn42cdb0/targets.txt	
 42cea0	336	func	80	walk_path	PropLoader/targets_walkpath.txt	
@@ -779,7 +779,7 @@
 42d5b0	16	bm	0	thunk42d5b0	Thunks/targets.txt	
 42d5c0	16	bm	0	r42d5c0	Guards/targets_init.txt	
 42d5d0	32	bm	0	g42d5d0	Guards/targets.txt	
-42d5f0	652	stub	-	-	-	
+42d5f0	652	todo	-	-	-	
 42d880	228	bm	0	overlay_dtor	Fn42d880/targets.txt	
 42d9f0	64	bm	0	panel_load	Panel/targets_widgets.txt	
 42da30	48	bm	0	winorigin	Misc9/targets_b.txt	
@@ -790,14 +790,14 @@
 42dc50	128	bm	0	panel_background	Panel/targets_background.txt	
 42dcd0	48	bm	0	clearnote	Panel/targets.txt	
 42dd00	48	bm	0	clearmessage	Panel/targets.txt	
-42dd30	944	stub	-	-	-	
+42dd30	944	todo	-	-	-	
 42e0e0	448	func	109	draw_note	Panel/targets_drawnote.txt	
 42e2a0	16	bm	0	updateregionsprites	CompassRuler/targets.txt	
 42e2b0	592	bm	0	follow	Fn42e2b0/targets.txt	
 42e500	476	bm	0	panel_bitmaps	Panel/targets_loadbitmaps.txt	
 42e6f0	32	bm	0	panel_animation	Panel/targets_animation.txt	
 42e710	144	bm	0	fontfound	Release/targets.txt	
-42e7a0	679	stub	-	-	-	
+42e7a0	679	todo	-	-	-	
 42ea60	16	bm	0	clearevent	Panel/targets.txt	
 42ea70	208	bm	0	ctor	StatusBarCtor/targets.txt	
 42eb40	146	bm	0	sbdtor	StatusBar/targets.txt	
@@ -812,7 +812,7 @@
 42f200	46	bm	0	timedset	Misc16/targets.txt	
 42f230	112	bm	0	name8	Fam112c/targets.txt	
 42f2a0	32	bm	0	leaf_42f2a0	Leaves/targets.txt	
-42f2c0	679	stub	-	-	-	
+42f2c0	679	todo	-	-	-	
 42f580	112	bm	0	ctor	QuestPanel/targets.txt	
 42f5f0	68	bm	0	qp_dtor	QuestPanel/targets_dtor.txt	
 42f660	48	bm	0	qp_load	QuestPanel/targets_wrappers.txt	
@@ -836,7 +836,7 @@
 430620	112	bm	0	tw_create	FunctionTweak/targets.txt	TweakFloatFunction
 430690	96	bm	0	tw_print	FunctionTweak/targets.txt	TweakFloatFunction
 4306f0	175	bm	0	setmotion_exec	FunctionTweak/targets_exec.txt	SetMotionSpeedFunction
-4307b0	1896	stub	-	-	-	LaunchFromFaceNormalFunction
+4307b0	1896	todo	-	-	-	LaunchFromFaceNormalFunction
 430f20	303	bm	0	bounce_exec	FunctionTweak/targets_exec.txt	BounceBackwardsFunction
 431080	282	bm	0	accel_exec	FunctionTweak/targets_exec.txt	AccelerateFunction
 4311c0	1904	bm	0	reg4311c0	Fn4311c0/targets.txt	
@@ -929,28 +929,28 @@
 435b30	128	bm	0	world_destroy	World/targets_destroy.txt	
 435bb0	157	bm	0	world_decal	World/targets_decal.txt	
 435c70	32	bm	0	setdecalsize	Misc/targets.txt	
-435c90	928	stub	-	-	-	
+435c90	928	todo	-	-	-	
 436040	532	func	2	world_lights	World/targets_lights.txt	
 4362a0	208	bm	0	world_render	World/targets_render.txt	
 436370	48	bm	0	worldreadpropfiles	PropLoader/targets.txt	
 4363a0	497	bm	0	world_loadnav	World/targets_loadnav.txt	
 4365a0	140	bm	0	world_surfaces	World/targets_surfaces.txt	
 436640	182	bm	0	face_to_world	World/targets_face_to_world.txt	
-436710	681	stub	-	-	-	
+436710	681	todo	-	-	-	
 4369c0	99	bm	0	rs_sdd	Misc18/targets_rs.txt	SqueezilRegionSoul
 436a60	144	func	-	-	Sim2/targets_stuck.txt	
-436af0	786	stub	-	-	-	SqueezilRegionSoul
+436af0	786	todo	-	-	-	SqueezilRegionSoul
 436e10	389	func	-	-	Fn436e10/targets.txt	SqueezilRegionSoul
-436fc0	781	stub	-	-	-	
+436fc0	781	todo	-	-	-	
 437360	112	bm	0	h5_get	Misc18/targets_get2.txt	
-4373d0	2664	stub	-	-	-	SqueezilRegionSoul
+4373d0	2664	todo	-	-	-	SqueezilRegionSoul
 437e40	256	bm	0	linkopen	Release/targets.txt	
 437f40	192	func	-	-	Sim2/targets_stuck.txt	
 438000	16	bm	0	v0o	CameraSoul/targets.txt	SqueezilRegionSoul
 438010	16	bm	0	v1n	CameraSoul/targets.txt	SqueezilRegionSoul
 438020	240	bm	0	toggle_place	Fn438020/targets.txt	
 438110	409	func	-	-	Fn438110/targets.txt	
-4382b0	16	stub	-	-	-	SqueezilRegionSoul
+4382b0	16	todo	-	-	-	SqueezilRegionSoul
 4382c0	16	bm	0	region_adapter	Adjustors/targets.txt	SqueezilRegionSoul
 4382d0	16	bm	0	v1k	CameraSoul/targets.txt	SqueezilRegionSoul
 4382e0	16	bm	0	v0m	CameraSoul/targets.txt	SqueezilRegionSoul
@@ -1031,7 +1031,7 @@
 43afb0	176	func	50	f43afb0	Tiny4/targets24.txt	
 43b060	112	bm	0	onpad	Misc18/targets_key.txt	
 43b0d0	80	bm	0	dispatch	Mouse/targets_d.txt	
-43b120	1151	stub	-	-	-	
+43b120	1151	todo	-	-	-	
 43b5a0	544	bm	0	key	Fn43b5a0/targets.txt	
 43b7c0	448	bm	0	press	Fn43b7c0/targets.txt	
 43b980	192	bm	0	setactive	Fn43b980/targets.txt	
@@ -1055,13 +1055,13 @@
 43c1a0	16	bm	0	applicationrunning	Input/targets.txt	
 43c1b0	96	bm	0	showmenu	Misc16/targets_win.txt	
 43c210	64	bm	0	hidemenu	Misc16/targets_win.txt	
-43c250	621	stub	-	-	-	
+43c250	621	todo	-	-	-	
 43c4d0	384	bm	0	save_bindings	Input/targets_savebindings.txt	
 43c650	336	func	62	compatible_bindings	Input/targets_compatible.txt	
 43c7a0	16	bm	0	inputjoystickpresent	Input/targets.txt	
-43c7b0	448	stub	-	-	-	
+43c7b0	448	todo	-	-	-	
 43c970	112	bm	0	clk_reset	Misc18/targets_clk.txt	
-43c9e0	3072	stub	-	-	-	
+43c9e0	3072	todo	-	-	-	
 43d5e0	32	bm	0	bufowner	Misc16/targets.txt	
 43d600	16	bm	0	slot7_field4	Keylist/targets.txt	
 43d610	16	bm	0	slot6_field4	Keylist/targets.txt	Keylist
@@ -1071,7 +1071,7 @@
 43d680	208	bm	0	ringstep	Fn43d680/targets.txt	
 43d750	80	func	12	input_selectvalue	Input/targets_select.txt	
 43d7a0	384	func	73	translate_key	Input/targets_translate_key.txt	
-43d8e0	60	stub	-	-	-	
+43d8e0	60	todo	-	-	-	
 43d920	96	bm	0	kt_prefix	Keylist/targets.txt	Keylist
 43d980	48	bm	0	kt_code	Keylist/targets.txt	Keylist
 43d9b0	80	bm	0	kt_name	Keylist/targets.txt	Keylist
@@ -1095,8 +1095,8 @@
 43edd0	64	bm	0	okdlg	Misc16/targets_win.txt	
 43ee10	80	bm	0	stepgame	Misc16/targets_m2.txt	
 43ee60	64	bm	0	redraw_windows_above	Misc16/targets_redraw.txt	
-43eea0	1129	stub	-	-	-	
-43f310	2745	stub	-	-	-	
+43eea0	1129	todo	-	-	-	
+43f310	2745	todo	-	-	-	
 43fde0	446	func	43	msg_create	FunctionMessage/targets.txt	MessageFunction
 43ffd0	16	bm	0	msg_name	FunctionMessage/targets.txt	
 43ffe0	91	bm	0	msg_sdd	FunctionMessage/targets.txt	MessageFunction
@@ -1331,13 +1331,13 @@
 446d00	80	bm	0	e446d00	Init446d00/targets.txt	
 446d40	10	bm	0	destroy_physics_gravity	Guards/targets_physicsgravity.txt	
 446d50	16	bm	0	r446d50	Guards/targets_init.txt	
-446d60	108	stub	-	-	-	
+446d60	108	todo	-	-	-	
 446dd0	96	bm	0	setgravity	Souls2/targets.txt	
 446e30	160	bm	0	physsoul_ctor	SoulDtor2/targets.txt	
 446ed0	174	bm	0	readphys	CameraSettings/targets.txt	
 446fa0	16	bm	0	cansave_d446fa0	RegionSimulation/targets.txt	SqueezilSoul
-446fb0	814	stub	-	-	-	
-4472e0	561	stub	-	-	-	
+446fb0	814	todo	-	-	-	
+4472e0	561	todo	-	-	-	
 447590	496	func	36	physical_collision	PhysicalCollision/targets.txt	
 447780	16	bm	0	cp_apply_d447780	FunctionProp/targets.txt	PhysicalSoul
 447790	16	bm	0	v0_d447790	CameraSoul/targets.txt	PhysicalSoul
@@ -1415,19 +1415,19 @@
 4494c0	16	bm	0	r4494c0	Guards/targets_init.txt	
 4494d0	32	bm	0	g4494d0	Guards/targets.txt	
 4494f0	16	bm	0	i4494f0	Guards/targets_init.txt	
-449500	112	stub	-	-	-	
+449500	112	todo	-	-	-	
 449570	16	bm	0	r449570	Guards/targets_init.txt	
-449580	85	stub	-	-	-	
-4495e0	1001	stub	-	-	-	
+449580	85	todo	-	-	-	
+4495e0	1001	todo	-	-	-	
 4499e0	128	func	13	f4499e0	Tiny4/targets14.txt	
 449a60	32	bm	0	stepall	Misc16/targets.txt	
 449a80	32	bm	0	releasesound	Misc16/targets.txt	
 449aa0	361	func	-	-	Fn449aa0/targets_stuck.txt	
 449c30	202	bm	0	find_sound	Audio/targets_find.txt	
 449d20	393	func	-	-	Fn449d20/targets.txt	
-449ee0	702	stub	-	-	-	
+449ee0	702	todo	-	-	-	
 44a1a0	176	bm	0	release_sound_scope	Audio/targets_releasescope.txt	
-44a250	732	stub	-	-	-	
+44a250	732	todo	-	-	-	
 44a5a0	418	func	-	-	Fn44a5a0/targets.txt	
 44a750	411	func	-	-	Fn44a750/targets.txt	
 44a8f0	80	bm	0	stop_looping_sounds	Audio/targets_stop.txt	
@@ -1435,17 +1435,17 @@
 44aa10	160	bm	0	sfx	Audio/targets.txt	
 44aab0	32	bm	0	setsensitivity2	Misc/targets.txt	
 44aad0	16	bm	0	stacktop_d44aad0	Misc9/targets.txt	
-44aae0	605	stub	-	-	-	
+44aae0	605	todo	-	-	-	
 44ad60	112	func	-	-	Misc18/targets_chk.txt	
 44add0	313	func	42	resume_sounds	Audio/targets_resume.txt	
-44af30	944	stub	-	-	-	
-44b2e0	449	stub	-	-	-	
+44af30	944	todo	-	-	-	
+44b2e0	449	todo	-	-	-	
 44b5b0	409	func	-	-	Fn44b5b0/targets.txt	
 44b780	404	func	-	-	Fn44b780/targets.txt	
-44b950	672	stub	-	-	-	
+44b950	672	todo	-	-	-	
 44bc40	241	func	8	run	Fn44bc40/targets.txt	
-44bd60	5418	stub	-	-	-	
-44d290	534	stub	-	-	-	
+44bd60	5418	todo	-	-	-	
+44d290	534	todo	-	-	-	
 44d4f0	498	func	59	spawnat	Spawn/targets_at.txt	
 44d750	464	func	4	spawn	Spawn/targets.txt	
 44d990	537	func	4	spawnvel	Spawn/targets_vel.txt	
@@ -1472,7 +1472,7 @@
 44e900	224	bm	0	splash_ctor	Fn44e900/targets.txt	
 44e9e0	80	bm	0	twoowner	Misc16/targets_m2.txt	
 44ea30	240	bm	0	splashload	Fn44ea30/targets.txt	
-44eb20	673	stub	-	-	-	
+44eb20	673	todo	-	-	-	
 44edd0	112	func	-	-	Ui/targets_splashshow.txt	
 44ee40	96	bm	0	stop	Player/targets.txt	
 44eea0	16	bm	0	isshown	Ui/targets.txt	
@@ -1482,9 +1482,9 @@
 44f010	112	bm	0	settarget	Souls2/targets.txt	Splash
 44f080	16	bm	0	reset	Ui/targets.txt	
 44f090	16	bm	0	i44f090	Guards/targets_init.txt	
-44f0a0	96	stub	-	-	-	
+44f0a0	96	todo	-	-	-	
 44f100	16	bm	0	r44f100	Guards/targets_init.txt	
-44f110	69	stub	-	-	-	
+44f110	69	todo	-	-	-	
 44f160	16	bm	0	i44f160	Guards/targets_init.txt	
 44f170	16	bm	0	thunk44f170	Thunks/targets.txt	
 44f180	16	bm	0	r44f180	Guards/targets_init.txt	
@@ -1534,7 +1534,7 @@
 4558f0	416	bm	0	hopstart	SqueezilSoul/targets.txt	SqueezilSoul
 455a90	329	bm	0	slot_455a90	SqueezilPlayerSoul/targets.txt	SqueezilSoul
 455c00	144	bm	0	skihopair	SqueezilPlayerSoul/targets.txt	SqueezilSoul
-455c90	587	stub	-	-	-	
+455c90	587	todo	-	-	-	
 455f10	448	func	4	spitstand	SqueezilSoul/targets.txt	SqueezilSoul
 4560d0	635	func	6	attack	SqueezilSoul/targets.txt	SqueezilSoul
 456350	224	bm	0	slot_456350	SqueezilPlayerSoul/targets.txt	SqueezilSoul
@@ -1552,34 +1552,34 @@
 456b40	80	bm	0	givenuts	Misc16/targets_m2.txt	
 456b90	272	bm	0	getgroundmotion	GetGroundMotion/targets.txt	SqueezilSoul
 456ca0	240	bm	0	getairmotion	GetAirMotion/targets.txt	SqueezilSoul
-456d90	16	stub	-	-	-	SqueezilSoul
+456d90	16	todo	-	-	-	SqueezilSoul
 456da0	192	bm	0	dh_ctor	Fn456da0/targets.txt	
 456e60	128	bm	0	c10_dtor	Misc18/targets_c10.txt	
 456ef0	80	bm	0	dirclear	Souls2/targets.txt	
 456f40	226	bm	0	dh_add	Fn456f40/targets.txt	
 457040	16	bm	0	v3_empty_ctor	Vector3fEmpty/targets.txt	
-457050	781	stub	-	-	-	
+457050	781	todo	-	-	-	
 457360	32	bm	0	squeezilbody	Destroy/targets.txt	SqueezilBody
 457380	211	bm	0	sqbody_dtor	Fn457380/targets.txt	
-4574b0	590	stub	-	-	-	
+4574b0	590	todo	-	-	-	
 457780	48	bm	0	setorientation	SqueezilBody/targets.txt	SqueezilBody
 4577b0	48	bm	0	getorientation	SqueezilBody/targets.txt	SqueezilBody
-4577e0	480	stub	-	-	-	
+4577e0	480	todo	-	-	-	
 4579f0	208	bm	0	updorient	SqueezilBody/targets.txt	SqueezilBody
 457ac0	16	bm	0	getmode	SqueezilBody/targets.txt	SqueezilBody
 457ad0	64	bm	0	f457ad0	Tiny4/targets9.txt	SqueezilBody
 457b10	166	func	-	-	SqueezilBody/targets_headpos.txt	SqueezilBody
-457bc0	1081	stub	-	-	-	SqueezilBody
+457bc0	1081	todo	-	-	-	SqueezilBody
 458000	16	bm	0	i458000	Guards/targets_init.txt	
 458010	16	bm	0	thunk458010	Thunks/targets.txt	
 458020	16	bm	0	r458020	Guards/targets_init.txt	
 458030	32	bm	0	g458030	Guards/targets.txt	
 458050	80	bm	0	load_proto_bodies	SqueezilBody/targets_loadprotos.txt	
 4580a0	144	func	15	free_proto_bodies	SqueezilBody/targets_freeprotos.txt	
-458130	968	stub	-	-	-	
+458130	968	todo	-	-	-	
 458590	344	func	-	-	Fn458590/targets_stuck.txt	
 458700	288	bm	0	load_body_cycle	SqueezilBody/targets_loadcycle.txt	
-458820	347	stub	-	-	-	SqueezilBody
+458820	347	todo	-	-	-	SqueezilBody
 4589a0	238	func	10	near9	Fn4589a0/targets.txt	
 458aa0	553	func	-	-	Fn458aa0/targets.txt	
 458cd0	496	bm	0	air	Fn458cd0/targets.txt	
@@ -1609,9 +1609,9 @@
 4593d0	128	bm	0	axisy	Misc18/targets_axis.txt	
 459450	112	bm	0	axisx	Misc18/targets_axis.txt	
 4594c0	16	bm	0	i4594c0	Guards/targets_init.txt	
-4594d0	96	stub	-	-	-	
+4594d0	96	todo	-	-	-	
 459530	16	bm	0	r459530	Guards/targets_init.txt	
-459540	69	stub	-	-	-	
+459540	69	todo	-	-	-	
 459590	324	func	-	-	Fn459590/targets.txt	
 4596e0	194	func	-	-	Misc18/targets_d21.txt	GoodieSoul
 4597b0	412	func	-	-	Fn459590/targets_read_stuck.txt	
@@ -1622,10 +1622,10 @@
 459a80	244	func	22	gs_hit	GoodieSoul/targets.txt	GoodieSoul
 459b80	106	bm	0	grant_to	GoodieSoul/targets_grantto.txt	
 459bf0	16	bm	0	getkind	GoodieSoul/targets.txt	GoodieSoul
-459c00	717	stub	-	-	-	
+459c00	717	todo	-	-	-	
 459ed0	141	bm	0	gs_launch	GoodieSoul/targets.txt	
-459f80	2122	stub	-	-	-	GoodieSoul
-45a7d0	16	stub	-	-	-	GoodieSoul
+459f80	2122	todo	-	-	-	GoodieSoul
+45a7d0	16	todo	-	-	-	GoodieSoul
 45a7e0	16	func	5	goodie_adapter	Adjustors/targets.txt	GoodieSoul
 45a7f0	16	bm	0	r0a1c	CameraSoul/targets.txt	GoodieSoul
 45a800	16	bm	0	v1i	CameraSoul/targets.txt	GoodieSoul
@@ -1644,18 +1644,18 @@
 45aba0	64	bm	0	pausemidi	PrintStubs/targets.txt	
 45abe0	96	bm	0	resumemidi	Misc16/targets_joy.txt	
 45ac40	160	func	33	f45ac40	Tiny4/targets31.txt	
-45ace0	432	stub	-	-	-	
-45ae90	1088	stub	-	-	-	
+45ace0	432	todo	-	-	-	
+45ae90	1088	todo	-	-	-	
 45b2d0	176	bm	0	release_midi_file	Misc18/targets_midifile.txt	
-45b380	336	stub	-	-	-	
+45b380	336	todo	-	-	-	
 45b4d0	720	func	-	-	Fn45b4d0/targets_stuck.txt	
 45b7a0	224	func	15	fillbuf	Fn45b7a0/targets.txt	
 45b880	528	func	999	midiev	Audio/targets.txt	
-45ba90	912	stub	-	-	-	
+45ba90	912	todo	-	-	-	
 45be20	144	func	-	-	Misc18/targets_varint.txt	
 45beb0	64	bm	0	getbyte	Misc6/targets.txt	
 45bef0	80	bm	0	readexact	Misc16/targets_win.txt	
-45bf40	784	stub	-	-	-	
+45bf40	784	todo	-	-	-	
 45c250	128	func	-	-	Misc18/targets_midi.txt	
 45c2d0	16	bm	0	prototype_thunk_45c2d0	ForwardThunks/targets.txt	
 45c2e0	208	bm	0	register_integer_array	Container2/targets_register_primitives.txt	
@@ -2156,7 +2156,7 @@
 46a540	64	bm	0	recset	Misc11/targets.txt	?$Array@U_tag_PartOrientation@@
 46a580	16	bm	0	ad23	ArrayData/targets.txt	?$Array@U_tag_PartOrientation@@
 46a590	304	bm	0	grow24	Fn46a590/targets.txt	
-46a6c0	112	stub	-	-	-	
+46a6c0	112	todo	-	-	-	
 46a730	32	bm	0	arr11_dtor	Container/gen/targets_ArrayDtor.txt	
 46a750	112	func	-	-	Container/gen/targets_Array47.txt	?$Array@PAV?$PrimitiveArray@M$01@@
 46a7c0	64	bm	0	arm19	ArrayRemove/targets.txt	?$Array@PAV?$PrimitiveArray@M$01@@
@@ -2432,7 +2432,7 @@
 471010	86	bm	0	cpa_sdd	FunctionProp/targets_cls.txt	CreatePropAtPositionFunction
 471080	128	bm	0	c6_ctor	Misc18/targets_c6.txt	
 471100	118	bm	0	cp_dtor	FunctionCycle/targets.txt	
-4711a0	141	stub	-	-	-	SetCyclePropFunction
+4711a0	141	todo	-	-	-	SetCyclePropFunction
 471260	16	bm	0	PathDir_name	FunctionCycle/targets_cycle.txt	SetCyclePropPathDirFunction
 471270	262	bm	0	PathDir_make	FunctionCycle/targets_cycle.txt	
 471390	16	bm	0	PathWrap_name	FunctionCycle/targets_cycle.txt	SetCyclePropPathWrapFunction
@@ -2453,14 +2453,14 @@
 471af0	16	bm	0	v2_d471af0	CameraSoul/targets.txt	
 471b00	16	bm	0	reporterror_d471b00	Bitmap2/targets.txt	
 471b10	16	bm	0	v2_d471b10	CameraSoul/targets.txt	
-471b20	2400	stub	-	-	-	
+471b20	2400	todo	-	-	-	
 472480	187	bm	0	load_wrl	SqgModel/targets_wrl.txt	
 472550	16	bm	0	d472550	Tiny1/targets.txt	
-472560	1584	stub	-	-	-	
-472b90	976	stub	-	-	-	
+472560	1584	todo	-	-	-	
+472b90	976	todo	-	-	-	
 472f60	656	func	-	-	Fn472f60/targets.txt	
 4731f0	752	func	-	-	Fn4731f0/targets.txt	
-4734e0	488	stub	-	-	-	
+4734e0	488	todo	-	-	-	
 4736f0	16	bm	0	sqgseterrorcallback	Globals/targets.txt	
 473700	16	bm	0	sqgsettexturelookup	Globals/targets.txt	
 473710	80	bm	0	sqglog	Log2/targets.txt	
@@ -2551,7 +2551,7 @@
 477540	128	bm	0	decalsize	Scene/targets.txt	
 4775c0	268	func	16	directional	Scene/targets.txt	
 477700	153	func	34	ambient	Scene/targets.txt	
-4777b0	668	stub	-	-	-	
+4777b0	668	todo	-	-	-	
 477a90	560	func	52	convertrow	Image/targets.txt	
 477cc0	416	func	16	load	Image/targets.txt	
 477e60	64	bm	0	callbacks_ctor	WindowCallbacks/targets.txt	
@@ -2567,7 +2567,7 @@
 478170	96	bm	0	client_bitmap_free	Misc/targets_bitmapfree.txt	
 4781d0	528	func	4	attach	Fn4781d0/targets.txt	
 4783e0	80	bm	0	client_bitmap_draw	Misc/targets_bitmapdraw.txt	
-478430	2128	stub	-	-	-	
+478430	2128	todo	-	-	-	
 478c80	48	bm	0	ctor	Warp/targets.txt	
 478cb0	48	bm	0	dtor	Warp/targets.txt	
 478ce0	192	bm	0	init	Warp/targets.txt	
@@ -2588,11 +2588,11 @@
 479af0	32	bm	0	f479af0	Misc17/targets.txt	
 479b10	96	func	16	p_ex	Tiny4/targets15.txt	
 479b70	16	bm	0	d479b70	Tiny1/targets.txt	
-479b80	1392	stub	-	-	-	
+479b80	1392	todo	-	-	-	
 47a0f0	48	bm	0	ch_ctor	Misc18/targets_com.txt	
 47a120	144	func	-	-	Misc18/targets_push.txt	
 47a1b0	80	bm	0	popframe	Misc18/targets_pop.txt	
-47a200	880	stub	-	-	-	
+47a200	880	todo	-	-	-	
 47a570	16	bm	0	leaf_47a570	Leaves/targets.txt	
 47a580	496	func	75	openfile	Loader/targets.txt	
 47a770	16	bm	0	setflagb	Misc10/targets.txt	
@@ -2602,10 +2602,10 @@
 47a7b0	80	bm	0	wrllog	Log2/targets_wrl.txt	
 47a800	227	func	8	read_wrl_file	SqgModel/targets_read_wrl.txt	
 47a8f0	160	func	16	p_base	Tiny4/targets15.txt	
-47a990	160	stub	-	-	-	
+47a990	160	todo	-	-	-	
 47aa50	128	func	3	gtrav	Fn47aa50/targets.txt	
 47aad0	448	func	-	-	Fn47aad0/targets.txt	
-47ac90	144	stub	-	-	-	
+47ac90	144	todo	-	-	-	
 47ad20	160	bm	0	mface_ctor	Misc15/targets_mesh.txt	
 47ade0	48	bm	0	tn_ctor	Misc15/targets_tree.txt	
 47ae10	64	bm	0	nrelease	Misc6/targets.txt	
@@ -2620,9 +2620,9 @@
 47b0f0	64	bm	0	freef	Misc15/targets_mesh.txt	
 47b130	32	bm	0	freea	Misc15/targets_mesh.txt	
 47b150	48	bm	0	freet	Misc15/targets_mesh.txt	
-47b180	713	stub	-	-	-	
-47b490	3590	stub	-	-	-	
-47c2a0	781	stub	-	-	-	
+47b180	713	todo	-	-	-	
+47b490	3590	todo	-	-	-	
+47c2a0	781	todo	-	-	-	
 47c630	64	bm	0	nav_comparehits	NavMesh/targets_compare.txt	
 47c670	32	bm	0	endian	Misc16/targets.txt	
 47c690	96	bm	0	readword	Misc16/targets.txt	
@@ -2631,9 +2631,9 @@
 47c7b0	304	bm	0	detect_surface_format	NavSurface/targets_detect_format.txt	
 47c8e0	304	func	24	load_surface_file	NavSurface/targets_load_file.txt	
 47ca10	591	bm	0	ascii	Fn47ca10/targets.txt	
-47cc60	896	stub	-	-	-	
+47cc60	896	todo	-	-	-	
 47cfe0	720	func	-	-	Fn47cfe0/targets.txt	
-47d2b0	576	stub	-	-	-	
+47d2b0	576	todo	-	-	-	
 47d4f0	112	bm	0	outcode	NavMesh/targets.txt	
 47d560	142	bm	0	find_leaf	NavMesh/targets_findleaf.txt	
 47d5f0	32	bm	0	length	Vector3f/targets.txt	
@@ -2641,7 +2641,7 @@
 47d630	80	bm	0	normalize	Vector3f/targets.txt	
 47d680	415	func	-	-	Fn47d680/targets.txt	
 47d850	205	bm	0	rayplane	Free2/targets.txt	
-47d940	284	stub	-	-	-	
+47d940	284	todo	-	-	-	
 47da80	334	func	8	slerp	VectorMath/targets_slerp.txt	
 47dbf0	206	bm	0	transpose	Fn47dbf0/targets.txt	
 47dcd0	80	bm	0	turnx	Matrix4/targets.txt	
