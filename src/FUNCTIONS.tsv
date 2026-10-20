@@ -1060,7 +1060,7 @@
 43c7a0	16	bm	0	inputjoystickpresent	Input/targets.txt	
 43c7b0	448	func	14	action_name	Input/targets_actionname.txt	
 43c970	112	bm	0	clk_reset	Misc18/targets_clk.txt	
-43c9e0	3072	todo	-	-	-	
+43c9e0	3072	func	35	kl_ctor	Keylist/targets_ctor.txt	
 43d5e0	32	bm	0	bufowner	Misc16/targets.txt	
 43d600	16	bm	0	slot7_field4	Keylist/targets.txt	
 43d610	16	bm	0	slot6_field4	Keylist/targets.txt	Keylist
