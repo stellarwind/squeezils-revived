@@ -2,14 +2,11 @@
 #include <string.h>
 #include "NavSurface/NavSurfaceList.h"
 #include "String/String.h"
+#include "NavSurface/SurfaceTypeDescription.h"
 
 struct SurfaceTypeInfo {
     int type;
     String typeName, value;
-};
-struct SurfaceTypeDescription {
-    String Deactivate(); // 0x412b50, returns the String at +0x18
-    String Activate(); // 0x40fab0, returns the String at +0x14
 };
 struct SurfaceTypeRegistry {
     virtual void slot0();

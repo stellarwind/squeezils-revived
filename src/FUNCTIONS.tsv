@@ -187,7 +187,7 @@
 40be40	61	bm	0	c40be40	Misc17/targets_dt2.txt	
 40be90	61	bm	0	c40be90	Misc17/targets_dt2.txt	
 40bee0	113	bm	0	loadeddtor	NavSurface/targets.txt	
-40bf90	1074	todo	-	-	-	
+40bf90	1074	func	21	instance_ctor	NavSurface/targets_instancector.txt	
 40c3d0	61	bm	0	c40c3d0	Misc17/targets_dt2.txt	
 40c420	61	bm	0	c40c420	Misc17/targets_dt2.txt	
 40c470	530	func	6	move_surface	NavMesh/targets_move.txt	
@@ -206,9 +206,9 @@
 40d520	16	bm	0	getproperties	NavSurface/targets.txt	
 40d530	272	bm	0	holder7_ctor	Fn40d530/targets.txt	
 40d640	360	func	8	nav_list_dtor	NavSurface/targets_listdtor.txt	
-40d870	606	bm	0	read_surface_list	NavSurface/targets_readlist.txt	
-40dad0	595	bm	0	read_surface_names	NavSurface/targets_readnames.txt	
-40dd30	1059	todo	-	-	-	
+40d870	606	func	68	read_surface_list	NavSurface/targets_readlist.txt	
+40dad0	595	func	92	read_surface_names	NavSurface/targets_readnames.txt	
+40dd30	1059	func	64	read_surface_type	NavSurface/targets_readtype.txt	
 40e160	333	bm	0	unload_file	NavSurface/targets_unloadfile.txt	
 40e2e0	413	func	24	read_bindings	NavSurface/targets_bindings.txt	
 40e480	1925	todo	-	-	-	
@@ -1534,7 +1534,7 @@
 4558f0	416	bm	0	hopstart	SqueezilSoul/targets.txt	SqueezilSoul
 455a90	329	bm	0	slot_455a90	SqueezilPlayerSoul/targets.txt	SqueezilSoul
 455c00	144	bm	0	skihopair	SqueezilPlayerSoul/targets.txt	SqueezilSoul
-455c90	587	todo	-	-	-	
+455c90	587	func	51	jumpflight	SqueezilSoul/targets_jumpflight.txt	
 455f10	448	func	4	spitstand	SqueezilSoul/targets.txt	SqueezilSoul
 4560d0	635	func	6	attack	SqueezilSoul/targets.txt	SqueezilSoul
 456350	224	bm	0	slot_456350	SqueezilPlayerSoul/targets.txt	SqueezilSoul

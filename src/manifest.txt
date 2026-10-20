@@ -44,6 +44,8 @@ NavSurface/targets_typechanged.txt NavSurface/TypeChanged.cpp
 NavSurface/targets_movecarried.txt NavSurface/MoveCarried.cpp
 NavSurface/targets_readlist.txt NavSurface/ReadSurfaceList.cpp
 NavSurface/targets_readnames.txt NavSurface/ReadSurfaceNames.cpp
+NavSurface/targets_readtype.txt NavSurface/ReadSurfaceType.cpp
+NavSurface/targets_instancector.txt NavSurface/InstanceCtor.cpp
 AnimatedBody/targets.txt AnimatedBody/AnimatedBody.cpp AnimatedBody/Blend.cpp
 AnimatedBody/targets_copyctor.txt AnimatedBody/CopyCtor.cpp
 AnimatedBody/targets_setcycle.txt AnimatedBody/SetCycle.cpp
@@ -679,3 +681,4 @@ Spawn/targets_at.txt Spawn/Spawn44d4f0.cpp
 Spawn/targets_nut.txt Spawn/Spawn44dc30.cpp
 Spawn/targets_vel.txt Spawn/Spawn44d990.cpp
 Spawn/targets_record.txt Spawn/SpawnRecord.cpp
+SqueezilSoul/targets_jumpflight.txt SqueezilSoul/JumpFlight.cpp
