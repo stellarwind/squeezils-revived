@@ -10,9 +10,9 @@ extern char *g_arrayName;           // 0x4bf95c
         if (!s) { \
             s = new char[strlen(g_arrayBase) + 1]; \
             strcpy(s, g_arrayBase); \
-            g_arrayName = s; \
-            sprintf(s + strlen("PrimArray"), "%2x", code); \
         } \
+        g_arrayName = s; \
+        sprintf(s + strlen("PrimArray"), "%2x", code); \
         return g_arrayName; \
     }
 PRIM_NAME(Name464ed0, 0x5)

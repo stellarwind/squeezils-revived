@@ -256,3 +256,40 @@ Eight focused tests pass. Conservative classifications leave 774 unknowns explic
 effort/dependency estimates remain for review. One accepted unregistered unresolved
 candidate is surfaced: LevelBrainTable::KeyAt at 0044de90. Review its addressed
 owner and String return ABI next. See the integration guide's final section.
+
+
+Surface accessor/transform family completed: 27 reviewed declarations now bind to
+ten complete byte-exact owners via surface_aliases.py and surface_registry.json.
+Five focused tests pass. Completed pipeline cbf6a1b4-0b47-445c-a516-4563dd46b9fe
+compiles 1,139/1,139 sources, zero duplicates and 1,285 unique unresolved names
+(1,312 -> 1,285 on the same source inventory); all 27 disappear from diagnostics.
+No source body edits or relaxed proof gates. Two nonexact IsNear bindings remain
+withheld. See integration guide for return-buffer/forwarder ABI evidence.
+
+
+Navigation contact-query extension completed: nine additional reviewed bindings
+across five exact owners. Six surface tests pass. Completed pipeline
+f1d4a985-7730-4ad7-bbb6-daf835e0a827 compiles 1,139/1,139 sources with zero
+duplicates and 1,276 unique unresolved names. Saved name-set comparison proves
+nine removals and no additions (1,285 -> 1,276); no body edits or relaxed checks.
+Larger nonexact movement/loading methods remain outside the exact-alias batch.
+
+
+Application family completed with eleven reviewed bindings removing ten existing
+unresolved names. A conflicting SetFlag declaration was split: RegionInit clears
++b4 at 43aa20; PlaceStart sets it at 43aa10. Original calls and all ten exact owner
+bodies are rechecked. Caller scores remain 61/87; four application and six shared
+surface tests pass. Completed pipeline 98bf731b-b29c-44bc-8277-446b7dd002be compiles
+1,139/1,139 sources, zero duplicates, 1,266 unique unresolved names. Name-set delta
+proves ten removals and zero additions. See integration guide for full ABI evidence.
+
+
+Integer ID-list ownership completed: the duplicate constructor unit was retired
+in favor of the existing exact Set<int,10> body; two reviewed lifecycle bindings
+preserve callers. Both complete vtables now have one verified owner and all 13
+slots agree with original identity, correcting the inherited wrong factory slot.
+Five tests and three byte-exact targets pass. Completed pipeline
+42841610-e40e-4be6-8a31-5de655772d85 compiles 1,138/1,138 sources, zero duplicates,
+1,248 unique unresolved names. Saved sets prove 18 removals and no additions
+(1,266 -> 1,248). Manifest changed only by removing the proven duplicate. See the
+integration guide for complete-object ABI, typed destruction and projection proof.

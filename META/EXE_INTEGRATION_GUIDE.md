@@ -1,6 +1,6 @@
 # Building the reconstructed SQZ executable
 
-**Latest restart point (2026-10-21):** full pipeline `2a8fcf02-13f4-42db-8cf4-82fea1fd6f64`; 1,139/1,139 manifest sources compile, zero duplicate errors and 1,312 unique unresolved symbols. EXE not linked. The final section records blocker-aware triage; pending LevelBrainTable::KeyAt is the next review.
+**Latest restart point (2026-10-21):** full pipeline `42841610-e40e-4be6-8a31-5de655772d85`; 1,138/1,138 manifest sources compile, zero duplicate errors and 1,248 unique unresolved symbols. EXE not linked. Final section records canonical integer ID-list ownership and corrected vtables.
 
 **Symbol-resolution optimization review (2026-10-21):** see
 [SYMBOL_RESOLUTION_OPTIMIZATION.md](SYMBOL_RESOLUTION_OPTIMIZATION.md) for
@@ -2407,3 +2407,177 @@ in Container2/PointerTableAccess.cpp. Review its String return-buffer ABI and ca
 proof next. No aliases or source bodies changed in this tooling block; unresolved
 count is unchanged. Cached binary/external-header provenance remains unverified;
 EXE/runtime validation pending. STATUS.md was not regenerated.
+
+## Surface accessor/transform ABI family: 27 names (2026-10-21)
+
+Added surface_aliases.py, surface_registry.json and a fail-closed entry_aliases.py
+hook for 27 reviewed spellings across MoveSurface, FlightSurface, CarrySurface,
+InstancedSurface/InstancedSurfaceCtor, NearSurfaceInstance, PlacementFace and
+SurfaceFace. Ten addressed owners cover original 40c6b0, 40c6d0, 40c7b0, 40c860,
+40f6f0, 40f850, 4105f0, 410660, 4128a0 and 4110b0. Each referring source must
+still declare the reviewed class, exact overload and original-address annotation.
+Every selectable owner must match the complete original body and retain symbolic
+absolute relocations; multi-address sharing requires relocation-free code.
+Registry decisions preserve full decorated identity and current declaration/object
+hashes. Original call evidence must not contradict the annotated address.
+
+ABI review: ECX is unchanged; pointer/int getters use EAX with no stack argument;
+WasNear takes one reference and RET 4. Vector/matrix return-by-value paths take a
+caller-owned hidden return buffer plus one reference and RET 8. The old Source /
+Holder Item/Part wrapper spellings merely forward that buffer; their declared
+placeholder sizes do not size, allocate or copy the returned object in these
+complete original wrappers. Their referenced helpers remain ordinary unresolved
+work with explicit original-address declarations, not new dependencies introduced
+by this batch. TypeFilter's existing void-spelled owner tail-jumps through the
+original +c8 member's vtable +10 slot and preserves the pointer in EAX. GetSurface
+shares the relocation-free load of the pointer at +0. Full layouts and field
+views are recorded in surface_registry.json; no source bodies changed.
+
+Five focused tests check overload/address/type evidence, class scope, conflicting
+annotations and exclusion of nonexact IsNear. All ten canonical match targets
+score zero. Both IsNear aliases at 40c700 remain unresolved because their current
+canonical implementation is nonexact; no proof requirement was relaxed.
+
+Completed authoritative pipeline cbf6a1b4-0b47-445c-a516-4563dd46b9fe compiles
+1,139/1,139 sources without failures/omissions, zero LNK2005, 1,574 LNK2001
+messages, 1,285 unique unresolved names and no internal linker error. Snapshot
+inputs stayed unchanged. Same source/compiler inventory as prior completed
+2a8fcf02-13f4-42db-8cf4-82fea1fd6f64; only the surface generator/registry/tests
+and alias hook changed. All 27 bindings are emitted and absent from unresolved
+inventory (1,312 -> 1,285); no source coverage change or STATUS regeneration.
+Cached provenance remains unverified; EXE/runtime validation pending. Next block:
+review the larger NavSurfaces/navigation-list interfaces using refreshed clusters.
+LevelBrainTable::KeyAt remains the single accepted unregistered candidate.
+
+## Navigation contact queries: nine names (2026-10-21)
+
+Extended surface_aliases.py and its reviewed registry with nine pointer-based
+contact query spellings: NavSurfaces Bounces/IsSlippery, three FlyThrough views,
+two ActivateScript overload spellings, and NavSurfaces/PlacementSurfaces FaceOf.
+Canonical owners are Fn40f610/F.cpp at 40f610/40f770/40f8d0/40f9b0 and
+NavSurface/NavSurfaceList.cpp at 412bf0. Existing 27 surface decisions remain
+byte-for-byte unchanged. Fresh discovery validates class-scoped declarations,
+overload types, pointer constness, explicit original addresses and all selectable
+complete owner bodies. No source bodies changed or alias proof gates relaxed.
+
+Contacts provide face +0, second +4 and matrix +8. List instances are +134;
+the type registry is +16c. Bounces/IsSlippery/FlyThrough read registered values
+at +4/+8/+c. These and FaceOf use ECX=this, one pointer, RET 4 and EAX result.
+ActivateScript uses a caller-owned four-byte String return object plus the contact
+pointer, RET 8 and EAX=buffer. The caller String views have the canonical rep
+pointer layout. FaceOf reads the face and returns the +134 instance Array entry;
+pointee constness differences introduce no runtime conversion or this adjustment.
+All five canonical match targets score zero; six focused surface tests pass.
+
+Authoritative completed pipeline f1d4a985-7730-4ad7-bbb6-daf835e0a827 compiles
+1,139/1,139 sources without failures/omissions, zero LNK2005, 1,564 LNK2001
+messages, 1,276 unique unresolved names and no internal linker error. Snapshot
+inputs stayed unchanged. Compared with saved cbf6a1b4-0b47-445c-a516-4563dd46b9fe
+name inventory, exactly the nine reviewed names disappeared and zero were added
+(1,285 -> 1,276). Evidence: nav-list-before-clusters.json, nav-list-reviewed.json
+and nav-list-name-delta.json in build/integration. Larger movement/loading methods,
+TypeChanged and RebudGoodies have nonexact current bodies and remain withheld
+from this exact-owner batch. Source coverage unchanged; STATUS.md not regenerated.
+Cached provenance remains unverified; no linked EXE or runtime validation. Next:
+review another coherent method/data declaration family from refreshed clusters.
+LevelBrainTable::KeyAt remains an accepted unregistered exact-call candidate.
+
+## Application interface and conflicting flag declarations (2026-10-21)
+
+Added application_aliases.py/application_registry.json and fail-closed alias-hook
+validation for eleven interface spellings over ten exact addressed owners. This
+resolves ten existing names: forward/turn axes and taps, initialize/cleanup,
+reset/flush, input-mode setter and flag setter. RegionInit previously declared
+SetFlag at 43aa20 while PlaceStart declared the same symbol at 43aa10. Those are
+different operations: original calls at 417405 and 43963c respectively clear and
+set the dword at Application +b4. RegionInit now calls a distinct ClearFlag name;
+PlaceStart retains SetFlag. Both compact local Application declarations now list
+method-address evidence separately. No executable source statements other than
+that symbol name were changed. The new name is also bound, so eleven emitted
+bindings remove ten prior unresolved names without introducing another.
+
+Canonical targets: Tiny4/F43bc70.cpp and F43bd20.cpp (axis values), Misc10/Small.cpp
+(taps), Input/Initialize.cpp, Tiny1/Tiny1.cpp (cleanup), Misc18/Flush.cpp,
+Fn43b980/F.cpp, and Leaves/Leaves.cpp (distinct flag stores). All ten score zero.
+ECX is unchanged; float results stay in ST0. SetInputMode and Initialize take one
+four-byte argument, RET 4; Initialize's WindowCallbacks first 0x80 bytes have the
+same 16 callback/context pairs and Add entry as ListenerTable. Cleanup's EAX int
+result is intentionally ignored by its void caller. Other no-argument methods
+have no stack cleanup. Registry records field layout, full decorated identity,
+current declaration/object hashes, complete original body and symbolic-operand
+proofs. Original set/clear call instructions are rechecked on each discovery.
+
+RegionInit and PlaceStart matches remain 61 and 87, equal to their recorded scores.
+Four application tests and six shared surface tests pass. Two existing destructor
+registry decisions (BodyPlacement, Contact) received declaration-hash-only updates
+for reformatted PlaceStart; destinations, owner-body hashes, declarations and ABI
+proofs were unchanged. Shared surface validation now supports explicit by-value
+arguments and parameterized policy/owner sets; existing 36 surface decisions stayed
+unchanged. Matcher follow-up: pipefail had made ordinary diff status 1 fail match.sh;
+normal nonexact diffs now succeed, while matcher/compiler/parser and diff errors
+still fail. Both nonexact caller checks exercised the repaired wrapper.
+
+Authoritative completed pipeline 98bf731b-b29c-44bc-8277-446b7dd002be compiles
+1,139/1,139 sources without failures/omissions; zero LNK2005, 1,550 LNK2001
+messages, 1,266 unique unresolved names and no internal linker error. Snapshot
+inputs stayed unchanged. Saved application-before-clusters.json comparison proves
+exactly ten removals and zero additions (1,276 -> 1,266); all eleven new registry
+bindings are emitted and absent from diagnostics. Delta is application-name-delta.json.
+Cached binary/external-header provenance remains unverified; no linked EXE or
+runtime validation. STATUS.md/source scoreboard unchanged. Next block: integer
+container lifecycle/virtual interfaces (IdArray/IdList) or another coherent family;
+LevelBrainTable::KeyAt remains an accepted unregistered candidate.
+
+## Integer ID-list canonical owner and complete vtables (2026-10-21)
+
+Retired Container2/IdListCtor.cpp and targets_idctor.txt: its sole original body
+at 45eef0 is already emitted byte-exact by Container2/gen/SC_i10.cpp as
+Set<int,10>::Set(). The existing SC target map now explicitly owns 45eef0;
+Create remains exact. Removed only the duplicate manifest row; no original
+function body was lost. The old local IdArray/IdPrimitiveArray/IdList vtables
+introduced 17 unowned method/lifetime names; their declarations and redundant
+constructor are gone. Reviewed lifecycle aliases preserve ??0IdList@@QAE@XZ
+and ??1IdList@@QAE@XZ for the existing Sim2 callers, selecting the addressed
+Set<int,10> constructor and complete destructor at 45efa0. This removes the final
+old IdList destructor reference too. Two exact-call registry bindings (ME and
+TimerRemovalIndices) migrate to the canonical constructor with unchanged original
+destination, caller sites, ABI and other proof fields.
+
+Added id_list_ownership.py/id_list_registry.json. Each pass verifies complete
+constructor/destructor code, symbolic absolute operands, current caller/owner
+hashes, both original vtable stores, and the destructor's typed base call to
+PrimitiveArray<int,10> at 46ebf0 (plus CRT CxxFrameHandler at 48e5f0). The legacy
+SetDtor scoring map also lists string variants: it is not identity proof. This
+binding is pinned specifically to the int/ID=10 complete-object vtables and typed
+base destruction, not inferred from masked-byte similarity at those other entries.
+Layout is 0x14: primary vptr/count/capacity/data +0/+4/+8/+c, BufferObject vptr +10.
+Existing LocationSimulation callers construct the list at +c; active follows +20.
+No stack argument, deleting flag or this adjustment is introduced.
+
+Canonical Set primary/secondary vtables at 4a009c/4a0084 are selected exclusively
+from SC_i10.cpp. All nine primary and four secondary slots must resolve to their
+original addresses using current decorated target mappings and zero-addend absolute
+relocations. This corrects incidental Set table copies whose secondary factory
+inherits PrimitiveArray::Create at 45ed90 instead of Set::Create at 45f310.
+Projection externalizes five copies of each table and verifies exactly one
+surviving owner for both. Its reviewed data-symbol path permits a nonzero offset
+inside a data COMDAT; code offsets, out-of-section values, unknown external labels,
+COMDAT/association/relocation checks and function checks remain enforced. The
+initial projection failed on that previously unsupported data layout; the guarded
+extension passed preflight and the subsequent full pipeline. Five focused tests
+cover slot identity and projection bounds. Constructor, destructor and Create
+match targets all score zero. No original binary code was copied into objects.
+
+Authoritative completed pipeline 42841610-e40e-4be6-8a31-5de655772d85 compiles
+1,138/1,138 manifest sources without failures/omissions; zero LNK2005, 1,532 LNK2001
+messages, 1,248 unique unresolved names, no internal linker error. Snapshot inputs
+stayed unchanged. Source inventory differs from the previous 1,139-source run only
+by retiring the proven duplicate; totals alone are not an equivalent-input build
+comparison. Saved id-list-before-clusters.json and id-list-name-delta.json prove
+exactly 18 named removals and zero additions (1,266 -> 1,248). Source coverage of
+original addresses is unchanged; the generated source scoreboard remains stale
+until user-requested mkstatus.sh (old constructor target path moved).
+Cached binary/external-header provenance remains unverified; EXE/runtime pending.
+Next: inspect the remaining pointer/primitive BufferObject interfaces and other
+shadow container views, selecting actual template owners and complete vtables.
+LevelBrainTable::KeyAt remains the accepted unregistered method candidate.

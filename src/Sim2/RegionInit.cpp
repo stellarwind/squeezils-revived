@@ -41,7 +41,17 @@ struct Land { const char *GetPlaceName(int index);       // 0x41e8c0
               virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9();
               virtual Possessions *Lend(int id); };
 Land *GetLand();                                         // 0x420680
-struct Application { char pad[0x18]; void *playerInput; void *cameraInput; char pad2[0x78 - 0x20]; int hasInput; void SetInputMode(int m); void SetFlag(); void FlushInput(); };   // 0x43b980 / 0x43aa20 / 0x43c970
+// Application local field view.
+struct Application {
+    char pad[0x18];
+    void *playerInput; // 0x18
+    void *cameraInput; // 0x1c
+    char pad2[0x78 - 0x20];
+    int hasInput; // 0x78
+    void SetInputMode(int m); // 0x43b980
+    void ClearFlag(); // 0x43aa20: clear the application flag at +0xb4
+    void FlushInput(); // 0x43c970
+};
 Application *GetApplication();                           // 0x4206b0
 struct Panel { void ShowQuest(int region); void Update(int n); };   // 0x42da60 / 0x42db10
 Panel *GetPanel();                                       // 0x4206c0
@@ -141,7 +151,7 @@ void RegionSimulation::Init()
     void *cameraInput = cameraSoul ? (char *)cameraSoul + 4 : 0;
     GetApplication()->cameraInput = cameraInput;
     GetPanel()->ShowQuest(self->GetRegion());
-    GetApplication()->SetFlag();
+    GetApplication()->ClearFlag();
 
     regionIni.SetSection("Defaults");
     const char *midi = regionIni.GetString("MidiFile");

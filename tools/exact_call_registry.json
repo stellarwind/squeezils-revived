@@ -413,8 +413,8 @@
   },
   "??0ME@@QAE@XZ": {
     "address": "0045eef0",
-    "target": "??0IdList@@QAE@XZ",
-    "owner": "Container2/IdListCtor.cpp",
+    "target": "??0?$Set@H$09@@QAE@XZ",
+    "owner": "Container2/gen/SC_i10.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40d530/F.cpp"
@@ -705,8 +705,8 @@
   },
   "??0TimerRemovalIndices@@QAE@XZ": {
     "address": "0045eef0",
-    "target": "??0IdList@@QAE@XZ",
-    "owner": "Container2/IdListCtor.cpp",
+    "target": "??0?$Set@H$09@@QAE@XZ",
+    "owner": "Container2/gen/SC_i10.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Misc16/AdvanceMessages.cpp"

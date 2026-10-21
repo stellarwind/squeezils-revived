@@ -1,0 +1,931 @@
+{
+  "?ActivateScript@NavSurfaces@@QAE?AVString@@PAUContact@@@Z": {
+    "address": "0040f9b0",
+    "target": "?Find@HolderS@@QAE?AVString@@PAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Fly.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "ActivateScript",
+      "address": 4258224,
+      "returned": "String",
+      "argument": "Contact",
+      "return_bytes": 4,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; hidden caller-owned String buffer plus contact pointer; RET 8; EAX=buffer; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ActivateScript@NavSurfaces@@QAE?AVString@@PAUMoveContact@@@Z": {
+    "address": "0040f9b0",
+    "target": "?Find@HolderS@@QAE?AVString@@PAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "ActivateScript",
+      "address": 4258224,
+      "returned": "String",
+      "argument": "MoveContact",
+      "return_bytes": 4,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; hidden caller-owned String buffer plus contact pointer; RET 8; EAX=buffer; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Bounces@NavSurfaces@@QAEHPAUContact@@@Z": {
+    "address": "0040f610",
+    "target": "?Find@Holder7@@QAEHPAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a",
+      "SqueezilSoul/MoveGround.cpp": "90ecfe9a06a3acc0a7ad190f92b3cbe251b36bbdf7e2854b589e97330057ad4a"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Fly.cpp",
+      "SqueezilSoul/MoveGround.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "Bounces",
+      "address": 4257296,
+      "returned": "int",
+      "argument": "Contact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Changed@CarrySurface@@QAEHXZ": {
+    "address": "0040c860",
+    "target": "?Compare@Cmp64@@QAEHXZ",
+    "owner": "Souls2/Handlers.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveCarried.cpp": "30396f12359025b2025f7fdc49f449f4091e790e4f8364fc588cf032ad43af38"
+    },
+    "referring_sources": [
+      "NavSurface/MoveCarried.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Souls2/Handlers.cpp": "42d3bafff0617299fc60c69fbe9fc3fb19ba62847a38f51f627e70028ebdb93b"
+    },
+    "signature": {
+      "typename": "CarrySurface",
+      "method": "Changed",
+      "address": 4245600,
+      "returned": "int",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Changed@FlightSurface@@QAEHXZ": {
+    "address": "0040c860",
+    "target": "?Compare@Cmp64@@QAEHXZ",
+    "owner": "Souls2/Handlers.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Souls2/Handlers.cpp": "42d3bafff0617299fc60c69fbe9fc3fb19ba62847a38f51f627e70028ebdb93b"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "Changed",
+      "address": 4245600,
+      "returned": "int",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Changed@MoveSurface@@QAEHXZ": {
+    "address": "0040c860",
+    "target": "?Compare@Cmp64@@QAEHXZ",
+    "owner": "Souls2/Handlers.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Souls2/Handlers.cpp": "42d3bafff0617299fc60c69fbe9fc3fb19ba62847a38f51f627e70028ebdb93b"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "Changed",
+      "address": 4245600,
+      "returned": "int",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?FaceOf@NavSurfaces@@QAEPAUSurfaceFace@@PAUContact@@@Z": {
+    "address": "00412bf0",
+    "target": "?FaceOf@NavSurfaceList@@QAEPAUInstancedSurface@@PBUContact@@@Z",
+    "owner": "NavSurface/NavSurfaceList.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Rotate.cpp": "47a860ee0f2a657e7cf179dde614b35d9691aacb2645cd362082d7ba3783cda9"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Rotate.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "NavSurface/NavSurfaceList.cpp": "4aced89e610040acb53ad90a566f2aa76577bba60114b5741f7214f46a74e9dd"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "FaceOf",
+      "address": 4271088,
+      "returned": "SurfaceFace *",
+      "argument": "Contact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?FaceOf@PlacementSurfaces@@QAEPAUPlacementFace@@PBUContact@@@Z": {
+    "address": "00412bf0",
+    "target": "?FaceOf@NavSurfaceList@@QAEPAUInstancedSurface@@PBUContact@@@Z",
+    "owner": "NavSurface/NavSurfaceList.cpp",
+    "declaration_sha256": {
+      "SqueezilBody/Place.cpp": "f94c1cc83e472b4d89aa322321f1271754b0c42dd90950a510e1e70561d57346"
+    },
+    "referring_sources": [
+      "SqueezilBody/Place.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "NavSurface/NavSurfaceList.cpp": "4aced89e610040acb53ad90a566f2aa76577bba60114b5741f7214f46a74e9dd"
+    },
+    "signature": {
+      "typename": "PlacementSurfaces",
+      "method": "FaceOf",
+      "address": 4271088,
+      "returned": "PlacementFace *",
+      "argument": "Contact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": true,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?FlyThrough@FlightSurfaces@@QAEHPAUFlightContact@@@Z": {
+    "address": "0040f8d0",
+    "target": "?Find@Holder9@@QAEHPAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "GoodieSoul/Update.cpp": "ca34fb2567e2e2ecd1ebffc05ca33e43ab54f1e0202f0ac560fb7d8739ae7add"
+    },
+    "referring_sources": [
+      "GoodieSoul/Update.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "FlightSurfaces",
+      "method": "FlyThrough",
+      "address": 4258000,
+      "returned": "int",
+      "argument": "FlightContact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?FlyThrough@NavSurfaces@@QAEHPAUContact@@@Z": {
+    "address": "0040f8d0",
+    "target": "?Find@Holder9@@QAEHPAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Fly.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "FlyThrough",
+      "address": 4258000,
+      "returned": "int",
+      "argument": "Contact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?FlyThrough@NavSurfaces@@QAEHPAUMoveContact@@@Z": {
+    "address": "0040f8d0",
+    "target": "?Find@Holder9@@QAEHPAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "FlyThrough",
+      "address": 4258000,
+      "returned": "int",
+      "argument": "MoveContact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": false,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?GetSurface@FlightSurface@@QAEPAUFlightSurfaceData@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "IniReader/IniReader.cpp": "4ffb9d4fa90986877bcd72b2b2a89476d70a975593d2b7aa61e35e4437bc7198"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "GetSurface",
+      "address": 4245168,
+      "returned": "FlightSurfaceData *",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?GetSurface@MoveSurface@@QAEPAUMoveSurfaceData@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "IniReader/IniReader.cpp": "4ffb9d4fa90986877bcd72b2b2a89476d70a975593d2b7aa61e35e4437bc7198"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "GetSurface",
+      "address": 4245168,
+      "returned": "MoveSurfaceData *",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?GetSurface@NearSurfaceInstance@@QAEPAUNearSurfaceData@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "declaration_sha256": {
+      "NavSurface/IsNear.cpp": "2dc5c746af8094bede96347c33810674b6616d7aa38556579e80cb00d1992b55"
+    },
+    "referring_sources": [
+      "NavSurface/IsNear.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "IniReader/IniReader.cpp": "4ffb9d4fa90986877bcd72b2b2a89476d70a975593d2b7aa61e35e4437bc7198"
+    },
+    "signature": {
+      "typename": "NearSurfaceInstance",
+      "method": "GetSurface",
+      "address": 4245168,
+      "returned": "NearSurfaceData *",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?IsSlippery@NavSurfaces@@QAEHPBUContact@@@Z": {
+    "address": "0040f770",
+    "target": "?Find@Holder8@@QAEHPAH@Z",
+    "owner": "Fn40f610/F.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Slip.cpp": "1e7317409f661d3b3e41dd85371956cb8ec6999c83787694870ad65e4b0ba950"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Slip.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Fn40f610/F.cpp": "e4fe8e5ec989060630de23a755b4f1d00e9f4d9b3bdd799a01eec6cfee512ba0"
+    },
+    "signature": {
+      "typename": "NavSurfaces",
+      "method": "IsSlippery",
+      "address": 4257648,
+      "returned": "int",
+      "argument": "Contact",
+      "return_bytes": null,
+      "argument_mode": "pointer",
+      "argument_const": true,
+      "family": "navigation-query"
+    },
+    "abi": "ECX=this; one contact pointer; RET 4; scalar/pointer EAX; no this adjustment",
+    "layout": "Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?MatrixToWorld@CarrySurface@@QAE?AUCarryMatrix@@ABU2@@Z": {
+    "address": "004105f0",
+    "target": "?GetA@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveCarried.cpp": "30396f12359025b2025f7fdc49f449f4091e790e4f8364fc588cf032ad43af38"
+    },
+    "referring_sources": [
+      "NavSurface/MoveCarried.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "CarrySurface",
+      "method": "MatrixToWorld",
+      "address": 4261360,
+      "returned": "CarryMatrix",
+      "argument": "CarryMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Relative@FlightSurface@@QAE?AUFlightMatrix@@ABU2@@Z": {
+    "address": "004110b0",
+    "target": "?GetB@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "Relative",
+      "address": 4264112,
+      "returned": "FlightMatrix",
+      "argument": "FlightMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Relative@MoveSurface@@QAE?AUMoveMatrix@@ABU2@@Z": {
+    "address": "004110b0",
+    "target": "?GetB@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "Relative",
+      "address": 4264112,
+      "returned": "MoveMatrix",
+      "argument": "MoveMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Relative@PlacementFace@@QAE?AUPlacementMatrix@@ABU2@@Z": {
+    "address": "004110b0",
+    "target": "?GetB@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "SqueezilBody/Place.cpp": "f94c1cc83e472b4d89aa322321f1271754b0c42dd90950a510e1e70561d57346"
+    },
+    "referring_sources": [
+      "SqueezilBody/Place.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "PlacementFace",
+      "method": "Relative",
+      "address": 4264112,
+      "returned": "PlacementMatrix",
+      "argument": "PlacementMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?Relative@SurfaceFace@@QAE?AUMatrix16@@ABU2@@Z": {
+    "address": "004110b0",
+    "target": "?GetB@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "SqueezilSoul/Rotate.cpp": "47a860ee0f2a657e7cf179dde614b35d9691aacb2645cd362082d7ba3783cda9"
+    },
+    "referring_sources": [
+      "SqueezilSoul/Rotate.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "SurfaceFace",
+      "method": "Relative",
+      "address": 4264112,
+      "returned": "Matrix16",
+      "argument": "Matrix16",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToLocal@FlightSurface@@QAE?AUFlightVector@@ABU2@@Z": {
+    "address": "0040f6f0",
+    "target": "?GetC@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "ToLocal",
+      "address": 4257520,
+      "returned": "FlightVector",
+      "argument": "FlightVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToLocal@MoveSurface@@QAE?AUMoveVector@@ABU2@@Z": {
+    "address": "0040f6f0",
+    "target": "?GetC@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "ToLocal",
+      "address": 4257520,
+      "returned": "MoveVector",
+      "argument": "MoveVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToLocalBefore@CarrySurface@@QAE?AUCarryVector@@ABU2@@Z": {
+    "address": "00410660",
+    "target": "?Get@Holder4@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveCarried.cpp": "30396f12359025b2025f7fdc49f449f4091e790e4f8364fc588cf032ad43af38"
+    },
+    "referring_sources": [
+      "NavSurface/MoveCarried.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "CarrySurface",
+      "method": "ToLocalBefore",
+      "address": 4261472,
+      "returned": "CarryVector",
+      "argument": "CarryVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToLocalBefore@FlightSurface@@QAE?AUFlightVector@@ABU2@@Z": {
+    "address": "00410660",
+    "target": "?Get@Holder4@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "ToLocalBefore",
+      "address": 4261472,
+      "returned": "FlightVector",
+      "argument": "FlightVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToLocalBefore@MoveSurface@@QAE?AUMoveVector@@ABU2@@Z": {
+    "address": "00410660",
+    "target": "?Get@Holder4@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "ToLocalBefore",
+      "address": 4261472,
+      "returned": "MoveVector",
+      "argument": "MoveVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@CarrySurface@@QAE?AUCarryVector@@ABU2@@Z": {
+    "address": "0040f850",
+    "target": "?Get@Holder3@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveCarried.cpp": "30396f12359025b2025f7fdc49f449f4091e790e4f8364fc588cf032ad43af38"
+    },
+    "referring_sources": [
+      "NavSurface/MoveCarried.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "CarrySurface",
+      "method": "ToWorld",
+      "address": 4257872,
+      "returned": "CarryVector",
+      "argument": "CarryVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@FlightSurface@@QAE?AUFlightMatrix@@ABU2@@Z": {
+    "address": "004105f0",
+    "target": "?GetA@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "ToWorld",
+      "address": 4261360,
+      "returned": "FlightMatrix",
+      "argument": "FlightMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@InstancedSurface@@QAE?AUVector3f@@ABU2@@Z": {
+    "address": "0040f850",
+    "target": "?Get@Holder3@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavMesh/SurfaceTransform.h": "916e1d99fc65f10505de613f1ea3b67c920acf1a45faa5bea9591813d34b0a2b"
+    },
+    "referring_sources": [
+      "NavMesh/MoveSurface.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "InstancedSurface",
+      "method": "ToWorld",
+      "address": 4257872,
+      "returned": "Vector3f",
+      "argument": "Vector3f",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@InstancedSurfaceCtor@@QAE?AUInstanceCtorVector@@ABU2@@Z": {
+    "address": "0040f850",
+    "target": "?Get@Holder3@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/InstanceCtor.cpp": "6771eac5839d2d88776f39d1ed0c040e89124e3380bf79199af02c0513b008e2"
+    },
+    "referring_sources": [
+      "NavSurface/InstanceCtor.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "InstancedSurfaceCtor",
+      "method": "ToWorld",
+      "address": 4257872,
+      "returned": "InstanceCtorVector",
+      "argument": "InstanceCtorVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@MoveSurface@@QAE?AUMoveMatrix@@ABU2@@Z": {
+    "address": "004105f0",
+    "target": "?GetA@Source@@QAE?AUItem@@H@Z",
+    "owner": "Misc14/Wrap.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc14/Wrap.cpp": "ebd9b7b83f3e45c9465489250a26809be5c4a1d5d33a1ff6ded823e91fafbd83"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "ToWorld",
+      "address": 4261360,
+      "returned": "MoveMatrix",
+      "argument": "MoveMatrix",
+      "return_bytes": 64
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorld@MoveSurface@@QAE?AUMoveVector@@ABU2@@Z": {
+    "address": "0040f850",
+    "target": "?Get@Holder3@@QAE?AUPart@@H@Z",
+    "owner": "Misc18/Getter.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc18/Getter.cpp": "4b67416b952740116967ee6a2ee3cc3778adec9740ecb0094d5de95ef91f59a8"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "ToWorld",
+      "address": 4257872,
+      "returned": "MoveVector",
+      "argument": "MoveVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?ToWorldBefore@MoveSurface@@QAE?AUMoveVector@@ABU2@@Z": {
+    "address": "004128a0",
+    "target": "?ToWorldBefore@InstancedSurface@@QAE?AUVector3f@@ABU2@@Z",
+    "owner": "NavMesh/ToWorldBefore.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "NavMesh/ToWorldBefore.cpp": "5ff2a36870f1f17623c43a3d099eb0a8dd8e5153f06a7185f440c609304f2f4b"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "ToWorldBefore",
+      "address": 4270240,
+      "returned": "MoveVector",
+      "argument": "MoveVector",
+      "return_bytes": 12
+    },
+    "abi": "ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?TypeFilter@FlightSurface@@QAEPBHXZ": {
+    "address": "0040c6d0",
+    "target": "?Forward0@Holder@@QAEXXZ",
+    "owner": "Misc3/Lists.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc3/Lists.cpp": "15a61bfb51a8e4b54efe382e84a33ccbe00c3d9209a6f2ed3382170e2d101a12"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "TypeFilter",
+      "address": 4245200,
+      "returned": "const int *",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?TypeFilter@MoveSurface@@QAEPBHXZ": {
+    "address": "0040c6d0",
+    "target": "?Forward0@Holder@@QAEXXZ",
+    "owner": "Misc3/Lists.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "Misc3/Lists.cpp": "15a61bfb51a8e4b54efe382e84a33ccbe00c3d9209a6f2ed3382170e2d101a12"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "TypeFilter",
+      "address": 4245200,
+      "returned": "const int *",
+      "argument": null,
+      "return_bytes": null
+    },
+    "abi": "ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?WasNear@FlightSurface@@QAEHABUFlightVector@@@Z": {
+    "address": "0040c7b0",
+    "target": "?WasNear@PreviousNearSurface@@QAEHABUPreviousNearVector@@@Z",
+    "owner": "NavSurface/WasNear.cpp",
+    "declaration_sha256": {
+      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+    },
+    "referring_sources": [
+      "NavSurface/FlightHits.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "NavSurface/WasNear.cpp": "4dc0258f3ddf33294ff3b9280160bcf7e80fb48f28c9d8e4cd694c4198db2b83"
+    },
+    "signature": {
+      "typename": "FlightSurface",
+      "method": "WasNear",
+      "address": 4245424,
+      "returned": "int",
+      "argument": "FlightVector",
+      "return_bytes": null
+    },
+    "abi": "ECX=this, const-reference argument, RET 4, int EAX; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  },
+  "?WasNear@MoveSurface@@QAEHABUMoveVector@@@Z": {
+    "address": "0040c7b0",
+    "target": "?WasNear@PreviousNearSurface@@QAEHABUPreviousNearVector@@@Z",
+    "owner": "NavSurface/WasNear.cpp",
+    "declaration_sha256": {
+      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+    },
+    "referring_sources": [
+      "NavSurface/MoveAlong.cpp"
+    ],
+    "owner_object_without_timestamp_sha256": {
+      "NavSurface/WasNear.cpp": "4dc0258f3ddf33294ff3b9280160bcf7e80fb48f28c9d8e4cd694c4198db2b83"
+    },
+    "signature": {
+      "typename": "MoveSurface",
+      "method": "WasNear",
+      "address": 4245424,
+      "returned": "int",
+      "argument": "MoveVector",
+      "return_bytes": null
+    },
+    "abi": "ECX=this, const-reference argument, RET 4, int EAX; no this adjustment",
+    "layout": "surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.",
+    "reason": "Reviewed declaration, address and ABI; every selectable owner matches the complete original body. Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it."
+  }
+}

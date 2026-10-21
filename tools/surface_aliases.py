@@ -24,6 +24,11 @@ OWNERS = {
     0x410660: ('?Get@Holder4@@QAE?AUPart@@H@Z', 'Misc18/Getter.cpp'),
     0x4128a0: ('?ToWorldBefore@InstancedSurface@@QAE?AUVector3f@@ABU2@@Z', 'NavMesh/ToWorldBefore.cpp'),
     0x4110b0: ('?GetB@Source@@QAE?AUItem@@H@Z', 'Misc14/Wrap.cpp'),
+    0x40f610: ('?Find@Holder7@@QAEHPAH@Z', 'Fn40f610/F.cpp'),
+    0x40f770: ('?Find@Holder8@@QAEHPAH@Z', 'Fn40f610/F.cpp'),
+    0x40f8d0: ('?Find@Holder9@@QAEHPAH@Z', 'Fn40f610/F.cpp'),
+    0x40f9b0: ('?Find@HolderS@@QAE?AVString@@PAH@Z', 'Fn40f610/F.cpp'),
+    0x412bf0: ('?FaceOf@NavSurfaceList@@QAEPAUInstancedSurface@@PBUContact@@@Z', 'NavSurface/NavSurfaceList.cpp'),
 }
 
 
@@ -57,6 +62,20 @@ def bindings():
     add('NearSurfaceInstance', 'GetSurface', 'QAEPAUNearSurfaceData@@XZ', 0x40c6b0, 'NearSurfaceData *')
     for cls, typ in (('PlacementFace', 'PlacementMatrix'), ('SurfaceFace', 'Matrix16')):
         add(cls, 'Relative', 'QAE?AU' + typ + '@@ABU2@@Z', 0x4110b0, typ, typ, 64)
+    def query(cls, method, returned, contact, address, suffix, size=None, const=False):
+        add(cls, method, suffix, address, returned, contact, size)
+        result['?' + method + '@' + cls + '@@' + suffix].update(
+            argument_mode='pointer', argument_const=const, family='navigation-query')
+    query('NavSurfaces', 'Bounces', 'int', 'Contact', 0x40f610, 'QAEHPAUContact@@@Z')
+    query('NavSurfaces', 'IsSlippery', 'int', 'Contact', 0x40f770, 'QAEHPBUContact@@@Z', const=True)
+    for contact in ('Contact', 'MoveContact'):
+        query('NavSurfaces', 'FlyThrough', 'int', contact, 0x40f8d0, 'QAEHPAU' + contact + '@@@Z')
+        query('NavSurfaces', 'ActivateScript', 'String', contact, 0x40f9b0,
+              'QAE?AVString@@PAU' + contact + '@@@Z', 4)
+    query('FlightSurfaces', 'FlyThrough', 'int', 'FlightContact', 0x40f8d0, 'QAEHPAUFlightContact@@@Z')
+    query('NavSurfaces', 'FaceOf', 'SurfaceFace *', 'Contact', 0x412bf0, 'QAEPAUSurfaceFace@@PAUContact@@@Z')
+    query('PlacementSurfaces', 'FaceOf', 'PlacementFace *', 'Contact', 0x412bf0,
+          'QAEPAUPlacementFace@@PBUContact@@@Z', const=True)
     return result
 
 
@@ -73,13 +92,19 @@ def declaration(text, spec):
     returned = re.escape(spec['returned']).replace(r'\ ', r'\s*')
     argument = (r'const\s+' + re.escape(spec['argument']) + r'\s*&\s*\w*'
                 if spec['argument'] else '')
+    if spec.get('argument_mode') == 'pointer':
+        argument = (r'const\s+' if spec['argument_const'] else '') + re.escape(spec['argument']) + r'\s*\*\s*\w*'
+    elif spec.get('argument_mode') == 'value':
+        argument = re.escape(spec['argument']) + r'\s+\w+'
     pattern = (r'\b' + returned + r'\s*' + re.escape(spec['method']) +
                r'\s*\(\s*' + argument + r'\s*\)\s*;\s*//[^\n]*\b0x([0-9a-fA-F]{6,8})\b')
     found = [int(m[1], 16) for m in re.finditer(pattern, body)]
     return found == [spec['address']]
 
 
-def discover():
+def discover(policy=None, owners=None):
+    policy = bindings() if policy is None else policy
+    owners = OWNERS if owners is None else owners
     units = json.loads((build.OUT / 'units.json').read_text())
     ownership = json.loads((build.OUT / 'ownership.json').read_text())
     exact = json.loads((build.OUT / 'exact-call-candidates.json').read_text())
@@ -96,12 +121,12 @@ def discover():
     read = original_reader()
     fixups = pe_fixups((build.REPO.parent / 'SqueezilsGameFiles/SQZ.EXE').read_bytes(), read)
     accepted, rejected = {}, {}
-    for alias, spec in sorted(bindings().items()):
+    for alias, spec in sorted(policy.items()):
         if alias not in refs or alias in ownership['definitions']:
             rejected[alias] = 'No exclusively undefined current reference'
             continue
         address = spec['address']; key = '%08x' % address
-        target, owner = OWNERS[address]
+        target, owner = owners[address]
         evidence = {}
         for source in sorted(refs[alias]):
             files = [p for p in source_files(source) if declaration(p.read_text(errors='replace'), spec)]
@@ -126,12 +151,23 @@ def discover():
             if ownership['symbol_addresses'][target] != [key] and sections[defs[0]['section']]['relocations']:
                 raise ValueError('Multi-address owner has relocations: ' + alias)
             hashes[source] = object_digest(raw)
+        abi = ('ECX=this, hidden return buffer plus const-reference argument, RET 8, EAX=return buffer'
+               if spec['return_bytes'] else 'ECX=this, const-reference argument, RET 4, int EAX'
+               if spec['argument'] else 'ECX=this, no stack arguments, scalar/pointer EAX, RET or tail jump')
+        layout = ('surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; '
+                  'type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.')
+        if spec.get('family') == 'navigation-query':
+            abi = ('ECX=this; hidden caller-owned String buffer plus contact pointer; RET 8; EAX=buffer'
+                   if spec['return_bytes'] else 'ECX=this; one contact pointer; RET 4; scalar/pointer EAX')
+            layout = ('Contact face/second +0/+4, matrix +8; instance Array +134, registry +16c; '
+                      'Bounces/IsSlippery/FlyThrough entry values +4/+8/+c; String is one four-byte rep pointer; '
+                      'FaceOf reads contact face at +0 and dispatches instance Get. No this adjustment.')
+        if spec.get('family') == 'application':
+            abi, layout = spec['abi'], spec['layout']
         accepted[alias] = dict(address=key, target=target, owner=owner, declaration_sha256=evidence,
             referring_sources=sorted(refs[alias]), owner_object_without_timestamp_sha256=hashes,
-            signature=spec, abi='thiscall; ECX unchanged; zero args and EAX scalar/pointer, or one four-byte reference; '
-                'nontrivial vector/matrix return uses caller-owned hidden buffer and RET 8; no this adjustment.',
-            layout='surface pointer +0; current matrix/identity +4/+44; previous +48/+88; dirty/result +8c/+90; '
-                'type filter virtual tail call via member +c8 slot +10; positions +dc/+e8; vector 12/matrix 64 bytes.',
+            signature=spec, abi=abi + '; no this adjustment',
+            layout=layout,
             reason='Reviewed declaration, address and ABI; every selectable owner matches the complete original body. '
                 'Forwarding wrappers pass the return buffer unchanged; local Item/Part spellings do not allocate or copy it.')
     return dict(accepted=accepted, rejected=rejected)

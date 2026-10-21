@@ -100,7 +100,7 @@ def verify_qv_library():
     return hashlib.sha256(raw).hexdigest()
 
 
-def project(raw, names):
+def project(raw, names, data_names=()):
     b = bytearray(raw)
     _, ns, _, sp, count, opt, _ = struct.unpack_from("<HHIIIHH", b)
     st = sp + count * 18
@@ -133,8 +133,14 @@ def project(raw, names):
         removed.update(more)
     for p, name, val, section, storage, aux in symbols.values():
         if section in removed and storage == 2:
-            if name not in names or val != 0 or aux:
+            if name not in names or (val != 0 and name not in data_names) or aux:
                 raise ValueError("Unexpected additional external definition in removed section: " + name)
+            if name in data_names:
+                header = 20 + opt + (section - 1) * 40
+                size = struct.unpack_from('<I', b, header + 16)[0]
+                flags = struct.unpack_from('<I', b, header + 36)[0]
+                if flags & 0x20 or val >= size:
+                    raise ValueError('Reviewed data symbol has code/out-of-section value: ' + name)
             struct.pack_into("<Ih", b, p + 8, 0, 0)
         elif section in removed and storage == 3 and aux and name.startswith("."):
             # A removed section is no longer a COMDAT: its leading external
@@ -168,6 +174,14 @@ def project(raw, names):
 def run():
     report = json.loads((build.OUT / "ownership.json").read_text())
     units = json.loads((build.OUT / "units.json").read_text())
+    data_policy = {}
+    if (build.REPO / 'tools/id_list_registry.json').exists():
+        from id_list_ownership import reviewed as reviewed_id_list
+        decisions = reviewed_id_list()
+        for decision in decisions.values():
+            for name, proof in decision['vtable_policy'].items():
+                data_policy[name] = (proof['address'], proof['owner'])
+    active_policy = dict(POLICY, **data_policy)
     qv_hash = verify_qv_library()
     from qv_name_ownership import reviewed
     name_registry = reviewed()
@@ -207,7 +221,7 @@ def run():
             rsp = rsp.replace(line, "")
             excluded.append(source)
             continue
-        names = {name for name, (_, owner) in POLICY.items()
+        names = {name for name, (_, owner) in active_policy.items()
                  if source != owner and source in report["definitions"].get(name, [])}
         names.update(name for name in qv_policy
                      if source in report["definitions"].get(name, []))
@@ -215,7 +229,7 @@ def run():
             continue
         original = pathlib.Path(unit["object"])
         projected = destination / ("%04d_%s.obj" % (index, pathlib.Path(source).stem))
-        data, removed = project(original.read_bytes(), names)
+        data, removed = project(original.read_bytes(), names, set(names) & set(data_policy))
         from project_dead_externals import retire
         data, retired = retire(original.read_bytes(), data, removed)
         projected.write_bytes(data)
@@ -242,9 +256,9 @@ def run():
             continue
         path = projected_by_source.get(unit["source"], pathlib.Path(unit["object"]))
         for name, kind in build.coff_symbols(path):
-            if name in dict(POLICY, **qv_policy) and kind != "undefined":
+            if name in dict(active_policy, **qv_policy) and kind != "undefined":
                 owners[name].append(unit["source"])
-    for name, (_, owner) in POLICY.items():
+    for name, (_, owner) in active_policy.items():
         if owners[name] != [owner]:
             raise ValueError("Projected collection does not have exactly its canonical owner: " + name)
     for name in qv_policy:
@@ -256,7 +270,8 @@ def run():
     import verify_eh_projection
     verify_eh_projection.main()
     (destination / "link.rsp").write_text(rsp, encoding="ascii")
-    summary = dict(diagnostic_only=True, policy=POLICY, qv_policy=qv_policy,
+    summary = dict(diagnostic_only=True, policy=active_policy, qv_policy=qv_policy,
+                   reviewed_data_policy=data_policy,
                    reviewed_qv_name_ownership=name_registry,
                    reviewed_qv_input_ownership=input_registry,
                    reviewed_qv_node_ownership=node_registry,

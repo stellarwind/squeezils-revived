@@ -101,7 +101,18 @@ struct Land { const char *GetPlaceName(int index);       // 0x41e8c0
               virtual Possessions *Lend(int id); };      // slot 10 (+0x28)
 Land *GetLand();                                         // 0x420680
 struct NavSurfaceList { void LoadGround(IniReader *ini); };   // 0x40e480
-struct Application { char pad[0x18]; void *playerInput; void *cameraInput; char pad2[0x78 - 0x20]; int hasInput; char pad3[0xb4 - 0x7c]; int flag; void SetInputMode(int m); void SetFlag(); };   // 0x43b980 / 0x43aa10
+// Application local field view.
+struct Application {
+    char pad[0x18];
+    void *playerInput; // 0x18
+    void *cameraInput; // 0x1c
+    char pad2[0x78 - 0x20];
+    int hasInput; // 0x78
+    char pad3[0xb4 - 0x7c];
+    int flag; // 0xb4
+    void SetInputMode(int m); // 0x43b980
+    void SetFlag(); // 0x43aa10: set the application flag at +0xb4
+};
 Application *GetApplication();                           // 0x4206b0
 struct Panel { void ShowStatus(int n); void Update(int n); };   // 0x42dac0 / 0x42db10
 Panel *GetPanel();                                       // 0x4206c0

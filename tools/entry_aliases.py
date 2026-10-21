@@ -152,6 +152,42 @@ def main():
             pairs.append((alias, decision['target']))
             evidence.append(dict(alias=alias, activity_decision=decision))
         pairs.sort()
+    surface_registry = build.REPO / 'tools/surface_registry.json'
+    if surface_registry.exists():
+        from surface_aliases import discover as discover_surfaces
+        surfaces = discover_surfaces()
+        (build.OUT / 'surface-candidates.json').write_text(json.dumps(surfaces, indent=2))
+        for alias, decision in json.loads(surface_registry.read_text()).items():
+            if surfaces['accepted'].get(alias) != decision:
+                raise ValueError('Surface interface proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate surface interface alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, surface_decision=decision))
+        pairs.sort()
+    application_registry = build.REPO / 'tools/application_registry.json'
+    if application_registry.exists():
+        from application_aliases import discover as discover_application
+        application = discover_application()
+        (build.OUT / 'application-candidates.json').write_text(json.dumps(application, indent=2))
+        for alias, decision in json.loads(application_registry.read_text()).items():
+            if application['accepted'].get(alias) != decision:
+                raise ValueError('Application interface proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate application interface alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, application_decision=decision))
+        pairs.sort()
+    if (build.REPO / 'tools/id_list_registry.json').exists():
+        from id_list_ownership import reviewed as reviewed_id_list
+        decisions = reviewed_id_list()
+        (build.OUT / 'id-list-candidates.json').write_text(json.dumps(dict(accepted=decisions, rejected={}), indent=2))
+        for alias, decision in decisions.items():
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate ID-list alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, id_list_decision=decision))
+        pairs.sort()
     write_coff(pairs, build.OUT / "entry_alias.obj")
     (build.OUT / "entry_alias.json").write_text(json.dumps(dict(
         aliases=pairs, evidence=evidence, skipped=skipped,

@@ -150,7 +150,7 @@
     },
     "declaration_sha256": {
       "Fn44b2e0/F.cpp": "d1f477eaea32848023de45d1b5e1995846551f5da8edd5e32ce3c2fad06ae9db",
-      "Sim2/PlaceStart.cpp": "d14a0050c6fe497c1e4c5e214426161cda1307c93d6e974fde824ea7c4244038",
+      "Sim2/PlaceStart.cpp": "3e90accb8151831130527284b07d59c1ef4c4361839ae6d0eea4a2f57a55ca91",
       "SqueezilBody/Place.cpp": "f94c1cc83e472b4d89aa322321f1271754b0c42dd90950a510e1e70561d57346"
     },
     "owner_object_without_timestamp_sha256": {
@@ -288,7 +288,7 @@
     "declaration_sha256": {
       "Activity/TurnStep.cpp": "d2769be42ab47fe88713d2f386ce00f90f1b40eb40ed8de3677ae04f244518f6",
       "Fn44b2e0/F.cpp": "d1f477eaea32848023de45d1b5e1995846551f5da8edd5e32ce3c2fad06ae9db",
-      "Sim2/PlaceStart.cpp": "d14a0050c6fe497c1e4c5e214426161cda1307c93d6e974fde824ea7c4244038",
+      "Sim2/PlaceStart.cpp": "3e90accb8151831130527284b07d59c1ef4c4361839ae6d0eea4a2f57a55ca91",
       "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a",
       "SqueezilSoul/Ground.cpp": "a041d398aa97418780ac95277ec8a4aca4dc1fcc83be66e3daf1cefaf33db30b",
       "SqueezilSoul/MoveGround.cpp": "90ecfe9a06a3acc0a7ad190f92b3cbe251b36bbdf7e2854b589e97330057ad4a",
