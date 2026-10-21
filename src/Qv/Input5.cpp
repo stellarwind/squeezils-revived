@@ -1,7 +1,8 @@
 // QvLib string token reader (0x4811d0): optionally quoted, backslash-escaped quote, read in chunks of 255 characters.
 #include <stdio.h>
 #include <ctype.h>
-struct QvStrA { char *data; int a, b; void Reset(int n); void Append(char *s); };     // 0x482810 / 0x482960
+// SIZE 0x28: data +0, capacity +4, inline buffer +8.
+struct QvStrA { char *data; int a; char buf[32]; void Reset(int n); void Append(char *s); }; // 0x482810 / 0x482960
 class QvIn5 {
 public:
     int pad0;

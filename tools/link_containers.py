@@ -143,7 +143,19 @@ def run():
     report = json.loads((build.OUT / "ownership.json").read_text())
     units = json.loads((build.OUT / "units.json").read_text())
     qv_hash = verify_qv_library()
-    for name, (address, owner) in dict(POLICY, **QV_POLICY).items():
+    from qv_name_ownership import reviewed
+    name_registry = reviewed()
+    from qv_input_ownership import reviewed as reviewed_input
+    input_registry = reviewed_input()
+    from qv_node_ownership import reviewed as reviewed_nodes
+    node_registry = reviewed_nodes()
+    qv_policy = dict(QV_POLICY)
+    for alias, decision in dict(name_registry, **input_registry, **node_registry).items():
+        if decision['loose_owners']:
+            if len(decision['loose_owners']) != 1:
+                raise ValueError('Ambiguous loose Qv owner: ' + alias)
+            qv_policy[alias] = (decision['address'], decision['loose_owners'][0])
+    for name, (address, owner) in dict(POLICY, **qv_policy).items():
         if report["symbol_addresses"].get(name) != [address]:
             raise ValueError("Address identity is not unique: " + name)
         if not any(e["symbol"] == name and e["source"] == owner
@@ -171,7 +183,7 @@ def run():
             continue
         names = {name for name, (_, owner) in POLICY.items()
                  if source != owner and source in report["definitions"].get(name, [])}
-        names.update(name for name in QV_POLICY
+        names.update(name for name in qv_policy
                      if source in report["definitions"].get(name, []))
         if not names:
             continue
@@ -201,12 +213,12 @@ def run():
             continue
         path = projected_by_source.get(unit["source"], pathlib.Path(unit["object"]))
         for name, kind in build.coff_symbols(path):
-            if name in dict(POLICY, **QV_POLICY) and kind != "undefined":
+            if name in dict(POLICY, **qv_policy) and kind != "undefined":
                 owners[name].append(unit["source"])
     for name, (_, owner) in POLICY.items():
         if owners[name] != [owner]:
             raise ValueError("Projected collection does not have exactly its canonical owner: " + name)
-    for name in QV_POLICY:
+    for name in qv_policy:
         if owners[name]:
             raise ValueError("Loose definition still competes with QvLib: " + name)
         owners[name] = ["qvlib/obj/QvLib.lib(QvLib.obj)"]
@@ -215,7 +227,10 @@ def run():
     import verify_eh_projection
     verify_eh_projection.main()
     (destination / "link.rsp").write_text(rsp, encoding="ascii")
-    summary = dict(diagnostic_only=True, policy=POLICY, qv_policy=QV_POLICY,
+    summary = dict(diagnostic_only=True, policy=POLICY, qv_policy=qv_policy,
+                   reviewed_qv_name_ownership=name_registry,
+                   reviewed_qv_input_ownership=input_registry,
+                   reviewed_qv_node_ownership=node_registry,
                    qv_object_sha256=qv_hash, excluded_sources=excluded, modified_objects=len(changed),
                    removed_duplicate_definitions=dict(totals), verified_owners=dict(owners), objects=changed)
     (destination / "projection.json").write_text(json.dumps(summary, indent=2))

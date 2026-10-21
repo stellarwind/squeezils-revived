@@ -4,7 +4,7 @@ struct QvEntryC { char *str; };
 struct QvNameC { QvEntryC *e; };
 struct QvNodeC { int dummy; };
 struct QvStrC {
-    char *data; int cap; char buf[28];
+    char *data; int cap; char buf[32]; // SIZE 0x28; data +0, cap +4, buf +8
     QvStrC() { data = buf; }
     ~QvStrC();                                           // 0x482730
 };

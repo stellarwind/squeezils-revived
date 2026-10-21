@@ -3,7 +3,7 @@
 struct QvName { void *p; QvName(); ~QvName(); QvName(void *x) { p = x; } };   // 0x482560 / 0x47ec60
 void *QvIntern(const char *s);                                                // 0x482390
 struct QvStrLocal {
-    char *data; int pad; char buf[28];
+    char *data; int pad; char buf[32]; // SIZE 0x28; data +0, cap +4, buf +8
     QvStrLocal() { data = buf; buf[0] = 0; }
     ~QvStrLocal();                                                            // 0x482730
 };

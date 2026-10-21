@@ -108,6 +108,27 @@ def main():
                 raise ValueError('Exact Qv caller/library proof changed; review registry: ' + alias)
             pairs.append((alias, decision['target']))
             evidence.append(dict(alias=alias, exact_call_decision=decision))
+    from qv_name_ownership import reviewed
+    name_registry = reviewed()
+    for alias, decision in name_registry.items():
+        if alias in {a for a, _ in pairs}:
+            raise ValueError('Overlapping reviewed Qv alias: ' + alias)
+        pairs.append((alias, decision['target']))
+        evidence.append(dict(alias=alias, reviewed_name_decision=decision))
+    from qv_input_ownership import reviewed as reviewed_input
+    input_registry = reviewed_input()
+    for alias, decision in input_registry.items():
+        if alias in {a for a, _ in pairs}:
+            raise ValueError('Overlapping reviewed Qv input alias: ' + alias)
+        pairs.append((alias, decision['target']))
+        evidence.append(dict(alias=alias, reviewed_input_decision=decision))
+    from qv_node_ownership import reviewed as reviewed_nodes
+    node_registry = reviewed_nodes()
+    for alias, decision in node_registry.items():
+        if alias in {a for a, _ in pairs}:
+            raise ValueError('Overlapping reviewed Qv node alias: ' + alias)
+        pairs.append((alias, decision['target']))
+        evidence.append(dict(alias=alias, reviewed_node_decision=decision))
     pairs.sort()
     write_coff(pairs, build.OUT / "qv_alias.obj")
     (build.OUT / "qv_alias.json").write_text(json.dumps(dict(

@@ -1,6 +1,7 @@
 // QvLib input stream (0x481050-0x4811a0): constructor, character reader with push-back string, and the skip-blanks-then-read wrapper.
 #include <stdio.h>
-struct QvStrA { char *data; int a, b; void Reset(int n); ~QvStrA(); };    // 0x482810 / 0x482730
+// SIZE 0x28: data +0x00, capacity +0x04, inline storage +0x08.
+struct QvStrA { char *data; int a; char buf[32]; void Reset(int n); ~QvStrA(); }; // 0x482810 / 0x482730
 struct QvStrB { char b[8]; ~QvStrB(); };                                  // 0x4821c0
 class QvIn3 {
 public:
@@ -18,7 +19,6 @@ public:
     int flag10;                    // +0x10
     QvStrB tmp;                    // +0x14
     QvStrA text;                   // +0x1c  (push-back / in-memory text)
-    char padding[0x44 - 0x28];
     int pos;                       // +0x44
 };
 void QvIn3::Init(FILE *f)

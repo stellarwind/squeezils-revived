@@ -1,9 +1,9 @@
 // QvLib name interning (0x482390) with its hash (0x4827e0) and the small-string helpers (0x482730 dtor, 0x482810 Reset).
 #include <string.h>
 struct QvStrS {
-    char *data;                       // points to buf while the string is short
-    int pad;
-    char buf[8];
+    char *data;                       // 0x00: points to buf while short
+    int pad;                          // 0x04: capacity
+    char buf[32];                     // 0x08; SIZE 0x28
     ~QvStrS();                        // 0x482730 (data != this+8 -> delete)
     void Reset(int freeIt);           // 0x482810
 };

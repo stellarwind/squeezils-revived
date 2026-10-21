@@ -1,6 +1,6 @@
 # Building the reconstructed SQZ executable
 
-**Latest restart point (2026-10-21):** full pipeline `954d8d0a-c5a3-49b3-a8e6-55c388d20d20`; 1,141/1,141 sources compile, zero duplicate errors, 1,695 unresolved symbols. EXE not linked. Audio-volume ownership fix and user-requested stopping point are recorded in the final section.
+**Latest restart point (2026-10-21):** full pipeline `0f43fb42-f3f6-4025-817d-32e729570319`; 1,141/1,141 sources compile, zero duplicate errors, 1,504 unresolved symbols. EXE not linked. Canonical Qv input/name-registry/dictionary ownership is recorded in the final section.
 
 This guide explains the integration plan, the first full-build probe, and what
 each step teaches us. It targets a working VC++ 4.1 executable first. Matching
@@ -1649,3 +1649,256 @@ linking on stale registry evidence; the registry was refreshed and this final
 full pipeline completed. The EXE does not link; cached binary provenance remains
 incomplete and gameplay is untested. Resume from this guide, pipeline-summary.json
 and owner-clusters.json, using the standard integration_pipeline.py driver.
+
+## Global getter declaration/ABI family (2026-10-21)
+
+Registered 24 missing typed getter spellings used by 61 loose-object references
+against the existing Globals/Globals.cpp implementations. global_getter_aliases.py
+discovers candidates from current object references, requires the matching
+zero-argument cdecl object-pointer decoration and address-annotated declaration
+in every referring translation unit or its local headers, and checks available
+exact original direct-call destinations for disagreement. Canonical getter
+ownership, the complete original mov eax,[slot]; ret body, its global relocation,
+and the extracted shared pointer storage must agree. entry_aliases.py revalidates
+the tracked full-decorated-name global_getter_registry.json on each run and rejects
+changed decisions or overlapping aliases. No callable code, storage, source
+declarations or target maps changed. This proves getter binding, not every local
+class layout used after dereferencing the returned pointer.
+
+Five new tests cover declaration identity, conflicting addresses, argument and
+calling-convention rejection, local includes, cycles and source-root boundaries.
+All 53 integration tests pass. STATUS.md and HANDOFF.md remain unchanged; work
+is uncommitted and unpushed.
+
+Authoritative full pipeline 3fa1621b-d108-42db-9d97-35bac874afc1 compiles
+1,141/1,141 sources with no failures or omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,104 LNK2001 messages, 1,671 unique unresolved symbols, no internal linker error.
+This supersedes 954d8d0a-c5a3-49b3-a8e6-55c388d20d20 (0/2,165/1,695),
+24 fewer symbols for the equivalent source set. Remaining clusters: Qv 114,
+container templates 43, ordinary-other 1,514. The EXE does not link; cached binary
+provenance remains incomplete and gameplay is untested. Next bounded block:
+review a remaining ordinary-method family or the simulation setter spellings;
+setter aliases were deliberately excluded from this six-getter family.
+
+## Empty vector/matrix lifetime family (2026-10-21)
+
+math_lifetime_aliases.py discovers complete nonvirtual zero-argument thiscall
+destructor references from current compiled objects. Every referring translation
+unit must contain an explicit annotated destructor declaration at one of the two
+reviewed original math destructor entries, directly or through local headers.
+All such annotations and available exact original direct-call destinations must
+agree. The original owner and every selectable current canonical definition must
+be exactly the relocation-free single RET instruction at 0x401660 (vector) or
+0x402310 (matrix). This does not generalize matching RET bytes into identity:
+the explicit address evidence and destructor ABI are required independently.
+The no-op body neither reads object fields nor adjusts this; no class-layout
+equivalence for other methods is asserted.
+
+The tracked full-name math_lifetime_registry.json records 46 reviewed aliases
+across 66 loose-object references. entry_aliases.py revalidates each decision
+on every pipeline run and rejects changed evidence or overlapping aliases.
+Names with missing annotations, differing original destinations, or other
+destructor entries are withheld. Part and Item remain unresolved: current
+evidence already shows their local spellings cover different original entries.
+Do not bind either name wholesale to an empty destructor. No callable adapter,
+new storage, source declaration or target map changed. Five new tests cover
+annotation identity, the complete/nonvirtual destructor ABI, missing/conflicting
+identity, changed original call destinations, and changed canonical machine code.
+All 58 integration tests pass. STATUS.md and HANDOFF.md remain unchanged; all
+changes remain uncommitted and unpushed.
+
+Authoritative full pipeline d866118b-1dc2-4221-8886-e1a1b60ebdf1 compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,038 LNK2001 messages, 1,625 unique unresolved symbols, no internal linker error.
+This supersedes 3fa1621b-d108-42db-9d97-35bac874afc1 (0/2,104/1,671),
+46 fewer symbols for equivalent source inputs. Remaining clusters: Qv 114,
+container templates 43, ordinary-other 1,468. The EXE does not link; cached binary
+provenance remains incomplete and gameplay is untested. Next bounded family:
+remaining vector arithmetic/matrix methods, or split the conflicting Part local
+type identity before attempting its destructor binding.
+
+## Vector arithmetic ABI family (2026-10-21)
+
+vector_aliases.py and the tracked full-decorated-name vector_registry.json bind
+38 current arithmetic spellings across 65 loose-object references to the existing
+Vector3f and DVec implementations. The fixed operation table covers vector
+add/subtract, scalar multiply/divide, Cross, Length, LengthSq and Normalize; only
+matching decorated thiscall argument/result forms qualify. Source evidence in
+every referring translation unit or its local headers must establish an unbased,
+nonvirtual, nontrivial vector with exactly float x/y/z fields in that order and an
+explicit original method address. Inline method bodies are elided conservatively;
+function-pointer fields, extra or reordered fields and unsupported declarations
+are rejected. Compact annotations require matching declaration/address counts or
+a named method tag. Complete class-definition hashes and per-source annotation
+evidence are retained. Available exact original direct-call destinations must
+also agree. entry_aliases.py revalidates registered decisions on each run.
+
+All selectable canonical methods must have the unique original-address owner and
+the complete exact original body outside COFF relocations. A fresh Vector3f
+matching run scores all 11 targets zero, and the separate DVec division target
+also scores zero (vector-arithmetic-match.log and vector-division-match.log).
+Canonical method externals remain owned by Vector3f/Vector3fLength.cpp (Length),
+the existing CRT (sqrt), and existing compiler/extracted constant ownership.
+No source declarations, target maps, callable adapters or data storage changed.
+
+Three remaining operation candidates are withheld: BridgeVec::Cross is explicitly
+annotated at 0x437360 rather than canonical Cross at 0x41a350; FaceVec subtract
+and Cross have an inline Dot helper beyond the restricted declaration parser.
+Vector copy constructors and the unannotated V3 default constructor are outside
+this arithmetic batch. Five new tests cover plain nontrivial layouts, bad fields
+including function pointers/initializers, inheritance/virtual/trivial-return
+rejection, compact/named/ambiguous address annotations and decorated ABI limits.
+The first test pass caught a too-strict reference-return declaration regex; it
+was fixed before the full pipeline ran. All 63 integration tests now pass.
+STATUS.md and HANDOFF.md remain unchanged; work is uncommitted and unpushed.
+
+Authoritative full pipeline 2b1858f3-ecff-4efa-af6e-2d88238a79ff compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+1,973 LNK2001 messages, 1,587 unique unresolved symbols, no internal linker error.
+This supersedes d866118b-1dc2-4221-8886-e1a1b60ebdf1 (0/2,038/1,625),
+38 fewer symbols for equivalent source inputs. Remaining clusters: Qv 114,
+container templates 43, ordinary-other 1,430. The EXE does not link; cached binary
+provenance remains incomplete and gameplay is untested. Next bounded family:
+matrix methods or source identity conflicts such as Part; do not infer the
+BridgeVec Cross destination solely from its operation name.
+
+## Affine matrix methods completed (2026-10-21)
+
+matrix_aliases.py, matrix_registry.json and entry_aliases.py now bind and
+revalidate 36 affine-method spellings: translation setters, X/Y/Z rotation
+setters, SetRows and Orthonormalize. Every referring unit supplies explicit
+method-address evidence and compatible 64-byte matrix and x/y/z vector-reference
+layouts. A sole contained matrix aggregate at offset zero is proved recursively
+(CamMatData); cycles, extra fields, function-pointer fields, inheritance and
+virtual layouts are rejected. Canonical methods have their existing unique
+owners. Reference/pointer arguments have the same machine ABI; void callers may
+discard the canonical this pointer returned in EAX. No hidden-result adaptation
+is accepted. Five new boundary tests bring the suite to 68 passing tests.
+
+Full pipeline 74d627d7-09e3-469e-86a9-654379d50a4c compiled all 1,141 sources,
+completed projection/link/classification with unchanged snapshot-covered inputs,
+zero LNK2005, 1,929 LNK2001 messages and 1,551 unique unresolved symbols. This
+superseded 2b1858f3-ecff-4efa-af6e-2d88238a79ff (0/1,973/1,587): 36 fewer
+missing names. The matrix batch was reported before starting the Qv family.
+Matrix multiplication and copy routines are outside this affine-method batch;
+do not spend effort on their byte matching merely to establish ABI ownership.
+
+## Canonical Qv string/name/intern ownership (2026-10-21)
+
+qv_name_ownership.py and qv_name_registry.json record 30 reviewed bindings to
+QvLib/LIBC. qv_aliases.py emits them and link_containers.py projects nine local
+COMDAT implementations into external references to the canonical library owners.
+The scoring sources remain available. Every decision records the full decorated
+name, original entry, ABI review, current loose owners and referring-source hashes;
+changed evidence fails revalidation. Functional upstream implementations are
+accepted without a zero-score gate. No callable adapters or copied state were
+introduced. The original insert body is not required to be byte-exact against the
+current unity object, which failed that unnecessary initial proof attempt.
+
+The three g_nameBuckets/g_nameTable/g_arena spellings now reference QvNameEntry's
+canonical nameTableSize/nameTable/chunk storage. Complete exact original local
+initializer operand evidence proves slots 0x4c8870/0x4c8868/0x4c886c; canonical
+initializer relocations independently confirm it uses those three library-owned
+symbols. Mixed interning interfaces therefore share entry pointer identity and
+arena/table state. QvLib's POSIX C spelling _strdup and the local QvStrdup spelling
+both bind to VC4 LIBC's actual __strdup export, verified in the library inventory.
+The original 0x49bd70 body is the malloc/strlen/strcpy strdup routine.
+
+Corrected allocated/local small-string storage in Input3.cpp, Input5.cpp,
+Input7.cpp, Create.cpp and Intern.cpp to the full 40-byte layout: data +0,
+capacity +4, inline buffer +8 with 32 bytes. Input3's old filler was removed to
+preserve pos at +0x44. Generated QvInfo482840 char[12] declarations are non-owning
+views used only through casts into existing node-field storage; they do not
+allocate 12-byte strings and were not enlarged as node members in this block.
+
+All 71 integration tests pass. qv_name_smoke.sh builds/runs a mixed-interface
+executable against the generated alias object and canonical library: shared
+interned pointers/state, short/4100-byte names, strdup/free, string assignment
+from its own substring, append, reset and adjacent buffer guards all pass. The
+test initially assumed a 31-character assignment stayed inline; the original
+allocates when strlen+1 >= 32, so that expectation was corrected. The existing
+qvlib/test.sh also passes field values, DEF/USE identity and invalid-input rejection.
+Neither smoke executable is the game EXE or a gameplay test.
+
+Authoritative full pipeline b25bf138-ef80-4dcd-8fda-95bf9033d79f compiles
+1,141/1,141 sources without failures or omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+1,900 LNK2001 messages, 1,531 unique unresolved symbols, no internal linker error.
+This supersedes matrix run 74d627d7-09e3-469e-86a9-654379d50a4c
+(0/1,929/1,551), a net 20-symbol reduction; 30 bindings include nine previously
+defined local owners and the newly reachable canonical strdup spelling. It also
+supersedes first Qv pass 2bfb5880-eb21-452d-8f15-77a0ef5e0ac2 with identical
+counts, after the smoke expectation, file-handle cleanup and offset comments.
+Remaining clusters: Qv 95, container templates 43, ordinary-other 1,393.
+
+The EXE still does not link; cached binary provenance remains incomplete and
+gameplay is untested. STATUS.md and HANDOFF.md remain unchanged. Changes are
+uncommitted/unpushed. Next coherent parser family: Qv input/name-registry and
+dictionary interfaces, including canonical QvNode::nameDict storage ownership;
+do not bind its aliases to independent extracted storage merely to reduce counts.
+
+## Canonical Qv input/name-registry/dictionary family (2026-10-21)
+
+qv_input_ownership.py and qv_input_registry.json register 74 full decorated
+spellings discovered from current object definitions/references. A finite reviewed
+ABI table covers input character/token/numeric readers, DEF/USE reference lookup,
+node read/create/factory/skip paths, diagnostics, name registration/removal and
+dictionary operations. Original-address identity fixes semantics independently
+of misleading local method names (GetUInt/GetLong and SetFileName among them).
+Reference/output-pointer parameters carry the same addresses; char/32-bit scalar
+widths, thiscall versus cdecl/variadic cleanup, pointer/EAX versus integer result,
+and no-hidden-result requirements are explicit. Name handles are one pointer;
+dictionary fields/entries and the 72-byte input prefix have reviewed offsets.
+Functional upstream implementations are accepted without byte-score gating.
+
+The projection externalizes 46 local addressed COMDAT implementations and
+verifies their surviving owners. qv_aliases.py binds their spellings to QvLib;
+link_containers.py merges the registry into its existing section/relocation and
+surviving-definition checks. Every decision retains current loose ownership,
+all referring-source hashes and canonical header/source hashes. Ambiguous or
+out-of-family owners and changed evidence fail closed. Scoring sources remain
+available and no source function bodies were rewritten for byte matching.
+
+data_aliases.py transfers ?g_nameDict@@3PAUQvDictN@@A from the extracted slot
+alias to QvLib's ?nameDict@QvNode@@0PAVQvDict@@A. Explicit original instruction
+checks establish the 0x4c4238 test/store operands and 251-bucket allocation in
+0x47e5d0; canonical initializer relocations prove use of the library-owned slot.
+The original extracted alias is recorded under superseded_qv_state_aliases and
+is not emitted alongside the library binding. No independent live name registry
+or callable adapter was added. QvNode::init at 0x47e5d0 needs an explicit entry
+mapping because the Qv score-table parser range begins above that bootstrap.
+
+Version.cpp now includes QvInput8's missing backBufIndex at +0x44 and a compile
+time size check for 0x48 bytes. Previously that local declaration stopped after
+the 40-byte string even though the input initializer uses the index field.
+No other game/source declarations were changed in this family.
+
+All 76 integration tests pass. qv_input_smoke.sh builds and runs against the
+generated qv_alias.obj and canonical QvLib: mixed top-level DEF/USE parsing and
+field values, mixed Register/Lookup, global name-registry lookup, mixed name
+removal/re-addition with canonical destruction, dictionary replacement including
+key 0xffffffff, quoted tokens and subsequent numeric reads pass. The earlier
+mixed string/intern smoke and qvlib/test.sh also pass. These smoke executables
+exercise the alias bindings and shared state; they do not constitute gameplay
+validation of the game EXE. No byte matching was chased for this batch.
+
+Authoritative full pipeline 0f43fb42-f3f6-4025-817d-32e729570319 compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+1,873 LNK2001 messages, 1,504 unique unresolved symbols, no internal linker error.
+This supersedes b25bf138-ef80-4dcd-8fda-95bf9033d79f (0/1,900/1,531),
+27 fewer missing names. The 74 bindings comprise 46 previously defined local
+owners, the already-resolved state alias transferred to its canonical owner,
+and 27 previously missing names. Remaining clusters: Qv 68, container templates
+43, ordinary-other 1,393. The EXE still does not link; cached binary provenance
+remains incomplete and gameplay is untested. STATUS.md and HANDOFF.md remain
+unchanged; work is uncommitted and unpushed.
+
+Next coherent parser family: remaining group/node-base/generated-class interfaces
+and class-owned field metadata from owner-clusters.json. A small projection audit
+found orphan undefined symbol-table entries in replaced Factory/Input4/Parse
+objects, but the sampled orphan names were absent from actual link diagnostics;
+do not assume pruning those names would reduce the remaining count.

@@ -1,0 +1,2202 @@
+{
+  "??0QvC483460@@QAE@XZ": {
+    "address": "00483460",
+    "target": "??0QvTranslation@@QAE@XZ",
+    "canonical_class": "QvTranslation",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC484530@@QAE@XZ": {
+    "address": "00484530",
+    "target": "??0QvSpotLight@@QAE@XZ",
+    "canonical_class": "QvSpotLight",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC484940@@QAE@XZ": {
+    "address": "00484940",
+    "target": "??0QvSphere@@QAE@XZ",
+    "canonical_class": "QvSphere",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485180@@QAE@XZ": {
+    "address": "00485180",
+    "target": "??0QvScale@@QAE@XZ",
+    "canonical_class": "QvScale",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485350@@QAE@XZ": {
+    "address": "00485350",
+    "target": "??0QvRotation@@QAE@XZ",
+    "canonical_class": "QvRotation",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485520@@QAE@XZ": {
+    "address": "00485520",
+    "target": "??0QvPointSet@@QAE@XZ",
+    "canonical_class": "QvPointSet",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485740@@QAE@XZ": {
+    "address": "00485740",
+    "target": "??0QvPointLight@@QAE@XZ",
+    "canonical_class": "QvPointLight",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485a20@@QAE@XZ": {
+    "address": "00485a20",
+    "target": "??0QvPerspectiveCamera@@QAE@XZ",
+    "canonical_class": "QvPerspectiveCamera",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC485d00@@QAE@XZ": {
+    "address": "00485d00",
+    "target": "??0QvOrthographicCamera@@QAE@XZ",
+    "canonical_class": "QvOrthographicCamera",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvC4864b0@@QAE@XZ": {
+    "address": "004864b0",
+    "target": "??0QvMatrixTransform@@QAE@XZ",
+    "canonical_class": "QvMatrixTransform",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Factory.cpp": "74eeb1ff4598124add15f5ad66fcfa1298ade09afe94f9052447b8207415a1e6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvGenericC@@QAE@XZ": {
+    "address": "00482c70",
+    "target": "??0QvUnknownNode@@QAE@XZ",
+    "canonical_class": "QvUnknownNode",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Create.cpp": "9c8feaec15be074af1d96d938fa3fc6351511d44b3cdbd0331dfd820a7e8b8fd"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvGroupBase@@QAE@XZ": {
+    "address": "00481e00",
+    "target": "??0QvGroup@@QAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_482ed0.cpp": "3713aad66d61b30472d5f702c2c4a952523893906278f4f286a817b8c04ce6dc",
+      "Qv/gen/C_483150.cpp": "4e1b7b7153ea95ee5b06dc6da52635d44c0fedf777e4cd899637fd827e4b6a50",
+      "Qv/gen/C_483630.cpp": "7a93f10e36ffd3b2323ea0592f5657064c52d02e1417bc0995d6044941c12b69",
+      "Qv/gen/C_484370.cpp": "131d7e3cae1f47a3ca6296f2dad2e95a38190e54282af7ab20b59d335f33d5c8",
+      "Qv/gen/C_484f30.cpp": "c44cbad32ebaf172430bde9d2e7fcb307ef9226098fcc5eb3316675f2e6968a8",
+      "Qv/gen/C_486d70.cpp": "526c821969354ff832a18c4ebf71f8d91d417c0b119be3ec3f3084d39060e0b5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvGroupBaseU@@QAE@XZ": {
+    "address": "00481e00",
+    "target": "??0QvGroup@@QAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvGroupX@@QAE@XZ": {
+    "address": "00481e00",
+    "target": "??0QvGroup@@QAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [
+      "Qv/Group.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Group.cpp": "3689ab7bb6b4a8cb3b2147eed6085ad20067150bc6e34648ceb9340fd5f02f8c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeB@@QAE@XZ": {
+    "address": "0047e660",
+    "target": "??0QvNode@@QAE@XZ",
+    "canonical_class": "QvNode",
+    "loose_owners": [
+      "Qv/NodeBase.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/NodeBase.cpp": "4ff3625b5673fa55d57920767cd3248a60f88655b4c3fd32cee821a2d4b20b4e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC482ed0@@QAE@XZ": {
+    "address": "00482ed0",
+    "target": "??0QvWWWInline@@QAE@XZ",
+    "canonical_class": "QvWWWInline",
+    "loose_owners": [
+      "Qv/gen/C_482ed0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_482ed0.cpp": "3713aad66d61b30472d5f702c2c4a952523893906278f4f286a817b8c04ce6dc"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483150@@QAE@XZ": {
+    "address": "00483150",
+    "target": "??0QvWWWAnchor@@QAE@XZ",
+    "canonical_class": "QvWWWAnchor",
+    "loose_owners": [
+      "Qv/gen/C_483150.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483150.cpp": "4e1b7b7153ea95ee5b06dc6da52635d44c0fedf777e4cd899637fd827e4b6a50"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483460@@QAE@XZ": {
+    "address": "00483460",
+    "target": "??0QvTranslation@@QAE@XZ",
+    "canonical_class": "QvTranslation",
+    "loose_owners": [
+      "Qv/gen/C_483460.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483460.cpp": "6490361b762642739a1a8ba560f0a12c3102f86a56e6bae9769fad6e110f4591"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483630@@QAE@XZ": {
+    "address": "00483630",
+    "target": "??0QvTransformSeparator@@QAE@XZ",
+    "canonical_class": "QvTransformSeparator",
+    "loose_owners": [
+      "Qv/gen/C_483630.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483630.cpp": "7a93f10e36ffd3b2323ea0592f5657064c52d02e1417bc0995d6044941c12b69"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483790@@QAE@XZ": {
+    "address": "00483790",
+    "target": "??0QvTransform@@QAE@XZ",
+    "canonical_class": "QvTransform",
+    "loose_owners": [
+      "Qv/gen/C_483790.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483790.cpp": "5caab2e61bd47d78c8f36c851e6be3f654820da2780d295b21b2fa66cfd7838e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483af0@@QAE@XZ": {
+    "address": "00483af0",
+    "target": "??0QvTextureCoordinate2@@QAE@XZ",
+    "canonical_class": "QvTextureCoordinate2",
+    "loose_owners": [
+      "Qv/gen/C_483af0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483af0.cpp": "630398f994df647ffc3c85200548c8208fc68226b8f380a6b4e801a099f6e356"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483cc0@@QAE@XZ": {
+    "address": "00483cc0",
+    "target": "??0QvTexture2Transform@@QAE@XZ",
+    "canonical_class": "QvTexture2Transform",
+    "loose_owners": [
+      "Qv/gen/C_483cc0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483cc0.cpp": "0083e5a3bb2c45a4f1909ed704a2d68bb4e9fe5d91cb1b8eeb0bff004e270e2e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC483f90@@QAE@XZ": {
+    "address": "00483f90",
+    "target": "??0QvTexture2@@QAE@XZ",
+    "canonical_class": "QvTexture2",
+    "loose_owners": [
+      "Qv/gen/C_483f90.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483f90.cpp": "48e7117fc1dcddd1460b0d94e68b1b13c52048a74f55814fa854d281ce4b9bf8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC484370@@QAE@XZ": {
+    "address": "00484370",
+    "target": "??0QvSwitch@@QAE@XZ",
+    "canonical_class": "QvSwitch",
+    "loose_owners": [
+      "Qv/gen/C_484370.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484370.cpp": "131d7e3cae1f47a3ca6296f2dad2e95a38190e54282af7ab20b59d335f33d5c8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC484530@@QAE@XZ": {
+    "address": "00484530",
+    "target": "??0QvSpotLight@@QAE@XZ",
+    "canonical_class": "QvSpotLight",
+    "loose_owners": [
+      "Qv/gen/C_484530.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484530.cpp": "024e3007f165b170ee7d00a75ef57b656f08fe2c7299039d1ea171bfcb09cd63"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC484940@@QAE@XZ": {
+    "address": "00484940",
+    "target": "??0QvSphere@@QAE@XZ",
+    "canonical_class": "QvSphere",
+    "loose_owners": [
+      "Qv/gen/C_484940.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484940.cpp": "dd1189a67f761c6f7ea8cf3978ff0d9a1510d2b23dfae59a6fa4b1321bf5827c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC484b00@@QAE@XZ": {
+    "address": "00484b00",
+    "target": "??0QvShapeHints@@QAE@XZ",
+    "canonical_class": "QvShapeHints",
+    "loose_owners": [
+      "Qv/gen/C_484b00.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484b00.cpp": "29ca56a4fa89d00d052829d733bc8701e636633c9480d4fbdc766576a8ccafe6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC484f30@@QAE@XZ": {
+    "address": "00484f30",
+    "target": "??0QvSeparator@@QAE@XZ",
+    "canonical_class": "QvSeparator",
+    "loose_owners": [
+      "Qv/gen/C_484f30.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484f30.cpp": "c44cbad32ebaf172430bde9d2e7fcb307ef9226098fcc5eb3316675f2e6968a8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485180@@QAE@XZ": {
+    "address": "00485180",
+    "target": "??0QvScale@@QAE@XZ",
+    "canonical_class": "QvScale",
+    "loose_owners": [
+      "Qv/gen/C_485180.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485180.cpp": "6fcb14d941dec42383473df3a22ea18135002a2120bd62228b66cac6783b9f44"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485350@@QAE@XZ": {
+    "address": "00485350",
+    "target": "??0QvRotation@@QAE@XZ",
+    "canonical_class": "QvRotation",
+    "loose_owners": [
+      "Qv/gen/C_485350.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485350.cpp": "bcc01f2b9134e9b1034cd4225600a423ce1fb7c718c25253f3c8bd4ad4b74b31"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485520@@QAE@XZ": {
+    "address": "00485520",
+    "target": "??0QvPointSet@@QAE@XZ",
+    "canonical_class": "QvPointSet",
+    "loose_owners": [
+      "Qv/gen/C_485520.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485520.cpp": "affce265d1bdadb000cda6181ea485cf05e425273949a7fc348c9bc334308c5e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485740@@QAE@XZ": {
+    "address": "00485740",
+    "target": "??0QvPointLight@@QAE@XZ",
+    "canonical_class": "QvPointLight",
+    "loose_owners": [
+      "Qv/gen/C_485740.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485740.cpp": "35137e5c5320760928696bc58364e1ea2abeee4c8991c8808e40ad67fe6aa47d"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485a20@@QAE@XZ": {
+    "address": "00485a20",
+    "target": "??0QvPerspectiveCamera@@QAE@XZ",
+    "canonical_class": "QvPerspectiveCamera",
+    "loose_owners": [
+      "Qv/gen/C_485a20.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485a20.cpp": "a197b88e191aa15f4f5eed10b5011502c7ff3115cc472efa527e4141d0f35e81"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485d00@@QAE@XZ": {
+    "address": "00485d00",
+    "target": "??0QvOrthographicCamera@@QAE@XZ",
+    "canonical_class": "QvOrthographicCamera",
+    "loose_owners": [
+      "Qv/gen/C_485d00.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485d00.cpp": "569c503f601a2b3638d3b6cb7073392f496ff10daa75336675beeb5b1dba6062"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC485fe0@@QAE@XZ": {
+    "address": "00485fe0",
+    "target": "??0QvNormalBinding@@QAE@XZ",
+    "canonical_class": "QvNormalBinding",
+    "loose_owners": [
+      "Qv/gen/C_485fe0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485fe0.cpp": "62e5695a871d9248a6a26f6859b90347c009175df7120ad9f211dffafc3532dd"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC4862d0@@QAE@XZ": {
+    "address": "004862d0",
+    "target": "??0QvNormal@@QAE@XZ",
+    "canonical_class": "QvNormal",
+    "loose_owners": [
+      "Qv/gen/C_4862d0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4862d0.cpp": "69188829f55b8e4a4827594fe48321c6504def2c334e2ce55272f893dfd16a96"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC4864b0@@QAE@XZ": {
+    "address": "004864b0",
+    "target": "??0QvMatrixTransform@@QAE@XZ",
+    "canonical_class": "QvMatrixTransform",
+    "loose_owners": [
+      "Qv/gen/C_4864b0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4864b0.cpp": "634075fe6a93c2ac65a9b025f37347820b1575222b6470c16e5578f2ac4650ab"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC4866a0@@QAE@XZ": {
+    "address": "004866a0",
+    "target": "??0QvMaterialBinding@@QAE@XZ",
+    "canonical_class": "QvMaterialBinding",
+    "loose_owners": [
+      "Qv/gen/C_4866a0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4866a0.cpp": "0c11f7e8596675a1a5680f21d8162cc53abb02b750b90197ee57773d979c6aa4"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC486990@@QAE@XZ": {
+    "address": "00486990",
+    "target": "??0QvMaterial@@QAE@XZ",
+    "canonical_class": "QvMaterial",
+    "loose_owners": [
+      "Qv/gen/C_486990.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486990.cpp": "b04820127d9045ebbaa9a6d168c8d20f8ef35ce2bd8dafeac43e40dc08a57030"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC486d70@@QAE@XZ": {
+    "address": "00486d70",
+    "target": "??0QvLOD@@QAE@XZ",
+    "canonical_class": "QvLOD",
+    "loose_owners": [
+      "Qv/gen/C_486d70.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486d70.cpp": "526c821969354ff832a18c4ebf71f8d91d417c0b119be3ec3f3084d39060e0b5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC486f90@@QAE@XZ": {
+    "address": "00486f90",
+    "target": "??0QvInfo@@QAE@XZ",
+    "canonical_class": "QvInfo",
+    "loose_owners": [
+      "Qv/gen/C_486f90.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486f90.cpp": "66bb788a5d92986024d691ca72a80b249d69baea432a7ed247cfe965a8ad6cf8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC487160@@QAE@XZ": {
+    "address": "00487160",
+    "target": "??0QvIndexedLineSet@@QAE@XZ",
+    "canonical_class": "QvIndexedLineSet",
+    "loose_owners": [
+      "Qv/gen/C_487160.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487160.cpp": "d1ae5a570dd8ceb9262430bfa06d58541f5cae074ca3ebb3d4f6c9215673009c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC487440@@QAE@XZ": {
+    "address": "00487440",
+    "target": "??0QvIndexedFaceSet@@QAE@XZ",
+    "canonical_class": "QvIndexedFaceSet",
+    "loose_owners": [
+      "Qv/gen/C_487440.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487440.cpp": "05914cfc4c1c225fe857737fbafa98d8f1f530a7847dd4905bc5d66d5272dc93"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC487720@@QAE@XZ": {
+    "address": "00487720",
+    "target": "??0QvFontStyle@@QAE@XZ",
+    "canonical_class": "QvFontStyle",
+    "loose_owners": [
+      "Qv/gen/C_487720.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487720.cpp": "6489dd8bbeb3a3684538d201c8f16ab207db020878924c3f6585c30fe23b48f2"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC487ab0@@QAE@XZ": {
+    "address": "00487ab0",
+    "target": "??0QvDirectionalLight@@QAE@XZ",
+    "canonical_class": "QvDirectionalLight",
+    "loose_owners": [
+      "Qv/gen/C_487ab0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487ab0.cpp": "0cbbffebe306083363511dca2c7d8470744aece136b1ccbf75dfe44b81bfeb5a"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC487d90@@QAE@XZ": {
+    "address": "00487d90",
+    "target": "??0QvCylinder@@QAE@XZ",
+    "canonical_class": "QvCylinder",
+    "loose_owners": [
+      "Qv/gen/C_487d90.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487d90.cpp": "e77cbfd42989f55b22301811428eee927cbff7d9e8287bfc8a0baa34d4680459"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC4880c0@@QAE@XZ": {
+    "address": "004880c0",
+    "target": "??0QvCube@@QAE@XZ",
+    "canonical_class": "QvCube",
+    "loose_owners": [
+      "Qv/gen/C_4880c0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4880c0.cpp": "efb7c5363d310f10a224f7670ebf7e280406ea77ed28e99db028a25a6afcbbd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC488330@@QAE@XZ": {
+    "address": "00488330",
+    "target": "??0QvCoordinate3@@QAE@XZ",
+    "canonical_class": "QvCoordinate3",
+    "loose_owners": [
+      "Qv/gen/C_488330.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488330.cpp": "a196dad618af7e60b904a553c404295547d24bfef72c5491e8deef1ab568a116"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC488510@@QAE@XZ": {
+    "address": "00488510",
+    "target": "??0QvCone@@QAE@XZ",
+    "canonical_class": "QvCone",
+    "loose_owners": [
+      "Qv/gen/C_488510.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488510.cpp": "169a586a82318245d784daab2c943831843aca01f402ed8adce0586eaebf439b"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvNodeC488820@@QAE@XZ": {
+    "address": "00488820",
+    "target": "??0QvAsciiText@@QAE@XZ",
+    "canonical_class": "QvAsciiText",
+    "loose_owners": [
+      "Qv/gen/C_488820.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488820.cpp": "c87ce881c1803bc6eb1cf4f17067364ed0390079cf56c6172828a30df3d38191"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvPListN@@QAE@XZ": {
+    "address": "00482a60",
+    "target": "??0QvPList@@QAE@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Names.cpp": "48479d7899cd37a711f3e295a494e75b7e451801f5b2da0e5d7f9bc6a7f96bd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvPListU@@QAE@XZ": {
+    "address": "00482a60",
+    "target": "??0QvPList@@QAE@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??0QvUnknownU@@QAE@XZ": {
+    "address": "00482c70",
+    "target": "??0QvUnknownNode@@QAE@XZ",
+    "canonical_class": "QvUnknownNode",
+    "loose_owners": [
+      "Qv/Unknown.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvFieldDataU@@QAE@XZ": {
+    "address": "00480630",
+    "target": "??1QvFieldData@@QAE@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvGroupBase@@UAE@XZ": {
+    "address": "00481f30",
+    "target": "??1QvGroup@@UAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_482ed0.cpp": "3713aad66d61b30472d5f702c2c4a952523893906278f4f286a817b8c04ce6dc",
+      "Qv/gen/C_483150.cpp": "4e1b7b7153ea95ee5b06dc6da52635d44c0fedf777e4cd899637fd827e4b6a50",
+      "Qv/gen/C_483630.cpp": "7a93f10e36ffd3b2323ea0592f5657064c52d02e1417bc0995d6044941c12b69",
+      "Qv/gen/C_484370.cpp": "131d7e3cae1f47a3ca6296f2dad2e95a38190e54282af7ab20b59d335f33d5c8",
+      "Qv/gen/C_484f30.cpp": "c44cbad32ebaf172430bde9d2e7fcb307ef9226098fcc5eb3316675f2e6968a8",
+      "Qv/gen/C_486d70.cpp": "526c821969354ff832a18c4ebf71f8d91d417c0b119be3ec3f3084d39060e0b5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvGroupBaseU@@UAE@XZ": {
+    "address": "00481f30",
+    "target": "??1QvGroup@@UAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvGroupN@@UAE@XZ": {
+    "address": "00482e10",
+    "target": "??1QvUnknownNode@@UAE@XZ",
+    "canonical_class": "QvUnknownNode",
+    "loose_owners": [
+      "Qv/Inter.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Inter.cpp": "d0887cf6dd93edd811edc05b10c3c2fc6f139510a59fd745be159f4cc8bd2900"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvGroupX@@UAE@XZ": {
+    "address": "00481f30",
+    "target": "??1QvGroup@@UAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Group.cpp": "3689ab7bb6b4a8cb3b2147eed6085ad20067150bc6e34648ceb9340fd5f02f8c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvInter@@UAE@XZ": {
+    "address": "00481f30",
+    "target": "??1QvGroup@@UAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [
+      "Qv/Inter.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Inter.cpp": "d0887cf6dd93edd811edc05b10c3c2fc6f139510a59fd745be159f4cc8bd2900"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvKids@@QAE@XZ": {
+    "address": "00480630",
+    "target": "??1QvFieldData@@QAE@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Inter.cpp": "d0887cf6dd93edd811edc05b10c3c2fc6f139510a59fd745be159f4cc8bd2900"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode481f30@@UAE@XZ": {
+    "address": "00481f30",
+    "target": "??1QvGroup@@UAE@XZ",
+    "canonical_class": "QvGroup",
+    "loose_owners": [
+      "Qv/gen/D_481f30.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_481f30.cpp": "1075524adf102bb4e8d7a66596ab77e0696edebef79d5f34fd857e676bed134c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode482e10@@UAE@XZ": {
+    "address": "00482e10",
+    "target": "??1QvUnknownNode@@UAE@XZ",
+    "canonical_class": "QvUnknownNode",
+    "loose_owners": [
+      "Qv/gen/D_482e10.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_482e10.cpp": "55ace96cf76cf9ac6de3218d8918404bd3754e2d52ace4615ea7d3a04c400ece"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4830a0@@UAE@XZ": {
+    "address": "004830a0",
+    "target": "??1QvWWWInline@@UAE@XZ",
+    "canonical_class": "QvWWWInline",
+    "loose_owners": [
+      "Qv/gen/D_4830a0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4830a0.cpp": "83b50f3cc647be06cf3b78df1e47859dc754f1af03964c925ecb1607cd8a0120"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4833b0@@UAE@XZ": {
+    "address": "004833b0",
+    "target": "??1QvWWWAnchor@@UAE@XZ",
+    "canonical_class": "QvWWWAnchor",
+    "loose_owners": [
+      "Qv/gen/D_4833b0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4833b0.cpp": "b55270328c8b8ba238fe2870df98a2b7e5afb5f32742454637a7a2cc03d68ab5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4835b0@@UAE@XZ": {
+    "address": "004835b0",
+    "target": "??1QvTranslation@@UAE@XZ",
+    "canonical_class": "QvTranslation",
+    "loose_owners": [
+      "Qv/gen/D_4835b0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4835b0.cpp": "3ef343de2413e85417726e2927c24247536c4ee66ca9b5119018627ca385003a"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode483730@@UAE@XZ": {
+    "address": "00483730",
+    "target": "??1QvTransformSeparator@@UAE@XZ",
+    "canonical_class": "QvTransformSeparator",
+    "loose_owners": [
+      "Qv/gen/D_483730.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_483730.cpp": "efce50a1144c3fd0b150571cd5525f937565b8c3133fea2f7e361feb182987ac"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode483a10@@UAE@XZ": {
+    "address": "00483a10",
+    "target": "??1QvTransform@@UAE@XZ",
+    "canonical_class": "QvTransform",
+    "loose_owners": [
+      "Qv/gen/D_483a10.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_483a10.cpp": "ac195a3b115311ab791e84a2de9e5f9737b68f74ecdf529c71bf10f08f2b45c9"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode483c40@@UAE@XZ": {
+    "address": "00483c40",
+    "target": "??1QvTextureCoordinate2@@UAE@XZ",
+    "canonical_class": "QvTextureCoordinate2",
+    "loose_owners": [
+      "Qv/gen/D_483c40.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_483c40.cpp": "0f55736f0fc48638b389cf154ced68ed6f7140d7afb92e1855a60780576ff973"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode483ed0@@UAE@XZ": {
+    "address": "00483ed0",
+    "target": "??1QvTexture2Transform@@UAE@XZ",
+    "canonical_class": "QvTexture2Transform",
+    "loose_owners": [
+      "Qv/gen/D_483ed0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_483ed0.cpp": "62599bce358703b67c22fa18ab4c35243fbc5bbd64557e4d7408c26daa130593"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode484260@@UAE@XZ": {
+    "address": "00484260",
+    "target": "??1QvTexture2@@UAE@XZ",
+    "canonical_class": "QvTexture2",
+    "loose_owners": [
+      "Qv/gen/D_484260.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_484260.cpp": "becca51c2eb8287e8eeb2cf113abb953e8f47eba4dc039a424c728967e22afa7"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4844b0@@UAE@XZ": {
+    "address": "004844b0",
+    "target": "??1QvSwitch@@UAE@XZ",
+    "canonical_class": "QvSwitch",
+    "loose_owners": [
+      "Qv/gen/D_4844b0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4844b0.cpp": "6b76d5cc3c314c41833758375db76f7d7e7c1e440454822997ca7cebd75db5ff"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode484a80@@UAE@XZ": {
+    "address": "00484a80",
+    "target": "??1QvSphere@@UAE@XZ",
+    "canonical_class": "QvSphere",
+    "loose_owners": [
+      "Qv/gen/D_484a80.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_484a80.cpp": "a1dd29bb2c8e00a5dcd1696aa79188d652f270bbfea2793846ee342f9e63f1d7"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode484e70@@UAE@XZ": {
+    "address": "00484e70",
+    "target": "??1QvShapeHints@@UAE@XZ",
+    "canonical_class": "QvShapeHints",
+    "loose_owners": [
+      "Qv/gen/D_484e70.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_484e70.cpp": "41b6dbd85afe63d764913f8fa2142e2ad70c7f3de7f98f776fab4fbeb3da0804"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode485100@@UAE@XZ": {
+    "address": "00485100",
+    "target": "??1QvSeparator@@UAE@XZ",
+    "canonical_class": "QvSeparator",
+    "loose_owners": [
+      "Qv/gen/D_485100.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_485100.cpp": "1ef1b3e5ae8ea0accd6eac4009da8129e24bcbe29f6844634116ac45f0fb266a"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4852d0@@UAE@XZ": {
+    "address": "004852d0",
+    "target": "??1QvScale@@UAE@XZ",
+    "canonical_class": "QvScale",
+    "loose_owners": [
+      "Qv/gen/D_4852d0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4852d0.cpp": "b8e4bcb0e44ec1a529dd461d8e4bf1221652bef615382b45c9d2e2b1342a9f11"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4854a0@@UAE@XZ": {
+    "address": "004854a0",
+    "target": "??1QvRotation@@UAE@XZ",
+    "canonical_class": "QvRotation",
+    "loose_owners": [
+      "Qv/gen/D_4854a0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4854a0.cpp": "0c1e99f0156832183ae38044780f5ed9b350b7c454032a18f0f3832d3eeeade3"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4856a0@@UAE@XZ": {
+    "address": "004856a0",
+    "target": "??1QvPointSet@@UAE@XZ",
+    "canonical_class": "QvPointSet",
+    "loose_owners": [
+      "Qv/gen/D_4856a0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4856a0.cpp": "b0378cb328683a4a3488c5fcf373130486d76a4f8d6bf6a18e4eaa02d1b1234d"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode485960@@UAE@XZ": {
+    "address": "00485960",
+    "target": "??1QvPointLight@@UAE@XZ",
+    "canonical_class": "QvPointLight",
+    "loose_owners": [
+      "Qv/gen/D_485960.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_485960.cpp": "27aa2774d1e4802e6c514cedbe1403c9570d44b31accb1e86466ce83d36db2d8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode485c40@@UAE@XZ": {
+    "address": "00485c40",
+    "target": "??1QvPerspectiveCamera@@UAE@XZ",
+    "canonical_class": "QvPerspectiveCamera",
+    "loose_owners": [
+      "Qv/gen/D_485c40.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_485c40.cpp": "892c97a23942b441d12f94b02a4f3ff191c9b13a95c2eaf1af18590a2b56e640"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode485f20@@UAE@XZ": {
+    "address": "00485f20",
+    "target": "??1QvOrthographicCamera@@UAE@XZ",
+    "canonical_class": "QvOrthographicCamera",
+    "loose_owners": [
+      "Qv/gen/D_485f20.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_485f20.cpp": "6b8e838602d25bddb295e9c94797f7a6708946a5be7b09a2efc276109d9a0bef"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode486250@@UAE@XZ": {
+    "address": "00486250",
+    "target": "??1QvNormalBinding@@UAE@XZ",
+    "canonical_class": "QvNormalBinding",
+    "loose_owners": [
+      "Qv/gen/D_486250.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_486250.cpp": "e28f2accd218d139147bcb0e871f7029c54e72054462c53ddb35fc8e83857663"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode486430@@UAE@XZ": {
+    "address": "00486430",
+    "target": "??1QvNormal@@UAE@XZ",
+    "canonical_class": "QvNormal",
+    "loose_owners": [
+      "Qv/gen/D_486430.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_486430.cpp": "60ef67942fc3f7ae4271799cec3f2bb3bffb85d411fe704d7f7549b049f78658"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode486620@@UAE@XZ": {
+    "address": "00486620",
+    "target": "??1QvMatrixTransform@@UAE@XZ",
+    "canonical_class": "QvMatrixTransform",
+    "loose_owners": [
+      "Qv/gen/D_486620.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_486620.cpp": "65c009b73c5fd19d6a9d9ecd904027f595b49de965703b29db7f5538c2bcb8d2"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode486910@@UAE@XZ": {
+    "address": "00486910",
+    "target": "??1QvMaterialBinding@@UAE@XZ",
+    "canonical_class": "QvMaterialBinding",
+    "loose_owners": [
+      "Qv/gen/D_486910.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_486910.cpp": "2a707370e5e668bb1c586069834002ec8753d84e91601ce63669c53088c797d0"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode486ef0@@UAE@XZ": {
+    "address": "00486ef0",
+    "target": "??1QvLOD@@UAE@XZ",
+    "canonical_class": "QvLOD",
+    "loose_owners": [
+      "Qv/gen/D_486ef0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_486ef0.cpp": "d474b3ca5af38b3d4740de731391da7f9f42c084e7978f4602155ddb0d780e8b"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode4870e0@@UAE@XZ": {
+    "address": "004870e0",
+    "target": "??1QvInfo@@UAE@XZ",
+    "canonical_class": "QvInfo",
+    "loose_owners": [
+      "Qv/gen/D_4870e0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_4870e0.cpp": "9727293017988250649b33beed867f394f92722a123e0bd117900813a92ddd52"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode487380@@UAE@XZ": {
+    "address": "00487380",
+    "target": "??1QvIndexedLineSet@@UAE@XZ",
+    "canonical_class": "QvIndexedLineSet",
+    "loose_owners": [
+      "Qv/gen/D_487380.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_487380.cpp": "b0d7d01dee218ee4ab7dfe35c0a7c807789cdfafb2ecc95d89212d737e8783a5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode487660@@UAE@XZ": {
+    "address": "00487660",
+    "target": "??1QvIndexedFaceSet@@UAE@XZ",
+    "canonical_class": "QvIndexedFaceSet",
+    "loose_owners": [
+      "Qv/gen/D_487660.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_487660.cpp": "cd1b21b5e984d51517070b2c57080868678fec2ad3131476b56ecdf04deb0db8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode487a00@@UAE@XZ": {
+    "address": "00487a00",
+    "target": "??1QvFontStyle@@UAE@XZ",
+    "canonical_class": "QvFontStyle",
+    "loose_owners": [
+      "Qv/gen/D_487a00.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_487a00.cpp": "9fb8ccebe569857991d38869aec1fea1502eb7cfe2cb9de6ed31ee65e573b0a6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode487cd0@@UAE@XZ": {
+    "address": "00487cd0",
+    "target": "??1QvDirectionalLight@@UAE@XZ",
+    "canonical_class": "QvDirectionalLight",
+    "loose_owners": [
+      "Qv/gen/D_487cd0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_487cd0.cpp": "26a28fc5841dad4fa8574a72a94ce2e353e1786b0c166f856efc5c8100adb93e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode488010@@UAE@XZ": {
+    "address": "00488010",
+    "target": "??1QvCylinder@@UAE@XZ",
+    "canonical_class": "QvCylinder",
+    "loose_owners": [
+      "Qv/gen/D_488010.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_488010.cpp": "d4c147d36278d1dc3823ed2226bee35f97e21f4d34c572714fe95e7806298c70"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode488280@@UAE@XZ": {
+    "address": "00488280",
+    "target": "??1QvCube@@UAE@XZ",
+    "canonical_class": "QvCube",
+    "loose_owners": [
+      "Qv/gen/D_488280.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_488280.cpp": "f2d56ed7da178ac556b9b69b879217f49c82e43dc73f41accddd3e4967a61744"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode488490@@UAE@XZ": {
+    "address": "00488490",
+    "target": "??1QvCoordinate3@@UAE@XZ",
+    "canonical_class": "QvCoordinate3",
+    "loose_owners": [
+      "Qv/gen/D_488490.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_488490.cpp": "2354ef39506b8e2251b9e0a9617cf604a10df16ef7b3685bf8b2e40bc96e0ab1"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode488770@@UAE@XZ": {
+    "address": "00488770",
+    "target": "??1QvCone@@UAE@XZ",
+    "canonical_class": "QvCone",
+    "loose_owners": [
+      "Qv/gen/D_488770.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_488770.cpp": "8d9fc694532e8f2f2aec43fd9bb5a1638e5a249f9f7ae58ad844f2df1f227efb"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNode488ad0@@UAE@XZ": {
+    "address": "00488ad0",
+    "target": "??1QvAsciiText@@UAE@XZ",
+    "canonical_class": "QvAsciiText",
+    "loose_owners": [
+      "Qv/gen/D_488ad0.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/D_488ad0.cpp": "dc756d818e5b1ec5b1a76353aaf5bd0cec01f69a90e49b0c1ed06d014ecd7f59"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeB@@UAE@XZ": {
+    "address": "0047e710",
+    "target": "??1QvNode@@UAE@XZ",
+    "canonical_class": "QvNode",
+    "loose_owners": [
+      "Qv/NodeBase.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/NodeBase.cpp": "4ff3625b5673fa55d57920767cd3248a60f88655b4c3fd32cee821a2d4b20b4e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC482ed0@@UAE@XZ": {
+    "address": "004830a0",
+    "target": "??1QvWWWInline@@UAE@XZ",
+    "canonical_class": "QvWWWInline",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_482ed0.cpp": "3713aad66d61b30472d5f702c2c4a952523893906278f4f286a817b8c04ce6dc"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483150@@UAE@XZ": {
+    "address": "004833b0",
+    "target": "??1QvWWWAnchor@@UAE@XZ",
+    "canonical_class": "QvWWWAnchor",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483150.cpp": "4e1b7b7153ea95ee5b06dc6da52635d44c0fedf777e4cd899637fd827e4b6a50"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483460@@UAE@XZ": {
+    "address": "004835b0",
+    "target": "??1QvTranslation@@UAE@XZ",
+    "canonical_class": "QvTranslation",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483460.cpp": "6490361b762642739a1a8ba560f0a12c3102f86a56e6bae9769fad6e110f4591"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483630@@UAE@XZ": {
+    "address": "00483730",
+    "target": "??1QvTransformSeparator@@UAE@XZ",
+    "canonical_class": "QvTransformSeparator",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483630.cpp": "7a93f10e36ffd3b2323ea0592f5657064c52d02e1417bc0995d6044941c12b69"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483790@@UAE@XZ": {
+    "address": "00483a10",
+    "target": "??1QvTransform@@UAE@XZ",
+    "canonical_class": "QvTransform",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483790.cpp": "5caab2e61bd47d78c8f36c851e6be3f654820da2780d295b21b2fa66cfd7838e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483af0@@UAE@XZ": {
+    "address": "00483c40",
+    "target": "??1QvTextureCoordinate2@@UAE@XZ",
+    "canonical_class": "QvTextureCoordinate2",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483af0.cpp": "630398f994df647ffc3c85200548c8208fc68226b8f380a6b4e801a099f6e356"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483cc0@@UAE@XZ": {
+    "address": "00483ed0",
+    "target": "??1QvTexture2Transform@@UAE@XZ",
+    "canonical_class": "QvTexture2Transform",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483cc0.cpp": "0083e5a3bb2c45a4f1909ed704a2d68bb4e9fe5d91cb1b8eeb0bff004e270e2e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC483f90@@UAE@XZ": {
+    "address": "00484260",
+    "target": "??1QvTexture2@@UAE@XZ",
+    "canonical_class": "QvTexture2",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_483f90.cpp": "48e7117fc1dcddd1460b0d94e68b1b13c52048a74f55814fa854d281ce4b9bf8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC484370@@UAE@XZ": {
+    "address": "004844b0",
+    "target": "??1QvSwitch@@UAE@XZ",
+    "canonical_class": "QvSwitch",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484370.cpp": "131d7e3cae1f47a3ca6296f2dad2e95a38190e54282af7ab20b59d335f33d5c8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC484530@@UAE@XZ": {
+    "address": "00484840",
+    "target": "??1QvSpotLight@@UAE@XZ",
+    "canonical_class": "QvSpotLight",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484530.cpp": "024e3007f165b170ee7d00a75ef57b656f08fe2c7299039d1ea171bfcb09cd63"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC484940@@UAE@XZ": {
+    "address": "00484a80",
+    "target": "??1QvSphere@@UAE@XZ",
+    "canonical_class": "QvSphere",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484940.cpp": "dd1189a67f761c6f7ea8cf3978ff0d9a1510d2b23dfae59a6fa4b1321bf5827c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC484b00@@UAE@XZ": {
+    "address": "00484e70",
+    "target": "??1QvShapeHints@@UAE@XZ",
+    "canonical_class": "QvShapeHints",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484b00.cpp": "29ca56a4fa89d00d052829d733bc8701e636633c9480d4fbdc766576a8ccafe6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC484f30@@UAE@XZ": {
+    "address": "00485100",
+    "target": "??1QvSeparator@@UAE@XZ",
+    "canonical_class": "QvSeparator",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_484f30.cpp": "c44cbad32ebaf172430bde9d2e7fcb307ef9226098fcc5eb3316675f2e6968a8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485180@@UAE@XZ": {
+    "address": "004852d0",
+    "target": "??1QvScale@@UAE@XZ",
+    "canonical_class": "QvScale",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485180.cpp": "6fcb14d941dec42383473df3a22ea18135002a2120bd62228b66cac6783b9f44"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485350@@UAE@XZ": {
+    "address": "004854a0",
+    "target": "??1QvRotation@@UAE@XZ",
+    "canonical_class": "QvRotation",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485350.cpp": "bcc01f2b9134e9b1034cd4225600a423ce1fb7c718c25253f3c8bd4ad4b74b31"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485520@@UAE@XZ": {
+    "address": "004856a0",
+    "target": "??1QvPointSet@@UAE@XZ",
+    "canonical_class": "QvPointSet",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485520.cpp": "affce265d1bdadb000cda6181ea485cf05e425273949a7fc348c9bc334308c5e"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485740@@UAE@XZ": {
+    "address": "00485960",
+    "target": "??1QvPointLight@@UAE@XZ",
+    "canonical_class": "QvPointLight",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485740.cpp": "35137e5c5320760928696bc58364e1ea2abeee4c8991c8808e40ad67fe6aa47d"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485a20@@UAE@XZ": {
+    "address": "00485c40",
+    "target": "??1QvPerspectiveCamera@@UAE@XZ",
+    "canonical_class": "QvPerspectiveCamera",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485a20.cpp": "a197b88e191aa15f4f5eed10b5011502c7ff3115cc472efa527e4141d0f35e81"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485d00@@UAE@XZ": {
+    "address": "00485f20",
+    "target": "??1QvOrthographicCamera@@UAE@XZ",
+    "canonical_class": "QvOrthographicCamera",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485d00.cpp": "569c503f601a2b3638d3b6cb7073392f496ff10daa75336675beeb5b1dba6062"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC485fe0@@UAE@XZ": {
+    "address": "00486250",
+    "target": "??1QvNormalBinding@@UAE@XZ",
+    "canonical_class": "QvNormalBinding",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_485fe0.cpp": "62e5695a871d9248a6a26f6859b90347c009175df7120ad9f211dffafc3532dd"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC4862d0@@UAE@XZ": {
+    "address": "00486430",
+    "target": "??1QvNormal@@UAE@XZ",
+    "canonical_class": "QvNormal",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4862d0.cpp": "69188829f55b8e4a4827594fe48321c6504def2c334e2ce55272f893dfd16a96"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC4864b0@@UAE@XZ": {
+    "address": "00486620",
+    "target": "??1QvMatrixTransform@@UAE@XZ",
+    "canonical_class": "QvMatrixTransform",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4864b0.cpp": "634075fe6a93c2ac65a9b025f37347820b1575222b6470c16e5578f2ac4650ab"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC4866a0@@UAE@XZ": {
+    "address": "00486910",
+    "target": "??1QvMaterialBinding@@UAE@XZ",
+    "canonical_class": "QvMaterialBinding",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4866a0.cpp": "0c11f7e8596675a1a5680f21d8162cc53abb02b750b90197ee57773d979c6aa4"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC486990@@UAE@XZ": {
+    "address": "00486c80",
+    "target": "??1QvMaterial@@UAE@XZ",
+    "canonical_class": "QvMaterial",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486990.cpp": "b04820127d9045ebbaa9a6d168c8d20f8ef35ce2bd8dafeac43e40dc08a57030"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC486d70@@UAE@XZ": {
+    "address": "00486ef0",
+    "target": "??1QvLOD@@UAE@XZ",
+    "canonical_class": "QvLOD",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486d70.cpp": "526c821969354ff832a18c4ebf71f8d91d417c0b119be3ec3f3084d39060e0b5"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC486f90@@UAE@XZ": {
+    "address": "004870e0",
+    "target": "??1QvInfo@@UAE@XZ",
+    "canonical_class": "QvInfo",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_486f90.cpp": "66bb788a5d92986024d691ca72a80b249d69baea432a7ed247cfe965a8ad6cf8"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC487160@@UAE@XZ": {
+    "address": "00487380",
+    "target": "??1QvIndexedLineSet@@UAE@XZ",
+    "canonical_class": "QvIndexedLineSet",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487160.cpp": "d1ae5a570dd8ceb9262430bfa06d58541f5cae074ca3ebb3d4f6c9215673009c"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC487440@@UAE@XZ": {
+    "address": "00487660",
+    "target": "??1QvIndexedFaceSet@@UAE@XZ",
+    "canonical_class": "QvIndexedFaceSet",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487440.cpp": "05914cfc4c1c225fe857737fbafa98d8f1f530a7847dd4905bc5d66d5272dc93"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC487720@@UAE@XZ": {
+    "address": "00487a00",
+    "target": "??1QvFontStyle@@UAE@XZ",
+    "canonical_class": "QvFontStyle",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487720.cpp": "6489dd8bbeb3a3684538d201c8f16ab207db020878924c3f6585c30fe23b48f2"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC487ab0@@UAE@XZ": {
+    "address": "00487cd0",
+    "target": "??1QvDirectionalLight@@UAE@XZ",
+    "canonical_class": "QvDirectionalLight",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487ab0.cpp": "0cbbffebe306083363511dca2c7d8470744aece136b1ccbf75dfe44b81bfeb5a"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC487d90@@UAE@XZ": {
+    "address": "00488010",
+    "target": "??1QvCylinder@@UAE@XZ",
+    "canonical_class": "QvCylinder",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_487d90.cpp": "e77cbfd42989f55b22301811428eee927cbff7d9e8287bfc8a0baa34d4680459"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC4880c0@@UAE@XZ": {
+    "address": "00488280",
+    "target": "??1QvCube@@UAE@XZ",
+    "canonical_class": "QvCube",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_4880c0.cpp": "efb7c5363d310f10a224f7670ebf7e280406ea77ed28e99db028a25a6afcbbd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC488330@@UAE@XZ": {
+    "address": "00488490",
+    "target": "??1QvCoordinate3@@UAE@XZ",
+    "canonical_class": "QvCoordinate3",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488330.cpp": "a196dad618af7e60b904a553c404295547d24bfef72c5491e8deef1ab568a116"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC488510@@UAE@XZ": {
+    "address": "00488770",
+    "target": "??1QvCone@@UAE@XZ",
+    "canonical_class": "QvCone",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488510.cpp": "169a586a82318245d784daab2c943831843aca01f402ed8adce0586eaebf439b"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvNodeC488820@@UAE@XZ": {
+    "address": "00488ad0",
+    "target": "??1QvAsciiText@@UAE@XZ",
+    "canonical_class": "QvAsciiText",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/gen/C_488820.cpp": "c87ce881c1803bc6eb1cf4f17067364ed0390079cf56c6172828a30df3d38191"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvPListU@@QAE@XZ": {
+    "address": "00482a80",
+    "target": "??1QvPList@@QAE@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "??1QvUnknownU@@UAE@XZ": {
+    "address": "00482e10",
+    "target": "??1QvUnknownNode@@UAE@XZ",
+    "canonical_class": "QvUnknownNode",
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Find@QvPListN@@QAEHPAX@Z": {
+    "address": "00482a90",
+    "target": "?find@QvPList@@QBEHPBX@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Names.cpp": "48479d7899cd37a711f3e295a494e75b7e451801f5b2da0e5d7f9bc6a7f96bd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?GetName@QvNode@@QAEPAXXZ": {
+    "address": "0047e780",
+    "target": "?getName@QvNode@@QBEABVQvName@@XZ",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Loader/FaceSet.cpp": "4326221356ee787b34839502a12e482bc6ca29ff2dcc4774d34eaa3ad81f913a"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Grow@QvEntryList@@QAEXH@Z": {
+    "address": "00482b10",
+    "target": "?expand@QvPList@@AAEXH@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/FieldData.cpp": "af4ee1b00ab6a6f2730efcfb67668ae6094706014d7cb4e58ba33b474345eaa7"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Grow@QvNodeList@@QAEXH@Z": {
+    "address": "00482b10",
+    "target": "?expand@QvPList@@AAEXH@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/PList.cpp": "d622e88c131eafacd299498d0e085f775a5850754cdf984216296a6a35948117"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Grow@QvPListN@@QAEXH@Z": {
+    "address": "00482b10",
+    "target": "?expand@QvPList@@AAEXH@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Names.cpp": "48479d7899cd37a711f3e295a494e75b7e451801f5b2da0e5d7f9bc6a7f96bd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z": {
+    "address": "00481fd0",
+    "target": "?readInstance@QvGroup@@UAEHPAVQvInput@@@Z",
+    "canonical_class": null,
+    "loose_owners": [
+      "Qv/NodeRead.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/NodeRead.cpp": "e313c870b5c1342f784d14eee34b75a9a8730cfe598b9b713390bd02788c3f50"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?ReadChildren@QvGroupG2@@QAEHPAVQvInputG2@@@Z": {
+    "address": "00482110",
+    "target": "?readChildren@QvGroup@@UAEHPAVQvInput@@@Z",
+    "canonical_class": null,
+    "loose_owners": [
+      "Qv/Group2.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Group2.cpp": "a489adda47b4a344b74b7169dc21ad7975e3691d164f30b188a2b8df1db3bf6f"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z": {
+    "address": "0047ec70",
+    "target": "?readInstance@QvNode@@MAEHPAVQvInput@@@Z",
+    "canonical_class": null,
+    "loose_owners": [
+      "Qv/NodeRead.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/NodeRead.cpp": "e313c870b5c1342f784d14eee34b75a9a8730cfe598b9b713390bd02788c3f50"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?ReadWrlTop@@YAHPAUWrlInput@@PAPAUQvNode@@@Z": {
+    "address": "00481c30",
+    "target": "?read@QvDB@@SAHPAVQvInput@@AAPAVQvNode@@@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "SqgModel/ReadWrl.cpp": "000b76f63e23f5511114fac0508b89393e49b346f9481e3f3de229899b015d00"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?Remove@QvPListN@@QAEXH@Z": {
+    "address": "00482ac0",
+    "target": "?remove@QvPList@@QAEXH@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Names.cpp": "48479d7899cd37a711f3e295a494e75b7e451801f5b2da0e5d7f9bc6a7f96bd6"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?SetClass@QvGenericC@@QAEXPAD@Z": {
+    "address": "00482df0",
+    "target": "?setClassName@QvUnknownNode@@QAEXPBD@Z",
+    "canonical_class": null,
+    "loose_owners": [],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Create.cpp": "9c8feaec15be074af1d96d938fa3fc6351511d44b3cdbd0331dfd820a7e8b8fd"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  },
+  "?SetClass@QvUnknownU@@QAEXPAD@Z": {
+    "address": "00482df0",
+    "target": "?setClassName@QvUnknownNode@@QAEXPBD@Z",
+    "canonical_class": null,
+    "loose_owners": [
+      "Qv/Unknown.cpp"
+    ],
+    "owner": "qvlib/obj/QvLib.lib",
+    "source_sha256": {
+      "Qv/Unknown.cpp": "0024191a72f15fb25bb503adc2aa17d45706137c2ba52b301f9e899b6c269fde"
+    },
+    "canonical_source_tree_sha256": "60383821df6d886374a5111eee9adb34847d8e0e84366b65dfa59eda305fb912",
+    "qv_object_sha256": "c06720f1c0e6384b56201302610ff9d32d72f1d6d0ed5fb467384646539e6838",
+    "abi": "Ctor and complete virtual dtor: zero-argument thiscall, same addressed node class, no this adjustment. Node prefix 24 bytes; canonical factory/lifetime owners initialize canonical vtables and class-specific field tables. Direct helpers retain reviewed thiscall/cdecl pointer and integer widths; GetName returns the name-handle address in EAX, not character data. Pointer lists are {items,count,capacity} (12 bytes); field table holds two lists (24 bytes); WrlInput is 72 bytes.",
+    "reason": "Generated class identity comes from its explicit original ctor/dtor entry and canonical class mapping; current loose owners and source hashes agree. Functional canonical code is accepted without a byte-score gate."
+  }
+}

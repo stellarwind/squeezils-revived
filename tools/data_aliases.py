@@ -182,11 +182,18 @@ def main():
     rtti_names = set(json.loads(rtti_registry.read_text())) if rtti_registry.exists() else set()
     superseded = [(a, t) for a, t in pairs if a in rtti_names]
     pairs = [(a, t) for a, t in pairs if a not in rtti_names]
+    # Node-name lookup must share QvLib's state; the extracted zero slot is not
+    # a second live registry. Transfer this full-name binding to its library owner.
+    from qv_input_ownership import reviewed as reviewed_qv_input
+    qv_owned = {a for a, d in reviewed_qv_input().items() if d.get('data')}
+    superseded_qv = [(a, t) for a, t in pairs if a in qv_owned]
+    pairs = [(a, t) for a, t in pairs if a not in qv_owned]
     write_coff(pairs, OUT / "data_alias.obj")
     (OUT / "data_alias.json").write_text(json.dumps(dict(aliases=pairs, skipped=skipped,
         original_reference_conflicts=reference_conflicts,
         reviewed_registry=registry,
         superseded_descriptor_aliases=superseded,
+        superseded_qv_state_aliases=superseded_qv,
         exact_registry_sha256=__import__('hashlib').sha256(exact_registry_path.read_bytes()).hexdigest() if exact_registry_path.exists() else None), indent=1))
     print(len(pairs), "aliases;", len(skipped), "skipped")
 

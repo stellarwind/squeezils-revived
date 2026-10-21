@@ -79,6 +79,54 @@ def main():
             pairs.append((alias, decision['target']))
             evidence.append(dict(alias=alias, exact_call_decision=decision))
         pairs.sort()
+    getter_registry = build.REPO / 'tools/global_getter_registry.json'
+    if getter_registry.exists():
+        from global_getter_aliases import discover as discover_getters
+        current_getters = discover_getters()
+        for alias, decision in json.loads(getter_registry.read_text()).items():
+            if current_getters['accepted'].get(alias) != decision:
+                raise ValueError('Global getter proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate global getter alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, global_getter_decision=decision))
+        pairs.sort()
+    lifetime_registry = build.REPO / 'tools/math_lifetime_registry.json'
+    if lifetime_registry.exists():
+        from math_lifetime_aliases import discover as discover_lifetimes
+        current_lifetimes = discover_lifetimes()
+        for alias, decision in json.loads(lifetime_registry.read_text()).items():
+            if current_lifetimes['accepted'].get(alias) != decision:
+                raise ValueError('Math destructor proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate math destructor alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, math_lifetime_decision=decision))
+        pairs.sort()
+    vector_registry = build.REPO / 'tools/vector_registry.json'
+    if vector_registry.exists():
+        from vector_aliases import discover as discover_vectors
+        current_vectors = discover_vectors()
+        for alias, decision in json.loads(vector_registry.read_text()).items():
+            if current_vectors['accepted'].get(alias) != decision:
+                raise ValueError('Vector arithmetic proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate vector arithmetic alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, vector_decision=decision))
+        pairs.sort()
+    matrix_registry = build.REPO / 'tools/matrix_registry.json'
+    if matrix_registry.exists():
+        from matrix_aliases import discover as discover_matrices
+        current_matrices = discover_matrices()
+        for alias, decision in json.loads(matrix_registry.read_text()).items():
+            if current_matrices['accepted'].get(alias) != decision:
+                raise ValueError('Affine matrix proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate affine matrix alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, matrix_decision=decision))
+        pairs.sort()
     write_coff(pairs, build.OUT / "entry_alias.obj")
     (build.OUT / "entry_alias.json").write_text(json.dumps(dict(
         aliases=pairs, evidence=evidence, skipped=skipped,
