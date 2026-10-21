@@ -15,6 +15,7 @@ import shlex
 import shutil
 import struct
 import subprocess
+from target_rows import parse_target_row
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 SRC = REPO / "src"
@@ -42,11 +43,12 @@ def inventory_ownership():
             continue
         target, *sources = row.split()
         for number, line in enumerate((SRC / target).read_text().splitlines(), 1):
-            if not line.strip() or line.lstrip().startswith("#"):
+            try:
+                fields = parse_target_row(line)
+            except ValueError as error:
+                invalid.append([target, number, str(error)])
                 continue
-            fields = line.split()
-            if len(fields) < 3:
-                invalid.append([target, number, "missing fields"])
+            if fields is None:
                 continue
             expression, address, label = fields[:3]
             try:
@@ -78,7 +80,8 @@ def inventory_ownership():
                    unmatched_target_lines=len(unmatched), invalid_lines=len(invalid),
                    symbols_targeting_multiple_addresses=sum(len(v) > 1 for v in symbol_addresses.values()))
     print(json.dumps(summary, indent=2))
-    return 0
+    # Invalid metadata must stop alias generation instead of hiding owners.
+    return 1 if invalid else 0
 
 
 def link_arguments(response):

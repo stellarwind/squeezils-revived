@@ -1,4 +1,124 @@
 {
+  "??0?$Array@UPartOrientation@@@@QAE@XZ": {
+    "address": "0046a330",
+    "target": "??0?$Array@U_tag_PartOrientation@@@@QAE@XZ",
+    "owner": "Container2/OrientationArrayCtor.cpp",
+    "abi": "thiscall constructor; no arguments; EAX=this; 16-byte array; count/capacity/data at +4/+8/+0c; 24-byte nontrivial elements; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "MorphCycle/MorphCycleLoadPath.cpp", "Container2/OrientationArrayCtor.cpp", "Container/ContainerArray.h", "Tiny4/F41c4b0.cpp"],
+    "reason": "Original 0x46a330 initializes count=0 and capacity=2, allocates cookie-prefixed storage, and uses element callbacks 0x46ed30/0x41d790. Score 20 is register choice only. Explicit projection selects the nontrivial original-compatible allocation and cleanup implementation."
+  },
+  "??0?$Array@UPartOrientation@@@@QAE@HPBUPartOrientation@@@Z": {
+    "address": "0046a230",
+    "target": "??0?$Array@U_tag_PartOrientation@@@@QAE@HPBU_tag_PartOrientation@@@Z",
+    "owner": "Container2/OrientationArrayCtor.cpp",
+    "abi": "thiscall constructor; int count then pointer to 24-byte elements; EAX=this; ret 8; 16-byte array; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "PartCycle/PartCycle.cpp", "Container2/OrientationArrayCtor.cpp", "Container/ContainerArray.h", "Tiny4/F41c4b0.cpp"],
+    "reason": "Original 0x46a230 sets count, chooses capacity=count or 2 for zero, constructs cookie-prefixed six-float elements and copies all six fields. Score 31 is register choice/copy-loop scheduling; allocation, callbacks, fields, conditions and loop agree. Projection selects this addressed owner."
+  },
+  "??1?$Array@UPartOrientation@@@@QAE@XZ": {
+    "address": "0046a3d0",
+    "target": "??1?$Array@U_tag_PartOrientation@@@@QAE@XZ",
+    "owner": "Container2/OrientationArrayCtor.cpp",
+    "abi": "thiscall complete nondeleting destructor; no arguments; void; array data at +0c; cookie-prefixed 24-byte nontrivial elements; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "PartCycle/PartCycle.cpp", "MorphCycle/MorphCycleLoadPath.cpp", "Container2/OrientationArrayCtor.cpp", "Container/ContainerArray.h", "Tiny4/F41c4b0.cpp"],
+    "reason": "Complete original 0x46a3d0 matches exactly, using the 0x41d790 element destructor, original reverse array cleanup and operator delete. Does not substitute a scalar/vector deleting destructor. Projection selects this owner."
+  },
+  "?Get@?$Array@UPartOrientation@@@@UAE?AUPartOrientation@@H@Z": {
+    "address": "0041d6e0",
+    "target": "?Get@?$Array@U_tag_PartOrientation@@@@UAE?AU_tag_PartOrientation@@H@Z",
+    "owner": "Tiny4/F41c4b0.cpp",
+    "abi": "thiscall; hidden nontrivial 24-byte result pointer then int index; EAX=result; ret 8; array vptr/count/capacity/data +0/+4/+8/+0c; six float element; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "Tiny4/F41c4b0.cpp", "Container/ContainerArray.h"],
+    "reason": "Original orientation vtable slot 0x4a0a2c selects 0x41d6e0. Both element views contain two three-float vectors with nontrivial destruction. Complete targeted Get matches exactly; projection selects this owner over incompatible incidental copies."
+  },
+  "?Insert@?$Array@UPartOrientation@@@@UAEHABUPartOrientation@@H@Z": {
+    "address": "0046a400",
+    "target": "?Insert@?$Array@U_tag_PartOrientation@@@@UAEHABU_tag_PartOrientation@@H@Z",
+    "owner": "Tiny4/F46a400.cpp",
+    "abi": "thiscall; 24-byte element reference then int index; EAX=int; ret 8; array vptr/count/capacity/data +0/+4/+8/+0c; six four-byte fields copied bitwise; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "Tiny4/F46a400.cpp", "Container/ContainerArray.h"],
+    "reason": "Original orientation vtable slot 0x4a0a30 selects 0x46a400. Complete targeted Insert matches exactly. Integer-word local view copies the six float object representations without arithmetic; no element is passed/returned by value or destroyed here. Projection selects the addressed implementation."
+  },
+  "?Replace@?$Array@UPartOrientation@@@@UAEXHABUPartOrientation@@@Z": {
+    "address": "0046a540",
+    "target": "?Replace@?$Array@U_tag_PartOrientation@@@@UAEXHABU_tag_PartOrientation@@@Z",
+    "owner": "Container2/OrientationArrayCtor.cpp",
+    "abi": "thiscall; int index then 24-byte element reference; void; ret 8; array data +0c; six contiguous floats; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "Container2/OrientationArrayCtor.cpp", "Container/ContainerArray.h"],
+    "reason": "Original orientation vtable slot 0x4a0a38 selects 0x46a540. Dedicated target matches exactly; six-float direction/up layout agrees at offsets 0/4/8/0c/10/14. Projection preserves this owner only."
+  },
+  "?Data@?$Array@UPartOrientation@@@@UAEPAUPartOrientation@@XZ": {
+    "address": "0046a580",
+    "target": "?Data@?$Array@U_tag_PartOrientation@@@@UAEPAU_tag_PartOrientation@@XZ",
+    "owner": "Container2/OrientationArrayCtor.cpp",
+    "abi": "thiscall; no arguments; EAX=element pointer; array data +0c; element stride 24; no this adjustment",
+    "evidence": ["PartCycle/PartCycle.h", "Container2/OrientationArrayCtor.cpp", "Container/ContainerArray.h"],
+    "reason": "Original orientation vtable slot 0x4a0a3c selects 0x46a580. Dedicated target matches exactly and returns the stored array pointer. Projection selects this owner over incidental copies."
+  },
+  "?Get@StringFunctionArgument@@QAE?AVString@@H@Z": {
+    "address": "00421a90",
+    "target": "?GetName@HasName12@@QAE?AVString@@H@Z",
+    "owner": "Fam112c/StrGet.cpp",
+    "abi": "thiscall; hidden String result pointer then one four-byte unused context argument; EAX=result; ret 8; same four-byte String handle at this+0x0c; no this adjustment",
+    "evidence": ["FunctionExec/Exec.h", "FunctionArgs/FunctionArgs2.cpp", "Fam112c/StrGet.cpp", "String/String.h"],
+    "reason": "Annotated 0x421a90; complete owner matches exactly. Original copies String at +0x0c through 0x4383b0, with 0x4383d0 EH cleanup. Context is unused."
+  },
+  "?Get@Vector3fFunctionArgument@@QAE?AUVector3f@@H@Z": {
+    "address": "00421800",
+    "target": "?Get@Vector3fFunctionArgument@@QAE?AUFaVec@@PAUArgContext@@@Z",
+    "owner": "FunctionArgs/FunctionArgs2.cpp",
+    "abi": "thiscall; hidden 12-byte nontrivial vector result pointer then four-byte context address; EAX=result; ret 8; literal/name/value at +4/+8/+0c; vector x/y/z at +0/+4/+8; no this adjustment",
+    "evidence": ["FunctionGoodie/Goodie.h", "FunctionArgs/FunctionArgs2.cpp", "FunctionArgs/FunctionArgs.h", "Vector3f/Vector3f.h"],
+    "reason": "Original 0x421800 copies the literal vector or calls 0x46b700 on context+0x60 with name at this+8 and the same result buffer. Match score 6 is only EH/jump layout. FaVec and Vector3f both have nontrivial destructors and compatible hidden-result ABI."
+  },
+  "?Lookup@VarTable@@QAE?AUFaVec@@ABVString@@@Z": {
+    "address": "0046b700",
+    "target": "?Get@VectorVariableTable@@QAE?AUVector3f@@ABVString@@@Z",
+    "owner": "Container2/GetVectorVariable.cpp",
+    "abi": "thiscall; hidden 12-byte nontrivial vector result pointer then String reference; EAX=result; ret 8; no this adjustment; ECX is vector table at context+0x60",
+    "evidence": ["FunctionArgs/FunctionArgs2.cpp", "Container2/GetVectorVariable.cpp", "String/String.h"],
+    "reason": "Explicit caller destination 0x46b700; canonical table has keys at +4, IndexOf slot +0x1c and values accessor 0x45d7e0. Local VarTable is an opaque interface, not allocated by the caller. Vector return layouts agree."
+  },
+  "?Print@FloatFunctionArgument@@UAEXXZ": {
+    "address": "00421410",
+    "target": "?PrintFloat@V@@QAEXXZ",
+    "owner": "PrintStubs/PrintStubs2.cpp",
+    "abi": "thiscall; no arguments; void; literal/name/value at +4/+8/+0c; no this adjustment",
+    "evidence": ["FunctionArgs/FunctionArgs2.cpp", "PrintStubs/PrintStubs2.cpp"],
+    "reason": "Original vtable 0x49da84 selects 0x421410. Complete owner matches exactly; literal float is promoted to double for DebugLogAll, nonliteral branch uses original base fallback."
+  },
+  "?Print@Vector3fFunctionArgument@@UAEXXZ": {
+    "address": "004217c0",
+    "target": "?PrintVec@V@@QAEXXZ",
+    "owner": "PrintStubs/PrintStubs2.cpp",
+    "abi": "thiscall; no arguments; void; literal/name/vector at +4/+8/+0c; x/y/z at +0c/+10/+14; no this adjustment",
+    "evidence": ["FunctionArgs/FunctionArgs2.cpp", "PrintStubs/PrintStubs2.cpp"],
+    "reason": "Original vtable 0x49da94 selects 0x4217c0. Complete owner matches exactly; three literal floats are promoted to doubles, nonliteral branch uses original base fallback."
+  },
+  "?Print@StringFunctionArgument@@UAEXXZ": {
+    "address": "00421a70",
+    "target": "?f_421a70@T@@QAEXXZ",
+    "owner": "PrintStubs/PrintStubs.cpp",
+    "abi": "thiscall; no arguments; void; four-byte String handle at +0x0c; no this adjustment",
+    "evidence": ["FunctionArgs/FunctionArgs2.cpp", "FunctionExec/Exec.h", "PrintStubs/PrintStubs.cpp"],
+    "reason": "Original vtable 0x49da9c selects 0x421a70. Complete owner matches exactly; passes the String at +0x0c through the existing reviewed c_str binding to DebugLogAll."
+  },
+  "??0Behavior@@QAE@PAUABody@@PAUASoul@@@Z": {
+    "address": "004022f0",
+    "target": "??0Behavior@@QAE@PAX0@Z",
+    "owner": "Behavior/Behavior.cpp",
+    "abi": "thiscall constructor; two four-byte pointers in original order; ECX=this; EAX=this; ret 8; no this adjustment; 12-byte polymorphic base",
+    "evidence": [
+      "Activity/Activity.h",
+      "Behavior/Behavior.h",
+      "Behavior2/ChaseCtor.cpp",
+      "Behavior2/DeathCtor.cpp",
+      "Fn4023b0/F.cpp",
+      "Fn402930/F.cpp",
+      "Fn403650/F.cpp"
+    ],
+    "reason": "Original 0x4022f0 stores body/soul at +4/+8 and installs the Behavior vtable (0x49d0bc). Dedicated owner now emits that symbolic vtable with destructor and pure Execute slots. Match score 4 contains only store order changes; complete destructor at 0x403b50 matches exactly."
+  },
   "??1V3@@QAE@XZ": {
     "address": "00401660",
     "target": "??1Vector3f@@QAE@XZ",

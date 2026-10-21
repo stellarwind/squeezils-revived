@@ -14,6 +14,32 @@ import struct
 import integration as build
 
 POLICY = {
+    # Orientation lifecycle callbacks and allocation use the same nontrivial
+    # six-float element view as the original; reject incidental trivial copies.
+    "??0?$Array@U_tag_PartOrientation@@@@QAE@XZ":
+        ("0046a330", "Container2/OrientationArrayCtor.cpp"),
+    "??0?$Array@U_tag_PartOrientation@@@@QAE@HPBU_tag_PartOrientation@@@Z":
+        ("0046a230", "Container2/OrientationArrayCtor.cpp"),
+    "??1?$Array@U_tag_PartOrientation@@@@QAE@XZ":
+        ("0046a3d0", "Container2/OrientationArrayCtor.cpp"),
+    "??0_tag_PartOrientation@@QAE@XZ":
+        ("0046ed30", "Tiny4/F41c4b0.cpp"),
+    "??1_tag_PartOrientation@@QAE@XZ":
+        ("0041d790", "Tiny4/F41c4b0.cpp"),
+    "?Remove@?$Array@U_tag_PartOrientation@@@@UAEXH@Z":
+        ("0046a4e0", "Container2/OrientationArrayCtor.cpp"),
+    "?Grow@?$Array@U_tag_PartOrientation@@@@UAEHH@Z":
+        ("0046a590", "Container2/OrientationArrayCtor.cpp"),
+    # Original orientation vtable slots select the nontrivial Get body and
+    # the addressed six-word Insert body, rather than incidental COMDAT copies.
+    "?Get@?$Array@U_tag_PartOrientation@@@@UAE?AU_tag_PartOrientation@@H@Z":
+        ("0041d6e0", "Tiny4/F41c4b0.cpp"),
+    "?Insert@?$Array@U_tag_PartOrientation@@@@UAEHABU_tag_PartOrientation@@H@Z":
+        ("0046a400", "Tiny4/F46a400.cpp"),
+    "?Replace@?$Array@U_tag_PartOrientation@@@@UAEXHABU_tag_PartOrientation@@@Z":
+        ("0046a540", "Container2/OrientationArrayCtor.cpp"),
+    "?Data@?$Array@U_tag_PartOrientation@@@@UAEPAU_tag_PartOrientation@@XZ":
+        ("0046a580", "Container2/OrientationArrayCtor.cpp"),
     "?Grow@?$Array@VString@@@@UAEHH@Z": ("0045e370", "Container/ArrayString.cpp"),
     "?IndexOf@?$Set@VString@@$0BH@@@UAEHABVString@@@Z": ("00462710", "Container/SetString23.cpp"),
     # Same base destructor, using the complete hierarchy's vtable owner.
@@ -190,6 +216,8 @@ def run():
         original = pathlib.Path(unit["object"])
         projected = destination / ("%04d_%s.obj" % (index, pathlib.Path(source).stem))
         data, removed = project(original.read_bytes(), names)
+        from project_dead_externals import retire
+        data, retired = retire(original.read_bytes(), data, removed)
         projected.write_bytes(data)
         # Verify the selected definitions really became undefined references.
         output_symbols = dict(build.coff_symbols(projected))
@@ -202,6 +230,7 @@ def run():
         totals.update(names)
         changed.append(dict(source=source, object=str(projected),
                             externalized=sorted(names), discarded_sections=removed,
+                            retired_dead_externals=retired,
                             input_sha256=hashlib.sha256(original.read_bytes()).hexdigest(),
                             output_sha256=hashlib.sha256(data).hexdigest()))
     # Check ownership across the complete projected loose-object collection,

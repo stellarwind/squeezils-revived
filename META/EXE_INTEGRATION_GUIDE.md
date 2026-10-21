@@ -1,6 +1,13 @@
 # Building the reconstructed SQZ executable
 
-**Latest restart point (2026-10-21):** full pipeline `0f43fb42-f3f6-4025-817d-32e729570319`; 1,141/1,141 sources compile, zero duplicate errors, 1,504 unresolved symbols. EXE not linked. Canonical Qv input/name-registry/dictionary ownership is recorded in the final section.
+**Latest restart point (2026-10-21):** full pipeline `2a8fcf02-13f4-42db-8cf4-82fea1fd6f64`; 1,139/1,139 manifest sources compile, zero duplicate errors and 1,312 unique unresolved symbols. EXE not linked. The final section records blocker-aware triage; pending LevelBrainTable::KeyAt is the next review.
+
+**Symbol-resolution optimization review (2026-10-21):** see
+[SYMBOL_RESOLUTION_OPTIMIZATION.md](SYMBOL_RESOLUTION_OPTIMIZATION.md) for
+target-map repair, blocker-aware triage, pending destructor candidates, shared
+declaration ownership and dependency-aware build/proof reuse. These are planned
+improvements; the review preserves its historical diagnostic snapshot separately
+from the current restart point above.
 
 This guide explains the integration plan, the first full-build probe, and what
 each step teaches us. It targets a working VC++ 4.1 executable first. Matching
@@ -1902,3 +1909,501 @@ and class-owned field metadata from owner-clusters.json. A small projection audi
 found orphan undefined symbol-table entries in replaced Factory/Input4/Parse
 objects, but the sampled orphan names were absent from actual link diagnostics;
 do not assume pruning those names would reduce the remaining count.
+
+## Qv generated node lifetimes and hierarchy ownership (2026-10-21)
+
+qv_node_ownership.py and qv_node_registry.json register 145 full-name bindings,
+including 80 local implementations externalized through the existing checked
+COMDAT projection. The family covers 38 canonical node classes: generated node
+constructors/complete virtual destructors, group/unknown/base-node lifetimes and
+read interfaces, supporting pointer-list/field-table cleanup and growth, node
+name access and the model loader's top-level reader. Class identity comes from
+the explicit original ctor/dtor address and its canonical class entry in the
+Qv mapping. Constructor identity selects that same class's complete destructor;
+node-range and ctor-versus-dtor entry checks reject interior or mismatched entries.
+Nonvirtual/deleting destructor signatures are not substituted for complete
+virtual destructors. Canonical implementations are accepted functionally without
+requiring zero byte scores, including SpotLight/PointLight/MatrixTransform ctors.
+
+qv_aliases.py and link_containers.py revalidate the full-name decisions and unique
+loose entry ownership, then project the selected bodies into external references.
+Each decision records referring-source hashes, the canonical source-tree digest
+and library object hash. Canonical ctor bodies install the canonical vtables and
+class-specific field tables. Existing local scoring fixtures and unused metadata
+remain available; this block did not fabricate vtables or duplicate live class
+field-table storage. Original per-class getFieldData owners remain in the earlier
+reviewed registry. Sources and matching targets were not rewritten.
+
+GetName returns the address of the boxed name handle at this+0x10 in EAX,
+matching the loader's existing double indirection to obtain the string. The WRL
+reader alias passes the 72-byte input and node output address to canonical
+QvDB::read. Pointer-list helper layouts are items/count/capacity (12 bytes);
+the field-table cleanup interface owns two such lists (24 bytes). These helper
+bindings preserve reference/pointer widths and calling conventions.
+
+All 81 integration tests pass. Run the bounded lifecycle sweep with the compiler
+environment sourced: python Repo/tools/qv_node_smoke.py. It generates a test-only
+source in build/integration, checks each constructor view's sizeof against its
+canonical class, invokes 35 constructor aliases and 35 addressed destructor
+aliases, verifies shared field-table identity/counts and field-address bounds,
+and checks nonexact light defaults and identity-matrix values. Destruction uses
+explicit qualified complete destructor calls plus matching operator delete.
+The mixed input/name/dictionary smoke, mixed string/intern smoke and original
+qvlib/test.sh also pass. Runtime smoke coverage is separate from game validation.
+
+Authoritative full pipeline 0a788529-2d10-4d11-95b3-08c431527dad compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+1,798 LNK2001 messages, 1,439 unique unresolved symbols, no internal linker error.
+This supersedes 0f43fb42-f3f6-4025-817d-32e729570319 (0/1,873/1,504),
+65 fewer missing names: the 145 bindings include 80 previously defined owners.
+Remaining clusters: Qv-named symbols 3, container templates 43, ordinary-other
+1,393. The three Qv-named leftovers are QvFieldC's destructor, QvFieldE's
+destructor and QvFieldE::Init, in the shared-shape field units FieldDeriv.cpp and
+FieldDerivB.cpp. Original addresses/field types must be distinguished before
+binding those generic names. Qv-related globals without Qv in their spelling can
+also remain in ordinary-other; the three-symbol count is not total parser closure.
+
+The EXE still does not link; cached binary provenance remains incomplete and
+gameplay is untested. STATUS.md and HANDOFF.md remain unchanged. Changes are
+uncommitted/unpushed. Next bounded block: shared-shape Qv field ownership, or a
+coherent ordinary-method/data family from the current owner-clusters.json.
+
+## Dead external rows after function projection (2026-10-21)
+
+Added tools/project_dead_externals.py to the existing function projection pass.
+VC4 still diagnoses undefined symbol-table entries after their only referencing
+sections have been discarded. Candidates must be original undefined external
+rows with zero value, referenced by a discarded section and by no retained
+relocation. Common storage, original definitions, selected function owners and
+weak-external auxiliary dependencies remain intact. Retired rows become private
+absolute .sqzdead bookkeeping markers; no public zero-valued symbols or dummy
+function bodies are introduced. Symbol indices and all retained section bytes
+and relocation records remain unchanged. Current projected .drectve sections
+contain only default-library directives. Per-object retired names are recorded
+in containers/projection.json.
+
+The completed pipeline retired 938 rows (302 distinct spellings) in 102 objects;
+54 were previously unresolved names, largely Qv parser string constants whose
+function owners already live in QvLib. No storage aliases were guessed for
+strings excluded from extracted data. Five regression tests cover dead-only,
+retained, weak-auxiliary, common-storage and unrelated undefined entries. All
+86 tests pass in the compiler environment. No game implementation sources changed.
+
+Authoritative pipeline 310e3e5c-8cca-4898-a4fe-e1142dfd3cb1 compiles 1,141/1,141
+sources without failures/omissions; snapshot-covered inputs are unchanged during
+the run. The diagnostic completes with zero LNK2005, 1,744 LNK2001 messages,
+1,385 unique unresolved names and no internal linker error. This supersedes
+0a788529-2d10-4d11-95b3-08c431527dad (0/1,798/1,439). Remaining clusters:
+Qv 3, container templates 43, ordinary-other 1,339. EXE not linked; cached binary
+provenance remains incomplete and gameplay remains untested. STATUS.md and
+HANDOFF.md unchanged. Changes uncommitted/unpushed. Next coherent candidate:
+Activity/WalkActivity/Behavior lifetime ownership, after separating unrelated
+Part destructor addresses and checking each original entry and object layout.
+
+## Annotated complete-destructor ownership (2026-10-21)
+
+Added tools/destructor_aliases.py and destructor_registry.json: 38 complete
+thiscall destructor bindings across 24 existing owners. Includes Activity,
+WalkActivity, Contact variants, placement helpers and other explicitly annotated
+lifetime spellings. Every referring translation unit must declare the same
+original destructor address; available exact caller destinations must agree.
+The canonical owner must be one complete destructor with one original address,
+and every selectable compiled definition must match the complete original body.
+Every original PE HIGHLOW operand in that body must have a symbolic DIR32
+relocation: hard-coded original vtable/data pointers cannot pass. Deleting
+entries and ordinary Dtor methods cannot serve as complete-destructor owners.
+Qv lifetime addresses remain with their existing registries.
+
+entry_aliases.py regenerates the decisions from current objects and declarations
+and checks exact registry equality before emitting aliases. Declaration hashes
+and canonical object hashes pin the reviewed evidence. Object hashes exclude
+only the VC4 COFF timestamp; code, relocations, symbol names and remaining object
+bytes remain checked. The initial diagnostic attempt stopped at this proof gate
+because recompilation changed the timestamp; its incomplete result is superseded
+by the completed run below. Six added regression tests cover address/call
+conflicts, owner ambiguity, ABI kind, symbolic absolute operands and timestamp
+normalization. All 92 tests pass in the compiler environment.
+
+Authoritative pipeline bfdd95a9-05a3-41ad-a517-32cb0a9e1be3 compiles 1,141/1,141
+sources with zero failures/omissions, completes diagnostic linking and
+classification, and reports snapshot-covered inputs unchanged during the run.
+Zero LNK2005; 1,672 LNK2001 messages; 1,347 unique unresolved;
+no internal linker error. This supersedes 310e3e5c-8cca-4898-a4fe-e1142dfd3cb1
+(0/1,744/1,385): all 38 bindings remove previously missing names.
+Remaining clusters: Qv 3, container templates 43, ordinary-other 1,301.
+No game implementation sources or scoring targets changed, and no new runtime
+validation was performed. Cached binary provenance remains incomplete and
+gameplay is untested. EXE not linked. STATUS.md/HANDOFF.md unchanged; changes
+uncommitted/unpushed. Behavior destructor mapping remains withheld because its
+addressed owner is an ordinary method that writes an original vtable address.
+Next bounded candidate: Activity virtual step interfaces or a larger coherent
+ordinary-method family from owner-clusters.json; never blanket-alias Part.
+
+## Activity step interface ownership (2026-10-21)
+
+Added tools/activity_aliases.py and activity_registry.json with five full-name
+bindings: WalkActivity::StepAir, MoveActivity::StepGround, TT::MoveStep,
+StopActivity::StepGround and DieActivity::StepGround. Original vtable slots
+0x49d08c, 0x49d080, 0x49d0e0 and 0x49d0a0 select their existing complete owners.
+All take ECX=this and one four-byte argument, return int in EAX and pop four
+bytes. Die's local unused int argument and Walk's unused int argument have the
+same entry ABI as the caller's pointer. No wrapper or this adjustment is used.
+Body/soul offsets are +4/+8, Move fields +2ac/+2b0/+2b4/+2b8, Die done +2ac;
+ground output is two four-byte floats. The registry pins referring sources,
+shared declarations and owner object hashes excluding only the COFF timestamp.
+Entry alias generation rechecks original slots, unique address ownership,
+complete original bodies and symbolic absolute operands before emitting aliases.
+
+Per-body external audit: Walk has no externals; Move/Stop's kStillSpeed spellings
+are already supplied by data_alias.json for original 0x49d014. Die's four calls
+are already reviewed entry bindings to Inventory::RemoveNuts, Sink::Absorb,
+PlaceSimulation::GetLevel and Possessions::GetInventory. No additional unowned
+external was introduced. TurnTargetActivity::StepGround remains unresolved:
+its nonexact TT body needs a separate semantic/shape review before binding.
+No game implementation sources, declarations or scoring targets changed.
+
+Authoritative pipeline 188253fb-859f-497e-864a-54e7994ef422 compiles 1,141/1,141
+sources with zero failures/omissions; all 92 integration tests pass. Projection,
+diagnostic linking and classification complete, with snapshot-covered inputs
+unchanged during the run. Zero LNK2005; 1,656 LNK2001 messages; 1,342 unique
+unresolved symbols; no internal linker error. This supersedes
+bfdd95a9-05a3-41ad-a517-32cb0a9e1be3 (0/1,672/1,347): all five selected names
+are absent from current unresolved diagnostics. Clusters: Qv 3, container
+43, ordinary-other 1,296. Source coverage remains the existing scoreboard's
+100%; compiled-source coverage is independently 1,141/1,141. EXE not linked,
+cached binary provenance incomplete, gameplay untested. STATUS.md and
+HANDOFF.md unchanged; changes uncommitted/unpushed. Next bounded candidate:
+TurnTarget's step body review or another coherent ordinary-method/data family.
+
+## Behavior constructor/destructor ownership (2026-10-21)
+
+Behavior now has its own 12-byte polymorphic base declaration: destructor at
+vtable+0, pure Execute at +4, body at +4 and soul at +8. The constructor at
+0x4022f0 uses the compiler-emitted symbolic Behavior vtable instead of writing
+original 0x49d0bc. The dedicated complete destructor at 0x403b50 matches exactly
+(score 0); constructor score 4 contains only store-order differences. The
+Behavior target was removed from the multi-address FlatDtor fixture, whose four
+remaining targets all still match exactly. No scoring status was regenerated.
+
+The full-name typed ABody/ASoul constructor reference is reviewed in
+ordinary_alias_registry.json against the existing void-pointer constructor:
+ECX=this, two pointers in original order, EAX=this, ret 8, no adjustment.
+The complete destructor is now directly defined under the required symbol;
+no destructor alias or original-image vtable pointer remains in this owner.
+Per-object externals are operator delete, CRT type_info vtable, purecall and a
+same-object deleting destructor reference; each has an existing owner.
+An isolated VC4 smoke validates sizeof 12, body/soul offsets and values,
+virtual Execute dispatch and repeated virtual destruction via a base pointer.
+An initial post-lifetime vtable read was discarded as an invalid smoke test;
+original-body comparison and current COFF relocations verify the base vtable.
+
+Authoritative pipeline 22e10a2a-3395-4b88-bb14-9c0de4dcc727 compiles 1,141/1,141
+sources with no failures/omissions, completes projection/link/classification,
+and reports snapshot-covered inputs unchanged. All 92 integration tests pass.
+Zero LNK2005; 1,642 LNK2001 messages; 1,340 unique unresolved; no internal linker
+error. This supersedes 188253fb-859f-497e-864a-54e7994ef422 (0/1,656/1,342):
+Behavior constructor and destructor references are both absent from diagnostics.
+Remaining clusters: Qv 3, container 43, ordinary-other 1,294. Source coverage is
+the prior scoreboard's 100%, compiled-source coverage independently 1,141/1,141.
+EXE not linked; cached binary provenance incomplete; gameplay untested. Both
+guide copies agree; STATUS.md/HANDOFF.md unchanged; changes uncommitted/unpushed.
+Next bounded candidate: FunctionArgument Get interfaces or TurnTarget step review.
+
+## FunctionArgument value/print interfaces (2026-10-21)
+
+Six reviewed full-name bindings in ordinary_alias_registry.json connect String
+and vector Get, the vector variable-table Lookup, and Float/String/vector Print
+to their existing addressed owners. The int/float Get interfaces were already
+bound and were not duplicated. Original vtable slots 0x49da84/0x49da94/0x49da9c
+select Print at 0x421410/0x4217c0/0x421a70. All PrintStubs targets match exactly.
+String Get at 0x421a90 matches exactly and copies the four-byte String at +0x0c.
+Vector Get at 0x421800 has score 6 with only EH/jump placement differences;
+it copies three floats at +0x0c or calls 0x46b700 on context+0x60. The canonical
+variable-table lookup at 0x46b700 matches exactly. Both vector spellings have
+nontrivial destructors and use the same 12-byte hidden-result ABI; String uses
+the same four-byte nontrivial handle in both units. Both Get interfaces pass a
+hidden result pointer followed by context, return that pointer in EAX, and pop
+8 bytes. Print takes no stack arguments and returns void; no this adjustments.
+
+Per-body audit maps String copy/destruction to String/String.cpp, FaVec cleanup
+to Vector3f/Vector3fOps.cpp, Text::Get to the existing String::c_str binding,
+DebugLogAll to DebugLog/DebugLog.cpp, and EH support to CRT/runtime ownership.
+The vector-table At call is still unresolved: annotated original 0x45d7e0 is
+currently mapped to a String-returning Holder::Item fixture in Fam112b/ItemGet.cpp.
+Do not bind that incompatible return type without reviewing/reconstructing the
+original vector accessor. This pre-existing dependency remains explicit; no
+new source reference or dummy accessor was added. No implementation sources,
+class declarations or scoring targets changed in this block.
+
+Authoritative pipeline c74094d8-35e6-49c5-806c-ef973edf46c0 compiles 1,141/1,141
+sources with no failures/omissions, completes projection/link/classification,
+and reports snapshot-covered inputs unchanged. All 92 integration tests pass.
+Zero LNK2005; 1,626 LNK2001 messages; 1,334 unique unresolved; no internal linker
+error. This supersedes 22e10a2a-3395-4b88-bb14-9c0de4dcc727 (0/1,642/1,340):
+all six selected names are absent from current diagnostics. Clusters: Qv 3,
+container 43, ordinary-other 1,288. Source coverage is the prior scoreboard's
+100%; compiled-source coverage independently 1,141/1,141. Neither proves runtime
+behavior. EXE not linked; cached binary provenance incomplete; no new runtime
+validation. STATUS.md/HANDOFF.md unchanged; changes uncommitted/unpushed.
+Next bounded candidate: resolve the 0x45d7e0 vector accessor ownership/type issue.
+
+## Vector-variable indexed accessor correction (2026-10-21)
+
+Original 0x45d7e0 is now owned by VectorVariableTable::At in
+Container2/GetVectorVariable.cpp. It forwards the hidden 12-byte result buffer
+and index to Array<Vector3f>::At at 0x45c5b0 on this+0x18, with vector cleanup
+at 0x401660. Its full decorated symbol directly resolves the existing named
+lookup call; no alias was needed. The table declaration records size 0x28,
+keys at +4 (size 0x14) and the real Array<Vector3f> values member at +0x18.
+The incorrect String-returning Holder::Item mapping was removed from Fam112b.
+Its other three String mappings remain. This corrects a return-type/cleanup
+ownership error that relocation-masked matching alone could not detect.
+
+At at 0x45d7e0, Get at 0x46b700, Array<Vector3f>::At at 0x45c5b0 and all three
+remaining Fam112b targets match exactly. Per-function externals map to the
+addressed array accessor in Container/ArrayVecAt.cpp, the shared vector
+destructor in Vector3f/Vector3fOps.cpp, and CRT/runtime EH support. The current
+ownership inventory records only the dedicated vector-table method for
+0x45d7e0, and its full name is absent from unresolved diagnostics.
+
+Authoritative pipeline d4513efe-de4a-4c7d-8a3e-1a0a5408bb43 compiles 1,141/1,141
+sources with zero failures/omissions; all 92 integration tests pass. Projection,
+diagnostic link and classification complete with snapshot-covered inputs
+unchanged. Zero LNK2005; 1,625 LNK2001 messages; 1,333 unique unresolved;
+no internal linker error. This supersedes c74094d8-35e6-49c5-806c-ef973edf46c0
+(0/1,626/1,334). Clusters: Qv 3, container 43, ordinary-other 1,287.
+The earlier scoreboard's source coverage is 100%, distinct from this run's
+compiled-source coverage of 1,141/1,141 and from behavior/runtime validation.
+EXE not linked; cached binary provenance incomplete; no new runtime validation.
+STATUS.md/HANDOFF.md unchanged; changes uncommitted/unpushed. Next coherent
+candidate: the remaining container-interface family from owner-clusters.json,
+or another high-reference ordinary-method family; keep return-type and called
+address checks separate from masked instruction scores.
+
+## Orientation-array value interfaces (2026-10-21)
+
+Four reviewed full-name bindings connect Array<PartOrientation>::Get, Insert,
+Replace and Data to addressed Array<_tag_PartOrientation> owners. Original
+vtable 0x4a0a2c selects entries 0x41d6e0/0x46a400/0x46a540/0x46a580 in slots
+0/4/0c/10. Array layout is vptr/count/capacity/data at +0/+4/+8/+0c, size 0x10;
+elements are two vectors, six contiguous floats, size 24. Get passes a hidden
+24-byte nontrivial result buffer and index (ret 8, EAX=result). Insert passes
+an element reference and index (ret 8, EAX=int). Replace passes index and
+reference (ret 8, void). Data takes no arguments and returns the stored pointer.
+No this adjustments. Insert's six-word local view copies float representations
+without arithmetic or by-value element transfer.
+
+All four targeted owners match exactly. Added dedicated Replace/Data targets
+in Container2/targets_orientation_ctor.txt; the existing constructor score is
+31 and no constructor binding was added. Explicit link_containers.py policies
+select Get from Tiny4/F41c4b0.cpp (nontrivial return), Insert from
+Tiny4/F46a400.cpp, and Replace/Data from Container2/OrientationArrayCtor.cpp.
+This rejects incidental competing COMDAT owners rather than trusting linker
+selection across differing local element declarations. Projection's surviving
+owner checks confirm exactly these four owners. Get's externals map to the
+shared Vector3f destructor and CRT/runtime EH support; the other three selected
+bodies have no undefined relocation targets (Insert dispatches Grow virtually).
+No implementation sources or class declarations changed. Array construction,
+destruction and element-lifetime spellings remain a separate ownership block.
+
+Authoritative pipeline 71c9c6dc-b0ed-47de-bbb0-acbcbf16cb6a compiles 1,141/1,141
+sources with zero failures/omissions; all 92 integration tests pass. Projection,
+diagnostic linking and classification complete with snapshot-covered inputs
+unchanged. Zero LNK2005; 1,621 LNK2001 messages; 1,329 unique unresolved;
+no internal linker error. This supersedes d4513efe-de4a-4c7d-8a3e-1a0a5408bb43
+(0/1,625/1,333). Clusters: Qv 3, container 39, ordinary-other 1,287.
+Source coverage remains the prior scoreboard's 100%; compiled-source coverage
+is independently 1,141/1,141. EXE not linked; cached binary provenance incomplete;
+no new runtime validation. STATUS.md/HANDOFF.md unchanged; changes uncommitted/
+unpushed. Next bounded candidate: orientation array lifecycle ownership, with
+explicit original ctor/dtor address checks and compatible element cleanup.
+
+## Orientation-array lifecycle and allocation ownership (2026-10-21)
+
+Three reviewed full-name bindings connect the PartOrientation array's default
+constructor, count/source constructor and complete destructor to the nontrivial
+_tag_PartOrientation template implementation in Container2/OrientationArrayCtor.cpp.
+These are original entries 0x46a330, 0x46a230 and 0x46a3d0. Default/copy constructor
+scores 20/31 are register choice and copy-loop scheduling only; count, capacity,
+24-byte stride, four-byte array cookie, allocation, callback addresses and
+conditions agree. The destructor matches exactly. The actual element constructor
+0x46ed30 and destructor 0x41d790 emitted in Tiny4/F41c4b0.cpp both match exactly.
+They have the original two-vector layout and use the shared vector destructor.
+Lifecycle references map to these element owners plus CRT allocation, array
+construction/destruction helpers and EH runtime support; no unowned dependency
+is hidden by a wrapper or dummy body.
+
+The allocation audit additionally selected Remove at 0x46a4e0 (score 0) and Grow
+at 0x46a590 (score 10, register/order only) from the same nontrivial array view.
+Grow must not select an incidental trivial-element instantiation that omits
+array cookies and callbacks. All six vtable methods, both array constructors,
+array destructor and both element callbacks now have explicit projection owners;
+current inventory records one target entry for each reviewed lifecycle address.
+The obsolete PArr24, standalone Pair constructor, Array24 Remove and E24 Grow
+fixtures were removed from the compile manifest, not deleted. Their functions
+are covered by the new canonical target lines. Pair's 0x41d790 target moved to
+the actual orientation element destructor; its remaining 0x4052b0 target is exact.
+No implementation body or shared class declaration was changed in this block.
+
+An isolated native VC4 smoke linked the actual projected orientation/Insert/Get
+objects and shared Vector3f owner. build/integration/orientation-smoke.cpp/.exe/
+.log exercise sizeof 24/16, default count/capacity, three inserts forcing growth,
+Get of all six float fields, Replace, Remove, zero/nonzero copy construction and
+cleanup of every array. Compile and runtime exit 0. Seven production interface
+bindings are used; a test-only Remove spelling binding exercises the addressed
+Remove body (the game currently dispatches through its vtable). The first smoke
+link exposed that test-only direct spelling and was repaired without changing
+production aliases. This is component runtime coverage, not gameplay validation.
+
+Authoritative pipeline 9ed43249-1aa5-4d6b-a12b-96f518346bd6 compiles 1,137/1,137
+manifest sources with zero failures/missing inputs; all 92 integration tests pass.
+Projection, diagnostic linking and classification complete with snapshot-covered
+inputs unchanged. Zero LNK2005; 1,614 LNK2001 messages; 1,323 unique unresolved;
+no internal linker error. This supersedes intermediate lifecycle run
+971d71c1-567c-4247-a45c-02370d96b7eb (1,139 sources, 0/1,616/1,325) and the prior
+71c9c6dc-b0ed-47de-bbb0-acbcbf16cb6a (1,141 sources, 0/1,621/1,329).
+The total six-name reduction includes three lifecycle bindings and removal of
+superseded fixture inputs; these are explicitly different source input sets,
+not an equivalent-input alias-only comparison. Clusters: Qv 3, container 36,
+ordinary-other 1,284. The prior source scoreboard remains 100%; current compiled
+coverage is independently 1,137/1,137 with the four replacements described above.
+EXE not linked; cached binary provenance incomplete; gameplay untested.
+STATUS.md/HANDOFF.md unchanged; changes uncommitted/unpushed. Next coherent
+candidate: pointer-table lifetimes (PartPose/PartCycle/RoboBrain), establishing
+array cookie and pointee ownership before sharing template implementations.
+
+## Pointer-table lifetime owners (2026-10-21)
+
+Added Container2/PointerTableLife.cpp with explicit constructor/destructor member
+instantiations for Table<String, PartPose*, Array<PartPose*>,0>, PartCycle* and
+RoboBrain*. No ABI alias or wrapper is needed: the definitions use the callers'
+full decorated names. Dedicated targets own PartPose 0x46a8b0/0x46ab60,
+PartCycle 0x46b2e0/0x46b590 and RoboBrain 0x469df0/0x46a0a0. These six addresses
+were removed from the generic integer-valued TableCtorS/TableDtor scoring maps.
+The remaining five generic constructor and twenty destructor targets are exact.
+
+All three typed complete destructors and the RoboBrain constructor match exactly.
+PartPose/PartCycle constructor score 42 consists only of register choice and
+instruction/store scheduling; original calls, allocation sizes, String callbacks,
+member offsets and conditions agree. Table layout is size 0x28, key Set at +4
+(size 0x14), pointer array at +0x18 (size 0x10); count/capacity/data have the
+existing shared Array layout. Keys allocate two nontrivial String handles with
+an array cookie; values allocate two four-byte pointers without element cleanup.
+Table destruction releases key and pointer-array storage, never the pointees.
+Enclosing PoseTable/MorphCycle/PlaceLevel destructors retain pointee ownership.
+
+Per-object external audit finds no current unresolved name: shared Set<String,0>
+metadata/read/write/Create is supplied by Container2/gen/PA_s0.cpp and SC_s0.cpp;
+Set Insert by Container/gen/Set28.cpp, Set destruction by SetDtorOwners.cpp;
+String construction/copy/assignment/destruction/order by String/String.cpp;
+allocation, array helpers, type_info and EH support by CRT/runtime. There are no
+PartPose/PartCycle/RoboBrain destructor references in the table lifetime owner.
+Only six lifetime members are explicitly instantiated; RoboBrain KeyAt remains
+unresolved and is a separate interface check, not silently emitted without an
+original-address target. No caller declarations or implementation bodies changed.
+
+Authoritative pipeline cd8ec253-803b-4a78-9cae-2e82b5c158f2 compiles 1,138/1,138
+manifest sources with zero failures/missing inputs; all 92 integration tests pass.
+Projection, diagnostic linking and classification complete with snapshot-covered
+inputs unchanged. Zero LNK2005; 1,606 LNK2001 messages; 1,317 unique unresolved;
+no internal linker error. This supersedes 9ed43249-1aa5-4d6b-a12b-96f518346bd6
+(1,137 sources, 0/1,614/1,323). One canonical source was added; all six previously
+missing lifetime names are now directly defined. Clusters: Qv 3, container 30,
+ordinary-other 1,284. The prior source scoreboard is 100%; this run independently
+compiles all 1,138 manifest sources. Neither proves full runtime behavior.
+EXE not linked; cached binary provenance incomplete; no new runtime validation.
+STATUS.md/HANDOFF.md unchanged; changes uncommitted/unpushed. Next bounded
+candidate: remaining pointer-table KeyAt/lookup interfaces or frame-pointer array
+lifetimes, with the same original-address and pointee-ownership checks.
+
+## TableGet exact-call registry ownership repair (2026-10-21)
+
+The previous pipeline stopped at Table2::Find because the exact-call registry
+still described the TableGet owner before 0x46d2a0 moved to the addressed
+SurfaceTypeDescription pointer-table accessor. The missing shared entry is
+0046d2a0, not 0046a210; the optimization note's earlier typo is corrected.
+
+Reviewed fresh discoveries and updated exactly 23 existing registry entries:
+six aliases calling 0046d2a0 now select Container2/PointerTableAccess.cpp and
+its Table<String,SurfaceTypeDescription*,...>::Get implementation; 17 retain
+TableGet/TableGet.cpp with only 0046d2a0 removed from their shared-entry lists.
+All destinations, referring sources, exact caller sites and ABI evidence remain
+unchanged. No new aliases were registered and no proof checks were weakened.
+The complete original body, indirect dispatch, table layout, pointer return and
+one stack argument agree; discovery still checks every compiled definition.
+All 18 affected accessor targets score zero; 11 exact-call proof tests pass.
+Detailed reviewed deltas are build/integration/table-get-registry-review.json.
+
+Authoritative pipeline 08c1b003-7d33-4a9a-86bc-ee61e521e01a compiles 1,139/1,139
+sources with no failures or omitted failed sources and completes every stage.
+Diagnostic: zero LNK2005, 1,604 LNK2001 messages, 1,315 unique unresolved names,
+no internal linker error. Snapshot-covered inputs stayed unchanged. The previous
+1,317-name diagnostic used a different source inventory and is not an equivalent
+before/after comparison. This run supersedes the failed target-repair run for
+current diagnostic evidence. Source coverage is unchanged; STATUS.md was not
+regenerated. Cached binary/external-header provenance remains unverified, the
+EXE does not link, and runtime is untested. Next block: blocker-aware triage from
+the refreshed owner-clusters.json, as outlined in SYMBOL_RESOLUTION_OPTIMIZATION.md.
+
+## Two-vector complete-destructor spellings (2026-10-21)
+
+Reviewed and registered ??1LaunchParams@@QAE@XZ, ??1M405260@@QAE@XZ and
+??1PhysCore@@QAE@XZ against ??1Pair@@QAE@XZ in Fam68/TwoVecDtor.cpp,
+original 004052b0. Each referring source explicitly annotates that entry.
+The original complete body and EH funclets call the empty vector destructor
+at +0xc and +0; no deleting flag, stack argument or this adjustment is introduced.
+Larger opaque caller layouts do not add destruction work to the original body.
+The sole canonical definition passes complete-body and absolute-relocation checks;
+its Float3 member destruction already maps to the Vector3f owner at 00401660.
+Fresh discovery, six destructor proof tests and pair_dtor=0 pass. No source bodies
+or target maps changed. Pipeline entry_alias.json confirms all three bindings.
+
+Authoritative pipeline 28d367f4-1779-46e3-a364-dc405a6b7af5 compiles all
+1,139/1,139 sources without failures/omissions and completes projection/link.
+Zero LNK2005, 1,601 LNK2001 messages, 1,312 unique unresolved names, no internal
+linker error. Snapshot-covered inputs stayed unchanged. Relative to completed
+08c1b003-7d33-4a9a-86bc-ee61e521e01a, the only changed snapshot input is
+tools/destructor_registry.json: the same-source diagnostic removes exactly these
+three names (1,315 -> 1,312). Cached binary/external-header provenance remains
+unverified; no linked EXE or runtime validation. Source coverage is unchanged;
+STATUS.md was not regenerated. Next block: blocker-aware owner triage rather than
+ordinary-other; inspect refreshed owner-clusters.json and discovery rejections.
+
+## Blocker-aware owning-family triage (2026-10-21)
+
+integration_clusters.py schema 2 replaces the ordinary-other bucket with owning
+entities extracted from linker-demangled displays while preserving full decorated
+names as identity. Template arguments to NavProp/FrameProp constructors no longer
+make them container implementations. Nested templates/classes and function-pointer
+data retain their owning names. Every diagnostic name has exactly one primary
+family and blocker; unknowns remain explicit rather than guessing implementations.
+
+The report joins current diagnostic names/messages, referring sources, actual
+compiled COFF relocation sites, original destinations from exact caller evidence,
+address-owner mappings, discovery decisions/rejections, and reviewed registries.
+Relocation sites are explicitly compiled-input sites: projection may retire some;
+they are not equated with linker messages. Candidate owners are not approved
+bindings. Missing target mappings are not labeled missing implementations without
+proof. Accepted discoveries absent from alias registries are deduplicated by full
+symbol and intersected with current unresolved names, never emitted automatically.
+Families rank by distinct names then affected sources; effort/dependency estimates
+remain unreviewed and are not invented. Standalone report generation rejects inputs
+whose hashes disagree with the completed pipeline; pipeline passes its own run ID.
+
+Eight unit tests cover family parsing, template arguments, global data/functions,
+pointer declarations, acceptance precedence and conservative blocker distinctions.
+Full pipeline 2a8fcf02-13f4-42db-8cf4-82fea1fd6f64 compiles 1,139/1,139 sources
+with no failures/omissions, zero duplicates, 1,601 LNK2001 messages and 1,312 unique
+unresolved names; no internal linker error and snapshot inputs unchanged. Report
+run ID/hash agree with pipeline-summary.json. All 1,312 names appear exactly once,
+blocker totals and linker messages reconcile, and 2,412 compiled relocation sites
+are separately enumerated. Blockers: 774 unknown, 195 owner-proof-incomplete,
+173 data-identity-layout-unproven, 98 unproven-caller, 37 ambiguous-owner-candidates,
+32 missing-mapping, two declaration/ABI conflicts and one accepted-awaiting-review.
+The sole pending candidate is ?KeyAt@LevelBrainTable@@QAE?AVString@@H@Z, original
+0044de90, canonical addressed Table<String,RoboBrain*,...>::KeyAt implementation
+in Container2/PointerTableAccess.cpp. Review its String return-buffer ABI and caller
+proof next. No aliases or source bodies changed in this tooling block; unresolved
+count is unchanged. Cached binary/external-header provenance remains unverified;
+EXE/runtime validation pending. STATUS.md was not regenerated.

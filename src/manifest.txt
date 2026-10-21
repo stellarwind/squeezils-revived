@@ -196,6 +196,8 @@ Container2/targets_int_string_ctor.txt Container2/IntStringTableCtor.cpp
 Container2/targets_float_string_ctor.txt Container2/FloatStringTableCtor.cpp
 Container2/targets_string_int_ctor.txt Container2/StringIntTableCtor.cpp
 Container2/targets_orientation_ctor.txt Container2/OrientationArrayCtor.cpp
+Container2/targets_pointer_table_life.txt Container2/PointerTableLife.cpp
+Container2/targets_pointer_table_access.txt Container2/PointerTableAccess.cpp
 Calibration/targets.txt Calibration/Calibration.cpp
 IsAttacking/targets.txt IsAttacking/IsAttacking.cpp
 GetGroundMotion/targets.txt GetGroundMotion/GetGroundMotion.cpp
@@ -515,7 +517,6 @@ Misc18/targets_reg.txt Misc18/Reg.cpp
 Misc18/targets_pop.txt Misc18/Pop.cpp
 Misc18/targets_free.txt Misc18/Free.cpp
 Misc18/targets_parr.txt Misc18/PArr.cpp
-Misc18/targets_parr24.txt Misc18/PArr24.cpp
 Misc18/targets_com.txt Misc18/ComHolder.cpp
 Misc18/targets_axis.txt Misc18/Axis.cpp
 Misc18/targets_get.txt Misc18/Getter.cpp
@@ -548,7 +549,6 @@ Tiny4/targets.txt Tiny4/F43bf10.cpp Tiny4/F448dc0.cpp
 Tiny4/targets2.txt Tiny4/F41bcf0.cpp
 Tiny4/targets3.txt Tiny4/F43bf80.cpp
 Tiny4/targets4.txt Tiny4/F43bb10.cpp
-Tiny4/targets5.txt Tiny4/F46a4e0.cpp
 Tiny4/targets6.txt Tiny4/Names.cpp
 Tiny4/targets7.txt Tiny4/F459220.cpp
 Tiny4/targets9.txt Tiny4/F457ad0.cpp
@@ -582,7 +582,6 @@ Container2/targets_glob.txt Container2/GlobTab.cpp
 Container/targets_vecat.txt Container/ArrayVecAt.cpp
 
 ForwardThunks/targets.txt ForwardThunks/ForwardThunks.cpp
-Fam68/targets_ctor.txt Fam68/TwoVecCtor.cpp
 Input/targets_assignkey.txt Input/AssignKey.cpp
 Input/targets_actionname.txt Input/ActionName.cpp
 Input/targets_keyslot.txt Input/SetKeySlot.cpp
@@ -667,7 +666,6 @@ Fn4311c0/targets.txt Fn4311c0/F.cpp String/String.cpp
 Fn470680/targets.txt Fn470680/F.cpp String/String.cpp
 Fn441d20/targets.txt Fn441d20/F.cpp String/String.cpp
 Fn445150/targets.txt Fn445150/F.cpp String/String.cpp
-Fn46a590/targets.txt Fn46a590/F.cpp
 Container/gen/targets_TableCtorS.txt Container/gen/TableCtorS.cpp
 Fn40f450/targets.txt Fn40f450/F.cpp
 Fn4781d0/targets.txt Fn4781d0/F.cpp

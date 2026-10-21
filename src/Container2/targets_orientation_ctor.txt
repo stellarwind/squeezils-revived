@@ -1,1 +1,7 @@
 ^\?\?0\?\$Array@.*@@QAE@H 46a230 orientation_array_ctor cc
+^\?\?0\?\$Array@U_tag_PartOrientation@@@@QAE@XZ 46a330 orientation_default_ctor cc
+^\?\?1\?\$Array@U_tag_PartOrientation 46a3d0 orientation_array_dtor cc
+^\?Replace@\?\$Array@U_tag_PartOrientation 46a540 orientation_replace 64
+^\?Data@\?\$Array@U_tag_PartOrientation 46a580 orientation_data 16
+^\?Remove@\?\$Array@U_tag_PartOrientation 46a4e0 orientation_remove 96
+^\?Grow@\?\$Array@U_tag_PartOrientation 46a590 orientation_grow 304

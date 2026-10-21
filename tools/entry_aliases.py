@@ -127,6 +127,31 @@ def main():
             pairs.append((alias, decision['target']))
             evidence.append(dict(alias=alias, matrix_decision=decision))
         pairs.sort()
+    destructor_registry = build.REPO / 'tools/destructor_registry.json'
+    if destructor_registry.exists():
+        from destructor_aliases import discover as discover_destructors
+        current_destructors = discover_destructors()
+        (build.OUT / 'destructor-candidates.json').write_text(json.dumps(current_destructors, indent=2))
+        for alias, decision in json.loads(destructor_registry.read_text()).items():
+            if current_destructors['accepted'].get(alias) != decision:
+                raise ValueError('Complete-destructor proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate complete-destructor alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, destructor_decision=decision))
+        pairs.sort()
+    activity_registry = build.REPO / 'tools/activity_registry.json'
+    if activity_registry.exists():
+        from activity_aliases import discover as discover_activities
+        current_activities = discover_activities()
+        if current_activities != json.loads(activity_registry.read_text()):
+            raise ValueError('Activity step proof changed; review activity registry')
+        for alias, decision in sorted(current_activities.items()):
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate Activity step alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, activity_decision=decision))
+        pairs.sort()
     write_coff(pairs, build.OUT / "entry_alias.obj")
     (build.OUT / "entry_alias.json").write_text(json.dumps(dict(
         aliases=pairs, evidence=evidence, skipped=skipped,

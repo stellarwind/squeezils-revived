@@ -20,7 +20,7 @@ def snapshot():
              build.REPO.parent / 'nm/full.asm'}
     for folder in (build.SRC, build.REPO / "tools", build.REPO / "data", build.REPO / "qvlib"):
         paths.update(p for p in folder.rglob("*") if p.is_file()
-                     and p.suffix.lower() in (".cpp", ".c", ".h", ".py", ".pl", ".sh", ".txt", ".tsv", ".json", ".obj", ".res", ".lib"))
+                     and p.suffix.lower() in (".cpp", ".c", ".h", ".py", ".pl", ".pm", ".sh", ".txt", ".tsv", ".json", ".obj", ".res", ".lib"))
     for folder in os.environ.get("LIB", "").split(";"):
         if folder:
             paths.update(pathlib.Path(folder).glob("*.lib"))
@@ -76,7 +76,7 @@ def main():
             raise RuntimeError("Diagnostic link did not complete; classification withheld")
         stage("classify_code_refs.py")
         stage("inventory_eh.py")
-        stage("integration_clusters.py")
+        stage("integration_clusters.py", "--run-id", report["run_id"])
         report["compile"] = json.loads((build.OUT / "summary.json").read_text())
         report["inputs_unchanged_during_run"] = snapshot() == report["input_hashes"]
         report["generated_hashes"] = {str(p.relative_to(build.OUT)): hashlib.sha256(p.read_bytes()).hexdigest()

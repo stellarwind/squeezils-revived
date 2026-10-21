@@ -3,4 +3,4 @@
 ^\?Remove@\?\$Array@   468c90 remove
 ^\?Replace@\?\$Array@   468cd0 replace
 ^\?Data@\?\$Array@   468cf0 data
-^\?Grow@\?\$Array@   468d00 grow
+^\?Grow@\?\$Array@   468d00 grow

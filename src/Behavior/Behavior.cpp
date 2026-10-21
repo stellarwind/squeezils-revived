@@ -5,5 +5,7 @@ Behavior::Behavior(void *body, void *soul)
 {
     this->body = body;
     this->soul = soul;
-    vtbl = (void **)0x49d0bc;
 }
+
+// Complete destructor at 0x403b50; the compiler installs Behavior's own vtable.
+Behavior::~Behavior() {}

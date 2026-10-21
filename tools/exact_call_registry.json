@@ -4670,7 +4670,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5144,7 +5143,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5189,7 +5187,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5234,7 +5231,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5243,8 +5239,8 @@
   },
   "?Get@?$Table@VString@@PAUUnloadType@@V?$Array@PAUUnloadType@@@@$0A@@@QAEPAUUnloadType@@ABVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "NavSurface/UnloadFile.cpp"
@@ -5258,33 +5254,7 @@
         "offset": 183,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@?$Table@VString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$04@@QAEPAV?$PrimitiveArray@H$00@@ABVString@@@Z": {
     "address": "00466210",
@@ -5345,7 +5315,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5390,7 +5359,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5435,7 +5403,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5480,7 +5447,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5539,7 +5505,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5584,7 +5549,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5656,7 +5620,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5665,8 +5628,8 @@
   },
   "?Get@Reg8@@QAEPAUEntry8@@AAVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40f610/F.cpp"
@@ -5680,38 +5643,12 @@
         "offset": 120,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@Reg9@@QAEPAUEntry9@@AAVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40f610/F.cpp"
@@ -5725,38 +5662,12 @@
         "offset": 120,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@Reg@@QAEPAUEntry@@AAVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40f610/F.cpp"
@@ -5770,38 +5681,12 @@
         "offset": 120,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@Reg@@QAEPAUWalk@@AAVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40f450/F.cpp"
@@ -5815,38 +5700,12 @@
         "offset": 365,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@RegS@@QAEPAUEntryS@@AAVString@@@Z": {
     "address": "0046d2a0",
-    "target": "?Get@TableGet@@QAEPAXH@Z",
-    "owner": "TableGet/TableGet.cpp",
+    "target": "?Get@?$Table@VString@@PAVSurfaceTypeDescription@@V?$Array@PAVSurfaceTypeDescription@@@@$0A@@@QAEPAVSurfaceTypeDescription@@ABVString@@@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
       "Fn40f610/F.cpp"
@@ -5860,33 +5719,7 @@
         "offset": 126,
         "address": "0046d2a0"
       }
-    ],
-    "shared_leaf_evidence": {
-      "compared_original_entry": "0046d2a0",
-      "verified_definitions": [
-        "TableGet/TableGet.cpp"
-      ],
-      "declared_original_entries": [
-        "00461230",
-        "00465340",
-        "00466210",
-        "00466820",
-        "00467a50",
-        "00467e90",
-        "00468630",
-        "00468ab0",
-        "00468ef0",
-        "00469a70",
-        "0046a210",
-        "0046acd0",
-        "0046b110",
-        "0046c430",
-        "0046d2a0",
-        "0046df30",
-        "0046ebd0"
-      ],
-      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
-    }
+    ]
   },
   "?Get@RegistrationTable@@QAEPAURegisteredFunction@@ABVString@@@Z": {
     "address": "0046c430",
@@ -5926,7 +5759,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -5971,7 +5803,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -6016,7 +5847,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -6061,7 +5891,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -6174,7 +6003,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],
@@ -9409,7 +9237,6 @@
         "0046acd0",
         "0046b110",
         "0046c430",
-        "0046d2a0",
         "0046df30",
         "0046ebd0"
       ],

@@ -2,4 +2,4 @@
 ^\?Replace@\?\$Set@   4675c0 replace
 ^\?Contains@\?\$Set@   4674d0 contains
 ^\?IndexOf@\?\$Set@   4674f0 indexof
-^\?RemoveKey@\?\$Set@   4675a0 removekey
+^\?RemoveKey@\?\$Set@   4675a0 removekey
