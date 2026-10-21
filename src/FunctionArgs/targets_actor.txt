@@ -1,1 +1,0 @@
-^\?Actor@ScriptCall@@QAEPAUTarget@@XZ 420c20 script_call_actor

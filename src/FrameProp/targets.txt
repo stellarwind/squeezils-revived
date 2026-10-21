@@ -1,8 +1,0 @@
-^\?SetCycleTime@FrameProp      427e30 setcycletime
-^\?SetCycleDirection@FrameProp 427e50 setcycledirection
-^\?SetCycleLoopMode@FrameProp  427e70 setcycleloopmode
-^\?SetActor@FrameProp          427f10 setactor
-^\?SetFollowMode@FrameProp     427f20 setfollowmode
-^\?SetHideAtEnd@FrameProp      427f30 sethideatend
-^\?HasBody@FrameProp           427f40 hasbody
-^\?ChildNames@FrameProp        427f50 childnames

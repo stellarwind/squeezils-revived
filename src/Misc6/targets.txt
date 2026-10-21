@@ -1,2 +1,0 @@
-^\?GetByte@@  45beb0 getbyte
-^\?ReadIntTo@@  47c770 readintto

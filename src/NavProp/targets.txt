@@ -1,3 +1,0 @@
-^\?GetSurface@NavProp   429690 getsurface
-^\?GetInstance@NavProp  4296a0 getinstance
-^\?GetSizeSquared@NavProp 429da0 getsizesquared

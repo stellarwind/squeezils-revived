@@ -1,1 +1,0 @@
-^\?SetCompass@CompassC@@  414fb0 setcompass 256

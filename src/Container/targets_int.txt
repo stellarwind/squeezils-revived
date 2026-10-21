@@ -1,8 +1,0 @@
-^\?\?0\?\$Array@H@@QAE@XZ      45d8d0 int_ctor
-^\?\?1\?\$Array@H@@          45d900 int_dtor
-^\?Insert@\?\$Array@H@@      45d920 int_insert
-^\?Remove@\?\$Array@H@@      45d990 int_remove
-^\?Replace@\?\$Array@H@@         45d9d0 int_set
-^\?Data@\?\$Array@H@@        45d9f0 int_data
-^\?Grow@\?\$Array@H@@        45da00 int_grow
-^\?Get@\?\$Array@H@@         40ec80 int_get

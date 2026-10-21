@@ -1,7 +1,0 @@
-# ctor address, spare declarations (padscan); read by tools/genQvCtors.pl
-485520 5
-486f90 15
-484530 15
-486d70 10
-482ed0 9
-4880c0 3

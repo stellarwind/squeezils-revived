@@ -1,1 +1,0 @@
-^\?DrawBackground@Panel@@ 42dc50 panel_background

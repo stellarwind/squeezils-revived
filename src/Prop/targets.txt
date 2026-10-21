@@ -1,6 +1,0 @@
-^\?IsShown@Prop  426160 isshown
-^\?GetOwner@Prop  426220 getowner
-^\?UpdateNoop@Prop  426200 updatenoop
-^\?Slot8Noop@Prop  426210 slot8noop
-^\?Slot11Return0@Prop 4262d0 slot11return0
-^\?Slot12Return0@Prop 426270 slot12return0

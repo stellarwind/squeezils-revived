@@ -1,2 +1,0 @@
-^?Value@Ramp  43bf10 ramp1
-^?Value2@Ramp  43bf80 ramp2

@@ -1,1 +1,0 @@
-^\?CreateTextureFromGif 415440 create_texture 640

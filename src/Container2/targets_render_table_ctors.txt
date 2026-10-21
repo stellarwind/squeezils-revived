@@ -1,1 +1,0 @@
-^\?\?0\?\$Table@.*IDirect3DRMFrame 466de0 frame_table_ctor cc

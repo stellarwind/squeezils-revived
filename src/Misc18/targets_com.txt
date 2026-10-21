@@ -1,2 +1,0 @@
-^\?\?0ComHolder  47a0f0 ch_ctor 16
-^\?Release@ComHolder  47a100 ch_release cc

@@ -1,2 +1,0 @@
-^??AxisX@Pad  459450 axisx
-^??AxisY@Pad  4593d0 axisy

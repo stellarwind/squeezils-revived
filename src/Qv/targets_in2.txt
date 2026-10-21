@@ -1,4 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?LineString@QvInput2  4815e0 in2_line
-^?PutBack@QvInput2  481620 in2_putback
-^?SetFileName@QvInput2  481650 in2_setname

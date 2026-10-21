@@ -1,4 +1,0 @@
-^\?SetF21c@DisplayObj   459010 setf21c
-^\?GetF21c@DisplayObj   459020 getf21c
-^\?GetF210@DisplayObj   459030 getf210
-^\?GetF218@DisplayObj   459040 getf218

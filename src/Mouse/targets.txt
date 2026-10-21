@@ -1,2 +1,0 @@
-^?ShowCursor@Mouse  4592f0 showcursor 40
-^?Capture@Mouse  4592a0 capture 80

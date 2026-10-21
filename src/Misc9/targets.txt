@@ -1,7 +1,0 @@
-^\?StackTop@@  423220 stacktop
-^\?StackTop@@  424dc0 stacktop_d424dc0 16
-^\?StackTop@@  425bf0 stacktop_d425bf0
-^\?StackTop@@  44aad0 stacktop_d44aad0
-^\?GlobalValue@@  422bd0 globalvalue
-^\?Get@IntArg  421150 intarg 32
-^\?Get@FloatArg  421440 floatarg 30

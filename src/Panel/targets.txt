@@ -1,5 +1,0 @@
-^\?Invalidate@Panel  42db00 invalidate
-^\?ClearEvent@Panel  42ea60 clearevent
-^\?ClearMessage@Panel  42dd00 clearmessage
-^\?ClearNote@Panel  42dcd0 clearnote
-^\?Update@PanelU@@  42db10 panelupdate 320

@@ -1,3 +1,0 @@
-^\?GetA@Source  4105f0 geta auto
-^\?GetB@Source  4110b0 getb auto
-^\?GetC@Source  40f6f0 getc auto

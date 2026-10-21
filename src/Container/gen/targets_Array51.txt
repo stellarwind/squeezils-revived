@@ -1,6 +1,0 @@
-^\?Get@\?\$Array@   46ae30 get
-^\?Insert@\?\$Array@   46ae40 insert
-^\?Remove@\?\$Array@   46aeb0 remove
-^\?Replace@\?\$Array@   46aef0 replace
-^\?Data@\?\$Array@   46af10 data
-^\?Grow@\?\$Array@   46af20 grow

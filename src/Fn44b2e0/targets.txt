@@ -1,4 +1,0 @@
-^\?\?0PlaceLevel@@  44af30 placelevel_ctor 944
-^\?\?1PlaceLevel@@  44b2e0 placelevel_dtor 713
-^\?ReadGoodieList@PlaceLevel@@  44b950 readgoodielist 736
-^\?Read@PlaceLevel@@  44bd60 placelevel_read 5418

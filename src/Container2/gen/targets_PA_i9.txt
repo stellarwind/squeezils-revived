@@ -1,4 +1,0 @@
-^\?TypeName@\?\$PrimitiveArray@   4691d0 tn
-^\?Create@\?\$PrimitiveArray@   469260 create cc
-^\?Write@\?\$PrimitiveArray@   469380 write
-^\?Read@\?\$PrimitiveArray@   469320 read

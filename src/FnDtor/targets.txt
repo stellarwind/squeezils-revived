@@ -1,2 +1,0 @@
-^\?\?_GIfFn  443a10 iff_sdd 124
-^\?\?_GExecWithPropFn  444b00 executewithprop_sdd 144

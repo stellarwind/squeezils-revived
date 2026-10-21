@@ -1,7 +1,0 @@
-^\?\?0\?\$Table@VString@@PAVIniFileCache  46df50 ctor
-^\?\?1\?\$Table@VString@@PAVIniFileCache  46ea60 dtor 112
-^\?Insert@\?\$Table@VString@@PAVIniFileCache  46ead0 insert
-^\?Contains@\?\$Table@VString@@PAVIniFileCache  46eb30 contains
-^\?IndexOf@\?\$Table@VString@@PAVIniFileCache  46eb50 indexof
-^\?RemoveAt@\?\$Table@VString@@PAVIniFileCache  46eb70 removeat
-^\?RemoveKey@\?\$Table@VString@@PAVIniFileCache  46eba0 removekey

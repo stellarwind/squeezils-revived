@@ -1,1 +1,0 @@
-^?RegisterBufferPrototype_45c760@@ 45c760 register_integer_set cc

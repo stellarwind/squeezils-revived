@@ -1,1 +1,0 @@
-^\?Read@RegSettings  43ec70 reg_read

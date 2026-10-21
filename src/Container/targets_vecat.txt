@@ -1,1 +1,0 @@
-^\?At@\?\$Array@UVector3f  45c5b0 vecat 128

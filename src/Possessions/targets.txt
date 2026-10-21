@@ -1,1 +1,0 @@
-^\?GetInventory@Possessions  448990 getinventory

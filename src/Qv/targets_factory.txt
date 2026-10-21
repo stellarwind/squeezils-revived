@@ -1,2 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?QvFactory  47f1d0 factory 4800

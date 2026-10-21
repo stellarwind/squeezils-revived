@@ -1,1 +1,0 @@
-^\?DrawPlaces@QuestPanel 42f6d0 qp_drawplaces

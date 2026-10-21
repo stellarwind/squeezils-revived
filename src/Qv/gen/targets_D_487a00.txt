@@ -1,2 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?\?1QvNode487a00@@  487a00 d_487a00 150

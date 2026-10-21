@@ -1,4 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?Ref@QvRc  47e750 rc_ref
-^?Unref@QvRc  47e760 rc_unref
-^?GetName@QvRc  47e780 rc_name

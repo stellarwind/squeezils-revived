@@ -1,1 +1,0 @@
-# Original table Read/Write owners moved to Container2/targets_table_io.txt.

@@ -1,2 +1,0 @@
-^?ScriptUpdateTimers@@ 422f70 script_update_timers 216
-^?ScriptResetTimers@@ 423050 script_reset_timers 208

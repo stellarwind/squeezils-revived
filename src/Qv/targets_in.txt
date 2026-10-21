@@ -1,6 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?GetInt@QvInput  481490 in_int
-^?GetShort@QvInput  4814d0 in_short
-^?GetUInt@QvInput  481510 in_uint
-^?GetLong@QvInput  481550 in_long
-^?GetFloat@QvInput  481590 in_float

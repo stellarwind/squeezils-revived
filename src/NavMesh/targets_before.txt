@@ -1,1 +1,0 @@
-^?ToWorldBefore@InstancedSurface@@ 4128a0 to_world_before 128

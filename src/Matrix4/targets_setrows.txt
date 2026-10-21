@@ -1,2 +1,0 @@
-# Ends at 0x409f70, where RegionCameraSoul's next method starts.
-^\?SetRows@Matrix4@@ 409f00 setrows 112

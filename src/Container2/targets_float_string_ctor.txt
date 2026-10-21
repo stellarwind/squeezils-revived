@@ -1,1 +1,0 @@
-^\?\?0\?\$Table@ 464220 float_string_table_ctor cc

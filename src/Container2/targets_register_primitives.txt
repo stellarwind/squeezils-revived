@@ -1,2 +1,0 @@
-^?RegisterBufferPrototype_45c2e0@@ 45c2e0 register_integer_array 208
-^?RegisterBufferPrototype_45c3c0@@ 45c3c0 register_float_array 208

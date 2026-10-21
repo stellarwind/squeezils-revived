@@ -1,1 +1,0 @@
-^\?ReadElem@@  4387a0 readstr auto

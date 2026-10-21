@@ -1,5 +1,0 @@
-^\?Get@\?\$Array@UVector3f  41c4b0 vget 128
-^\?Get@\?\$Array@U_tag_PartOrientation  41d6e0 pget 176
-^\?Insert@\?\$Array@UVector3f  45e880 vins 158
-^\?\?0_tag_PartOrientation@@ 46ed30 orientation_element_ctor 96
-^\?\?1_tag_PartOrientation@@ 41d790 orientation_element_dtor auto

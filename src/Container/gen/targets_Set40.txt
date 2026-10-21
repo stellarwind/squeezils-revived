@@ -1,5 +1,0 @@
-^\?Insert@\?\$Set@   4693c0 insert
-^\?Replace@\?\$Set@   4696a0 replace
-^\?Contains@\?\$Set@   4695f0 contains
-^\?IndexOf@\?\$Set@   469610 indexof 112
-^\?RemoveKey@\?\$Set@   469680 removekey 32

@@ -1,1 +1,0 @@
-^\?FindPropTemplate@@ 42c8b0 find_prop_template cc

@@ -1,5 +1,0 @@
-# regex-on-mangled-name  address  label
-^\?TypeName@\?\$PrimitiveArray@H\$00   45da80 pi1_typename
-^\?Create@\?\$PrimitiveArray@H\$00     45db10 pi1_create auto
-^\?Write@\?\$PrimitiveArray@H\$00      45dc30 pi1_write
-^\?Read@\?\$PrimitiveArray@H\$00       45dbd0 pi1_read

@@ -1,1 +1,0 @@
-^?LoadTextureResources@@  425310 loadtex auto

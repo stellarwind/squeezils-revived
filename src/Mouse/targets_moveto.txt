@@ -1,1 +1,0 @@
-^\?MoveTo@Pointer@@ 459150 pointer_moveto

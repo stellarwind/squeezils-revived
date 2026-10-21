@@ -1,7 +1,0 @@
-EmitRow          479290 emitrow
-ReadByte         4792e0 readbyte
-InitCodes        479340 initcodes
-GetCode          479390 getcode
-FreeTables       479520 freetables
-Decode 479550 decode
-GifDecode 479830 gifdecode

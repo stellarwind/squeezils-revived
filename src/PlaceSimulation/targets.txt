@@ -1,5 +1,0 @@
-^\?GetLevel@PlaceSimulation       439b50 getlevel
-^\?GetSurfaces@PlaceSimulation    439b60 getsurfaces
-^\?StartPlacement@PlaceSimulation 439f70 startplacement
-^\?CanSave@PlaceSimulation        439f80 cansave
-^\?Finish@PlaceSimulation         439ad0 finish

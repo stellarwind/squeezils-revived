@@ -1,2 +1,0 @@
-^\?RegisterFunctionsC  445150 reg445150 2191
-^\?\?0IfFunction@@ 4459e0 iff

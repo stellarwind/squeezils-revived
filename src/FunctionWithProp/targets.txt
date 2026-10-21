@@ -1,5 +1,0 @@
-^\?Create@ExecuteWithPropFunction  4449e0 ewp_create cc
-^\?Execute@ExecuteWithPropFunction  444bc0 ewp_exec cc
-^\?Name@ExecuteWithPropFunction  444af0 ewp_name 6
-^\?\?_GExecuteWithPropFunction  444b00 ewp_sdd 144
-^\?Print@ExecuteWithPropFunction  444b90 ewp_print 48

@@ -1,4 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?addField@QvFieldData  480720 fd_addfield 238
-^?Get@QvEntryList2  480810 el_get
-^?OffsetOf@QvEntryList2  480820 el_off

@@ -1,9 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?Next@QvIn4  481740 in4_next
-^\?ReadLong@QvIn4  481820 in4_long
-^\?ReadULong@QvIn4  481890 in4_ulong
-^\?ReadInteger@QvIn4  4818d0 in4_integer
-^\?ReadDouble@QvIn4  481950 in4_double
-^\?ReadDigits@QvIn4  481a40 in4_digits
-^\?ReadHexDigits@QvIn4  481ad0 in4_hex
-^\?TryChar@QvIn4  481b60 in4_trychar

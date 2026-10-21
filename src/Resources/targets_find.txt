@@ -1,2 +1,0 @@
-^?FindGeometry@@ 4246f0 find_geometry 229
-^?FindTexture@@ 425220 find_texture 229

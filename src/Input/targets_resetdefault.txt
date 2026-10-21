@@ -1,1 +1,0 @@
-^?ResetCommandDefault@DefaultCommandBindings@@ 43ebc0 reset_command_default 170

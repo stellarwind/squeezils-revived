@@ -1,2 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?\?0QvNodeC485d00@@  485d00 c_485d00 512

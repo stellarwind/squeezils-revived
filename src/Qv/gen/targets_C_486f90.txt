@@ -1,2 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?\?0QvNodeC486f90@@  486f90 c_486f90 304

@@ -1,1 +1,0 @@
-^\?CreateScene@World 435910 world_create cc

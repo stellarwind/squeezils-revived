@@ -1,3 +1,0 @@
-^\?RunAllThunk@@  414fa0 runall
-^\?WindowOrigin@@  42da30 winorigin
-^\?WriteElem@@  438770 writestr

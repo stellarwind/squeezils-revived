@@ -1,2 +1,0 @@
-^\?\?0WindowCallbacks@@ 477e60 callbacks_ctor
-^\?\?1WindowCallbacks@@ 477ea0 callbacks_dtor

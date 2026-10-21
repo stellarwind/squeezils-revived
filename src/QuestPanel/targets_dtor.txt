@@ -1,1 +1,0 @@
-^\?\?1QuestPanel@@ 42f5f0 qp_dtor cc

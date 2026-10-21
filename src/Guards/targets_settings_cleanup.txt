@@ -1,2 +1,0 @@
-^\?G44f110@@ 44f110 squeezil_settings_cleanup cc
-^\?G459540@@ 459540 goodie_settings_cleanup cc

@@ -1,2 +1,0 @@
-^?ScheduleDelayed@@ 422e00 schedule_delayed 160
-^?ScheduleRenderDelayed@@ 422ed0 schedule_render_delayed 160

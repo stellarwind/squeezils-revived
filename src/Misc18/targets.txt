@@ -1,2 +1,0 @@
-^\?DlgProc447d80  447d80 dlgproc
-^\?\?0Rec@@  404f10 rec_ctor cc

@@ -1,6 +1,0 @@
-^\?Init@BodyPart@@QAEPAU1@PAX   41d870 init_model
-^\?Init@BodyPart@@QAEPAU1@XZ    41d8a0 init
-^\?Init@BodyPart@@QAEPAU1@PBU1  41d8c0 init_like
-^\?GetFrame@BodyPart   41d890 getframe
-^\?\?1BodyPartA@@  41d8e0 bp_dtor 32
-^\?Apply@BodyPartA@@  41d900 bp_apply 129

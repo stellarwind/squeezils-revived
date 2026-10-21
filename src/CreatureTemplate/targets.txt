@@ -1,4 +1,0 @@
-^\?FindBehaviourMode@@  448850 findbehaviourmode
-^\?FindStimulus@@       448890 findstimulus
-^\?\?0CreatureTemplate  4483d0 creaturetemplate_ctor cc
-^\?\?1CreatureTemplate  4484a0 creaturetemplate_dtor ehend

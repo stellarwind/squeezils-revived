@@ -1,2 +1,0 @@
-^\?KeyAt@\?\$Table@VString@@PAURoboBrain 44de90 brain_key_at 112
-^\?Get@\?\$Table@VString@@PAVSurfaceTypeDescription 46d2a0 surface_type_get 32

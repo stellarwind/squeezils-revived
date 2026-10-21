@@ -1,1 +1,0 @@
-^?FindFunction@@ 423130 find_script_function 233

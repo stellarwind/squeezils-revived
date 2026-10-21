@@ -1,6 +1,0 @@
-^\?Loaded@NavSurfaceList   412c10 loaded
-^\?FaceOf@NavSurfaceList   412bf0 faceof
-^\?Properties@NavSurfaceList 40f3a0 properties
-^\?GetProperties@InstancedSurface 40d520 getproperties
-^\?DestroyLoaded@NavSurfaceListD  40ede0 destroyloaded 112
-^\?\?1LoadedSurfaceD@@  40bee0 loadeddtor 176

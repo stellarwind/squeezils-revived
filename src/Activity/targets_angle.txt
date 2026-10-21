@@ -1,1 +1,0 @@
-^\?AngleToTarget@TurnTargetActivity 4016e0 angle_to_target

@@ -1,1 +1,0 @@
-^\?LoadResourceTexture@@ 425070 load_texture 419

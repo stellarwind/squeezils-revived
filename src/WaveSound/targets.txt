@@ -1,2 +1,0 @@
-^\?\?0WaveSound  448d90 ctor
-^\?\?1WaveSound  448db0 dtor

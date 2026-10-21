@@ -1,6 +1,0 @@
-^\?\?0NutCounter    42f780 ctor 16
-^\?\?1NutCounter    42f790 dtor 52
-^\?Init@NutCounter  42f7d0 init auto
-^\?Load@NutCounter  42f900 load
-^\?Draw@NutCounter  42f9f0 draw
-^\?DrawNumber@NutCounter 42fb10 drawnumber

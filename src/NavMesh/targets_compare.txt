@@ -1,1 +1,0 @@
-^\?CompareHits@@ 47c630 nav_comparehits

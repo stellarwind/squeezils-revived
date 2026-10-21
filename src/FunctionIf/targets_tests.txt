@@ -1,6 +1,0 @@
-^\?Test@IfOnTreeFunction  443800 t_tree 26
-^\?Test@IfPlayerDeadFunction  443820 t_dead 13
-^\?Test@IfPlayerFunction  443830 t_player 17
-^\?Test@IfDyingOrDeadFunction  443dc0 t_dying 42
-^\?Test@IfHasAllKeysFunction  443850 t_keys 96
-^\?Test@IfCompletedPlaceFunction  4438b0 t_place 80

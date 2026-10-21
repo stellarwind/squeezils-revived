@@ -1,6 +1,0 @@
-^\?\?0\?\$Table@VString@@PAUPartPose 46a8b0 pose_table_ctor 320
-^\?\?1\?\$Table@VString@@PAUPartPose 46ab60 pose_table_dtor auto
-^\?\?0\?\$Table@VString@@PAUPartCycle 46b2e0 cycle_table_ctor 320
-^\?\?1\?\$Table@VString@@PAUPartCycle 46b590 cycle_table_dtor auto
-^\?\?0\?\$Table@VString@@PAURoboBrain 469df0 brain_table_ctor 320
-^\?\?1\?\$Table@VString@@PAURoboBrain 46a0a0 brain_table_dtor auto

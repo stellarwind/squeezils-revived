@@ -1,2 +1,0 @@
-^?RegisterBufferPrototype_45d430@@ 45d430 register_character_table cc
-^?RegisterBufferPrototype_45d5c0@@ 45d5c0 register_creature_table cc

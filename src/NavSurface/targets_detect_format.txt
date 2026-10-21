@@ -1,1 +1,0 @@
-^?DetectFormat@NavMesh@@ 47c7b0 detect_surface_format 304

@@ -1,8 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?\?0QvDict@@  482180 dict_ctor
-^\?\?1QvDict@@  4821c0 dict_dtor
-^\?Clear@QvDict  4821e0 dict_clear
-^\?Enter@QvDict  482230 dict_enter 160
-^\?Find@QvDict  4822e0 dict_find
-^\?FindSlot@QvDict  482310 dict_slot
-^?QvInitNames  482340 names_init

@@ -1,6 +1,0 @@
-^\?\?1FlashGoodieFunction  441670 fg_dtor 176
-^\?Create@FlashGoodieFunction  441750 fg_create 176
-^\?Execute@FlashGoodieFunction  441840 fg_exec 96
-^\?Print@FlashGoodieFunction  441800 fg_print
-^\?Name@FlashGoodieFunction  441720 fg_name 6
-^\?\?_GFlashGoodieFunction  441730 fg_sdd 32

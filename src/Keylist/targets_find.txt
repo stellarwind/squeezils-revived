@@ -1,2 +1,0 @@
-^\?Find@Keylist  43dad0 kl_find
-^?NameOf@Keylist  43db60 kl_nameof

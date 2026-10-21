@@ -1,5 +1,0 @@
-^\?SetMusicVolume 44a940 music
-^\?SetSfxVolume 44aa10 sfx
-^\?SetMasterVolumeAndApply 44aab0 master
-^\?CreateSecondary@SoundObj@@  449200 creatsec 416
-^\?ConvertMidiEvent@@  45b880 midiev 528

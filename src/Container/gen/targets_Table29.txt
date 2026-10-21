@@ -1,5 +1,0 @@
-^\?Insert@\?\$Table@   467d90 insert
-^\?Contains@\?\$Table@   467df0 contains
-^\?IndexOf@\?\$Table@   467e10 indexof
-^\?RemoveAt@\?\$Table@   467e30 removeat
-^\?RemoveKey@\?\$Table@   467e60 removekey

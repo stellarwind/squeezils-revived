@@ -1,2 +1,0 @@
-^\?\?1Function@@UAE@XZ       422ea0 dtor
-^\?\?_GFunction             422eb0 sdd

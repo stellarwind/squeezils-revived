@@ -1,2 +1,0 @@
-^\?Stickish@Ctl  43bfe0 stickish 224
-^\?Vertical@Ctl2  43c0c0 vertical 224

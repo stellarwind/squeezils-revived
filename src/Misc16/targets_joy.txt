@@ -1,2 +1,0 @@
-^\?Capture@Joystick 4479d0 joycap
-^\?ResumeMidi@@ 45abe0 resumemidi 83

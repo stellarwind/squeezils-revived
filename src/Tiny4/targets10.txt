@@ -1,2 +1,0 @@
-^\?Write@ObjArrayC@@  465070 oa_write 64
-^\?Read@ObjArrayC@@  465010 oa_read 96

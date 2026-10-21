@@ -1,1 +1,0 @@
-^\?ClosestOnLine@@ 47d940 closest_on_line cc

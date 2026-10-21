@@ -1,9 +1,0 @@
-^\?\?0MFace@@ 47ad20 mface_ctor 192
-^\?\?0NavMesh@@ 47aec0 mesh_ctor
-^\?Radius@NavMesh 47af20 radius
-^\?AllocPoints@NavMesh 47af30 allocv 192
-^\?AllocFaces@NavMesh 47aff0 allocf 192
-^\?FreeVerts@NavMesh 47b0b0 freev
-^\?FreeFaces@NavMesh 47b0f0 freef
-^\?FreeArrays@NavMesh 47b130 freea
-^\?FreeTree@NavMesh 47b150 freet

@@ -1,2 +1,0 @@
-^?Init@Joystick  447810 joyinit 85
-^?ReadJoystick@@  4481f0 joyread 80

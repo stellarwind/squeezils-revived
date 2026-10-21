@@ -1,8 +1,0 @@
-^\?GetPixelFormat@Renderer  475000 getpixelfmt1
-^\?GetPixelFormat@Renderer  475020 getpixelfmt2
-^\?SetShades@Renderer  475040 setshades
-^\?SetTextureColors@Renderer  475060 settexturecolors
-^\?SetTextureShades@Renderer  475080 settextureshades
-^\?SetViewParams@Renderer  474f40 setviewparams
-^\?GetScreenRect@Renderer  474fe0 getscreenrect
-^\?UpdateViewportPlanes@RendererVp 4757d0 viewplanes

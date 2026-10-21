@@ -1,2 +1,0 @@
-^?Get@VectorVariableTable@@ 46b700 get_vector_variable 128
-^?At@VectorVariableTable@@ 45d7e0 at_vector_variable 112

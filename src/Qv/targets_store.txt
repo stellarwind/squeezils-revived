@@ -1,8 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^\?QvReadTop  481c30 readtop
-^\?\?0QvNodeTable@@  481c90 nt_ctor
-^\?\?1QvNodeTable@@  481cc0 nt_dtor
-^\?Insert@QvNodeTable  481cf0 nt_insert
-^\?Inc@QvNodeTable  481d20 nt_inc
-^\?Sweep@QvNodeTable  481d30 nt_sweep
-^\?RemoveHead@QvNodeTable  481d70 nt_remove

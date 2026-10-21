@@ -1,1 +1,0 @@
-^\?ShowQuest@Panel@@ 42da60 panel_showquest

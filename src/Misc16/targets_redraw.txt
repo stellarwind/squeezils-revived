@@ -1,1 +1,0 @@
-^\?RedrawWindowsAbove@@ 43ee60 redraw_windows_above

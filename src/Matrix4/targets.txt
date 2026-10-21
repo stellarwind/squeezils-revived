@@ -1,6 +1,0 @@
-# regex-on-mangled-name  address  label
-^\?SetTranslation@Matrix4   47e330 settrans
-^\?TurnX@Matrix4            47dcd0 turnx
-^\?TurnY@Matrix4            47dd20 turny
-^\?TurnZ@Matrix4            47dd70 turnz
-^\?TurnAxis@Matrix4         47ddc0 turnaxis

@@ -1,2 +1,0 @@
-^\?Create@\?\$BufferObjectTable@HPAVCharacter  4653e0 tab_char 352
-^\?Create@\?\$BufferObjectTable@HPAVCreature  4668c0 tab_crea 352

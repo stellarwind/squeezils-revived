@@ -1,1 +1,0 @@
-^\?SetupLights@World 436040 world_lights cc

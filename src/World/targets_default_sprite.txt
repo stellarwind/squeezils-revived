@@ -1,1 +1,0 @@
-^?ReadDefaultPropSprite@@ 425870 read_default_prop_sprite cc

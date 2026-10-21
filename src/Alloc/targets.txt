@@ -1,2 +1,0 @@
-^\?GameAlloc@@  448350 gamealloc
-^\?GameFree@@   448360 gamefree

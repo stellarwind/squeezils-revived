@@ -1,6 +1,0 @@
-^\?\?1SetSurfaceTypeFunction  440830 ss_dtor 224
-^\?\?_GSetSurfaceTypeFunction  440920 ss_sdd 32
-^\?Create@SetSurfaceTypeFunction  440940 ss_create 176
-^\?Print@SetSurfaceTypeFunction  4409f0 ss_print
-^\?Name@SetSurfaceTypeFunction  440910 ss_name 6
-^\?Execute@SetSurfaceTypeFunction  440a30 sst_exec 272

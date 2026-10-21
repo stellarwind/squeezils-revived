@@ -1,1 +1,0 @@
-^\?RegisterRoboFunctions  423e60 regrobo 427

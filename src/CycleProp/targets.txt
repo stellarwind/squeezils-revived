@@ -1,3 +1,0 @@
-^\?SetCurrentThin@CycleProp  429370 setcurrentthin
-^\?SetStep@CycleProp         429350 setstep
-^\?SetMode@CycleProp         429360 setmode

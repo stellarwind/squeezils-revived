@@ -1,3 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^?f_480820@L  480820 leaf_480820
-^?f_488ba0@L  488ba0 leaf_488ba0

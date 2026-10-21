@@ -1,5 +1,0 @@
-^\?SetFoodGoal@StatusBar  42ef40 setfoodgoal
-^\?\?1StatusBarD@@  42eb40 sbdtor 208
-^\?Update@StatusS@@  42ed70 statusupd 288
-^\?Init@StatusI@@  42ec10 statusinit 352
-^\?Sub@StatusT@@  42f050 statussub 408

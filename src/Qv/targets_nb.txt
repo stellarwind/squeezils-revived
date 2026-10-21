@@ -1,3 +1,0 @@
-#FLAGS -GX -GR -Gy -O2 -G3 -ML
-^??0QvNodeB@@  47e660 qn_ctor 144
-^??1QvNodeB@@  47e710 qn_dtor 64

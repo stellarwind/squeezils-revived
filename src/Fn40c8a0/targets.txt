@@ -1,1 +1,0 @@
-^\?PointToLocal 40c8a0 pointlocal auto

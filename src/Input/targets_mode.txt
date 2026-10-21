@@ -1,1 +1,0 @@
-^\?SetJoystickMode@AppInput@@ 43aef0 input_setmode

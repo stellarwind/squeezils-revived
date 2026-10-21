@@ -1,24 +1,14 @@
-# Built binaries (never commit these)
-*.dll
-*.exe
-*.obj
-*.o
-*.lib
-*.a
-
-# Build output
+# Generated outputs
 build/
 __pycache__/
-
-# Game files and exported decompilation are copyrighted: keep them out
-SqueezilsGameFiles/
-Exported/
-
-# Ghidra project databases
-*.gpr
-*.rep/
-*.lock
-*.lock~
-
-# Local helper scripts
-*.cmd
+*.pyc
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.a
+*.pdb
+*.ilk
+*.map
+# Original game and Ghidra databases stay outside this worktree.
