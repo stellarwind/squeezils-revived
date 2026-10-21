@@ -1,0 +1,3 @@
+tools/mkstatus.sh text eol=lf
+tools/progress.py text eol=lf
+progress/*.tsv text eol=lf
