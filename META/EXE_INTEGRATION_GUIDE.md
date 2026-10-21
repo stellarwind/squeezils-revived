@@ -1,5 +1,7 @@
 # Building the reconstructed SQZ executable
 
+**Latest restart point (2026-10-21):** full pipeline `954d8d0a-c5a3-49b3-a8e6-55c388d20d20`; 1,141/1,141 sources compile, zero duplicate errors, 1,695 unresolved symbols. EXE not linked. Audio-volume ownership fix and user-requested stopping point are recorded in the final section.
+
 This guide explains the integration plan, the first full-build probe, and what
 each step teaches us. It targets a working VC++ 4.1 executable first. Matching
 the original executable's section layout and link order is a later goal.
@@ -1406,3 +1408,244 @@ reports snapshot-covered inputs unchanged. Zero LNK2005, 2,533 LNK2001 messages,
 code pointers remain. The EXE still does not link, cached binary provenance is
 incomplete and gameplay remains untested. Next block: another explicit ownership
 family from the refreshed clusters, or the two rejected getter declarations.
+
+
+## Original TypeDescriptor ownership batch (2026-10-21)
+
+rtti_aliases.py identifies 22 decorated data names for 13 original MSVC RTTI
+TypeDescriptors. The annotations parser associates multiple declared names with
+multiple address comments in order, rejecting mismatched counts. Original header
+validation requires the type_info vtable at 0x4a177c, zero spare pointer and a
+terminated decorated class/struct name. Ghidra memory inspection confirmed this
+layout at 0x4ba1d0 (LocationSimulation). All 41 available exact caller references
+agree with the registered original addresses; unaligned/nonexact callers remain
+supported by the explicit source address annotations, not claimed as byte proof.
+
+The registry records full decorated aliases, original addresses/type names,
+annotation sources and available exact-reference evidence. Existing compiler
+TypeDescriptors are reused only after verifying their complete metadata and CRT
+vtable relocation. None of these 13 original class-tag/name combinations exists
+in the current compiler objects. The generated rtti_data.obj therefore supplies
+the real descriptor fields and names, with a symbolic DIR32 relocation to LIBC's
+actual type_info vtable. No original image pointers, machine code, class hierarchy
+tables, callable bodies or zero-filled placeholder globals are emitted. All
+original/generated metadata stays in ignored build outputs; the tracked registry
+contains addresses and type names. Source class hierarchies and cached broad
+extracted blocks may still contain renamed or redundant metadata; runtime casts
+and gameplay equivalence are not established by this descriptor-only change.
+
+Six names already had data-alias bindings. The old single-name address parser
+misassociated some multi-declaration annotations, binding PhysicalSoul,
+SqueezilSoul and player-soul descriptors to the Soul record at 0x4b93e8. Dedicated
+RTTI ownership now supersedes all six bindings and data_aliases.py excludes them.
+rtti_aliases.py rejects any overlap with another alias family. The final inventory
+has zero overlapping descriptor aliases. This is 16 newly resolved names plus
+six corrected/reowned names, rather than 22 new unresolved-symbol reductions.
+
+The integration driver deletes stale RTTI outputs, regenerates both metadata and
+aliases and explicitly inserts them before the diagnostic link. Registry and
+original-image evidence are checked each run; current CRT vtable ownership and
+library hash are recorded. Initial CRT symbol inspection needed byte decoding
+instead of Python 3.15 UTF-8 text mode; that tooling failure is fixed. Three RTTI
+layout/annotation/relocation tests, nine complete-body/getter tests, six data tests,
+five Qv tests, five code-binding tests and seven EH retention tests pass (35 total).
+No game source bodies, headers or targets changed. STATUS.md and HANDOFF.md are
+unchanged. The current batch is intentionally left uncommitted for user review.
+
+Authoritative full pipeline 4e3a892c-2d03-4ba5-92bc-2414bc16989b compiles
+1,141/1,141 sources without failures or omissions, completes projection/link/
+classification and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,494 LNK2001 messages, 1,997 unique unresolved symbols, no internal linker error.
+This supersedes 0/2,533/2,013 and intermediate run 08df276f-8d8c-4c5e-92a7-
+997295713441, which had the same counts but retained six overlapping weak aliases.
+Zero unresolved code pointers remain. The EXE still does not link; cached binary
+provenance remains incomplete and gameplay untested.
+
+Restart here: inspect build/integration/pipeline-summary.json and owner-clusters.json,
+then pick one remaining ordinary method/data ownership family. Reproduce with
+source tools/flagsearch/env.sh followed by python Repo/tools/integration_pipeline.py
+from the workspace root in Git Bash. The user requested stopping after this RTTI
+block for a context restart; do not infer that the overall linked-EXE goal is done.
+
+
+## Extracted TypeDescriptor ownership batch (2026-10-21)
+
+Extended rtti_aliases.py to resolve the 220 address-named TypeDescriptor symbols
+referenced by cached data/data.obj. Each original descriptor requires the verified
+MSVC header and terminated decorated class/struct name. Every extracted reference
+must be a zero-addend COFF DIR32 relocation, mapped through its unique original
+data object to an original PE HIGHLOW fixup containing that exact descriptor
+address. Missing fixups, conflicting pointers, unsupported relocation types,
+interior addends and ambiguous referring owners fail closed. The registry records
+full decorated symbols, original addresses/type names and original pointer sites;
+these proofs are recomputed from current inputs on every pipeline run.
+
+The expanded registry has 242 aliases for 223 original descriptors. Current
+compiler-emitted descriptors are reused after complete content and CRT relocation
+validation; 98 descriptors require generated metadata. Only metadata fields/names
+and symbolic CRT relocations are emitted. No callable bodies, hierarchy tables or
+original runtime pointers are synthesized. Existing source bodies, headers,
+targets, STATUS.md and HANDOFF.md remain unchanged. Changes remain uncommitted.
+
+Authoritative full pipeline e919a3fc-7da8-40ed-93a0-cdd753f8f6e3 compiles
+1,141/1,141 sources without failures or omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,274 LNK2001 messages, 1,777 unique unresolved symbols, no internal linker error.
+This supersedes 4e3a892c-2d03-4ba5-92bc-2414bc16989b (0/2,494/1,997), an exact
+220-symbol reduction for the equivalent source set. Remaining clusters: Qv 114,
+container templates 46, ordinary-other 1,617. No unresolved code pointers remain.
+Cached binary provenance remains incomplete; the EXE does not link and gameplay
+is untested. Next bounded block: a remaining ordinary method/data ownership
+family from the refreshed owner-clusters.json, using integration_pipeline.py.
+
+
+## Renderer and scene singleton storage family (2026-10-21)
+
+Registered all 27 current typed spellings of g_app, g_renderer, g_scene and
+gWorldScene against the two existing extracted pointer slots 0x4c75dc and
+0x4c75e0. Every source address annotation for each name agrees. All available
+complete exact caller/PE relocation evidence agrees too; the registry preserves
+these sites. Ten already-resolved exact-data aliases were transferred to this
+registry with their prior decisions retained as evidence, leaving no duplicate
+registry ownership. This resolves 17 additional names, rather than 27.
+
+data_aliases.py now validates every reviewed pointer decision against mutable
+32-bit object-pointer decoration, a unique current extracted data owner, all
+current declaration addresses, the named evidence files' declaration contents,
+and all available exact original reference destinations. Registered exact sites
+must remain unchanged. These checks validate pointer storage identity, not the
+complete layout of every caller's local renderer/scene class declaration. No
+source, target, callable wrapper or new storage was introduced. Four new tests
+cover typed pointer equivalence and conflicting storage/address/owner/evidence.
+All 41 integration tests pass before the build. STATUS.md and HANDOFF.md remain
+unchanged; the batch is uncommitted.
+
+Authoritative full pipeline 11f88eec-3899-4f7d-a52b-82a55217c3ba compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,236 LNK2001 messages, 1,760 unique unresolved symbols, no internal linker error.
+This supersedes e919a3fc-7da8-40ed-93a0-cdd753f8f6e3 (0/2,274/1,777), with
+17 fewer missing names for the equivalent source set. The first attempted run
+b1bb2d6a-1f8c-4b02-a373-d0d9ea1ca40f stopped before linking on overlapping
+exact-data registry ownership; that overlap is fixed. The EXE does not link;
+cached binary provenance remains incomplete and gameplay is untested. Next block:
+a remaining ordinary method/data family from the current owner-clusters.json.
+
+
+## Exact relocation-free shared implementations (2026-10-21)
+
+exact_call_aliases.py now permits a canonical symbol to serve multiple original
+entries only when every selectable compiled definition has the complete identical
+original bytes at the caller's specific destination and has zero COFF relocations.
+Each candidate source must be mapped to the original entry in the ownership
+inventory. Full-entry/package checks, exact caller body/direct call boundary,
+zero call addend, original destination agreement for every current reference,
+and surviving-definition completeness checks remain enforced. Multiple-address
+bodies are never used as callers to infer original destinations. Bodies with
+relocations still require the prior unique-address ownership rule.
+
+This certifies 51 current loose-object aliases across ten shared implementations
+(matrix copies, field accessors and table operations); the actual completed link
+resolves 37 previously missing symbols. Indirect dispatch already present in an
+identical original body remains identical. This change introduces no new callable
+body, wrapper, interior offset, data storage or original-image runtime call.
+Registry entries record the compared original entry, all verified source
+definitions and the target's declared original entries; unchanged decisions are
+reproved on every integration run. Two new tests check destination-specific byte
+comparison and rejection of relocations/single-address inputs. All 43 integration
+tests pass. Sources/headers/targets, STATUS.md and HANDOFF.md are unchanged.
+
+Authoritative full pipeline 53682928-b7a1-4500-ab2c-8e0864f651f9 compiles
+1,141/1,141 sources without failures or omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,198 LNK2001 messages, 1,723 unique unresolved symbols, no internal linker error.
+This supersedes 11f88eec-3899-4f7d-a52b-82a55217c3ba (0/2,236/1,760), a
+37-symbol reduction for the equivalent source set. Remaining clusters: Qv 114,
+container templates 43, ordinary-other 1,566. No unresolved code pointers remain.
+The EXE still does not link; cached binary provenance remains incomplete and
+gameplay is untested. Batch remains uncommitted. Next block: a remaining coherent
+method/data family from the current owner-clusters.json. Do not extend shared
+implementation acceptance to relocation-bearing code without proving those
+relocations' original owners and semantics too.
+
+
+## Multi-variable data address annotation corrections (2026-10-21)
+
+Moved extern annotation parsing to source_annotations.py, shared by data and RTTI
+ownership discovery. Names and explicit addresses are now associated in order;
+count mismatches are rejected. Explicit contiguous ranges are accepted only for
+plain known 32-bit scalar declarations with matching element count and endpoint.
+This replaces the old last-name/first-address regex, which changed 91 name
+associations in the current source inventory, including wrong existing bindings
+for food labels, key diagnostics, turning/banking settings and other globals.
+Available exact original references agreed with every corrected unambiguous
+association. Compressed ambiguous pointer annotations remain unguessed; exact
+reference discovery can resolve them separately when all occurrences prove one
+entry. The refreshed exact-data registry contains 105 decisions.
+
+Baseline annotations can corroborate an existing exact-data registry owner but
+cannot duplicate it or override a different target. Every proposed data alias is
+also checked against all available complete exact caller/PE-fixup evidence.
+Contradictory proposals are withheld and reported under original_reference_conflicts
+in data_alias.json. Four remain: g_signature, g_vol1, g_vol2 and kToSlider. These
+need a separate source identity/evidence block. The previous generated aliases
+had 20 disagreements with available exact original references; the new emitted
+alias set has zero. This is a correctness fix as well as link progress.
+
+Five new parser tests cover declaration ordering, strings/pointers, count
+ambiguity and valid/invalid scalar ranges. All 48 integration tests pass. No
+sources/headers/targets changed; STATUS.md and HANDOFF.md remain unchanged.
+Batch is uncommitted. No relocation-bearing shared-code acceptance was added.
+
+Authoritative full pipeline 7e577604-0b39-4ad1-be87-ef3d5b6c4b45 compiles
+1,141/1,141 sources with no failures or omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,166 LNK2001 messages, 1,696 unique unresolved symbols, no internal linker error.
+This supersedes 53682928-b7a1-4500-ab2c-8e0864f651f9 (0/2,198/1,723), a net
+27-symbol reduction for the equivalent source set despite withholding known bad
+bindings. The EXE still does not link; cached binary provenance remains incomplete
+and gameplay is untested. Next bounded block: split one of the four contradictory
+data spellings by original address, or a coherent remaining method family from
+owner-clusters.json. Never restore a contradicted alias merely to reduce totals.
+
+
+## Volume-dialog data identity correction; stop for context restart (2026-10-21)
+
+The user requested finishing the current block and stopping for a context
+restart. This block is complete; do not infer the broader linked-EXE goal is done.
+
+Menu/Menu2.cpp now declares kToSlider before g_vol1/g_vol2/g_vol3. A bounded
+five-variant compile sweep showed that reversing multiplication expressions was
+optimized away, while declaration order fixes VC4's x87 operand selection without
+changing the complete relocation-masked body. The arithmetic expressions remain
+unchanged. The full Menu matching unit was rerun: volumedlg remains score 0.
+Existing other unit differences remain (drawitem 6, menu_dtor 30, loadgamedlg 331).
+
+Fresh full-body/PE reference inspection now proves g_vol1 -> 0x4c77c8,
+g_vol2 -> 0x4c77cc, g_vol3 -> 0x4c77a0, and all three kToSlider uses ->
+0x49d294. Previous exact-data decisions had incorrectly attributed the first two
+commutative multiply operands to the constant address. The two registry decisions
+were corrected and kToSlider was added; no other prior exact-data decision changed
+or was removed. Merely comparing bodies outside relocations can misattribute
+symbol identity when commutative operands are exchanged; source storage identity
+and operand evidence must agree. The previous section's four conflicting
+proposals did not imply all four were absent from the exact-data aliases: those
+two stale entries existed there and are fixed by this block.
+
+Only g_signature remains in data_alias.json's original_reference_conflicts.
+Its region/place save/load sources use one decorated name for original references
+to 0x4bc6b0 and 0x4ba368; resolve that as a separate source-identity block. No
+further family was started. STATUS.md and HANDOFF.md are unchanged. All work
+remains uncommitted and unpushed.
+
+Authoritative full pipeline 954d8d0a-c5a3-49b3-a8e6-55c388d20d20 compiles
+1,141/1,141 sources with no failures/omissions, completes projection/link/
+classification, and reports snapshot-covered inputs unchanged. Zero LNK2005,
+2,165 LNK2001 messages, 1,695 unique unresolved symbols, no internal linker error.
+All 48 integration tests pass. This supersedes 7e577604-0b39-4ad1-be87-
+ef3d5b6c4b45 (0/2,166/1,696): one newly resolved symbol plus two corrected
+storage bindings. The intermediate declaration-order build stopped before
+linking on stale registry evidence; the registry was refreshed and this final
+full pipeline completed. The EXE does not link; cached binary provenance remains
+incomplete and gameplay is untested. Resume from this guide, pipeline-summary.json
+and owner-clusters.json, using the standard integration_pipeline.py driver.

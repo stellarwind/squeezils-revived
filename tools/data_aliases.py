@@ -12,6 +12,7 @@ data_alias.json (aliases made, plus names skipped and why).
 Run with flagsearch/env.sh sourced (needs dumpbin).
 """
 import collections, json, os, pathlib, re, struct, subprocess
+from source_annotations import annotated
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 OUT = REPO / "build" / "integration"
@@ -48,11 +49,9 @@ def source_addresses(names):
         if path.suffix not in (".h", ".cpp"):
             continue
         for line in path.read_text(encoding="latin-1").splitlines():
-            if "extern" not in line:
-                continue
-            m = DECL.search(line)
-            if m and m.group(1) in names:
-                found[m.group(1)].add(m.group(2).upper().lstrip("0"))
+            for name, address in annotated(line):
+                if name in names:
+                    found[name].add(address.upper().lstrip('0'))
     return found
 
 
@@ -88,6 +87,27 @@ def write_coff(pairs, path):
     path.write_bytes(header + symbols + strtab)
 
 
+def validate_pointer_decision(alias, decision, found, targets, sites, source_text):
+    """A reviewed type spelling changes neither pointer storage nor address."""
+    match = re.fullmatch(r'\?(\w+)@@3PA(?:X|[UV]\w+@@)A', alias)
+    if not match or decision['storage'] != 'one mutable 32-bit object pointer':
+        raise ValueError('Reviewed pointer alias has incompatible storage: ' + alias)
+    name, address = match[1], decision['address']
+    if found.get(name) != {address} or len(targets.get(address, [])) != 1:
+        raise ValueError('Reviewed pointer address/owner changed: ' + alias)
+    if not decision['evidence']:
+        raise ValueError('Reviewed pointer has no declaration evidence')
+    for source in decision['evidence']:
+        declarations = [DECL.search(line) for line in source_text(source).splitlines() if 'extern' in line]
+        if not any(m and m[1] == name and m[2].upper().lstrip('0') == address for m in declarations):
+            raise ValueError('Reviewed pointer declaration evidence changed: ' + source)
+    current_sites = sites.get(alias, [])
+    if any(int(site['address'], 16) != int(address, 16) for site in current_sites):
+        raise ValueError('Reviewed pointer conflicts with original reference: ' + alias)
+    if 'exact_reference_sites' in decision and current_sites != decision['exact_reference_sites']:
+        raise ValueError('Reviewed pointer exact-reference evidence changed: ' + alias)
+
+
 def main():
     by_addr = data_symbols()
     names = wanted()
@@ -95,6 +115,12 @@ def main():
     pairs, skipped = [], {}
     registry_path = REPO / "tools/data_alias_registry.json"
     registry = json.loads(registry_path.read_text())
+    from exact_data_aliases import discover
+    all_exact = discover(set())
+    registry_sites = all_exact['reference_sites']
+    for alias, decision in registry.items():
+        validate_pointer_decision(alias, decision, found, by_addr, registry_sites,
+            lambda source: (REPO / 'src' / source).read_text(encoding='latin-1'))
     for name, decorated in sorted(names.items()):
         if len(decorated) != 1:
             if all(alias in registry and registry[alias]["address"] in found.get(name, set())
@@ -121,19 +147,46 @@ def main():
             skipped[name] = "no unique data.obj symbol"
             continue
         pairs.append((mangled, targets[0]))
+    # An explicit declaration must never override contradictory machine-code
+    # evidence. Keep the diagnostic honest for symbols used at several original
+    # addresses until their source-level spellings are separated.
+    reference_conflicts = {}
+    checked = []
+    for alias, target in pairs:
+        address = int(re.fullmatch(r'\?[gs]_([0-9A-Fa-f]+)@@\S+', target)[1], 16)
+        sites = registry_sites.get(alias, [])
+        if any(int(site['address'], 16) != address for site in sites):
+            reference_conflicts[alias] = dict(proposed_target=target, exact_reference_sites=sites)
+            skipped[alias] = 'original reference contradicts declaration address'
+        else:
+            checked.append((alias, target))
+    pairs = checked
     exact_registry_path = REPO / 'tools/exact_data_registry.json'
     if exact_registry_path.exists():
-        from exact_data_aliases import discover
-        current = discover({alias for alias, _ in pairs})
+        exact_registry = json.loads(exact_registry_path.read_text())
+        current = discover({alias for alias, _ in pairs} - set(exact_registry))
         (OUT / 'exact-data-candidates.json').write_text(json.dumps(current, indent=2))
-        for alias, decision in json.loads(exact_registry_path.read_text()).items():
+        for alias, decision in exact_registry.items():
             if current['accepted'].get(alias) != decision:
                 raise ValueError('Exact data proof changed; review registry: ' + alias)
-            pairs.append((alias, decision['target']))
+            previous = dict(pairs).get(alias)
+            if previous is not None and previous != decision['target']:
+                raise ValueError('Annotated and exact data owners disagree: ' + alias)
+            if previous is None:
+                pairs.append((alias, decision['target']))
         pairs.sort()
+    # RTTI descriptors have a dedicated metadata owner. Some cached extracted
+    # blocks contain several descriptors; the old single-name annotation regex
+    # can otherwise bind the last declaration to the first comment address.
+    rtti_registry = REPO / 'tools/rtti_alias_registry.json'
+    rtti_names = set(json.loads(rtti_registry.read_text())) if rtti_registry.exists() else set()
+    superseded = [(a, t) for a, t in pairs if a in rtti_names]
+    pairs = [(a, t) for a, t in pairs if a not in rtti_names]
     write_coff(pairs, OUT / "data_alias.obj")
     (OUT / "data_alias.json").write_text(json.dumps(dict(aliases=pairs, skipped=skipped,
+        original_reference_conflicts=reference_conflicts,
         reviewed_registry=registry,
+        superseded_descriptor_aliases=superseded,
         exact_registry_sha256=__import__('hashlib').sha256(exact_registry_path.read_bytes()).hexdigest() if exact_registry_path.exists() else None), indent=1))
     print(len(pairs), "aliases;", len(skipped), "skipped")
 

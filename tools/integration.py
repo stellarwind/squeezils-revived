@@ -225,7 +225,8 @@ def run(compile_only=False):
     entry_alias = OUT / "entry_alias.obj"  # tools/entry_aliases.py: verified entry pointers only
     runtime_alias = OUT / "runtime_alias.obj"  # tools/runtime_aliases.py: verified CRT ABI
     qv_alias = OUT / "qv_alias.obj"  # tools/qv_aliases.py: address-proven constructors/destructors
-    inputs = [data, res, qv] + [p for p in (alias, entry_alias, runtime_alias, qv_alias) if p.exists()]
+    inputs = [data, res, qv] + [p for p in (alias, entry_alias, runtime_alias, qv_alias,
+        OUT / 'rtti_alias.obj', OUT / 'rtti_data.obj') if p.exists()]
     missing = [str(p) for p in inputs if not p.exists()]
     definitions = collections.defaultdict(list)
     references = collections.defaultdict(list)

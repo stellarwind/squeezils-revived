@@ -164,10 +164,10 @@ int CALLBACK NameDlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+extern const float kToSlider;     // 0x49d294
 extern float g_vol1;      // 0x4c77c8
 extern float g_vol2;      // 0x4c77cc
 extern float g_vol3;      // 0x4c77a0
-extern const float kToSlider;     // 0x49d294
 extern const float kFromSlider;   // 0x49d298
 void SetVolumeA(float v);   // 0x44aa10
 void SetVolumeB(float v);   // 0x44a940

@@ -41,8 +41,9 @@ def main():
     try:
         report["input_hashes"] = snapshot()
         # Avoid accepting stale generated aliases during the initial inventory.
-        for name in ("data", "entry", "runtime", "qv"):
+        for name in ("data", "entry", "runtime", "qv", "rtti"):
             (build.OUT / (name + "_alias.obj")).unlink(missing_ok=True)
+        (build.OUT / 'rtti_data.obj').unlink(missing_ok=True)
 
         def stage(script, *args, diagnostic=False):
             log = build.OUT / ("pipeline-%02d.log" % len(report["stages"]))
@@ -55,14 +56,15 @@ def main():
 
         stage("integration.py", "--compile-only")
         stage("integration.py", "--inventory-ownership")
-        for name in ("data", "entry", "runtime", "qv"):
+        for name in ("data", "entry", "runtime", "qv", "rtti"):
             stage(name + "_aliases.py")
         response = build.OUT / "link.rsp"
         lines = response.read_text().splitlines()
         # The compile inventory contains no old aliases; insert current objects.
         insertion = next(i for i, line in enumerate(lines) if line == "libc.lib")
         lines[insertion:insertion] = ['"%s"' % (build.OUT / (name + "_alias.obj"))
-                                     for name in ("data", "entry", "runtime", "qv")]
+                                     for name in ("data", "entry", "runtime", "qv", "rtti")]
+        lines.insert(insertion, '"%s"' % (build.OUT / 'rtti_data.obj'))
         response.write_text("\n".join(lines) + "\n", encoding="ascii")
         stage("link_containers.py")
         stage("integration.py", "--diagnose-existing-link", "--diagnostic-response",

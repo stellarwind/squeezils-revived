@@ -77,6 +77,18 @@ def exact_body(raw, symbols, sections, symbol, address, read):
         a == b for i, (a, b) in enumerate(zip(body, expected)) if i not in mask)
 
 
+def exact_shared_leaf(raw, symbols, sections, symbol, addresses, read):
+    """An identical full body with no fixups can own several original entries.
+
+    Never use multi-address code to infer a caller's destination. Only the
+    callee is shared here, and every possible compiled definition must still
+    pass the destination-specific owner check in discover().
+    """
+    if len(addresses) < 2 or sections[symbol['section']]['relocations']:
+        return []
+    return [a for a in addresses if exact_body(raw, symbols, sections, symbol, int(a, 16), read)]
+
+
 def discover(include_qv=False):
     ownership = json.loads((build.OUT / 'ownership.json').read_text())
     units = json.loads((build.OUT / 'units.json').read_text())
@@ -111,6 +123,14 @@ def discover(include_qv=False):
             if symbol['storage'] != 2 or symbol['section'] <= 0:
                 continue
             addresses = ownership['symbol_addresses'].get(symbol['name'], [])
+            if len(addresses) > 1:
+                mapped = [a for a in addresses if any(
+                    e['symbol'] == symbol['name'] and e['source'] == unit['source']
+                    for e in ownership['addresses'][a])]
+                for address in exact_shared_leaf(raw, symbols, sections, symbol, mapped, read):
+                    exact_owners[int(address, 16)].append(dict(
+                        target=symbol['name'], owner=unit['source'], shared_leaf=True))
+                continue
             if len(addresses) != 1:
                 continue
             address = int(addresses[0], 16)
@@ -172,9 +192,11 @@ def discover(include_qv=False):
         if set(ownership['definitions'].get(target, [])) != {o['owner'] for o in owners}:
             rejected[alias] = 'not every possible compiled callee definition is exact'
             continue
-        # Address identity must also be unambiguous in the complete inventory.
-        if ownership['symbol_addresses'].get(target) != [address]:
-            rejected[alias] = 'callee targets multiple original addresses'
+        # A multi-address leaf is safe only when every selectable compiled
+        # definition has the exact complete original body and no relocations.
+        shared_leaf = ownership['symbol_addresses'].get(target) != [address]
+        if shared_leaf and not all(o.get('shared_leaf') for o in owners):
+            rejected[alias] = 'multi-address callee is not an exact relocation-free body'
             continue
         owner = EMPTY_SOURCES.get(int(address, 16), sorted(o['owner'] for o in owners)[0])
         if owner not in {o['owner'] for o in owners}:
@@ -189,6 +211,12 @@ def discover(include_qv=False):
             evidence=sorted({s['source'] for s in sites}),
             reason='All current referring relocations resolve to this original entry; complete canonical callee body matches original.',
             exact_call_sites=sites)
+        if shared_leaf:
+            accepted[alias]['shared_leaf_evidence'] = dict(
+                compared_original_entry=address,
+                verified_definitions=sorted(o['owner'] for o in owners),
+                declared_original_entries=ownership['symbol_addresses'][target],
+                reason='Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees.')
     return dict(accepted=accepted, rejected=rejected, object_sha256=objects,
                 call_sites=dict(calls), failed_call_sources=dict(failures),
                 original_sha256=hashlib.sha256((build.REPO.parent / 'SqueezilsGameFiles/SQZ.EXE').read_bytes()).hexdigest())

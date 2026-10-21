@@ -2,10 +2,30 @@
 import struct
 import unittest
 
-from exact_call_aliases import exact_body, POINTER_GETTERS, pointer_getter_abi
+from exact_call_aliases import exact_body, exact_shared_leaf, POINTER_GETTERS, pointer_getter_abi
 
 
 class BodyProof(unittest.TestCase):
+    def shared(self, originals, relocs=()):
+        raw = bytearray(60) + b'\x8b\x41\x04\xc3'
+        struct.pack_into('<I', raw, 36, 0x20)
+        symbol = dict(section=1, value=0, storage=2, name='getter')
+        return exact_shared_leaf(raw, {0: symbol},
+            {1: dict(position=0, offset=60, size=4, relocations=relocs)},
+            symbol, list(originals), lambda a, n: originals['%08x' % a][:n])
+
+    def test_shared_leaf_compares_each_original_destination(self):
+        self.assertEqual(self.shared({'00401000': b'\x8b\x41\x04\xc3',
+                                      '00402000': b'\x8b\x41\x04\xc3'}),
+                         ['00401000', '00402000'])
+        self.assertEqual(self.shared({'00401000': b'\x8b\x41\x04\xc3',
+                                      '00402000': b'\x8b\x41\x08\xc3'}), ['00401000'])
+
+    def test_shared_leaf_requires_no_relocations_or_suffix(self):
+        originals = {'00401000': b'\x8b\x41\x04\xc3', '00402000': b'\x8b\x41\x04\xc3'}
+        self.assertEqual(self.shared(originals, [(0, 0, 6)]), [])
+        self.assertEqual(self.shared({'00401000': originals['00401000']}), [])
+
     def proof(self, body, original, relocs=(), value=0, flags=0x20, extra=False,
               name='', address=0x401000):
         raw = bytearray(60) + body

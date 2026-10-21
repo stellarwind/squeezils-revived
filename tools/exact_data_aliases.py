@@ -115,6 +115,7 @@ def discover(existing):
             evidence=sorted({s['source'] for s in calls[alias]}), exact_data_sites=calls[alias],
             reason='Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry.')
     return dict(accepted=accepted, rejected=rejected, object_sha256=hashes,
+                reference_sites=dict(calls), failed_reference_sources=dict(failures),
                 original_sha256=hashlib.sha256(original).hexdigest(),
                 data_sha256=hashlib.sha256(data).hexdigest())
 

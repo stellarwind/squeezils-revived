@@ -151,6 +151,43 @@
       }
     ]
   },
+  "??0DropMatrix@@QAE@ABUMatrix@@@Z": {
+    "address": "004099e0",
+    "target": "?Assign@Mi16b@@QAEPAU1@PBH@Z",
+    "owner": "Souls2/Misc3.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "SqueezilSoul/Nuts.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "SqueezilSoul/Nuts.cpp",
+        "caller": "?SprayNuts@SqueezilSoul@@QAEXXZ",
+        "caller_address": "00450740",
+        "offset": 159,
+        "address": "004099e0"
+      },
+      {
+        "source": "SqueezilSoul/Nuts.cpp",
+        "caller": "?SprayNuts@SqueezilSoul@@QAEXXZ",
+        "caller_address": "00450740",
+        "offset": 355,
+        "address": "004099e0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "004099e0",
+      "verified_definitions": [
+        "Souls2/Misc3.cpp"
+      ],
+      "declared_original_entries": [
+        "00402340",
+        "004099e0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "??0ExecContext@@QAE@PAUScriptCall@@@Z": {
     "address": "00420bf0",
     "target": "?Copy@Rec6@@QAEPAU1@PBU1@@Z",
@@ -222,6 +259,43 @@
         "address": "0041eb90"
       }
     ]
+  },
+  "??0GoodieMatrix@@QAE@ABU0@@Z": {
+    "address": "004099e0",
+    "target": "?Assign@Mi16b@@QAEPAU1@PBH@Z",
+    "owner": "Souls2/Misc3.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionGoodie/GoodieSpawn.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionGoodie/GoodieSpawn.cpp",
+        "caller": "?Spawn@CreateGoodieAtPositionFunction@@UAEXHPAXPBDPAUGoodieMatrix@@@Z",
+        "caller_address": "00440e50",
+        "offset": 38,
+        "address": "004099e0"
+      },
+      {
+        "source": "FunctionGoodie/GoodieSpawn.cpp",
+        "caller": "?Spawn@CreateGoodieAtPositionWithVelocityFunction@@UAEXHPAXPBDPAUGoodieMatrix@@@Z",
+        "caller_address": "00441550",
+        "offset": 90,
+        "address": "004099e0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "004099e0",
+      "verified_definitions": [
+        "Souls2/Misc3.cpp"
+      ],
+      "declared_original_entries": [
+        "00402340",
+        "004099e0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "??0InitControls@@QAE@XZ": {
     "address": "00459050",
@@ -381,6 +455,36 @@
         "address": "004690c0"
       }
     ]
+  },
+  "??0MoviePlayer@@QAE@XZ": {
+    "address": "00418b90",
+    "target": "??0String@@QAE@XZ",
+    "owner": "String/String.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionMovie/Movie.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionMovie/Movie.cpp",
+        "caller": "?Execute@PlayMovieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441aa0",
+        "offset": 80,
+        "address": "00418b90"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00418b90",
+      "verified_definitions": [
+        "String/String.cpp"
+      ],
+      "declared_original_entries": [
+        "00418b90",
+        "00438370"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "??0NavProp@@QAE@UVector3f@@000PAUNavBlock@@PAX11HHHH1@Z": {
     "address": "004296d0",
@@ -560,6 +664,44 @@
         "address": "004267b0"
       }
     ]
+  },
+  "??0SurfaceWorldMatrix@@QAE@ABU0@@Z": {
+    "address": "004099e0",
+    "target": "?Assign@Mi16b@@QAEPAU1@PBH@Z",
+    "owner": "Souls2/Misc3.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "NavMesh/MatrixToLocal.cpp",
+      "NavMesh/MatrixToWorld.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "NavMesh/MatrixToWorld.cpp",
+        "caller": "?MatrixToWorld@InstancedSurface@@QAE?AUSurfaceWorldMatrix@@ABUMatrix16@@0H@Z",
+        "caller_address": "0040d070",
+        "offset": 629,
+        "address": "004099e0"
+      },
+      {
+        "source": "NavMesh/MatrixToLocal.cpp",
+        "caller": "?MatrixToLocal@InstancedSurface@@QAE?AUSurfaceWorldMatrix@@ABUMatrix16@@0H@Z",
+        "caller_address": "0040cb30",
+        "offset": 640,
+        "address": "004099e0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "004099e0",
+      "verified_definitions": [
+        "Souls2/Misc3.cpp"
+      ],
+      "declared_original_entries": [
+        "00402340",
+        "004099e0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "??0TimerRemovalIndices@@QAE@XZ": {
     "address": "0045eef0",
@@ -2105,25 +2247,6 @@
       }
     ]
   },
-  "??1SimB@@UAE@XZ": {
-    "address": "00414270",
-    "target": "?ResetVtbl@LocSim@@QAEXXZ",
-    "owner": "Souls2/Misc3.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Fn41e3a0/F.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Fn41e3a0/F.cpp",
-        "caller": "??1LandSim@@UAE@XZ",
-        "caller_address": "0041e3a0",
-        "offset": 222,
-        "address": "00414270"
-      }
-    ]
-  },
   "??1SnapMat@@QAE@XZ": {
     "address": "00402310",
     "target": "??1MatrixLifetime@@QAE@XZ",
@@ -2539,72 +2662,35 @@
       }
     ]
   },
-  "??4BodyUpdateMatrix@@QAEAAU0@ABU0@@Z": {
-    "address": "00402340",
-    "target": "?Assign@Mi16@@QAEPAU1@PBH@Z",
-    "owner": "Souls2/Misc2.cpp",
+  "??4AV3@@QAEAAU0@ABU0@@Z": {
+    "address": "00401670",
+    "target": "??4Vector3f@@QAEAAU0@ABU0@@Z",
+    "owner": "Vector3f/Vector3fAssign.cpp",
     "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
     "evidence": [
-      "SqueezilBody/Update.cpp"
+      "Activity/Activity.cpp"
     ],
     "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
     "exact_call_sites": [
       {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 839,
-        "address": "00402340"
-      },
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 869,
-        "address": "00402340"
-      },
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 903,
-        "address": "00402340"
-      },
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 951,
-        "address": "00402340"
+        "source": "Activity/Activity.cpp",
+        "caller": "??0Activity@@QAE@PAUABody@@PAUASoul@@@Z",
+        "caller_address": "00401000",
+        "offset": 98,
+        "address": "00401670"
       }
-    ]
-  },
-  "??4SurfaceWorldMatrix@@QAEAAU0@ABU0@@Z": {
-    "address": "00402340",
-    "target": "?Assign@Mi16@@QAEPAU1@PBH@Z",
-    "owner": "Souls2/Misc2.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "NavMesh/MatrixToLocal.cpp",
-      "NavMesh/MatrixToWorld.cpp"
     ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "NavMesh/MatrixToWorld.cpp",
-        "caller": "?MatrixToWorld@InstancedSurface@@QAE?AUSurfaceWorldMatrix@@ABUMatrix16@@0H@Z",
-        "caller_address": "0040d070",
-        "offset": 552,
-        "address": "00402340"
-      },
-      {
-        "source": "NavMesh/MatrixToLocal.cpp",
-        "caller": "?MatrixToLocal@InstancedSurface@@QAE?AUSurfaceWorldMatrix@@ABUMatrix16@@0H@Z",
-        "caller_address": "0040cb30",
-        "offset": 563,
-        "address": "00402340"
-      }
-    ]
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00401670",
+      "verified_definitions": [
+        "Vector3f/Vector3fAssign.cpp"
+      ],
+      "declared_original_entries": [
+        "00401670",
+        "004183c0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "??5LandStream@@QAEAAU0@PAPAUStreamable@@@Z": {
     "address": "00448ca0",
@@ -3300,6 +3386,68 @@
       }
     ]
   },
+  "?Busy@FlashCall@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionFlash/Flash.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionFlash/Flash.cpp",
+        "caller": "?Execute@FlashGoodieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441840",
+        "offset": 22,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Busy@SpitCall@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionSpit/Spit.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionSpit/Spit.cpp",
+        "caller": "?Execute@AddSpitNutsFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00423ca0",
+        "offset": 25,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?C@PartB@@QAEXH@Z": {
     "address": "004479d0",
     "target": "?Capture@Joystick@@QAEHH@Z",
@@ -3657,6 +3805,104 @@
       }
     ]
   },
+  "?Contains@FunctionPrototypeRegistry@@QAEHABVString@@@Z": {
+    "address": "0046c390",
+    "target": "?Contains@TableFwd@@UAEHABH@Z",
+    "owner": "TableFwd/TableFwd.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionArgs/ParseFunction.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionArgs/ParseFunction.cpp",
+        "caller": "?ParseFunction@@YAPAVFunction@@PAUArgList@@@Z",
+        "caller_address": "00421f50",
+        "offset": 62,
+        "address": "0046c390"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046c390",
+      "verified_definitions": [
+        "TableFwd/TableFwd.cpp"
+      ],
+      "declared_original_entries": [
+        "004652a0",
+        "00466170",
+        "00466780",
+        "004679b0",
+        "00467df0",
+        "00468590",
+        "00468a10",
+        "00468e50",
+        "004699d0",
+        "0046a170",
+        "0046ac30",
+        "0046b070",
+        "0046c390",
+        "0046d200"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Contains@NameTable@@QAEHABVString@@@Z": {
+    "address": "00468e50",
+    "target": "?Contains@TableFwd@@UAEHABH@Z",
+    "owner": "TableFwd/TableFwd.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn42cc10/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 53,
+        "address": "00468e50"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 171,
+        "address": "00468e50"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 277,
+        "address": "00468e50"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00468e50",
+      "verified_definitions": [
+        "TableFwd/TableFwd.cpp"
+      ],
+      "declared_original_entries": [
+        "004652a0",
+        "00466170",
+        "00466780",
+        "004679b0",
+        "00467df0",
+        "00468590",
+        "00468a10",
+        "00468e50",
+        "004699d0",
+        "0046a170",
+        "0046ac30",
+        "0046b070",
+        "0046c390",
+        "0046d200"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?Contains@WindowListeners@@QAEHPAX0@Z": {
     "address": "00477f20",
     "target": "?Contains@ListenerTable@@QBEHPAX0@Z",
@@ -3880,6 +4126,68 @@
       }
     ]
   },
+  "?Creature@RoboCall2@@QAEPAURoboBody@@XZ": {
+    "address": "00420c50",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionRobo/RoboSetExec.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionRobo/RoboSetExec.cpp",
+        "caller": "?Execute@SetRoboBehaviorFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00423800",
+        "offset": 12,
+        "address": "00420c50"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c50",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Creature@RoboCall@@QAEPAURoboCreature@@XZ": {
+    "address": "00420c50",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionRobo/RoboExec.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionRobo/RoboExec.cpp",
+        "caller": "?Execute@ChangeRoboResponseFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00423a50",
+        "offset": 38,
+        "address": "00420c50"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c50",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?Default@App@@QAEHHH@Z": {
     "address": "0043b5a0",
     "target": "?Key@Controller@@QAEHHH@Z",
@@ -4067,96 +4375,6 @@
         "caller_address": "00401ef0",
         "offset": 43,
         "address": "0044e0b0"
-      }
-    ]
-  },
-  "?Elapsed@DeathClock@@QAEHXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Behavior2/Death.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Behavior2/Death.cpp",
-        "caller": "?Execute@DeathBehavior@@UAEHHH@Z",
-        "caller_address": "00403310",
-        "offset": 74,
-        "address": "0041ec00"
-      }
-    ]
-  },
-  "?Elapsed@PaceClock@@QAEHXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Behavior2/Pace.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Behavior2/Pace.cpp",
-        "caller": "?Execute@PaceBehavior@@UAEHHH@Z",
-        "caller_address": "00402cd0",
-        "offset": 113,
-        "address": "0041ec00"
-      },
-      {
-        "source": "Behavior2/Pace.cpp",
-        "caller": "?Execute@PaceBehavior@@UAEHHH@Z",
-        "caller_address": "00402cd0",
-        "offset": 182,
-        "address": "0041ec00"
-      },
-      {
-        "source": "Behavior2/Pace.cpp",
-        "caller": "?Execute@PaceBehavior@@UAEHHH@Z",
-        "caller_address": "00402cd0",
-        "offset": 251,
-        "address": "0041ec00"
-      }
-    ]
-  },
-  "?Elapsed@PlayerUpdateClock@@QAEIXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "SqueezilPlayerSoul/Update.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "SqueezilPlayerSoul/Update.cpp",
-        "caller": "?Update@PlayerUpdate@@QAEXXZ",
-        "caller_address": "0041f5a0",
-        "offset": 138,
-        "address": "0041ec00"
-      }
-    ]
-  },
-  "?Elapsed@SpitClock@@QAEHXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Behavior2/Spit.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Behavior2/Spit.cpp",
-        "caller": "?Execute@SpitBehavior@@UAEHHH@Z",
-        "caller_address": "00403d90",
-        "offset": 247,
-        "address": "0041ec00"
       }
     ]
   },
@@ -4413,6 +4631,51 @@
         "address": "004772a0"
       }
     ]
+  },
+  "?Find@Table2@@QAEPAUEntry@@ABVString@@@Z": {
+    "address": "0046b110",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Misc16/Misc2.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Misc16/Misc2.cpp",
+        "caller": "?Get@Valued@@QAEHXZ",
+        "caller_address": "004276b0",
+        "offset": 83,
+        "address": "0046b110"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046b110",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?FindFunction@@YAPAVRunFunction@@PBD@Z": {
     "address": "00423130",
@@ -4843,6 +5106,491 @@
       }
     ]
   },
+  "?Get@?$ResourceLookupTable@UGeometryFrame@@@@QAEPAUGeometryFrame@@ABVString@@@Z": {
+    "address": "00467a50",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Resources/FindResources.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Resources/FindResources.cpp",
+        "caller": "?FindGeometry@@YAPAUGeometryFrame@@PBD@Z",
+        "caller_address": "004246f0",
+        "offset": 179,
+        "address": "00467a50"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00467a50",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@?$ResourceLookupTable@UResourceTexture@@@@QAEPAUResourceTexture@@ABVString@@@Z": {
+    "address": "00467e90",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Resources/FindResources.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Resources/FindResources.cpp",
+        "caller": "?FindTexture@@YAPAUResourceTexture@@PBD@Z",
+        "caller_address": "00425220",
+        "offset": 179,
+        "address": "00467e90"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00467e90",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@?$Table@VString@@PAUPartPose@@V?$Array@PAUPartPose@@@@$0A@@@QAEPAUPartPose@@ABVString@@@Z": {
+    "address": "0046acd0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "PoseTable/PoseTableLife.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "PoseTable/PoseTableLife.cpp",
+        "caller": "?Find@PoseTable@@QAEPAUPartPose@@PBD@Z",
+        "caller_address": "0041b6e0",
+        "offset": 53,
+        "address": "0046acd0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046acd0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@?$Table@VString@@PAUUnloadType@@V?$Array@PAUUnloadType@@@@$0A@@@QAEPAUUnloadType@@ABVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "NavSurface/UnloadFile.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "NavSurface/UnloadFile.cpp",
+        "caller": "?UnloadLastFile@NavUnload@@QAEXXZ",
+        "caller_address": "0040e160",
+        "offset": 183,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@?$Table@VString@@PAV?$PrimitiveArray@H$00@@V?$Array@PAV?$PrimitiveArray@H$00@@@@$04@@QAEPAV?$PrimitiveArray@H$00@@ABVString@@@Z": {
+    "address": "00466210",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Inventory/Inventory.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Inventory/Inventory.cpp",
+        "caller": "?Add@Inventory@@QAEXPBDH@Z",
+        "caller_address": "00416110",
+        "offset": 311,
+        "address": "00466210"
+      },
+      {
+        "source": "Inventory/Inventory.cpp",
+        "caller": "?Remove@Inventory@@QAEXPBDH@Z",
+        "caller_address": "00416280",
+        "offset": 54,
+        "address": "00466210"
+      },
+      {
+        "source": "Inventory/Inventory.cpp",
+        "caller": "?Count@Inventory@@QAEHPBD@Z",
+        "caller_address": "00416300",
+        "offset": 143,
+        "address": "00466210"
+      },
+      {
+        "source": "Inventory/Inventory.cpp",
+        "caller": "?Items@Inventory@@QAEPAV?$PrimitiveArray@H$00@@PBD@Z",
+        "caller_address": "004163d0",
+        "offset": 143,
+        "address": "00466210"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00466210",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@CreatureTable@@QAEPAUCreature@@ABH@Z": {
+    "address": "00466820",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Sim2/TablePut.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Sim2/TablePut.cpp",
+        "caller": "?Put@CreatureTable@@QAEXHPAUObject@@0@Z",
+        "caller_address": "00412da0",
+        "offset": 53,
+        "address": "00466820"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00466820",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@FunctionPrototypeRegistry@@QAEPAVFunction@@ABVString@@@Z": {
+    "address": "0046c430",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionArgs/ParseFunction.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionArgs/ParseFunction.cpp",
+        "caller": "?ParseFunction@@YAPAVFunction@@PAUArgList@@@Z",
+        "caller_address": "00421f50",
+        "offset": 87,
+        "address": "0046c430"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046c430",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@LevelBrainTable@@QAEPAXABVString@@@Z": {
+    "address": "0046a210",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Level/FindBrain.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Level/FindBrain.cpp",
+        "caller": "?FindBrain@BrainLookupLevel@@QAEPAXVString@@@Z",
+        "caller_address": "0044e1b0",
+        "offset": 215,
+        "address": "0046a210"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046a210",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@NameTable@@QAEPAXABVString@@@Z": {
+    "address": "00468ef0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn42cc10/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 105,
+        "address": "00468ef0"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 223,
+        "address": "00468ef0"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 329,
+        "address": "00468ef0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00468ef0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@PlaceTable@@QAEPAXABH@Z": {
+    "address": "00469a70",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "RegionSimulation/RegionSimulation.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "RegionSimulation/RegionSimulation.cpp",
+        "caller": "?GetPlace@RegionSimulation@@QAEPAXH@Z",
+        "caller_address": "00418140",
+        "offset": 9,
+        "address": "00469a70"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00469a70",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?Get@Possessions@@QAEPAUInventory@@XZ": {
     "address": "00448990",
     "target": "?GetInventory@Possessions@@QAEPAXXZ",
@@ -4869,6 +5617,456 @@
         "address": "00448990"
       }
     ]
+  },
+  "?Get@PossessionsTable@@QAEPAXABH@Z": {
+    "address": "00465340",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "LandSimulation/LandSimulation.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "LandSimulation/LandSimulation.cpp",
+        "caller": "?Lend@LandSimulation@@QAEPAXH@Z",
+        "caller_address": "0041e850",
+        "offset": 28,
+        "address": "00465340"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00465340",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@Reg8@@QAEPAUEntry8@@AAVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f610/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f610/F.cpp",
+        "caller": "?Find@Holder8@@QAEHPAH@Z",
+        "caller_address": "0040f770",
+        "offset": 120,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@Reg9@@QAEPAUEntry9@@AAVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f610/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f610/F.cpp",
+        "caller": "?Find@Holder9@@QAEHPAH@Z",
+        "caller_address": "0040f8d0",
+        "offset": 120,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@Reg@@QAEPAUEntry@@AAVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f610/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f610/F.cpp",
+        "caller": "?Find@Holder7@@QAEHPAH@Z",
+        "caller_address": "0040f610",
+        "offset": 120,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@Reg@@QAEPAUWalk@@AAVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f450/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f450/F.cpp",
+        "caller": "?SetFaceSet@Holder@@QAEXVString@@0PBUContact@@@Z",
+        "caller_address": "0040f450",
+        "offset": 365,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@RegS@@QAEPAUEntryS@@AAVString@@@Z": {
+    "address": "0046d2a0",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f610/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f610/F.cpp",
+        "caller": "?Find@HolderS@@QAE?AVString@@PAH@Z",
+        "caller_address": "0040f9b0",
+        "offset": 126,
+        "address": "0046d2a0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046d2a0",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@RegistrationTable@@QAEPAURegisteredFunction@@ABVString@@@Z": {
+    "address": "0046c430",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Script/RegisterFunction.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Script/RegisterFunction.cpp",
+        "caller": "?RegisterFunction@@YAXPBDZZ",
+        "caller_address": "00422be0",
+        "offset": 113,
+        "address": "0046c430"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046c430",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@RunTable@@QAEPAVRunFunction@@ABVString@@@Z": {
+    "address": "0046c430",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn422ce0/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn422ce0/F.cpp",
+        "caller": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
+        "caller_address": "00422ce0",
+        "offset": 204,
+        "address": "0046c430"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046c430",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@ScriptFunctionTable@@QAEPAVFunction@@ABVString@@@Z": {
+    "address": "0046c430",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Script/FindFunction.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Script/FindFunction.cpp",
+        "caller": "?FindFunction@@YAPAVFunction@@PBD@Z",
+        "caller_address": "00423130",
+        "offset": 186,
+        "address": "0046c430"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0046c430",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Get@SoundLookupScope@@QAEPAUWaveSound@@ABVString@@@Z": {
+    "address": "00468630",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Audio/FindSound.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Audio/FindSound.cpp",
+        "caller": "?FindSound@@YAPAUWaveSound@@PBD@Z",
+        "caller_address": "00449c30",
+        "offset": 179,
+        "address": "00468630"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00468630",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?Get@Text@@QAEPBDXZ": {
     "address": "00438530",
@@ -4937,6 +6135,51 @@
         "address": "00438530"
       }
     ]
+  },
+  "?Get@TimeVars@@QAEHPAVString@@@Z": {
+    "address": "00461230",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionStr/TimerTime.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionStr/TimerTime.cpp",
+        "caller": "?Execute@TimerTimeMessageFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00440520",
+        "offset": 43,
+        "address": "00461230"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00461230",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?GetActors@LODViewSimulation@@QAEPAULODViewActors@@XZ": {
     "address": "00414150",
@@ -6555,6 +7798,37 @@
       }
     ]
   },
+  "?GetSurface@PreviousNearSurface@@QAEPAUPreviousNearData@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "NavSurface/WasNear.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "NavSurface/WasNear.cpp",
+        "caller": "?WasNear@PreviousNearSurface@@QAEHABUPreviousNearVector@@@Z",
+        "caller_address": "0040c7b0",
+        "offset": 86,
+        "address": "0040c6b0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0040c6b0",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?GetSurfaces@FaceWorldPlace@@QAEPAUFaceWorldSurfaces@@XZ": {
     "address": "00439b60",
     "target": "?GetSurfaces@PlaceSimulation@@QAEPAXXZ",
@@ -7692,6 +8966,148 @@
       }
     ]
   },
+  "?Level@CallLevel@@QAEHXZ": {
+    "address": "00420c70",
+    "target": "?SampleCount@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionCycle/Cycle.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionCycle/Cycle.cpp",
+        "caller": "?Execute@SetCyclePropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00470440",
+        "offset": 43,
+        "address": "00420c70"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c70",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba30",
+        "00420c70"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Level@PropCall@@QAEHXZ": {
+    "address": "00420c70",
+    "target": "?SampleCount@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionWithProp/WithProp.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionWithProp/WithProp.cpp",
+        "caller": "?Execute@ExecuteWithPropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00444bc0",
+        "offset": 40,
+        "address": "00420c70"
+      },
+      {
+        "source": "FunctionWithProp/WithProp.cpp",
+        "caller": "?Execute@ExecuteWithPropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00444bc0",
+        "offset": 51,
+        "address": "00420c70"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c70",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba30",
+        "00420c70"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Level@PropLevel@@QAEHXZ": {
+    "address": "00420c70",
+    "target": "?SampleCount@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionStr/HideProp.cpp",
+      "FunctionStr/ShowProp.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionStr/ShowProp.cpp",
+        "caller": "?Execute@ShowPropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00470070",
+        "offset": 41,
+        "address": "00420c70"
+      },
+      {
+        "source": "FunctionStr/HideProp.cpp",
+        "caller": "?Execute@HidePropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "004702c0",
+        "offset": 37,
+        "address": "00420c70"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c70",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba30",
+        "00420c70"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Level@SurfCall@@QAEPAXXZ": {
+    "address": "00420c70",
+    "target": "?SampleCount@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionSurf/SurfExec.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionSurf/SurfExec.cpp",
+        "caller": "?Execute@SetSurfaceTypeFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00440a30",
+        "offset": 62,
+        "address": "00420c70"
+      },
+      {
+        "source": "FunctionSurf/SurfExec.cpp",
+        "caller": "?Execute@SetSurfaceTypeFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00440a30",
+        "offset": 85,
+        "address": "00420c70"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c70",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba30",
+        "00420c70"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?ListA@Source@@QAEPAUItemList@@PBD@Z": {
     "address": "004163d0",
     "target": "?Items@Inventory@@QAEPAV?$PrimitiveArray@H$00@@PBD@Z",
@@ -7955,6 +9371,51 @@
       }
     ]
   },
+  "?Lookup@Scope@@QAEHPBX@Z": {
+    "address": "00461230",
+    "target": "?Get@TableGet@@QAEPAXH@Z",
+    "owner": "TableGet/TableGet.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Misc9/Getters.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Misc9/Getters.cpp",
+        "caller": "?Get@IntArg@@QAEHPAUScope@@@Z",
+        "caller_address": "00421150",
+        "offset": 22,
+        "address": "00461230"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00461230",
+      "verified_definitions": [
+        "TableGet/TableGet.cpp"
+      ],
+      "declared_original_entries": [
+        "00461230",
+        "00465340",
+        "00466210",
+        "00466820",
+        "00467a50",
+        "00467e90",
+        "00468630",
+        "00468ab0",
+        "00468ef0",
+        "00469a70",
+        "0046a210",
+        "0046acd0",
+        "0046b110",
+        "0046c430",
+        "0046d2a0",
+        "0046df30",
+        "0046ebd0"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?Lookup@Sub@FloatScope@@QAEMPBX@Z": {
     "address": "00461ea0",
     "target": "?Lookup@STable@@QAEMH@Z",
@@ -8205,25 +9666,6 @@
       }
     ]
   },
-  "?Milliseconds@Clock@@QAEIXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "SqueezilPlayerSoul/Slots7.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "SqueezilPlayerSoul/Slots7.cpp",
-        "caller": "?Run@Soul7@@QAEXPAUCtl@@H@Z",
-        "caller_address": "00454ab0",
-        "offset": 17,
-        "address": "0041ec00"
-      }
-    ]
-  },
   "?Mode3@Ring@@QAEHH@Z": {
     "address": "0043ebc0",
     "target": "?ResetCommandDefault@DefaultCommandBindings@@QAEHH@Z",
@@ -8358,6 +9800,37 @@
         "address": "00414250"
       }
     ]
+  },
+  "?Name@Target@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "PrintStubs/PrintStubs3.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "PrintStubs/PrintStubs3.cpp",
+        "caller": "?RunTarget@@YGHPAUTarget@@H@Z",
+        "caller_address": "00423e20",
+        "offset": 19,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?NameAtIndex@NameTable@@QAE?AVString@@H@Z": {
     "address": "0040f2a0",
@@ -8605,6 +10078,203 @@
         "address": "0047e350"
       }
     ]
+  },
+  "?Other@ApplyCall@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionProp/PropApplyT.cpp",
+      "FunctionProp/PropApplyX.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionProp/PropApplyT.cpp",
+        "caller": "?Apply@CreatePropTrackingSqueezilPositionFunction@@UAEHPAX00@Z",
+        "caller_address": "0046fd70",
+        "offset": 13,
+        "address": "00420c60"
+      },
+      {
+        "source": "FunctionProp/PropApplyX.cpp",
+        "caller": "?Apply@CreatePropTrackingSqueezilXformFunction@@UAEHPAX00@Z",
+        "caller_address": "0046fda0",
+        "offset": 13,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Other@AudioCall@@QAEPAXXZ": {
+    "address": "00420c30",
+    "target": "?Data@ArrayData@@QAEPAHXZ",
+    "owner": "ArrayData/ArrayData.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionStr/PlayAudio.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionStr/PlayAudio.cpp",
+        "caller": "?Execute@PlayAudioEffectFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "0043a130",
+        "offset": 84,
+        "address": "00420c30"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c30",
+      "verified_definitions": [
+        "ArrayData/ArrayData.cpp"
+      ],
+      "declared_original_entries": [
+        "0041d890",
+        "0041ec00",
+        "00420c30",
+        "0045de60",
+        "0045e9a0",
+        "00464e40",
+        "00466010",
+        "00466320",
+        "00466ba0",
+        "00466d50",
+        "00467850",
+        "00467c90",
+        "00467fd0",
+        "00468180",
+        "00468430",
+        "00468770",
+        "00468cf0",
+        "00469030",
+        "00469870",
+        "00469bb0",
+        "00469d60",
+        "0046a010",
+        "0046a580",
+        "0046a820",
+        "0046aad0",
+        "0046af10",
+        "0046b250",
+        "0046b500",
+        "0046b8a0",
+        "0046c570",
+        "0046c720",
+        "0046c8d0",
+        "0046ca80",
+        "0046cc30",
+        "0046cde0",
+        "0046cf60",
+        "00477290"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Other@RoboCall2@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionRobo/RoboSetExec.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionRobo/RoboSetExec.cpp",
+        "caller": "?Execute@SetRoboBehaviorFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00423800",
+        "offset": 25,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Other@RoboCall@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionRobo/RoboExec.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionRobo/RoboExec.cpp",
+        "caller": "?Execute@ChangeRoboResponseFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00423a50",
+        "offset": 51,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Other@TestCall@@QAEHXZ": {
+    "address": "00420c60",
+    "target": "?NoLoop@MorphCycle@@QAEHXZ",
+    "owner": "MorphCycle/MorphCycle.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "FunctionIf/IfTests.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "FunctionIf/IfTests.cpp",
+        "caller": "?Test@IfPlayerFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00443830",
+        "offset": 5,
+        "address": "00420c60"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c60",
+      "verified_definitions": [
+        "MorphCycle/MorphCycle.cpp"
+      ],
+      "declared_original_entries": [
+        "0041ba40",
+        "00420c60",
+        "0047e780"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?PanelBitmapLog@@YAXPBDZZ": {
     "address": "00419290",
@@ -8887,6 +10557,66 @@
       }
     ]
   },
+  "?Position@LODViewMatrix@@QAEPAUVector3f@@XZ": {
+    "address": "0041faf0",
+    "target": "?Keys@IniFileSection@@QAEPAV?$PrimitiveArray@VString@@$02@@XZ",
+    "owner": "Ini/IniFile.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Props2/LODUpdate.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Props2/LODUpdate.cpp",
+        "caller": "?UpdateLevel@LODUpdate@@QAEXXZ",
+        "caller_address": "00428510",
+        "offset": 195,
+        "address": "0041faf0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0041faf0",
+      "verified_definitions": [
+        "Ini/IniFile.cpp"
+      ],
+      "declared_original_entries": [
+        "0041faf0",
+        "00442980"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Position@PlayerUpdateMatrix@@QAEPAUVector3f@@XZ": {
+    "address": "0041faf0",
+    "target": "?Keys@IniFileSection@@QAEPAV?$PrimitiveArray@VString@@$02@@XZ",
+    "owner": "Ini/IniFile.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "SqueezilPlayerSoul/Update.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "SqueezilPlayerSoul/Update.cpp",
+        "caller": "?Update@PlayerUpdate@@QAEXXZ",
+        "caller_address": "0041f5a0",
+        "offset": 309,
+        "address": "0041faf0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0041faf0",
+      "verified_definitions": [
+        "Ini/IniFile.cpp"
+      ],
+      "declared_original_entries": [
+        "0041faf0",
+        "00442980"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
   "?PostFunction@@YAXPBDPAUPCaller@@HH@Z": {
     "address": "00422ce0",
     "target": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
@@ -9045,6 +10775,99 @@
         "address": "0043c250"
       }
     ]
+  },
+  "?Ptr@Item3@@QAEPAHXZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Misc3/Lists.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Misc3/Lists.cpp",
+        "caller": "?Forward4@Holder@@QAEHPAH@Z",
+        "caller_address": "00412bc0",
+        "offset": 22,
+        "address": "0040c6b0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0040c6b0",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Ptr@Item3@@QAEPAURec@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Misc18/Lookup.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Misc18/Lookup.cpp",
+        "caller": "?Lookup@Holder6@@QAE?AUPart@@PAH@Z",
+        "caller_address": "0040f3c0",
+        "offset": 66,
+        "address": "0040c6b0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0040c6b0",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
+  },
+  "?Ptr@Item@@QAEPAURec@@XZ": {
+    "address": "0040c6b0",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Fn40f450/F.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Fn40f450/F.cpp",
+        "caller": "?SetFaceSet@Holder@@QAEXVString@@0PBUContact@@@Z",
+        "caller_address": "0040f450",
+        "offset": 241,
+        "address": "0040c6b0"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "0040c6b0",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?Put@CreatureTable@@QAEXHPAX0@Z": {
     "address": "00412da0",
@@ -9569,40 +11392,6 @@
       }
     ]
   },
-  "?Remove@DelayedMessageArray@@QAEXH@Z": {
-    "address": "0046c6c0",
-    "target": "?Remove@?$Array@PAVDelayedExecutionContext@@@@UAEXH@Z",
-    "owner": "Container/gen/Array59.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Misc16/AdvanceMessages.cpp",
-      "Misc16/ReleaseMessages.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Misc16/ReleaseMessages.cpp",
-        "caller": "?ReleaseDelayedMessages@@YAXXZ",
-        "caller_address": "00422b80",
-        "offset": 46,
-        "address": "0046c6c0"
-      },
-      {
-        "source": "Misc16/AdvanceMessages.cpp",
-        "caller": "?ScriptUpdateTimers@@YAXM@Z",
-        "caller_address": "00422f70",
-        "offset": 162,
-        "address": "0046c6c0"
-      },
-      {
-        "source": "Misc16/AdvanceMessages.cpp",
-        "caller": "?ScriptResetTimers@@YAXXZ",
-        "caller_address": "00423050",
-        "offset": 158,
-        "address": "0046c6c0"
-      }
-    ]
-  },
   "?Remove@NavTables@@QAEXH@Z": {
     "address": "004102f0",
     "target": "?Forward2@Holder@@QAEXH@Z",
@@ -9648,25 +11437,6 @@
       }
     ]
   },
-  "?Remove@ObjStack@@QAEXH@Z": {
-    "address": "0046c510",
-    "target": "?Remove@?$Array@PAV?$Table@VString@@PAVFunction@@V?$Array@PAVFunction@@@@$0N@@@@@UAEXH@Z",
-    "owner": "Container/gen/Array58.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Release/ReleaseB.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Release/ReleaseB.cpp",
-        "caller": "?ReleaseB@@YAXXZ",
-        "caller_address": "00422b00",
-        "offset": 91,
-        "address": "0046c510"
-      }
-    ]
-  },
   "?Remove@SceneTable@@QAEXPAX0@Z": {
     "address": "004773e0",
     "target": "?DeleteChildFromFrame@@YGJPAUIDirect3DRMFrame@@0@Z",
@@ -9683,44 +11453,6 @@
         "caller_address": "00426170",
         "offset": 38,
         "address": "004773e0"
-      }
-    ]
-  },
-  "?Remove@SoundScopeStack@@QAEXH@Z": {
-    "address": "00467f70",
-    "target": "?Remove@?$Array@PAV?$Table@VString@@PAVAudioSample@@V?$Array@PAVAudioSample@@@@$0A@@@@@UAEXH@Z",
-    "owner": "Container/gen/Array31.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Audio/ReleaseSoundScope.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Audio/ReleaseSoundScope.cpp",
-        "caller": "?ReleaseCurrentSoundScope@@YAXXZ",
-        "caller_address": "0044a1a0",
-        "offset": 155,
-        "address": "00467f70"
-      }
-    ]
-  },
-  "?Remove@StreamBufferArray@@QAEXH@Z": {
-    "address": "00468120",
-    "target": "?Remove@?$Array@PAUIDirectSoundBuffer@@@@UAEXH@Z",
-    "owner": "Container/gen/Array32.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Audio/StopLoopingSounds.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Audio/StopLoopingSounds.cpp",
-        "caller": "?StopLoopingSounds@@YAXXZ",
-        "caller_address": "0044a8f0",
-        "offset": 50,
-        "address": "00468120"
       }
     ]
   },
@@ -10269,6 +12001,37 @@
         "address": "0043d680"
       }
     ]
+  },
+  "?Self@Target@@QAEPAHXZ": {
+    "address": "00420c50",
+    "target": "?GetPath@IniReader@@QBEPBDXZ",
+    "owner": "IniReader/IniReader.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "PrintStubs/PrintStubs3.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "PrintStubs/PrintStubs3.cpp",
+        "caller": "?RunTarget@@YGHPAUTarget@@H@Z",
+        "caller_address": "00423e20",
+        "offset": 8,
+        "address": "00420c50"
+      }
+    ],
+    "shared_leaf_evidence": {
+      "compared_original_entry": "00420c50",
+      "verified_definitions": [
+        "IniReader/IniReader.cpp"
+      ],
+      "declared_original_entries": [
+        "0040c6b0",
+        "00420c50",
+        "00443460"
+      ],
+      "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
+    }
   },
   "?Set@Display@@QAEXH@Z": {
     "address": "004592f0",
@@ -11009,51 +12772,6 @@
         "caller_address": "004205a0",
         "offset": 195,
         "address": "00421d80"
-      }
-    ]
-  },
-  "?SimRate@BodyUpdateClock@@QAEIXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "SqueezilBody/Update.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 401,
-        "address": "0041ec00"
-      },
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 1003,
-        "address": "0041ec00"
-      }
-    ]
-  },
-  "?SimRate@ClockR@@QAEIXZ": {
-    "address": "0041ec00",
-    "target": "?SimRate@GameClock@@QAEHXZ",
-    "owner": "GameClock/GameClock.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "GameClock/RunFrame.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "GameClock/RunFrame.cpp",
-        "caller": "?RunFrame@@YAXXZ",
-        "caller_address": "004206e0",
-        "offset": 12,
-        "address": "0041ec00"
       }
     ]
   },
