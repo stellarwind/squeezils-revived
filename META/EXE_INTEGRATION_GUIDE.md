@@ -1098,3 +1098,311 @@ Current authoritative evidence: build/integration/pipeline-summary.json,
 containers/eh-projection.json and code-reference-classification.json.
 Next integration block should use owner-clusters.json to pick an ordinary
 missing-definition family; EH funclet references no longer dominate the link.
+
+
+## Interior-pointer category closed (2026-10-21)
+
+The EH batch removed 1,664 of the original 1,665 interior-pointer diagnostics;
+they were old EH metadata destinations, not surviving application jump tables.
+The final entry, 0x424dd0, is a separate static initializer incorrectly included
+in the original range for StackTop at 0x424dc0. Original code calls 0x424de0
+then tail-jumps to 0x424df0; these are already owned by Thunks/Thunks.cpp
+(construct stack at 0x4c71c0) and Guards/Init.cpp (atexit cleanup registration).
+Runtime/GeometryStackInit.cpp supplies the missing initializer, with explicit
+original-address comments and a ten-byte target. It scores 0. Its only two
+undefined externals are the existing Thunk424de0 and R424df0 owners. Normal
+entry-alias generation resolves _fn_424DD0 to InitializeGeometryStack; no
+interior offsets, jump-table guesses or new EH aliases are generated.
+
+Full pipeline 7be6c39b-e367-4b7c-a6ab-4343e010fc69 compiles 1,141/1,141 sources without failures/omissions,
+completes projection/link/classification and reports snapshot-covered inputs
+unchanged. Zero EH-inventory or original-range interior pointer diagnostics
+remain. Current totals supersede 0/3,490/2,901: zero LNK2005, 3,489 LNK2001
+messages, 2,900 unique unresolved symbols, no internal linker error. Remaining
+code pointers: four shared implementations, 21 original entries without target
+mappings and 122 absent range mappings. They require separate ownership/CRT/Qv
+triage; they are not a remaining 1,665-entry jump-table job. The EXE still does
+not link, cached binary provenance remains incomplete, and gameplay is untested.
+STATUS.md and HANDOFF.md unchanged.
+
+
+## Original CRT floating-point dispatch table removed (2026-10-21)
+
+Of the 147 remaining code-pointer names, 63 were case labels in the original
+CRT floating-point mask-and-dispatch table at 0x4c559e (64 entries). The original
+instruction sequence at 0x49172a masks eax with 0x3f then jumps through that table.
+Linked LIBC supplies replacement runtime code and its own tables; no individual
+case-label aliases or CRT reconstructions are needed.
+
+eh_batch.py now recognizes this original x86 dispatch idiom in CRT code,
+validates a power-of-two bounded index, CRT destinations, original table bytes
+and COFF pointer identities, then subjects extracted table objects to the same
+conservative reachability analysis as EH records. All extracted slots are one
+atomic retention group: a reference to any slot keeps them all. This prevents
+unsafe per-slot removal when extraction split an indexed table across symbols.
+One slot was already excluded as CRT-only by extraction; 63 extracted slots
+are now removed. The last object's four bytes of zero COFF alignment padding
+are checked explicitly rather than mistaken for another original image field.
+All retained payload, symbols and 2,371 relocations pass the projection verifier.
+Six tests pass, including an external reference to the last table slot retaining
+the entire group. No game source bodies or matching targets changed.
+
+Full pipeline 20328528-f89c-4cdf-915c-556705f61957 compiles 1,141/1,141 sources without failures or omissions,
+completes projection/link/classification, and reports snapshot-covered inputs
+unchanged. Zero LNK2005, 3,426 LNK2001 messages, 2,837 unique unresolved symbols,
+no internal linker error. This supersedes 0/3,489/2,900. Code pointers decreased
+147 -> 84: four shared implementations, 21 original entries without target
+mappings, 59 absent range mappings. No EH or original-range interior references
+returned. Cached binaries remain unverified and gameplay untested; the EXE still
+does not link. STATUS.md and HANDOFF.md unchanged. Next bounded pointer block:
+remaining CRT function/metadata tables or Qv virtual entries, with ABI ownership
+and whole-table retention evidence rather than guessed original offsets.
+
+
+## Original CRT transcendental descriptor batch (2026-10-21)
+
+eh_batch.py validates four CRT math-dispatch descriptors loaded by original
+mov-edx/tail-jump wrappers: asin at 0x4c56f0, acos at 0x4c5710, atan at 0x4c5730,
+and atan2 at 0x4c5750. Length-prefixed names and arity fields determine 32-byte
+unary (four-case) and 80-byte binary (sixteen-case) layouts. Validation requires
+original instruction boundaries, CRT destinations, PE/COFF byte and relocation
+identity, and no direct original game-code references to any field. Retained
+input/data roots still control removal. Every extracted descriptor member is
+one atomic retention group, including noncandidate members: referencing any
+slot keeps the whole descriptor. Linked LIBC retains its own runtime metadata.
+
+Twenty-four additional relocations and twelve unused code-symbol rows were
+removed; eleven of those code symbols were unresolved. All retained payload,
+symbols and 2,347 relocations pass the projection verifier. Seven tests pass,
+including one atan2 slot retaining its entire descriptor. No source bodies or
+matching targets changed.
+
+Full pipeline db2e29c8-3b64-4bfe-ad45-192bef5a26ca compiles 1,141/1,141 sources without failures/omissions,
+completes projection/link/classification, and reports snapshot-covered inputs
+unchanged. Zero LNK2005, 3,415 LNK2001 messages, 2,826 unique unresolved symbols,
+no internal linker error. This supersedes 0/3,426/2,837. Code pointers decreased
+84 -> 73: four shared implementations, 21 original entries without target
+mappings, 48 absent-range entries. EH and interior categories remain zero.
+The EXE still does not link; cached binary provenance remains incomplete and
+gameplay is untested. STATUS.md and HANDOFF.md unchanged. Next pointer family:
+original virtual-table entries at 0x4a10xx..0x4a16xx, requiring actual Qv/CRT/source
+owners or whole-table liveness evidence; never delete individual vtable slots.
+
+
+## Code-pointer integration complete (2026-10-21)
+
+All 73 remaining unresolved _fn_ADDRESS names are cleared. qv_aliases.py uses
+unique original-address entries from the existing QvLib body/vtable mapping to
+bind 57 additional pointers, including QvGroup::getChildren previously grouped
+under a scoring-only LandSimulation spelling. Zero-score mappings are exact;
+nonzero mappings are restricted to the 34 documented upstream traversal methods
+in the late Qv block. Those methods retain SGI ANNOUNCE diagnostics, a known
+difference recorded in qvlib/README.md. No claim of gameplay equivalence or game
+traversal-override integration follows from resolving these pointer spellings.
+
+code_pointer_bindings.py verifies current LIBC archive members against complete
+original function bodies, masking only COFF relocations and requiring executable
+code plus meaningful unmasked bytes. It resolves malloc, free, realloc, purecall,
+terminate, the __non_rtti_object copy constructor, and the C++ unhandled-exception
+filter. The empty optional floating-point hook at 0x48e930 maps to LIBC's actual
+one-byte __fpclear function. __FPmtinit is a DATA variable holding that function's
+address and is explicitly not a callable alias target; the final bindings correct
+an intermediate candidate caught by the executable-section audit. Three shared
+empty game methods have identical original/compiled bodies and RET 4/RET 8 cleanup.
+No CRT bodies or dummy implementations were added to the game sources.
+
+The original CRT startup slot at 0x4b9004 is removed only with proof that the
+current LIBC .CRT$XCC member supplies matching initializer and constructor code;
+original/library hashes guard freshness. Math descriptors spanning extracted
+object boundaries now use original extents from data/ambiguous.tsv to distinguish
+real payload from checked zero COFF alignment padding. Overlapping objects join
+all affected descriptor retention groups, including noncandidate members. This
+clears four remaining descriptor-only pointers and the replaced CRT initializer.
+Retained payload, symbol identities and 2,342 relocations pass verification.
+
+Seven reachability/retention tests and five code-binding tests pass; QvLib's
+compiled parser smoke test passes fields, DEF/USE and invalid-input rejection.
+Full pipeline 32492a06-41dd-4270-b31e-877b7dcc2c38 compiles 1,141/1,141 sources without failures/omissions,
+completes projection/link/classification and reports snapshot-covered inputs
+unchanged. Zero LNK2005, 3,342 LNK2001 messages, 2,753 unique unresolved symbols,
+no internal linker error. This supersedes 0/3,415/2,826. There are zero unresolved
+code pointers across every classification category, including EH and interiors.
+The EXE still does not link: the remaining 2,753 symbols require ordinary
+method/data/ABI ownership work. Cached binary provenance remains incomplete and
+gameplay is untested. STATUS.md and HANDOFF.md unchanged. Reproduce with the
+existing integration_pipeline.py; tests are test_eh_batch.py and
+test_code_pointer_bindings.py, plus qvlib/test.sh in the compiler environment.
+
+
+## Exact-call ordinary method batch (2026-10-21)
+
+exact_call_aliases.py discovers ordinary game-method bindings from current COFF
+references. It requires a complete caller body identical to the original outside
+COFF relocations, a zero-addend direct CALL/JMP at a verified original instruction
+boundary, one destination across every referring relocation, and a complete exact
+callee body at that destination. All possible compiled definitions of the callee
+must pass; ambiguous addresses, interior entries, non-call references, short
+unmasked evidence and Qv/CRT destinations are rejected. Original instruction bytes
+are checked against SQZ.EXE before trusting archived disassembly boundaries.
+
+The tracked exact_call_registry.json records 481 full decorated names across
+339 original entries, with caller sources, addresses and relocation offsets.
+entry_aliases.py rediscovers the proofs on every pipeline run and fails closed if
+any registered decision changes. Candidate reports include current object and
+original-image hashes. No source bodies, declarations or target regexes changed;
+no byte-match rerun is needed for unchanged translation units. The five new
+complete-body proof tests pass, as do five existing code-binding tests and seven
+EH retention tests (the latter require the compiler LIB environment).
+
+Full pipeline 556c68dc-1ec1-4346-9286-63003da16726 compiles 1,141/1,141 sources,
+without failures or omissions, completes projection/link/classification and
+reports snapshot-covered inputs unchanged. Zero LNK2005, 2,822 LNK2001 messages,
+2,272 unique unresolved symbols, no internal linker error. This supersedes
+0/3,342/2,753: exactly 481 unique unresolved symbols and 520 diagnostic messages
+were removed. The batch deliberately leaves 673 discovered candidates rejected
+rather than guessing their identity. No unresolved code pointers returned.
+The EXE still does not link; cached data/resources/QvLib provenance remains
+unverified and gameplay is untested. STATUS.md and HANDOFF.md unchanged.
+Reproduce with integration_pipeline.py; inspect exact-call-candidates.json and
+owner-clusters.json for the next bounded method/data ownership family.
+
+
+## Exact-reference data ownership batch (2026-10-21)
+
+exact_data_aliases.py resolves 106 additional decorated global names to 87
+existing extracted storage entries. All 204 referring relocations have complete
+original/compiled caller-body equality outside COFF fixups, zero DIR32 addends,
+and original PE HIGHLOW relocation records at the corresponding operand offsets.
+Every occurrence must agree on one original address and one extracted symbol.
+Unmapped callers, nonzero offsets, conflicting destinations and ambiguous or
+absent data owners remain rejected. No globals or replacement bytes are created.
+
+The tracked exact_data_registry.json records each full decorated name, canonical
+storage owner, original address and referring relocation evidence. data_aliases.py
+recomputes these proofs from current compiled references on every pipeline run
+and fails if any registered decision changes. exact-data-candidates.json records
+current object, data and original-image hashes. The existing declaration-only
+skip list in data_alias.json is supplemented by these exact-reference bindings;
+a name can remain in that declaration-triage list after being resolved here.
+
+The pipeline freshness snapshot now also hashes the original SQZ.EXE and the
+archived disassembly used to verify instruction boundaries. Complete-body proof
+validation rejects truncated original reads explicitly. Six data identity/fixup
+tests, six complete-body tests, five code-pointer tests and seven EH retention
+tests pass. No translation-unit bodies, headers or matching targets changed.
+
+Full pipeline 67e14aa7-d1a0-4d5b-b368-c13e0582725a compiles 1,141/1,141 sources,
+with no failures or omissions, completes projection/link/classification and
+reports snapshot-covered inputs unchanged. Zero LNK2005, 2,697 LNK2001 messages,
+2,166 unique unresolved symbols, no internal linker error. This supersedes
+0/2,822/2,272: exactly 106 unique unresolved names and 125 diagnostic messages
+were removed. Zero unresolved code pointers remain. The EXE still does not link;
+cached data/resources/QvLib provenance is not fully verified and gameplay remains
+untested. STATUS.md and HANDOFF.md unchanged. Reproduce using the existing
+integration_pipeline.py; the next family should use the refreshed owner clusters.
+
+
+## Reviewed empty-destructor ownership batch (2026-10-21)
+
+exact_call_aliases.py now recognizes the two previously reviewed complete,
+nonvirtual empty destructor owners: Vector3f at 0x401660 and MatrixLifetime at
+0x402310. A one-byte RET alone never establishes identity: both the exact
+original address and canonical decorated name must be in the explicit policy,
+every reference must remain a complete nonvirtual zero-argument destructor
+call with original instruction/caller-body evidence, and every possible compiled
+canonical definition must be exactly RET. Incidental Vector3f definitions are
+checked too, while Vector3f/Vector3fOps.cpp remains the explicit retained owner.
+The matrix owner remains Matrix4/MatrixDtor.cpp. No layout or this adjustment is
+introduced, and constructors/deleting destructors cannot use this exception.
+
+This adds 27 registry bindings: 16 matrix and 11 vector local spellings. All
+481 prior exact-call decisions remain unchanged. The canonical implementations
+already existed; no source bodies, headers, targets or new empty bodies were
+added. Seven complete-body tests (including short-body positive/negative cases),
+six data identity tests and five code-binding tests pass. EH retention tests
+must run after compilation: a concurrent test attempt observed temporarily
+missing objects while the compiler replaced them and was rerun on stable inputs.
+
+Full pipeline f46abbbb-4fe0-4c1c-bb18-cba6cbd282f7 compiles 1,141/1,141 sources,
+without failures or omissions, completes projection/link/classification and
+reports snapshot-covered inputs unchanged. Zero LNK2005, 2,664 LNK2001 messages,
+2,139 unique unresolved symbols, no internal linker error. This supersedes
+0/2,697/2,166: all 27 names and 33 diagnostic messages were removed. The EXE
+still does not link; cached binary provenance remains incomplete and gameplay
+is untested. STATUS.md and HANDOFF.md unchanged. Next block: ordinary method
+ownership or Qv parser aliases using original entry and canonical ABI evidence.
+
+
+## Exact Qv parser call ownership batch (2026-10-21)
+
+qv_exact_aliases.py binds 84 local parser method spellings to 58 canonical
+QvLib entries. Every referring relocation must have a complete original/compiled
+caller-body match, zero-addend direct CALL/JMP, verified instruction boundary
+and one original destination. The canonical QvLib body is checked freshly from
+the current library object against that original entry outside COFF relocations;
+a cached zero score alone is insufficient. The unity object must also be an
+actual member of QvLib.lib. Only zero-score parser entries qualify; traversal
+methods, game override dispatch and nonexact routines are excluded.
+
+qv_exact_registry.json records full decorated aliases, canonical entries and
+all call-site evidence. qv_aliases.py recomputes the proofs and fails on changed
+registered decisions every pipeline run. Existing parser exports require no
+aliases: three initially discovered identity spellings were excluded. The shared
+COFF emitter now rejects identity and duplicate alias definitions before writing
+an object; a negative test covers both cases. Five Qv identity/emission tests,
+seven complete-body tests, six data tests, five code-binding tests and seven
+EH retention tests pass. QvLib parser smoke passes fields, DEF/USE and invalid
+input rejection. No upstream QvLib sources, game source bodies, headers or scoring targets changed.
+These bindings do not by themselves unify all parser global storage or install
+the game's three traversal overrides; whole-game model loading is still untested.
+
+Full cleaned pipeline 8c784319-c87f-4bc0-9735-bed9e0880b98 compiles 1,141/1,141
+sources without failures or omissions, completes projection/link/classification
+and reports snapshot-covered inputs unchanged. Zero LNK2005, 2,580 LNK2001
+messages, 2,055 unique unresolved symbols, no internal linker error. This
+supersedes 0/2,664/2,139: 84 unique names and 84 diagnostic messages removed.
+It also supersedes intermediate run a8a458b7-4324-4d68-8044-d7ea147b60cf, which
+had the same diagnostics but included the three unnecessary identity aliases.
+Zero unresolved code pointers remain. The EXE still does not link, cached binary
+provenance remains incomplete and gameplay is untested. STATUS.md and HANDOFF.md
+unchanged. Reproduce with integration_pipeline.py; next candidates are in the
+updated owner clusters and qv-exact-candidates.json rejection list.
+
+
+## Global pointer getter/storage ownership batch (2026-10-21)
+
+The six Globals.cpp accessors at 0x420680..0x4206d0 are six-byte A1-address/RET
+bodies: only two bytes remain after masking their four-byte address operands.
+They previously failed the general three-unmasked-byte evidence threshold.
+POINTER_GETTERS now records their exact canonical symbols, named pointer-global
+relocations and original absolute operands. Only the complete six-byte sequence,
+one external zero-addend DIR32 relocation at +1, its expected global spelling,
+and the exact original storage address qualify. The general threshold remains
+unchanged for all other functions. Getter aliases additionally require cdecl,
+zero arguments, pointer return, complete original caller evidence and current
+canonical data-alias ownership of the referenced storage slot.
+
+This proves 38 new method names. Exact-data discovery also resolves the four
+void-pointer spellings for g_land (0x4badb8), g_application (0x4badac), g_panel
+(0x4badb0), and g_gameClock (0x4badc0) to their already extracted slots. Previously
+proved typed spellings share that same storage; no duplicate variables are added.
+The exact-call registry now has 546 entries and the data registry has 110.
+All earlier decisions remain unchanged. Two source declarations remain rejected:
+GetHolder( int ) and GetPauseTarget( int ) claim stdcall arguments while their
+original destinations are cdecl no-argument getters. They need a separate source
+ABI correction; no aliases or cleanup adapters were manufactured for them.
+
+Nine complete-body/getter tests, six data identity tests, five Qv identity tests,
+five code-binding tests and seven EH retention tests pass. New negative cases
+reject wrong original storage, global symbol, getter symbol, relocation type,
+calling convention, argument list and scalar return. No game source bodies,
+headers or scoring targets changed; STATUS.md and HANDOFF.md remain unchanged.
+
+Full pipeline a26e3cc1-ec2f-4b23-a140-cd133c7b68c5 compiles 1,141/1,141 sources
+without failures or omissions, completes projection/link/classification and
+reports snapshot-covered inputs unchanged. Zero LNK2005, 2,533 LNK2001 messages,
+2,013 unique unresolved symbols, no internal linker error. This supersedes
+0/2,580/2,055: 42 unique names and 47 diagnostic messages removed. Zero unresolved
+code pointers remain. The EXE still does not link, cached binary provenance is
+incomplete and gameplay remains untested. Next block: another explicit ownership
+family from the refreshed clusters, or the two rejected getter declarations.

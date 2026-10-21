@@ -66,10 +66,24 @@ def main():
             pairs.append((alias, target))
             evidence.append(dict(alias=alias, reviewed_decision=decision))
     pairs.sort()
+    exact_registry_path = build.REPO / 'tools/exact_call_registry.json'
+    if exact_registry_path.exists():
+        from exact_call_aliases import discover
+        current = discover()
+        (build.OUT / 'exact-call-candidates.json').write_text(json.dumps(current, indent=2))
+        for alias, decision in json.loads(exact_registry_path.read_text()).items():
+            if current['accepted'].get(alias) != decision:
+                raise ValueError('Exact-call proof changed; review registry: ' + alias)
+            if alias in {a for a, _ in pairs}:
+                raise ValueError('Duplicate exact-call alias: ' + alias)
+            pairs.append((alias, decision['target']))
+            evidence.append(dict(alias=alias, exact_call_decision=decision))
+        pairs.sort()
     write_coff(pairs, build.OUT / "entry_alias.obj")
     (build.OUT / "entry_alias.json").write_text(json.dumps(dict(
         aliases=pairs, evidence=evidence, skipped=skipped,
         ordinary_registry_sha256=hashlib.sha256(registry_path.read_bytes()).hexdigest(),
+        exact_registry_sha256=hashlib.sha256(exact_registry_path.read_bytes()).hexdigest() if exact_registry_path.exists() else None,
         data_sha256=hashlib.sha256(data.read_bytes()).hexdigest()), indent=2))
     print("%d entry/reviewed ordinary aliases; %d skipped data-pointer targets" % (len(pairs), len(skipped)))
 

@@ -1,0 +1,2687 @@
+{
+  "?f_4c70d8@@3EA": {
+    "address": "004c70d8",
+    "target": "?g_4C70D8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G421ce0@@YAXXZ",
+        "caller_address": "00421ce0",
+        "offset": 1,
+        "address": "004c70d8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G421ce0@@YAXXZ",
+        "caller_address": "00421ce0",
+        "offset": 17,
+        "address": "004c70d8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c70dc@@3EA": {
+    "address": "004c70dc",
+    "target": "?g_4C70DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Container2/SettingsCleanup.cpp",
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4225a0@@YAXXZ",
+        "caller_address": "004225a0",
+        "offset": 1,
+        "address": "004c70dc"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4225a0@@YAXXZ",
+        "caller_address": "004225a0",
+        "offset": 17,
+        "address": "004c70dc"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4225f0@@YAXXZ",
+        "caller_address": "004225f0",
+        "offset": 1,
+        "address": "004c70dc"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4225f0@@YAXXZ",
+        "caller_address": "004225f0",
+        "offset": 17,
+        "address": "004c70dc"
+      },
+      {
+        "source": "Container2/SettingsCleanup.cpp",
+        "caller": "?G4226a0@@YAXXZ",
+        "caller_address": "004226a0",
+        "offset": 25,
+        "address": "004c70dc"
+      },
+      {
+        "source": "Container2/SettingsCleanup.cpp",
+        "caller": "?G4226a0@@YAXXZ",
+        "caller_address": "004226a0",
+        "offset": 43,
+        "address": "004c70dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c70e0@@3EA": {
+    "address": "004c70e0",
+    "target": "?g_4C70E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G424e00@@YAXXZ",
+        "caller_address": "00424e00",
+        "offset": 1,
+        "address": "004c70e0"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G424e00@@YAXXZ",
+        "caller_address": "00424e00",
+        "offset": 17,
+        "address": "004c70e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c70e4@@3EA": {
+    "address": "004c70e4",
+    "target": "?g_4C70E4@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp",
+      "Guards/PropVectors.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G425d20@@YAXXZ",
+        "caller_address": "00425d20",
+        "offset": 1,
+        "address": "004c70e4"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G425d20@@YAXXZ",
+        "caller_address": "00425d20",
+        "offset": 17,
+        "address": "004c70e4"
+      },
+      {
+        "source": "Guards/PropVectors.cpp",
+        "caller": "?G425dc0@@YAXXZ",
+        "caller_address": "00425dc0",
+        "offset": 25,
+        "address": "004c70e4"
+      },
+      {
+        "source": "Guards/PropVectors.cpp",
+        "caller": "?G425dc0@@YAXXZ",
+        "caller_address": "00425dc0",
+        "offset": 43,
+        "address": "004c70e4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c72f8@@3EA": {
+    "address": "004c72f8",
+    "target": "?g_4C72F8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d3a0@@YAXXZ",
+        "caller_address": "0042d3a0",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d3a0@@YAXXZ",
+        "caller_address": "0042d3a0",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d3f0@@YAXXZ",
+        "caller_address": "0042d3f0",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d3f0@@YAXXZ",
+        "caller_address": "0042d3f0",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d440@@YAXXZ",
+        "caller_address": "0042d440",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d440@@YAXXZ",
+        "caller_address": "0042d440",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d490@@YAXXZ",
+        "caller_address": "0042d490",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d490@@YAXXZ",
+        "caller_address": "0042d490",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d4e0@@YAXXZ",
+        "caller_address": "0042d4e0",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d4e0@@YAXXZ",
+        "caller_address": "0042d4e0",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d530@@YAXXZ",
+        "caller_address": "0042d530",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d530@@YAXXZ",
+        "caller_address": "0042d530",
+        "offset": 17,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d580@@YAXXZ",
+        "caller_address": "0042d580",
+        "offset": 1,
+        "address": "004c72f8"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d580@@YAXXZ",
+        "caller_address": "0042d580",
+        "offset": 17,
+        "address": "004c72f8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c72fc@@3EA": {
+    "address": "004c72fc",
+    "target": "?g_4C72FC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d5d0@@YAXXZ",
+        "caller_address": "0042d5d0",
+        "offset": 1,
+        "address": "004c72fc"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G42d5d0@@YAXXZ",
+        "caller_address": "0042d5d0",
+        "offset": 17,
+        "address": "004c72fc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c778c@@3EA": {
+    "address": "004c778c",
+    "target": "?g_4C778C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/PhysicsGravity.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/PhysicsGravity.cpp",
+        "caller": "?G446d60@@YAXXZ",
+        "caller_address": "00446d60",
+        "offset": 25,
+        "address": "004c778c"
+      },
+      {
+        "source": "Guards/PhysicsGravity.cpp",
+        "caller": "?G446d60@@YAXXZ",
+        "caller_address": "00446d60",
+        "offset": 36,
+        "address": "004c778c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c780c@@3EA": {
+    "address": "004c780c",
+    "target": "?g_4C780C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/AmbientNames.cpp",
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G449430@@YAXXZ",
+        "caller_address": "00449430",
+        "offset": 1,
+        "address": "004c780c"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G449430@@YAXXZ",
+        "caller_address": "00449430",
+        "offset": 17,
+        "address": "004c780c"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G449480@@YAXXZ",
+        "caller_address": "00449480",
+        "offset": 1,
+        "address": "004c780c"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G449480@@YAXXZ",
+        "caller_address": "00449480",
+        "offset": 17,
+        "address": "004c780c"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4494d0@@YAXXZ",
+        "caller_address": "004494d0",
+        "offset": 1,
+        "address": "004c780c"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G4494d0@@YAXXZ",
+        "caller_address": "004494d0",
+        "offset": 17,
+        "address": "004c780c"
+      },
+      {
+        "source": "Audio/AmbientNames.cpp",
+        "caller": "?G449580@@YAXXZ",
+        "caller_address": "00449580",
+        "offset": 25,
+        "address": "004c780c"
+      },
+      {
+        "source": "Audio/AmbientNames.cpp",
+        "caller": "?G449580@@YAXXZ",
+        "caller_address": "00449580",
+        "offset": 43,
+        "address": "004c780c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?f_4c7b78@@3EA": {
+    "address": "004c7b78",
+    "target": "?g_4C7B78@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Guards/Guards.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G458030@@YAXXZ",
+        "caller_address": "00458030",
+        "offset": 1,
+        "address": "004c7b78"
+      },
+      {
+        "source": "Guards/Guards.cpp",
+        "caller": "?G458030@@YAXXZ",
+        "caller_address": "00458030",
+        "offset": 17,
+        "address": "004c7b78"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gAppWnd@@3PAUAppWnd@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc16/Joy.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc16/Joy.cpp",
+        "caller": "?Capture@Joystick@@QAEHH@Z",
+        "caller_address": "004479d0",
+        "offset": 31,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gClimb@@3MA": {
+    "address": "004c7b80",
+    "target": "?g_4C7B80@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 83,
+        "address": "004c7b80"
+      },
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 113,
+        "address": "004c7b80"
+      },
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 164,
+        "address": "004c7b80"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gDefaultPhysics@@3PAUSqueezilPhysics@@A": {
+    "address": "004c7ad0",
+    "target": "?g_4C7AD0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CameraSettings/PhysicsBlock.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "CameraSettings/PhysicsBlock.cpp",
+        "caller": "?ReadSqueezilPhysics@@YAXXZ",
+        "caller_address": "0044f700",
+        "offset": 61,
+        "address": "004c7ad0"
+      },
+      {
+        "source": "CameraSettings/PhysicsBlock.cpp",
+        "caller": "?ReadSqueezilPhysics@@YAXXZ",
+        "caller_address": "0044f700",
+        "offset": 154,
+        "address": "004c7ad0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gDelayedMessages@@3UDelayedContextQueue@@A": {
+    "address": "004c70c8",
+    "target": "?g_4C70C8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "FunctionExec/ScheduleDelayed.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "FunctionExec/ScheduleDelayed.cpp",
+        "caller": "?ScheduleDelayed@@YAXPBDMPAXH@Z",
+        "caller_address": "00422e00",
+        "offset": 87,
+        "address": "004c70c8"
+      },
+      {
+        "source": "FunctionExec/ScheduleDelayed.cpp",
+        "caller": "?ScheduleRenderDelayed@@YAXPBDMPAXH@Z",
+        "caller_address": "00422ed0",
+        "offset": 87,
+        "address": "004c70c8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gDive@@3MA": {
+    "address": "004c7b7c",
+    "target": "?g_4C7B7C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 127,
+        "address": "004c7b7c"
+      },
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 139,
+        "address": "004c7b7c"
+      },
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 176,
+        "address": "004c7b7c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFly@@3PAUClip@@A": {
+    "address": "004bf0b0",
+    "target": "?g_4BF0B0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 290,
+        "address": "004bf0b0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFlyDown@@3PAUClip@@A": {
+    "address": "004bf0c0",
+    "target": "?g_4BF0C0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 362,
+        "address": "004bf0c0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFlyLeft@@3PAUClip@@A": {
+    "address": "004bf0b8",
+    "target": "?g_4BF0B8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 396,
+        "address": "004bf0b8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFlyUp@@3PAUClip@@A": {
+    "address": "004bf0b4",
+    "target": "?g_4BF0B4@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn458cd0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn458cd0/F.cpp",
+        "caller": "?AnimateInAir@Body@@QAEXM@Z",
+        "caller_address": "00458cd0",
+        "offset": 328,
+        "address": "004bf0b4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFrameTimer@@3PAUFrameTimer@@A": {
+    "address": "004badc0",
+    "target": "?g_4BADC0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc15/Frame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc15/Frame.cpp",
+        "caller": "?RunFrame2@@YAXXZ",
+        "caller_address": "00420760",
+        "offset": 3,
+        "address": "004badc0"
+      },
+      {
+        "source": "Misc15/Frame.cpp",
+        "caller": "?RunFrame2@@YAXXZ",
+        "caller_address": "00420760",
+        "offset": 52,
+        "address": "004badc0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gFrameTimer@@3PAUWorldFrameTimer@@A": {
+    "address": "004c7308",
+    "target": "?g_4C7308@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp",
+      "World/WorldCtor.cpp",
+      "World/WorldDtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/WorldDtor.cpp",
+        "caller": "??1World@@QAE@XZ",
+        "caller_address": "004358e0",
+        "offset": 2,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 10,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 42,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 59,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 118,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 135,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 171,
+        "address": "004c7308"
+      },
+      {
+        "source": "World/WorldCtor.cpp",
+        "caller": "??0World@@QAE@XZ",
+        "caller_address": "004357b0",
+        "offset": 201,
+        "address": "004c7308"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gLastHeading@@3MA": {
+    "address": "004bbe94",
+    "target": "?g_4BBE94@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn42e2b0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn42e2b0/F.cpp",
+        "caller": "?Follow@Follower@@QAEXH@Z",
+        "caller_address": "0042e2b0",
+        "offset": 180,
+        "address": "004bbe94"
+      },
+      {
+        "source": "Fn42e2b0/F.cpp",
+        "caller": "?Follow@Follower@@QAEXH@Z",
+        "caller_address": "0042e2b0",
+        "offset": 560,
+        "address": "004bbe94"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gLastY@@3MA": {
+    "address": "004bbe98",
+    "target": "?g_4BBE98@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn42e2b0/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn42e2b0/F.cpp",
+        "caller": "?Follow@Follower@@QAEXH@Z",
+        "caller_address": "0042e2b0",
+        "offset": 186,
+        "address": "004bbe98"
+      },
+      {
+        "source": "Fn42e2b0/F.cpp",
+        "caller": "?Follow@Follower@@QAEXH@Z",
+        "caller_address": "0042e2b0",
+        "offset": 222,
+        "address": "004bbe98"
+      },
+      {
+        "source": "Fn42e2b0/F.cpp",
+        "caller": "?Follow@Follower@@QAEXH@Z",
+        "caller_address": "0042e2b0",
+        "offset": 572,
+        "address": "004bbe98"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gLevelNutSprayPercent@@3MA": {
+    "address": "004c7820",
+    "target": "?g_4C7820@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CameraSettings/PhysicsBlock.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "CameraSettings/PhysicsBlock.cpp",
+        "caller": "?ReadSqueezilPhysics@@YAXXZ",
+        "caller_address": "0044f700",
+        "offset": 2922,
+        "address": "004c7820"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gMidiStream@@3RAXA": {
+    "address": "004c86b8",
+    "target": "?g_4C86B8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc16/Joy.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc16/Joy.cpp",
+        "caller": "?ResumeMidi@@YAHXZ",
+        "caller_address": "0045abe0",
+        "offset": 2,
+        "address": "004c86b8"
+      },
+      {
+        "source": "Misc16/Joy.cpp",
+        "caller": "?ResumeMidi@@YAHXZ",
+        "caller_address": "0045abe0",
+        "offset": 30,
+        "address": "004c86b8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gMidiTrackCount@@3KA": {
+    "address": "004c869c",
+    "target": "?g_4C869C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc18/ReleaseMidiFile.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 43,
+        "address": "004c869c"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 109,
+        "address": "004c869c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gMidiTracks@@3PAUMidiTrackBuffer@@A": {
+    "address": "004c86a0",
+    "target": "?g_4C86A0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc18/ReleaseMidiFile.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 34,
+        "address": "004c86a0"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 66,
+        "address": "004c86a0"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 85,
+        "address": "004c86a0"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 130,
+        "address": "004c86a0"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 141,
+        "address": "004c86a0"
+      },
+      {
+        "source": "Misc18/ReleaseMidiFile.cpp",
+        "caller": "?ReleaseMidiFile@@YAXXZ",
+        "caller_address": "0045b2d0",
+        "offset": 157,
+        "address": "004c86a0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gPhysicsRead@@3HA": {
+    "address": "004bd6ac",
+    "target": "?g_4BD6AC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CameraSettings/Physics.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "CameraSettings/Physics.cpp",
+        "caller": "?ReadPhysicsSettings@@YAXXZ",
+        "caller_address": "00446ed0",
+        "offset": 141,
+        "address": "004bd6ac"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gPhysicsRead@@3PAHA": {
+    "address": "004bd6ac",
+    "target": "?g_4BD6AC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "SoulDtor2/CameraDtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "SoulDtor2/CameraDtor.cpp",
+        "caller": "??0PhysicalSoul@@QAE@XZ",
+        "caller_address": "00446e30",
+        "offset": 84,
+        "address": "004bd6ac"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gProtoBodies@@3PAPAUCtorAnimatedBody@@A": {
+    "address": "004bf138",
+    "target": "?g_4BF138@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "SqueezilBody/Constructor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "SqueezilBody/Constructor.cpp",
+        "caller": "??0ConstructingSqueezilBody@@QAE@PBMH@Z",
+        "caller_address": "00457050",
+        "offset": 525,
+        "address": "004bf138"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gSpitNutSprayPercent@@3MA": {
+    "address": "004c7b0c",
+    "target": "?g_4C7B0C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CameraSettings/PhysicsBlock.cpp",
+      "SqueezilSoul/Nuts.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "SqueezilSoul/Nuts.cpp",
+        "caller": "?SprayNuts@SqueezilSoul@@QAEXXZ",
+        "caller_address": "00450740",
+        "offset": 266,
+        "address": "004c7b0c"
+      },
+      {
+        "source": "CameraSettings/PhysicsBlock.cpp",
+        "caller": "?ReadSqueezilPhysics@@YAXXZ",
+        "caller_address": "0044f700",
+        "offset": 2946,
+        "address": "004c7b0c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gStreamBuffers@@3UStreamBufferArray@@A": {
+    "address": "004c77d0",
+    "target": "?g_4C77D0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/StopLoopingSounds.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Audio/StopLoopingSounds.cpp",
+        "caller": "?StopLoopingSounds@@YAXXZ",
+        "caller_address": "0044a8f0",
+        "offset": 45,
+        "address": "004c77d0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gStreamBuffers@@3UStreamBuffers@@A": {
+    "address": "004c77d0",
+    "target": "?g_4C77D0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn44a5a0/F.cpp",
+      "Fn44a750/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn44a5a0/F.cpp",
+        "caller": "?StartStream@@YAXVString@@HHH@Z",
+        "caller_address": "0044a5a0",
+        "offset": 342,
+        "address": "004c77d0"
+      },
+      {
+        "source": "Fn44a750/F.cpp",
+        "caller": "?StartAmbient@@YAXVString@@@Z",
+        "caller_address": "0044a750",
+        "offset": 325,
+        "address": "004c77d0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gTableA@@3UNameTable@@A": {
+    "address": "004c71d0",
+    "target": "?g_4C71D0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn42cc10/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 41,
+        "address": "004c71d0"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 93,
+        "address": "004c71d0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gTableB@@3UNameTable@@A": {
+    "address": "004c7258",
+    "target": "?g_4C7258@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn42cc10/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 159,
+        "address": "004c7258"
+      },
+      {
+        "source": "Fn42cc10/F.cpp",
+        "caller": "?LookupByName@@YAPAXPBD@Z",
+        "caller_address": "0042cc10",
+        "offset": 211,
+        "address": "004c7258"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldFrames@@3KA": {
+    "address": "004c7324",
+    "target": "?g_4C7324@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp",
+      "World/WorldCtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 2,
+        "address": "004c7324"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 21,
+        "address": "004c7324"
+      },
+      {
+        "source": "World/WorldCtor.cpp",
+        "caller": "??0World@@QAE@XZ",
+        "caller_address": "004357b0",
+        "offset": 232,
+        "address": "004c7324"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldLastClear@@3KA": {
+    "address": "004c730c",
+    "target": "?g_4C730C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 68,
+        "address": "004c730c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldLastPresent@@3KA": {
+    "address": "004c7314",
+    "target": "?g_4C7314@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 192,
+        "address": "004c7314"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldLastRender@@3KA": {
+    "address": "004c7310",
+    "target": "?g_4C7310@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 144,
+        "address": "004c7310"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldTotalClear@@3KA": {
+    "address": "004c7318",
+    "target": "?g_4C7318@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp",
+      "World/WorldCtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 50,
+        "address": "004c7318"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 74,
+        "address": "004c7318"
+      },
+      {
+        "source": "World/WorldCtor.cpp",
+        "caller": "??0World@@QAE@XZ",
+        "caller_address": "004357b0",
+        "offset": 207,
+        "address": "004c7318"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldTotalPresent@@3KA": {
+    "address": "004c7320",
+    "target": "?g_4C7320@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp",
+      "World/WorldCtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 179,
+        "address": "004c7320"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 198,
+        "address": "004c7320"
+      },
+      {
+        "source": "World/WorldCtor.cpp",
+        "caller": "??0World@@QAE@XZ",
+        "caller_address": "004357b0",
+        "offset": 219,
+        "address": "004c7320"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?gWorldTotalRender@@3KA": {
+    "address": "004c731c",
+    "target": "?g_4C731C@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/RenderFrame.cpp",
+      "World/WorldCtor.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 126,
+        "address": "004c731c"
+      },
+      {
+        "source": "World/RenderFrame.cpp",
+        "caller": "?RenderFrame@World@@QAEXXZ",
+        "caller_address": "004362a0",
+        "offset": 150,
+        "address": "004c731c"
+      },
+      {
+        "source": "World/WorldCtor.cpp",
+        "caller": "??0World@@QAE@XZ",
+        "caller_address": "004357b0",
+        "offset": 213,
+        "address": "004c731c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_4c75dc@@3PAUR4c75dc@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Tiny1/Tiny1.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Tiny1/Tiny1.cpp",
+        "caller": "?F@X459080@@QAEXXZ",
+        "caller_address": "00459080",
+        "offset": 6,
+        "address": "004c75dc"
+      },
+      {
+        "source": "Tiny1/Tiny1.cpp",
+        "caller": "?F43a9a0@H43a900@@QAEXXZ",
+        "caller_address": "0043a9a0",
+        "offset": 9,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_app@@3PAUAppI@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "StatusBar/Init.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "StatusBar/Init.cpp",
+        "caller": "?Init@StatusI@@QAEHXZ",
+        "caller_address": "0042ec10",
+        "offset": 183,
+        "address": "004c75dc"
+      },
+      {
+        "source": "StatusBar/Init.cpp",
+        "caller": "?Init@StatusI@@QAEHXZ",
+        "caller_address": "0042ec10",
+        "offset": 263,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_app@@3PAUAppWnd@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Mouse/Mouse.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Mouse/Mouse.cpp",
+        "caller": "?Capture@Mouse@@QAEXH@Z",
+        "caller_address": "004592a0",
+        "offset": 20,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_application@@3PAUApplication@@A": {
+    "address": "004badac",
+    "target": "?g_4BADAC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Release/Shutdown.cpp",
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Release/Shutdown.cpp",
+        "caller": "?Shutdown@@YAXXZ",
+        "caller_address": "004205a0",
+        "offset": 72,
+        "address": "004badac"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 410,
+        "address": "004badac"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 486,
+        "address": "004badac"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 514,
+        "address": "004badac"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_application@@3PAXA": {
+    "address": "004badac",
+    "target": "?g_4BADAC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Globals/Globals.cpp",
+        "caller": "?GetApplication@@YAPAXXZ",
+        "caller_address": "004206b0",
+        "offset": 1,
+        "address": "004badac"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_clock@@3PAUClockR@@A": {
+    "address": "004badc0",
+    "target": "?g_4BADC0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "GameClock/RunFrame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "GameClock/RunFrame.cpp",
+        "caller": "?RunFrame@@YAXXZ",
+        "caller_address": "004206e0",
+        "offset": 18,
+        "address": "004badc0"
+      },
+      {
+        "source": "GameClock/RunFrame.cpp",
+        "caller": "?RunFrame@@YAXXZ",
+        "caller_address": "004206e0",
+        "offset": 113,
+        "address": "004badc0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_clock@@3PAUGameClock@@A": {
+    "address": "004badc0",
+    "target": "?g_4BADC0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 167,
+        "address": "004badc0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_gameClock@@3PAUGameClock@@A": {
+    "address": "004badc0",
+    "target": "?g_4BADC0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Release/Shutdown.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Release/Shutdown.cpp",
+        "caller": "?Shutdown@@YAXXZ",
+        "caller_address": "004205a0",
+        "offset": 126,
+        "address": "004badc0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_gameClock@@3PAXA": {
+    "address": "004badc0",
+    "target": "?g_4BADC0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Globals/Globals.cpp",
+        "caller": "?GetGameClock@@YAPAXXZ",
+        "caller_address": "004206d0",
+        "offset": 1,
+        "address": "004badc0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_goodieSettings@@3PAUGoodieSettings@@A": {
+    "address": "004c7bb4",
+    "target": "?g_4C7BB4@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn459590/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn459590/F.cpp",
+        "caller": "??0GoodieSoulC@@QAE@PAUGoodieBody@@PBDH@Z",
+        "caller_address": "00459590",
+        "offset": 150,
+        "address": "004c7bb4"
+      },
+      {
+        "source": "Fn459590/F.cpp",
+        "caller": "??0GoodieSoulC@@QAE@PAUGoodieBody@@PBDH@Z",
+        "caller_address": "00459590",
+        "offset": 179,
+        "address": "004c7bb4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_joystick@@3PAUJoystick8@@A": {
+    "address": "004bd6f8",
+    "target": "?g_4BD6F8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Tiny4/F447a30.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Tiny4/F447a30.cpp",
+        "caller": "?JoyDlgProc@@YGHPAXIIJ@Z",
+        "caller_address": "00447a30",
+        "offset": 153,
+        "address": "004bd6f8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_joystick@@3PAUJoystick@@A": {
+    "address": "004bd6f8",
+    "target": "?g_4BD6F8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Joy/Joy.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Joy/Joy.cpp",
+        "caller": "?Init@Joystick@@QAEPAU1@XZ",
+        "caller_address": "00447810",
+        "offset": 68,
+        "address": "004bd6f8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_land@@3PAULandSimulation@@A": {
+    "address": "004badb8",
+    "target": "?g_4BADB8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 662,
+        "address": "004badb8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_land@@3PAUSim@@A": {
+    "address": "004badb8",
+    "target": "?g_4BADB8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Release/Shutdown.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Release/Shutdown.cpp",
+        "caller": "?Shutdown@@YAXXZ",
+        "caller_address": "004205a0",
+        "offset": 35,
+        "address": "004badb8"
+      },
+      {
+        "source": "Release/Shutdown.cpp",
+        "caller": "?Shutdown@@YAXXZ",
+        "caller_address": "004205a0",
+        "offset": 52,
+        "address": "004badb8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_land@@3PAXA": {
+    "address": "004badb8",
+    "target": "?g_4BADB8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Globals/Globals.cpp",
+        "caller": "?GetLand@@YAPAXXZ",
+        "caller_address": "00420680",
+        "offset": 1,
+        "address": "004badb8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_midi@@3HA": {
+    "address": "004bf458",
+    "target": "?g_4BF458@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/PlaceClear.cpp",
+      "Sim2/RegionClear.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/PlaceClear.cpp",
+        "caller": "?Clear@PlaceSimulation@@QAEXXZ",
+        "caller_address": "00439a50",
+        "offset": 24,
+        "address": "004bf458"
+      },
+      {
+        "source": "Sim2/RegionClear.cpp",
+        "caller": "?Clear@RegionSimulation@@QAEXXZ",
+        "caller_address": "00417600",
+        "offset": 21,
+        "address": "004bf458"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_moviePlayer@@3PAUMoviePlayer@@A": {
+    "address": "004c75e4",
+    "target": "?g_4C75E4@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "FunctionMovie/Movie.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "FunctionMovie/Movie.cpp",
+        "caller": "?Execute@PlayMovieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441aa0",
+        "offset": 25,
+        "address": "004c75e4"
+      },
+      {
+        "source": "FunctionMovie/Movie.cpp",
+        "caller": "?Execute@PlayMovieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441aa0",
+        "offset": 98,
+        "address": "004c75e4"
+      },
+      {
+        "source": "FunctionMovie/Movie.cpp",
+        "caller": "?Execute@PlayMovieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441aa0",
+        "offset": 138,
+        "address": "004c75e4"
+      },
+      {
+        "source": "FunctionMovie/Movie.cpp",
+        "caller": "?Execute@PlayMovieFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "00441aa0",
+        "offset": 150,
+        "address": "004c75e4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_panel@@3PAUPanel@@A": {
+    "address": "004badb0",
+    "target": "?g_4BADB0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Release/Shutdown.cpp",
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Release/Shutdown.cpp",
+        "caller": "?Shutdown@@YAXXZ",
+        "caller_address": "004205a0",
+        "offset": 163,
+        "address": "004badb0"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 415,
+        "address": "004badb0"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 472,
+        "address": "004badb0"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 523,
+        "address": "004badb0"
+      },
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 551,
+        "address": "004badb0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_panel@@3PAXA": {
+    "address": "004badb0",
+    "target": "?g_4BADB0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Globals/Globals.cpp",
+        "caller": "?GetPanel@@YAPAXXZ",
+        "caller_address": "004206c0",
+        "offset": 1,
+        "address": "004badb0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_pathScene@@3PAUPathScene@@A": {
+    "address": "004c75e0",
+    "target": "?g_4C75E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CameraSoul/StartPath.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "CameraSoul/StartPath.cpp",
+        "caller": "?StartPath@PathSoul@@QAEXPAUPathClip@@HHM@Z",
+        "caller_address": "00409a50",
+        "offset": 164,
+        "address": "004c75e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_renderer@@3PAUJoyRenderer@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc10/JoyCalibrate.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc10/JoyCalibrate.cpp",
+        "caller": "?Calibrate@JoyCal@@QAEHPAX@Z",
+        "caller_address": "00447f00",
+        "offset": 307,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_renderer@@3PAURend@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn43aa50/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn43aa50/F.cpp",
+        "caller": "?ShellProc@@YAIHIIIPAUShell@@@Z",
+        "caller_address": "0043aa50",
+        "offset": 288,
+        "address": "004c75dc"
+      },
+      {
+        "source": "Fn43aa50/F.cpp",
+        "caller": "?ShellProc@@YAIHIIIPAUShell@@@Z",
+        "caller_address": "0043aa50",
+        "offset": 322,
+        "address": "004c75dc"
+      },
+      {
+        "source": "Fn43aa50/F.cpp",
+        "caller": "?ShellProc@@YAIHIIIPAUShell@@@Z",
+        "caller_address": "0043aa50",
+        "offset": 390,
+        "address": "004c75dc"
+      },
+      {
+        "source": "Fn43aa50/F.cpp",
+        "caller": "?ShellProc@@YAIHIIIPAUShell@@@Z",
+        "caller_address": "0043aa50",
+        "offset": 514,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_renderer@@3PAURendererR@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "CompassRuler/DrawRow.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "CompassRuler/DrawRow.cpp",
+        "caller": "?DrawRow@RowPanel@@QAEXH@Z",
+        "caller_address": "00430440",
+        "offset": 35,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_renderer@@3PAURendererS@@A": {
+    "address": "004c75dc",
+    "target": "?g_4C75DC@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "StatusBar/UpdateStatus.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "StatusBar/UpdateStatus.cpp",
+        "caller": "?Update@StatusS@@QAEHHPAHH@Z",
+        "caller_address": "0042ed70",
+        "offset": 119,
+        "address": "004c75dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_scene@@3PAUScene@@A": {
+    "address": "004c75e0",
+    "target": "?g_4C75E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Misc/Misc.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Misc/Misc.cpp",
+        "caller": "?SetDecalSize@@YGPAXPAXMM@Z",
+        "caller_address": "00435c70",
+        "offset": 17,
+        "address": "004c75e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_scene@@3PAUSceneFrames@@A": {
+    "address": "004c75e0",
+    "target": "?g_4C75E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Props2/AnimBody2.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Props2/AnimBody2.cpp",
+        "caller": "?Attach@AnimatedBody@@QAEXH@Z",
+        "caller_address": "0041dda0",
+        "offset": 12,
+        "address": "004c75e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_scene@@3PAUSceneHolder@@A": {
+    "address": "004c75e0",
+    "target": "?g_4C75E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "FunctionProp/PropExec.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "FunctionProp/PropExec.cpp",
+        "caller": "?Execute@CreatePropFunction@@UAEHPAUScriptCall@@H@Z",
+        "caller_address": "0046fb00",
+        "offset": 300,
+        "address": "004c75e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?g_scene@@3PAUSceneTable@@A": {
+    "address": "004c75e0",
+    "target": "?g_4C75E0@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Props2/MeshProp.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Props2/MeshProp.cpp",
+        "caller": "?Hide@MeshProp@@QAEXXZ",
+        "caller_address": "00426170",
+        "offset": 13,
+        "address": "004c75e0"
+      },
+      {
+        "source": "Props2/MeshProp.cpp",
+        "caller": "?Hide@MeshProp@@QAEXXZ",
+        "caller_address": "00426170",
+        "offset": 33,
+        "address": "004c75e0"
+      },
+      {
+        "source": "Props2/MeshProp.cpp",
+        "caller": "?Underlying@MeshProp@@QAEPAXXZ",
+        "caller_address": "00426230",
+        "offset": 16,
+        "address": "004c75e0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kAmbBadStop@@3PBDB": {
+    "address": "004be050",
+    "target": "?s_4BE050@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn44a5a0/F.cpp",
+      "Fn44a750/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn44a5a0/F.cpp",
+        "caller": "?StartStream@@YAXVString@@HHH@Z",
+        "caller_address": "0044a5a0",
+        "offset": 322,
+        "address": "004be050"
+      },
+      {
+        "source": "Fn44a750/F.cpp",
+        "caller": "?StartAmbient@@YAXVString@@@Z",
+        "caller_address": "0044a750",
+        "offset": 305,
+        "address": "004be050"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kAmoLabel@@3PADA": {
+    "address": "004bbfec",
+    "target": "?s_4BBFEC@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "StatusBar/Init.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "StatusBar/Init.cpp",
+        "caller": "?Init@StatusI@@QAEHXZ",
+        "caller_address": "0042ec10",
+        "offset": 45,
+        "address": "004bbfec"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kBindingWriteWarning@@3PBDB": {
+    "address": "004bc8c0",
+    "target": "?s_4BC8C0@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Input/SaveBindings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Input/SaveBindings.cpp",
+        "caller": "?SaveBindings@InputCompatibility@@QAEHPAX@Z",
+        "caller_address": "0043c4d0",
+        "offset": 165,
+        "address": "004bc8c0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kBodyBlendTimeScale@@3MB": {
+    "address": "0049fe30",
+    "target": "?g_49FE30@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "SqueezilBody/Update.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "SqueezilBody/Update.cpp",
+        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
+        "caller_address": "00457bc0",
+        "offset": 423,
+        "address": "0049fe30"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kColors@@3PBDB": {
+    "address": "004bc554",
+    "target": "?s_4BC554@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/ReadDecalSettings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/ReadDecalSettings.cpp",
+        "caller": "?ReadDecalSettings@@YG?AUDecalSettings@@PAVIniReader@@PBD1U1@@Z",
+        "caller_address": "00435c90",
+        "offset": 100,
+        "address": "004bc554"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kCurrentDirectory@@3PADA": {
+    "address": "004bd220",
+    "target": "?g_4BD220@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "IniReader/IniReader.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "IniReader/IniReader.cpp",
+        "caller": "?GetDirectory@IniReader@@QBE?AVString@@XZ",
+        "caller_address": "004433a0",
+        "offset": 58,
+        "address": "004bd220"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kCurrentIniPath@@3PADA": {
+    "address": "004c74d8",
+    "target": "?g_4C74D8@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "IniReader/IniReader.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "IniReader/IniReader.cpp",
+        "caller": "??0IniReader@@QAE@XZ",
+        "caller_address": "00443120",
+        "offset": 75,
+        "address": "004c74d8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kDefaultSectionName@@3PADA": {
+    "address": "004b9e60",
+    "target": "?s_4B9E60@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "IniReader/IniReader.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "IniReader/IniReader.cpp",
+        "caller": "??0IniReader@@QAE@XZ",
+        "caller_address": "00443120",
+        "offset": 19,
+        "address": "004b9e60"
+      },
+      {
+        "source": "IniReader/IniReader.cpp",
+        "caller": "??0IniReader@@QAE@PBD@Z",
+        "caller_address": "004431b0",
+        "offset": 19,
+        "address": "004b9e60"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kDefaults@@3PBDB": {
+    "address": "004b9e60",
+    "target": "?s_4B9E60@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 724,
+        "address": "004b9e60"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kDuplicateKeys@@3PBDB": {
+    "address": "004bc960",
+    "target": "?s_4BC960@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Input/SaveBindings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Input/SaveBindings.cpp",
+        "caller": "?SaveBindings@InputCompatibility@@QAEHPAX@Z",
+        "caller_address": "0043c4d0",
+        "offset": 237,
+        "address": "004bc960"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kLoadingSub@@3PBDB": {
+    "address": "004be220",
+    "target": "?s_4BE220@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn44b780/F.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn44b780/F.cpp",
+        "caller": "?LoadAll@SubLoader@@QAEHXZ",
+        "caller_address": "0044b780",
+        "offset": 249,
+        "address": "004be220"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kMaxRenderTimeMS@@3PBDB": {
+    "address": "004bae00",
+    "target": "?s_4BAE00@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 89,
+        "address": "004bae00"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kMaxSimTimeMS@@3PBDB": {
+    "address": "004bae10",
+    "target": "?s_4BAE10@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 69,
+        "address": "004bae10"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kNoLock@@3PBDB": {
+    "address": "004bdbd4",
+    "target": "?s_4BDBD4@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/CreateSecondary.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Audio/CreateSecondary.cpp",
+        "caller": "?CreateSecondary@SoundObj@@QAEHXZ",
+        "caller_address": "00449200",
+        "offset": 147,
+        "address": "004bdbd4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kNoSecondary@@3PBDB": {
+    "address": "004bdbf8",
+    "target": "?s_4BDBF8@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/CreateSecondary.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Audio/CreateSecondary.cpp",
+        "caller": "?CreateSecondary@SoundObj@@QAEHXZ",
+        "caller_address": "00449200",
+        "offset": 84,
+        "address": "004bdbf8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kNoUnlock@@3PBDB": {
+    "address": "004bdbb0",
+    "target": "?s_4BDBB0@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/CreateSecondary.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Audio/CreateSecondary.cpp",
+        "caller": "?CreateSecondary@SoundObj@@QAEHXZ",
+        "caller_address": "00449200",
+        "offset": 237,
+        "address": "004bdbb0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kNoVolume@@3PBDB": {
+    "address": "004bdb98",
+    "target": "?s_4BDB98@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Audio/CreateSecondary.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Audio/CreateSecondary.cpp",
+        "caller": "?CreateSecondary@SoundObj@@QAEHXZ",
+        "caller_address": "00449200",
+        "offset": 300,
+        "address": "004bdb98"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kOrigin@@3PBDB": {
+    "address": "004bc54c",
+    "target": "?s_4BC54C@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/ReadDecalSettings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/ReadDecalSettings.cpp",
+        "caller": "?ReadDecalSettings@@YG?AUDecalSettings@@PAVIniReader@@PBD1U1@@Z",
+        "caller_address": "00435c90",
+        "offset": 239,
+        "address": "004bc54c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kRotation@@3PADA": {
+    "address": "004baae0",
+    "target": "?s_4BAAE0@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Qv/Factory.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2806,
+        "address": "004baae0"
+      },
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2817,
+        "address": "004baae0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kScale@@3PADA": {
+    "address": "004bbe4c",
+    "target": "?s_4BBE4C@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Qv/Factory.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2937,
+        "address": "004bbe4c"
+      },
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2948,
+        "address": "004bbe4c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSimClockRateMS@@3PBDB": {
+    "address": "004bae20",
+    "target": "?s_4BAE20@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 52,
+        "address": "004bae20"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSize@@3PBDB": {
+    "address": "004bc544",
+    "target": "?g_4BC544@@3PAEA",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/ReadDecalSettings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/ReadDecalSettings.cpp",
+        "caller": "?ReadDecalSettings@@YG?AUDecalSettings@@PAVIniReader@@PBD1U1@@Z",
+        "caller_address": "00435c90",
+        "offset": 377,
+        "address": "004bc544"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSoulType@@3PADA": {
+    "address": "004b93e8",
+    "target": "?g_4B93E8@@3UT_g_4B93E8@@A",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/PlaceLoad.cpp",
+      "Sim2/PlaceSave.cpp",
+      "Sim2/RegionLoad.cpp",
+      "Sim2/RegionSave.cpp",
+      "SqueezilRoboSoul/Hit.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "SqueezilRoboSoul/Hit.cpp",
+        "caller": "?Hit@SqueezilRoboSoul@@QAEXHHH@Z",
+        "caller_address": "00404630",
+        "offset": 18,
+        "address": "004b93e8"
+      },
+      {
+        "source": "Sim2/PlaceSave.cpp",
+        "caller": "?Save@PlaceSimulation@@QAEHPBD@Z",
+        "caller_address": "00439db0",
+        "offset": 125,
+        "address": "004b93e8"
+      },
+      {
+        "source": "Sim2/PlaceLoad.cpp",
+        "caller": "?Load@PlaceSimulation@@QAEHPBD@Z",
+        "caller_address": "00439b70",
+        "offset": 332,
+        "address": "004b93e8"
+      },
+      {
+        "source": "Sim2/RegionLoad.cpp",
+        "caller": "?Load@RegionSimulation@@QAEHPBD@Z",
+        "caller_address": "00418680",
+        "offset": 332,
+        "address": "004b93e8"
+      },
+      {
+        "source": "Sim2/RegionSave.cpp",
+        "caller": "?Save@RegionSimulation@@QAEHPBD@Z",
+        "caller_address": "004188c0",
+        "offset": 125,
+        "address": "004b93e8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantOpen@@3PBDB": {
+    "address": "004c1304",
+    "target": "?s_4C1304@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 35,
+        "address": "004c1304"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteDelta@@3PBDB": {
+    "address": "004c1188",
+    "target": "?s_4C1188@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 942,
+        "address": "004c1188"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteDeltaCount@@3PBDB": {
+    "address": "004c11dc",
+    "target": "?s_4C11DC@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 772,
+        "address": "004c11dc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteDeltaSize@@3PBDB": {
+    "address": "004c11b0",
+    "target": "?s_4C11B0@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 907,
+        "address": "004c11b0"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteFaceCount@@3PBDB": {
+    "address": "004c1260",
+    "target": "?s_4C1260@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 478,
+        "address": "004c1260"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteGroupCount@@3PBDB": {
+    "address": "004c1210",
+    "target": "?s_4C1210@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 654,
+        "address": "004c1210"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteGroups@@3PBDB": {
+    "address": "004c11fc",
+    "target": "?s_4C11FC@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 714,
+        "address": "004c11fc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteHeader@@3PBDB": {
+    "address": "004c12e8",
+    "target": "?s_4C12E8@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 102,
+        "address": "004c12e8"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteIndexCount@@3PBDB": {
+    "address": "004c1244",
+    "target": "?s_4C1244@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 536,
+        "address": "004c1244"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteIndices@@3PBDB": {
+    "address": "004c122c",
+    "target": "?s_4C122C@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 596,
+        "address": "004c122c"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteTexture@@3PBDB": {
+    "address": "004c12ac",
+    "target": "?s_4C12AC@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 360,
+        "address": "004c12ac"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteTextureCount@@3PBDB": {
+    "address": "004c12cc",
+    "target": "?s_4C12CC@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 157,
+        "address": "004c12cc"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteVertexCount@@3PBDB": {
+    "address": "004c1290",
+    "target": "?s_4C1290@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 321,
+        "address": "004c1290"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kSqgCantWriteVertices@@3PBDB": {
+    "address": "004c1278",
+    "target": "?s_4C1278@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Fn472f60/SqgSave.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Fn472f60/SqgSave.cpp",
+        "caller": "?Save@SqgSaveModel@@QAEHPBD@Z",
+        "caller_address": "00472b90",
+        "offset": 420,
+        "address": "004c1278"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kStartInPlace@@3PBDB": {
+    "address": "004badc4",
+    "target": "?s_4BADC4@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 771,
+        "address": "004badc4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kStartLocation@@3PBDB": {
+    "address": "004badd4",
+    "target": "?s_4BADD4@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 756,
+        "address": "004badd4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kStartRegion@@3PBDB": {
+    "address": "004bade4",
+    "target": "?s_4BADE4@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "Sim2/StartGame.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "Sim2/StartGame.cpp",
+        "caller": "?StartGame@@YAHXZ",
+        "caller_address": "00420170",
+        "offset": 742,
+        "address": "004bade4"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  },
+  "?kUseTransparency@@3PBDB": {
+    "address": "004bc534",
+    "target": "?s_4BC534@@3PBDB",
+    "owner": "data/data.obj",
+    "evidence": [
+      "World/ReadDecalSettings.cpp"
+    ],
+    "exact_data_sites": [
+      {
+        "source": "World/ReadDecalSettings.cpp",
+        "caller": "?ReadDecalSettings@@YG?AUDecalSettings@@PAVIniReader@@PBD1U1@@Z",
+        "caller_address": "00435c90",
+        "offset": 515,
+        "address": "004bc534"
+      }
+    ],
+    "reason": "Every referencing relocation has a complete exact caller, zero COFF DIR32 addend and original PE HIGHLOW fixup to this extracted object entry."
+  }
+}

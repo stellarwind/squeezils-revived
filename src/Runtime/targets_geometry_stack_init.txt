@@ -1,0 +1,1 @@
+^?InitializeGeometryStack@@  424dd0 geometry_stack_init 10

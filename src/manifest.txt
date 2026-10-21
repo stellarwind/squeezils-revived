@@ -884,3 +884,4 @@ Qv/targets_owner.txt Qv/FieldOwner.cpp
 Container/gen/targets_SetDtorOwners.txt Container/gen/SetDtorOwners.cpp
 Container2/targets_table_names.txt Container2/TableNames.cpp
 Container2/targets_table_io.txt Container2/TableIO.cpp
+Runtime/targets_geometry_stack_init.txt Runtime/GeometryStackInit.cpp

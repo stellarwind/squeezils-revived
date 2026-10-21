@@ -1,0 +1,1500 @@
+{
+  "??0QvC481e00@@QAE@XZ": {
+    "address": "00481e00",
+    "target": "??0QvGroup@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1074,
+        "address": "00481e00"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC482ed0@@QAE@XZ": {
+    "address": "00482ed0",
+    "target": "??0QvWWWInline@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 4761,
+        "address": "00482ed0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483150@@QAE@XZ": {
+    "address": "00483150",
+    "target": "??0QvWWWAnchor@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 4626,
+        "address": "00483150"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483630@@QAE@XZ": {
+    "address": "00483630",
+    "target": "??0QvTransformSeparator@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 4361,
+        "address": "00483630"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483790@@QAE@XZ": {
+    "address": "00483790",
+    "target": "??0QvTransform@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 4230,
+        "address": "00483790"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483af0@@QAE@XZ": {
+    "address": "00483af0",
+    "target": "??0QvTextureCoordinate2@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 4096,
+        "address": "00483af0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483cc0@@QAE@XZ": {
+    "address": "00483cc0",
+    "target": "??0QvTexture2Transform@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 3965,
+        "address": "00483cc0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC483f90@@QAE@XZ": {
+    "address": "00483f90",
+    "target": "??0QvTexture2@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 3834,
+        "address": "00483f90"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC484370@@QAE@XZ": {
+    "address": "00484370",
+    "target": "??0QvSwitch@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 3700,
+        "address": "00484370"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC484b00@@QAE@XZ": {
+    "address": "00484b00",
+    "target": "??0QvShapeHints@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 3304,
+        "address": "00484b00"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC484f30@@QAE@XZ": {
+    "address": "00484f30",
+    "target": "??0QvSeparator@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 3173,
+        "address": "00484f30"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC485fe0@@QAE@XZ": {
+    "address": "00485fe0",
+    "target": "??0QvNormalBinding@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2256,
+        "address": "00485fe0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC4862d0@@QAE@XZ": {
+    "address": "004862d0",
+    "target": "??0QvNormal@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 2125,
+        "address": "004862d0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC4866a0@@QAE@XZ": {
+    "address": "004866a0",
+    "target": "??0QvMaterialBinding@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1863,
+        "address": "004866a0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC486990@@QAE@XZ": {
+    "address": "00486990",
+    "target": "??0QvMaterial@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1732,
+        "address": "00486990"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC486d70@@QAE@XZ": {
+    "address": "00486d70",
+    "target": "??0QvLOD@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1598,
+        "address": "00486d70"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC486f90@@QAE@XZ": {
+    "address": "00486f90",
+    "target": "??0QvInfo@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1467,
+        "address": "00486f90"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC487160@@QAE@XZ": {
+    "address": "00487160",
+    "target": "??0QvIndexedLineSet@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1336,
+        "address": "00487160"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC487440@@QAE@XZ": {
+    "address": "00487440",
+    "target": "??0QvIndexedFaceSet@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 1205,
+        "address": "00487440"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC487720@@QAE@XZ": {
+    "address": "00487720",
+    "target": "??0QvFontStyle@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 943,
+        "address": "00487720"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC487ab0@@QAE@XZ": {
+    "address": "00487ab0",
+    "target": "??0QvDirectionalLight@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 812,
+        "address": "00487ab0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC487d90@@QAE@XZ": {
+    "address": "00487d90",
+    "target": "??0QvCylinder@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 681,
+        "address": "00487d90"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC4880c0@@QAE@XZ": {
+    "address": "004880c0",
+    "target": "??0QvCube@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 550,
+        "address": "004880c0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC488330@@QAE@XZ": {
+    "address": "00488330",
+    "target": "??0QvCoordinate3@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 419,
+        "address": "00488330"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC488510@@QAE@XZ": {
+    "address": "00488510",
+    "target": "??0QvCone@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 288,
+        "address": "00488510"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvC488820@@QAE@XZ": {
+    "address": "00488820",
+    "target": "??0QvAsciiText@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Factory.cpp",
+        "caller": "?QvFactory@@YAPAUQvNodeF@@PAPAUQvEntryF@@@Z",
+        "caller_address": "0047f1d0",
+        "offset": 139,
+        "address": "00488820"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvChildListG@@QAE@XZ": {
+    "address": "004898b0",
+    "target": "??0QvChildList@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Group.cpp",
+        "caller": "??0QvGroupX@@QAE@XZ",
+        "caller_address": "00481e00",
+        "offset": 83,
+        "address": "004898b0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvDict8@@QAE@H@Z": {
+    "address": "00482180",
+    "target": "??0QvDict@@QAE@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Version.cpp",
+        "caller": "??0QvInput8@@QAE@XZ",
+        "caller_address": "00480fc0",
+        "offset": 42,
+        "address": "00482180"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvDictN@@QAE@H@Z": {
+    "address": "00482180",
+    "target": "??0QvDict@@QAE@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/InitNameDict.cpp",
+        "caller": "?QvInitNameDict@@YAXXZ",
+        "caller_address": "0047e5d0",
+        "offset": 76,
+        "address": "00482180"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvNameN@@QAE@XZ": {
+    "address": "00482560",
+    "target": "??0QvName@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 36,
+        "address": "00482560"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 36,
+        "address": "00482560"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvNameP@@QAE@XZ": {
+    "address": "00482560",
+    "target": "??0QvName@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse.cpp",
+        "caller": "?QvReadNode@@YAHPAVQvInputP@@PAPAUQvNodeP@@@Z",
+        "caller_address": "0047eb00",
+        "offset": 32,
+        "address": "00482560"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvNameQ@@QAE@XZ": {
+    "address": "00482560",
+    "target": "??0QvName@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse2.cpp",
+        "caller": "?QvReadUse@@YAPAUQvNodeQ@@PAVQvInputQ@@@Z",
+        "caller_address": "0047ed90",
+        "offset": 32,
+        "address": "00482560"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??0QvNameR@@QAE@XZ": {
+    "address": "00482560",
+    "target": "??0QvName@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 36,
+        "address": "00482560"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??1QvDict8@@QAE@XZ": {
+    "address": "004821c0",
+    "target": "??1QvDict@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Version.cpp",
+        "caller": "??0QvInput8@@QAE@XZ",
+        "caller_address": "00480fc0",
+        "offset": 130,
+        "address": "004821c0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??1QvStrA@@QAE@XZ": {
+    "address": "00482730",
+    "target": "??1QvString@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input3.cpp",
+        "caller": "??1QvIn3@@QAE@XZ",
+        "caller_address": "00481050",
+        "offset": 75,
+        "address": "00482730"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??1QvStrB@@QAE@XZ": {
+    "address": "004821c0",
+    "target": "??1QvDict@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input3.cpp",
+        "caller": "??1QvIn3@@QAE@XZ",
+        "caller_address": "00481050",
+        "offset": 96,
+        "address": "004821c0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??1QvStrE@@QAE@XZ": {
+    "address": "00482730",
+    "target": "??1QvString@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Error.cpp",
+        "caller": "?QvError@@YAXPAVQvInputE@@PBDZZ",
+        "caller_address": "00482bd0",
+        "offset": 151,
+        "address": "00482730"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "??1QvStrS8@@QAE@XZ": {
+    "address": "00482730",
+    "target": "??1QvString@@QAE@XZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Version.cpp",
+        "caller": "??0QvInput8@@QAE@XZ",
+        "caller_address": "00480fc0",
+        "offset": 109,
+        "address": "00482730"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Append@QvNodeListG2@@QAEXPAUQvNodeG2@@@Z": {
+    "address": "00489a10",
+    "target": "?append@QvNodeList@@QAEXPAVQvNode@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Group2.cpp",
+        "caller": "?ReadChildren@QvGroupG2@@QAEHPAVQvInputG2@@@Z",
+        "caller_address": "00482110",
+        "offset": 53,
+        "address": "00489a10"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Append@QvStrA@@QAEXPAD@Z": {
+    "address": "00482960",
+    "target": "??YQvString@@QAEAAV0@PBD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 267,
+        "address": "00482960"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Assign@QvStr@@QAEXPBD@Z": {
+    "address": "00482840",
+    "target": "??4QvString@@QAEAAV0@PBD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input.cpp",
+        "caller": "?LineString@QvInput2@@QAEXPAUQvStr@@@Z",
+        "caller_address": "004815e0",
+        "offset": 41,
+        "address": "00482840"
+      },
+      {
+        "source": "Qv/Input.cpp",
+        "caller": "?SetFileName@QvInput2@@QAEXPBD@Z",
+        "caller_address": "00481650",
+        "offset": 12,
+        "address": "00482840"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?AtEnd@QvIn3@@QAEHXZ": {
+    "address": "004815d0",
+    "target": "?eof@QvInput@@QBEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input3.cpp",
+        "caller": "?ReadChar@QvIn3@@QAEHPAD@Z",
+        "caller_address": "004810f0",
+        "offset": 90,
+        "address": "004815d0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?AtEnd@QvIn4@@QAEHXZ": {
+    "address": "004815d0",
+    "target": "?eof@QvInput@@QBEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 163,
+        "address": "004815d0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?AtEnd@QvInputT@@QAEHXZ": {
+    "address": "004815d0",
+    "target": "?eof@QvInput@@QBEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Store.cpp",
+        "caller": "?QvReadTop@@YAHPAVQvInputT@@PAPAUQvNodeT@@@Z",
+        "caller_address": "00481c30",
+        "offset": 38,
+        "address": "004815d0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Enter@QvDictY@@QAEHIPAX@Z": {
+    "address": "00482230",
+    "target": "?enter@QvDict@@QAEHKPAX@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Str2.cpp",
+        "caller": "?Register@QvInputY@@QAEXPAUQvNameZ@@PAUQvNodeSetName@@@Z",
+        "caller_address": "00481bc0",
+        "offset": 20,
+        "address": "00482230"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Find@QvDictY@@QAEHIPAPAX@Z": {
+    "address": "004822e0",
+    "target": "?find@QvDict@@QBEHKAAPAX@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Str2.cpp",
+        "caller": "?Lookup@QvInputY@@QAEPAUQvNodeSetName@@PAUQvNameZ@@@Z",
+        "caller_address": "00481bf0",
+        "offset": 21,
+        "address": "004822e0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Get@QvKids@@QAEPAXPAVQvNode@@H@Z": {
+    "address": "00480820",
+    "target": "?getField@QvFieldData@@QBEPAVQvField@@PBVQvNode@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Inter.cpp",
+        "caller": "??1QvGroupN@@UAE@XZ",
+        "caller_address": "00482e10",
+        "offset": 60,
+        "address": "00480820"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?HasExtension@QvFieldDataN@@QAEHPAUQvInputN@@PAX@Z": {
+    "address": "00480c00",
+    "target": "?readFieldTypes@QvFieldData@@QAEHPAVQvInput@@PAVQvNode@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 167,
+        "address": "00480c00"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 157,
+        "address": "00480c00"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Init@QvInput8@@QAEXPAU_iobuf@@@Z": {
+    "address": "004810c0",
+    "target": "?setFilePointer@QvInput@@QAEXPAU_iobuf@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Version.cpp",
+        "caller": "??0QvInput8@@QAE@XZ",
+        "caller_address": "00480fc0",
+        "offset": 74,
+        "address": "004810c0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?LineString@QvInputE@@QAEXPAUQvStrE@@@Z": {
+    "address": "004815e0",
+    "target": "?getLocationString@QvInput@@QBEXAAVQvString@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Error.cpp",
+        "caller": "?QvError@@YAXPAVQvInputE@@PBDZZ",
+        "caller_address": "00482bd0",
+        "offset": 79,
+        "address": "004815e0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Lookup@QvInputQ@@QAEPAUQvNodeQ@@PAUQvNameQ@@@Z": {
+    "address": "00481bf0",
+    "target": "?findReference@QvInput@@QBEPAVQvNode@@ABVQvName@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse2.cpp",
+        "caller": "?QvReadUse@@YAPAUQvNodeQ@@PAVQvInputQ@@@Z",
+        "caller_address": "0047ed90",
+        "offset": 93,
+        "address": "00481bf0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Next@QvIn3@@QAEHXZ": {
+    "address": "00481740",
+    "target": "?skipWhiteSpace@QvInput@@AAEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input3.cpp",
+        "caller": "?ReadNext@QvIn3@@QAEHPAD@Z",
+        "caller_address": "004811a0",
+        "offset": 4,
+        "address": "00481740"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Next@QvIn5@@QAEHXZ": {
+    "address": "00481740",
+    "target": "?skipWhiteSpace@QvInput@@AAEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 13,
+        "address": "00481740"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Next@QvInput@@QAEHXZ": {
+    "address": "00481740",
+    "target": "?skipWhiteSpace@QvInput@@AAEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetInt@QvInput@@QAEHPAH@Z",
+        "caller_address": "00481490",
+        "offset": 7,
+        "address": "00481740"
+      },
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetShort@QvInput@@QAEHPAF@Z",
+        "caller_address": "004814d0",
+        "offset": 7,
+        "address": "00481740"
+      },
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetUInt@QvInput@@QAEHPAI@Z",
+        "caller_address": "00481510",
+        "offset": 7,
+        "address": "00481740"
+      },
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetLong@QvInput@@QAEHPAJ@Z",
+        "caller_address": "00481550",
+        "offset": 7,
+        "address": "00481740"
+      },
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetFloat@QvInput@@QAEHPAM@Z",
+        "caller_address": "00481590",
+        "offset": 7,
+        "address": "00481740"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?PutBack@QvIn4@@QAEXD@Z": {
+    "address": "00481620",
+    "target": "?putBack@QvInput@@QAEXD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 206,
+        "address": "00481620"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481a40",
+        "offset": 118,
+        "address": "00481620"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadHexDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481ad0",
+        "offset": 123,
+        "address": "00481620"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?TryChar@QvIn4@@QAEHPADD@Z",
+        "caller_address": "00481b60",
+        "offset": 69,
+        "address": "00481620"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?PutBack@QvIn5@@QAEXD@Z": {
+    "address": "00481620",
+    "target": "?putBack@QvInput@@QAEXD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 89,
+        "address": "00481620"
+      },
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 168,
+        "address": "00481620"
+      },
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 247,
+        "address": "00481620"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?PutBack@QvIn6@@QAEXD@Z": {
+    "address": "00481620",
+    "target": "?putBack@QvInput@@QAEXD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input6.cpp",
+        "caller": "?ReadHeader@QvIn6@@QAEHXZ",
+        "caller_address": "00481670",
+        "offset": 171,
+        "address": "00481620"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvCreateAndRead@@YAHPAVQvInputR@@PAUQvNameR@@1PAPAUQvNodeR@@@Z": {
+    "address": "0047f040",
+    "target": "?readNodeInstance@QvNode@@CAHPAVQvInput@@ABVQvName@@1AAPAV1@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 307,
+        "address": "0047f040"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAUQvInputN@@PBDZZ": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 182,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 172,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAVQvIn4@@PBD@Z": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 178,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAVQvIn6@@PBD@Z": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input6.cpp",
+        "caller": "?ReadHeader@QvIn6@@QAEHXZ",
+        "caller_address": "00481670",
+        "offset": 182,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAVQvInputQ@@PBDZZ": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse2.cpp",
+        "caller": "?QvReadUse@@YAPAUQvNodeQ@@PAVQvInputQ@@@Z",
+        "caller_address": "0047ed90",
+        "offset": 70,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse2.cpp",
+        "caller": "?QvReadUse@@YAPAUQvNodeQ@@PAVQvInputQ@@@Z",
+        "caller_address": "0047ed90",
+        "offset": 117,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAVQvInputR@@PBDZZ": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 174,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 210,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 246,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 367,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 398,
+        "address": "00482bd0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 416,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvError@@YAXPAVQvInputT@@PBDZZ": {
+    "address": "00482bd0",
+    "target": "?post@QvReadError@@SAXPBVQvInput@@PBDZZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Store.cpp",
+        "caller": "?QvReadTop@@YAHPAVQvInputT@@PAPAUQvNodeT@@@Z",
+        "caller_address": "00481c30",
+        "offset": 73,
+        "address": "00482bd0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvReadNodeBody@@YAHPAVQvInputP@@PAUQvNameP@@PAPAUQvNodeP@@@Z": {
+    "address": "0047ee40",
+    "target": "?readNode@QvNode@@CAHPAVQvInput@@AAVQvName@@AAPAV1@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse.cpp",
+        "caller": "?QvReadNode@@YAHPAVQvInputP@@PAPAUQvNodeP@@@Z",
+        "caller_address": "0047eb00",
+        "offset": 270,
+        "address": "0047ee40"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?QvReadUse@@YAHPAVQvInputP@@@Z": {
+    "address": "0047ed90",
+    "target": "?readReference@QvNode@@CAPAV1@PAVQvInput@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse.cpp",
+        "caller": "?QvReadNode@@YAHPAVQvInputP@@PAPAUQvNodeP@@@Z",
+        "caller_address": "0047eb00",
+        "offset": 237,
+        "address": "0047ed90"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Read@QvInput@@QAEHPAD@Z": {
+    "address": "004810f0",
+    "target": "?get@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Skip.cpp",
+        "caller": "?SkipBlock@@YAXPAUQvInput@@@Z",
+        "caller_address": "00480490",
+        "offset": 28,
+        "address": "004810f0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadChar@QvIn4@@QAEHPAD@Z": {
+    "address": "004810f0",
+    "target": "?get@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 52,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 146,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481a40",
+        "offset": 21,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481a40",
+        "offset": 100,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadHexDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481ad0",
+        "offset": 21,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?ReadHexDigits@QvIn4@@QAEHPAD@Z",
+        "caller_address": "00481ad0",
+        "offset": 105,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?TryChar@QvIn4@@QAEHPADD@Z",
+        "caller_address": "00481b60",
+        "offset": 12,
+        "address": "004810f0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadChar@QvIn5@@QAEHPAD@Z": {
+    "address": "004810f0",
+    "target": "?get@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 50,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 106,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input5.cpp",
+        "caller": "?ReadString@QvIn5@@QAEHPAUQvStrA@@@Z",
+        "caller_address": "004811d0",
+        "offset": 140,
+        "address": "004810f0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadChar@QvIn6@@QAEHPAD@Z": {
+    "address": "004810f0",
+    "target": "?get@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input6.cpp",
+        "caller": "?ReadHeader@QvIn6@@QAEHXZ",
+        "caller_address": "00481670",
+        "offset": 25,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input6.cpp",
+        "caller": "?ReadHeader@QvIn6@@QAEHXZ",
+        "caller_address": "00481670",
+        "offset": 60,
+        "address": "004810f0"
+      },
+      {
+        "source": "Qv/Input6.cpp",
+        "caller": "?ReadHeader@QvIn6@@QAEHXZ",
+        "caller_address": "00481670",
+        "offset": 96,
+        "address": "004810f0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadChar@QvInputT@@QAEHPAD@Z": {
+    "address": "004810f0",
+    "target": "?get@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Store.cpp",
+        "caller": "?QvReadTop@@YAHPAVQvInputT@@PAPAUQvNodeT@@@Z",
+        "caller_address": "00481c30",
+        "offset": 54,
+        "address": "004810f0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadDouble@QvInput@@QAEHPAN@Z": {
+    "address": "00481950",
+    "target": "?readReal@QvInput@@AAEHAAN@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/InputGet.cpp",
+        "caller": "?GetFloat@QvInput@@QAEHPAM@Z",
+        "caller_address": "00481590",
+        "offset": 32,
+        "address": "00481950"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadFields@QvFieldDataN@@QAEHPAUQvInputN@@PAXH@Z": {
+    "address": "00480df0",
+    "target": "?read@QvFieldData@@QBEHPAVQvInput@@PAVQvNode@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 247,
+        "address": "00480df0"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 232,
+        "address": "00480df0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadHeader@QvIn3@@QAEHXZ": {
+    "address": "00481670",
+    "target": "?checkHeader@QvInput@@AAEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input3.cpp",
+        "caller": "?ReadChar@QvIn3@@QAEHPAD@Z",
+        "caller_address": "004810f0",
+        "offset": 72,
+        "address": "00481670"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadHeader@QvIn4@@QAEHXZ": {
+    "address": "00481670",
+    "target": "?checkHeader@QvInput@@AAEHXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Input4.cpp",
+        "caller": "?Next@QvIn4@@QAEHXZ",
+        "caller_address": "00481740",
+        "offset": 16,
+        "address": "00481670"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadName@QvInputN@@QAEHPAUQvNameN@@H@Z": {
+    "address": "00481300",
+    "target": "?read@QvInput@@QAEHAAVQvName@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 78,
+        "address": "00481300"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 68,
+        "address": "00481300"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadName@QvInputP@@QAEHPAUQvNameP@@H@Z": {
+    "address": "00481300",
+    "target": "?read@QvInput@@QAEHAAVQvName@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse.cpp",
+        "caller": "?QvReadNode@@YAHPAVQvInputP@@PAPAUQvNodeP@@@Z",
+        "caller_address": "0047eb00",
+        "offset": 55,
+        "address": "00481300"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadName@QvInputQ@@QAEHPAUQvNameQ@@H@Z": {
+    "address": "00481300",
+    "target": "?read@QvInput@@QAEHAAVQvName@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse2.cpp",
+        "caller": "?QvReadUse@@YAPAUQvNodeQ@@PAVQvInputQ@@@Z",
+        "caller_address": "0047ed90",
+        "offset": 55,
+        "address": "00481300"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadName@QvInputR@@QAEHPAUQvNameR@@H@Z": {
+    "address": "00481300",
+    "target": "?read@QvInput@@QAEHAAVQvName@@H@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 145,
+        "address": "00481300"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 159,
+        "address": "00481300"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?ReadNext@QvInputR@@QAEHPAD@Z": {
+    "address": "004811a0",
+    "target": "?read@QvInput@@QAEHAAD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 282,
+        "address": "004811a0"
+      },
+      {
+        "source": "Qv/Parse3.cpp",
+        "caller": "?QvReadNodeBody2@@YAHPAVQvInputR@@PAUQvNameR@@PAPAUQvNodeR@@@Z",
+        "caller_address": "0047ee40",
+        "offset": 335,
+        "address": "004811a0"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Ref@QvRefd@@QAEXXZ": {
+    "address": "0047e750",
+    "target": "?ref@QvNode@@QBEXXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/PList.cpp",
+        "caller": "?Append@QvNodeList@@QAEXPAUQvRefd@@@Z",
+        "caller_address": "00489a10",
+        "offset": 34,
+        "address": "0047e750"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?SetFileName@QvInputN@@QAEXPAD@Z": {
+    "address": "00481650",
+    "target": "?putBack@QvInput@@QAEXPBD@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?Read@QvNodeN@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "00481fd0",
+        "offset": 231,
+        "address": "00481650"
+      },
+      {
+        "source": "Qv/NodeRead.cpp",
+        "caller": "?ReadFieldsOnly@QvNodeN2@@QAEHPAUQvInputN@@@Z",
+        "caller_address": "0047ec70",
+        "offset": 221,
+        "address": "00481650"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?SetName@QvNodeSetName@@QAEXPAUQvNameZ@@@Z": {
+    "address": "0047e790",
+    "target": "?setName@QvNode@@QAEXABVQvName@@@Z",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/Str2.cpp",
+        "caller": "?Register@QvInputY@@QAEXPAUQvNameZ@@PAUQvNodeSetName@@@Z",
+        "caller_address": "00481bc0",
+        "offset": 28,
+        "address": "0047e790"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  },
+  "?Unref@QvRefd@@QAEXXZ": {
+    "address": "0047e760",
+    "target": "?unref@QvNode@@QBEXXZ",
+    "owner": "qvlib/obj/QvLib.lib",
+    "exact_call_sites": [
+      {
+        "source": "Qv/PList.cpp",
+        "caller": "?Truncate@QvNodeList@@QAEXH@Z",
+        "caller_address": "00489a40",
+        "offset": 34,
+        "address": "0047e760"
+      }
+    ],
+    "reason": "All original direct-call destinations agree; complete caller and current QvLib callee bodies match original outside COFF relocations; no callable adapter or this adjustment."
+  }
+}

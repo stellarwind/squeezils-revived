@@ -51,6 +51,38 @@ class RetentionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "EH bytes disagree"):
             discover(self.response, modified, self.symbols, self.sections, self.inventory)
 
+    def test_reference_to_one_runtime_slot_keeps_entire_table(self):
+        baseline, report = discover(self.response, self.raw, self.symbols, self.sections, self.inventory)
+        self.assertTrue(report["runtime_jump_tables"])
+        table = report["runtime_jump_tables"][0]
+        lo = int(table["address"], 16)
+        import re
+        members = [name for name in baseline if (m := re.match(r"\?g_([0-9A-F]+)@@", name))
+                   and lo <= int(m[1], 16) < lo + table["size"]]
+        self.assertGreater(len(members), 1)
+        with tempfile.TemporaryDirectory(dir=build.OUT) as folder:
+            path = pathlib.Path(folder) / "reference.obj"
+            path.write_bytes(members[-1].encode() + b"\0")
+            result, _ = discover(self.response + '"%s"\n' % path, self.raw, self.symbols,
+                                 self.sections, self.inventory)
+        self.assertFalse(set(members).intersection(result))
+
+    def test_reference_to_binary_math_slot_keeps_descriptor(self):
+        baseline, report = discover(self.response, self.raw, self.symbols, self.sections, self.inventory)
+        table = next(t for t in report["runtime_math_descriptors"] if t["name"] == "atan2")
+        self.assertEqual((table["arity"], table["count"], table["size"]), (2, 16, 80))
+        lo = int(table["address"], 16)
+        import re
+        members = [name for name in baseline if (m := re.match(r"\?g_([0-9A-F]+)@@", name))
+                   and lo <= int(m[1], 16) < lo + table["size"]]
+        self.assertGreater(len(members), 4)
+        with tempfile.TemporaryDirectory(dir=build.OUT) as folder:
+            path = pathlib.Path(folder) / "reference.obj"
+            path.write_bytes(members[-1].encode() + b"\0")
+            result, _ = discover(self.response + '"%s"\n' % path, self.raw, self.symbols,
+                                 self.sections, self.inventory)
+        self.assertFalse(set(members).intersection(result))
+
 
 if __name__ == "__main__":
     unittest.main()

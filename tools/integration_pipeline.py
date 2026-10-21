@@ -16,7 +16,8 @@ import integration as build
 
 
 def snapshot():
-    paths = set()
+    paths = {build.REPO.parent / 'SqueezilsGameFiles/SQZ.EXE',
+             build.REPO.parent / 'nm/full.asm'}
     for folder in (build.SRC, build.REPO / "tools", build.REPO / "data", build.REPO / "qvlib"):
         paths.update(p for p in folder.rglob("*") if p.is_file()
                      and p.suffix.lower() in (".cpp", ".c", ".h", ".py", ".pl", ".sh", ".txt", ".tsv", ".json", ".obj", ".res", ".lib"))

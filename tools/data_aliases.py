@@ -57,6 +57,10 @@ def source_addresses(names):
 
 
 def write_coff(pairs, path):
+    if any(alias == target for alias, target in pairs):
+        raise ValueError('Identity weak aliases are invalid')
+    if len({alias for alias, _ in pairs}) != len(pairs):
+        raise ValueError('Duplicate weak alias definitions')
     strtab = bytearray(4)
     symbols = bytearray()
     index = {}
@@ -117,9 +121,20 @@ def main():
             skipped[name] = "no unique data.obj symbol"
             continue
         pairs.append((mangled, targets[0]))
+    exact_registry_path = REPO / 'tools/exact_data_registry.json'
+    if exact_registry_path.exists():
+        from exact_data_aliases import discover
+        current = discover({alias for alias, _ in pairs})
+        (OUT / 'exact-data-candidates.json').write_text(json.dumps(current, indent=2))
+        for alias, decision in json.loads(exact_registry_path.read_text()).items():
+            if current['accepted'].get(alias) != decision:
+                raise ValueError('Exact data proof changed; review registry: ' + alias)
+            pairs.append((alias, decision['target']))
+        pairs.sort()
     write_coff(pairs, OUT / "data_alias.obj")
     (OUT / "data_alias.json").write_text(json.dumps(dict(aliases=pairs, skipped=skipped,
-        reviewed_registry=registry), indent=1))
+        reviewed_registry=registry,
+        exact_registry_sha256=__import__('hashlib').sha256(exact_registry_path.read_bytes()).hexdigest() if exact_registry_path.exists() else None), indent=1))
     print(len(pairs), "aliases;", len(skipped), "skipped")
 
 
