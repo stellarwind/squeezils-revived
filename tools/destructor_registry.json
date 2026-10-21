@@ -102,27 +102,7 @@
       "Activity/Activity.h": "ea616606f227bcbb892b320974a1652e2cab18fab624bfc3e0efd4ce1e2dae5b"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
-    },
-    "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
-    "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
-  },
-  "??1AdvancePose@@QAE@XZ": {
-    "address": "0041b5f0",
-    "target": "??1PoseTable@@QAE@XZ",
-    "owner": "PoseTable/PoseTableLife.cpp",
-    "declarations": {
-      "AnimatedBody/Advance.cpp": {
-        "AnimatedBody/Advance.cpp": [
-          "0041b5f0"
-        ]
-      }
-    },
-    "declaration_sha256": {
-      "AnimatedBody/Advance.cpp": "39dbf84dfcb662f1708e1b976bb99f3ca96e22dce96e9bdca37193ffa1c69e9b"
-    },
-    "owner_object_without_timestamp_sha256": {
-      "PoseTable/PoseTableLife.cpp": "14e48666ac1ed9739a7fe7d69e630b9da90b3e62cfc790d97bc10b467966d08f"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -150,7 +130,7 @@
     },
     "declaration_sha256": {
       "Fn44b2e0/F.cpp": "d1f477eaea32848023de45d1b5e1995846551f5da8edd5e32ce3c2fad06ae9db",
-      "Sim2/PlaceStart.cpp": "3e90accb8151831130527284b07d59c1ef4c4361839ae6d0eea4a2f57a55ca91",
+      "Sim2/PlaceStart.cpp": "46475d8883cac63f1b6b848ca37f38ed2b781b1993ac2cbb44b2363bad099f4d",
       "SqueezilBody/Place.cpp": "f94c1cc83e472b4d89aa322321f1271754b0c42dd90950a510e1e70561d57346"
     },
     "owner_object_without_timestamp_sha256": {
@@ -174,27 +154,7 @@
       "NavProp/BuildFrame.cpp": "c1f0aae56a330602e431f5774a4466a1cca1901b727c9dc191c0dca284b51a78"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
-    },
-    "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
-    "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
-  },
-  "??1CPose@@QAE@XZ": {
-    "address": "0041b5f0",
-    "target": "??1PoseTable@@QAE@XZ",
-    "owner": "PoseTable/PoseTableLife.cpp",
-    "declarations": {
-      "AnimatedBody/SetCycle.cpp": {
-        "AnimatedBody/SetCycle.cpp": [
-          "0041b5f0"
-        ]
-      }
-    },
-    "declaration_sha256": {
-      "AnimatedBody/SetCycle.cpp": "c29fba5b48006196b676fcddbacb458e6736cafb759ed999198520c67fb9e507"
-    },
-    "owner_object_without_timestamp_sha256": {
-      "PoseTable/PoseTableLife.cpp": "14e48666ac1ed9739a7fe7d69e630b9da90b3e62cfc790d97bc10b467966d08f"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -234,7 +194,7 @@
       "Sim2/LocCollide.cpp": "5c2895db9659dd8296d740c41e33fbb3919a74b783035ee27a97e110ebe670d2"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -288,15 +248,15 @@
     "declaration_sha256": {
       "Activity/TurnStep.cpp": "d2769be42ab47fe88713d2f386ce00f90f1b40eb40ed8de3677ae04f244518f6",
       "Fn44b2e0/F.cpp": "d1f477eaea32848023de45d1b5e1995846551f5da8edd5e32ce3c2fad06ae9db",
-      "Sim2/PlaceStart.cpp": "3e90accb8151831130527284b07d59c1ef4c4361839ae6d0eea4a2f57a55ca91",
-      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a",
+      "Sim2/PlaceStart.cpp": "46475d8883cac63f1b6b848ca37f38ed2b781b1993ac2cbb44b2363bad099f4d",
+      "SqueezilSoul/Fly.cpp": "1a9d8a2b9e11c298a80597b328d01c615eec886731176bb1f68e236c0631b0f5",
       "SqueezilSoul/Ground.cpp": "a041d398aa97418780ac95277ec8a4aca4dc1fcc83be66e3daf1cefaf33db30b",
-      "SqueezilSoul/MoveGround.cpp": "90ecfe9a06a3acc0a7ad190f92b3cbe251b36bbdf7e2854b589e97330057ad4a",
+      "SqueezilSoul/MoveGround.cpp": "ab5d5c75096538bc184c5554d1b13ffb9f51747b1774b450a7d8ba7672a5823c",
       "SqueezilSoul/SlipMove.cpp": "9d3594270de8585ce70f59dad08a04835266b742bc5f5f82fb8d6f4eb7b76051",
       "SqueezilSoul/Turn.cpp": "a2d7126a1f9afd832cc8d0a4bdbf4b7f64cc9bfe2060f03f2ba0038888a228b6"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -356,7 +316,7 @@
       "Audio/PlayEffect.cpp": "c7ca62377ea84c7089812e07e38026c07c4a64196980bae26ec7f3ae58829e8a"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -379,10 +339,10 @@
     },
     "declaration_sha256": {
       "GoodieSoul/Update.cpp": "ca34fb2567e2e2ecd1ebffc05ca33e43ab54f1e0202f0ac560fb7d8739ae7add",
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -408,7 +368,7 @@
       "NavSurface/ListDtor.cpp": "b7d4ed5297246349fc60e77dbdad5cf9e148222fbea3e7feab569e16d813581a"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -434,7 +394,7 @@
       "NavSurface/ListDtor.cpp": "b7d4ed5297246349fc60e77dbdad5cf9e148222fbea3e7feab569e16d813581a"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -454,7 +414,7 @@
       "FunctionTweak/exec/Exec_LaunchFromFaceNormal.cpp": "b387bb287969516c02821c2b3cb036b8f02f742816c0b78200d35f9df311ed0f"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -511,7 +471,7 @@
       }
     },
     "declaration_sha256": {
-      "Misc17/Dt2.cpp": "fc08a734f57bd9f75e0825b66d9c89b02670934f47ad5207c35e45f9ec564b6b"
+      "Misc17/Dt2.cpp": "e1318eaba16c6c3b902048326cf64e0f19bb08aa5ad95e347c9096557b400f03"
     },
     "owner_object_without_timestamp_sha256": {
       "SoulDtor2/BodyDtor.cpp": "03fda8813d0f14a5f7d0b0c93804b68983db5992c84a00f455e31d8ffff1cb79"
@@ -525,16 +485,16 @@
     "owner": "Misc17/Dt2.cpp",
     "declarations": {
       "Misc15/Mesh.cpp": {
-        "Misc15/Mesh.cpp": [
+        "NavMesh/NavMesh.h": [
           "004053e0"
         ]
       }
     },
     "declaration_sha256": {
-      "Misc15/Mesh.cpp": "dda1d9abc3558438c0af81a4bdc9b76217059ef05866e4f2b536fe591f786ba7"
+      "NavMesh/NavMesh.h": "35793e123fa74bd1589ad8537209a4f612965b05424d187ba2915269502d5116"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -551,10 +511,10 @@
       }
     },
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -574,7 +534,7 @@
       "NavSurface/LoadedDtor.cpp": "6f0ff67a6d271dec184ca5ad582665e8a3120516651ba8d393d7dc452ce6dc5d"
     },
     "owner_object_without_timestamp_sha256": {
-      "NavMesh/NavMeshDtor.cpp": "b1facade03d94cdce37ada85d43f0824a8ba0a19c7c1f53cb313375d6b4431fa"
+      "NavMesh/NavMeshDtor.cpp": "7c0a72318d2225e1afa17e506bf83c53f14647c3d6d9c11fa002c635c26df907"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -594,7 +554,7 @@
       "Fn402930/F.cpp": "c5b7669ad5f5734bf860e8e2099cda0072a93d27ff6d5e1d523c9cace2baad0c"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -614,7 +574,7 @@
       "Behavior2/PickTarget.cpp": "d8e6a876578da48f4cefcff6d8f24de46ae8523c9500d5f735facb0966cb6ac8"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -634,7 +594,7 @@
       "Behavior2/PickTarget.cpp": "d8e6a876578da48f4cefcff6d8f24de46ae8523c9500d5f735facb0966cb6ac8"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -700,7 +660,7 @@
       "Fn41fb90/F.cpp": "4adc82f00bd7455131ea185e872941bd63c1351298411f1acd4a05fc6ff4cc24"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -908,7 +868,7 @@
       "Activity/Activity.h": "ea616606f227bcbb892b320974a1652e2cab18fab624bfc3e0efd4ce1e2dae5b"
     },
     "owner_object_without_timestamp_sha256": {
-      "Misc17/Dt2.cpp": "663a1480cef7aa6b06824493c9cd53d6f3f07343a2ef45794d793a75fe9d3ba7"
+      "Misc17/Dt2.cpp": "856763a200eb76f60c1f00d5647187ceefd4586e96ce1ea9736cb3dcfb28cb78"
     },
     "abi": "Zero-argument complete thiscall destructor, void; no deleting flag or this adjustment.",
     "reason": "Every referring source annotates one original entry; available exact calls agree; all selectable canonical definitions match the complete original body."
@@ -980,7 +940,7 @@
       }
     },
     "declaration_sha256": {
-      "Misc17/Dt2.cpp": "fc08a734f57bd9f75e0825b66d9c89b02670934f47ad5207c35e45f9ec564b6b"
+      "Misc17/Dt2.cpp": "e1318eaba16c6c3b902048326cf64e0f19bb08aa5ad95e347c9096557b400f03"
     },
     "owner_object_without_timestamp_sha256": {
       "Fam68/TwoVecDtor.cpp": "947b581f7014ae19b1b8c5e384e4521ae581d232245c92bf6326b118431497cb"

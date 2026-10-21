@@ -26,6 +26,7 @@ void PoseDecl24();
 // AnimatedBody::ApplyPose (virtual slot 4, SQZ.EXE 0x41df10): push the current pose to every part.
 #define ANIMBODY_SLOTS
 #include "AnimatedBody/AnimatedBody.h"
+#include "PoseTable/PoseTable.h"
 
 struct ComObject {
     virtual long __stdcall QueryInterface(void *iid, void **out);
@@ -38,7 +39,7 @@ struct BodyPartLike {
 };
 #define PARTS_COUNT (*(int *)((char *)this + 0x0c))
 #define PARTS_DATA (*(BodyPartLike ***)((char *)this + 0x28))
-struct PoseEntries { void *Entry(int i); };              // 0x41b750
+
 
 struct PoseDispatch { void (BodyPartLike::*apply)(ComObject *, void *); };
 void AnimatedBody::ApplyPose()
@@ -46,6 +47,6 @@ void AnimatedBody::ApplyPose()
     for (int i = 0; i < PARTS_COUNT; i++) {
         BodyPartLike *p = PARTS_DATA[i];
         PoseDispatch *v = *(PoseDispatch **)p;
-        (p->*(v->apply))((ComObject *)rootFrame, ((PoseEntries *)pose)->Entry(i));
+        (p->*(v->apply))((ComObject *)rootFrame, ((PoseTable *)pose)->At(i));
     }
 }

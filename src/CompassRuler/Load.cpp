@@ -1,9 +1,9 @@
 // CompassRuler::Load (SQZ.EXE 0x414c10): load the pictures of coast, desert, spacer, jungle and pine. A failure frees everything (0x414fa0, answers 0).
 #include <string.h>
+#include "Bitmap/Bitmap.h"
 struct BitmapL {
     virtual void l0();
     virtual int CopyFrom(BitmapL *other);       // slot 1 (+4)
-    int Load(const char *path);                 // 0x4739d0
 };
 struct CompassL {
     BitmapL *picture[12];                       // 0x00
@@ -25,7 +25,7 @@ int CompassL::Load()
     strcpy(full, path);
     strcat(full, name[4]);
     strcat(full, ".bmp");
-    if (!picture[10]->Load(full))
+    if (!((Bitmap *)picture[10])->Load(full))
         return FreeBitmaps();
     if (!LoadPair(&picture[8], name[3]))
         return FreeBitmaps();

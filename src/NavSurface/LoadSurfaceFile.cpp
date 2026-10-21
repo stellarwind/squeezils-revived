@@ -19,7 +19,7 @@ extern const char kSurfaceBinaryMode[];   // 0x4baa40
 extern const char kSurfaceOpenError[];    // 0x4c3e54
 extern const char kSurfaceInvalidHeader[]; // 0x4c3e70
 
-int SurfaceFileReader::Load(const char *path)
+int NavMesh::Load(const char *path)
 {
     int format = DetectFormat(path);
     switch (format) {
@@ -47,8 +47,8 @@ int SurfaceFileReader::Load(const char *path)
         float *point = &points->y;
         do {
             float squared = point[-1] * point[-1] + point[0] * point[0] + point[1] * point[1];
-            if (squared > radiusSquared)
-                radiusSquared = squared;
+            if (squared > radius)
+                radius = squared;
             point += 3;
         } while (--remaining);
     }

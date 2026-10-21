@@ -23,7 +23,7 @@ NutCounter/targets.txt NutCounter/NutCounter.cpp
 GoodieList/targets.txt GoodieList/GoodieList.cpp
 Inventory/targets.txt Inventory/Inventory.cpp
 Vector3f/targets.txt Vector3f/Vector3fCtor.cpp Vector3f/Vector3fAssign.cpp Vector3f/Vector3fOps.cpp Vector3f/Vector3fLength.cpp Vector3f/Vector3fPlus.cpp Vector3f/Vector3fCross.cpp
-NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp NavMesh/NavMeshCtor.cpp
+NavMesh/targets.txt NavMesh/Outcode.cpp NavMesh/NavMeshGet.cpp NavMesh/NavMeshDtor.cpp
 CompassRuler/targets.txt CompassRuler/CompassRuler.cpp CompassRuler/UpdateSpritesReal.cpp CompassRuler/Load.cpp CompassRuler/LoadPair.cpp CompassRuler/DrawRow.cpp
 Destroy/targets.txt Destroy/Destroy.cpp
 VirtualDtor/targets.txt VirtualDtor/VirtualDtor.cpp
@@ -546,7 +546,7 @@ ErrorBox/targets.txt ErrorBox/ErrorBox.cpp ErrorBox/FileOpen.cpp
 Tiny1/targets.txt Tiny1/Tiny1.cpp
 Tiny3/targets.txt Tiny3/F43ae70.cpp
 Tiny4/targets.txt Tiny4/F43bf10.cpp Tiny4/F448dc0.cpp
-Tiny4/targets2.txt Tiny4/F41bcf0.cpp
+MorphCycle/targets_blend_pose.txt MorphCycle/BlendPose.cpp
 Tiny4/targets3.txt Tiny4/F43bf80.cpp
 Tiny4/targets4.txt Tiny4/F43bb10.cpp
 Tiny4/targets6.txt Tiny4/Names.cpp

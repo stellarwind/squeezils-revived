@@ -10,7 +10,7 @@ public:
     String Get(int context);                             // 0x421a90 (by value)
 };
 StringFunctionArgument *ParseStringArgument(ArgList *list);   // 0x421940 (cdecl)
-int PostFunction(const char *name, void *args, int extra, int local);   // 0x422ce0 (cdecl)
+#include "Script/CallFunction.h"
 
 class ExecuteFunction : public Function {
 public:

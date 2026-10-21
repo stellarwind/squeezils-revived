@@ -1,6 +1,7 @@
 // CompassRuler::LoadPair (SQZ.EXE 0x414d90, ret 8): load <name>.bmp and <name>1.bmp from the ui folder; frees everything on failure.
 #include <string.h>
-struct BitmapP { int Load(const char *path); };   // 0x4739d0
+#include "Bitmap/Bitmap.h"
+struct BitmapP;
 extern char kGameDirectory[];                      // 0x4c73d8
 struct CompassP {
     char pad[0xf4];
@@ -17,13 +18,13 @@ int CompassP::LoadPair(BitmapP **pair, const char *file)
     strcpy(full, path);
     strcat(full, file);
     strcat(full, ".bmp");
-    if (!pair[0]->Load(full))
+    if (!((Bitmap *)pair[0])->Load(full))
         return FreeBitmaps();
     strcpy(full, path);
     strcat(full, file);
     strcat(full, "1");
     strcat(full, ".bmp");
-    if (!pair[1]->Load(full))
+    if (!((Bitmap *)pair[1])->Load(full))
         return FreeBitmaps();
     return 1;
 }

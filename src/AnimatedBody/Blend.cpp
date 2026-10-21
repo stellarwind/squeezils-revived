@@ -1,5 +1,6 @@
 // AnimatedBody slot 10 (SQZ.EXE 0x41e2a0): how far the blend into the new clip is (0..1), -1 when not blending.
-struct Clip { float Length(); };                         // 0x41ba10
+#include "MorphCycle/MorphCycle.h"
+struct Clip;                         // 0x41ba10
 struct AnimatedBody2 {
     char pad[0x2c];
     Clip *clip;                                          // 0x2c
@@ -12,6 +13,6 @@ struct AnimatedBody2 {
 float AnimatedBody2::GetBlendFraction()
 {
     if (blending)
-        return 1.0f - blendTime / clip->Length();
+        return 1.0f - blendTime / ((MorphCycle *)clip)->Period();
     return -1.0f;
 }

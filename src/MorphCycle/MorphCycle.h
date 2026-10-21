@@ -3,10 +3,9 @@
 // larger members live in their own files (MorphCycleLoad.cpp, MorphCycleLoadPath.cpp, ...).
 #pragma once
 #include "compat41.h"
-#ifdef MORPH_CYCLE_SAMPLE_INTERFACE
 struct PoseTable;
-#endif
 
+// SIZE 0x28
 struct MorphCycle {
     float duration;                 // 0x00
     float period;                   // 0x04
@@ -28,9 +27,9 @@ struct MorphCycle {
     int   SampleCount();            // 0x41ba30
     int   NoLoop();                 // 0x41ba40
     float TimeAt(int sample);       // 0x41ba50
-#ifdef MORPH_CYCLE_SAMPLE_INTERFACE
     int SamplePose(PoseTable *pose, float time, int flag); // 0x41bbf0
-#endif
+    int BlendPose(PoseTable *pose, float time, float weight, int hint); // 0x41bcf0
+    PoseTable *NewPoseTable(); // 0x41ba70
 #ifdef MORPH_CYCLE_LOAD_INTERFACE
     // Opt in to preserve the symbol count in existing byte-match units.
     int Load(const char *filename); // 0x41bd60

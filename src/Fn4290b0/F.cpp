@@ -8,7 +8,7 @@ struct Target : Base { };
 struct Events { virtual int v0(); virtual int Has(int *k); /* vtable+0x04 */ String Get(int *k); }; // 0x4638b0, hidden result
 // SIZE 0x18
 struct Ref { int d[6]; /* 0x00 */ Ref(int handle, void *owner); Ref(Target *t, int handle, void *owner); }; // 0x4207a0 / 0x420900
-int RunCommand(const char *name, Ref *r, int a, int b);              // 0x422ce0 (cdecl)
+#include "Script/CallFunction.h"
 struct Owner;
 Owner *GetOwner(); // 0x420690
 struct Owner { Base *Find(int handle); }; // 0x414080, thiscall ret 4
@@ -32,10 +32,10 @@ void CycleProp::FireStepMessages(int from, int to)
                     if (handle != -1) {
                         Target *t = dynamic_cast<Target *>(GetOwner()->Find(handle));
                         Ref ref(t, handle, this);
-                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
+                        CallFunction(ev->Get(&number).c_str(), &ref, 0, 0);
                     } else {
                         Ref ref(-1, this);
-                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
+                        CallFunction(ev->Get(&number).c_str(), &ref, 0, 0);
                     }
                 }
                 number++;
@@ -50,10 +50,10 @@ void CycleProp::FireStepMessages(int from, int to)
                     if (handle != -1) {
                         Target *t = dynamic_cast<Target *>(GetOwner()->Find(handle));
                         Ref ref(t, handle, this);
-                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
+                        CallFunction(ev->Get(&number).c_str(), &ref, 0, 0);
                     } else {
                         Ref ref(-1, this);
-                        RunCommand(ev->Get(&number).c_str(), &ref, 0, 0);
+                        CallFunction(ev->Get(&number).c_str(), &ref, 0, 0);
                     }
                 }
                 number--;

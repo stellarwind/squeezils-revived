@@ -1,52 +1,42 @@
 // A spatial-tree node (SQZ.EXE 0x47ade0-0x47ae90): eight children and a list of item indices.
-struct TreeNode {
-    int a0, a1, a2, a3, a4, a5;      // 0x00..0x14
-    int count;                       // 0x18 items in the list
-    int *items;                      // 0x1c
-    TreeNode *child[8];              // 0x20
-    TreeNode();                      // 0x47ade0
-    void Clear();                    // 0x47ae10
-    int Allocate(int n);             // 0x47ae50
-    void FreeItems();                // 0x47ae90
-};
+#include "NavMesh/BoxNode.h"
 
-TreeNode::TreeNode()
+BoxNode::BoxNode()
 {
-    a1 = 0; a0 = 0; a3 = 0; a2 = 0;
-    a5 = 0; a4 = 0; count = 0; items = 0;
+    maxX = 0; minX = 0; maxY = 0; minY = 0;
+    maxZ = 0; minZ = 0; count = 0; faces = 0;
     for (int i = 0; i < 8; i++)
         child[i] = 0;
 }
 
-void TreeNode::Clear()
+BoxNode::~BoxNode()
 {
     FreeItems();
     for (int i = 0; i < 8; i++) {
-        TreeNode *c = child[i];
+        BoxNode *c = child[i];
         if (c) {
-            c->Clear();
             delete c;
             child[i] = 0;
         }
     }
 }
 
-int TreeNode::Allocate(int n)
+int BoxNode::Allocate(int n)
 {
     FreeItems();
     if (n) {
-        items = new int[n];
-        if (!items)
+        faces = new int[n];
+        if (!faces)
             return 0;
         count = n;
     }
     return 1;
 }
 
-void TreeNode::FreeItems()
+void BoxNode::FreeItems()
 {
-    if (items)
-        delete items;
+    if (faces)
+        delete [] faces;
     count = 0;
-    items = 0;
+    faces = 0;
 }

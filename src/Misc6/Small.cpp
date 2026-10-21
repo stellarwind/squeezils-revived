@@ -20,26 +20,6 @@ int GetByte(ByteSrc *s, unsigned char *out)
     return 0;
 }
 
-struct Node8 {
-    char pad[0x20];
-    Node8 *kids[8];
-    void Clear();                             // 0x47ae90
-    void Release();
-};
-
-void Node8::Release()
-{
-    Clear();
-    for (int i = 0; i < 8; i++) {
-        Node8 *k = kids[i];
-        if (k) {
-            k->Release();
-            delete k;
-            kids[i] = 0;
-        }
-    }
-}
-
 int ReadInt(void *src, float *tmp);           // 0x47c6f0 (4-byte read; the float type gives SQZ.EXE's load order)
 int ReadIntTo(void *src, float *out)
 {

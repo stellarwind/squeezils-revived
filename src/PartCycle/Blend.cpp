@@ -2,7 +2,7 @@
 // pose = pose * (1 - weight) + sample * weight. Only the nearest-sample case renormalises the two axes;
 // between samples they are left as blended. Outside the track a morph weight the
 // track does not have is set to 0 rather than blended towards 0. Returns the sample index (the hint after FindSegment).
-#include "PartCycle/PartCycle.h"
+#include "PartCycle/Execution.h"
 
 struct PartPose {
     Vector3f   position;            // 0x00
@@ -17,9 +17,6 @@ struct PartCycleF {
     char pad[0x34];
     MorphCycleF *cycle;             // 0x34
     int FindSegment(float time, int *hint);   // 0x41b2a0
-};
-struct PartCycleB : PartCycle {
-    int Blend(PartPose *pose, float time, float weight, int hint);
 };
 
 int PartCycleB::Blend(PartPose *pose, float time, float weight, int hint)

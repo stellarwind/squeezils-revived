@@ -1,1 +1,1 @@
-^?DetectFormat@SurfaceFileReader@@ 47c7b0 detect_surface_format 304
+^?DetectFormat@NavMesh@@ 47c7b0 detect_surface_format 304

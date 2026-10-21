@@ -174,15 +174,6 @@
           ]
         }
       ],
-      "Fn47b180/F.cpp": [
-        {
-          "file": "Fn47b180/F.cpp",
-          "class_sha256": "612b523b58d8f5dd04190de7552c6bdc8f019004559102e7600d4debe9c3f7ec",
-          "addresses": [
-            "00401b60"
-          ]
-        }
-      ],
       "GoodieSoul/Hit.cpp": [
         {
           "file": "GoodieSoul/Hit.cpp",
@@ -291,25 +282,6 @@
         {
           "file": "NavSurface/MoveAlong.cpp",
           "class_sha256": "025a6fa8e6baf30f6f77940495742e46a07d1570ef5f9021aea73b04f3c7256b",
-          "addresses": [
-            "00401ae0"
-          ]
-        }
-      ]
-    },
-    "abi": "thiscall; plain nontrivial 12-byte x/y/z float vector; matching decorated scalar/reference arguments and scalar or hidden vector result; const this qualification does not change calling convention; no this adjustment.",
-    "reason": "Every referring unit has the reviewed vector layout and annotated method entry; available exact original direct calls agree; unique canonical method matches the complete original body outside relocations."
-  },
-  "??GNearVector@@QAE?AU0@ABU0@@Z": {
-    "address": "00401ae0",
-    "target": "??GVector3f@@QBE?AU0@ABU0@@Z",
-    "owner": "Vector3f/Vector3fOps.cpp",
-    "operation": "subtract",
-    "declarations": {
-      "NavSurface/IsNear.cpp": [
-        {
-          "file": "NavSurface/IsNear.cpp",
-          "class_sha256": "eec54545ce75cfe35d25e97a0f9964b4878fdcb3615179afa00be8d0feeade55",
           "addresses": [
             "00401ae0"
           ]
@@ -559,15 +531,6 @@
           ]
         }
       ],
-      "Fn47b180/F.cpp": [
-        {
-          "file": "Fn47b180/F.cpp",
-          "class_sha256": "612b523b58d8f5dd04190de7552c6bdc8f019004559102e7600d4debe9c3f7ec",
-          "addresses": [
-            "00403070"
-          ]
-        }
-      ],
       "NavMesh/NavMove.cpp": [
         {
           "file": "NavMesh/NavMove.cpp",
@@ -638,15 +601,6 @@
         {
           "file": "Fn4373d0/F.cpp",
           "class_sha256": "010b4075e51ceaf59f2dccb4f3d4ff28951a1b2847a846804d80bfc28f2072a2",
-          "addresses": [
-            "0041a350"
-          ]
-        }
-      ],
-      "Fn47b180/F.cpp": [
-        {
-          "file": "Fn47b180/F.cpp",
-          "class_sha256": "612b523b58d8f5dd04190de7552c6bdc8f019004559102e7600d4debe9c3f7ec",
           "addresses": [
             "0041a350"
           ]
@@ -928,15 +882,6 @@
         {
           "file": "Fn44b2e0/F.cpp",
           "class_sha256": "a391c4a531a5c79efc7345fae3a27fd4629563ea5f8fc12c2c4bd0cb096b7696",
-          "addresses": [
-            "0047d630"
-          ]
-        }
-      ],
-      "Fn47b180/F.cpp": [
-        {
-          "file": "Fn47b180/F.cpp",
-          "class_sha256": "612b523b58d8f5dd04190de7552c6bdc8f019004559102e7600d4debe9c3f7ec",
           "addresses": [
             "0047d630"
           ]

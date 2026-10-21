@@ -293,3 +293,181 @@ Five tests and three byte-exact targets pass. Completed pipeline
 1,248 unique unresolved names. Saved sets prove 18 removals and no additions
 (1,266 -> 1,248). Manifest changed only by removing the proven duplicate. See the
 integration guide for complete-object ABI, typed destruction and projection proof.
+
+
+LevelBrainTable::KeyAt is now reviewed and registered to the sole addressed
+Table<String,RoboBrain*,Array<RoboBrain*>,0> owner at 0044de90. Hidden String
+result buffer, ECX/table/key offsets, virtual key access and ret 8 agree with the
+original; caller and owner matches are zero and eleven proof tests pass. Completed
+pipeline f0a8730c-4600-4bd6-9968-e67fc835207e compiles 1,138/1,138 sources, zero
+duplicates, 1,531 LNK2001 messages and 1,247 unique unresolved names. Saved sets
+prove this one removal and no additions (1,248 -> 1,247); no pending accepted
+unregistered candidates remain. Snapshot-covered inputs were unchanged during
+this run and report hashes reconcile. The prior baseline also differs in
+Tiny4/Names.cpp, which this block did not edit; no registry-only equivalent-input
+comparison is claimed. Source coverage unchanged; cached provenance unverified,
+EXE/runtime pending. See integration guide for ABI and ownership evidence.
+
+
+Character/Creature pointer-array interface family completed: shared ObjArrayC/D
+declarations now own the existing TypeName, Read and Write bodies, and factories
+use the same declarations. Original secondary vtable slots and all eight affected
+match targets agree exactly; five object audits find no unresolved externals.
+Pipeline 643b1fca-66f9-4b2d-a5da-1c310f9fc1ad compiles 1,138/1,138 sources, zero
+duplicates, 1,507 LNK2001 messages and 1,237 unique unresolved names. Saved sets
+prove ten removals and no additions (1,247 -> 1,237). Inventory unchanged; snapshot
+inputs unchanged during the run and report hashes reconcile. Source coverage is
+unchanged; cached provenance unverified and EXE/runtime pending. See integration
+guide for vtable identity, stream ABI and single-owner evidence.
+
+
+Integer-array member lifetime ownership is now shared at source: C40c420 uses
+Array<int> directly and the standalone cleanup uses the same 0x14-byte declaration.
+Both unowned destructor spellings disappear without new aliases. All twelve
+wrapper-unit targets remain byte-exact; cleanup retains its known score-2 frame
+difference. Six proof tests pass; 18 existing registry decisions refresh hashes
+only, with identity/ABI/address evidence unchanged. Completed pipeline
+16d810bf-e77f-4754-a1c8-ea67265824d4 compiles 1,138/1,138 sources, zero duplicates,
+1,505 LNK2001 messages, 1,235 unresolved names. Saved sets prove two removals and
+no additions (1,237 -> 1,235); snapshot/report hashes verify this run. Cached
+provenance unverified, EXE/runtime pending. Integration guide also records the
+incomplete LandSimulation primary/secondary vtables that require a shared-class
+repair; no unsafe placeholder-slot aliases were added.
+
+
+## String-container member destructor ownership (2026-10-21)
+
+Container/StringContainerMembers.h gives C40be40 its actual Array<String> member
+(base destructor 45e250), and C40c3d0 its actual Table<String,String,
+PrimitiveArray<String,3>,23> member (base destructor 462b50). Misc17/Dt2.cpp uses
+these shared declarations, retiring the two unowned M40be40/M40c3d0 names. Original
+cleanup tail jumps establish both destinations; existing RTTI gives the table's
+BufferObject offset +2c. Compile-time guards check complete sizes 14/30 hex.
+All twelve wrapper targets remain exact; six destructor tests pass. Eighteen
+existing registry decisions refresh only owner/source hashes; script assertions
+preserve addresses, ABI, owners and declaration evidence. No new aliases.
+Completed pipeline 052e239a-b67d-49d0-a7d4-f18afc596b21 compiles 1,138/1,138 sources,
+zero duplicates, 1,503 LNK2001 messages and 1,233 unique unresolved names. Saved
+string-members-name-delta.json proves two removals and zero additions (1,235 ->
+1,233); snapshot inputs unchanged during run and report hashes verified. This
+supersedes 16d810bf-e77f-4754-a1c8-ea67265824d4. Source inventory/coverage unchanged;
+remaining wrapper-unit unowned names are M40be90 and M450910. Cached provenance
+unverified; EXE/runtime pending. STATUS.md/HANDOFF.md untouched; no commit/push.
+
+
+## Functional source priority and animation ownership (2026-10-21)
+
+User explicitly superseded byte matching: no match.sh, scores, padscan or register
+tuning. WORKFLOW.md records the override. Changed functions are explicitly func
+in states.txt; no new score measurements were made. The old generic Owner41
+blend owner's score is obsolete: it was replaced by typed functional source,
+not preserved as a bm target. Existing scores for other edited units may change.
+STATUS.md/FUNCTIONS.tsv were not regenerated.
+
+Interrupted dispatch run de708b27-aa7d-47c7-8e2a-c52af841ea56 had completed:
+1,138/1,138 sources, zero duplicates, 1,492 LNK2001 messages, 1,227 unique names
+(1,233 -> 1,227). Script/CallFunction.h supplies one cdecl dispatch declaration;
+15 direct callers and 47 transitive translation units use the canonical entry.
+Three now-unused dispatch aliases were retired. This is prior evidence, not the
+current restart point.
+
+Animation source now shares MorphCycle execution/creation declarations,
+PoseTable lifetimes/accessors and PartCycle/Execution.h. Advance, SetCycle,
+blend-fraction, air-animation and pose-application callers name these source
+owners directly. MorphCycle::BlendPose replaces the generic Owner41 integer-
+argument view at 41bcf0, forwarding actual float weight, time and hint to the
+existing PartCycleB::Blend. Empty tracks return the incoming hint. BodyUpdate.h
+now shares pitch/roll/character fields at +210/+218/+22c with AnimateInAir;
+the implementation is directly UpdatingSqueezilBody::AnimateInAir. No substitute
+stubs or no-op implementations were introduced.
+
+Seven global bindings formerly depended on exact caller bodies. Their already-
+reviewed addresses are now explicit individual extern declarations in Fn458cd0;
+normal data ownership resolves them to the same extracted symbols, asserted in
+animation-declared-data-owners.json. The old multi-variable comment misleadingly
+implied declaration order: FlyUp=b4, FlyLeft=b8, FlyRight=bc, FlyDown=c0 relative
+to 4bf000. No address was inferred from that ordering. Obsolete exact aliases
+for AdvancePose/CPose lifetimes, Clip blend/length, PoseEntries::Entry and the
+air-animation method were removed as their callers now use the real definitions.
+Old failed pipeline attempts are superseded below; no original-body proof gate
+was bypassed or made to accept a nonexact binding.
+
+Authoritative completed pipeline 2ffa28ea-790e-4b8e-a5fe-920ec74ff9c5 compiles
+1,138/1,138 sources with no failures/omissions, zero LNK2005, 1,479 LNK2001
+messages and 1,214 unique unresolved names; no internal linker error. Snapshot
+inputs stayed unchanged and report hashes reconcile. Saved animation-name-delta
+proves 13 removals and zero additions (1,227 -> 1,214). The manifest replaces
+one generic blend source with its typed owner; original-address coverage remains
+unchanged. Four native VC4 functional cases link the production BlendPose object
+against an instrumented part-track callback: empty/nonempty tracks, order,
+pose pointers, time offset, float weight, hint and returned last result pass.
+Evidence: animation-blend-test-result.json. This is focused runtime validation,
+not gameplay validation. Cached binary/external-header provenance remains
+unverified, EXE still does not link. No commits/pushes; HANDOFF.md unchanged.
+
+
+## Navigation storage/loading shared source (2026-10-21)
+
+NavMesh/NavMesh.h now provides the actual 0x2030-byte mesh layout, construction,
+allocation/cleanup, file-format detection and ASCII/binary loader interfaces.
+Compile-time checks cover 0x0c points and 0x28 faces. Misc15/Mesh.cpp owns the
+constructor and allocators under NavMesh; the redundant NavMeshCtor translation
+unit/target is retired from the manifest. The existing NavMesh destructor calls
+FreeArrays/FreeTree directly, retiring the old Free1/Free2 aliases. Point arrays
+use the existing Vector3fEmpty owner via a shared header instead of an undefined
+MVert constructor. ASCII/binary input writes the same face fields and now agrees
+with the BoxNode** tree-reader declarations. World and surface-loading callers
+include the shared mesh declaration instead of incomplete private storage views.
+No replacement stubs, byte-match runs, padding sweeps or score preservation.
+Touched original addresses are explicitly func; old scores may change and were
+not measured. STATUS.md/FUNCTIONS.tsv were not regenerated.
+
+Existing math and face-destructor declaration evidence moved from Mesh.cpp to
+the shared header; one mesh-destructor object hash changed after direct helper
+calls. Three reviewed records were refreshed with unchanged addresses, targets,
+ABI and per-source declaration-address identity. Generated evidence is in
+nav-loading-proof-refresh.json. Tree-node lifetime implementation and geometric
+raycast helper declarations remain separate unresolved families.
+
+Authoritative completed pipeline 0adb4bd0-ddb2-44e3-806d-8bba095c287e compiles
+1,137/1,137 active manifest sources without failures/omissions; zero duplicate
+errors, 1,466 LNK2001 messages and 1,205 unique unresolved names. No internal
+linker error; snapshot inputs unchanged and report hashes reconcile. This
+supersedes 2ffa28ea-790e-4b8e-a5fe-920ec74ff9c5 and the failed intermediate
+1bdb8b1c-91e0-480f-95be-0de12e18a88c. nav-loading-name-delta.json proves nine
+removals and no additions (1,214 -> 1,205). Source inventory decreases only by
+retiring the duplicate constructor; original-address source coverage is unchanged.
+Fourteen native VC4 checks exercise production allocator, face constructor,
+empty-point and mesh-destructor objects (with test-only vector/face lifetime
+and tree-clear leaf dependencies): initial fields, allocation/reallocation to
+zero, face defaults, tree cleanup, repeated array cleanup and destruction pass.
+Evidence: nav-storage-test-result.json. File parsing/gameplay are not runtime-
+validated; cached binary/external-header provenance remains unverified. EXE
+still cannot link. No commit/push; HANDOFF.md unchanged.
+
+
+## Navigation tree lifetime owner (2026-10-21)
+
+NavMesh/BoxNode.h now shares the complete 0x40-byte node layout across mesh
+cleanup and both box readers. Misc15/Octree.cpp supplies BoxNode construction,
+recursive complete destruction, face-index allocation and FreeItems. Child
+deletion invokes its destructor exactly once; face storage uses delete[]. Mesh
+FreeTree likewise performs one typed delete. Retired the duplicate Node8::Release
+body/target from Misc6 and its now-unreferenced Clear alias. No stubs or binary
+wrappers; all four tree addresses remain func. Scores may change and were not
+measured/preserved. One existing face-destructor record refreshed its shared-
+header hash only; ownership and ABI decisions are unchanged.
+
+Completed pipeline 66078bb4-17a1-4e39-8a83-aa616d8a0d68 compiles 1,137/1,137
+sources without failures/omissions; zero duplicates, 1,460 LNK2001 messages,
+1,202 unique unresolved symbols, no internal linker error. Snapshot inputs stayed
+unchanged; report hashes reconcile. nav-tree-name-delta.json proves three removed
+BoxNode names, no additions (1,205 -> 1,202). This supersedes
+0adb4bd0-ddb2-44e3-806d-8bba095c287e and the failed intermediate proof-refresh run.
+Sixteen native VC4 checks link the production Octree object: initialization,
+allocation/reallocation/empty allocation, repeated release and nested child
+destruction pass, with eight tracked allocations and eight releases. Evidence:
+nav-tree-test-result.json. Source inventory/address coverage unchanged; cached
+binary/external-header provenance unverified, EXE/gameplay pending. No byte-match
+commands, STATUS regeneration, commit or push; HANDOFF.md unchanged. Remaining
+NavMesh raycast helper declarations are a separate next family.

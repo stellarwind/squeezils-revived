@@ -2,10 +2,11 @@
 // bitmaps named by [Interface] DeadMessage / WonMessage from <game dir>\ui\; 0 when a bitmap fails to load.
 #include <string.h>
 #include "IniReader/IniReader.h"
+#include "GoodieList/GoodieList.h"
 extern char kGameDirectory[];                               // 0x4c73d8
 struct Counter { char d[0x34]; void Reset(); };             // 0x42f900
-struct FaceList { void Clear(); };                          // 0x415b40
-struct MessageBitmap { int Load(const char *path); };       // 0x4739d0
+struct FaceList {};                          // 0x415b40
+struct MessageBitmap;       // 0x4739d0
 struct StatusBarM {
     Counter food;                                           // 0x00
     Counter amo;                                            // 0x34
@@ -21,7 +22,7 @@ int StatusBarM::LoadMessages()
 {
     food.Reset();
     amo.Reset();
-    faces.Clear();
+    ((GoodieList *)&faces)->Load();
     IniReader ini;
     ini.SetSection("Interface");
     char dir[100];
@@ -34,7 +35,7 @@ int StatusBarM::LoadMessages()
         strcpy(path, dir);
         strcat(path, name);
         strcat(path, ".bmp");
-        if (!deadMessage->Load(path))
+        if (!((Bitmap *)deadMessage)->Load(path))
             return 0;
     }
     strcpy(name, ini.GetString("WonMessage"));
@@ -42,7 +43,7 @@ int StatusBarM::LoadMessages()
         strcpy(path, dir);
         strcat(path, name);
         strcat(path, ".bmp");
-        if (!wonMessage->Load(path))
+        if (!((Bitmap *)wonMessage)->Load(path))
             return 0;
     }
     return 1;

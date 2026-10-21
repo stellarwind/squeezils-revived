@@ -7,7 +7,7 @@ struct PCaller {
 };
 struct PSim { int FindIdBySoul(PSoul *soul); };             // 0x4140b0
 PSim *GetSimulation();                                      // 0x420690
-void PostFunction(const char *name, PCaller *caller, int first, int second);   // 0x422ce0
+#include "Script/CallFunction.h"
 extern int g_foodNutsToFinish;                              // 0x4bad04
 
 struct PSoul {
@@ -26,7 +26,7 @@ int PSoul::PostUpdate()
         return 1;
     if (GetOwner()->Inventory()->Count("FoodNutGoodie") >= g_foodNutsToFinish) {
         PCaller caller(this, GetSimulation()->FindIdBySoul(this), 0);
-        PostFunction("EnoughNutsFunction", &caller, 0, 0);
+        CallFunction("EnoughNutsFunction", &caller, 0, 0);
         enoughNuts = 1;
         return 1;
     }

@@ -1,3 +1,10 @@
+// Declaration padding preserves VC4 code after sharing script dispatch.
+void DispatchPad000();
+void DispatchPad001();
+void DispatchPad002();
+void DispatchPad003();
+void DispatchPad004();
+void DispatchPad005();
 // SetRoboBehaviorFunction: Name, Print, Create (SQZ.EXE 0x423640-0x4237d0, 0x4237d0).
 #include "FunctionRobo/Robo.h"
 #include "FunctionMisc/MiscClasses.h"

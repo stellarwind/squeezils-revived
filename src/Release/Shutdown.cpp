@@ -1,3 +1,4 @@
+#include "Fn42d880/OverlayLifetime.h"
 // Game shutdown (SQZ.EXE 0x4205a0): tear down the simulation, land, and every global subsystem.
 struct Sim {
     virtual ~Sim();
@@ -7,7 +8,7 @@ struct Sim {
 struct Application { ~Application(); };   // 0x43a730
 struct World { ~World(); };               // 0x4358e0
 struct GameClock { ~GameClock(); };       // 0x41ebe0
-struct Panel { ~Panel(); };               // 0x42d880
+struct Panel {};               // 0x42d880
 
 extern Sim *g_currentSimulation;    // 0x4badbc
 extern Sim *g_land;                 // 0x4badb8
@@ -42,7 +43,7 @@ void Shutdown()
     ShutdownB();
     ReleaseB();
     if (g_panel)
-        delete g_panel;
+        DestroyOverlay(g_panel);
     ShutdownC();
     ShutdownD();
 }

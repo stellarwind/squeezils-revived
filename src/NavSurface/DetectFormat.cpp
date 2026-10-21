@@ -10,7 +10,7 @@ extern const char kSurfaceHeaderError[];          // 0x4c3e30
 extern const char *gSurfaceAsciiHeader;           // 0x4c3e28
 extern const char *gSurfaceBinaryHeader;          // 0x4c3e2c
 
-int SurfaceFileReader::DetectFormat(const char *path)
+int NavMesh::DetectFormat(const char *path)
 {
     char header[128];
     FILE *file = fopen(path, kSurfaceReadMode);

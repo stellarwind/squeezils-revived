@@ -1,23 +1,7 @@
 // 0x47c2a0 (ret 8): NavMesh::InsideFace - 1 when the point lies inside the face's three edge planes (on an edge
 // counts as inside), 0 otherwise. The sign test reads the float bits, so -0 counts as 0.
-struct FaceVec {
-    float x, y, z;
-    FaceVec() {}
-    FaceVec(const FaceVec &o) : x(o.x), y(o.y), z(o.z) {}
-    ~FaceVec();                                           // 0x401660
-    FaceVec operator-(const FaceVec &o) const;            // 0x401ae0
-    FaceVec Cross(const FaceVec &o) const;                // 0x41a350
-    float Dot(const FaceVec &o) const { return x * o.x + y * o.y + z * o.z; }
-};
-struct NavFace {
-    int vertex[3];          // 0x00
-    FaceVec normal;         // 0x0c
-};
-struct NavMesh {
-    unsigned pointCount;    // 0x00
-    FaceVec *points;        // 0x04
-    int InsideFace(NavFace *face, const FaceVec &point);
-};
+#include "NavMesh/NavMesh.h"
+
 static inline int BitSign(float f)
 {
     int bits = *(int *)&f;
@@ -26,24 +10,28 @@ static inline int BitSign(float f)
     return ((unsigned)bits <= 0x80000000u) - 1;
 }
 
-int NavMesh::InsideFace(NavFace *face, const FaceVec &point)
+int NavMesh::InsideFace(MFace *face, const Vector3f &point)
 {
-    FaceVec p0 = points[face->vertex[0]];
-    FaceVec p1 = points[face->vertex[1]];
-    FaceVec p2 = points[face->vertex[2]];
-    FaceVec e0 = p1 - p0;
-    FaceVec e1 = p2 - p1;
-    FaceVec e2 = p0 - p2;
-    FaceVec c0 = face->normal.Cross(e0);
-    FaceVec c1 = face->normal.Cross(e1);
-    FaceVec c2 = face->normal.Cross(e2);
-    FaceVec d0 = point - p0;
-    FaceVec d1 = point - p1;
-    FaceVec d2 = point - p2;
+    const MVert &v0 = points[face->a];
+    Vector3f p0(v0.x, v0.y, v0.z);
+    const MVert &v1 = points[face->b];
+    Vector3f p1(v1.x, v1.y, v1.z);
+    const MVert &v2 = points[face->c];
+    Vector3f p2(v2.x, v2.y, v2.z);
+    Vector3f e0 = p1 - p0;
+    Vector3f e1 = p2 - p1;
+    Vector3f e2 = p0 - p2;
+    Vector3f normal(face->normal.x, face->normal.y, face->normal.z);
+    Vector3f c0 = normal.Cross(e0);
+    Vector3f c1 = normal.Cross(e1);
+    Vector3f c2 = normal.Cross(e2);
+    Vector3f d0 = point - p0;
+    Vector3f d1 = point - p1;
+    Vector3f d2 = point - p2;
     float dot[3];
-    dot[0] = d0.Dot(c0);
-    dot[1] = d1.Dot(c1);
-    dot[2] = d2.Dot(c2);
+    dot[0] = (d0.x * c0.x + d0.y * c0.y + d0.z * c0.z);
+    dot[1] = (d1.x * c1.x + d1.y * c1.y + d1.z * c1.z);
+    dot[2] = (d2.x * c2.x + d2.y * c2.y + d2.z * c2.z);
     int s0 = BitSign(dot[0]);
     int s1 = BitSign(dot[1]);
     int s2 = BitSign(dot[2]);

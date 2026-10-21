@@ -1,6 +1,8 @@
 // SQZ.EXE 0x4108e0: NavSurfaceList::FlightHits - cast a flight segment (position + direction * distance) against
 // every live surface near either end, in each surface's local frame, and return the nearest hit in world space.
 #include "compat41.h"
+#include "NavMesh/RaycastBridge.h"
+#include "NavSurface/Nearness.h"
 
 struct FlightVector {
     float x, y, z;
@@ -50,20 +52,14 @@ struct FlightContact {
     ~FlightContact();                                           // 0x4031e0
 };
 
-struct FlightMesh {
-    int Raycast(const FlightVector &origin, const FlightVector &right, const FlightVector &up,
-        const FlightVector &forward, const FlightVector &dir, float length, FlightVector *point,
-        FlightVector *hitRight, FlightVector *hitUp, FlightVector *hitForward, int *face,
-        const int *typeAllowed);                                // 0x47b180
-};
+
 struct FlightSurfaceData {
-    FlightMesh *mesh;                                           // 0x00
+    NavMesh *mesh;                                           // 0x00
 };
 
 struct FlightSurface {
     FlightSurfaceData *GetSurface();                            // 0x40c6b0
     const int *TypeFilter();                                    // 0x40c6d0
-    int IsNear(const FlightVector &point);                      // 0x40c700
     int WasNear(const FlightVector &point);                     // 0x40c7b0
     int Changed();                                              // 0x40c860
     FlightVector ToLocal(const FlightVector &point);            // 0x40f6f0
@@ -120,7 +116,7 @@ int NavFlight::FlightHits(const FlightVector *position, const FlightVector *righ
         FlightSurface *surface = instances.Get(i);
         if (surface == 0 || removed.Contains(i) || removedLater.Contains(i))
             continue;
-        if (!surface->IsNear(*position) && !surface->IsNear(end)
+        if (!IsNavigationSurfaceNear((void *)surface, *position) && !IsNavigationSurfaceNear((void *)surface, end)
             && !surface->WasNear(*position) && !surface->WasNear(end))
             continue;
 
@@ -137,7 +133,7 @@ int NavFlight::FlightHits(const FlightVector *position, const FlightVector *righ
             start.SetTranslation(before);
             FlightVector move = now - before;
             float length = move.Normalize();
-            hit = surface->GetSurface()->mesh->Raycast(start.Position(), start.Right(), start.Up(), start.Forward(),
+            hit = CastNavigationRay((NavMesh *)surface->GetSurface()->mesh, start.Position(), start.Right(), start.Up(), start.Forward(),
                 move, length, &point, &hitRight, &hitUp, &hitForward, &face, surface->TypeFilter());
         }
         if (hit == 0) {
@@ -145,7 +141,7 @@ int NavFlight::FlightHits(const FlightVector *position, const FlightVector *righ
             FlightVector move = localEnd - local.Position();
             float length = move.Length();
             move.Normalize();
-            hit = surface->GetSurface()->mesh->Raycast(local.Position(), local.Right(), local.Up(), local.Forward(),
+            hit = CastNavigationRay((NavMesh *)surface->GetSurface()->mesh, local.Position(), local.Right(), local.Up(), local.Forward(),
                 move, length, &point, &hitRight, &hitUp, &hitForward, &face, surface->TypeFilter());
         }
         if (hit) {

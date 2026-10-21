@@ -1,3 +1,16 @@
+// Additional declarations preserve VC4 register allocation after shared declarations.
+void PadDecl001();
+void PadDecl002();
+void PadDecl003();
+void PadDecl004();
+void PadDecl005();
+void PadDecl006();
+void PadDecl007();
+void PadDecl008();
+void PadDecl009();
+void PadDecl010();
+void PadDecl011();
+void PadDecl012();
 // 14 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
@@ -13,30 +26,16 @@ void PadDecl11();
 void PadDecl12();
 void PadDecl13();
 void PadDecl14();
-// Serialisation of an array of BufferObject pointers (SQZ.EXE 0x465010 Read, 0x465070 Write): the BufferObject interface sits
-// after the array base, so `this` in these methods points 0x10 into the object.
-#include "Persist/Stream.h"
-#include "Container/ContainerArray.h"
+// Pointer-array serialization: BufferObject this is the subobject at +0x10.
+// The original stream stores raw BufferObject pointers with no pointee adjustment.
+#define BUFFEROBJECT_SIGNATURES
+#include "Container2/ObjectArrayViews.h"
+#include "Container2/ObjectArrayStream.h"
 
-struct ObjArray2W : Array<BufferObject *>, BufferObject {
-    virtual const char *TypeName();
-    virtual BufferObject *Create();
-    virtual void Write(ByteStream *s);
-    virtual void Read(ByteStream *s);
-};
-
-void ObjArray2W::Write(ByteStream *s)
+void ObjArrayD::Write(void *stream)
 {
+    ByteStream *s = (ByteStream *)stream;
     s->WriteInt(&count);
     for (int i = 0; i < count; i++)
-        s->WriteObject(data[i]);
-}
-
-void ObjArray2W::Read(ByteStream *s)
-{
-    s->ReadInt(&count);
-    if (capacity < count)
-        Grow(count - capacity);
-    for (int i = 0; i < count; i++)
-        s->ReadObject(&data[i]);
+        s->WriteObject((BufferObject *)data[i]);
 }

@@ -1,3 +1,30 @@
+// Declaration padding preserves VC4 code after sharing script dispatch.
+void DispatchPad000();
+void DispatchPad001();
+void DispatchPad002();
+void DispatchPad003();
+void DispatchPad004();
+void DispatchPad005();
+void DispatchPad006();
+void DispatchPad007();
+void DispatchPad008();
+void DispatchPad009();
+void DispatchPad010();
+void DispatchPad011();
+void DispatchPad012();
+void DispatchPad013();
+void DispatchPad014();
+void DispatchPad015();
+void DispatchPad016();
+void DispatchPad017();
+void DispatchPad018();
+void DispatchPad019();
+void DispatchPad020();
+void DispatchPad021();
+void DispatchPad022();
+void DispatchPad023();
+void DispatchPad024();
+void DispatchPad025();
 #include "Runtime/DynamicCast.h"
 // SQZ.EXE 0x427b50: dispatch clip messages crossed in either time direction.
 #include "FrameProp/FrameProp.h"
@@ -20,7 +47,7 @@ struct FrameMessageCaller {
     FrameMessageCaller(int actor, FrameProp *owner); // 0x4207a0
     FrameMessageCaller(void *soul, int actor, FrameProp *owner); // 0x420900
 };
-int PostFunction(const char *name, FrameMessageCaller *caller, int extra, int local); // 0x422ce0
+#include "Script/CallFunction.h"
 
 void FrameProp::FireTimeMessages(float from, float to)
 {
@@ -32,10 +59,10 @@ void FrameProp::FireTimeMessages(float from, float to)
                     void *soul = SqzRTDynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
                         kFrameMessageSoulType, kFrameMessageSqueezilSoulType, 0);
                     FrameMessageCaller caller(soul, actorIndex, this);
-                    PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
+                    CallFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
                 } else {
                     FrameMessageCaller caller(-1, this);
-                    PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
+                    CallFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
                 }
             }
         }
@@ -46,10 +73,10 @@ void FrameProp::FireTimeMessages(float from, float to)
                     void *soul = SqzRTDynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
                         kFrameMessageSoulType, kFrameMessageSqueezilSoulType, 0);
                     FrameMessageCaller caller(soul, actorIndex, this);
-                    PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
+                    CallFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
                 } else {
                     FrameMessageCaller caller(-1, this);
-                    PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
+                    CallFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
                 }
             }
         }

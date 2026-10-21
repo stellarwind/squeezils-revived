@@ -1,7 +1,7 @@
 // PartCycle::Sample (SQZ.EXE 0x419960): fill a pose at `time`. Between two samples the position, direction and up are
 // blended linearly (the two axes renormalised) and so are the morph weights; outside the track the nearest sample is copied.
 // Returns the sample index (the hint after FindSegment).
-#include "PartCycle/PartCycle.h"
+#include "PartCycle/Execution.h"
 
 struct PartPose {
     Vector3f   position;            // 0x00
@@ -16,9 +16,6 @@ struct PartCycleF {
     char pad[0x34];
     MorphCycleF *cycle;             // 0x34
     int FindSegment(float time, int *hint);   // 0x41b2a0
-};
-struct PartCycleN : PartCycle {
-    int Sample(PartPose *pose, float time, int hint);
 };
 
 int PartCycleN::Sample(PartPose *pose, float time, int hint)

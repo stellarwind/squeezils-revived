@@ -1,35 +1,25 @@
 // SQZ.EXE 0x47d560: recursive octree lookup of the leaf box containing a point.
 // Preserve the original infinite wait if a null root is requested.
 
-struct NavBox {
-    float bounds[6];                        // xMin/xMax/yMin/yMax/zMin/zMax
-    int pad18[2];
-    NavBox *children[8];                    // +0x20
-};
+#include "NavMesh/NavMesh.h"
 
 int Outcode(float *point, float xMin, float xMax, float yMin, float yMax,
-            float zMin, float zMax);        // 0x47d4f0
+            float zMin, float zMax); // 0x47d4f0, NavMesh/Outcode.cpp
 
-struct NavMeshTree {
-    char pad00[0x10];
-    NavBox *root;
-    NavBox *FindLeaf(float *point, NavBox *box);
-};
-
-NavBox *NavMeshTree::FindLeaf(float *point, NavBox *box)
+BoxNode *NavMesh::FindLeaf(const Vector3f *point, BoxNode *box)
 {
     if (!box) {
-        box = root;
+        box = (BoxNode *)tree;
         while (!box) {}
     }
-    if (Outcode(point, box->bounds[0], box->bounds[1], box->bounds[2],
-                box->bounds[3], box->bounds[4], box->bounds[5]))
+    if (Outcode((float *)point, box->minX, box->maxX, box->minY,
+                box->maxY, box->minZ, box->maxZ))
         return 0;
     int hasChildren = 0;
     for (int i = 0; i < 8; ++i) {
-        if (box->children[i]) {
+        if (box->child[i]) {
             hasChildren = 1;
-            NavBox *leaf = FindLeaf(point, box->children[i]);
+            BoxNode *leaf = FindLeaf(point, box->child[i]);
             if (leaf)
                 return leaf;
         }

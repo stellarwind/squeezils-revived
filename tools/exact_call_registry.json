@@ -1837,33 +1837,6 @@
       }
     ]
   },
-  "??1Panel@@QAE@XZ": {
-    "address": "0042d880",
-    "target": "??1Overlay@@QAE@XZ",
-    "owner": "Fn42d880/F.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Release/Shutdown.cpp",
-      "Sim2/StartGame.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Release/Shutdown.cpp",
-        "caller": "?Shutdown@@YAXXZ",
-        "caller_address": "004205a0",
-        "offset": 176,
-        "address": "0042d880"
-      },
-      {
-        "source": "Sim2/StartGame.cpp",
-        "caller": "?StartGame@@YAHXZ",
-        "caller_address": "00420170",
-        "offset": 536,
-        "address": "0042d880"
-      }
-    ]
-  },
   "??1Part10@@QAE@XZ": {
     "address": "00456e60",
     "target": "??1C10@@QAE@XZ",
@@ -3002,25 +2975,6 @@
       }
     ]
   },
-  "?AnimateInAir@UpdatingSqueezilBody@@QAEXM@Z": {
-    "address": "00458cd0",
-    "target": "?AnimateInAir@Body@@QAEXM@Z",
-    "owner": "Fn458cd0/F.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "SqueezilBody/Update.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "SqueezilBody/Update.cpp",
-        "caller": "?Update@UpdatingSqueezilBody@@QAEXXZ",
-        "caller_address": "00457bc0",
-        "offset": 1054,
-        "address": "00458cd0"
-      }
-    ]
-  },
   "?Append@LoadedCompound@@QAEXPAVFunction@@@Z": {
     "address": "00421c90",
     "target": "?Append@Holder7@@QAEXH@Z",
@@ -3320,46 +3274,6 @@
       }
     ]
   },
-  "?BlendPose@Clip@@QAEHPAUPoseTable@@MMH@Z": {
-    "address": "0041bcf0",
-    "target": "?Apply@Owner41@@QAEHPAUGroup41@@MHH@Z",
-    "owner": "Tiny4/F41bcf0.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Fn458cd0/F.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Fn458cd0/F.cpp",
-        "caller": "?AnimateInAir@Body@@QAEXM@Z",
-        "caller_address": "00458cd0",
-        "offset": 334,
-        "address": "0041bcf0"
-      },
-      {
-        "source": "Fn458cd0/F.cpp",
-        "caller": "?AnimateInAir@Body@@QAEXM@Z",
-        "caller_address": "00458cd0",
-        "offset": 368,
-        "address": "0041bcf0"
-      },
-      {
-        "source": "Fn458cd0/F.cpp",
-        "caller": "?AnimateInAir@Body@@QAEXM@Z",
-        "caller_address": "00458cd0",
-        "offset": 402,
-        "address": "0041bcf0"
-      },
-      {
-        "source": "Fn458cd0/F.cpp",
-        "caller": "?AnimateInAir@Body@@QAEXM@Z",
-        "caller_address": "00458cd0",
-        "offset": 436,
-        "address": "0041bcf0"
-      }
-    ]
-  },
   "?Busy@Ctx@@QAEHXZ": {
     "address": "0044eea0",
     "target": "?IsShown@Splash@@QAEHXZ",
@@ -3626,25 +3540,6 @@
       }
     ]
   },
-  "?Clear@FaceList@@QAEXXZ": {
-    "address": "00415b40",
-    "target": "?Load@GoodieList@@QAEHXZ",
-    "owner": "GoodieList/GoodieList.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Fn42f2c0/F.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Fn42f2c0/F.cpp",
-        "caller": "?LoadMessages@StatusBarM@@QAEHXZ",
-        "caller_address": "0042f2c0",
-        "offset": 52,
-        "address": "00415b40"
-      }
-    ]
-  },
   "?Clear@LocList@@QAEXXZ": {
     "address": "00412d20",
     "target": "??1CreatureTable@@UAE@XZ",
@@ -3661,25 +3556,6 @@
         "caller_address": "004130b0",
         "offset": 11,
         "address": "00412d20"
-      }
-    ]
-  },
-  "?Clear@Node8@@QAEXXZ": {
-    "address": "0047ae90",
-    "target": "?FreeItems@TreeNode@@QAEXXZ",
-    "owner": "Misc15/Octree.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Misc6/Small.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Misc6/Small.cpp",
-        "caller": "?Release@Node8@@QAEXXZ",
-        "caller_address": "0047ae10",
-        "offset": 11,
-        "address": "0047ae90"
       }
     ]
   },
@@ -4397,25 +4273,6 @@
       }
     ]
   },
-  "?Entry@PoseEntries@@QAEPAXH@Z": {
-    "address": "0041b750",
-    "target": "?At@PoseTable@@QAEPAUPartPose@@H@Z",
-    "owner": "PoseTable/PoseTable.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Props2/AnimPose.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Props2/AnimPose.cpp",
-        "caller": "?ApplyPose@AnimatedBody@@QAEXXZ",
-        "caller_address": "0041df10",
-        "offset": 31,
-        "address": "0041b750"
-      }
-    ]
-  },
   "?ErrorBox@@YAHPAXPBDZZ": {
     "address": "00418a60",
     "target": "?ErrorBox@@YAXHPBDZZ",
@@ -4688,7 +4545,7 @@
     "exact_call_sites": [
       {
         "source": "Fn422ce0/F.cpp",
-        "caller": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
+        "caller": "?CallFunction@@YAHPBDPAXHH@Z",
         "caller_address": "00422ce0",
         "offset": 48,
         "address": "00423130"
@@ -4900,44 +4757,6 @@
         "caller_address": "00452be0",
         "offset": 986,
         "address": "0041ec10"
-      }
-    ]
-  },
-  "?Free1@NavMesh@@QAEXXZ": {
-    "address": "0047b130",
-    "target": "?FreeArrays@Mesh@@QAEXXZ",
-    "owner": "Misc15/Mesh.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "NavMesh/NavMeshDtor.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "NavMesh/NavMeshDtor.cpp",
-        "caller": "??1NavMesh@@QAE@XZ",
-        "caller_address": "0047af00",
-        "offset": 4,
-        "address": "0047b130"
-      }
-    ]
-  },
-  "?Free2@NavMesh@@QAEXXZ": {
-    "address": "0047b150",
-    "target": "?FreeTree@Mesh@@QAEXXZ",
-    "owner": "Misc15/Mesh.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "NavMesh/NavMeshDtor.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "NavMesh/NavMeshDtor.cpp",
-        "caller": "??1NavMesh@@QAE@XZ",
-        "caller_address": "0047af00",
-        "offset": 11,
-        "address": "0047b150"
       }
     ]
   },
@@ -5777,7 +5596,7 @@
     "exact_call_sites": [
       {
         "source": "Fn422ce0/F.cpp",
-        "caller": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
+        "caller": "?CallFunction@@YAHPBDPAXHH@Z",
         "caller_address": "00422ce0",
         "offset": 204,
         "address": "0046c430"
@@ -8775,25 +8594,6 @@
       }
     ]
   },
-  "?Length@Clip@@QAEMXZ": {
-    "address": "0041ba10",
-    "target": "?Period@MorphCycle@@QAEMXZ",
-    "owner": "MorphCycle/MorphCycle.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "AnimatedBody/Blend.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "AnimatedBody/Blend.cpp",
-        "caller": "?GetBlendFraction@AnimatedBody2@@QAEMXZ",
-        "caller_address": "0041e2a0",
-        "offset": 14,
-        "address": "0041ba10"
-      }
-    ]
-  },
   "?Level@CallLevel@@QAEHXZ": {
     "address": "00420c70",
     "target": "?SampleCount@MorphCycle@@QAEHXZ",
@@ -10443,70 +10243,6 @@
       ],
       "reason": "Every possible compiled definition has the complete identical original bytes at this entry and zero relocations; sharing introduces no changed address operands or callees."
     }
-  },
-  "?PostFunction@@YAXPBDPAUPCaller@@HH@Z": {
-    "address": "00422ce0",
-    "target": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
-    "owner": "Fn422ce0/F.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "SqueezilPlayerSoul/PostUpdate.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "SqueezilPlayerSoul/PostUpdate.cpp",
-        "caller": "?PostUpdate@PSoul@@QAEHXZ",
-        "caller_address": "0041f750",
-        "offset": 101,
-        "address": "00422ce0"
-      }
-    ]
-  },
-  "?PostFunction@@YAXPBDPAUPendingCaller@@HH@Z": {
-    "address": "00422ce0",
-    "target": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
-    "owner": "Fn422ce0/F.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "CreatureTemplate/RunPending.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "CreatureTemplate/RunPending.cpp",
-        "caller": "?RunPending@CreatureTemplate@@QAEXPAUPendingSoul@@@Z",
-        "caller_address": "004487f0",
-        "offset": 61,
-        "address": "00422ce0"
-      }
-    ]
-  },
-  "?PostMessageText@@YAXPBDHHH@Z": {
-    "address": "00422ce0",
-    "target": "?CallFunction@@YAHPBDPAUCallArg@@HH@Z",
-    "owner": "Fn422ce0/F.cpp",
-    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
-    "evidence": [
-      "Misc16/Timed2.cpp"
-    ],
-    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
-    "exact_call_sites": [
-      {
-        "source": "Misc16/Timed2.cpp",
-        "caller": "?Tick@DelayedMessage@@QAEHM@Z",
-        "caller_address": "004224b0",
-        "offset": 58,
-        "address": "00422ce0"
-      },
-      {
-        "source": "Misc16/Timed2.cpp",
-        "caller": "?TickFrame@DelayedMessage@@QAEHXZ",
-        "caller_address": "00422510",
-        "offset": 56,
-        "address": "00422ce0"
-      }
-    ]
   },
   "?Prepare@CalObj@@QAEXXZ": {
     "address": "00447880",
@@ -13547,6 +13283,25 @@
         "caller_address": "00426b00",
         "offset": 47,
         "address": "00438530"
+      }
+    ]
+  },
+  "?KeyAt@LevelBrainTable@@QAE?AVString@@H@Z": {
+    "address": "0044de90",
+    "target": "?KeyAt@?$Table@VString@@PAURoboBrain@@V?$Array@PAURoboBrain@@@@$0A@@@QAE?AVString@@H@Z",
+    "owner": "Container2/PointerTableAccess.cpp",
+    "abi": "Identical complete original caller and callee machine bodies outside COFF relocations; direct entry call/tail jump, zero addend, no this adjustment introduced.",
+    "evidence": [
+      "Level/FindBrain.cpp"
+    ],
+    "reason": "All current referring relocations resolve to this original entry; complete canonical callee body matches original.",
+    "exact_call_sites": [
+      {
+        "source": "Level/FindBrain.cpp",
+        "caller": "?FindBrain@BrainLookupLevel@@QAEPAXVString@@@Z",
+        "caller_address": "0044e1b0",
+        "offset": 93,
+        "address": "0044de90"
       }
     ]
   }

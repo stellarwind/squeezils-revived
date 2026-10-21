@@ -9,7 +9,7 @@ struct SpotF {
 };
 struct RegionF { SpotF *GetPlace(int id); };              // 0x418140
 struct CallerF { char pad[0x18]; CallerF(void *soul, int id, int zero); };   // 0x420bc0
-void PostFunction(const char *name, CallerF *caller, int a, int b);   // 0x422ce0 (cdecl)
+#include "Script/CallFunction.h"
 
 struct RegionSoulF {
     char pad[0x88];
@@ -24,6 +24,6 @@ void RegionSoulF::StartFunction()
     if (strlen(region->GetPlace(location2)->function.c_str()) != 0) {
         CallerF caller(this, 0, region->GetPlace(location2)->prop);
         const char *n = region->GetPlace(location2)->function.c_str();
-        PostFunction(n, &caller, 0, 0);
+        CallFunction(n, &caller, 0, 0);
     }
 }

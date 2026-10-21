@@ -1,13 +1,8 @@
 // AnimatedBody::SetCycle (SQZ.EXE 0x41de20): start a clip; with blend the current pose fades out over the new clip's period.
-struct CPose {                                           // PoseTable, 0x28 bytes
-    CPose(const CPose &o);                               // 0x41b440
-    ~CPose();                                            // 0x41b5f0
-    char d[0x28];
-};
-struct CClip {
-    CPose *NewPoseTable();                               // 0x41ba70
-    float Period();                                      // 0x41ba10
-};
+#include "MorphCycle/MorphCycle.h"
+#include "PoseTable/PoseTable.h"
+typedef PoseTable CPose;
+struct CClip;
 struct CBody {
     char pad[0x2c];
     CClip *cycle;                                        // 0x2c
@@ -28,11 +23,11 @@ void CBody::SetCycle(CClip *clip, int blend)
     cycle = clip;
     direction = 1;
     if (pose == 0)
-        pose = clip->NewPoseTable();
+        pose = ((MorphCycle *)clip)->NewPoseTable();
     if (blend) {
         delete previousPose;
         previousPose = new CPose(*pose);
-        blendLeft = clip->Period();
+        blendLeft = ((MorphCycle *)clip)->Period();
     } else {
         delete previousPose;
         previousPose = 0;

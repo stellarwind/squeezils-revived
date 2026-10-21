@@ -2,6 +2,7 @@
 #include "compat41.h"
 
 struct BodyBlendVector;
+struct AirAnimationCharacter;
 
 struct BodyUpdateMatrix {
     float m[16];
@@ -39,7 +40,11 @@ struct UpdatingSqueezilBody {
     BodyUpdateMatrix blendTo; // +0x1c0
     float blendTime; // +0x200
     int blending, noBlend, unknown20c;
-    char pad210[0x230 - 0x210];
+    float pitch; // +0x210
+    char pad214[4]; // +0x214
+    float roll; // +0x218
+    char pad21c[0x10]; // +0x21c
+    AirAnimationCharacter *character; // +0x22c
     int mode; // +0x230
     BodyUpdateMatrix BlendedMatrix(); // 0x4574b0
     void AnimateOnGround(float seconds); // 0x458aa0

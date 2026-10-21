@@ -119,7 +119,7 @@ Panel *GetPanel();                                       // 0x4206c0
 struct Sim { int FindIdBySoul(void *soul); };            // 0x4140b0
 Sim *GetSimulation();                                    // 0x420690
 struct ScriptCaller { char pad[0x18]; ScriptCaller(void *soul, int id, int zero); };   // 0x420900
-void PostFunction(const char *name, ScriptCaller *caller, int a, int b);   // 0x422ce0 (cdecl)
+#include "Script/CallFunction.h"
 int ReadBodyColor(IniReader *ini);                       // 0x458f60 (cdecl)
 void SetMaxLandingSpeed(float v);                        // 0x450c10 (cdecl)
 void RunFrame();                                         // 0x4206e0 (cdecl)
@@ -251,8 +251,8 @@ void PlaceSimulation::Start()
     GetPanel()->Update(1);
 
     ScriptCaller caller(playerSoul, GetSimulation()->FindIdBySoul(playerSoul), 0);
-    PostFunction("StartAmbient", 0, 0, 1);
-    PostFunction("StartFunction", &caller, 0, 1);
+    CallFunction("StartAmbient", 0, 0, 1);
+    CallFunction("StartFunction", &caller, 0, 1);
     if (GetApplication()->hasInput)
         GetApplication()->SetInputMode(1);
     if (g_audioFlag == 0)

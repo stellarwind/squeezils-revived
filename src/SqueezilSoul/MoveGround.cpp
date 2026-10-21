@@ -1,3 +1,20 @@
+// Declaration padding preserves VC4 code after sharing script dispatch.
+void DispatchPad000();
+void DispatchPad001();
+void DispatchPad002();
+void DispatchPad003();
+void DispatchPad004();
+void DispatchPad005();
+void DispatchPad006();
+void DispatchPad007();
+void DispatchPad008();
+void DispatchPad009();
+void DispatchPad010();
+void DispatchPad011();
+void DispatchPad012();
+void DispatchPad013();
+void DispatchPad014();
+void DispatchPad015();
 // SqueezilSoul::MoveOnGround (0x451fd0): self-contained (vector, matrix and contact locals with out-of-line dtors).
 #include <string.h>
 #include <math.h>
@@ -98,7 +115,7 @@ struct ScriptCaller {
     int data[3];
     void InitSoul(SqueezilSoul *soul, int actorIndex, void *prop);     // 0x420900
 };
-void PostFunction(const char *name, ScriptCaller *caller, int a, int b); // 0x422ce0
+#include "Script/CallFunction.h"
 
 struct Simulation {
     int FindIdBySoul(void *soul);           // 0x4140b0
@@ -201,7 +218,7 @@ void SqueezilSoul::MoveOnGround(float seconds)
         if (strlen(gFloorLevelScript.Chars()) != 0) {
             ScriptCaller caller;
             caller.InitSoul(this, GetSimulation()->FindIdBySoul(this), 0);
-            PostFunction(gFloorLevelScript.Chars(), &caller, 0, 0);
+            CallFunction(gFloorLevelScript.Chars(), &caller, 0, 0);
         }
     }
     m.Row(0) = right; m.v[3] = 0.0f;

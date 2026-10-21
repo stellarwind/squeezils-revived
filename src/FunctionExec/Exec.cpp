@@ -30,6 +30,6 @@ void ExecuteFunction::Print()
 int ExecuteFunction::Execute(ScriptCall *args, int extra)
 {
     const String &s = name->Get(extra);
-    PostFunction(s.c_str(), args, extra, 0);
+    CallFunction(s.c_str(), args, extra, 0);
     return 1;
 }

@@ -4,7 +4,7 @@
     "target": "?Find@HolderS@@QAE?AVString@@PAH@Z",
     "owner": "Fn40f610/F.cpp",
     "declaration_sha256": {
-      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a"
+      "SqueezilSoul/Fly.cpp": "1a9d8a2b9e11c298a80597b328d01c615eec886731176bb1f68e236c0631b0f5"
     },
     "referring_sources": [
       "SqueezilSoul/Fly.cpp"
@@ -32,7 +32,7 @@
     "target": "?Find@HolderS@@QAE?AVString@@PAH@Z",
     "owner": "Fn40f610/F.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -60,8 +60,8 @@
     "target": "?Find@Holder7@@QAEHPAH@Z",
     "owner": "Fn40f610/F.cpp",
     "declaration_sha256": {
-      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a",
-      "SqueezilSoul/MoveGround.cpp": "90ecfe9a06a3acc0a7ad190f92b3cbe251b36bbdf7e2854b589e97330057ad4a"
+      "SqueezilSoul/Fly.cpp": "1a9d8a2b9e11c298a80597b328d01c615eec886731176bb1f68e236c0631b0f5",
+      "SqueezilSoul/MoveGround.cpp": "ab5d5c75096538bc184c5554d1b13ffb9f51747b1774b450a7d8ba7672a5823c"
     },
     "referring_sources": [
       "SqueezilSoul/Fly.cpp",
@@ -115,7 +115,7 @@
     "target": "?Compare@Cmp64@@QAEHXZ",
     "owner": "Souls2/Handlers.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -140,7 +140,7 @@
     "target": "?Compare@Cmp64@@QAEHXZ",
     "owner": "Souls2/Handlers.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -249,7 +249,7 @@
     "target": "?Find@Holder9@@QAEHPAH@Z",
     "owner": "Fn40f610/F.cpp",
     "declaration_sha256": {
-      "SqueezilSoul/Fly.cpp": "4d9267225575cfa7c1ce9642bd992eb95ca3adb52c00729537ccb943cecdd68a"
+      "SqueezilSoul/Fly.cpp": "1a9d8a2b9e11c298a80597b328d01c615eec886731176bb1f68e236c0631b0f5"
     },
     "referring_sources": [
       "SqueezilSoul/Fly.cpp"
@@ -277,7 +277,7 @@
     "target": "?Find@Holder9@@QAEHPAH@Z",
     "owner": "Fn40f610/F.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -305,7 +305,7 @@
     "target": "?GetPath@IniReader@@QBEPBDXZ",
     "owner": "IniReader/IniReader.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -330,7 +330,7 @@
     "target": "?GetPath@IniReader@@QBEPBDXZ",
     "owner": "IniReader/IniReader.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -355,7 +355,7 @@
     "target": "?GetPath@IniReader@@QBEPBDXZ",
     "owner": "IniReader/IniReader.cpp",
     "declaration_sha256": {
-      "NavSurface/IsNear.cpp": "2dc5c746af8094bede96347c33810674b6616d7aa38556579e80cb00d1992b55"
+      "NavSurface/Nearness.h": "19ca2803b0b8886f618ca67c9718f959626e48ec118a0c0048ead66d65fee062"
     },
     "referring_sources": [
       "NavSurface/IsNear.cpp"
@@ -433,7 +433,7 @@
     "target": "?GetB@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -458,7 +458,7 @@
     "target": "?GetB@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -533,7 +533,7 @@
     "target": "?GetC@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -558,7 +558,7 @@
     "target": "?GetC@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -608,7 +608,7 @@
     "target": "?Get@Holder4@@QAE?AUPart@@H@Z",
     "owner": "Misc18/Getter.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -633,7 +633,7 @@
     "target": "?Get@Holder4@@QAE?AUPart@@H@Z",
     "owner": "Misc18/Getter.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -683,7 +683,7 @@
     "target": "?GetA@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -758,7 +758,7 @@
     "target": "?GetA@Source@@QAE?AUItem@@H@Z",
     "owner": "Misc14/Wrap.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -783,7 +783,7 @@
     "target": "?Get@Holder3@@QAE?AUPart@@H@Z",
     "owner": "Misc18/Getter.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -808,7 +808,7 @@
     "target": "?ToWorldBefore@InstancedSurface@@QAE?AUVector3f@@ABU2@@Z",
     "owner": "NavMesh/ToWorldBefore.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -833,7 +833,7 @@
     "target": "?Forward0@Holder@@QAEXXZ",
     "owner": "Misc3/Lists.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -858,7 +858,7 @@
     "target": "?Forward0@Holder@@QAEXXZ",
     "owner": "Misc3/Lists.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"
@@ -883,7 +883,7 @@
     "target": "?WasNear@PreviousNearSurface@@QAEHABUPreviousNearVector@@@Z",
     "owner": "NavSurface/WasNear.cpp",
     "declaration_sha256": {
-      "NavSurface/FlightHits.cpp": "3aa916305e48a04c64f51f7ea8a6419e27d473bcb5614531a2eb0911a3835a8b"
+      "NavSurface/FlightHits.cpp": "a83d0b8d119935d13b12c4d9686fb2b04fb80468722e7bcba9d3402b789bd9bc"
     },
     "referring_sources": [
       "NavSurface/FlightHits.cpp"
@@ -908,7 +908,7 @@
     "target": "?WasNear@PreviousNearSurface@@QAEHABUPreviousNearVector@@@Z",
     "owner": "NavSurface/WasNear.cpp",
     "declaration_sha256": {
-      "NavSurface/MoveAlong.cpp": "14e04da6b058151c3ebf55e95f14a7284af70e0f503d2d5295c72de589afd8d4"
+      "NavSurface/MoveAlong.cpp": "4c57b0def172f7a7de267997b84a8c6821829e4e793b704c7011a34043bc1e56"
     },
     "referring_sources": [
       "NavSurface/MoveAlong.cpp"

@@ -277,7 +277,14 @@
     "declarations": {
       "NavSurface/MoveAlong.cpp": {
         "files": [
-          "NavSurface/MoveAlong.cpp"
+          "NavMesh/BoxNode.h",
+          "NavMesh/NavMesh.h",
+          "NavMesh/RaycastBridge.h",
+          "NavSurface/MoveAlong.cpp",
+          "NavSurface/Nearness.h",
+          "Script/CallFunction.h",
+          "Vector3f/Vector3f.h",
+          "Vector3fEmpty/Vector3fEmpty.h"
         ],
         "layout_sha256": "6c87629254e088497f357c376f086be4bf01fd2f3d266c507a262008038539e9",
         "addresses": [
@@ -320,7 +327,13 @@
     "declarations": {
       "NavSurface/FlightHits.cpp": {
         "files": [
-          "NavSurface/FlightHits.cpp"
+          "NavMesh/BoxNode.h",
+          "NavMesh/NavMesh.h",
+          "NavMesh/RaycastBridge.h",
+          "NavSurface/FlightHits.cpp",
+          "NavSurface/Nearness.h",
+          "Vector3f/Vector3f.h",
+          "Vector3fEmpty/Vector3fEmpty.h"
         ],
         "layout_sha256": "13cb9baf40e761beb826359fb80195999bf2db45fc0bf8eeede6b147974e7205",
         "addresses": [
@@ -467,6 +480,7 @@
     "declarations": {
       "SqueezilSoul/Fly.cpp": {
         "files": [
+          "Script/CallFunction.h",
           "SqueezilSoul/Fly.cpp"
         ],
         "layout_sha256": "041046ec1ba6aee0996231085d7591f38a692544458b0ae3c43c47f427f6035c",
@@ -485,6 +499,7 @@
       },
       "SqueezilSoul/MoveGround.cpp": {
         "files": [
+          "Script/CallFunction.h",
           "SqueezilSoul/MoveGround.cpp"
         ],
         "layout_sha256": "5c163a021958361de51c5ff58a1a76100339bb2c24ffdcb1a2b4dba907dc1ccc",
@@ -561,7 +576,14 @@
     "declarations": {
       "NavSurface/MoveAlong.cpp": {
         "files": [
-          "NavSurface/MoveAlong.cpp"
+          "NavMesh/BoxNode.h",
+          "NavMesh/NavMesh.h",
+          "NavMesh/RaycastBridge.h",
+          "NavSurface/MoveAlong.cpp",
+          "NavSurface/Nearness.h",
+          "Script/CallFunction.h",
+          "Vector3f/Vector3f.h",
+          "Vector3fEmpty/Vector3fEmpty.h"
         ],
         "layout_sha256": "6c87629254e088497f357c376f086be4bf01fd2f3d266c507a262008038539e9",
         "addresses": [

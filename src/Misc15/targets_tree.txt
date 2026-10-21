@@ -1,4 +1,4 @@
-^??0TreeNode@@ 47ade0 tn_ctor
-^?Clear@TreeNode 47ae10 tn_clear
-^?Allocate@TreeNode 47ae50 tn_alloc
-^?FreeItems@TreeNode 47ae90 tn_free
+^??0BoxNode@@ 47ade0 tn_ctor
+^??1BoxNode@@ 47ae10 tn_clear
+^?Allocate@BoxNode 47ae50 tn_alloc
+^?FreeItems@BoxNode 47ae90 tn_free

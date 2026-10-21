@@ -1,12 +1,7 @@
 // Array member destructor at 0x40c420. Its base destructor (0x45d900)
 // releases the integer array's backing allocation.
-struct IntegerArrayMember {
-    void *virtualTable;
-    int count;
-    int capacity;
-    int *data;
-    ~IntegerArrayMember();
-};
+#include "Container/IntegerArrayMember.h"
+typedef C40c420 IntegerArrayMember;
 
 struct CleanupObject {
     unsigned char precedingMembers[0xc8];

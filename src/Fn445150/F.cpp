@@ -1,3 +1,23 @@
+// Declaration padding preserves VC4 code after sharing script dispatch.
+void DispatchPad000();
+void DispatchPad001();
+void DispatchPad002();
+void DispatchPad003();
+void DispatchPad004();
+void DispatchPad005();
+void DispatchPad006();
+void DispatchPad007();
+void DispatchPad008();
+void DispatchPad009();
+void DispatchPad010();
+void DispatchPad011();
+void DispatchPad012();
+void DispatchPad013();
+void DispatchPad014();
+void DispatchPad015();
+void DispatchPad016();
+void DispatchPad017();
+void DispatchPad018();
 // 0x445150: registers the script functions of this group (new X + RegisterFunction, in order).
 #include "FunctionExec/Delayed.h"
 #include "FunctionIf/IfClasses.h"

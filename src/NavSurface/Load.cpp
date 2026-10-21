@@ -5,12 +5,7 @@
 #include "IniReader/IniReader.h"
 #pragma intrinsic(strcpy, strcmp, strlen)
 
-struct NavMesh {
-    char data[0x2030];
-    NavMesh();                                  // 0x47aec0
-    ~NavMesh();                                 // 0x47af00
-    int Load(const char *file);                  // 0x47c8e0
-};
+#include "NavMesh/NavMesh.h"
 struct LoadedSurface {
     NavMesh *mesh;
     float sizeSquared;

@@ -13,13 +13,13 @@ struct PendingSimulation {
     int FindIdBySoul(PendingSoul *soul); // 0x4140b0
 };
 PendingSimulation *GetSimulation(); // 0x420690
-void PostFunction(const char *name, PendingCaller *caller, int first, int second); // 0x422ce0
+#include "Script/CallFunction.h"
 
 void CreatureTemplate::RunPending(PendingSoul *soul)
 {
     if (soul->pendingFunction) {
         PendingCaller caller(soul, GetSimulation()->FindIdBySoul(soul), 0);
-        PostFunction(soul->pendingFunction, &caller, 0, 0);
+        CallFunction(soul->pendingFunction, &caller, 0, 0);
         soul->pendingFunction = 0;
     }
 }

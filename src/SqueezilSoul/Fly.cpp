@@ -107,7 +107,7 @@ struct ScriptCaller {
     int data[3];
     void InitSoul(SqueezilSoul *soul, int actorIndex, void *prop);     // 0x420900
 };
-void PostFunction(const char *name, ScriptCaller *caller, int a, int b); // 0x422ce0
+#include "Script/CallFunction.h"
 
 struct Simulation {
     int FindIdBySoul(void *soul);           // 0x4140b0
@@ -176,7 +176,7 @@ inline void CheckFloorLevel(SqueezilSoul *soul, Vector3f *position, float oldY)
         if (strlen(gFloorLevelScript.Chars()) != 0) {
             ScriptCaller caller;
             caller.InitSoul(soul, GetSimulation()->FindIdBySoul(soul), 0);
-            PostFunction(gFloorLevelScript.Chars(), &caller, 0, 0);
+            CallFunction(gFloorLevelScript.Chars(), &caller, 0, 0);
         }
     }
 }
@@ -187,7 +187,7 @@ inline void RunScript(SqueezilSoul *soul, String &name)
     if (strlen(name.Chars()) != 0) {
         ScriptCaller caller;
         caller.InitSoul(soul, GetSimulation()->FindIdBySoul(soul), 0);
-        PostFunction(name.Chars(), &caller, 0, 0);
+        CallFunction(name.Chars(), &caller, 0, 0);
     }
 }
 

@@ -1,3 +1,4 @@
+#include "Fn42d880/OverlayLifetime.h"
 // SQZ.EXE 0x420170 (cdecl): start the game: clock settings from the main ini, seed the random generator, load the
 // scripts, props, world, application, panel, land, bodies and clips (stepping the splash bar), then enter the start
 // region, or the start place when StartInPlace says so or a place ini override is set. 0 when the panel fails.
@@ -10,7 +11,7 @@
 struct GameClock { GameClock(int rate, int maxSim, int maxRender, float multiplier); char d[0x30]; };   // 0x41eb90
 struct World { World(); char d[0x10]; };                       // 0x4357b0
 struct Application { Application(); ~Application(); char d[0xc4]; };   // 0x43a6a0 / 0x43a730
-struct Panel { Panel(); ~Panel(); int Load(); char d[0x6a8]; };   // 0x42d5f0 / 0x42d880, Load 0x42d9f0
+struct Panel { Panel(); int Load(); char d[0x6a8]; };   // 0x42d5f0 / 0x42d880, Load 0x42d9f0
 struct Sim { virtual void v0(); virtual void Start(); };
 struct LandSimulation : Sim { LandSimulation(); char d[0x14]; };   // 0x41e310
 struct RegionSimulation : Sim { RegionSimulation(int region, int location); char d[0x64]; };   // 0x416e50
@@ -68,7 +69,7 @@ int StartGame()
                 delete g_application;
             g_application = 0;
             if (g_panel)
-                delete g_panel;
+                DestroyOverlay(g_panel);
             g_panel = 0;
             return 0;
         }

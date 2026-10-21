@@ -2,6 +2,7 @@
 #pragma once
 #include "Renderer2/Renderer2.h"
 
+// SIZE 0x80
 class Bitmap {
 public:
     Bitmap(Renderer *r);                                                                                 // 0x473760
@@ -10,6 +11,13 @@ public:
     virtual int CopyFrom(Bitmap *src);                                                                  // slot 1, 0x473780
     virtual int DrawToBitmap(Bitmap *dest, int x, int y, int sx, int sy);                               // slot 2, 0x474130
     virtual int DrawToSurface(LPDIRECTDRAWSURFACE dest, RECT dstRect, RECT srcRect);   // slot 3, 0x473f70
+    // Older callers spell the two by-value RECT arguments as eight scalars.
+    int DrawToSurface(LPDIRECTDRAWSURFACE dest, int dl, int dt, int dr, int db,
+        int sl, int st, int sr, int sb) {
+        RECT dst = { dl, dt, dr, db };
+        RECT src = { sl, st, sr, sb };
+        return DrawToSurface(dest, dst, src);
+    }
     virtual int DrawToSurfaceAt(LPDIRECTDRAWSURFACE dest, int x, int y, int sx, int sy, int key);       // slot 4, 0x474020
     virtual LPDIRECTDRAWSURFACE CreateSurfaceSized(int w, int h);                                       // slot 5, 0x4738c0
     virtual LPDIRECTDRAWSURFACE CreateSurface();                                                        // slot 6, 0x473940
@@ -26,3 +34,4 @@ public:
     int width;                   // +0x78
     int height;                  // +0x7c
 };
+typedef char BitmapSizeCheck[(sizeof(Bitmap) == 0x80) ? 1 : -1];

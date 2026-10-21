@@ -21,7 +21,7 @@ struct SurfaceScriptCaller {
     int storage[6];
     SurfaceScriptCaller(void *soul, int id, void *owner); // 0x420900
 };
-int PostFunction(const char *name, SurfaceScriptCaller *caller, int extra, int local); // 0x422ce0
+#include "Script/CallFunction.h"
 
 void NavSurfaceList::TypeChanged(void *soul, const Contact *,
     const SurfaceTypeInfo *oldInfo, const SurfaceTypeInfo *newInfo)
@@ -34,7 +34,7 @@ void NavSurfaceList::TypeChanged(void *soul, const Contact *,
         SurfaceTypeDescription *description = types.Get(oldInfo->value);
         if (strlen(description->Deactivate().c_str()) > 0) {
             SurfaceScriptCaller caller(soul, GetSimulation()->FindIdBySoul(soul), 0);
-            PostFunction(description->Deactivate().c_str(), &caller, 0, 0);
+            CallFunction(description->Deactivate().c_str(), &caller, 0, 0);
         }
     }
     newInfo->typeName.c_str();
@@ -43,7 +43,7 @@ void NavSurfaceList::TypeChanged(void *soul, const Contact *,
         SurfaceTypeDescription *description = types.Get(newInfo->value);
         if (strlen(description->Activate().c_str()) > 0) {
             SurfaceScriptCaller caller(soul, GetSimulation()->FindIdBySoul(soul), 0);
-            PostFunction(description->Activate().c_str(), &caller, 0, 0);
+            CallFunction(description->Activate().c_str(), &caller, 0, 0);
         }
     }
 }

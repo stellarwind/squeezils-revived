@@ -5,30 +5,18 @@ void PadDecl3();
 void PadDecl4();
 void PadDecl5();
 void PadDecl6();
-// Serialisation of an array of BufferObject pointers (SQZ.EXE 0x465010 Read, 0x465070 Write): the BufferObject interface sits
-// after the array base, so `this` in these methods points 0x10 into the object.
-#include "Persist/Stream.h"
-#include "Container/ContainerArray.h"
+// Pointer-array serialization: BufferObject this is the subobject at +0x10.
+// The original stream stores raw BufferObject pointers with no pointee adjustment.
+#define BUFFEROBJECT_SIGNATURES
+#include "Container2/ObjectArrayViews.h"
+#include "Container2/ObjectArrayStream.h"
 
-struct ObjArray2R : Array<BufferObject *>, BufferObject {
-    virtual const char *TypeName();
-    virtual BufferObject *Create();
-    virtual void Write(ByteStream *s);
-    virtual void Read(ByteStream *s);
-};
-
-void ObjArray2R::Write(ByteStream *s)
+void ObjArrayD::Read(void *stream)
 {
-    s->WriteInt(&count);
-    for (int i = 0; i < count; i++)
-        s->WriteObject(data[i]);
-}
-
-void ObjArray2R::Read(ByteStream *s)
-{
+    ByteStream *s = (ByteStream *)stream;
     s->ReadInt(&count);
     if (capacity < count)
         Grow(count - capacity);
     for (int i = 0; i < count; i++)
-        s->ReadObject(&data[i]);
+        s->ReadObject((BufferObject **)&data[i]);
 }

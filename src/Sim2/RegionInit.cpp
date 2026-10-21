@@ -58,7 +58,7 @@ Panel *GetPanel();                                       // 0x4206c0
 struct Sim { int FindIdBySoul(void *soul); };            // 0x4140b0
 Sim *GetSimulation();                                    // 0x420690
 struct ScriptCaller { char pad[0x18]; ScriptCaller(void *soul, int id, int zero); };   // 0x420bc0
-void PostFunction(const char *name, ScriptCaller *caller, int a, int b);   // 0x422ce0 (cdecl)
+#include "Script/CallFunction.h"
 int ReadBodyColor(IniReader *ini);                       // 0x458f60 (cdecl)
 int DebugLogAll(const char *fmt, ...);                      // 0x419290 (cdecl)
 void ReadFunctionList(IniReader *ini);                   // 0x422730 (cdecl)
@@ -164,7 +164,7 @@ void RegionSimulation::Init()
     GetPanel()->Update(1);
 
     ScriptCaller caller(soul, GetSimulation()->FindIdBySoul(soul), 0);
-    PostFunction("StartFunction", &caller, 0, 0);
+    CallFunction("StartFunction", &caller, 0, 0);
     soul->StartFunction();
     if (GetApplication()->hasInput)
         GetApplication()->SetInputMode(1);

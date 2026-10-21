@@ -268,23 +268,6 @@
     "abi": "Complete nonvirtual thiscall destructor, zero arguments, void; canonical original body is RET and does not read or adjust this.",
     "reason": "Every referring unit explicitly annotates this destructor at the same reviewed math entry; available exact calls agree; all selectable canonical definitions are the original relocation-free RET."
   },
-  "??1FaceVec@@QAE@XZ": {
-    "address": "00401660",
-    "target": "??1Vector3f@@QAE@XZ",
-    "owner": "Vector3f/Vector3fOps.cpp",
-    "referring_sources": [
-      "NavMesh/InsideFace.cpp"
-    ],
-    "declarations": {
-      "NavMesh/InsideFace.cpp": {
-        "NavMesh/InsideFace.cpp": [
-          "00401660"
-        ]
-      }
-    },
-    "abi": "Complete nonvirtual thiscall destructor, zero arguments, void; canonical original body is RET and does not read or adjust this.",
-    "reason": "Every referring unit explicitly annotates this destructor at the same reviewed math entry; available exact calls agree; all selectable canonical definitions are the original relocation-free RET."
-  },
   "??1FlightMatrix@@QAE@XZ": {
     "address": "00402310",
     "target": "??1MatrixLifetime@@QAE@XZ",
@@ -539,7 +522,7 @@
     ],
     "declarations": {
       "Misc15/Mesh.cpp": {
-        "Misc15/Mesh.cpp": [
+        "NavMesh/NavMesh.h": [
           "00401660"
         ]
       }
@@ -625,23 +608,6 @@
     "declarations": {
       "NavSurface/MoveAlong.cpp": {
         "NavSurface/MoveAlong.cpp": [
-          "00401660"
-        ]
-      }
-    },
-    "abi": "Complete nonvirtual thiscall destructor, zero arguments, void; canonical original body is RET and does not read or adjust this.",
-    "reason": "Every referring unit explicitly annotates this destructor at the same reviewed math entry; available exact calls agree; all selectable canonical definitions are the original relocation-free RET."
-  },
-  "??1NearVector@@QAE@XZ": {
-    "address": "00401660",
-    "target": "??1Vector3f@@QAE@XZ",
-    "owner": "Vector3f/Vector3fOps.cpp",
-    "referring_sources": [
-      "NavSurface/IsNear.cpp"
-    ],
-    "declarations": {
-      "NavSurface/IsNear.cpp": {
-        "NavSurface/IsNear.cpp": [
           "00401660"
         ]
       }

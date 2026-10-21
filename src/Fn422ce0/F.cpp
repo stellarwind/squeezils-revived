@@ -1,5 +1,6 @@
 // SQZ.EXE 0x422ce0 (cdecl): run a script function by name, from the top table only when asked, else from any table; 0 if not found.
 #include "String/String.h"
+#include "Script/CallFunction.h"
 
 struct CallArg;
 class RunFunction {
@@ -23,7 +24,7 @@ RunFunction *FindFunction(const char *name);             // 0x423130 (cdecl)
 int DebugLogAll(const char *format, ...);                  // 0x419290
 extern const char kNoFunction[];                         // 0x4bb21c
 
-int CallFunction(const char *name, CallArg *args, int extra, int topOnly)
+int CallFunction(const char *name, void *args, int extra, int topOnly)
 {
     RunFunction *fn = 0;
     if (!topOnly)
@@ -34,6 +35,6 @@ int CallFunction(const char *name, CallArg *args, int extra, int topOnly)
         DebugLogAll(kNoFunction, name);
         return 0;
     }
-    fn->Run(args, extra);
+    fn->Run((CallArg *)args, extra);
     return 1;
 }

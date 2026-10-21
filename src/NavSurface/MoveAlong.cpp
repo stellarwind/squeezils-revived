@@ -5,6 +5,8 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 #include "compat41.h"
+#include "NavMesh/RaycastBridge.h"
+#include "NavSurface/Nearness.h"
 
 struct SqueezilSoul;
 
@@ -71,9 +73,7 @@ struct MoveMesh {
         MoveVector *newUp, MoveVector *newForward, MoveVector *newDir, int *newFace,
         const int *typeAllowed);                                // 0x47b490
     // Cast the segment origin + dir * length (NavMesh::Raycast).
-    int Raycast(const MoveVector &origin, const MoveVector &right, const MoveVector &up, const MoveVector &forward,
-        const MoveVector &dir, float length, MoveVector *point, MoveVector *hitRight, MoveVector *hitUp,
-        MoveVector *hitForward, int *face, const int *typeAllowed);   // 0x47b180
+
 };
 struct MoveSurfaceData {
     MoveMesh *mesh;                                             // 0x00
@@ -82,7 +82,6 @@ struct MoveSurfaceData {
 struct MoveSurface {
     MoveSurfaceData *GetSurface();                              // 0x40c6b0
     const int *TypeFilter();                                    // 0x40c6d0
-    int IsNear(const MoveVector &point);                        // 0x40c700
     int WasNear(const MoveVector &point);                       // 0x40c7b0
     int Changed();                                              // 0x40c860
     MoveVector ToLocal(const MoveVector &point);                // 0x40f6f0
@@ -112,7 +111,7 @@ struct ScriptCaller {
     int data[3];
     void InitSoul(SqueezilSoul *soul, int actorIndex, void *prop);     // 0x420900
 };
-void PostFunction(const char *name, ScriptCaller *caller, int a, int b); // 0x422ce0
+#include "Script/CallFunction.h"
 
 struct Simulation {
     int FindIdBySoul(void *soul);                               // 0x4140b0
@@ -145,7 +144,7 @@ struct NavSurfaces {
     if (strlen(script.Chars()) != 0) { \
         ScriptCaller caller; \
         caller.InitSoul(soul, GetSimulation()->FindIdBySoul(soul), 0); \
-        PostFunction(script.Chars(), &caller, 0, 0); \
+        CallFunction(script.Chars(), &caller, 0, 0); \
     }
 
 int NavSurfaces::MoveAlong(SqueezilSoul *soul, MoveVector *position, MoveVector *right, MoveVector *up,
@@ -182,7 +181,7 @@ int NavSurfaces::MoveAlong(SqueezilSoul *soul, MoveVector *position, MoveVector 
         MoveSurface *surf = instances.Get(i);
         if (surf == 0)
             continue;
-        if (!surf->IsNear(*position) && !surf->IsNear(end)) {
+        if (!IsNavigationSurfaceNear((void *)surf, *position) && !IsNavigationSurfaceNear((void *)surf, end)) {
             if (!surf->Changed())
                 continue;
             if (!surf->WasNear(*position) && !surf->WasNear(end))
@@ -200,7 +199,7 @@ int NavSurfaces::MoveAlong(SqueezilSoul *soul, MoveVector *position, MoveVector 
             MoveVector before = surf->ToLocalBefore(prev);
             MoveVector mv = b - before;
             float length = mv.Normalize();
-            hit = surf->GetSurface()->mesh->Raycast(before, local.Right(), local.Up(), local.Forward(), mv, length,
+            hit = CastNavigationRay((NavMesh *)surf->GetSurface()->mesh, before, local.Right(), local.Up(), local.Forward(), mv, length,
                 &newPos, &newRight2, &newUp2, &newForward2, &hitFace, surf->TypeFilter());
         }
         if (hit) {
@@ -220,7 +219,7 @@ int NavSurfaces::MoveAlong(SqueezilSoul *soul, MoveVector *position, MoveVector 
         {
             MoveVector d = localEnd - local.Position();
             float length = d.Normalize();
-            hit = surf->GetSurface()->mesh->Raycast(local.Position(), local.Right(), local.Up(), local.Forward(), d,
+            hit = CastNavigationRay((NavMesh *)surf->GetSurface()->mesh, local.Position(), local.Right(), local.Up(), local.Forward(), d,
                 length, &newPos, &newRight2, &newUp2, &newForward2, &hitFace, surf->TypeFilter());
         }
         if (hit) {
@@ -282,7 +281,7 @@ int NavSurfaces::MoveAlong(SqueezilSoul *soul, MoveVector *position, MoveVector 
             localEnd = localEnd - local.Up() * 0.05f;
             MoveVector d = localEnd - local.Position();
             float length = dir.Normalize();     // sic: the original normalizes dir, not d
-            hit = surf->GetSurface()->mesh->Raycast(local.Position(), local.Right(), local.Up(), local.Forward(), d,
+            hit = CastNavigationRay((NavMesh *)surf->GetSurface()->mesh, local.Position(), local.Right(), local.Up(), local.Forward(), d,
                 length, &newPos, &newRight2, &newUp2, &newForward2, &hitFace, surf->TypeFilter());
         }
         if (hit) {

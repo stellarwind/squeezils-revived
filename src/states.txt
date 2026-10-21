@@ -16,3 +16,103 @@
 43bf10 func # Restored single-precision return rounding; VC4.1 score 16, stack layout only (2026-10-20).
 43bf80 func # Restored running elapsed-time subtraction and float return rounding; VC4.1 score 14, stack layout only (2026-10-20).
 445150 func # Registrar corrected: IfPlayer/Execute/ExecuteWithProp/DelayedExecute; VC4.1 score 42, register-only diff; all 40 vtable stores and call destinations checked against original (2026-10-20).
+# 2026-10-21 user priority: functional source/linking; scores may change and are not measured or tuned.
+401690 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4031e0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4044c0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+405210 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+405260 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+405320 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+405380 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4053e0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+40be40 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+40be90 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+40c3d0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+40c420 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+40ed97 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+411120 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+412920 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+416f50 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+419960 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41a5d0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41ba70 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41bbf0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41bcf0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41de20 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41df50 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41e2a0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+41f750 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+422450 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4224b0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+422510 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+422ce0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+423640 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+423650 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+423670 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4237d0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+427b50 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+436a60 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+438ee0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+444770 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4447d0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4447e0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4448a0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+444930 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+444960 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4459e0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4487f0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+44bc40 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+44e560 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+451fd0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+454b40 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+458cd0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+464ed0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+464f50 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+465010 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+465070 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4663b0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+466430 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+4664f0 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+466550 func # Functional declaration/ownership repair; no score preservation or gameplay validation.
+457bc0 func # Shared animation body layout; functional linking priority; score not measured.
+41df10 func # Direct PoseTable accessor; source ownership repair; score not measured.
+47ad20 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47aec0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47af00 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47af20 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47af30 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47aff0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47b0b0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47b0f0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47b130 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47b150 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47c7b0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47c8e0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47ca10 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47cfe0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47cc60 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47d2b0 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+457040 func # Shared navigation storage/loading declarations; scores not measured or preserved.
+47ade0 func # Shared tree lifetime and recursive ownership; scores not measured or preserved.
+47ae10 func # Shared tree lifetime and recursive ownership; scores not measured or preserved.
+47ae50 func # Shared tree lifetime and recursive ownership; scores not measured or preserved.
+47ae90 func # Shared tree lifetime and recursive ownership; scores not measured or preserved.
+47b180 func # Shared navigation query source owners; byte scores not measured.
+47c2a0 func # Shared navigation query source owners; byte scores not measured.
+47d560 func # Shared navigation query source owners; byte scores not measured.
+4108e0 func # Shared source raycast bridge; no byte matching.
+411120 func # Shared source raycast bridge; no byte matching.
+40c700 func # Shared symbol ownership declarations; no byte matching.
+414c10 func # Shared symbol ownership declarations; no byte matching.
+414d90 func # Shared symbol ownership declarations; no byte matching.
+42f7d0 func # Shared symbol ownership declarations; no byte matching.
+415750 func # Shared symbol ownership declarations; no byte matching.
+430150 func # Shared symbol ownership declarations; no byte matching.
+42fca0 func # Shared symbol ownership declarations; no byte matching.
+42dd30 func # Shared symbol ownership declarations; no byte matching.
+42e0e0 func # Shared symbol ownership declarations; no byte matching.
+42d880 func # Direct shared lifetime/bitmap owner after declaration integration; no byte matching.
+420170 func # Direct shared lifetime/bitmap owner after declaration integration; no byte matching.
+4205a0 func # Direct shared lifetime/bitmap owner after declaration integration; no byte matching.
+42f2c0 func # Direct shared lifetime/bitmap owner after declaration integration; no byte matching.
+415b40 func # Direct shared lifetime/bitmap owner after declaration integration; no byte matching.

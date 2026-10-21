@@ -1,6 +1,6 @@
 # Building the reconstructed SQZ executable
 
-**Latest restart point (2026-10-21):** full pipeline `42841610-e40e-4be6-8a31-5de655772d85`; 1,138/1,138 manifest sources compile, zero duplicate errors and 1,248 unique unresolved symbols. EXE not linked. Final section records canonical integer ID-list ownership and corrected vtables.
+**Latest restart point (2026-10-21):** functional-source-only pipeline `a499c3e8-6476-4301-a02a-751043ae4fc2`; 1,137/1,137 active sources compile, zero duplicates, 1,195 unresolved symbols. No byte matching. EXE not linked; final section records raycast caller integration.
 
 **Symbol-resolution optimization review (2026-10-21):** see
 [SYMBOL_RESOLUTION_OPTIMIZATION.md](SYMBOL_RESOLUTION_OPTIMIZATION.md) for
@@ -2581,3 +2581,337 @@ Cached binary/external-header provenance remains unverified; EXE/runtime pending
 Next: inspect the remaining pointer/primitive BufferObject interfaces and other
 shadow container views, selecting actual template owners and complete vtables.
 LevelBrainTable::KeyAt remains the accepted unregistered method candidate.
+
+
+## LevelBrainTable::KeyAt reviewed owner (2026-10-21)
+
+Registered only ?KeyAt@LevelBrainTable@@QAE?AVString@@H@Z in
+exact_call_registry.json, selecting the sole addressed Table<String,RoboBrain*,
+Array<RoboBrain*>,0>::KeyAt owner in Container2/PointerTableAccess.cpp at 44de90.
+Fresh discovery proves the sole current referring relocation in Level/FindBrain.cpp
+(original caller 44e1b0, call 44e20c); caller and both pointer-accessor match targets
+score zero. Eleven exact-call proof tests pass. No body or declaration edits.
+
+ABI review: ECX is the table base, keys are at +4, and the key Set's virtual slot
+zero returns String through the forwarded hidden buffer. The caller pushes index
+zero and the result-buffer address; KeyAt reads [ebp+8]/[ebp+c], returns the buffer
+in EAX and uses ret 8. Its complete body includes String-result cleanup/EH. String
+destruction is owned by String/String.cpp; exception-chain/CxxFrameHandler,
+operator delete and array cleanup are CRT/compiler support. Existing local EH
+records/funclets remain subject to projection, not replaced by an interior alias.
+No wrapper, this adjustment, deleting-destructor flag or extra stack argument.
+
+Authoritative completed pipeline f0a8730c-4600-4bd6-9968-e67fc835207e compiles
+1,138/1,138 manifest sources without failures/omissions; zero LNK2005, 1,531 LNK2001
+messages and 1,247 unique unresolved names; no internal linker error. Projection
+and diagnostic finish, snapshot-covered inputs stay unchanged during the run,
+and ownership/candidate/cluster report hashes reconcile. This supersedes pipeline
+42841610-e40e-4be6-8a31-5de655772d85 as the current restart point. Saved
+brain-key-before-clusters.json and brain-key-name-delta.json establish exactly one
+named removal and zero additions (1,248 -> 1,247); no accepted unregistered
+candidates remain. Baseline/current snapshot inputs differ in the registry and
+Tiny4/Names.cpp, so this is not claimed as a registry-only equivalent-input build
+comparison. This block did not edit Names.cpp. Original-address source coverage
+is unchanged; compiled-source coverage is independently complete. Cached binary
+and external-header provenance remain unverified; EXE is not linked and runtime
+is untested. STATUS.md/HANDOFF.md unchanged; no commit/push. Next bounded block:
+remaining pointer/primitive BufferObject interfaces or shadow container owners.
+
+
+## Character/Creature pointer-array interface ownership (2026-10-21)
+
+Unified Tiny4's temporary ObjArray/ObjArray2R/ObjArray2W owners and factory-local
+classes under Container2/ObjectArrayViews.h's ObjArrayC/ObjArrayD declarations.
+Read/Write now consistently take void*, with a local ByteStream view declared in
+ObjectArrayStream.h. The narrow stream declaration avoids importing Persist's
+separate BufferObject declaration. It introduces no wrapper or new function.
+The existing raw pointer stream format is unchanged: four-byte pointers are passed
+to WriteObject/ReadObject without pointee adjustment. Array count/capacity/data
+remain +4/+8/+c; BufferObject this is +0x10 and accesses them at negative offsets.
+Stream operations remain at 448ac0/448af0/448c60/448ca0, owned by Persist/Stream.cpp.
+
+Moved the existing free type-name bodies to the two virtual TypeName members,
+retaining IDs 5/10, name-cache globals and original formatting. Each complete
+serialization method has one source owner; removed only unused, unaddressed
+cross-method copies from the old split Creature units. Factories share the same
+class declarations. No aliases or copied original binary code were added.
+Existing declaration padding was recalibrated by one scripted sweep to preserve
+byte matches after introducing the shared declarations: all eight affected
+TypeName/Create/Read/Write targets score zero, retaining bm status. FUNCTIONS.tsv
+is not regenerated and its renamed-owner metadata is stale until requested.
+
+Original RTTI secondary tables 4a055c/4a05cc list TypeName/Create/Write/Read at
+464ed0/464f50/465070/465010 and 4663b0/466430/466550/4664f0. All eight entries map
+to their one compiled source owner; the table/factory targets preserve secondary
+subobject return and this conventions. Saved object-array-owner-audit.json records
+the original-address owner checks. The five affected objects' undefined externals
+are all accounted for by current source owners, existing aliases or CRT/library
+support; none occur in current unresolved diagnostics.
+
+Authoritative completed pipeline 643b1fca-66f9-4b2d-a5da-1c310f9fc1ad compiles
+1,138/1,138 manifest sources, zero failures/omissions or duplicate errors, 1,507
+LNK2001 messages and 1,237 unique unresolved names; no internal linker error.
+Projection/link/classification finish; snapshot inputs stay unchanged during the
+run and report hashes reconcile. This supersedes f0a8730c-4600-4bd6-9968-e67fc835207e
+and the intermediate 8c2bbf90-3994-4c93-b7ed-c296cafca94b (identical diagnostic;
+final rerun refreshed provenance after trailing-whitespace cleanup). Saved
+object-array-name-delta.json proves ten removals and zero additions (1,247 ->
+1,237): both type names and all eight old void*/ByteStream* Read/Write spellings.
+Manifest inventory and original-address source coverage are unchanged. Cached
+binary/external-header provenance remains unverified; EXE/runtime still pending.
+STATUS.md/HANDOFF.md untouched; no commit or push. Next bounded family can inspect
+LandSimulation's BufferObjectB slots or another shadow container interface.
+
+
+## Integer-array member lifetime source identity (2026-10-21)
+
+Added Container/IntegerArrayMember.h for complete owner C40c420 at original
+40c420: Array<int> at +0, trailing BufferObject vptr at +10, size 14 hex. The
+original enclosing member occupies +c8..+dc; the following vector begins at +dc.
+Misc17/Dt2.cpp now declares its actual Array<int> member rather than the unowned
+M40c420 destructor spelling. AutoGPT/fn_40ed97 uses the same C40c420 declaration
+via a typedef. This removes both temporary IntegerArrayMember/M40c420 names
+without introducing aliases, wrappers or copied original code.
+
+The complete wrapper retains original EH and its cleanup tail to Array<int>
+at 45d900. Current Array<int> definitions are the existing shared template owners
+(Container/ArrayInt.cpp, Container/gen/ArrayDtor.cpp, Container/Container.cpp);
+the wrapper's only ordinary lifetime external now names that template directly.
+Its source body still matches original, as do all twelve Misc17/targets_dt2
+functions. The standalone fn_40ed97 remains score 2, its original recorded frame
+shape difference ([parent EBP-10] versus explicit argument [ESP+4]); this block
+adds no alias to an interior funclet and makes no new runtime-equivalence claim
+for that standalone reconstruction. Six destructor proof tests pass.
+
+Refreshed 18 preexisting destructor registry decisions only in hashes: the shared
+owner object changed, and Misc17/Dt2.cpp also supplies declaration evidence for
+other reviewed bindings. Script assertions verify every address, owner, ABI,
+declaration-address mapping and reason is unchanged. No new registry entry was
+added. Generated refresh-integer-member.py and integer-member-refreshed-proofs.json
+retain the bounded update procedure/list. Pipeline regenerated all dependent proof,
+projection and diagnostic evidence afterwards.
+
+Authoritative completed pipeline 16d810bf-e77f-4754-a1c8-ea67265824d4 compiles
+1,138/1,138 sources without failures/omissions; zero duplicate errors, 1,505 LNK2001
+messages and 1,235 unique unresolved symbols; no internal linker error. Snapshot
+inputs stayed unchanged during the run and report hashes reconcile. This
+supersedes 643b1fca-66f9-4b2d-a5da-1c310f9fc1ad. Saved
+integer-member-name-delta.json proves precisely two removals and no additions
+(1,237 -> 1,235). The standalone cleanup object has no unresolved externals.
+Misc17/Dt2.cpp still references four unrelated unowned destructors (M40be40,
+M40be90, M40c3d0, M450910); these are outside this member-lifetime block. Source
+coverage/inventory unchanged; cached binary/external-header provenance unverified,
+EXE not linked, runtime untested. STATUS.md/HANDOFF.md unchanged; no commit/push.
+
+### Deferred LandSimulation vtable repair evidence
+
+The next LandSimulation pass must repair class/table identity rather than alias
+BufferObjectB::SaveSlotN. LandCtor.cpp currently declares a two-slot SimulationB
+and two-slot LandSim primary table, while the original Simulation base at 49d644
+has seven slots (deleting destructor plus six purecall entries), and Land primary
+49d82c has twelve. Original BufferObject 49d52c is four purecall entries;
+Land secondary 49d814 is TypeName/Make/Save/Load at 41ea50/41ea60/41e8d0/41e910,
+with this at +4. The temporary BufferObjectB slots are inherited unchanged and
+have incorrect no-argument signatures for Save/Load. Fn41e3a0/F.cpp independently
+emits the incompatible SimB/BufB view. Constructor masked-byte score alone does
+not verify these tables. Reconcile both lifetime declarations and complete tables;
+retain primary/secondary this, deleting-vs-complete destructor and stream ABI
+checks. Several slot bodies already exist, but Init at 41e490 is nonexact, so do
+not route this family through an exact-alias shortcut or invent bodies. No Land
+source or registry changes were made during this investigation.
+
+
+## String-container member destructor ownership (2026-10-21)
+
+Container/StringContainerMembers.h gives C40be40 its actual Array<String> member
+(base destructor 45e250), and C40c3d0 its actual Table<String,String,
+PrimitiveArray<String,3>,23> member (base destructor 462b50). Misc17/Dt2.cpp uses
+these shared declarations, retiring the two unowned M40be40/M40c3d0 names. Original
+cleanup tail jumps establish both destinations; existing RTTI gives the table's
+BufferObject offset +2c. Compile-time guards check complete sizes 14/30 hex.
+All twelve wrapper targets remain exact; six destructor tests pass. Eighteen
+existing registry decisions refresh only owner/source hashes; script assertions
+preserve addresses, ABI, owners and declaration evidence. No new aliases.
+Completed pipeline 052e239a-b67d-49d0-a7d4-f18afc596b21 compiles 1,138/1,138 sources,
+zero duplicates, 1,503 LNK2001 messages and 1,233 unique unresolved names. Saved
+string-members-name-delta.json proves two removals and zero additions (1,235 ->
+1,233); snapshot inputs unchanged during run and report hashes verified. This
+supersedes 16d810bf-e77f-4754-a1c8-ea67265824d4. Source inventory/coverage unchanged;
+remaining wrapper-unit unowned names are M40be90 and M450910. Cached provenance
+unverified; EXE/runtime pending. STATUS.md/HANDOFF.md untouched; no commit/push.
+
+
+## Functional source priority and animation ownership (2026-10-21)
+
+User explicitly superseded byte matching: no match.sh, scores, padscan or register
+tuning. WORKFLOW.md records the override. Changed functions are explicitly func
+in states.txt; no new score measurements were made. The old generic Owner41
+blend owner's score is obsolete: it was replaced by typed functional source,
+not preserved as a bm target. Existing scores for other edited units may change.
+STATUS.md/FUNCTIONS.tsv were not regenerated.
+
+Interrupted dispatch run de708b27-aa7d-47c7-8e2a-c52af841ea56 had completed:
+1,138/1,138 sources, zero duplicates, 1,492 LNK2001 messages, 1,227 unique names
+(1,233 -> 1,227). Script/CallFunction.h supplies one cdecl dispatch declaration;
+15 direct callers and 47 transitive translation units use the canonical entry.
+Three now-unused dispatch aliases were retired. This is prior evidence, not the
+current restart point.
+
+Animation source now shares MorphCycle execution/creation declarations,
+PoseTable lifetimes/accessors and PartCycle/Execution.h. Advance, SetCycle,
+blend-fraction, air-animation and pose-application callers name these source
+owners directly. MorphCycle::BlendPose replaces the generic Owner41 integer-
+argument view at 41bcf0, forwarding actual float weight, time and hint to the
+existing PartCycleB::Blend. Empty tracks return the incoming hint. BodyUpdate.h
+now shares pitch/roll/character fields at +210/+218/+22c with AnimateInAir;
+the implementation is directly UpdatingSqueezilBody::AnimateInAir. No substitute
+stubs or no-op implementations were introduced.
+
+Seven global bindings formerly depended on exact caller bodies. Their already-
+reviewed addresses are now explicit individual extern declarations in Fn458cd0;
+normal data ownership resolves them to the same extracted symbols, asserted in
+animation-declared-data-owners.json. The old multi-variable comment misleadingly
+implied declaration order: FlyUp=b4, FlyLeft=b8, FlyRight=bc, FlyDown=c0 relative
+to 4bf000. No address was inferred from that ordering. Obsolete exact aliases
+for AdvancePose/CPose lifetimes, Clip blend/length, PoseEntries::Entry and the
+air-animation method were removed as their callers now use the real definitions.
+Old failed pipeline attempts are superseded below; no original-body proof gate
+was bypassed or made to accept a nonexact binding.
+
+Authoritative completed pipeline 2ffa28ea-790e-4b8e-a5fe-920ec74ff9c5 compiles
+1,138/1,138 sources with no failures/omissions, zero LNK2005, 1,479 LNK2001
+messages and 1,214 unique unresolved names; no internal linker error. Snapshot
+inputs stayed unchanged and report hashes reconcile. Saved animation-name-delta
+proves 13 removals and zero additions (1,227 -> 1,214). The manifest replaces
+one generic blend source with its typed owner; original-address coverage remains
+unchanged. Four native VC4 functional cases link the production BlendPose object
+against an instrumented part-track callback: empty/nonempty tracks, order,
+pose pointers, time offset, float weight, hint and returned last result pass.
+Evidence: animation-blend-test-result.json. This is focused runtime validation,
+not gameplay validation. Cached binary/external-header provenance remains
+unverified, EXE still does not link. No commits/pushes; HANDOFF.md unchanged.
+
+
+## Navigation storage/loading shared source (2026-10-21)
+
+NavMesh/NavMesh.h now provides the actual 0x2030-byte mesh layout, construction,
+allocation/cleanup, file-format detection and ASCII/binary loader interfaces.
+Compile-time checks cover 0x0c points and 0x28 faces. Misc15/Mesh.cpp owns the
+constructor and allocators under NavMesh; the redundant NavMeshCtor translation
+unit/target is retired from the manifest. The existing NavMesh destructor calls
+FreeArrays/FreeTree directly, retiring the old Free1/Free2 aliases. Point arrays
+use the existing Vector3fEmpty owner via a shared header instead of an undefined
+MVert constructor. ASCII/binary input writes the same face fields and now agrees
+with the BoxNode** tree-reader declarations. World and surface-loading callers
+include the shared mesh declaration instead of incomplete private storage views.
+No replacement stubs, byte-match runs, padding sweeps or score preservation.
+Touched original addresses are explicitly func; old scores may change and were
+not measured. STATUS.md/FUNCTIONS.tsv were not regenerated.
+
+Existing math and face-destructor declaration evidence moved from Mesh.cpp to
+the shared header; one mesh-destructor object hash changed after direct helper
+calls. Three reviewed records were refreshed with unchanged addresses, targets,
+ABI and per-source declaration-address identity. Generated evidence is in
+nav-loading-proof-refresh.json. Tree-node lifetime implementation and geometric
+raycast helper declarations remain separate unresolved families.
+
+Authoritative completed pipeline 0adb4bd0-ddb2-44e3-806d-8bba095c287e compiles
+1,137/1,137 active manifest sources without failures/omissions; zero duplicate
+errors, 1,466 LNK2001 messages and 1,205 unique unresolved names. No internal
+linker error; snapshot inputs unchanged and report hashes reconcile. This
+supersedes 2ffa28ea-790e-4b8e-a5fe-920ec74ff9c5 and the failed intermediate
+1bdb8b1c-91e0-480f-95be-0de12e18a88c. nav-loading-name-delta.json proves nine
+removals and no additions (1,214 -> 1,205). Source inventory decreases only by
+retiring the duplicate constructor; original-address source coverage is unchanged.
+Fourteen native VC4 checks exercise production allocator, face constructor,
+empty-point and mesh-destructor objects (with test-only vector/face lifetime
+and tree-clear leaf dependencies): initial fields, allocation/reallocation to
+zero, face defaults, tree cleanup, repeated array cleanup and destruction pass.
+Evidence: nav-storage-test-result.json. File parsing/gameplay are not runtime-
+validated; cached binary/external-header provenance remains unverified. EXE
+still cannot link. No commit/push; HANDOFF.md unchanged.
+
+
+## Navigation tree lifetime owner (2026-10-21)
+
+NavMesh/BoxNode.h now shares the complete 0x40-byte node layout across mesh
+cleanup and both box readers. Misc15/Octree.cpp supplies BoxNode construction,
+recursive complete destruction, face-index allocation and FreeItems. Child
+deletion invokes its destructor exactly once; face storage uses delete[]. Mesh
+FreeTree likewise performs one typed delete. Retired the duplicate Node8::Release
+body/target from Misc6 and its now-unreferenced Clear alias. No stubs or binary
+wrappers; all four tree addresses remain func. Scores may change and were not
+measured/preserved. One existing face-destructor record refreshed its shared-
+header hash only; ownership and ABI decisions are unchanged.
+
+Completed pipeline 66078bb4-17a1-4e39-8a83-aa616d8a0d68 compiles 1,137/1,137
+sources without failures/omissions; zero duplicates, 1,460 LNK2001 messages,
+1,202 unique unresolved symbols, no internal linker error. Snapshot inputs stayed
+unchanged; report hashes reconcile. nav-tree-name-delta.json proves three removed
+BoxNode names, no additions (1,205 -> 1,202). This supersedes
+0adb4bd0-ddb2-44e3-806d-8bba095c287e and the failed intermediate proof-refresh run.
+Sixteen native VC4 checks link the production Octree object: initialization,
+allocation/reallocation/empty allocation, repeated release and nested child
+destruction pass, with eight tracked allocations and eight releases. Evidence:
+nav-tree-test-result.json. Source inventory/address coverage unchanged; cached
+binary/external-header provenance unverified, EXE/gameplay pending. No byte-match
+commands, STATUS regeneration, commit or push; HANDOFF.md unchanged. Remaining
+NavMesh raycast helper declarations are a separate next family.
+
+
+## Navigation query source owners (2026-10-21)
+
+NavMesh/InsideFace.cpp, FindLeaf.cpp and Fn47b180/F.cpp now share the full
+NavMesh/MFace/BoxNode layout and canonical Vector3f operations. Raycast calls
+InsideFace and FindLeaf directly, and the existing Free2/RayPlane.cpp owner
+with its actual five-argument cdecl reference signature. Temporary vertex/normal
+copies bridge existing storage types without changing field offsets. The
+original query branches, limits and null-root behavior remain. Removed the
+unreferenced FaceVec destructor binding and obsolete raycast referring-source
+evidence from four V3 operation bindings. One face-destructor header hash was
+refreshed; original addresses, owners and ABI decisions did not change.
+All touched functions are explicitly func. Scores may change; no byte matching,
+score measurements, STATUS regeneration, commits or pushes were performed.
+
+Completed pipeline d141eb52-5085-4215-852e-5b48c194bdd8 compiles 1,137/1,137
+sources, no failures/omissions, zero LNK2005, 1,455 LNK2001 messages and 1,197
+unique unresolved symbols. No internal linker error; inputs stayed unchanged
+and generated report hashes reconcile. nav-query-name-delta.json proves five
+removed names and zero additions (1,202 -> 1,197), superseding
+66078bb4-17a1-4e39-8a83-aa616d8a0d68. Source/address coverage is unchanged.
+Thirteen native VC4 checks link the production query/geometry/vector objects:
+triangle interior/edge/exterior, recursive tree lookup, half-open maximum,
+missing child coverage, hit outputs, surface filter and backface rejection pass.
+Evidence: nav-query-test-result.json and nav-query-external-owners.json; every
+query external maps to its source owner or LIBC.LIB. Cached binary/external-
+header provenance remains unverified; EXE/gameplay validation remains pending.
+FlightMesh/MoveMesh raycast caller declarations remain a separate next family.
+
+
+## Flight/movement raycast caller integration (2026-10-21)
+
+NavMesh/RaycastBridge.h copies the callers' local vector views into canonical
+Vector3f values and invokes the existing NavMesh::Raycast source owner. Both
+FlightHits and MoveAlong now use this bridge instead of undefined FlightMesh/
+MoveMesh raycast methods. Original arguments two and three are unused; argument
+four (the callers' frame-forward vector) builds the hit frame. Outputs are copied
+only on success, preserving untouched miss outputs. Original decompile evidence
+also corrected the raycast facing tolerance from zero to 0.001f. No replacement
+stubs or byte matching. The three touched addresses remain func; scores were
+not measured. Matrix/destructor/surface records refreshed only file hashes and
+the explicitly added shared-header dependencies; owners/ABI decisions unchanged.
+
+Completed pipeline a499c3e8-6476-4301-a02a-751043ae4fc2 compiles 1,137/1,137
+sources with no failures/omissions, zero duplicates, 1,453 LNK2001 messages and
+1,195 unique unresolved names. Snapshot inputs unchanged and report hashes
+reconcile. raycall-name-delta.json proves two removals and no additions
+(1,197 -> 1,195). This supersedes d141eb52-5085-4215-852e-5b48c194bdd8 and the
+intermediate raycall pass whose input snapshot changed during registry review.
+Twenty-one native VC4 query/bridge checks pass, including untouched miss outputs,
+fourth-vector frame construction, unchanged inputs and the 0.001f boundary.
+Evidence: nav-query-test-result.json, raycall-external-owners.json. Existing
+caller dependencies still unresolved include IsNear, FlightMatrix assignment,
+MoveFrame construction, MoveMesh::Move and script/string entry spellings; these
+are separate families. Original-address/source coverage unchanged. Cached binary
+and external-header provenance remains unverified; EXE/gameplay pending.
+STATUS/HANDOFF unchanged; no commit/push.

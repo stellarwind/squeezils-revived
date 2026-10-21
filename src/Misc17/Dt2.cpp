@@ -1,3 +1,5 @@
+#include "Container/StringContainerMembers.h"
+#include "Container/IntegerArrayMember.h"
 struct M401690 { ~M401690(); };   // ~M = 0x405320
 struct C401690 { M401690 m; ~C401690(); };
 C401690::~C401690() {}
@@ -22,17 +24,11 @@ C405380::~C405380() {}
 struct M4053e0 { ~M4053e0(); };   // ~M = 0x401660
 struct C4053e0 { char pad[12]; M4053e0 m; ~C4053e0(); };
 C4053e0::~C4053e0() {}
-struct M40be40 { ~M40be40(); };   // ~M = 0x45e250
-struct C40be40 { M40be40 m; ~C40be40(); };
 C40be40::~C40be40() {}
 struct M40be90 { ~M40be90(); };   // ~M = 0x4610c0
 struct C40be90 { M40be90 m; ~C40be90(); };
 C40be90::~C40be90() {}
-struct M40c3d0 { ~M40c3d0(); };   // ~M = 0x462b50
-struct C40c3d0 { M40c3d0 m; ~C40c3d0(); };
 C40c3d0::~C40c3d0() {}
-struct M40c420 { ~M40c420(); };   // ~M = 0x45d900
-struct C40c420 { M40c420 m; ~C40c420(); };
 C40c420::~C40c420() {}
 struct M40b910 { ~M40b910(); };   // ~M = 0x40bae0
 struct C40b910 { M40b910 m; ~C40b910(); };

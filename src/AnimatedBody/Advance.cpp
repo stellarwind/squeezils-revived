@@ -1,18 +1,10 @@
 // SQZ.EXE 0x41df50: advance clip time, blending and the current part poses.
 #include "compat41.h"
 
-struct AdvancePose {
-    void Assign(const AdvancePose &other); // 0x41b760
-    ~AdvancePose(); // 0x41b5f0
-};
-struct AdvanceClip {
-    float Duration(); // 0x41ba00
-    float Period(); // 0x41ba10
-    float Speed(); // 0x41ba20
-    int NoLoop(); // 0x41ba40
-    int SamplePose(AdvancePose *pose, float time, int hint); // 0x41bbf0
-    int BlendPose(AdvancePose *pose, float time, float amount, int hint); // 0x41bcf0
-};
+#include "MorphCycle/MorphCycle.h"
+#include "PoseTable/PoseTable.h"
+typedef PoseTable AdvancePose;
+typedef MorphCycle AdvanceClip;
 struct AdvancingBody {
     virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3();
     virtual void ApplyPose(); // slot 4, +0x10

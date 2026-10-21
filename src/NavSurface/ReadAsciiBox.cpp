@@ -4,18 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #pragma intrinsic(strcmp)
-struct BoxNode {
-    float minX, maxX, minY, maxY, minZ, maxZ;               // 0x00..0x14
-    unsigned int count;                                     // 0x18
-    int *faces;                                             // 0x1c
-    BoxNode *child[8];                                      // 0x20
-    BoxNode();                                              // 0x47ade0
-    ~BoxNode();                                             // 0x47ae10
-    int Allocate(int n);                                    // 0x47ae50
-};
-struct NavMesh {
-    int ReadAsciiBox(FILE *f, BoxNode **out);
-};
+#include "NavMesh/BoxNode.h"
+#include "NavMesh/NavMesh.h"
 
 int NavMesh::ReadAsciiBox(FILE *f, BoxNode **out)
 {

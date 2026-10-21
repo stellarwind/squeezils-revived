@@ -1,23 +1,8 @@
 // 0x47ca10: NavMesh::ReadAscii - header, "Points n {" list, "Faces n {" list, then the box tree.
 #include <stdio.h>
-struct Point { float x, y, z; };
-struct Face {
-    int vertex[3];          // 0x00
-    float normal[3];        // 0x0c
-    int neighbour[3];       // 0x18
-    int type;               // 0x24
-};
-struct NavMesh {
-    unsigned pointCount;    // 0x00
-    Point *points;          // 0x04
-    unsigned faceCount;     // 0x08
-    Face *faces;            // 0x0c
-    void *tree;             // 0x10
-    int AllocPoints(int n);                                 // 0x47af30
-    int AllocFaces(int n);                                  // 0x47aff0
-    int ReadAsciiBox(FILE *f, void **out);                  // 0x47cc60
-    int ReadAscii(FILE *f);
-};
+#include "NavMesh/NavMesh.h"
+typedef MVert Point;
+typedef MFace Face;
 int NavMesh::ReadAscii(FILE *f)
 {
     char line[256];
@@ -67,8 +52,8 @@ int NavMesh::ReadAscii(FILE *f)
     do {
         fgets(line, 256, f);
         Face *fc = (Face *)((char *)faces + off);
-        if (sscanf(line, "%d %d %d %d %d %d %f %f %f %x", &fc->vertex[0], &fc->vertex[1], &fc->vertex[2], &fc->neighbour[0],
-                   &fc->neighbour[1], &fc->neighbour[2], &fc->normal[0], &fc->normal[1], &fc->normal[2], &fc->type) != 10) {
+        if (sscanf(line, "%d %d %d %d %d %d %f %f %f %x", &fc->a, &fc->b, &fc->c, &fc->i0,
+                   &fc->i1, &fc->i2, &fc->normal.x, &fc->normal.y, &fc->normal.z, &fc->pad) != 10) {
             fprintf(stderr, "ERROR: can't read face[%d]\n", i);
             return 0;
         }
@@ -77,5 +62,5 @@ int NavMesh::ReadAscii(FILE *f)
     } while (i < faceCount);
     }
     fgets(line, 256, f);
-    return ReadAsciiBox(f, &tree);
+    return ReadAsciiBox(f, (BoxNode **)&tree);
 }
