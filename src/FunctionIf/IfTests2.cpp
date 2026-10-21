@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // 19 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
@@ -24,7 +25,6 @@ void PadDecl19();
 struct KCall { void *Actor(); };                         // 0x420c20
 struct Sim { int dummy; };
 Sim *GetSim();                                           // 0x420690 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kSimType[];                            // 0x4ba1d0
 extern const char kPlaceType[];                          // 0x4ba370
 struct Place { int Region(); int Piece(); };             // 0x418150 / 0x418160
@@ -42,7 +42,7 @@ Progress *GetProgress();                                 // 0x420680 (cdecl)
 
 int IfHasAllKeysFunction::Test(ScriptCall *args, int extra)
 {
-    Place *pl = (Place *)DynamicCast(GetSim(), 0, kSimType, kPlaceType, 0);
+    Place *pl = (Place *)SqzRTDynamicCast(GetSim(), 0, kSimType, kPlaceType, 0);
     if (!pl)
         return 0;
     return ((KActor *)((KCall *)args)->Actor())->Soul()->Inventory()->KeysFound(pl->Piece());

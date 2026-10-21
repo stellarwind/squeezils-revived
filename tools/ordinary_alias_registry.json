@@ -1,0 +1,297 @@
+{
+  "??1V3@@QAE@XZ": {
+    "address": "00401660",
+    "target": "??1Vector3f@@QAE@XZ",
+    "owner": "Vector3f/Vector3fOps.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 12-byte three-float object; no this adjustment",
+    "evidence": [
+      "Activity/TurnStep.cpp",
+      "GoodieSoul/Hit.cpp",
+      "Scene/Lights.cpp"
+    ],
+    "reason": "Local vector spelling for original empty destructor; original 0x401660 is ret."
+  },
+  "??1Float3@@QAE@XZ": {
+    "address": "00401660",
+    "target": "??1Vector3f@@QAE@XZ",
+    "owner": "Vector3f/Vector3fOps.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 12-byte three-float object; no this adjustment",
+    "evidence": [
+      "Fam68/TwoVecCtor.cpp",
+      "Sim2/PlaceInit.cpp",
+      "SqueezilPlayerSoul/Slots9.cpp"
+    ],
+    "reason": "Local vector spelling for original empty destructor; original 0x401660 is ret."
+  },
+  "??1Vec3@@QAE@XZ": {
+    "address": "00401660",
+    "target": "??1Vector3f@@QAE@XZ",
+    "owner": "Vector3f/Vector3fOps.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 12-byte three-float object; no this adjustment",
+    "evidence": [
+      "Fn4043a0/F.cpp",
+      "Fn42d880/F.cpp",
+      "SqueezilRoboSoul/RoboDtor.cpp"
+    ],
+    "reason": "Local vector spelling for original empty destructor; original 0x401660 is ret."
+  },
+  "??1Matrix16@@QAE@XZ": {
+    "address": "00402310",
+    "target": "??1MatrixLifetime@@QAE@XZ",
+    "owner": "Matrix4/MatrixDtor.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 64-byte sixteen-float object; no this adjustment",
+    "evidence": [
+      "GoodieSoul/Launch.cpp",
+      "NavMesh/SurfaceTransform.h",
+      "SqueezilSoul/Fly.cpp"
+    ],
+    "reason": "Annotated original matrix destructor is ret at 0x402310; dedicated canonical source replaces shared CameraSoulStubs scoring owner."
+  },
+  "??1Matrix@@QAE@XZ": {
+    "address": "00402310",
+    "target": "??1MatrixLifetime@@QAE@XZ",
+    "owner": "Matrix4/MatrixDtor.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 64-byte sixteen-float object; no this adjustment",
+    "evidence": [
+      "Fn4373d0/F.cpp",
+      "Sim2/RegionInit.cpp"
+    ],
+    "reason": "Annotated original matrix destructor is ret at 0x402310; dedicated canonical source replaces shared CameraSoulStubs scoring owner."
+  },
+  "??1Mat@@QAE@XZ": {
+    "address": "00402310",
+    "target": "??1MatrixLifetime@@QAE@XZ",
+    "owner": "Matrix4/MatrixDtor.cpp",
+    "abi": "nonvirtual thiscall complete destructor; no arguments; void; 64-byte sixteen-float object; no this adjustment",
+    "evidence": [
+      "Fn41fb90/F.cpp",
+      "Fn458aa0/F.cpp",
+      "Fn47dbf0/F.cpp"
+    ],
+    "reason": "Annotated original matrix destructor is ret at 0x402310; dedicated canonical source replaces shared CameraSoulStubs scoring owner."
+  },
+  "?Actor@CallActor@@QAEPAUTweakActor@@XZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionTweak/TweakExec.h",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@FaceCall@@QAEPAUFaceActorBody@@XZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionIf/IfFace.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@RgCall@@QAEPAURgActor@@XZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionMisc/ExecGoodie.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@FlashCall@@QAEPAXXZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionFlash/Flash.h",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@SpitCall@@QAEPAUSqueezil@@XZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionSpit/Spit.h",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@PosCall@@QAEPAXXZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionProp/PropPos.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@AudioCall@@QAEPAXXZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionStr/PlayAudio.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@TestCall@@QAEPAXXZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionIf/IfTests.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Actor@KCall@@QAEPAXXZ": {
+    "address": "00420c20",
+    "target": "?Actor@ScriptCall@@QAEPAUTarget@@XZ",
+    "owner": "FunctionArgs/ScriptCallActor.cpp",
+    "abi": "thiscall; no arguments; 32-bit pointer returned in eax; same script-call object at ecx; actor slot +0x08; no this adjustment",
+    "evidence": [
+      "FunctionIf/IfTests2.cpp",
+      "FunctionArgs/FunctionArgs.h"
+    ],
+    "reason": "Annotated 0x420c20 destination reads pointer at this+8; local pointee spellings do not change pointer-return ABI. Actor2 at 0x420c40 is excluded."
+  },
+  "?Get@IntFunctionArgument@@QAEHH@Z": {
+    "address": "00421150",
+    "target": "?Get@IntArg@@QAEHPAUScope@@@Z",
+    "owner": "Misc9/Getters.cpp",
+    "abi": "thiscall; one 32-bit context address argument; callee ret 4; return in eax; literal/name/value at +4/+8/+12; no this adjustment",
+    "evidence": [
+      "FunctionArgs/FunctionArgs.h",
+      "Misc9/Getters.cpp"
+    ],
+    "reason": "Original evaluates literal or scope lookup. Caller int context carries the same 32-bit address as canonical typed scope pointer. Float lookup adjusts context by +0x30; integer lookup does not."
+  },
+  "?Get@FloatFunctionArgument@@QAEMH@Z": {
+    "address": "00421440",
+    "target": "?Get@FloatArg@@QAEMPAUFloatScope@@@Z",
+    "owner": "Misc9/Getters.cpp",
+    "abi": "thiscall; one 32-bit context address argument; callee ret 4; return in x87 st0; literal/name/value at +4/+8/+12; no this adjustment",
+    "evidence": [
+      "FunctionMisc/MiscClasses.h",
+      "FunctionGoodie/Goodie.h",
+      "Misc9/Getters.cpp"
+    ],
+    "reason": "Original evaluates literal or scope lookup. Caller int context carries the same 32-bit address as canonical typed scope pointer. Float lookup adjusts context by +0x30; integer lookup does not."
+  },
+  "?Get@FloatArg@@QAEMH@Z": {
+    "address": "00421440",
+    "target": "?Get@FloatArg@@QAEMPAUFloatScope@@@Z",
+    "owner": "Misc9/Getters.cpp",
+    "abi": "thiscall; one 32-bit context address argument; callee ret 4; return in x87 st0; literal/name/value at +4/+8/+12; no this adjustment",
+    "evidence": [
+      "FunctionTweak/TweakExec.h",
+      "Misc9/Getters.cpp"
+    ],
+    "reason": "Original evaluates literal or scope lookup. Caller int context carries the same 32-bit address as canonical typed scope pointer. Float lookup adjusts context by +0x30; integer lookup does not."
+  },
+  "??4Mat9@@QAEAAU0@ABU0@@Z": {
+    "address": "00435760",
+    "target": "??4Rec9@@QAEAAU0@ABU0@@Z",
+    "owner": "Misc4/Copy9.cpp",
+    "abi": "thiscall; const source reference passed as one pointer; callee ret 4; destination reference in eax; nine 32-bit words at offsets 0..0x20; no this adjustment",
+    "evidence": [
+      "FunctionTweak/BodyParams.h",
+      "Misc4/Copy9.cpp"
+    ],
+    "reason": "Original 0x435760 copies nine dwords in order, with no floating arithmetic or member destructor calls, then returns ecx. Mat9 is two 12-byte vectors and three floats (0x24 bytes); Rec9 is the same 36-byte copy view."
+  },
+  "?GetWorld@@YAPAUWorld@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "Activity/TurnStep.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetWorld@@YAPAUSpriteWorld@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "Props2/SpriteBuild.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetWorld@@YAPAUGroundWorld@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "NavSurface/LoadGround.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetWorld@@YAPAULaunchWorld@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "FunctionTweak/exec/Exec_LaunchFromFaceNormal.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetWorld@@YAPAUPropWorld@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "PropLoader/LoadProp.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetWorld@@YAPAUWorldD@@XZ": {
+    "address": "004206a0",
+    "target": "?GetWorld@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4bada8",
+    "evidence": [
+      "Release/DecalSize.cpp",
+      "Globals/Globals.cpp"
+    ],
+    "reason": "Original world getter, distinct from simulation getter 0x420690. Spawn callers using conflicting GetWorld spelling were renamed before aliasing."
+  },
+  "?GetSpawnSimulation@@YAPAUWorld@@XZ": {
+    "address": "00420690",
+    "target": "?GetCurrentSimulation@@YAPAXXZ",
+    "owner": "Globals/Globals.cpp",
+    "abi": "cdecl; no arguments; 32-bit pointer return in eax; reads original global 0x4badbc",
+    "evidence": [
+      "Spawn/Spawn44d4f0.cpp",
+      "Spawn/Spawn44d750.cpp",
+      "Spawn/Spawn44d990.cpp",
+      "Spawn/Spawn44dc30.cpp",
+      "Spawn/SpawnRecord.cpp"
+    ],
+    "reason": "Spawn World local view is the current simulation, not world storage."
+  }
+}

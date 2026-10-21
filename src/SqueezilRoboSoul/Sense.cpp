@@ -1,9 +1,9 @@
+#include "Runtime/DynamicCast.h"
 // SqueezilRoboSoul::Sense (0x404720) and TargetGone (0x4047c0).
 #include "SqueezilRoboSoul/SqueezilRoboSoul.h"
 #include "Simulation/Simulation.h"
 
 Simulation *GetCurrentSimulation();                                      // 0x420690
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kSoulType[];                                           // 0x4b93e8
 extern const char kSimulationSoulType[];                                 // 0x4b9400
 
@@ -15,7 +15,7 @@ struct KindSoul {
 
 void SqueezilRoboSoul::Sense(const AwarenessRecord *seen)
 {
-    KindSoul *s = (KindSoul *)DynamicCast(GetCurrentSimulation()->GetSoul(seen->id), 0, kSoulType, kSimulationSoulType, 0);
+    KindSoul *s = (KindSoul *)SqzRTDynamicCast(GetCurrentSimulation()->GetSoul(seen->id), 0, kSoulType, kSimulationSoulType, 0);
     int kind = s->Kind();
     if (kind < 3)
         records[kind].Offer(seen);
@@ -25,7 +25,7 @@ int SqueezilRoboSoul::TargetGone(int kind)
 {
     if (kind < 3 && records[kind].id != -1) {
         if (!GetCurrentSimulation()->GetActor(records[kind].id)
-            || ((KindSoul *)DynamicCast(GetCurrentSimulation()->GetSoul(records[kind].id), 0, kSoulType, kSimulationSoulType, 0))->Kind() == 6)
+            || ((KindSoul *)SqzRTDynamicCast(GetCurrentSimulation()->GetSoul(records[kind].id), 0, kSoulType, kSimulationSoulType, 0))->Kind() == 6)
             return 1;
     }
     return 0;

@@ -1,0 +1,31 @@
+{
+  "?g_world@@3PAXA": {
+    "address": "4BADA8",
+    "storage": "one mutable 32-bit object pointer",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ]
+  },
+  "?g_world@@3PAUWorld@@A": {
+    "address": "4BADA8",
+    "storage": "one mutable 32-bit object pointer",
+    "evidence": [
+      "Release/Shutdown.cpp",
+      "Sim2/StartGame.cpp"
+    ]
+  },
+  "?g_currentSimulation@@3PAXA": {
+    "address": "4BADBC",
+    "storage": "one mutable 32-bit object pointer",
+    "evidence": [
+      "Globals/Globals.cpp"
+    ]
+  },
+  "?g_currentSimulation@@3PAUSim@@A": {
+    "address": "4BADBC",
+    "storage": "one mutable 32-bit object pointer",
+    "evidence": [
+      "Release/Shutdown.cpp"
+    ]
+  }
+}

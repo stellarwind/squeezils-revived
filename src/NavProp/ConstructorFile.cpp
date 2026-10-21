@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // NavProp constructor, 0x429380 (ret 0x5c): build the cycle prop, load its navigation surface from a file through
 // the place's surface list, take the surface's property names (empty values) and instance, then copy the bindings.
 #define V3_COPYCTOR_OUTOFLINE
@@ -33,7 +34,6 @@ struct NavFileSurfaces {
 };
 struct NavFilePlace { NavFileSurfaces *GetSurfaces(); }; // 0x439b60
 void *GetSimulation();                                    // 0x420690 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kWorldSimulationType[], kWorldPlaceType[]; // 0x4ba1d0, 0x4bae38
 extern const char kEmptyValue[];                          // 0x4b9cf4
 struct NavFileProp : NavFileCycle {
@@ -52,9 +52,9 @@ NavFileProp::NavFileProp(Vector3f position, Vector3f scale, Vector3f direction, 
     const char *a, const char *b, const char *c, NavFileBindings *bindings)
     : NavFileCycle(position, scale, direction, up, names, cycle, messages, start, stepPeriod, keepRemainder, clipStart)
 {
-    surface = ((NavFilePlace *)DynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0))
+    surface = ((NavFilePlace *)SqzRTDynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0))
         ->GetSurfaces()->Load(a, b, c);
-    NavFileInfo *info = ((NavFilePlace *)DynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0))
+    NavFileInfo *info = ((NavFilePlace *)SqzRTDynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0))
         ->GetSurfaces()->Info(surface);
     int i;
     for (i = 0; i < info->names.count; ++i)

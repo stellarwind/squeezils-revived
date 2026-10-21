@@ -29,7 +29,7 @@ FunctionArgument *ParseArgument(ArgList *list);   // 0x420ee0 (cdecl)
 int DebugLogAll(const char *fmt, ...);     // 0x419290
 
 struct ScriptCall {                      // the small record PostFunction passes as `args`
-    int pad[2];
+    int pad[2];                          // 0x00
     struct Target *target;               // 0x08
     struct Target *Actor();              // 0x420c20 (not inlined)
 };

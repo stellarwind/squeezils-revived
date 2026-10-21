@@ -36,22 +36,22 @@ QvNodeC487720::QvNodeC487720()
     ((int *)this)[0xd] = 0;
     ((int *)this)[0x14] = 0;
     if (firstInstance)
-        fieldData->addEnum("Family", "SERIF", 0);
+        fieldData->addEnumValue("Family", "SERIF", 0);
     if (firstInstance)
-        fieldData->addEnum("Family", "SANS", 1);
+        fieldData->addEnumValue("Family", "SANS", 1);
     if (firstInstance)
-        fieldData->addEnum("Family", "TYPEWRITER", 2);
+        fieldData->addEnumValue("Family", "TYPEWRITER", 2);
     if (firstInstance)
-        fieldData->addEnum("Style", "NONE", 0);
+        fieldData->addEnumValue("Style", "NONE", 0);
     if (firstInstance)
-        fieldData->addEnum("Style", "BOLD", 1);
+        fieldData->addEnumValue("Style", "BOLD", 1);
     if (firstInstance)
-        fieldData->addEnum("Style", "ITALIC", 2);
+        fieldData->addEnumValue("Style", "ITALIC", 2);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("Family", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("Family", local_20, local_1c, local_14);
     ((int *)this)[0xe] = (int)local_20;
     ((int *)this)[0xf] = (int)local_1c;
     ((int *)this)[0x10] = (int)local_14;

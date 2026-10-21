@@ -4,6 +4,5 @@
 ^\?Lend@LandSimulation            41e850 lend
 ^\?Return@LandSimulation          41e880 return
 ^\?GetPlaceName@LandSimulation    41e8c0 getplacename
-^\?GetTable@LandSimulation  420c20 gettable_d420c20
 ^\?GetTable@LandSimulation  481fc0 gettable_d481fc0
 ^\?\?0LandSim@@  41e310 landctor 112

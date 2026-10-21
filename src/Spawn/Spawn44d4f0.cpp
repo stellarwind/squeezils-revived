@@ -23,7 +23,7 @@ struct World {
     int Current();                                                  // 0x414250
     void Add(int current, Body *body, MessageMap *map);             // 0x414160
 };
-World *GetWorld();                                                  // 0x420690
+World *GetSpawnSimulation();                                                  // 0x420690
 
 struct Spawner {
     char pad[0x11c];
@@ -42,6 +42,6 @@ void Spawner::SpawnAt(int slot, const char *name, SpawnParams params)
     float s = scales.Scale(ids.Id(String(name)));
     body->scale = s;
     map->Start(params);
-    World *w = GetWorld();
+    World *w = GetSpawnSimulation();
     w->Add(slot, body, map);
 }

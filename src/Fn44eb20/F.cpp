@@ -1,10 +1,10 @@
+#include "Runtime/DynamicCast.h"
 // 0x44eb20 (ret 4): Splash::FindImage - pick the ini of the game (0), of the current place (1) or of the current region (2)
 // and build the splash bitmap path ".\ui\<Defaults/Splash or "splash">.bmp" from it.
 #include <stdio.h>
 #include <string.h>
 #include "IniReader/IniReader.h"
 extern char g_iniPath[];                                    // 0x4c74d8
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kWorldSimulationType[], kWorldPlaceType[], kWorldRegionType[];   // 0x4ba1d0, 0x4bae38, 0x4ba370
 struct Simulation;
 Simulation *GetSimulation();                                // 0x420690
@@ -28,7 +28,7 @@ void Splash::FindImage(int which)
         strcpy(path, g_iniPath);
         break;
     case 1: {
-        PlaceSim *place = (PlaceSim *)DynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0);
+        PlaceSim *place = (PlaceSim *)SqzRTDynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldPlaceType, 0);
         strcpy(path, GetLand()->GetPlaceName(place->region));
         strcat(path, "\\place");
         sprintf(number, "%02d", place->location);
@@ -37,7 +37,7 @@ void Splash::FindImage(int which)
         break;
     }
     case 2: {
-        RegionSim *region = (RegionSim *)DynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldRegionType, 0);
+        RegionSim *region = (RegionSim *)SqzRTDynamicCast(GetSimulation(), 0, kWorldSimulationType, kWorldRegionType, 0);
         strcpy(path, GetLand()->GetPlaceName(region->GetRegion()));
         strcat(path, "\\region\\region.ini");
         break;

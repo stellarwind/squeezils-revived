@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SetCyclePropFunction base slots (SQZ.EXE 0x470360-0x470440).
 #include "FunctionCycle/Cycle.h"
 
@@ -5,7 +6,7 @@ int SetCyclePropFunction::Execute(ScriptCall *args, int extra)
 {
     void *found = FindProp(name, ((CallLevel *)args)->Level(), 0);
     if (found) {
-        CycleProp *prop = (CycleProp *)DynamicCast(found, 0, kPropType, kCyclePropType, 0);
+        CycleProp *prop = (CycleProp *)SqzRTDynamicCast(found, 0, kPropType, kCyclePropType, 0);
         return Apply(prop, args, extra);
     }
     DebugLogAll("WARNING: SetCyclePropFunction couldn't find prop %s", name.c_str());

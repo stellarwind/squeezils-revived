@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // RegionSimulation slot 10 (SQZ.EXE 0x418680): identical to PlaceSimulation::Load (load a saved game and switch to a new RegionSimulation).
 #include <stdio.h>
 #include <string.h>
@@ -19,7 +20,6 @@ struct NextRegion : Sim { char pad[0x64]; NextRegion(int region, int location); 
 struct Panel { void UpdateRegionSprites(); };                                       // 0x42e2a0
 Panel *GetPanel();                                                                  // 0x4206c0 (cdecl)
 void SetGamePaused(int p);                                                          // 0x43ed80 (cdecl)
-void *DynamicCast(void *p, int a, void *from, void *to, int b);                     // 0x48f060
 extern char kSoulType[], kPlayerSoulType[];
 extern char *g_signature;                                                           // 0x4bc6b0
 struct RegionSimulation {
@@ -52,7 +52,7 @@ int RegionSimulation::Load(const char *path)
         return 0;
     }
     fclose(f);
-    PlayerSoul *soul = (PlayerSoul *)DynamicCast(GetSimulation()->GetSoul(0), 0, kSoulType, kPlayerSoulType, 0);
+    PlayerSoul *soul = (PlayerSoul *)SqzRTDynamicCast(GetSimulation()->GetSoul(0), 0, kSoulType, kPlayerSoulType, 0);
     Possessions *p = soul->TakePossessions();
     p->SetInventory(inventory);
     GetLand()->Return(0, p);

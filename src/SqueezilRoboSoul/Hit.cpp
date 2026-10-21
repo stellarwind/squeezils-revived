@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SqueezilRoboSoul::Hit (slot 9, SQZ.EXE 0x404630): pick the activity for being hit by this kind of creature, run it, then the base Hit.
 struct Body2 {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5();
@@ -10,7 +11,6 @@ struct KindSoul { virtual void v0(); virtual void v1(); virtual void v2(); virtu
                   virtual int Kind(); };                 // slot 8 (+0x20)
 struct SoulHolder { KindSoul *GetSoul(int id); };        // 0x414080
 SoulHolder *GetSimulation();                             // 0x420690 (cdecl)
-void *DynamicCast(void *p, int a, void *from, void *to, int b);   // 0x48f060
 extern char kSoulType[], kKindSoulType[];
 struct Character {
     int TrySetState(int state, void *soul);              // 0x4486f0
@@ -31,7 +31,7 @@ struct SqueezilRoboSoul {
 
 void SqueezilRoboSoul::Hit(int knock, int sprayNuts, int byId)
 {
-    senseKind = ((KindSoul *)DynamicCast(GetSimulation()->GetSoul(byId), 0, kSoulType, kKindSoulType, 0))->Kind();
+    senseKind = ((KindSoul *)SqzRTDynamicCast(GetSimulation()->GetSoul(byId), 0, kSoulType, kKindSoulType, 0))->Kind();
     int wanted = 0x13;
     int onGround = GetBody()->IsOnGround();
     switch (senseKind) {

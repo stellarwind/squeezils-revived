@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SetCyclePropFunction (vtable 0x4a0f64) and its six subclasses: set one property of a named animated prop to a float.
 #pragma once
 #include "FunctionArgs/FunctionArgs.h"
@@ -16,7 +17,6 @@ struct CycleProp {                       // the animated prop found by name
     virtual void SetWrap(int);                 // slot 24 (+0x60)
 };
 void *FindProp(String name, int level, int zero);        // 0x42c8b0 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kPropType[];           // 0x4bb910
 extern const char kCyclePropType[];      // 0x4bb9c0
 

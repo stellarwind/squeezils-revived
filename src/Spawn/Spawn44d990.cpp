@@ -24,7 +24,7 @@ struct World {
     int Current();                                                  // 0x414250
     void Add(int cur, Body *body, MessageMap *map);             // 0x414160
 };
-World *GetWorld();                                                  // 0x420690
+World *GetSpawnSimulation();                                                  // 0x420690
 
 struct Spawner {
     char pad[0x11c];
@@ -44,7 +44,7 @@ void Spawner::SpawnVel(const char *name, SpawnParams params, Vec3 vel, int extra
     map->Start(params, vel, extra);
     int id = ids.Id(String(name));
     body->scale = scales.Scale(id);
-    World *w = GetWorld();
+    World *w = GetSpawnSimulation();
     int cur = w->Current();
     w->Add(cur, body, map);
 }

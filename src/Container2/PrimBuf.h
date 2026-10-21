@@ -33,8 +33,8 @@ inline void WriteElem(ByteStream *s, Vector3f *p) { s->WriteVec3((Vec3 *)p); }
 inline void ReadElem(ByteStream *s, Vector3f *p) { s->ReadVec3((Vec3 *)p); }
 #endif
 #ifdef PB_STRING
-void WriteElem(ByteStream *s, String *p);        // 0x438770
-void ReadElem(ByteStream *s, String *p);         // 0x4387a0
+ByteStream *WriteElem(ByteStream *s, String *p); // 0x438770
+ByteStream *ReadElem(ByteStream *s, String *p);  // 0x4387a0
 #endif
 
 template <class T, int ID>

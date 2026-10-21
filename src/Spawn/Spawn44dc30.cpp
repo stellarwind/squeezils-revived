@@ -24,7 +24,7 @@ struct World {
     int Current();                                                  // 0x414250
     void Add(int cur, Body *body, MessageMap *map);             // 0x414160
 };
-World *GetWorld();                                                  // 0x420690
+World *GetSpawnSimulation();                                                  // 0x420690
 
 struct Spawner {
     char pad[0x11c];
@@ -43,6 +43,6 @@ void Spawner::SpawnNut(int slot, SpawnParams params, Vec3 vel, int extra)
     MessageMap *map = new MessageMap(body, "SpitNutGoodie", maker.Make(ids.Id(String("SpitNutGoodie"))));
     body->scale = scales.Scale(1);
     map->Start(params, vel, extra);
-    World *w = GetWorld();
+    World *w = GetSpawnSimulation();
     w->Add(slot, body, map);
 }

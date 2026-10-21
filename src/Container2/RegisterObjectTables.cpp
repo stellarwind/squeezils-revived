@@ -4,20 +4,7 @@
 #define SET_CREATE
 #include "Container/ContainerTable.h"
 
-class Character;
-class Creature;
-struct ObjArrayC : Array<Character *>, BufferObject {
-    virtual const char *TypeName();
-    virtual BufferObject *Create();
-    virtual void Write(void *stream);
-    virtual void Read(void *stream);
-};
-struct ObjArrayD : Array<Creature *>, BufferObject {
-    virtual const char *TypeName();
-    virtual BufferObject *Create();
-    virtual void Write(void *stream);
-    virtual void Read(void *stream);
-};
+#include "Container2/ObjectArrayViews.h"
 void RegisterBufferObject(BufferObject *prototype); // 0x448ce0
 
 void RegisterBufferPrototype_45d430()

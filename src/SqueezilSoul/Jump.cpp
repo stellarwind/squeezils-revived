@@ -51,7 +51,7 @@ struct Matrix16 {                           // a body matrix held by value (64 b
 };
 
 void PlayEffect(String name, Vector3f at); // 0x44a250
-void DebugLog(const char *format, ...);     // 0x419360
+int DebugLog(const char *format, ...);      // 0x419360
 
 struct Clock {
     int Ticks();                            // 0x41ebf0

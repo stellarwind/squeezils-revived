@@ -35,7 +35,7 @@ struct World {
     int Current(); // 0x414250
     void Add(int current, Body *body, MessageMap *map); // 0x414160
 };
-World *GetWorld(); // 0x420690
+World *GetSpawnSimulation(); // 0x420690
 struct Spawner {
     char pad[0x160];
     ScaleTable scales; // +0x160
@@ -69,7 +69,7 @@ void Spawner::SpawnRecordObject(SpawnRecord *record)
     NamedBodyN *body = new NamedBodyN(matrix, names.Lookup(String(record->name)).c_str());
     MessageMap *map = new MessageMap(body, record->name, maker.Make(record->kind));
     body->scale = scales.Scale(record->kind);
-    World *world = GetWorld();
+    World *world = GetSpawnSimulation();
     int id = world->Current();
     world->Add(id, body, map);
     record->worldId = id;

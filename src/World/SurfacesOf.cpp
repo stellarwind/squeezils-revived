@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // World::SurfacesOf, SQZ.EXE 0x4365a0.
 #include "World/World.h"
 
@@ -19,13 +20,12 @@ struct WorldPlace {
     WorldSurfaces *GetSurfaces(); // 0x439b60
 };
 void *GetSimulation(); // 0x420690
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kWorldSimulationType[]; // 0x4ba1d0
 extern const char kWorldPlaceType[];      // 0x4bae38
 
 NavMesh *World::SurfacesOf(int face)
 {
     WorldContact contact(face, 0);
-    return ((WorldPlace *)DynamicCast(GetSimulation(), 0,
+    return ((WorldPlace *)SqzRTDynamicCast(GetSimulation(), 0,
         kWorldSimulationType, kWorldPlaceType, 0))->GetSurfaces()->FaceMesh(&contact);
 }

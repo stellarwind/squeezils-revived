@@ -35,18 +35,18 @@ QvNodeC487d90::QvNodeC487d90()
     ((int *)this)[0x10] = 0x3f800000;
     ((int *)this)[0x14] = 0x40000000;
     if (firstInstance)
-        fieldData->addEnum("Part", "SIDES", 1);
+        fieldData->addEnumValue("Part", "SIDES", 1);
     if (firstInstance)
-        fieldData->addEnum("Part", "TOP", 2);
+        fieldData->addEnumValue("Part", "TOP", 2);
     if (firstInstance)
-        fieldData->addEnum("Part", "BOTTOM", 4);
+        fieldData->addEnumValue("Part", "BOTTOM", 4);
     if (firstInstance)
-        fieldData->addEnum("Part", "ALL", 7);
+        fieldData->addEnumValue("Part", "ALL", 7);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("Part", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("Part", local_20, local_1c, local_14);
     ((int *)this)[10] = (int)local_20;
     ((int *)this)[0xb] = (int)local_1c;
     ((int *)this)[0xc] = (int)local_14;

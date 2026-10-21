@@ -1,5 +1,8 @@
 // BufferObject, PrimitiveArray<T,ID> and Set<T,ID> of the game (see META/CONTAINERS.md).
 #pragma once
+#if defined(SQZ_INTEGRATION) && !defined(BUFFEROBJECT_SIGNATURES)
+#define BUFFEROBJECT_SIGNATURES
+#endif
 #include "Container/ContainerArray.h"
 
 // The save/load interface (vtable 0x49d52c): four pure virtuals. Their implementations are not reconstructed.

@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SetSurfaceTypeFunction::Execute (0x440a30): hand the (name, type) pair and the calling prop's handle to the place's surface table.
 #include "FunctionSurf/Surf.h"
 
@@ -25,7 +26,6 @@ struct SurfProp {
     virtual void v24(); virtual void v25();
     virtual int Handle();                                // slot 26 (+0x68)
 };
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kPropType[];                           // 0x4bb910
 extern const char kHandleType[];                         // 0x4bbb58
 
@@ -33,7 +33,7 @@ int SetSurfaceTypeFunction::Execute(ScriptCall *args, int extra)
 {
     SurfPlacement where;
     if (((SurfCall *)args)->Level())
-        where.prop = ((SurfProp *)DynamicCast(((SurfCall *)args)->Level(), 0, kPropType, kHandleType, 0))->Handle();
+        where.prop = ((SurfProp *)SqzRTDynamicCast(((SurfCall *)args)->Level(), 0, kPropType, kHandleType, 0))->Handle();
     else
         where.prop = 0;
     GetPlace()->GetSurfaces()->SetType(first->Get(extra), second->Get(extra), &where);

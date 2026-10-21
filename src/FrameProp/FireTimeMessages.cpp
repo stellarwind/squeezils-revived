@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SQZ.EXE 0x427b50: dispatch clip messages crossed in either time direction.
 #include "FrameProp/FrameProp.h"
 #include "String/String.h"
@@ -13,7 +14,6 @@ struct FrameMessageTable {
 };
 struct FrameMessageSimulation { void *FindSoul(int actor); }; // 0x414080, ret 4
 FrameMessageSimulation *GetSimulation(); // 0x420690
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kFrameMessageSoulType[], kFrameMessageSqueezilSoulType[]; // 0x4b93e8, 0x4b9368
 struct FrameMessageCaller {
     int storage[6];
@@ -29,7 +29,7 @@ void FrameProp::FireTimeMessages(float from, float to)
         for (int i = 0; i < messages->keys.count; ++i) {
             if (messages->keys.Get(i) > from && messages->keys.Get(i) <= to) {
                 if (actorIndex != -1) {
-                    void *soul = DynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
+                    void *soul = SqzRTDynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
                         kFrameMessageSoulType, kFrameMessageSqueezilSoulType, 0);
                     FrameMessageCaller caller(soul, actorIndex, this);
                     PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);
@@ -43,7 +43,7 @@ void FrameProp::FireTimeMessages(float from, float to)
         for (int i = messages->keys.count - 1; i >= 0; --i) {
             if (messages->keys.Get(i) < from && messages->keys.Get(i) >= to) {
                 if (actorIndex != -1) {
-                    void *soul = DynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
+                    void *soul = SqzRTDynamicCast(GetSimulation()->FindSoul(actorIndex), 0,
                         kFrameMessageSoulType, kFrameMessageSqueezilSoulType, 0);
                     FrameMessageCaller caller(soul, actorIndex, this);
                     PostFunction(messages->ValueAt(i).c_str(), &caller, 0, 0);

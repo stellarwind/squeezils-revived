@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // GoodieSoul::Touch (slot 4, SQZ.EXE 0x4599b0): a creature touched the goodie; one that takes goodies is given it (unless thrown).
 #include "String/String.h"
 struct Taker {
@@ -14,7 +15,6 @@ struct Sim {
     void AddId(int id);                                  // 0x414180
 };
 Sim *GetSimulation();                                    // 0x420690 (cdecl)
-void *DynamicCast(void *p, int a, void *from, void *to, int b);   // 0x48f060
 void PhysicalCollision(int a, int b);                    // 0x447590 (cdecl)
 extern char kMessageMapType[], kGrantMessageMapType[];
 struct GoodieSoul {
@@ -29,7 +29,7 @@ struct GoodieSoul {
 void GoodieSoul::Touch(int otherId)
 {
     Sim *sim = GetSimulation();
-    Taker *taker = (Taker *)DynamicCast(sim->GetSoul(otherId)->GetInterface(1), 0, kMessageMapType, kGrantMessageMapType, 0);
+    Taker *taker = (Taker *)SqzRTDynamicCast(sim->GetSoul(otherId)->GetInterface(1), 0, kMessageMapType, kGrantMessageMapType, 0);
     if (!taker)
         return;
     if (taker->Accepts(*(int *)((char *)this + 0x10)) && !thrown) {

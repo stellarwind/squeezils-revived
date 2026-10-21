@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SQZ.EXE 0x4577e0: restore orientation, position and the surface-relative contact.
 #include "SqueezilBody/SqueezilBody.h"
 
@@ -37,7 +38,6 @@ struct PlacementSimulation {
     PlacementSurfaces *GetSurfaces(); // 0x439b60
 };
 void *GetSimulation(); // 0x420690
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kWorldSimulationType[]; // 0x4ba1d0
 extern const char kWorldPlaceType[]; // 0x4bae38
 
@@ -56,7 +56,7 @@ void SqueezilBody::Place(BodyPlacement placement)
     contact.second=placement.contact.second;
     *(PlacementMatrix *)contact.matrix = *(PlacementMatrix *)placement.contact.matrix;
     ((PlacementMatrix *)contact.matrix)->CopyInline(
-        ((PlacementSimulation *)DynamicCast(GetSimulation(), 0,
+        ((PlacementSimulation *)SqzRTDynamicCast(GetSimulation(), 0,
             kWorldSimulationType, kWorldPlaceType, 0))->GetSurfaces()->FaceOf(
                 &placement.contact)->Relative(*(PlacementMatrix *)matrix));
 }

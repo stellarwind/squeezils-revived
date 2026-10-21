@@ -33,6 +33,7 @@ Vector3fEmpty/targets.txt Vector3fEmpty/Vector3fEmpty.cpp
 Destruct/targets.txt Destruct/Destruct.cpp
 Matrix4/targets.txt Matrix4/SetTranslation.cpp Matrix4/Turn.cpp
 Matrix4/targets_setrows.txt Matrix4/SetRows.cpp
+Matrix4/targets_dtor.txt Matrix4/MatrixDtor.cpp
 DisplayConfig/targets.txt DisplayConfig/DisplayConfig.cpp
 DisplayConfig/targets_obj.txt DisplayConfig/DisplayObj.cpp
 MorphCycle/targets.txt MorphCycle/MorphCycle.cpp MorphCycle/MorphCycleTimeAt.cpp MorphCycle/MorphCycleCtor.cpp MorphCycle/MorphCycleCopyCtor.cpp MorphCycle/MorphCycleDtor.cpp
@@ -412,7 +413,6 @@ Qv/gen/targets_C_4862d0.txt Qv/gen/C_4862d0.cpp
 Qv/gen/targets_C_486d70.txt Qv/gen/C_486d70.cpp
 Fam112/targets.txt Fam112/KeyGet.cpp
 Fam61/targets.txt Fam61/MemberDtor.cpp
-Fam48/targets.txt Fam48/BothSlots.cpp
 Qv/targets_store.txt Qv/Store.cpp
 Qv/targets_error.txt Qv/Error.cpp
 Fam68/targets.txt Fam68/TwoVecDtor.cpp
@@ -612,6 +612,7 @@ Audio/targets_find.txt Audio/FindSound.cpp
 Audio/targets_playeffect.txt Audio/PlayEffect.cpp
 Audio/targets_update.txt Audio/UpdateSounds.cpp
 FunctionArgs/targets_parsefunction.txt FunctionArgs/ParseFunction.cpp
+FunctionArgs/targets_actor.txt FunctionArgs/ScriptCallActor.cpp
 Dtor44f590/targets.txt Dtor44f590/D.cpp
 Fn450b90/targets.txt Fn450b90/D.cpp
 Init446d00/targets.txt Init446d00/D.cpp
@@ -880,3 +881,6 @@ Container/gen/targets_Set66.txt Container/gen/Set66.cpp
 Container/gen/targets_Set69.txt Container/gen/Set69.cpp
 Container/targets.txt Container/Container.cpp
 Qv/targets_owner.txt Qv/FieldOwner.cpp
+Container/gen/targets_SetDtorOwners.txt Container/gen/SetDtorOwners.cpp
+Container2/targets_table_names.txt Container2/TableNames.cpp
+Container2/targets_table_io.txt Container2/TableIO.cpp

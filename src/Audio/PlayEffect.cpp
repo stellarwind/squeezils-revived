@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SQZ.EXE 0x44a250: duplicate and play a sample relative to the listener.
 #include "compat41.h"
 #include <windows.h>
@@ -25,7 +26,6 @@ struct EffectContact {
 struct EffectSurface { float unused, radiusSquared; };
 struct EffectSurfaces { EffectSurface *Surface(EffectContact *where); }; // 0x412be0
 struct EffectPlace { EffectSurfaces *GetSurfaces(); }; // 0x439b60
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kWorldSimulationType[], kWorldPlaceType[]; // 0x4ba1d0, 0x4bae38
 struct StreamBuffers { void Insert(LPDIRECTSOUNDBUFFER *item, int at); }; // 0x4680b0
 extern StreamBuffers gEffectBuffers; // 0x4c77e0
@@ -58,7 +58,7 @@ void PlayEffectAt(String name, Vector3f position)
     float distance;
     // The original tests the unsigned representation of Y, including its sentinel.
     if (*(unsigned *)&position.y < 0xc7c35000U) {
-        EffectPlace *place = (EffectPlace *)DynamicCast(GetEffectSimulation(), 0,
+        EffectPlace *place = (EffectPlace *)SqzRTDynamicCast(GetEffectSimulation(), 0,
             kWorldSimulationType, kWorldPlaceType, 0);
         float radius = (float)sqrt(place->GetSurfaces()->Surface(&contact)->radiusSquared);
         distance = direction.Length() / radius;

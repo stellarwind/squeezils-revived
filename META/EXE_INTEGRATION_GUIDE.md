@@ -303,12 +303,13 @@ equivalence needs considerably more evidence than a successful launch.
 ## 11. Session-sized continuation
 
 Treat integration as a sequence of bounded jobs: first inventory and probe,
-then one coherent ownership/ABI/data family per fresh session. Script repeated
+then one coherent ownership/ABI/data family per work block. Session resets are
+optional and user-controlled; do not require or request one. Script repeated
 inventory work; avoid open-ended repair loops or enormous diagnostics in chat.
 After each family, verify its affected units and the relevant integration step.
 Do not regenerate STATUS.md unless requested, and do not edit HANDOFF.md.
 
-The next session should start from the measured probe results below and choose
+The next block should start from the latest measured probe results and choose
 the smallest dependency family that removes a meaningful group of blockers.
 
 ## First probe results
@@ -548,3 +549,501 @@ choosing an owner or renaming.
   ordinary ABI/name mismatches, skipped data and interior code references.
 - All earlier working-tree edits (DebugLogAll/global aliases, Bitmap ownership,
   ObjArray names and Qv field-owner/signature work) are included in this push.
+
+## Integration workflow improvements (2026-10-21)
+
+These requirements guide future integration work. The unified driver, freshness
+validation, tracked decision registry, and expanded classification report below
+are **not implemented yet**. Do not present them as available commands.
+
+### 1. Make a clean run reproducible
+
+The next tooling block should provide one driver that runs compilation,
+ownership inventory, alias generation (data, entry, runtime, Qv), link-input
+refresh, object projection, and diagnostic linking in dependency order. Split
+the existing compile/link probe as needed so alias generation sees current
+objects and the final link sees current aliases. Run once, read once; no polling
+or automatic repair loop. Preserve failed compilation evidence and never omit
+failed sources from a claimed complete build.
+
+Validate freshness with hashes of sources and included headers, compiler and
+flags/defines, manifest and target mappings, ownership/alias policies, libraries,
+and generated inputs. File existence alone is insufficient. Reject stale or
+missing prerequisites in verified mode; cached diagnostic mode must identify
+unverified inputs. Record one run identity and input provenance in all reports.
+
+Until that driver exists, use the manual sequence above, including the newer
+runtime_aliases.py and qv_aliases.py generators before refreshing link inputs
+and projecting them. Rebuild or regenerate dependent outputs after changes;
+otherwise describe the result as a cached diagnostic.
+
+### 2. Keep reviewed decisions separate from generated evidence
+
+Create a tracked registry for reviewed mappings: original address, full
+decorated symbol, implementation owner, aliases, ABI/layout evidence, and
+reason for selection. Generate inventories and COFF alias objects from current
+inputs plus that registry. Validate registry decisions against current objects.
+
+data_aliases.py currently seeds candidates from a prior unresolved report and
+prior aliases. Replace that history dependence with current undefined object
+references. Preserve full decorated names rather than collapsing candidates by
+readable variable name. Require a clean build and a repeated build to produce
+the same alias set for identical inputs. A shared address does not establish
+type compatibility; retain ambiguous declarations for review.
+
+### 3. Pick missing-definition families from classified evidence
+
+Separate ordinary methods/data, QvLib, runtime/imports, and `_fn_ADDRESS`
+references. For code pointers, classify exact entries, interior addresses, EH
+funclets, ambiguous owners, and absent mappings. Treat absence from the target
+inventory as an evidence gap, not proof that source is missing. Rank bounded
+families by affected references and dependency impact. Never infer arbitrary
+interior offsets or insert dummy bodies to improve the count.
+
+For duplicates, distinguish the same original routine from different routines
+that share a reconstructed name. Preserve the projection's section/relocation
+safeguards and exactly-one-owner checks. Use shared class declarations once
+identity is established; linker-name agreement alone does not prove ABI/layout
+compatibility. Verify affected match units and the relevant link stage after
+each family.
+
+### 4. Report integration readiness separately from source coverage
+
+One authoritative summary per run must identify failed/omitted sources,
+duplicate diagnostics, unique unresolved symbols and categories, input
+verification, diagnostic completion, and runtime checks. Compare equivalent
+input sets; an internal linker failure has no usable unresolved total.
+Explicitly supersede old reports rather than choosing whichever count is lowest.
+Source coverage, compilation, linking, and gameplay validation are separate
+milestones. Keep this guide and Repo/META/EXE_INTEGRATION_GUIDE.md identical;
+update generated STATUS.md only at the user's request.
+
+At this workflow review, the latest saved completed projected diagnostic is
+`build/integration/containers/partial-link-summary.json`: 0 LNK2005 messages,
+7,416 LNK2001 messages, 6,633 unique unresolved symbols, no omitted failed
+sources, and no internal linker error. It supersedes the earlier 17/6,751
+diagnostic counts above for that saved input set. Cached objects remain
+unverified; this review did not rerun compilation or linking. The corresponding
+unresolved report contains 3,834 `_fn_ADDRESS` names (about 58% of unresolved
+symbols), supporting a dedicated code-pointer classification block next after
+the reproducible-driver work. These figures are a snapshot, not a build gate.
+
+## Bounded pipeline block (2026-10-21)
+
+`tools/integration_pipeline.py` now runs compile-only, ownership inventory,
+data/entry/runtime/Qv alias generation, response refresh, object projection and
+one diagnostic link in dependency order. Run from the workspace root after
+sourcing tools/flagsearch/env.sh. It removes old alias objects before compilation,
+stops on failed prerequisites, and writes build/integration/pipeline-summary.json
+with a run ID, stage logs, environment, input/output hashes and diagnostic results.
+This is cached-input diagnostic mode only: extracted data/resources/QvLib remain
+unverified. The driver does not implement a verified release mode or a tracked
+ABI decision registry. Hash coverage includes repository source/header/tool/input
+files, compiler/linker/dumpbin and LIB-directory archives; external INCLUDE headers
+and compiler support DLLs are not yet covered. No freshness claim extends to them.
+
+Data aliases now derive candidates from current external-references.json rather
+than previous link reports or alias output. Full decorated spellings are retained;
+multiple spellings for one readable variable are rejected for ABI review. Address
+comments still supply candidate evidence, not a complete type/layout proof.
+
+Completed run c3603512-d9da-4ec1-a771-15808ef0fa88 compiled 1,136/1,136 sources,
+omitted none, and completed projection/link diagnostics: zero LNK2005, 7,468
+LNK2001 messages, 6,666 unique unresolved symbols, no internal linker error.
+Inputs covered by the recorded snapshot were unchanged during the run. This
+supersedes the previous 0/7,416/6,633 saved diagnostic for the new alias input set;
+the counts are not an equivalent-input improvement comparison. Current-reference
+alias generation emits 472 data aliases (previously 505); rejected candidates stay
+unresolved. Repeating generation produced the same COFF SHA-256. Python syntax
+and git diff whitespace checks passed. No runtime validation or playable EXE.
+Next bounded block: classify remaining code pointers or review one rejected
+ordinary data/ABI family; complete external-header provenance before verified mode.
+
+## Code-pointer classification block (2026-10-21)
+
+Added tools/classify_code_refs.py, also invoked by integration_pipeline.py only
+after a completed diagnostic link. It emits code-reference-classification.json
+with input hashes, one category per current unresolved _fn_ADDRESS name, original
+range evidence and owner-family rankings. It emits no aliases. Original interior
+offsets are explicitly non-relocatable; the generated EH inventory is heuristic.
+Counts are linker diagnostic messages, not individual relocation sites.
+
+Against the completed 6,666-symbol diagnostic, all 3,834 code pointers partition
+exactly once: 1,784 EH-inventory funclets, 1,665 original-range interiors, 209
+original entries without target mappings, 132 absent range mappings, 40 entries
+whose implementation targets multiple addresses, and four adapter-only entries.
+There are no currently unresolved unique ordinary mapped entries. The largest
+mapped family is Qv/GetTypeId.cpp (36 names); examine its per-type QvLib owners
+and data requirements rather than aliasing every entry to a generic shared body.
+The other shared-entry owners include CameraSoul, Bitmap2 and LandSimulation.
+
+Verified the classification covers every current pointer diagnostic exactly once,
+category totals and per-symbol message counts agree, and Python syntax checks
+pass. No link inputs changed in this block; link counts remain the previous
+completed run's evidence. The new pipeline classification hook has syntax checks
+but has not yet been exercised by another full compile/link pass. Runtime and
+cached library verification remain outstanding.
+
+## Qv per-type field-data pointer block (2026-10-21)
+
+Resolved 37 _fn_ADDRESS pointers to the matching QvLib getFieldData methods.
+The earlier classification's 36 shared GetTypeId entries plus QvAsciiText's
+unmapped entry form this family. tools/qv_field_data_registry.json records each
+full target symbol, original address, original class-static address, owner and
+ABI/evidence. Every original entry is mov eax,[class static]; ret, with 37
+separate original statics. QvSubNode.h implements the corresponding per-class
+fieldData static and virtual method; all 37 target methods have zero-score
+QvLib mappings. The generator verifies current library membership, exact entry
+mapping and the class-specific fieldData definition, and hashes the registry.
+The generic Qv/GetTypeId.cpp scoring body is not used as their owner.
+
+qv_aliases.py now emits 92 aliases (55 existing + 37 reviewed pointers).
+The completed cached projected diagnostic reports zero LNK2005, 7,431 LNK2001
+messages, 6,629 unique unresolved symbols, no omitted failed sources and no
+internal linker error. This supersedes the prior 0/7,468/6,666 diagnostic for
+the same compiled source inputs with the reviewed Qv aliases added. All 37
+names disappeared from linker diagnostics. Classification now contains 3,797
+code pointers; only four remain in the shared-implementation category.
+
+Source objects were not recompiled in this block; cached data/resources/QvLib
+remain unverified and no runtime validation occurred. Alias validation against
+the current QvLib object, Python syntax checks and diff whitespace checks pass.
+The pipeline input snapshot now includes JSON policy/registry files. Its prior
+pipeline-summary.json belongs to the earlier full run; the current link result
+is containers/partial-link-summary.json, backed by qv_alias.json and registry.
+
+## Empty vector destructor ABI block (2026-10-21)
+
+Resolved ??1V3@@QAE@XZ, ??1Float3@@QAE@XZ and ??1Vec3@@QAE@XZ to
+??1Vector3f@@QAE@XZ (original 0x401660), owned by Vector3f/Vector3fOps.cpp
+under the existing projection policy. All are nonvirtual thiscall complete
+destructors with no stack arguments, void return and three-float 12-byte
+objects. Annotated callers identify the original destructor address; the
+original instruction is ret and the canonical current object was checked to
+start with ret. No deleting-destructor or this-adjustment alias is involved.
+
+tools/ordinary_alias_registry.json records the full decorated aliases, address,
+owner and declaration/ABI evidence. entry_aliases.py validates current owner
+mapping/definitions, requires evidence files to exist, rejects aliases with
+source definitions and emits only currently referenced aliases. It records the
+registry hash in entry_alias.json. The generated object now has 68 aliases:
+65 existing extracted-entry aliases plus these three reviewed ordinary names.
+
+Completed cached projected diagnostic: zero LNK2005, 7,396 LNK2001 messages,
+6,626 unique unresolved symbols, no omitted failed sources and no internal
+linker error. It supersedes 0/7,431/6,629 for the same compiled inputs plus the
+three reviewed aliases. All three names disappeared, removing 35 diagnostic
+messages. Python syntax and diff whitespace checks pass. No source recompilation,
+runtime validation or cached library verification in this block. The current
+completed result is containers/partial-link-summary.json; pipeline-summary.json
+still describes its earlier full run.
+
+## Matrix destructor ownership block (2026-10-21)
+
+Moved original 0x402310 out of the shared CameraSoulStubs::void0 scoring mapping
+into Matrix4/MatrixDtor.cpp (MatrixLifetime complete destructor, SIZE 0x40,
+sixteen floats). targets_dtor.txt matches score 0. The manifest includes the
+new canonical owner. The ordinary registry maps Matrix16, Matrix and Mat
+nonvirtual complete destructors to it, based on annotated original destinations,
+64-byte layouts, matching thiscall/no-argument ABI and original ret body.
+No deleting destructor or this adjustment is involved.
+
+Completed full pipeline run 8c5bc80a-7d5c-4322-af28-8bf27f4a35a4 compiled
+1,137/1,137 sources with no failures or omissions, regenerated all aliases,
+projected owners, linked diagnostically and ran code-pointer classification.
+Result: zero LNK2005, 7,375 LNK2001 messages, 6,623 unique unresolved symbols,
+no internal linker error. All three matrix destructor spellings disappeared;
+21 reference diagnostics removed compared with the preceding cached pass.
+Snapshot-covered inputs remained unchanged during this run. This pipeline
+summary supersedes the earlier full-run summary and cached diagnostic counts.
+The classification hook and JSON registry hashing were exercised end to end.
+
+Python syntax and whitespace checks passed; dedicated destructor byte-match
+score is zero. Extracted data/resources/QvLib remain unverified cached inputs,
+external INCLUDE headers are not fully covered by provenance, and gameplay is
+untested. STATUS.md was not regenerated. Next block can address an ordinary
+accessor family such as CallActor::Actor or function-argument Get methods.
+
+## Script-call Actor accessor block (2026-10-21)
+
+Original 0x420c20 is mov eax,[ecx+8]; ret. Added the real ScriptCall::Actor
+implementation in FunctionArgs/ScriptCallActor.cpp with targets_actor.txt,
+score 0, and removed its unrelated LandSimulation::GetTable scoring mapping.
+The existing ScriptCall declaration owns the target pointer at +8. Its total
+record size is not asserted. Nine annotated local views (CallActor, FaceCall,
+RgCall, FlashCall, SpitCall, PosCall, AudioCall, TestCall, KCall) now have reviewed
+ordinary registry aliases to this canonical owner. All are thiscall/no-argument
+pointer-return accessors at the same original address and require no adjustment.
+Actor2 at 0x420c40 is excluded. No pointee layout equivalence is inferred beyond
+the accessor's pointer-return ABI.
+
+Full pipeline run ddb9a18c-984a-4fef-a0e0-f067768ac7dc compiled 1,138/1,138
+sources, failed/omitted none, regenerated aliases and projection, completed the
+diagnostic link and classification with snapshot-covered inputs unchanged.
+Result: zero LNK2005, 7,349 LNK2001 messages, 6,613 unique unresolved symbols,
+no internal linker error. Nine aliases plus the previously missing canonical
+ScriptCall accessor disappeared, removing 26 reference messages. This supersedes
+the prior full-run 0/7,375/6,623 diagnostic. Dedicated accessor byte-match is 0;
+registry resolution assertions, Python syntax and whitespace checks pass.
+Cached extracted data/resources/QvLib and external-header provenance remain
+unverified; no gameplay validation. STATUS.md was not regenerated.
+
+## Numeric argument evaluator ABI mappings (2026-10-21)
+
+The ordinary registry now maps IntFunctionArgument::Get(int) to
+IntArg::Get(Scope*) at 0x421150, and FloatFunctionArgument::Get(int) plus
+FloatArg::Get(int) to FloatArg::Get(FloatScope*) at 0x421440. Both original
+methods use thiscall, one 32-bit context address, callee ret 4, and fields
+literal/name/value at +4/+8/+12. Integer returns in eax; float returns in st0.
+The dynamic integer path calls 0x461230 directly on context; the float path
+uses context+0x30 and calls 0x461ea0. Caller int spelling preserves that address
+on the x86 ABI. No int/float return conversion or ABI wrapper is introduced.
+All seven Misc9/Getters.cpp targets, including both evaluators, still score 0.
+
+Regenerated entry aliases (83 total), projected objects and diagnostic link
+against unchanged compiled source inputs. Completed result supersedes the
+previous 0/7,349/6,613 diagnostic: zero LNK2005, 7,318 LNK2001 messages,
+6,610 unique unresolved symbols, no omitted failed sources or internal linker
+error. All three missing evaluator spellings disappeared (31 messages).
+Current result: containers/partial-link-summary.json plus entry_alias.json;
+pipeline-summary.json still describes its preceding full run. Cached binaries
+remain unverified and runtime remains untested. STATUS.md was not regenerated.
+
+## Qv enum interface integration (2026-10-21)
+
+Qv/Node.h now declares QvLib's addEnumValue(const char*,const char*,int) and
+getEnumData(const char*,int&,const int*&,const QvName*&), replacing the local
+addEnum/getEnum spellings. QvFieldData has the verified 24-byte fields/enums
+pair at +0/+12. Ten generated constructors now use typed table-pointer locals
+and reference outputs. tools/genQvCtors.pl emits the same interface and types;
+it was syntax checked but not rerun (other manual constructor repairs remain).
+No weak alias or pointer-to-int output write is needed for these calls.
+
+Full pipeline a6cad694-9fa8-4436-b14d-2d907fe796c3 compiled 1,138/1,138 sources,
+failed/omitted none, completed projection/link/classification and found snapshot
+inputs unchanged. Result supersedes 0/7,318/6,610: zero LNK2005, 7,298 LNK2001,
+6,608 unique unresolved symbols, no internal linker error. Both old names
+disappeared (20 messages). Representative constructor C_483150 scores 24;
+this is not a claim of byte-exact Qv constructors or a before/after score.
+
+Focused VC4 enum-smoke.cpp linked against the current QvLib.lib and passed:
+24-byte QvFieldData, multiple enum values/names, trimmed whitespace, typed output
+references and zeroed outputs for an absent enum type. Test source/build log
+and executable are under build/integration/enum-smoke*. Diff whitespace and
+Perl syntax checks passed. This finite library check is not game runtime
+validation; cached data/resources/QvLib provenance remains incomplete.
+STATUS.md was not regenerated.
+
+## Mat9 assignment ownership (2026-10-21)
+
+Reviewed ordinary alias ??4Mat9@@QAEAAU0@ABU0@@Z ->
+??4Rec9@@QAEAAU0@ABU0@@Z, Misc4/Copy9.cpp, original 0x435760.
+Both views are 0x24 bytes: nine words, matching thiscall source-reference
+argument, ret 4 cleanup and destination-reference return in eax. Original
+copies offsets 0..0x20 in order without floating arithmetic or member calls;
+Misc4 copy9 still scores 0. Registry records layout, ABI and source evidence.
+
+Current completed cached projected link supersedes 0/7,298/6,608 with
+zero LNK2005, 7,287 LNK2001, 6,607 unique unresolved symbols; no omitted failed
+sources or internal linker error. Mat9 assignment disappeared (11 messages).
+Source objects were unchanged; entry aliases were regenerated (84 total).
+Evidence: containers/partial-link-summary.json and entry_alias.json. The prior
+pipeline-summary.json remains the earlier full run. Whitespace check passed;
+no new runtime validation or cached-input verification. STATUS.md unchanged.
+
+## World/simulation getter identity (2026-10-21)
+
+Five Spawn files used World* GetWorld() for original simulation getter 0x420690,
+colliding with the same decorated symbol used for world getter 0x4206a0.
+Renamed those calls/declarations to GetSpawnSimulation; its reviewed alias goes
+to Globals::GetCurrentSimulation's free-function implementation. Six typed
+GetWorld pointer-return spellings now map to the canonical void* GetWorld at
+0x4206a0. These are cdecl/no-argument/eax pointer-return routines. Registry
+entries preserve original addresses and source evidence. Globals targets all
+score 0; representative SpawnAt still scores 59 (same as saved STATUS score).
+
+Added tools/data_alias_registry.json for the four reviewed decorated pointer
+variables: g_world (void*/World*) shares storage 0x4bada8, and
+ g_currentSimulation (void*/Sim*) shares storage 0x4badbc. data_aliases.py only
+accepts the multi-spelling family when every spelling is reviewed, declarations
+agree on one address and data.obj supplies one target. Evidence files must
+exist. No pointer storage is copied or synthesized. Unreviewed type ambiguity
+remains rejected. Canonical getters/setter now reference these single locations.
+
+Full pipeline e6485d23-b572-40e5-8290-84272df6c3bd compiled 1,138/1,138 sources
+without failure/omission and completed projection/link/classification with
+snapshot-covered inputs unchanged. Result supersedes 0/7,287/6,607: zero
+LNK2005, 7,268 LNK2001, 6,597 unique unresolved symbols, no internal error.
+All GetWorld/GetSpawnSimulation missing names disappeared; four data spellings
+resolve to their two distinct address symbols. Syntax/whitespace checks passed.
+Current authoritative result is pipeline-summary.json. Cached binary provenance
+and external INCLUDE coverage remain incomplete; no gameplay validation.
+STATUS.md was not regenerated.
+
+## Owner-cluster workflow and Set destructors (2026-10-21)
+
+integration_clusters.py now partitions every unresolved symbol into triage
+families and records referring sources plus input hashes in owner-clusters.json;
+the full pipeline runs it after each completed link. Family names are triage,
+not ABI ownership proof. DebugLog cluster is closed: Jump.cpp now declares
+int DebugLog(const char*,...), matching the existing 0x419360 implementation.
+Full run c40888a1-6ca0-4cf8-a73f-1670df623d96 compiled 1,138 sources and reported
+zero duplicates, 7,267 LNK2001, 6,596 unique unresolved symbols.
+
+Script tools/generate_set_destructors.py emits explicit member-only destructor
+instantiations for 12 reviewed Set type/ID variants (not whole class templates).
+All 12 byte-match at score 0. New SetDtorOwners.cpp/targets take their original
+address ownership from the old generic SetDtor target map; old mappings were
+removed and the manifest includes the new unit. Repeated generation preserves
+source/target hashes. Full run bb3f6862-39fa-4df9-98e0-902333817a9b compiled
+1,139/1,139 sources without failures/omissions, snapshot-covered inputs unchanged,
+completed link/classification/cluster reporting: zero LNK2005, 7,237 LNK2001,
+6,584 unique unresolved symbols. This supersedes the previous run; 12 Set
+symbols and 30 messages disappeared, with no newly reported duplicates.
+
+Current clusters: container templates 80 symbols/153 messages; Qv 198/216;
+code pointers 3,797/3,797; other ordinary references 2,509/3,071. Only missing
+Set destructor is Set<int,21>, emitted by generic scoring-only TableCtor.cpp.
+That source uses Table<int,int,PrimitiveArray<int,1>,21> to score both original
+0x4650b0 and 0x466590. Its type/ID is not established as either original owner;
+do not manufacture a Set<int,21> destructor. Next bounded ownership block must
+identify the real two table specializations and their compiled owners (compare
+TabObj/Character and Creature families), then replace/project the generic unit.
+Syntax and whitespace checks passed. Cached input provenance remains incomplete;
+no gameplay validation. STATUS.md was not regenerated.
+
+## Set destructor cluster closed: pointer-table identities (2026-10-21)
+
+RTTI and original constructor stores establish 0x4650b0 as the Character*
+table (Set<int,5> at vtable 0x4a051c; pointer array at 0x4a0574) and 0x466590
+as the Creature* table (Set<int,10> at 0x4a009c; pointer array at 0x4a05e4).
+Replaced TableCtor.cpp's generic Table<int,int,PrimitiveArray<int,1>,21>
+scoring instantiation with explicit constructors of the two real local views.
+Targets now name distinct decorated owners. ObjectArrayViews.h shares the
+20-byte pointer-array declarations with TabObj and RegisterObjectTables;
+BufferObject subobject is +0x10. Both constructors and both TabObj factories
+byte-match at score 0. No Set<int,21> body or alias was manufactured.
+
+Full pipeline faf95363-8f27-40b1-a669-f7ae47c7ec13 compiled 1,139/1,139 sources
+without failures/omissions, completed link/classification/clustering and found
+snapshot-covered inputs unchanged. Zero unresolved Set destructors remain.
+Current authoritative totals supersede 0/7,237/6,584: zero LNK2005, 7,236
+LNK2001, 6,578 unique unresolved symbols, no internal linker error. Container
+cluster decreased from 80/153 to 74 symbols/146 messages; existing other
+ordinary missing methods gained six referring messages from the real owners,
+so the net message reduction is only one. No claims of entire-container closure.
+
+Current clusters: containers 74/146; Qv 198/216; extracted pointers 3,797/3,797;
+other ordinary 2,509/3,077. Next bounded container block should address one
+complete method family (table serialization/type names or PrimitiveArray base
+methods), retaining the per-cluster link gate. Whitespace checks passed.
+Cached data/resources/QvLib provenance remains incomplete and gameplay is
+untested. STATUS.md was not regenerated.
+
+## BufferObjectTable TypeName family closed (2026-10-21)
+
+Script tools/generate_table_names.py owns all eight reviewed table TypeName
+entries: numeric/String IDs 20..25 and Character/Creature pointer IDs 5/10.
+Generated TableNames.cpp implements the shared original cache at 0x4bf95c,
+base pointer 0x4bf958, allocation strlen(base)+1, then rewrites the ID every
+call using the original PrimArray/%2x strings. All eight targets score 0.
+Moved the eight original-address mappings out of Tiny4/Names and removed those
+generic bodies. TabObj no longer supplies null-return TypeName placeholders;
+the new canonical owner supplies the two pointer-table methods. Both pointer
+table Create methods still score 0. Generator output repeats byte-for-byte.
+
+The six missing numeric/String methods resolved in full run
+89d35995-ba33-4076-8637-680107406e40. Final full run after correcting the two
+already-linking pointer placeholders: 8412ec60-f66b-4e73-aab4-fa57f17cb7cb,
+1,140/1,140 sources compile, no failures/omissions, completed projection/link,
+classification and owner reporting, snapshot-covered inputs unchanged. Eight
+canonical owners are inventoried; zero unresolved BufferObjectTable::TypeName
+symbols remain. Current authoritative totals supersede 0/7,236/6,578: zero
+LNK2005, 7,209 LNK2001, 6,572 unique unresolved symbols. Container cluster is
+68 symbols/119 messages (six symbols and 27 messages removed). No internal
+linker error. Python syntax/whitespace checks passed; cached binary provenance
+remains incomplete and gameplay is untested. STATUS.md was not regenerated.
+Next table family: Read/Write slots, including the existing pointer-table
+empty placeholders; derive actual stream operations from original vtables.
+
+## BufferObjectTable stream family closed (2026-10-21)
+
+Script generate_table_io.py derives Write/Read addresses from the reviewed
+secondary RTTI vtables (offset 44, slots 2/3) for all eight table types/IDs.
+Generated TableIO.cpp delegates keys first and values second through their
+BufferObject interfaces at table offsets 0x14/0x28; stream pointer is forwarded
+unchanged, slot offsets are +8/+12, callee cleans four bytes. Explicit base
+addresses avoid VC4 adding nullable base-conversion branches absent in original.
+All 16 methods score 0. Generator output repeats byte-for-byte. Moved 13 old
+Fam48 generic mappings to typed owners; three more stream addresses now have
+explicit mappings. Fam48 scoring-only source is no longer a manifest input;
+its files remain as reference. Removed all four empty pointer-table stream
+placeholders from TabObj. Both pointer-table factories still score 0.
+
+Full pipeline 4611f932-4b5b-4ffc-a549-303b61f4c866 compiled 1,140/1,140 sources
+without failures/omissions, completed projection/link/classification/clustering,
+snapshot-covered inputs unchanged. Sixteen canonical owners inventoried; zero
+unresolved BufferObjectTable::Read/Write symbols. Current result supersedes
+0/7,209/6,572: zero LNK2005, 7,155 LNK2001 messages, 6,560 unique unresolved
+symbols, no internal linker error. Container cluster is now 56 symbols/65
+messages (12 symbols and 54 messages removed). Whitespace/Python syntax checks
+passed. Cached binary provenance and external-header coverage remain incomplete;
+no gameplay validation. STATUS.md was not regenerated.
+
+## Array::At template family closed (2026-10-21)
+
+ContainerArray.h now supplies the missing nonvirtual At implementation for the
+integration build: return data[i], no bounds check. This matches the existing
+String accessor reconstruction (Fam112c/StrGet.cpp, original 0x40f310) and the
+shared array data pointer at +0x0c. Normal C++ copy/return rules preserve String
+hidden-result/copy semantics, float st0 returns and scalar/pointer returns.
+No identity aliases or invented per-type original addresses were added.
+The body is gated by SQZ_INTEGRATION inside CONTAINER_DEFINITIONS so adding a
+template declaration does not perturb matching-only symbol inventories. A
+baseline overlay confirmed ungated declaration changed TableCtorS register/
+stack scheduling scores; after gating all 38 TableStringString matching targets
+and all eight TableCtorS targets score 0. The full build always defines the
+integration macro and sees the real shared implementation.
+
+Final full pipeline 4d64aa58-7d1c-4295-b039-0cd23b8a5834 compiled 1,140/1,140
+sources without failure/omission, completed diagnostic link/classification/
+clustering and found snapshot-covered inputs unchanged. Zero unresolved
+Array::At symbols remain (String, int, float and seven pointer variants).
+Current totals supersede 0/7,155/6,560: zero LNK2005, 7,139 LNK2001 messages,
+6,550 unique unresolved symbols, no internal linker error. Container cluster
+now has 46 symbols/49 messages: ten symbols and 16 messages removed.
+Whitespace checks passed; cached binary provenance remains incomplete and
+no gameplay validation occurred. STATUS.md was not regenerated.
+
+
+## EH funclet ownership inventory (2026-10-21)
+
+Added tools/inventory_eh.py to trace original VC4 handler thunks to FuncInfo
+records and validate unwind-state transitions and action pointers. All 1,784
+currently unresolved EH-inventory symbols are confirmed original unwind actions.
+The original image has 1,074 recognized FuncInfo records; 1,039 have parent
+handler-push sites inside known original function ranges. Parent candidates
+include current target-owner evidence; unmapped parents remain explicit gaps.
+Report: build/integration/eh-inventory.json, with SHA-256 input provenance.
+
+First reviewed family: parent 0x401690, owner Misc17/Dt2.cpp
+(??1C401690@@QAE@XZ), handler 0x4016c7, FuncInfo 0x4a76b0, unwind
+map 0x4a76d0, action pointer at 0x4a76d4 -> funclet 0x4016d1.
+The action loads ecx from [ebp-0x10] then tail-jumps to 0x405320.
+This is a parent-frame cleanup, not a standalone callable implementation.
+
+The pipeline now invokes inventory_eh.py after code-reference classification;
+that hook has syntax validation but has not been exercised by a full pipeline
+run. Direct inventory execution passed complete classification coverage,
+nonempty validated action evidence for every EH symbol, and deterministic
+report hashing on repeated generation. Python syntax and whitespace checks
+passed. No link inputs or source bodies changed, no link was rerun, and the
+previous completed pipeline remains authoritative: 1,140/1,140 compiled,
+zero LNK2005, 7,139 LNK2001 messages, 6,550 unique unresolved symbols.
+Cached binary provenance remains incomplete; no runtime validation.
+
+Next bounded EH block: trace incoming COFF relocations to the first family's
+extracted FuncInfo/unwind-map objects and establish metadata liveness against
+current compiled owners. Only discard original compiler metadata after proving
+no retained references require it; never alias original frame-relative actions
+to arbitrary compiled local labels. STATUS.md and HANDOFF.md unchanged.

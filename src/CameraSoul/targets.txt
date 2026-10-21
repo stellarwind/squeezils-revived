@@ -52,7 +52,6 @@
 ^\?void4c@CameraSoulStubs       438340 v4c
 ^\?void0n@CameraSoulStubs       438350 v0n
 ^\?void1m@CameraSoulStubs       438360 v1m
-^\?void0@CameraSoulStubs  402310 v0_d402310
 ^\?void0@CameraSoulStubs  40b980 v0_d40b980
 ^\?void0@CameraSoulStubs  4130e0 v0_d4130e0
 ^\?void0@CameraSoulStubs  4130f0 v0_d4130f0

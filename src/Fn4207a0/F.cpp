@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // Two constructors of a small reference holder (SQZ.EXE 0x4207a0 ret 8, 0x420900 ret 0xc): use the given handle, else look it up through the creature's placement.
 struct RefMat {                                          // 64 bytes, empty out-of-line destructor 0x402310
     float a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15;
@@ -24,7 +25,6 @@ struct RefLevel { RefIndex *Index(); };                  // 0x439b60
 struct RefPlace { RefLevel *GetLevel(); };
 struct RefRoot { RefCreature *GetCreature(int id); };   // 0x414050
 RefRoot *GetSim();                                       // 0x420690 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kSimType[];                            // 0x4ba1d0
 extern const char kPlaceSimType[];                       // 0x4bae38
 
@@ -46,7 +46,7 @@ RefHolder::RefHolder(int id_, int handle_)
     if (!handle_) {
         RefPlacement p(GetSim()->GetCreature(id_)->Placement());
         if (p.prop != -1) {
-            handle = ((RefPlace *)DynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
+            handle = ((RefPlace *)SqzRTDynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
         } else
             handle = 0;
     } else
@@ -63,7 +63,7 @@ RefHolder3::RefHolder3(int a, int id_, int handle_)
     if (!handle_) {
         RefPlacement p(GetSim()->GetCreature(id_)->Placement());
         if (p.prop != -1) {
-            handle = ((RefPlace *)DynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
+            handle = ((RefPlace *)SqzRTDynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
         } else
             handle = 0;
     } else
@@ -80,7 +80,7 @@ RefHolder4::RefHolder4(int a, int id_, int handle_)
     if (!handle_) {
         RefPlacement p(GetSim()->GetCreature(id_)->Placement());
         if (p.prop != -1) {
-            handle = ((RefPlace *)DynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
+            handle = ((RefPlace *)SqzRTDynamicCast(GetSim(), 0, kSimType, kPlaceSimType, 0))->GetLevel()->Index()->Resolve(&p);
         } else
             handle = 0;
     } else

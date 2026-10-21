@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // 0x447590: resolve a pair of creatures and report which one was hit.
 #define V3_COPYCTOR_OUTOFLINE
 #include "Vector3f/Vector3f.h"
@@ -14,7 +15,6 @@ struct CollisionSimulation {
     void *GetSoul(int id); // 0x414080
 };
 CollisionSimulation *GetCollisionSimulation(); // 0x420690
-void *CollisionDynamicCast(void *, int, const void *, const void *, int);
 extern const char kCollisionSoulType[], kCollisionPhysicalType[]; // 0x4b93e8, 0x4b9420
 void AttackImpulse(CollisionBody *attacker, CollisionBody *defender); // 0x446fb0
 void BumpImpulse(CollisionBody *first, CollisionBody *second); // 0x4472e0
@@ -25,9 +25,9 @@ void PhysicalCollision(int id, int otherId)
     CollisionSimulation *simulation = GetCollisionSimulation();
     CollisionBody *first = simulation->GetBody(id);
     CollisionBody *second = simulation->GetBody(otherId);
-    CollisionSoul *firstSoul = (CollisionSoul *)CollisionDynamicCast(simulation->GetSoul(id),
+    CollisionSoul *firstSoul = (CollisionSoul *)SqzRTDynamicCast(simulation->GetSoul(id),
         0, kCollisionSoulType, kCollisionPhysicalType, 0);
-    CollisionSoul *secondSoul = (CollisionSoul *)CollisionDynamicCast(simulation->GetSoul(otherId),
+    CollisionSoul *secondSoul = (CollisionSoul *)SqzRTDynamicCast(simulation->GetSoul(otherId),
         0, kCollisionSoulType, kCollisionPhysicalType, 0);
     sprayFirst = 0; int firstAttack = firstSoul->IsAttacking();
     if (firstAttack != secondSoul->IsAttacking()) {

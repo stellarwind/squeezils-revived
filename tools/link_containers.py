@@ -1,4 +1,4 @@
-"""Project two verified String-container owners into diagnostic link objects.
+"""Project verified addressed owners into diagnostic link objects.
 
 VC4 emits NODUPLICATES COMDATs for incidental template instantiations. Keep
 each addressed implementation in its target-owning source and make other
@@ -6,6 +6,7 @@ copies external references. Do not use this for unverified name collisions.
 No code bytes from the original EXE are used; input objects are compiled source.
 """
 import collections
+import csv
 import hashlib
 import json
 import pathlib
@@ -15,7 +16,62 @@ import integration as build
 POLICY = {
     "?Grow@?$Array@VString@@@@UAEHH@Z": ("0045e370", "Container/ArrayString.cpp"),
     "?IndexOf@?$Set@VString@@$0BH@@@UAEHABVString@@@Z": ("00462710", "Container/SetString23.cpp"),
+    # Same base destructor, using the complete hierarchy's vtable owner.
+    "??1Function@@UAE@XZ": ("00422ea0", "Function/Function.cpp"),
+    # Both scoring files contain both bodies with identical layouts and code.
+    "?PeekA@Bindings43b@@QAEHH@Z": ("0043de80", "Tiny4/F43de80.cpp"),
+    "?PeekW@Bindings43b@@QAEHH@Z": ("0043eb30", "Tiny4/F43eb30.cpp"),
+    # Empty destructor at 0x401660, also emitted by a cleanup adapter.
+    "??1Vector3f@@QAE@XZ": ("00401660", "Vector3f/Vector3fOps.cpp"),
+    # Explicit String Read specializations supersede incidental instantiations
+    # from Set::Create and table factories. Their layout comes from PrimBuf.h.
+    "?Read@?$PrimitiveArray@VString@@$02@@UAEXPAX@Z": ("0045e620", "Container2/gen/PA_s3.cpp"),
+    "?Read@?$PrimitiveArray@VString@@$0BH@@@UAEXPAX@Z": ("004622e0", "Container2/gen/PA_s23.cpp"),
+    # Same Array pointer-copy constructor in the shared template and its
+    # addressed specialization, with identical count/capacity/data layout.
+    "??0?$Array@PAV?$PrimitiveArray@M$01@@@@QAE@HPBQAV?$PrimitiveArray@M$01@@@Z":
+        ("0046a6c0", "Container/ArrayFloatArrayCopy.cpp"),
 }
+
+# These nonvirtual dictionary/list/field-data methods have the same layouts
+# and zero-score upstream mappings. The complete QvTranslation class also
+# owns its virtual table, so discard that entire constructor-only shadow TU.
+QV_POLICY = {
+    "??0QvDict@@QAE@H@Z": ("00482180", "Qv/Dict.cpp"),
+    "??1QvDict@@QAE@XZ": ("004821c0", "Qv/Dict.cpp"),
+    "??1QvFieldData@@QAE@XZ": ("00480630", "Qv/FieldDataDtor.cpp"),
+    "??0QvPList@@QAE@XZ": ("00482a60", "Qv/List.cpp"),
+    "??1QvPList@@QAE@XZ": ("00482a80", "Qv/List.cpp"),
+    "??0QvTranslation@@QAE@XZ": ("00483460", "Qv/Translation.cpp"),
+}
+
+
+def verify_qv_library():
+    obj = build.REPO / "qvlib/obj/QvLib.obj"
+    archive = (build.REPO / "qvlib/obj/QvLib.lib").read_bytes()
+    raw = obj.read_bytes()
+    if archive[:8] != b"!<arch>\n":
+        raise ValueError("Invalid QvLib archive")
+    position, found = 8, False
+    while position < len(archive):
+        header = archive[position:position + 60]
+        if len(header) != 60 or header[58:60] != b"`\n":
+            raise ValueError("Malformed QvLib archive member")
+        size = int(header[48:58])
+        start = position + 60
+        found |= archive[start:start + size] == raw
+        position = start + size + size % 2
+    if not found:
+        raise ValueError("QvLib.obj does not match any library member")
+    definitions = dict(build.coff_symbols(obj))
+    with (build.REPO / "qvlib/score_table.tsv").open() as stream:
+        scores = {row["symbol"]: row for row in csv.DictReader(stream, delimiter="\t")}
+    for name, (address, _) in QV_POLICY.items():
+        row = scores.get(name, {})
+        if (row.get("address", "").lower() != address or row.get("score") != "0"
+                or definitions.get(name) not in ("strong", "comdat")):
+            raise ValueError("QvLib ownership lacks exact entry evidence: " + name)
+    return hashlib.sha256(raw).hexdigest()
 
 
 def project(raw, names):
@@ -86,7 +142,8 @@ def project(raw, names):
 def run():
     report = json.loads((build.OUT / "ownership.json").read_text())
     units = json.loads((build.OUT / "units.json").read_text())
-    for name, (address, owner) in POLICY.items():
+    qv_hash = verify_qv_library()
+    for name, (address, owner) in dict(POLICY, **QV_POLICY).items():
         if report["symbol_addresses"].get(name) != [address]:
             raise ValueError("Address identity is not unique: " + name)
         if not any(e["symbol"] == name and e["source"] == owner
@@ -95,13 +152,27 @@ def run():
     destination = build.OUT / "containers"
     destination.mkdir(exist_ok=True)
     rsp = (build.OUT / "link.rsp").read_text()
-    changed, totals = [], collections.Counter()
+    changed, excluded, totals = [], [], collections.Counter()
     for index, unit in enumerate(units):
         if unit["returncode"]:
             continue
         source = unit["source"]
+        if source == "Qv/Translation.cpp":
+            targeted = {a for a, entries in report["addresses"].items()
+                        if any(e["source"] == source for e in entries)}
+            if targeted != {"00483460"}:
+                raise ValueError("Unexpected additional QvTranslation target")
+            original = pathlib.Path(unit["object"])
+            line = '"%s"\n' % original
+            if rsp.count(line) != 1:
+                raise ValueError("Missing QvTranslation input")
+            rsp = rsp.replace(line, "")
+            excluded.append(source)
+            continue
         names = {name for name, (_, owner) in POLICY.items()
                  if source != owner and source in report["definitions"].get(name, [])}
+        names.update(name for name in QV_POLICY
+                     if source in report["definitions"].get(name, []))
         if not names:
             continue
         original = pathlib.Path(unit["object"])
@@ -126,17 +197,22 @@ def run():
     projected_by_source = {entry["source"]: pathlib.Path(entry["object"]) for entry in changed}
     owners = collections.defaultdict(list)
     for unit in units:
-        if unit["returncode"]:
+        if unit["returncode"] or unit["source"] in excluded:
             continue
         path = projected_by_source.get(unit["source"], pathlib.Path(unit["object"]))
         for name, kind in build.coff_symbols(path):
-            if name in POLICY and kind != "undefined":
+            if name in dict(POLICY, **QV_POLICY) and kind != "undefined":
                 owners[name].append(unit["source"])
     for name, (_, owner) in POLICY.items():
         if owners[name] != [owner]:
             raise ValueError("Projected collection does not have exactly its canonical owner: " + name)
+    for name in QV_POLICY:
+        if owners[name]:
+            raise ValueError("Loose definition still competes with QvLib: " + name)
+        owners[name] = ["qvlib/obj/QvLib.lib(QvLib.obj)"]
     (destination / "link.rsp").write_text(rsp, encoding="ascii")
-    summary = dict(diagnostic_only=True, policy=POLICY, modified_objects=len(changed),
+    summary = dict(diagnostic_only=True, policy=POLICY, qv_policy=QV_POLICY,
+                   qv_object_sha256=qv_hash, excluded_sources=excluded, modified_objects=len(changed),
                    removed_duplicate_definitions=dict(totals), verified_owners=dict(owners), objects=changed)
     (destination / "projection.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps({k: v for k, v in summary.items() if k != "objects"}, indent=2))

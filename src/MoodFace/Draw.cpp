@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SQZ.EXE 0x4059e0: compose the mood animation over the panel and copy it to the screen.
 #include "MoodFace.h"
 #include "Bitmap2/Bitmap2.h"
@@ -7,7 +8,6 @@ struct MoodSimulation { void *GetSoul(int id); };   // 0x414080
 MoodSimulation *GetSimulation();                   // 0x420690
 struct MoodPanel { void GetScreenOrigin(int *x, int *y); }; // 0x42da30
 MoodPanel *GetPanel();                             // 0x4206c0
-void *DynamicCast(void *p, int delta, const void *from, const void *to, int ref); // 0x48f060
 extern const char kMoodSoulType[], kMoodPlayerSoulType[]; // 0x4b93e8, 0x4b9490
 struct MoodSoul {
     virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4();
@@ -23,7 +23,7 @@ int MoodFace::Draw(int force, Bitmap *panel)
     if (g_renderer->field_078) return 0;
     void *soul = GetSimulation()->GetSoul(0);
     if (!soul) return 0;
-    MoodSoul *player = (MoodSoul *)DynamicCast(soul, 0, kMoodSoulType, kMoodPlayerSoulType, 0);
+    MoodSoul *player = (MoodSoul *)SqzRTDynamicCast(soul, 0, kMoodSoulType, kMoodPlayerSoulType, 0);
     int mood = player->Mood();
     int asleep = mood == 22;
     if (mood==lastMood && animation[current].frameCount==1 && !force) return asleep;

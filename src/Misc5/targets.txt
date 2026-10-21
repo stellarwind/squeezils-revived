@@ -1,1 +1,1 @@
-^\?ReadStringFrom@@  4387a0 readstr auto
+^\?ReadElem@@  4387a0 readstr auto

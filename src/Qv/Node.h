@@ -11,11 +11,15 @@ struct QvPList {                      // 0xc bytes: ctor 0x482a60 (zeroes), dtor
 };
 
 class QvNode;
+class QvName;
+// SIZE 0x18
 struct QvFieldData {                  // 0x18 bytes
-    QvPList fields; QvPList names;
+    QvPList fields; // 0x00
+    QvPList enums;  // 0x0c
     void addField(QvNode *node, const char *name, QvField *f);   // 0x480720
-    void addEnum(const char *type, const char *name, int value);         // 0x480840
-    void getEnum(const char *type, int *a, int *b, int *c);             // 0x480b50
+    void addEnumValue(const char *type, const char *name, int value); // 0x480840
+    void getEnumData(const char *type, int &count, const int *&values,
+                     const QvName *&names); // 0x480b50
 };
 
 class QvNode {                        // 0x18 bytes, vtbl 0x4a11d8

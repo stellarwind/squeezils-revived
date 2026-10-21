@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // 4 spare declarations (symbol count, see padscan.sh)
 void PadDecl1();
 void PadDecl2();
@@ -10,7 +11,7 @@ int AnimateCameraPathFunction::Execute(ScriptCall *args, int extra)
 {
     if (FindPath(path.c_str())) {
         void *soul = GetSimulation()->GetSoul(1);
-        CameraSoul *cam = (CameraSoul *)DynamicCast(soul, 0, kSoulType, kCameraSoulType, 0);
+        CameraSoul *cam = (CameraSoul *)SqzRTDynamicCast(soul, 0, kSoulType, kCameraSoulType, 0);
         cam->FollowPath(FindPath(path.c_str()), a->Get(extra), b->Get(extra), c->Get(extra));
         return 1;
     }

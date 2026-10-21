@@ -26,6 +26,17 @@ public:
 
 #ifdef CONTAINER_DEFINITIONS
 
+// Nonvirtual element access. String returns use the compiler's normal hidden
+// result pointer/copy constructor; scalar and pointer instantiations copy bits.
+// Keep matching-only symbol inventories stable; the full build needs the body.
+#ifdef SQZ_INTEGRATION
+template <class T>
+inline T Array<T>::At(int i)
+{
+    return data[i];
+}
+#endif
+
 template <class T>
 Array<T>::Array()
 {

@@ -44,14 +44,14 @@ QvNodeC483f90::QvNodeC483f90()
     ((int *)this)[0x1c] = 0;
     ((int *)this)[0x23] = 0;
     if (firstInstance)
-        fieldData->addEnum("Wrap", "REPEAT", 0);
+        fieldData->addEnumValue("Wrap", "REPEAT", 0);
     if (firstInstance)
-        fieldData->addEnum("Wrap", "CLAMP", 1);
+        fieldData->addEnumValue("Wrap", "CLAMP", 1);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("Wrap", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("Wrap", local_20, local_1c, local_14);
     ((int *)this)[0x1d] = (int)local_20;
     ((int *)this)[0x1e] = (int)local_1c;
     ((int *)this)[0x1f] = (int)local_14;

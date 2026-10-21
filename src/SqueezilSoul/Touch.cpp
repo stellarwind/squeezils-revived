@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // SqueezilSoul::Touch (slot 4, SQZ.EXE 0x450430, ret 4): a creature touched this soul; the touching one's grant interface decides, else a physical bump.
 struct ActorHolder;
 struct Taker {
@@ -13,7 +14,6 @@ struct Sim {
     int FindIdByActor(void *actor);                      // 0x414100
 };
 Sim *GetSimulation();                                    // 0x420690 (cdecl)
-void *DynamicCast(void *p, int a, void *from, void *to, int b);   // 0x48f060
 void PhysicalCollision(int a, int b);                    // 0x447590 (cdecl)
 extern char kMessageMapType[], kGrantMessageMapType[];
 struct SoulT {
@@ -41,7 +41,7 @@ struct SoulT {
 void SoulT::Touch(int otherId)
 {
     Sim *sim = GetSimulation();
-    Taker *taker = (Taker *)DynamicCast(sim->GetSoul(otherId)->GetInterface(1), 0, kMessageMapType, kGrantMessageMapType, 0);
+    Taker *taker = (Taker *)SqzRTDynamicCast(sim->GetSoul(otherId)->GetInterface(1), 0, kMessageMapType, kGrantMessageMapType, 0);
     int id = sim->FindIdBySoul(this);
     if (taker) {
         if (taker->Slot3(id != 0)) {

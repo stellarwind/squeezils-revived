@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // CreatePropFunction::Execute (0x46fb00, shared by the four subclasses): find the prop template by name, make one at the computed position.
 #define V3_CTOR_OUTOFLINE
 #define V3_COPYCTOR_OUTOFLINE
@@ -29,7 +30,6 @@ struct PropFramed {                                      // the FrameProp view o
 struct SceneHolder { void *Child(); };                   // 0x477290
 extern SceneHolder *g_scene;                             // 0x4c75e0
 PropTemplate *FindPropTemplate(String name, int level, int how);   // 0x42c8b0 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 void DestroyPropLater(void *prop);                       // 0x42d1f0 (cdecl)
 extern const char kPropType[];                           // 0x4bb910
 extern const char kCyclePropType[];                      // 0x4bb9c0
@@ -42,7 +42,7 @@ int CreatePropFunction::Execute(ScriptCall *args, int extra)
         return 1;
     Vector3f pos = Position(args, extra);
     void *obj = proto->Make(0, pos, Vector3f(1, 1, 1), position->Get(extra), direction->Get(extra));
-    PropAnim *anim = (PropAnim *)DynamicCast(obj, 0, kPropType, kCyclePropType, 0);
+    PropAnim *anim = (PropAnim *)SqzRTDynamicCast(obj, 0, kPropType, kCyclePropType, 0);
     if (!anim)
         return 1;
     DestroyPropLater(anim);
@@ -50,7 +50,7 @@ int CreatePropFunction::Execute(ScriptCall *args, int extra)
     anim->Reset(0);
     anim->Start(1);
     Apply(anim, args, (void *)extra);
-    PropFramed *framed = (PropFramed *)DynamicCast(obj, 0, kPropType, kFrameType, 0);
+    PropFramed *framed = (PropFramed *)SqzRTDynamicCast(obj, 0, kPropType, kFrameType, 0);
     if (framed)
         framed->SetWrap(0);
     return 1;

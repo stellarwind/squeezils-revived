@@ -43,14 +43,14 @@ QvNodeC483150::QvNodeC483150()
     ((QvInfo482840 *)((char *)this + 88))->Assign("");
     ((int *)this)[0x23] = 0;
     if (firstInstance)
-        fieldData->addEnum("Map", "NONE", 0);
+        fieldData->addEnumValue("Map", "NONE", 0);
     if (firstInstance)
-        fieldData->addEnum("Map", "POINT", 1);
+        fieldData->addEnumValue("Map", "POINT", 1);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("Map", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("Map", local_20, local_1c, local_14);
     ((int *)this)[0x24] = (int)local_20;
     ((int *)this)[0x25] = (int)local_1c;
     ((int *)this)[0x26] = (int)local_14;

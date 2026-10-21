@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // 0x436640: apply a surface face's transform to a matrix.
 struct FaceWorldMatrix {
     float m[16];
@@ -20,7 +21,6 @@ struct FaceWorldPlace {
     FaceWorldSurfaces *GetSurfaces(); // 0x439b60
 };
 void *GetSimulation(); // 0x420690
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref); // 0x48f060
 extern const char kWorldSimulationType[]; // 0x4ba1d0
 extern const char kWorldPlaceType[];      // 0x4bae38
 
@@ -31,6 +31,6 @@ struct FaceTransformWorld {
 FaceWorldMatrix FaceTransformWorld::FaceToWorld(const FaceWorldMatrix &matrix, int face)
 {
     FaceWorldContact contact(face, 0);
-    return ((FaceWorldPlace *)DynamicCast(GetSimulation(), 0,
+    return ((FaceWorldPlace *)SqzRTDynamicCast(GetSimulation(), 0,
         kWorldSimulationType, kWorldPlaceType, 0))->GetSurfaces()->FaceOf(&contact)->Apply(matrix);
 }

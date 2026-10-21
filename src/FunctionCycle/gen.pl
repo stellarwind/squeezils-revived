@@ -25,7 +25,7 @@ while (<R>) { chomp; my @f = split /\t/; next unless $f[0] =~ /^\.\?AVSetCyclePr
   my $nb = bytes($name, 6); my $str = cstr(unpack('V', substr($nb,1,4)));
   my ($ptype, $meth, $argt, $body, $cast) = @{$apply{$short}};
   push @h, "class $n : public SetCyclePropFunction {\npublic:\n" . ($short eq "FrameWrap" ? "    ~$n() {}\n" : "") . "    virtual const char *Name();\n    virtual int Apply(CycleProp *p, ScriptCall *args, int extra);\n    virtual SetCyclePropFunction *Make();\n};\n";
-  my $cb = $cast ? "    FrameProp *prop = (FrameProp *)DynamicCast(p, 0, kCyclePropType, kFrameType, 0);\n" : "    PathProp *prop = (PathProp *)p;\n";
+  my $cb = $cast ? "    FrameProp *prop = (FrameProp *)SqzRTDynamicCast(p, 0, kCyclePropType, kFrameType, 0);\n" : "    PathProp *prop = (PathProp *)p;\n";
   push @c, "const char *$n\::Name() { return \"$str\"; }\nSetCyclePropFunction *$n\::Make() { return new $n; }\nint $n\::Apply(CycleProp *p, ScriptCall *args, int extra)\n{\n$cb    $body\n    return 1;\n}\n";
   my $esz = $fsz{$app} // 48;
   push @t, $q . "Name\@$n  " . sprintf("%x", $name) . " ${short}_name 6\n" . $q . "Make\@$n  " . sprintf("%x", $make) . " ${short}_make " . (($sdd > $make && $sdd - $make < 300) ? ($sdd - $make) : "") . "\n" . $q . "Apply\@$n  " . sprintf("%x", $app) . " ${short}_apply\n" . $q . $bs . "?_G$n  " . sprintf("%x", $sdd) . " ${short}_sdd " . sddsize($sdd) . "\n";

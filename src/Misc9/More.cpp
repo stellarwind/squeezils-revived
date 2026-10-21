@@ -2,6 +2,7 @@
 // and the String output operator of the text stream (0x438770).
 #include "compat41.h"
 #include "String/String.h"
+#include "Persist/Stream.h"
 
 void RunAll();                               // 0x4143d0
 int RunAllThunk()
@@ -21,10 +22,9 @@ void __stdcall WindowOrigin(int *x, int *y)
     *x = rc[0];
 }
 
-struct Writer { void PutText(const char **p); };   // 0x448bd0
-Writer *WriteString(Writer *w, String *s)
+ByteStream *WriteElem(ByteStream *w, String *s)
 {
-    const char *text = s->c_str();
-    w->PutText(&text);
+    char *text = (char *)s->c_str();
+    w->WriteString(&text);
     return w;
 }

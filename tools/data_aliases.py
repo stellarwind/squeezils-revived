@@ -32,20 +32,13 @@ def data_symbols():
 
 
 def wanted():
-    grouped = json.loads((OUT / "containers" / "unresolved-grouped.json").read_text())
-    names = {}
-    # The latest link omits already resolved names. Preserve the candidate
-    # inventory across runs, then revalidate every address against the sources.
-    previous = OUT / "data_alias.json"
-    if previous.exists():
-        for alias, target in json.loads(previous.read_text()).get("aliases", []):
-            m = re.fullmatch(r'\?(\w+)@@3\S*', alias)
-            if m:
-                names[m.group(1)] = alias
+    # Current loose-object references are independent of previous link/alias runs.
+    grouped = json.loads((OUT / "external-references.json").read_text())
+    names = collections.defaultdict(set)
     for key in grouped:
-        m = re.search(r'\((\?(\w+)@@3\S*)\)$', key)
+        m = re.fullmatch(r'(\?(\w+)@@3\S*)', key)
         if m:
-            names[m.group(2)] = m.group(1)
+            names[m.group(2)].add(m.group(1))
     return names
 
 
@@ -96,7 +89,25 @@ def main():
     names = wanted()
     found = source_addresses(names)
     pairs, skipped = [], {}
-    for name, mangled in sorted(names.items()):
+    registry_path = REPO / "tools/data_alias_registry.json"
+    registry = json.loads(registry_path.read_text())
+    for name, decorated in sorted(names.items()):
+        if len(decorated) != 1:
+            if all(alias in registry and registry[alias]["address"] in found.get(name, set())
+                   for alias in decorated) and len(found.get(name, set())) == 1:
+                for alias in sorted(decorated):
+                    decision = registry[alias]
+                    for source in decision["evidence"]:
+                        if not (REPO / "src" / source).is_file():
+                            raise ValueError("Missing reviewed data evidence: " + source)
+                    targets = by_addr.get(decision["address"])
+                    if not targets or len(targets) != 1:
+                        raise ValueError("No unique reviewed data owner: " + alias)
+                    pairs.append((alias, targets[0]))
+                continue
+            skipped[name] = "incompatible decorated declarations: " + ",".join(sorted(decorated))
+            continue
+        mangled = next(iter(decorated))
         addrs = found.get(name, set())
         if len(addrs) != 1:
             skipped[name] = "no address" if not addrs else "ambiguous " + ",".join(sorted(addrs))
@@ -107,7 +118,8 @@ def main():
             continue
         pairs.append((mangled, targets[0]))
     write_coff(pairs, OUT / "data_alias.obj")
-    (OUT / "data_alias.json").write_text(json.dumps(dict(aliases=pairs, skipped=skipped), indent=1))
+    (OUT / "data_alias.json").write_text(json.dumps(dict(aliases=pairs, skipped=skipped,
+        reviewed_registry=registry), indent=1))
     print(len(pairs), "aliases;", len(skipped), "skipped")
 
 

@@ -41,14 +41,14 @@ QvNodeC488820::QvNodeC488820()
     ((int *)this)[0x13] = 0;
     *(int *)((int *)this)[0x1c] = 0;
     if (firstInstance)
-        fieldData->addEnum("Justification", "CENTER", 1);
+        fieldData->addEnumValue("Justification", "CENTER", 1);
     if (firstInstance)
-        fieldData->addEnum("Justification", "RIGHT", 2);
+        fieldData->addEnumValue("Justification", "RIGHT", 2);
     {
         int local_20;
-        int local_1c;
-        int *local_18;
-    fieldData->getEnum("Justification", &local_20, &local_1c, (int *)&local_18);
+        const int *local_1c;
+        const QvName *local_18;
+    fieldData->getEnumData("Justification", local_20, local_1c, local_18);
     ((int *)this)[0x14] = (int)local_20;
     ((int *)this)[0x15] = (int)local_1c;
     ((int *)this)[0x16] = (int)local_18;

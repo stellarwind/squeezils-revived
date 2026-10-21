@@ -167,7 +167,7 @@ def coff_symbols(path):
         i += aux + 1
 
 
-def run():
+def run(compile_only=False):
     OUT.mkdir(parents=True, exist_ok=True)
     cl, link = shutil.which("cl"), shutil.which("link")
     if not cl or not link:
@@ -204,12 +204,12 @@ def run():
         folder.mkdir(parents=True, exist_ok=True)
         obj = folder / ("%04d_%s.obj" % (index, pathlib.Path(source).stem))
         obj.unlink(missing_ok=True)
-        command = [cl, "-nologo", "-c", *shlex.split(flags),
+        command = [cl, "-nologo", "-c", "-DSQZ_INTEGRATION", *shlex.split(flags),
                    "-Fo" + str(obj), str(SRC / source)]
         result = subprocess.run(command, cwd=folder, stdout=subprocess.PIPE,
                                 stderr=subprocess.STDOUT)
         (folder / "compile.log").write_bytes(result.stdout)
-        units.append(dict(source=source, flags=flags, object=str(obj),
+        units.append(dict(source=source, flags=flags, integration_defines=["SQZ_INTEGRATION"], object=str(obj),
                           returncode=result.returncode))
         if result.returncode or not obj.exists():
             failed.append(source)
@@ -223,7 +223,9 @@ def run():
     qv = REPO / "qvlib" / "obj" / "QvLib.lib"
     alias = OUT / "data_alias.obj"   # tools/data_aliases.py: weak externals, readable name -> data.obj symbol
     entry_alias = OUT / "entry_alias.obj"  # tools/entry_aliases.py: verified entry pointers only
-    inputs = [data, res, qv] + [p for p in (alias, entry_alias) if p.exists()]
+    runtime_alias = OUT / "runtime_alias.obj"  # tools/runtime_aliases.py: verified CRT ABI
+    qv_alias = OUT / "qv_alias.obj"  # tools/qv_aliases.py: address-proven constructors/destructors
+    inputs = [data, res, qv] + [p for p in (alias, entry_alias, runtime_alias, qv_alias) if p.exists()]
     missing = [str(p) for p in inputs if not p.exists()]
     definitions = collections.defaultdict(list)
     references = collections.defaultdict(list)
@@ -249,7 +251,9 @@ def run():
     args += libraries
     rsp.write_text("\n".join(args) + "\n", encoding="ascii")
     link_result = None
-    if not failed and not missing:
+    if compile_only:
+        (OUT / "link.log").write_text("Link deferred until alias generation and projection.\n")
+    elif not failed and not missing:
         result = launch_link(link, rsp, OUT / "link.log")
         link_result = result.returncode
     else:
@@ -271,7 +275,7 @@ def run():
                    compiler=cl, linker=link)
     (OUT / "summary.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2), flush=True)
-    return 0 if summary["exe_linked"] else 1
+    return (0 if not failed and not missing else 1) if compile_only else (0 if summary["exe_linked"] else 1)
 
 
 if __name__ == "__main__":
@@ -280,6 +284,8 @@ if __name__ == "__main__":
                         help="Link saved inputs for diagnostics only; retain no EXE")
     parser.add_argument("--inventory-ownership", action="store_true",
                         help="Map target addresses to compiled external symbols")
+    parser.add_argument("--compile-only", action="store_true",
+                        help="Compile and inventory inputs; defer linking")
     parser.add_argument("--diagnostic-response", type=pathlib.Path,
                         help="Saved response inventory under build/integration (diagnostic mode only)")
     options = parser.parse_args()
@@ -287,4 +293,4 @@ if __name__ == "__main__":
         parser.error("--diagnostic-response requires --diagnose-existing-link")
     if options.inventory_ownership:
         raise SystemExit(inventory_ownership())
-    raise SystemExit(diagnose_existing(options.diagnostic_response) if options.diagnose_existing_link else run())
+    raise SystemExit(diagnose_existing(options.diagnostic_response) if options.diagnose_existing_link else run(options.compile_only))

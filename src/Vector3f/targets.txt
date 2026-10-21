@@ -9,3 +9,4 @@
 ^\?LengthSq@     47d610 lengthsq
 ^\?Normalize@    47d630 normalize
 ^\?\?4Vector3f  401670 assign_d401670
+^\?\?1Vector3f@@QAE@XZ 401660 empty_dtor

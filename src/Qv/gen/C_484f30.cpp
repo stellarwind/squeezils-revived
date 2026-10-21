@@ -29,16 +29,16 @@ QvNodeC484f30::QvNodeC484f30()
     m0.SetOwner(this);
     ((int *)this)[9] = 2;
     if (firstInstance)
-        fieldData->addEnum("CullEnabled", "ON", 1);
+        fieldData->addEnumValue("CullEnabled", "ON", 1);
     if (firstInstance)
-        fieldData->addEnum("CullEnabled", "OFF", 0);
+        fieldData->addEnumValue("CullEnabled", "OFF", 0);
     if (firstInstance)
-        fieldData->addEnum("CullEnabled", "AUTO", 2);
+        fieldData->addEnumValue("CullEnabled", "AUTO", 2);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("CullEnabled", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("CullEnabled", local_20, local_1c, local_14);
     ((int *)this)[10] = (int)local_20;
     ((int *)this)[0xb] = (int)local_1c;
     ((int *)this)[0xc] = (int)local_14;

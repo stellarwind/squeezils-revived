@@ -1,3 +1,4 @@
+#include "Runtime/DynamicCast.h"
 // AnimateCameraPathFunction (vtable 0x49ecfc): fly the camera along a named path.
 #pragma once
 #include "FunctionExec/Exec.h"
@@ -10,7 +11,6 @@ struct PathHandle { int id; };
 void *FindPath(const char *name);                        // 0x42cc10 (cdecl)
 struct Simulation2 { void *GetSoul(int id); };           // 0x414080
 Simulation2 *GetSimulation();                            // 0x420690 (cdecl)
-void *DynamicCast(void *p, int zero, const void *from, const void *to, int ref);   // 0x48f060 (cdecl)
 extern const char kSoulType[];                           // 0x4b93e8
 extern const char kCameraSoulType[];                     // 0x4b98b0
 struct CameraSoul { void FollowPath(void *path, int a, int b, float c); };   // 0x409a50

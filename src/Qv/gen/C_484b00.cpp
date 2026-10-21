@@ -40,24 +40,24 @@ QvNodeC484b00::QvNodeC484b00()
     ((int *)this)[9] = 0;
     ((int *)this)[0x10] = 0;
     if (firstInstance)
-        fieldData->addEnum("VertexOrdering", "UNKNOWN_ORDERING", 0);
+        fieldData->addEnumValue("VertexOrdering", "UNKNOWN_ORDERING", 0);
     if (firstInstance)
-        fieldData->addEnum("VertexOrdering", "CLOCKWISE", 1);
+        fieldData->addEnumValue("VertexOrdering", "CLOCKWISE", 1);
     if (firstInstance)
-        fieldData->addEnum("VertexOrdering", "COUNTERCLOCKWISE", 2);
+        fieldData->addEnumValue("VertexOrdering", "COUNTERCLOCKWISE", 2);
     if (firstInstance)
-        fieldData->addEnum("ShapeType", "UNKNOWN_SHAPE_TYPE", 0);
+        fieldData->addEnumValue("ShapeType", "UNKNOWN_SHAPE_TYPE", 0);
     if (firstInstance)
-        fieldData->addEnum("ShapeType", "SOLID", 1);
+        fieldData->addEnumValue("ShapeType", "SOLID", 1);
     if (firstInstance)
-        fieldData->addEnum("FaceType", "UNKNOWN_FACE_TYPE", 0);
+        fieldData->addEnumValue("FaceType", "UNKNOWN_FACE_TYPE", 0);
     if (firstInstance)
-        fieldData->addEnum("FaceType", "CONVEX", 1);
+        fieldData->addEnumValue("FaceType", "CONVEX", 1);
     {
         int local_20;
-        int local_1c;
-        int *local_14;
-    fieldData->getEnum("VertexOrdering", &local_20, &local_1c, (int *)&local_14);
+        const int *local_1c;
+        const QvName *local_14;
+    fieldData->getEnumData("VertexOrdering", local_20, local_1c, local_14);
     ((int *)this)[10] = (int)local_20;
     ((int *)this)[0xb] = (int)local_1c;
     ((int *)this)[0xc] = (int)local_14;

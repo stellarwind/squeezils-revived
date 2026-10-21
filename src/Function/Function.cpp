@@ -1,50 +1,6 @@
-// Function hierarchy: base dtor + the small derived ctors.
+// Function base destructor, SQZ.EXE 0x422ea0 (vtable 0x49dabc).
+// Constructors formerly scored here now belong to their complete classes:
+// FunctionExec, FunctionIf and FunctionProp. Use their real virtual slots.
 #include "Function/Function.h"
 
-void Function::vf1() {}
-void Function::vf2() {}
-void Function::vf3() {}
-void Function::vf4() {}
-
-ExecuteFunction::ExecuteFunction()
-{
-    field_4 = 0;
-}
-
-void ExecuteFunction::vf1() {}
-void ExecuteFunction::vf2() {}
-void ExecuteFunction::vf3() {}
-void ExecuteFunction::vf4() {}
-
-IfFunction::IfFunction()
-{
-    field_4 = 0;
-}
-
-void IfFunction::vf1() {}
-void IfFunction::vf2() {}
-void IfFunction::vf3() {}
-void IfFunction::vf4() {}
-
-DelayedExecuteFunction::DelayedExecuteFunction()
-{
-    field_4 = 0;
-    field_8 = 0;
-}
-
-void DelayedExecuteFunction::vf1() {}
-void DelayedExecuteFunction::vf2() {}
-void DelayedExecuteFunction::vf3() {}
-void DelayedExecuteFunction::vf4() {}
-
-Fnc3Field::Fnc3Field()
-{
-    field_4 = 0;
-    field_8 = 0;
-    field_C = 0;
-}
-
-void Fnc3Field::vf1() {}
-void Fnc3Field::vf2() {}
-void Fnc3Field::vf3() {}
-void Fnc3Field::vf4() {}
+Function::~Function() {}
