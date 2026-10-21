@@ -1047,3 +1047,54 @@ extracted FuncInfo/unwind-map objects and establish metadata liveness against
 current compiled owners. Only discard original compiler metadata after proving
 no retained references require it; never alias original frame-relative actions
 to arbitrary compiled local labels. STATUS.md and HANDOFF.md unchanged.
+
+
+## Automated dead EH metadata projection (2026-10-21)
+
+Supersedes the per-family EH registry approach. eh_batch.py discovers whole
+extracted data objects contained in validated original VC4 FuncInfo/unwind
+ranges. It verifies original bytes and symbolic relocation destinations against
+the PE. All noncandidate extracted data and every other link input, including
+libraries and alias objects, are conservative roots. Graph reachability keeps
+all dependencies of those roots, including cycles. No parent-frame label is
+aliased or implemented individually; rebuilt functions keep their own compiler
+EH metadata. The old one-family registry is historical, not a projection input.
+
+project_eh.py compacts dead records and remaps symbols and relocations, rejecting
+retained references, pointer addends across deleted intervals, unsupported
+section/local relocations and auxiliary formats. Dead undefined symbol-table
+entries must also be removed because VC4 diagnoses them even without relocation
+sites. verify_eh_projection.py checks every retained payload byte, symbol and
+relocation by identity. link_containers.py runs discovery, projection and this
+verifier automatically, so integration_pipeline.py needs no per-symbol edits.
+
+The batch removes 1,768 wholly unreachable original metadata objects (58,168
+bytes), 4,598 relocations and 3,651 now-unused code-pointer symbol entries.
+The 2,434 retained relocations, remaining symbols and payload are preserved.
+All 1,784 original unresolved EH funclets are gone; other internal EH labels
+and metadata-only entries disappear with the same dead tables. Five tests in
+test_eh_batch.py pass: root dependency cycles, unrooted cycles, noncandidate
+roots, an actual externally mentioned candidate retained with dependencies,
+and corrupted metadata rejected. Repeated projection yields identical COFF
+SHA-256 fce6e1ac220f2e0a66e0368268420102e3838f7f740ca2e320cbd6661a4c716f.
+
+Final full pipeline 9c7e815b-93b0-4d42-83f7-b07bf9eb5379 compiles 1,140/1,140 sources, with no failed or
+omitted sources; completes projection, verification, diagnostic link and
+classification; and reports snapshot-covered inputs unchanged. Zero LNK2005,
+3,490 LNK2001 messages, 2,901 unique unresolved symbols, no internal linker
+error. This supersedes the previous full 0/7,139/6,550 result and the interim
+single-family 0/7,138/6,549 diagnostic. An earlier full batch run reproduced
+the counts but failed its input-change check during tooling edits; it is
+superseded by this stable run. The executable still does not link. Cached
+extracted data/resources/QvLib provenance and external-header coverage remain
+incomplete; gameplay is untested. No source bodies or matching targets changed.
+STATUS.md and HANDOFF.md were not regenerated or edited.
+
+Reproduce from the workspace root in Git Bash:
+    source tools/flagsearch/env.sh
+    python Repo/tools/integration_pipeline.py
+Tests (after an integration run): python Repo/tools/test_eh_batch.py
+Current authoritative evidence: build/integration/pipeline-summary.json,
+containers/eh-projection.json and code-reference-classification.json.
+Next integration block should use owner-clusters.json to pick an ordinary
+missing-definition family; EH funclet references no longer dominate the link.

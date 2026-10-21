@@ -1,0 +1,11 @@
+[
+  {
+    "parent": "00401690",
+    "owner": "Misc17/Dt2.cpp",
+    "symbol": "??1C401690@@QAE@XZ",
+    "func_info": "004a76b0",
+    "unwind_map": "004a76d0",
+    "action": "004016d1",
+    "reason": "Original compiler-owned FuncInfo and one-state unwind map; rebuilt parent owns its own frame-specific EH metadata. Discard only with zero retained incoming relocations or external references."
+  }
+]

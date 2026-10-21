@@ -210,6 +210,10 @@ def run():
         if owners[name]:
             raise ValueError("Loose definition still competes with QvLib: " + name)
         owners[name] = ["qvlib/obj/QvLib.lib(QvLib.obj)"]
+    import project_eh
+    rsp = project_eh.project(rsp)
+    import verify_eh_projection
+    verify_eh_projection.main()
     (destination / "link.rsp").write_text(rsp, encoding="ascii")
     summary = dict(diagnostic_only=True, policy=POLICY, qv_policy=QV_POLICY,
                    qv_object_sha256=qv_hash, excluded_sources=excluded, modified_objects=len(changed),
