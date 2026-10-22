@@ -88,11 +88,16 @@ HRESULT sqz_gpu_render(const IDirect3DRMViewportVtbl *native, IDirect3DRMViewpor
     char error[512] = "RM render target was not captured";
     if (surface)
     {
+        LONGLONG extraction_start = sqz_gpu_profile_clock();
         ok = sqz_scene_extract(&scene, viewport, root);
+        scene.profile_tick = extraction_start;
+        sqz_gpu_profile_mark(&scene, PROFILE_EXTRACT);
         if (!ok)
             snprintf(error, sizeof(error), "Scene extraction: %s", scene.error);
         else
             ok = sqz_gpu_draw(&scene, surface, error, sizeof(error));
+        if (ok)
+            sqz_gpu_profile_finish(&scene);
     }
     if (ok && !marked)
     {

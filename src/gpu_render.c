@@ -15,7 +15,8 @@
 #define GPU_FUNCTIONS(X)                                                                           \
     X(SDL_Init)                                                                                    \
     X(SDL_WasInit)                                                                                 \
-    X(SDL_QuitSubSystem) X(SDL_SetMainReady) X(SDL_CreateGPUDevice) X(SDL_DestroyGPUDevice) X(     \
+    X(SDL_QuitSubSystem)                                                                           \
+    X(SDL_SetMainReady) X(SDL_CreateGPUDevice) X(SDL_DestroyGPUDevice) X(                          \
         SDL_GetGPUDeviceDriver) X(SDL_GetError) X(SDL_CreateGPUShader) X(SDL_ReleaseGPUShader)     \
         X(SDL_CreateGPUGraphicsPipeline) X(SDL_ReleaseGPUGraphicsPipeline) X(SDL_CreateGPUTexture) \
             X(SDL_ReleaseGPUTexture) X(SDL_CreateGPUSampler) X(SDL_ReleaseGPUSampler)              \
@@ -58,6 +59,114 @@ static TextureRecord textures[1024];
 static unsigned texture_count;
 static char last_error[512];
 static BOOL own_video;
+
+/* Opt-in CPU stage profiling. Aggregate in memory for process seconds 15..25;
+ * write one report afterward, with no per-frame logging or GPU synchronization
+ * beyond the renderer's existing fence. This does not measure GPU timestamps. */
+static struct
+{
+    BOOL initialized, enabled, written;
+    LONGLONG frequency, start, end, totals[PROFILE_STAGE_COUNT];
+    unsigned frames;
+    double vertices, batches;
+} profile;
+static const char *profile_names[PROFILE_STAGE_COUNT] = {"extract",
+                                                         "initialize",
+                                                         "background_read_convert",
+                                                         "background_upload",
+                                                         "texture_resolve",
+                                                         "vertex_setup_upload_encode",
+                                                         "draw_download_encode",
+                                                         "submit",
+                                                         "fence_wait",
+                                                         "readback_map_release",
+                                                         "writeback_convert",
+                                                         "cleanup"};
+
+static void profile_report(void)
+{
+    if (profile.written || !profile.frames)
+        return;
+    profile.written = TRUE;
+    char path[MAX_PATH];
+    DWORD length = GetModuleFileNameA(NULL, path, sizeof(path));
+    char *slash = length && length < sizeof(path) ? strrchr(path, '\\') : NULL;
+    if (!slash)
+        return;
+    snprintf(slash + 1, sizeof(path) - (size_t)(slash + 1 - path), "gpu-profile-%lu.json",
+             GetCurrentProcessId());
+    FILE *file = fopen(path, "w");
+    if (!file)
+        return;
+    fprintf(file,
+            "{\n  \"frames\": %u,\n  \"vertices_per_frame\": %.1f,\n"
+            "  \"batches_per_frame\": %.1f,\n  \"cpu_ms_per_frame\": {\n",
+            profile.frames, profile.vertices / profile.frames, profile.batches / profile.frames);
+    for (unsigned i = 0; i < PROFILE_STAGE_COUNT; ++i)
+        fprintf(file, "    \"%s\": %.6f%s\n", profile_names[i],
+                1000.0 * profile.totals[i] / profile.frequency / profile.frames,
+                i + 1 == PROFILE_STAGE_COUNT ? "" : ",");
+    fprintf(file, "  }\n}\n");
+    fclose(file);
+}
+
+LONGLONG sqz_gpu_profile_clock(void)
+{
+    LARGE_INTEGER now;
+    if (!profile.initialized)
+    {
+        profile.initialized = TRUE;
+        char enabled[8] = "";
+        GetEnvironmentVariableA("SQZ_GPU_PROFILE", enabled, sizeof(enabled));
+        profile.enabled = !strcmp(enabled, "1");
+        if (profile.enabled)
+        {
+            FILETIME created, exited, kernel, user, current;
+            LARGE_INTEGER frequency;
+            GetProcessTimes(GetCurrentProcess(), &created, &exited, &kernel, &user);
+            GetSystemTimeAsFileTime(&current);
+            ULARGE_INTEGER birth = {.LowPart = created.dwLowDateTime,
+                                    .HighPart = created.dwHighDateTime};
+            ULARGE_INTEGER wall = {.LowPart = current.dwLowDateTime,
+                                   .HighPart = current.dwHighDateTime};
+            QueryPerformanceFrequency(&frequency);
+            QueryPerformanceCounter(&now);
+            profile.frequency = frequency.QuadPart;
+            LONGLONG origin = now.QuadPart - (LONGLONG)((wall.QuadPart - birth.QuadPart) *
+                                                        (double)profile.frequency / 10000000.0);
+            profile.start = origin + 15 * profile.frequency;
+            profile.end = origin + 25 * profile.frequency;
+        }
+    }
+    if (!profile.enabled || profile.written)
+        return 0;
+    QueryPerformanceCounter(&now);
+    if (now.QuadPart >= profile.end)
+    {
+        profile_report();
+        return 0;
+    }
+    return now.QuadPart >= profile.start ? now.QuadPart : 0;
+}
+void sqz_gpu_profile_mark(SceneData *scene, enum SceneProfileStage stage)
+{
+    if (!scene->profile_tick)
+        return;
+    LARGE_INTEGER now;
+    QueryPerformanceCounter(&now);
+    scene->profile_ticks[stage] += now.QuadPart - scene->profile_tick;
+    scene->profile_tick = now.QuadPart;
+}
+void sqz_gpu_profile_finish(const SceneData *scene)
+{
+    if (!scene->profile_tick)
+        return;
+    for (unsigned i = 0; i < PROFILE_STAGE_COUNT; ++i)
+        profile.totals[i] += scene->profile_ticks[i];
+    ++profile.frames;
+    profile.vertices += scene->count;
+    profile.batches += scene->batch_count;
+}
 static BOOL gpu_error(const char *label)
 {
     snprintf(last_error, sizeof(last_error), "%s: %s", label,
@@ -505,10 +614,12 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
 {
     if (!initialize_gpu())
         return FALSE;
+    sqz_gpu_profile_mark(scene, PROFILE_INITIALIZE);
     unsigned w, h;
     BYTE *background = NULL;
     if (!read_background(target, &background, &w, &h))
         return FALSE;
+    sqz_gpu_profile_mark(scene, PROFILE_BACKGROUND_READ);
     size_t pixels = (size_t)w * h * 4;
     if (target_width != w || target_height != h)
     {
@@ -528,6 +639,7 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     free(background);
     if (!ok)
         return gpu_error("frame target creation/upload");
+    sqz_gpu_profile_mark(scene, PROFILE_BACKGROUND_UPLOAD);
     /* Resolve textures before the render pass: uploads submit separate commands. */
     SDL_GPUTexture **bindings =
         calloc(scene->batch_count ? scene->batch_count : 1, sizeof(*bindings));
@@ -539,6 +651,7 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
             free(bindings);
             return FALSE;
         }
+    sqz_gpu_profile_mark(scene, PROFILE_TEXTURES);
     Uint32 vertex_bytes = (Uint32)(scene->count * sizeof(SceneVertex));
     if (!vertex_buffer || buffer_size < vertex_bytes)
     {
@@ -590,6 +703,7 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     if (vertex_bytes)
         p_SDL_UploadToGPUBuffer(copy, &from, &region, FALSE);
     p_SDL_EndGPUCopyPass(copy);
+    sqz_gpu_profile_mark(scene, PROFILE_VERTEX_SETUP);
     /* Preserve the uploaded sky, clear only depth, then draw meshes and cutouts. */
     SDL_GPUColorTargetInfo color = {
         .texture = color_target, .load_op = SDL_GPU_LOADOP_LOAD, .store_op = SDL_GPU_STOREOP_STORE};
@@ -624,9 +738,12 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     SDL_GPUTextureTransferInfo destination = {.transfer_buffer = download};
     p_SDL_DownloadFromGPUTexture(copy, &source, &destination);
     p_SDL_EndGPUCopyPass(copy);
+    sqz_gpu_profile_mark(scene, PROFILE_DRAW_ENCODE);
     /* The original game consumes the DD pixels immediately after Render returns. */
     SDL_GPUFence *fence = p_SDL_SubmitGPUCommandBufferAndAcquireFence(command);
+    sqz_gpu_profile_mark(scene, PROFILE_SUBMIT);
     ok = fence && p_SDL_WaitForGPUFences(gpu, TRUE, &fence, 1);
+    sqz_gpu_profile_mark(scene, PROFILE_FENCE_WAIT);
     if (fence)
         p_SDL_ReleaseGPUFence(gpu, fence);
     p_SDL_ReleaseGPUTransferBuffer(gpu, upload);
@@ -636,9 +753,12 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
         p_SDL_ReleaseGPUTransferBuffer(gpu, download);
         return gpu_error("frame readback");
     }
+    sqz_gpu_profile_mark(scene, PROFILE_READBACK_MAP);
     ok = write_frame(target, result, w, h);
+    sqz_gpu_profile_mark(scene, PROFILE_WRITEBACK);
     p_SDL_UnmapGPUTransferBuffer(gpu, download);
     p_SDL_ReleaseGPUTransferBuffer(gpu, download);
+    sqz_gpu_profile_mark(scene, PROFILE_CLEANUP);
     return ok;
 }
 BOOL sqz_gpu_draw(SceneData *scene, IDirectDrawSurface *target, char *message, size_t size)

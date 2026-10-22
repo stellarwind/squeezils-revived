@@ -170,3 +170,12 @@ uses coordinates around (522, 89, 547), small camera movements and a transformed
 scene root; its maximum position error against direct native point transforms is
 below 0.0002 world units (observed 0.0000551). The initial reproduction with the
 old unit-point method measured 0.02861691 world units on the X axis alone.
+
+Optional CPU stage profiling: launch with SQZ_GPU_PROFILE=1 to aggregate Render
+stages during process seconds 15 through 25. The runtime writes one
+gpu-profile-PID.json beside the EXE after that interval. Normal launches disable
+the profiler. Stages separate extraction, CPU background conversion/upload,
+texture resolution, vertex setup, draw/download command encoding, submission,
+existing fence wait, readback mapping and CPU output conversion. Command encoding
+is CPU time; fence wait includes outstanding GPU work and is not a GPU timestamp.
+The original HUD drawn after Viewport::Render is outside these profiler stages.
