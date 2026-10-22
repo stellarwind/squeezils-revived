@@ -16,34 +16,36 @@
     X(SDL_Init)                                                                                    \
     X(SDL_WasInit)                                                                                 \
     X(SDL_QuitSubSystem)                                                                           \
-    X(SDL_SetMainReady) X(SDL_CreateGPUDevice) X(SDL_DestroyGPUDevice) X(                          \
-        SDL_GetGPUDeviceDriver) X(SDL_GetError) X(SDL_CreateGPUShader) X(SDL_ReleaseGPUShader)     \
-        X(SDL_CreateGPUGraphicsPipeline) X(SDL_ReleaseGPUGraphicsPipeline) X(SDL_CreateGPUTexture) \
-            X(SDL_ReleaseGPUTexture) X(SDL_CreateGPUSampler) X(SDL_ReleaseGPUSampler)              \
-                X(SDL_CreateGPUBuffer) X(SDL_ReleaseGPUBuffer) X(SDL_CreateGPUTransferBuffer)      \
-                    X(SDL_ReleaseGPUTransferBuffer) X(SDL_MapGPUTransferBuffer)                    \
-                        X(SDL_UnmapGPUTransferBuffer) X(SDL_AcquireGPUCommandBuffer)               \
-                            X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass)                          \
-                                X(SDL_UploadToGPUTexture) X(SDL_UploadToGPUBuffer)                 \
-                                    X(SDL_DownloadFromGPUTexture) X(SDL_SubmitGPUCommandBuffer)    \
-                                        X(SDL_SubmitGPUCommandBufferAndAcquireFence)               \
-                                            X(SDL_WaitForGPUFences) X(SDL_ReleaseGPUFence)         \
-                                                X(SDL_BeginGPURenderPass) X(SDL_EndGPURenderPass)  \
-                                                    X(SDL_BindGPUGraphicsPipeline)                 \
-                                                        X(SDL_BindGPUVertexBuffers)                \
-                                                            X(SDL_BindGPUFragmentSamplers)         \
-                                                                X(SDL_DrawGPUPrimitives) X(        \
-                                                                    SDL_SetGPUViewport)            \
-                                                                    X(SDL_CancelGPUCommandBuffer)
+    X(SDL_SetMainReady)                                                                            \
+    X(SDL_CreateGPUDevice) X(SDL_DestroyGPUDevice) X(SDL_GetGPUDeviceDriver) X(SDL_GetError) X(    \
+        SDL_CreateGPUShader) X(SDL_ReleaseGPUShader) X(SDL_CreateGPUGraphicsPipeline)              \
+        X(SDL_ReleaseGPUGraphicsPipeline) X(SDL_CreateGPUTexture) X(SDL_ReleaseGPUTexture) X(      \
+            SDL_CreateGPUSampler) X(SDL_ReleaseGPUSampler) X(SDL_CreateGPUBuffer)                  \
+            X(SDL_ReleaseGPUBuffer) X(SDL_CreateGPUTransferBuffer) X(SDL_ReleaseGPUTransferBuffer) \
+                X(SDL_MapGPUTransferBuffer) X(SDL_UnmapGPUTransferBuffer)                          \
+                    X(SDL_AcquireGPUCommandBuffer) X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass)   \
+                        X(SDL_UploadToGPUTexture) X(SDL_UploadToGPUBuffer)                         \
+                            X(SDL_DownloadFromGPUTexture) X(SDL_SubmitGPUCommandBuffer) X(         \
+                                SDL_SubmitGPUCommandBufferAndAcquireFence) X(SDL_WaitForGPUFences) \
+                                X(SDL_ReleaseGPUFence) X(SDL_BeginGPURenderPass)                   \
+                                    X(SDL_EndGPURenderPass) X(SDL_BindGPUGraphicsPipeline)         \
+                                        X(SDL_BindGPUVertexBuffers) X(SDL_BindGPUFragmentSamplers) \
+                                            X(SDL_DrawGPUPrimitives) X(SDL_SetGPUViewport)         \
+                                                X(SDL_CancelGPUCommandBuffer)
 #define DECLARE(name) static __typeof__(&name) p_##name;
 GPU_FUNCTIONS(DECLARE)
-/* Cache holds an RM reference so a recycled COM address cannot reuse old pixels.
- * Hash converted texels every frame because the game mutates native textures. */
+/* Keep native source snapshots as well as GPU textures. A fast byte comparison
+ * detects mutable pixels/palettes before conversion; each texture/decal pair is
+ * resolved only once per draw. RM references protect against recycled pointers. */
 typedef struct TextureRecord
 {
     IDirect3DRMTexture *rm;
     SDL_GPUTexture *gpu;
-    uint64_t hash;
+    uint64_t resolved_frame;
+    BYTE *source;
+    D3DRMIMAGE description;
+    DWORD key;
+    BOOL keyed;
     unsigned width, height;
     BOOL decal;
 } TextureRecord;
@@ -57,6 +59,7 @@ static Uint32 buffer_size;
 static unsigned target_width, target_height;
 static TextureRecord textures[1024];
 static unsigned texture_count;
+static uint64_t texture_frame;
 static char last_error[512];
 static BOOL own_video;
 
@@ -68,7 +71,7 @@ static struct
     BOOL initialized, enabled, written;
     LONGLONG frequency, start, end, totals[PROFILE_STAGE_COUNT];
     unsigned frames;
-    double vertices, batches;
+    double vertices, batches, texture_checks, texture_conversions, texture_reuses;
 } profile;
 static const char *profile_names[PROFILE_STAGE_COUNT] = {"extract",
                                                          "initialize",
@@ -100,8 +103,13 @@ static void profile_report(void)
         return;
     fprintf(file,
             "{\n  \"frames\": %u,\n  \"vertices_per_frame\": %.1f,\n"
-            "  \"batches_per_frame\": %.1f,\n  \"cpu_ms_per_frame\": {\n",
-            profile.frames, profile.vertices / profile.frames, profile.batches / profile.frames);
+            "  \"batches_per_frame\": %.1f,\n"
+            "  \"texture_checks_per_frame\": %.2f,\n"
+            "  \"texture_conversions_per_frame\": %.2f,\n"
+            "  \"texture_reuses_per_frame\": %.2f,\n  \"cpu_ms_per_frame\": {\n",
+            profile.frames, profile.vertices / profile.frames, profile.batches / profile.frames,
+            profile.texture_checks / profile.frames, profile.texture_conversions / profile.frames,
+            profile.texture_reuses / profile.frames);
     for (unsigned i = 0; i < PROFILE_STAGE_COUNT; ++i)
         fprintf(file, "    \"%s\": %.6f%s\n", profile_names[i],
                 1000.0 * profile.totals[i] / profile.frequency / profile.frames,
@@ -166,6 +174,9 @@ void sqz_gpu_profile_finish(const SceneData *scene)
     ++profile.frames;
     profile.vertices += scene->count;
     profile.batches += scene->batch_count;
+    profile.texture_checks += scene->texture_checks;
+    profile.texture_conversions += scene->texture_conversions;
+    profile.texture_reuses += scene->texture_reuses;
 }
 static BOOL gpu_error(const char *label)
 {
@@ -396,10 +407,43 @@ static DWORD pack_channel(unsigned value, DWORD mask)
     }
     return ((value * mask + 127) / 255) << shift;
 }
-static SDL_GPUTexture *resolve_rm_texture(IDirect3DRMTexture *rm, BOOL decal)
+static BOOL same_texture_source(const TextureRecord *record, const D3DRMIMAGE *image, BOOL keyed,
+                                DWORD key)
+{
+    const D3DRMIMAGE *old = &record->description;
+    if (!record->source || !record->gpu || old->width != image->width ||
+        old->height != image->height || old->depth != image->depth || old->rgb != image->rgb ||
+        old->red_mask != image->red_mask || old->green_mask != image->green_mask ||
+        old->blue_mask != image->blue_mask || old->alpha_mask != image->alpha_mask ||
+        record->keyed != keyed || record->key != key ||
+        (!image->rgb && old->palette_size != image->palette_size))
+        return FALSE;
+    size_t row_bytes = (size_t)image->width * (image->depth / 8);
+    for (int y = 0; y < image->height; ++y)
+        if (memcmp(record->source + y * row_bytes,
+                   (BYTE *)image->buffer1 + (ptrdiff_t)y * image->bytes_per_line, row_bytes))
+            return FALSE;
+    return image->rgb || !memcmp(record->source + row_bytes * image->height, image->palette,
+                                 (size_t)image->palette_size * sizeof(*image->palette));
+}
+
+static SDL_GPUTexture *resolve_rm_texture(SceneData *scene, IDirect3DRMTexture *rm, BOOL decal)
 {
     if (!rm)
         return white;
+    TextureRecord *record = NULL;
+    for (unsigned i = 0; i < texture_count; ++i)
+        if (textures[i].rm == rm && textures[i].decal == decal)
+        {
+            record = &textures[i];
+            break;
+        }
+    if (record && record->gpu && record->resolved_frame == texture_frame)
+    {
+        ++scene->texture_reuses;
+        return record->gpu;
+    }
+    ++scene->texture_checks;
     D3DRMIMAGE *image = rm->lpVtbl->GetImage(rm);
     if (!image || !image->buffer1 || image->width <= 0 || image->height <= 0 ||
         image->width > 8192 || image->height > 8192 ||
@@ -415,6 +459,13 @@ static SDL_GPUTexture *resolve_rm_texture(IDirect3DRMTexture *rm, BOOL decal)
     }
     BOOL keyed = decal && rm->lpVtbl->GetDecalTransparency(rm);
     DWORD key = keyed ? rm->lpVtbl->GetDecalTransparentColor(rm) : 0;
+    if (record && same_texture_source(record, image, keyed, key))
+    {
+        record->resolved_frame = texture_frame;
+        ++scene->texture_reuses;
+        return record->gpu;
+    }
+    ++scene->texture_conversions;
     unsigned kr = (key >> 16) & 255, kg = (key >> 8) & 255, kb = key & 255;
     DWORD key_packed = pack_channel(kr, image->red_mask) | pack_channel(kg, image->green_mask) |
                        pack_channel(kb, image->blue_mask);
@@ -426,7 +477,6 @@ static SDL_GPUTexture *resolve_rm_texture(IDirect3DRMTexture *rm, BOOL decal)
         gpu_error("texture conversion allocation");
         return NULL;
     }
-    uint64_t hash = 1469598103934665603ull;
     for (int y = 0; y < image->height; ++y)
         for (int x = 0; x < image->width; ++x)
         {
@@ -462,18 +512,28 @@ static SDL_GPUTexture *resolve_rm_texture(IDirect3DRMTexture *rm, BOOL decal)
              * transparent magenta texel contributes no color to foliage edges. */
             for (unsigned c = 0; c < 3; ++c)
                 dst[c] = (dst[c] * dst[3] + 127) / 255;
-            for (unsigned c = 0; c < 4; ++c)
-                hash = (hash ^ dst[c]) * 1099511628211ull;
         }
-    TextureRecord *record = NULL;
-    for (unsigned i = 0; i < texture_count; ++i)
-        if (textures[i].rm == rm && textures[i].decal == decal)
-            record = &textures[i];
+    size_t row_bytes = (size_t)image->width * (image->depth / 8);
+    size_t pixel_bytes = row_bytes * image->height;
+    size_t palette_bytes = image->rgb ? 0 : (size_t)image->palette_size * sizeof(*image->palette);
+    BYTE *source = malloc(pixel_bytes + palette_bytes);
+    if (!source)
+    {
+        free(rgba);
+        gpu_error("texture source snapshot allocation");
+        return NULL;
+    }
+    for (int y = 0; y < image->height; ++y)
+        memcpy(source + y * row_bytes,
+               (BYTE *)image->buffer1 + (ptrdiff_t)y * image->bytes_per_line, row_bytes);
+    if (palette_bytes)
+        memcpy(source + pixel_bytes, image->palette, palette_bytes);
     if (!record)
     {
         if (texture_count == 1024)
         {
             free(rgba);
+            free(source);
             gpu_error("prototype texture cache limit reached");
             return NULL;
         }
@@ -492,15 +552,19 @@ static SDL_GPUTexture *resolve_rm_texture(IDirect3DRMTexture *rm, BOOL decal)
                            SDL_GPU_TEXTUREUSAGE_SAMPLER);
         record->width = image->width;
         record->height = image->height;
-        record->hash = ~hash;
     }
-    BOOL ok = record->gpu != NULL;
-    if (ok && record->hash != hash)
+    BOOL ok = record->gpu && upload_texture(record->gpu, rgba, image->width, image->height);
+    if (ok)
     {
-        ok = upload_texture(record->gpu, rgba, image->width, image->height);
-        if (ok)
-            record->hash = hash;
+        free(record->source);
+        record->source = source;
+        record->description = *image;
+        record->keyed = keyed;
+        record->key = key;
+        record->resolved_frame = texture_frame;
     }
+    else
+        free(source);
     free(rgba);
     return ok ? record->gpu : NULL;
 }
@@ -513,6 +577,7 @@ void sqz_gpu_shutdown(void)
         return;
     for (unsigned i = 0; i < texture_count; ++i)
     {
+        free(textures[i].source);
         if (textures[i].gpu)
             p_SDL_ReleaseGPUTexture(gpu, textures[i].gpu);
         textures[i].rm->lpVtbl->Release(textures[i].rm);
@@ -614,6 +679,13 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
 {
     if (!initialize_gpu())
         return FALSE;
+    if (++texture_frame == 0)
+    {
+        for (unsigned i = 0; i < texture_count; ++i)
+            textures[i].resolved_frame = 0;
+        ++texture_frame;
+    }
+    scene->texture_checks = scene->texture_conversions = scene->texture_reuses = 0;
     sqz_gpu_profile_mark(scene, PROFILE_INITIALIZE);
     unsigned w, h;
     BYTE *background = NULL;
@@ -646,7 +718,8 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     if (!bindings)
         return gpu_error("texture binding allocation");
     for (size_t i = 0; i < scene->batch_count; ++i)
-        if (!(bindings[i] = resolve_rm_texture(scene->batches[i].texture, scene->batches[i].decal)))
+        if (!(bindings[i] =
+                  resolve_rm_texture(scene, scene->batches[i].texture, scene->batches[i].decal)))
         {
             free(bindings);
             return FALSE;

@@ -146,6 +146,41 @@ int main(void)
     assert(pixel(target, 2, 2) == 0xff && pixel(target, 36, 32) == 0xff0000 &&
            pixel(target, 56, 32) == 0x00ff00);
     assert(pixel(target, 48, 32) == 0x00ff00); /* Linear-filtered key edge has no magenta fringe. */
+    assert(scene.texture_checks == 1 && scene.texture_conversions == 1);
+    /* A repeated material must reuse one lookup/conversion, and a warm texture
+     * must not be converted again. Mutations remain visible on the next draw. */
+    assert(scene.batch_capacity > scene.batch_count);
+    scene.batches[scene.batch_count] = scene.batches[1];
+    ++scene.batch_count;
+    assert(sqz_gpu_draw(&scene, target, message, sizeof(message)));
+    assert(scene.texture_checks == 1 && scene.texture_conversions == 0 &&
+           scene.texture_reuses == 2);
+    D3DRMIMAGE *mutable_image = texture->lpVtbl->GetImage(texture);
+    D3DRMPALETTEENTRY original_palette = mutable_image->palette[0];
+    BYTE original_pixels[16];
+    memcpy(original_pixels, mutable_image->buffer1, sizeof(original_pixels));
+    mutable_image->palette[0] = (D3DRMPALETTEENTRY){255, 255, 0, 0};
+    assert(SUCCEEDED(target->lpVtbl->Blt(target, NULL, NULL, NULL, DDBLT_COLORFILL, &fill)));
+    assert(sqz_gpu_draw(&scene, target, message, sizeof(message)));
+    assert(scene.texture_conversions == 1 && pixel(target, 56, 32) == 0xffff00);
+    memset(mutable_image->buffer1, 1, sizeof(original_pixels));
+    assert(SUCCEEDED(target->lpVtbl->Blt(target, NULL, NULL, NULL, DDBLT_COLORFILL, &fill)));
+    assert(sqz_gpu_draw(&scene, target, message, sizeof(message)));
+    assert(scene.texture_conversions == 1 && pixel(target, 56, 32) == 0xff);
+    assert(SUCCEEDED(texture->lpVtbl->SetDecalTransparentColor(texture, 0xff00ffff)));
+    assert(SUCCEEDED(target->lpVtbl->Blt(target, NULL, NULL, NULL, DDBLT_COLORFILL, &fill)));
+    assert(sqz_gpu_draw(&scene, target, message, sizeof(message)));
+    assert(scene.texture_conversions == 1 && pixel(target, 56, 32) == 0xff00ff);
+    assert(SUCCEEDED(texture->lpVtbl->SetDecalTransparentColor(texture, 0xffff00ff)));
+    assert(SUCCEEDED(texture->lpVtbl->SetDecalTransparency(texture, FALSE)));
+    assert(SUCCEEDED(target->lpVtbl->Blt(target, NULL, NULL, NULL, DDBLT_COLORFILL, &fill)));
+    assert(sqz_gpu_draw(&scene, target, message, sizeof(message)));
+    assert(scene.texture_conversions == 1 && pixel(target, 56, 32) == 0xff00ff);
+    mutable_image->palette[0] = original_palette;
+    memcpy(mutable_image->buffer1, original_pixels, sizeof(original_pixels));
+    assert(SUCCEEDED(texture->lpVtbl->SetDecalTransparency(texture, TRUE)));
+    puts("PASS: warm/shared texture reuse and in-place palette, pixel, color-key and transparency "
+         "updates");
     sqz_scene_free(&scene);
     vertices[0].position.x = -1;
     assert(SUCCEEDED(mesh->lpVtbl->SetVertices(mesh, group, 0, 3, vertices)));

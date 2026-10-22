@@ -179,3 +179,14 @@ texture resolution, vertex setup, draw/download command encoding, submission,
 existing fence wait, readback mapping and CPU output conversion. Command encoding
 is CPU time; fence wait includes outstanding GPU work and is not a GPU timestamp.
 The original HUD drawn after Viewport::Render is outside these profiler stages.
+
+Texture caching compares packed source rows and indexed palettes with retained
+byte snapshots before allocating/converting RGBA. Format masks, dimensions,
+color-key and transparency changes invalidate the cache too. Each texture/decal
+pair is resolved once per draw, so repeated batches reuse its binding. Unchanged
+textures retain their GPU allocation without conversion or upload. The source
+scan remains necessary because native image buffers can be edited directly;
+this does not yet rely on dirty notifications. Snapshots and native references
+are released with the GPU cache. Profiler reports include source-check,
+conversion and reuse counts. Tests cover warm/shared bindings and live pixel,
+palette, color-key and transparency edits through the native RM image.

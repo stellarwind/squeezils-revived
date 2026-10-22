@@ -60,6 +60,7 @@ typedef struct SceneData
     IDirect3DRMFrame *camera;
     float left, right, bottom, top, front, back;
     LONGLONG profile_tick, profile_ticks[PROFILE_STAGE_COUNT];
+    unsigned texture_checks, texture_conversions, texture_reuses;
 } SceneData;
 LONGLONG sqz_gpu_profile_clock(void);
 void sqz_gpu_profile_mark(SceneData *, enum SceneProfileStage);
