@@ -53,7 +53,9 @@ def main():
                     target.write_bytes(z.read(name))
     manifest = generate(sdk, BUILD / 'generated', system, legacy)
     flags = ['-m32', '-static-libgcc', '-std=c11', '-O2', '-g', '-Wall', '-Wextra', '-Werror=incompatible-pointer-types', '-I', ROOT / 'src', '-I', headers]
-    run(gcc, *flags, '-shared', ROOT / 'src/runtime.c', ROOT / 'src/platform.c', BUILD / 'generated/observers.c',
+    color_fixes = ['-DSQZ_FIX_16BPP_RGB_INDEX_REMAP', '-DSQZ_FIX_16BPP_DESKTOP_GATE', '-DSQZ_FIX_16BPP_COLORKEY_MASK', '-DSQZ_FIX_16BPP_WARP_BRIDGE']
+    run(gcc, *flags, *color_fixes, '-shared', ROOT / 'src/runtime.c', ROOT / 'src/platform.c', ROOT / 'src/color_compat.c', ROOT / 'src/warp_compat.c',
+        ROOT / 'src/scene_extract.c', ROOT / 'src/gpu_bridge.c', ROOT / 'src/gpu_render.c', ROOT / 'src/shading_capture.c', BUILD / 'generated/observers.c',
         '-o', BUILD / 'sqz-runtime.dll', '-Wl,--out-implib,' + str(BUILD / 'libsqz-runtime.a'), '-ldxguid', '-lole32', '-luser32', '-lgdi32')
     for label in ('ddraw', 'd3drm'):
         run(gcc, '-m32', '-shared', BUILD / ('generated/' + label + '.S'),
@@ -104,6 +106,15 @@ def main():
                 archive.write(patch / target, target)
             shutil.copy2(legacy, patch / 'd3drm.dll')
             archive.write(patch / 'd3drm.dll', 'd3drm.dll')
+        with zipfile.ZipFile(BUILD / 'squeezils-diagnostic-patch.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+            for path in [*(patch / target for target in files.values()), patch / 'd3drm.dll']:
+                archive.write(path, path.name)
+            for name in ('diagnose.cmd', 'diagnose.ps1'):
+                archive.write(ROOT / 'tools' / name, name)
+        with zipfile.ZipFile(BUILD / 'squeezils-sdlgpu-experiment.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+            for path in [*(patch / target for target in files.values()), patch / 'd3drm.dll']:
+                archive.write(path, path.name)
+            archive.write(ROOT / 'tools/play-gpu.cmd', 'play-gpu.cmd')
     print(json.dumps({'interfaces': len(manifest), 'methods': sum(map(len, manifest.values())),
                       'build': str(BUILD), 'stage': str(STAGE) if args.stage else None}, indent=2))
 

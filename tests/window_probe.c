@@ -6,6 +6,9 @@
 #include "geometry.h"
 static LRESULT CALLBACK procedure(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 {
+    /* Reproduce a legacy callback swallowing the SDL border hit-test. */
+    if (msg == WM_NCHITTEST)
+        return HTCLIENT;
     return DefWindowProcA(hwnd,msg,wp,lp);
 }
 static DWORD pixel(IDirectDrawSurface *surface, int x, int y)
@@ -60,6 +63,10 @@ int main(void)
     SetCursor(NULL);
     assert(GetCursor() == LoadCursorA(NULL,IDC_ARROW));
     assert(GetWindowLongA(hwnd,GWL_STYLE) & WS_THICKFRAME);
+    RECT border_rect;
+    assert(GetWindowRect(hwnd,&border_rect));
+    LPARAM edge_point=MAKELPARAM(border_rect.right-2,(border_rect.top+border_rect.bottom)/2);
+    assert(SendMessageA(hwnd,WM_NCHITTEST,0,edge_point)==HTRIGHT);
     assert(SUCCEEDED(DirectDrawCreate(NULL,&dd,NULL)));
     assert(SUCCEEDED(IDirectDraw_SetCooperativeLevel(dd,hwnd,DDSCL_EXCLUSIVE|DDSCL_FULLSCREEN)));
     assert(SUCCEEDED(IDirectDraw_SetDisplayMode(dd,640,480,16)));
@@ -85,12 +92,14 @@ int main(void)
     assert(SUCCEEDED(IDirectDrawSurface_Blt(snapshot,NULL,primary,&capture,DDBLT_WAIT,NULL)));
     assert(pixel(snapshot,20,20) == 0xff && pixel(snapshot,0,0) == 0);
     /* Same nested GetDC and ExtTextOut pattern as timer 0x42e0e0/0x4753d0. */
-    HFONT font = CreateFontA(-14,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
-                            OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,
-                            DEFAULT_PITCH,"Arial");
+    LOGFONTA font_spec = {.lfHeight=-14,.lfWeight=FW_NORMAL,.lfCharSet=DEFAULT_CHARSET,
+                         .lfFaceName="Arial"};
+    HFONT font = CreateFontIndirectA(&font_spec);
     assert(font);
     HDC outer_dc = GetDC(hwnd);
     assert(outer_dc);
+    assert(GetDeviceCaps(outer_dc,LOGPIXELSY) == 96);
+    assert(GetDeviceCaps(outer_dc,LOGPIXELSX) == 96);
     HGDIOBJ old_font = SelectObject(outer_dc,font);
     SetTextColor(outer_dc,RGB(255,0,0));
     HDC text_dc = GetDC(hwnd);

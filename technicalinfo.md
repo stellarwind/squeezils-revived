@@ -6,7 +6,7 @@ stays in place. Original DirectDraw/Direct3DRM implementations still render.
 The default SDL3 platform path owns a resizable native window and presents a
 fixed-resolution virtual game primary with aspect-correct scaling.
 
-This is an experimental forwarding checkpoint, not a modern GPU renderer.
+The retained scene is rendered by SDL3 GPU / Direct3D12 by default.
 
 Requirements: Windows, Python 3, and i686-w64-mingw32 GCC on PATH. Put the supplied
 game ZIP and original DLLs in `../SqueezilsGameFiles` relative to this checkout.
@@ -32,15 +32,53 @@ export-shim tests and are not part of the patch package.
 
 SDL is enabled when `SQZ_SDL_WINDOW` is unset; `SQZ_SDL_WINDOW=0` opts out.
 `tools/play.ps1 -OriginalWindow` also retains original window creation. The launch
-script scopes 16-bit-color compatibility to its child process for development.
-For ordinary launch, users enable Reduced color mode / 16-bit color in the
-executable's Windows Compatibility settings. The runtime does not restart the
-game or change compatibility settings. Original executable bytes stay unchanged.
+script removes inherited 16BITCOLOR/256COLOR environment tokens for its child.
+For ordinary launch, disable Reduced color mode in the executable's Windows
+Compatibility settings; existing saved settings are not changed by the runtime.
+The runtime does not restart the game. The original executable on disk stays unchanged.
 
 The source build instruments native vtable entries inside the test process,
 preserving object/vtable addresses, COM identity and original callbacks. There
-is no game-function trampoline or GPU swapchain. Unknown interfaces and failed
+is no GPU swapchain. Unknown interfaces and failed
 surface recovery remain visible in the trace rather than silently succeeding.
+
+Two narrowly scoped color fixes are enabled at build time with
+`SQZ_FIX_16BPP_RGB_INDEX_REMAP` and `SQZ_FIX_16BPP_DESKTOP_GATE`. Whole-function
+fingerprints check the known original code before process-memory edits. The
+texture loader branches through an x86 guard that retains its index-remapping
+path only for indexed 8bpp images. The desktop gate accepts depths up to 32
+without falsifying GetDeviceCaps/GetDisplayMode or the actual surface formats.
+Set `SQZ_FIX_RGB_REMAP=0` to compare with the original remapping while retaining
+32bpp startup acceptance; `SQZ_ALLOW_32BPP=0` preserves the original depth gate.
+Diagnostic logs report installation status and actual image/surface formats.
+
+The 32bpp build also enables `SQZ_FIX_16BPP_COLORKEY_MASK` for the original
+HUD key helper's shift-by-32 bug, and `SQZ_FIX_16BPP_WARP_BRIDGE` for the CPU
+sky renderer, which only accepts 8/16bpp. Warp images and their private output
+surface use RGB565; a scoped GDI StretchBlt converts/scales that surface into
+the 32-bit frame. All other color surfaces remain at the actual display format.
+Native tests cover original mask instructions and real RGB565-to-32 pixel output.
+
+SDL3 GPU rendering is the default; `SQZ_RENDERER=native` selects native RM
+rendering for comparison. The Viewport::Render hook reads live frame/mesh/decal
+data, uploads the existing sky background, renders to an offscreen target and
+synchronously reads back into the original DD surface so HUD/GDI composition
+continues. Texture sampling is bilinear with premultiplied cutout filtering.
+
+Lights are collected from native RM frames before geometry extraction. Ambient
+colors and directional frame +Z directions are evaluated in camera coordinates.
+Vertex normals use the inverse-transpose frame transform. CPU Lambert diffuse
+lighting multiplies group color; the vertex color attribute carries the
+result to the GPU, which smoothly interpolates it for Gouraud shading. Point
+lights support range/attenuation; enable-frame scope and unlit/flat/Gouraud group
+quality are respected. Decals remain unlit. Specular, fog, material inheritance,
+translucent sorting and exact RM render-quality equivalence remain unimplemented.
+
+Run `tools/play.ps1` locally or launch the patched SQZ.EXE directly. A usable SDL
+Direct3D12 backend and Windows d3dcompiler_47.dll are required. A small first-scene
+result file distinguishes successful replacement from initialization/extraction
+failure. Unsupported visuals fail explicitly. The Windows 11 scene test has been
+confirmed by the user; complete game coverage remains to be tested.
 
 Tests cover native forwarding vs original DLLs, export names/ordinals, scene and
 mesh APIs, callbacks, float ABI, reference concurrency, surface recovery, pointer
@@ -59,4 +97,47 @@ Manual gameplay, focus changes and fullscreen transitions need playtesting.
 Project evidence and current limitations live in the workspace's
 `../META/FORWARDING_SDL_2026-10-22.md`. Do not replace DLLs while the test game is
 running. The files in test `legacy` folders are private dependencies, not redistributable
-source artifacts. Detailed per-call tracing has substantial debug overhead.
+source artifacts. Normal launches do not create logs. Set `SQZ_TRACE=1` only
+when diagnosing a problem; detailed per-call tracing has substantial overhead.
+
+Native color-source verification: the original RM DLL ignores per-vertex source
+colors when rendering these Mesh groups and uses SetGroupColor instead. The GPU
+extractor follows that behavior. A native offscreen fixture checks white/blue/
+gray groups with contradictory and mixed source colors, plus a Gouraud gradient.
+RGB565 ambient/directional shading samples agree within one component step;
+complete scene and render-state equivalence is not claimed.
+
+HUD DPI: the game converts its INI font point sizes using GetDeviceCaps(LOGPIXELSY)
+before creating GDI fonts. The import hook returns 96 for LOGPIXELSX/Y only on the
+logical canvas DC and the game window DC used before the primary is available.
+The full canvas is scaled at presentation, so HUD text no longer scales twice at
+200% Windows UI scaling. Other device metrics and unrelated DCs remain native.
+A fixture substitutes 96/144/192/288 host DPI and checks identical font extents;
+the window integration test checks the hooked canvas reports 96 DPI.
+
+Mesh culling: the native offscreen oracle discards a reverse-wound triangle.
+The GPU mesh pipeline now culls back faces with clockwise front-face winding;
+a separate decal pipeline keeps billboards double-sided. A regression compares
+both native/GPU front-facing and reversed geometry. No depth bias is applied.
+
+Placed frame visuals: resource frames attached through AddVisual need the
+placement frame's transform. Extraction composes local GetTransform matrices
+along the traversed path instead of relying on world transforms initialized by
+native Render. Visitation is keyed by frame identity and placement basis, so
+shared resources render at each placement. Tests extract the original nut/spit
+assets before any native rendering and verify shared sprite placements.
+
+Billboard sizing: native RM SetDecalSize stores world-space dimensions; inherited
+frame scale affects anchor placement but does not resize the billboard. A native
+oracle at frame scales 1, 2, (3,.5,1), and .5 produces the same 256 covered pixels.
+GPU extraction now matches, avoiding oversized overworld tree sprites.
+
+Testing saves: original region/place serializers 0x4188c0/0x439db0 write the same
+ASCII v1.1 header, region/location pair and Inventory serializer 0x416600 data:
+name, scalar, six four-integer region rows, then inventory count/items. The
+original Inventory constructor 0x415ef0 initializes its scalar to -1. Generated
+profiles retain that scalar, unlock the six region rows and use an empty
+inventory. The loader 0x439b70 creates RegionSimulation (0x416e50), even when
+loading a save written inside a level: no mid-level position is serialized.
+The generator enumerates LocationList place definitions and validates each
+Destination's PLACE.INI/LevelFile before writing short alphanumeric filenames.

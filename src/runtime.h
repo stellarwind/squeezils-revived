@@ -8,7 +8,8 @@
 #include <d3d.h>
 #include <d3drm.h>
 
-typedef struct SqzInterface {
+typedef struct SqzInterface
+{
     const IID *iid;
     const char *name;
     size_t slots;
@@ -17,6 +18,17 @@ typedef struct SqzInterface {
 extern const SqzInterface sqz_interfaces[];
 extern const size_t sqz_interface_count;
 void sqz_log(const char *format, ...);
+void sqz_diag_desc(const char *, const void *, const DDSURFACEDESC *);
+void sqz_diag_image(const char *, const void *, const D3DRMIMAGE *);
+int sqz_color_patch_image(BYTE *, size_t, BOOL, BOOL);
+void sqz_color_install(void);
+void sqz_color_log(void);
+int sqz_warp_patch_image(BYTE *, size_t);
+HRESULT sqz_warp_create_surface(const IDirectDrawVtbl *, IDirectDraw *, DDSURFACEDESC *,
+                                IDirectDrawSurface **, IUnknown *, void *);
+HRESULT sqz_warp_blt(const IDirectDrawSurfaceVtbl *, IDirectDrawSurface *, RECT *,
+                     IDirectDrawSurface *, RECT *, DWORD, DDBLTFX *);
+void sqz_warp_surface_released(void *, ULONG);
 void *sqz_original(void *self);
 void sqz_hook(void *self, const char *name);
 void sqz_hook_iid(void *self, REFIID iid);
@@ -25,13 +37,15 @@ HRESULT WINAPI sqz_create_rm(IDirect3DRM **out);
 FARPROC __cdecl sqz_resolve(unsigned library, const char *name);
 void sqz_platform_install(void);
 BOOL sqz_platform_window(HWND hwnd);
+void sqz_platform_gpu_title(void);
 HRESULT sqz_surface_blt(const IDirectDrawSurfaceVtbl *, IDirectDrawSurface *, RECT *,
                         IDirectDrawSurface *, RECT *, DWORD, DDBLTFX *);
 HRESULT sqz_cooperative(const IDirectDrawVtbl *, IDirectDraw *, HWND, DWORD);
 HRESULT sqz_display_mode(const IDirectDrawVtbl *, IDirectDraw *, DWORD, DWORD, DWORD);
 HRESULT sqz_get_caps(const IDirectDrawVtbl *, IDirectDraw *, DDCAPS *, DDCAPS *);
 void sqz_surface_created(IDirectDraw *, IDirectDrawSurface *);
-HRESULT sqz_create_surface(const IDirectDrawVtbl *, IDirectDraw *, DDSURFACEDESC *, IDirectDrawSurface **, IUnknown *);
+HRESULT sqz_create_surface(const IDirectDrawVtbl *, IDirectDraw *, DDSURFACEDESC *,
+                           IDirectDrawSurface **, IUnknown *);
 HRESULT sqz_release_dc(const IDirectDrawSurfaceVtbl *, IDirectDrawSurface *, HDC);
 void sqz_surface_released(void *, ULONG);
 #endif

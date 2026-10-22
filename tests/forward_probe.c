@@ -69,9 +69,23 @@ int main(void)
     assert(SUCCEEDED(IDirectDrawSurface_Lock(surface, NULL, &locked, DDLOCK_WAIT, NULL)));
     assert(locked.lpSurface && locked.lPitch);
     assert(SUCCEEDED(IDirectDrawSurface_Unlock(surface, locked.lpSurface)));
+    DDCOLORKEY key = {0xf81f,0xf81f};
+    assert(SUCCEEDED(IDirectDrawSurface_SetColorKey(surface,DDCKEY_SRCBLT,&key)));
     IDirectDrawSurface_Release(surface);
     IDirectDraw_Release(dd);
     assert(SUCCEEDED(create_rm(&rm)));
+    BYTE pixels[256] = {0};
+    D3DRMPALETTEENTRY palette[256] = {{255,0,255,0}};
+    D3DRMIMAGE image = {.width=16,.height=16,.aspectx=1,.aspecty=1,.depth=8,
+                        .bytes_per_line=16,.buffer1=pixels,.palette_size=256,.palette=palette};
+    IDirect3DRMTexture *texture;
+    assert(SUCCEEDED(IDirect3DRM_CreateTexture(rm,&image,&texture)));
+    assert(IDirect3DRMTexture_GetImage(texture));
+    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparency(texture,TRUE)));
+    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparentColor(texture,0xffff00ff)));
+    assert(IDirect3DRMTexture_GetDecalTransparency(texture));
+    assert(texture->lpVtbl->GetDecalTransparentColor(texture) == 0xffff00ff);
+    IDirect3DRMTexture_Release(texture);
     assert(SUCCEEDED(IDirect3DRM_CreateFrame(rm, NULL, &root)));
     assert(SUCCEEDED(IDirect3DRM_CreateFrame(rm, root, &frame)));
     expected = frame;

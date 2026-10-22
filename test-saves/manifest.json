@@ -1,0 +1,431 @@
+[
+  {
+    "name": "T01L01",
+    "region": 1,
+    "location": 1,
+    "place": 1,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T01L02",
+    "region": 1,
+    "location": 2,
+    "place": 2,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T01L03",
+    "region": 1,
+    "location": 3,
+    "place": 3,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T01L04",
+    "region": 1,
+    "location": 4,
+    "place": 4,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T01L05",
+    "region": 1,
+    "location": 5,
+    "place": 5,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T01L06",
+    "region": 1,
+    "location": 6,
+    "place": 6,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE06\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE06\\place.lvl"
+  },
+  {
+    "name": "T01L07",
+    "region": 1,
+    "location": 7,
+    "place": 7,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE07\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE07\\place.lvl"
+  },
+  {
+    "name": "T01L08",
+    "region": 1,
+    "location": 8,
+    "place": 8,
+    "region_name": "river",
+    "kind": "level entrance",
+    "definition": "regions\\river\\PLACE08\\PLACE.INI",
+    "level_file": "regions\\river\\PLACE08\\place.lvl"
+  },
+  {
+    "name": "T01MAP",
+    "region": 1,
+    "location": 1,
+    "region_name": "river",
+    "kind": "overworld"
+  },
+  {
+    "name": "T02L01",
+    "region": 2,
+    "location": 1,
+    "place": 1,
+    "region_name": "coast",
+    "kind": "level entrance",
+    "definition": "regions\\coast\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\coast\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T02L02",
+    "region": 2,
+    "location": 2,
+    "place": 2,
+    "region_name": "coast",
+    "kind": "level entrance",
+    "definition": "regions\\coast\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\coast\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T02L03",
+    "region": 2,
+    "location": 3,
+    "place": 3,
+    "region_name": "coast",
+    "kind": "level entrance",
+    "definition": "regions\\coast\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\coast\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T02L04",
+    "region": 2,
+    "location": 4,
+    "place": 4,
+    "region_name": "coast",
+    "kind": "level entrance",
+    "definition": "regions\\coast\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\coast\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T02L05",
+    "region": 2,
+    "location": 5,
+    "place": 5,
+    "region_name": "coast",
+    "kind": "level entrance",
+    "definition": "regions\\coast\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\coast\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T02MAP",
+    "region": 2,
+    "location": 1,
+    "region_name": "coast",
+    "kind": "overworld"
+  },
+  {
+    "name": "T03L01",
+    "region": 3,
+    "location": 1,
+    "place": 1,
+    "region_name": "desert",
+    "kind": "level entrance",
+    "definition": "regions\\desert\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\desert\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T03L02",
+    "region": 3,
+    "location": 2,
+    "place": 2,
+    "region_name": "desert",
+    "kind": "level entrance",
+    "definition": "regions\\desert\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\desert\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T03L03",
+    "region": 3,
+    "location": 3,
+    "place": 3,
+    "region_name": "desert",
+    "kind": "level entrance",
+    "definition": "regions\\desert\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\desert\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T03L04",
+    "region": 3,
+    "location": 4,
+    "place": 4,
+    "region_name": "desert",
+    "kind": "level entrance",
+    "definition": "regions\\desert\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\desert\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T03L05",
+    "region": 3,
+    "location": 5,
+    "place": 5,
+    "region_name": "desert",
+    "kind": "level entrance",
+    "definition": "regions\\desert\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\desert\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T03MAP",
+    "region": 3,
+    "location": 1,
+    "region_name": "desert",
+    "kind": "overworld"
+  },
+  {
+    "name": "T04L01",
+    "region": 4,
+    "location": 1,
+    "place": 1,
+    "region_name": "jungle",
+    "kind": "level entrance",
+    "definition": "regions\\jungle\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\jungle\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T04L02",
+    "region": 4,
+    "location": 2,
+    "place": 2,
+    "region_name": "jungle",
+    "kind": "level entrance",
+    "definition": "regions\\jungle\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\jungle\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T04L03",
+    "region": 4,
+    "location": 3,
+    "place": 3,
+    "region_name": "jungle",
+    "kind": "level entrance",
+    "definition": "regions\\jungle\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\jungle\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T04L04",
+    "region": 4,
+    "location": 4,
+    "place": 4,
+    "region_name": "jungle",
+    "kind": "level entrance",
+    "definition": "regions\\jungle\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\jungle\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T04L05",
+    "region": 4,
+    "location": 5,
+    "place": 5,
+    "region_name": "jungle",
+    "kind": "level entrance",
+    "definition": "regions\\jungle\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\jungle\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T04MAP",
+    "region": 4,
+    "location": 1,
+    "region_name": "jungle",
+    "kind": "overworld"
+  },
+  {
+    "name": "T05L01",
+    "region": 5,
+    "location": 1,
+    "place": 1,
+    "region_name": "pine",
+    "kind": "level entrance",
+    "definition": "regions\\pine\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\pine\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T05L02",
+    "region": 5,
+    "location": 2,
+    "place": 2,
+    "region_name": "pine",
+    "kind": "level entrance",
+    "definition": "regions\\pine\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\pine\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T05L03",
+    "region": 5,
+    "location": 3,
+    "place": 3,
+    "region_name": "pine",
+    "kind": "level entrance",
+    "definition": "regions\\pine\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\pine\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T05L04",
+    "region": 5,
+    "location": 4,
+    "place": 4,
+    "region_name": "pine",
+    "kind": "level entrance",
+    "definition": "regions\\pine\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\pine\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T05L05",
+    "region": 5,
+    "location": 5,
+    "place": 5,
+    "region_name": "pine",
+    "kind": "level entrance",
+    "definition": "regions\\pine\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\pine\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T05MAP",
+    "region": 5,
+    "location": 1,
+    "region_name": "pine",
+    "kind": "overworld"
+  },
+  {
+    "name": "T06L01",
+    "region": 6,
+    "location": 1,
+    "place": 1,
+    "region_name": "tomb",
+    "kind": "level entrance",
+    "definition": "regions\\tomb\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\tomb\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T06L02",
+    "region": 6,
+    "location": 2,
+    "place": 2,
+    "region_name": "tomb",
+    "kind": "level entrance",
+    "definition": "regions\\tomb\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\tomb\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T06L03",
+    "region": 6,
+    "location": 3,
+    "place": 3,
+    "region_name": "tomb",
+    "kind": "level entrance",
+    "definition": "regions\\tomb\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\tomb\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T06L04",
+    "region": 6,
+    "location": 4,
+    "place": 4,
+    "region_name": "tomb",
+    "kind": "level entrance",
+    "definition": "regions\\tomb\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\tomb\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T06L05",
+    "region": 6,
+    "location": 5,
+    "place": 5,
+    "region_name": "tomb",
+    "kind": "level entrance",
+    "definition": "regions\\tomb\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\tomb\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T06MAP",
+    "region": 6,
+    "location": 1,
+    "region_name": "tomb",
+    "kind": "overworld"
+  },
+  {
+    "name": "T07L01",
+    "region": 7,
+    "location": 1,
+    "place": 1,
+    "region_name": "nutscape",
+    "kind": "level entrance",
+    "definition": "regions\\nutscape\\PLACE01\\PLACE.INI",
+    "level_file": "regions\\nutscape\\PLACE01\\place.lvl"
+  },
+  {
+    "name": "T07L02",
+    "region": 7,
+    "location": 2,
+    "place": 2,
+    "region_name": "nutscape",
+    "kind": "level entrance",
+    "definition": "regions\\nutscape\\PLACE02\\PLACE.INI",
+    "level_file": "regions\\nutscape\\PLACE02\\place.lvl"
+  },
+  {
+    "name": "T07L03",
+    "region": 7,
+    "location": 3,
+    "place": 3,
+    "region_name": "nutscape",
+    "kind": "level entrance",
+    "definition": "regions\\nutscape\\PLACE03\\PLACE.INI",
+    "level_file": "regions\\nutscape\\PLACE03\\place.lvl"
+  },
+  {
+    "name": "T07L04",
+    "region": 7,
+    "location": 4,
+    "place": 4,
+    "region_name": "nutscape",
+    "kind": "level entrance",
+    "definition": "regions\\nutscape\\PLACE04\\PLACE.INI",
+    "level_file": "regions\\nutscape\\PLACE04\\place.lvl"
+  },
+  {
+    "name": "T07L05",
+    "region": 7,
+    "location": 5,
+    "place": 5,
+    "region_name": "nutscape",
+    "kind": "level entrance",
+    "definition": "regions\\nutscape\\PLACE05\\PLACE.INI",
+    "level_file": "regions\\nutscape\\PLACE05\\place.lvl"
+  },
+  {
+    "name": "T07MAP",
+    "region": 7,
+    "location": 1,
+    "region_name": "nutscape",
+    "kind": "overworld"
+  }
+]
