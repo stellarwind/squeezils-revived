@@ -54,7 +54,7 @@ def main():
     manifest = generate(sdk, BUILD / 'generated', system, legacy)
     flags = ['-m32', '-static-libgcc', '-std=c11', '-O2', '-g', '-Wall', '-Wextra', '-Werror=incompatible-pointer-types', '-I', ROOT / 'src', '-I', headers]
     run(gcc, *flags, '-shared', ROOT / 'src/runtime.c', ROOT / 'src/platform.c', BUILD / 'generated/observers.c',
-        '-o', BUILD / 'sqz-runtime.dll', '-Wl,--out-implib,' + str(BUILD / 'libsqz-runtime.a'), '-ldxguid', '-lole32', '-luser32')
+        '-o', BUILD / 'sqz-runtime.dll', '-Wl,--out-implib,' + str(BUILD / 'libsqz-runtime.a'), '-ldxguid', '-lole32', '-luser32', '-lgdi32')
     for label in ('ddraw', 'd3drm'):
         run(gcc, '-m32', '-shared', BUILD / ('generated/' + label + '.S'),
             BUILD / ('generated/' + label + '.def'), BUILD / 'libsqz-runtime.a', '-o', BUILD / (label + '.dll'))

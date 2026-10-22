@@ -18,6 +18,29 @@ static DWORD pixel(IDirectDrawSurface *surface, int x, int y)
     assert(SUCCEEDED(IDirectDrawSurface_Unlock(surface,locked.lpSurface)));
     return value;
 }
+static unsigned timer_ink(IDirectDrawSurface *surface)
+{
+    DDSURFACEDESC locked = {0};
+    unsigned ink = 0;
+    locked.dwSize = sizeof(locked);
+    assert(SUCCEEDED(IDirectDrawSurface_Lock(surface,NULL,&locked,DDLOCK_WAIT,NULL)));
+    unsigned bytes = locked.ddpfPixelFormat.dwRGBBitCount / 8;
+    for (unsigned y=366; y<390; ++y) for (unsigned x=300; x<370; ++x) {
+        DWORD value = 0;
+        memcpy(&value,(BYTE *)locked.lpSurface+y*locked.lPitch+x*bytes,bytes);
+        if (value & 0x00ffffff) ++ink;
+    }
+    assert(SUCCEEDED(IDirectDrawSurface_Unlock(surface,locked.lpSurface)));
+    return ink;
+}
+static void messages(void)
+{
+    MSG message;
+    for (unsigned i=0; i<128 && PeekMessageA(&message,NULL,0,0,PM_REMOVE); ++i) {
+        TranslateMessage(&message);
+        DispatchMessageA(&message);
+    }
+}
 int main(void)
 {
     HINSTANCE instance = GetModuleHandleA(NULL);
@@ -56,16 +79,48 @@ int main(void)
     assert(SUCCEEDED(IDirectDraw_CreateSurface(dd,&desc,&snapshot,NULL)));
     assert(SUCCEEDED(IDirectDrawSurface_Blt(snapshot,NULL,primary,&capture,DDBLT_WAIT,NULL)));
     assert(pixel(snapshot,20,20) == 0xff && pixel(snapshot,0,0) == 0);
+    /* Same nested GetDC and ExtTextOut pattern as timer 0x42e0e0/0x4753d0. */
+    HFONT font = CreateFontA(-14,0,0,0,FW_NORMAL,FALSE,FALSE,FALSE,DEFAULT_CHARSET,
+                            OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,
+                            DEFAULT_PITCH,"Arial");
+    assert(font);
+    HDC outer_dc = GetDC(hwnd);
+    assert(outer_dc);
+    HGDIOBJ old_font = SelectObject(outer_dc,font);
+    SetTextColor(outer_dc,RGB(255,0,0));
+    HDC text_dc = GetDC(hwnd);
+    assert(text_dc);
+    SelectObject(text_dc,font);
+    SetTextColor(text_dc,RGB(255,255,255));
+    SetBkMode(text_dc,TRANSPARENT);
+    RECT text_box = {300,366,370,390};
+    assert(ExtTextOutA(text_dc,300,366,ETO_CLIPPED,&text_box,"1:23",4,NULL));
+    assert(ReleaseDC(hwnd,text_dc));
+    assert(GetTextColor(outer_dc) == RGB(255,0,0));
+    SelectObject(outer_dc,old_font);
+    assert(ReleaseDC(hwnd,outer_dc));
+    DeleteObject(font);
+    unsigned ink = timer_ink(primary);
+    assert(ink > 0);
+    messages();
     assert(SetWindowPos(hwnd,NULL,0,0,900,700,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
+    messages();
     assert(GetClientRect(hwnd,&rect) && rect.right == 640 && rect.bottom == 480);
     assert(GetWindowRect(hwnd,&rect) && rect.right-rect.left == 900 && rect.bottom-rect.top == 700);
     assert(SUCCEEDED(IDirectDrawSurface_GetSurfaceDesc(primary,&actual)));
     assert(actual.dwWidth == 640 && actual.dwHeight == 480);
     assert(pixel(primary,20,20) == 0xff && pixel(primary,0,0) == 0);
+    assert(timer_ink(primary) == ink);
+    assert(SetWindowPos(hwnd,NULL,0,0,640,480,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
+    messages();
+    assert(timer_ink(primary) == ink);
+    assert(InvalidateRect(hwnd,NULL,FALSE));
+    UpdateWindow(hwnd);
+    messages();
     IDirectDrawSurface_Release(snapshot);
     IDirectDrawSurface_Release(primary);
     IDirectDraw_Release(dd);
     assert(DestroyWindow(hwnd));
-    puts("PASS: SDL-created resizable HWND, virtual primary pixels/snapshots, logical size survives physical resize, paired teardown");
+    puts("PASS: SDL HWND, canvas pixels/snapshots, nested GDI timer text, resize/restore without UI action, paired teardown");
     return 0;
 }

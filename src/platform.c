@@ -29,6 +29,74 @@ static BOOL (WINAPI *native_to_screen)(HWND, POINT *);
 static BOOL (WINAPI *native_to_client)(HWND, POINT *);
 static BOOL (WINAPI *native_cursor)(int, int);
 static HCURSOR (WINAPI *native_set_cursor)(HCURSOR);
+static HDC (WINAPI *native_get_dc)(HWND);
+static int (WINAPI *native_release_dc)(HWND,HDC);
+static HDC canvas_dc;
+static IDirectDrawSurface *dc_surface;
+static unsigned dc_depth;
+static int dc_states[32];
+static BOOL repaint_queued, repaint_pending, refresh_clipping;
+#define SQZ_REPAINT (WM_APP + 0x351)
+static HRESULT present_canvas(void);
+static void request_repaint(void)
+{
+    if (!game_hwnd || !virtual_primary) return;
+    repaint_pending = TRUE;
+    if (!repaint_queued && PostMessageA(game_hwnd,SQZ_REPAINT,0,0)) repaint_queued = TRUE;
+}
+
+/* Window text (including the timer) and DD sprites must share one logical
+ * primary. Nested GetDC calls share a surface lease; release/present only when
+ * the outermost window-DC scope ends, preserving each nested GDI state. */
+static HDC WINAPI window_get_dc(HWND hwnd)
+{
+    HRESULT hr;
+    int state;
+    if (!sqz_platform_window(hwnd) || !virtual_primary) return native_get_dc(hwnd);
+    if (dc_depth == sizeof(dc_states)/sizeof(dc_states[0])) return NULL;
+    if (!dc_depth) {
+        dc_surface = virtual_primary;
+        IDirectDrawSurface_AddRef(dc_surface);
+        hr = IDirectDrawSurface_GetDC(dc_surface,&canvas_dc);
+        if (FAILED(hr)) {
+            sqz_log("GDI CANVAS GetDC failed=%08lx",hr);
+            IDirectDrawSurface_Release(dc_surface);
+            dc_surface = NULL;
+            return NULL;
+        }
+    }
+    state = SaveDC(canvas_dc);
+    if (!state) {
+        if (!dc_depth) {
+            IDirectDrawSurface_ReleaseDC(dc_surface,canvas_dc);
+            IDirectDrawSurface_Release(dc_surface);
+            dc_surface = NULL;
+            canvas_dc = NULL;
+        }
+        return NULL;
+    }
+    dc_states[dc_depth++] = state;
+    sqz_log("GDI CANVAS acquire hwnd=%p dc=%p depth=%u",hwnd,canvas_dc,dc_depth);
+    return canvas_dc;
+}
+
+static int WINAPI window_release_dc(HWND hwnd, HDC dc)
+{
+    HRESULT hr;
+    IDirectDrawSurface *surface;
+    if (!sqz_platform_window(hwnd) || !dc_depth || dc != canvas_dc)
+        return native_release_dc(hwnd,dc);
+    RestoreDC(dc,dc_states[--dc_depth]);
+    sqz_log("GDI CANVAS release dc=%p depth=%u",dc,dc_depth);
+    if (dc_depth) return 1;
+    surface = dc_surface;
+    canvas_dc = NULL;
+    dc_surface = NULL;
+    hr = IDirectDrawSurface_ReleaseDC(surface,dc);
+    IDirectDrawSurface_Release(surface);
+    if (repaint_pending) request_repaint();
+    return SUCCEEDED(hr);
+}
 typedef struct Dispatch { HWND hwnd; UINT msg; WPARAM wp; LPARAM lp; LRESULT value; struct Dispatch *previous; } Dispatch;
 static DWORD dispatch_tls = TLS_OUT_OF_INDEXES;
 
@@ -93,6 +161,15 @@ static LRESULT CALLBACK window_dispatch(HWND hwnd, UINT msg, WPARAM wp, LPARAM l
 {
     Dispatch frame = {hwnd, msg, wp, lp, 0, TlsGetValue(dispatch_tls)};
     LRESULT result;
+    if (msg == SQZ_REPAINT) {
+        repaint_queued = FALSE;
+        if (repaint_pending && !dc_depth && virtual_primary) {
+            repaint_pending = FALSE;
+            HRESULT hr = present_canvas();
+            sqz_log("SDL REPAINT hr=%08lx",hr);
+        }
+        return 0;
+    }
     /* SDL receives lifecycle messages even if a game callback suppresses default
      * handling. The original DefWindowProc import returns this cached result. */
     frame.value = CallWindowProcA(sdl_proc, hwnd, msg, wp, lp);
@@ -110,6 +187,11 @@ static LRESULT CALLBACK window_dispatch(HWND hwnd, UINT msg, WPARAM wp, LPARAM l
     TlsSetValue(dispatch_tls, frame.previous);
     if (msg == WM_SIZE || msg == WM_ACTIVATEAPP || msg == WM_DISPLAYCHANGE)
         sqz_log("WINDOW message=%04x wparam=%08lx lparam=%08lx", msg, (DWORD)wp, (DWORD)lp);
+    if (msg == WM_SIZE || msg == WM_WINDOWPOSCHANGED || msg == WM_DISPLAYCHANGE ||
+        msg == WM_PAINT || msg == WM_EXITSIZEMOVE || (msg == WM_ACTIVATEAPP && wp)) {
+        if (msg != WM_PAINT) refresh_clipping = TRUE;
+        request_repaint();
+    }
     return result;
 }
 
@@ -234,6 +316,8 @@ void sqz_platform_install(void)
             ROUTE("ScreenToClient", window_to_client, native_to_client)
             ROUTE("SetCursorPos", window_cursor, native_cursor)
             ROUTE("SetCursor", window_set_cursor, native_set_cursor)
+            ROUTE("GetDC", window_get_dc, native_get_dc)
+            ROUTE("ReleaseDC", window_release_dc, native_release_dc)
             if (!replacement) continue;
             if (!VirtualProtect(&slots->u1.Function, sizeof(DWORD), PAGE_READWRITE, &old)) continue;
             *original = (void *)(uintptr_t)slots->u1.Function;
@@ -315,7 +399,7 @@ static HRESULT present_canvas(void)
     DDBLTFX fill = {0};
     HRESULT hr;
     const IDirectDrawSurfaceVtbl *original;
-    if (presenting || !game_hwnd || !native_primary || !virtual_primary || IsIconic(game_hwnd)) return DD_OK;
+    if (presenting || dc_depth || !game_hwnd || !native_primary || !virtual_primary || IsIconic(game_hwnd)) return DD_OK;
     GetClientRect(game_hwnd, &client);
     if (!client.right || !client.bottom) return DD_OK;
     destination = content_rect();
@@ -323,6 +407,15 @@ static HRESULT present_canvas(void)
     OffsetRect(&destination, origin.x, origin.y);
     OffsetRect(&client, origin.x, origin.y);
     original = sqz_original(native_primary);
+    if (refresh_clipping) {
+        IDirectDrawClipper *clipper;
+        if (SUCCEEDED(original->GetClipper(native_primary,&clipper))) {
+            HRESULT clip_hr = IDirectDrawClipper_SetHWnd(clipper,0,game_hwnd);
+            sqz_log("SDL CLIPPER refresh=%08lx",clip_hr);
+            IDirectDrawClipper_Release(clipper);
+            if (SUCCEEDED(clip_hr)) refresh_clipping = FALSE;
+        }
+    }
     if (original->IsLost(native_primary) == DDERR_SURFACELOST) {
         hr = original->Restore(native_primary);
         sqz_log("SDL PRESENT restore=%08lx", hr);
@@ -359,7 +452,7 @@ void sqz_surface_released(void *self, ULONG refs)
 HRESULT sqz_release_dc(const IDirectDrawSurfaceVtbl *original, IDirectDrawSurface *self, HDC dc)
 {
     HRESULT hr = original->ReleaseDC(self, dc);
-    if (SUCCEEDED(hr) && self == virtual_primary) present_canvas();
+    if (SUCCEEDED(hr) && self == virtual_primary) request_repaint();
     return hr;
 }
 
@@ -378,6 +471,6 @@ HRESULT sqz_surface_blt(const IDirectDrawSurfaceVtbl *original, IDirectDrawSurfa
             hr = original->Blt(self, destination, source, source_rect, flags, effects);
         sqz_log("SURFACE RETRY blt hr=%08lx", hr);
     }
-    if (SUCCEEDED(hr) && self == virtual_primary) present_canvas();
+    if (SUCCEEDED(hr) && self == virtual_primary) request_repaint();
     return hr;
 }
