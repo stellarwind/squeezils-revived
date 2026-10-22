@@ -53,7 +53,6 @@ def generate(game, output, install):
         region = int(region_text)
         region_dir = sqz.joinpath(*relative.split('\\'))
         definition = ini(region_dir / 'REGION' / 'REGION.INI')
-        places = []
         for location_text, section in definition['LocationList'].items():
             if definition.get(section, 'type', fallback='').lower() != 'place':
                 continue
@@ -66,17 +65,11 @@ def generate(game, output, install):
             level_file = place_ini.parent / level.get('Defaults', 'LevelFile')
             if not level_file.is_file():
                 raise ValueError(f'Level data missing: {level_file}')
-            places.append(location)
             entries.append(dict(name=f'T{region:02d}L{destination:02d}', region=region,
                                 location=location, place=destination,
                                 region_name=region_dir.name, kind='level entrance',
                                 definition=str(place_ini.relative_to(sqz)),
                                 level_file=str(level_file.relative_to(sqz))))
-        # Also provide an overworld checkpoint for every configured region.
-        locations = [int(key) for key in definition['LocationList']]
-        location = min(places or locations)
-        entries.append(dict(name=f'T{region:02d}MAP', region=region, location=location,
-                            region_name=region_dir.name, kind='overworld'))
     for entry in entries:
         content = save_bytes(entry['region'], entry['location'])
         # Independent format/definition checks before writing or installing.
@@ -92,7 +85,7 @@ def generate(game, output, install):
     (output / 'manifest.json').write_text(json.dumps(entries, indent=2) + '\n')
     (output / 'README.txt').write_text(
         'Squeezils testing saves\n\n'
-        'T01L01 = region 1, level 1 entrance; T01MAP = region 1 overworld.\n'
+        'T01L01 = region 1, level 1 entrance.\n'
         'Use F1 / Load-Save and choose a T-prefixed save, then enter the level.\n'
         'The original save loader always resumes the overworld, not mid-level.\n'
         'All six sets of region keys/completion flags are unlocked for testing.\n'
@@ -106,7 +99,6 @@ def generate(game, output, install):
         for name in ('README.txt', 'manifest.json'):
             archive.write(output / name, name)
     print(json.dumps(dict(level_saves=sum(e['kind'] == 'level entrance' for e in entries),
-                          overworld_saves=sum(e['kind'] == 'overworld' for e in entries),
                           installed=install, output=str(output)), indent=2))
 
 

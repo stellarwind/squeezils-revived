@@ -80,13 +80,6 @@
     "level_file": "regions\\river\\PLACE08\\place.lvl"
   },
   {
-    "name": "T01MAP",
-    "region": 1,
-    "location": 1,
-    "region_name": "river",
-    "kind": "overworld"
-  },
-  {
     "name": "T02L01",
     "region": 2,
     "location": 1,
@@ -135,13 +128,6 @@
     "kind": "level entrance",
     "definition": "regions\\coast\\PLACE05\\PLACE.INI",
     "level_file": "regions\\coast\\PLACE05\\place.lvl"
-  },
-  {
-    "name": "T02MAP",
-    "region": 2,
-    "location": 1,
-    "region_name": "coast",
-    "kind": "overworld"
   },
   {
     "name": "T03L01",
@@ -194,13 +180,6 @@
     "level_file": "regions\\desert\\PLACE05\\place.lvl"
   },
   {
-    "name": "T03MAP",
-    "region": 3,
-    "location": 1,
-    "region_name": "desert",
-    "kind": "overworld"
-  },
-  {
     "name": "T04L01",
     "region": 4,
     "location": 1,
@@ -249,13 +228,6 @@
     "kind": "level entrance",
     "definition": "regions\\jungle\\PLACE05\\PLACE.INI",
     "level_file": "regions\\jungle\\PLACE05\\place.lvl"
-  },
-  {
-    "name": "T04MAP",
-    "region": 4,
-    "location": 1,
-    "region_name": "jungle",
-    "kind": "overworld"
   },
   {
     "name": "T05L01",
@@ -308,13 +280,6 @@
     "level_file": "regions\\pine\\PLACE05\\place.lvl"
   },
   {
-    "name": "T05MAP",
-    "region": 5,
-    "location": 1,
-    "region_name": "pine",
-    "kind": "overworld"
-  },
-  {
     "name": "T06L01",
     "region": 6,
     "location": 1,
@@ -365,13 +330,6 @@
     "level_file": "regions\\tomb\\PLACE05\\place.lvl"
   },
   {
-    "name": "T06MAP",
-    "region": 6,
-    "location": 1,
-    "region_name": "tomb",
-    "kind": "overworld"
-  },
-  {
     "name": "T07L01",
     "region": 7,
     "location": 1,
@@ -420,12 +378,5 @@
     "kind": "level entrance",
     "definition": "regions\\nutscape\\PLACE05\\PLACE.INI",
     "level_file": "regions\\nutscape\\PLACE05\\place.lvl"
-  },
-  {
-    "name": "T07MAP",
-    "region": 7,
-    "location": 1,
-    "region_name": "nutscape",
-    "kind": "overworld"
   }
 ]

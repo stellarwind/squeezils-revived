@@ -1,6 +1,6 @@
 Squeezils testing saves
 
-T01L01 = region 1, level 1 entrance; T01MAP = region 1 overworld.
+T01L01 = region 1, level 1 entrance.
 Use F1 / Load-Save and choose a T-prefixed save, then enter the level.
 The original save loader always resumes the overworld, not mid-level.
 All six sets of region keys/completion flags are unlocked for testing.
