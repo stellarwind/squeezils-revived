@@ -1,0 +1,26 @@
+/* DXBC vertex uniforms use SDL's vertex register space 1. Keep the projected
+ * path for CPU-oracle vertices and decals, and shade cached local meshes here. */
+static const char *scene_vertex_shader =
+    "struct In { float4 pos:TEXCOORD0; float2 uv:TEXCOORD1; float4 color:TEXCOORD2; float4 "
+    "normal:TEXCOORD3; };"
+    "struct Out { float4 pos:SV_Position; float2 uv:TEXCOORD0; float4 color:TEXCOORD1; };"
+    "cbuffer Draw:register(b0,space1) { float4 basis[4]; float4 normals[3]; float4 material; uint4 "
+    "mode; uint4 enabled[2]; };"
+    "struct Light { float4 axis; float4 color; float4 attenuation; };"
+    "cbuffer View:register(b1,space1) { float4 scale; float4 offset; uint4 control; Light "
+    "lights[256]; };"
+    "float3 unit(float3 v) { float m=dot(v,v); return m>1e-24 ? v*rsqrt(m) : float3(0,0,0); }"
+    "Out main(In v) { Out o; o.uv=v.uv; o.pos=v.pos; o.color=v.color; if(mode.x==0) return o;"
+    "float3 p=basis[0].xyz+basis[1].xyz*v.pos.x+basis[2].xyz*v.pos.y+basis[3].xyz*v.pos.z;"
+    "o.pos=float4(scale.x*p.x+offset.x*p.z,scale.y*p.y+offset.y*p.z,scale.z*p.z+offset.z,p.z);"
+    "o.color=material; if(mode.y!=0) { float3 "
+    "n=unit(normals[0].xyz*v.normal.x+normals[1].xyz*v.normal.y+normals[2].xyz*v.normal.z);"
+    "float3 illumination=0; [loop] for(uint i=0;i<control.x;i++) { uint word=i>>5;"
+    "if((enabled[word>>2][word&3] & (1u<<(i&31)))==0) continue; Light l=lights[i]; float amount=1;"
+    "if(l.color.w==1) amount=max(0,-dot(n,l.axis.xyz));"
+    "else if(l.color.w==2) { float3 delta=l.axis.xyz-p; float distance=length(delta);"
+    "if(l.attenuation.w>0 && distance>l.attenuation.w) continue;"
+    "float attenuation=l.attenuation.x+l.attenuation.y*distance+l.attenuation.z*distance*distance;"
+    "amount=max(0,dot(n,unit(delta)))/(attenuation>0 ? attenuation : 1); }"
+    "illumination+=l.color.rgb*amount; } o.color.rgb=saturate(o.color.rgb*illumination); } return "
+    "o; }";

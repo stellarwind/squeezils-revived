@@ -280,6 +280,7 @@ static BOOL append_vertex(SceneData *s, D3DVECTOR p, float u, float v, const flo
     out->uv[0] = u;
     out->uv[1] = v;
     memcpy(out->color, color, 4 * sizeof(float));
+    memset(out->normal, 0, sizeof(out->normal));
     return TRUE;
 }
 static SceneBatch *append_batch(SceneData *s, IDirect3DRMTexture *texture, BOOL decal)
@@ -288,10 +289,65 @@ static SceneBatch *append_batch(SceneData *s, IDirect3DRMTexture *texture, BOOL 
                        sizeof(SceneBatch)))
         return NULL;
     SceneBatch *b = &s->batches[s->batch_count++];
-    *b = (SceneBatch){(unsigned)s->count, 0, texture, decal};
+    *b = (SceneBatch){.first = (unsigned)s->count, .texture = texture, .decal = decal};
     if (texture)
         texture->lpVtbl->AddRef(texture);
     return b;
+}
+static BOOL extract_cached_mesh(SceneData *s, void *source, BOOL builder, IDirect3DRMFrame *frame,
+                                IDirect3DRMTexture *inherited, const D3DVECTOR basis[4])
+{
+    IDirect3DRMMesh *mesh = sqz_geometry_mesh(source, builder);
+    if (!mesh)
+        return scene_error(s, "cached mesh acquisition failed");
+    unsigned groups = mesh->lpVtbl->GetGroupCount(mesh);
+    if (groups > 10000)
+        return scene_error(s, "cached mesh group limit exceeded");
+    DWORD mask[8] = {0};
+    for (size_t i = 0; i < s->light_count; ++i)
+        if (light_applies_to_frame(frame, s->lights[i].enable_frame))
+            mask[i / 32] |= 1u << (i % 32);
+    D3DVECTOR normal[3] = {cross(basis[2], basis[3]), cross(basis[3], basis[1]),
+                           cross(basis[1], basis[2])};
+    float determinant = dot(basis[1], normal[0]);
+    ++s->meshes;
+    for (unsigned group = 0; group < groups; ++group)
+    {
+        D3DRMRENDERQUALITY quality = mesh->lpVtbl->GetGroupQuality(mesh, group);
+        if (!quality)
+            quality = s->default_quality;
+        BOOL rebuilt;
+        SceneGeometry *geometry = sqz_geometry_group(source, group, quality, &rebuilt);
+        if (!geometry)
+            return scene_error(s, "cached mesh extraction failed");
+        s->geometry_builds += rebuilt;
+        if (!geometry->count)
+            continue;
+        IDirect3DRMTexture *texture = NULL;
+        mesh->lpVtbl->GetGroupTexture(mesh, group, &texture);
+        SceneBatch *batch = append_batch(s, texture ? texture : inherited, FALSE);
+        if (texture)
+            texture->lpVtbl->Release(texture);
+        if (!batch)
+            return scene_error(s, "cached batch allocation failed");
+        batch->geometry = geometry;
+        batch->first = 0;
+        batch->count = geometry->count;
+        batch->lit = (quality & D3DRMLIGHT_MASK) != D3DRMLIGHT_OFF;
+        memcpy(batch->basis, basis, sizeof(batch->basis));
+        memcpy(batch->light_mask, mask, sizeof(mask));
+        color_to_rgba(mesh->lpVtbl->GetGroupColor(mesh, group), batch->group_color);
+        float divisor = fabsf(determinant) > 1e-12f ? determinant : 0;
+        if ((quality & D3DRMSHADE_MASK) == D3DRMSHADE_FLAT)
+            divisor = fabsf(divisor);
+        for (unsigned i = 0; i < 3; ++i)
+            batch->normals[i] = divisor ? (D3DVECTOR){.x = normal[i].x / divisor,
+                                                      .y = normal[i].y / divisor,
+                                                      .z = normal[i].z / divisor}
+                                        : (D3DVECTOR){0};
+        s->cached_vertices += geometry->count;
+    }
+    return TRUE;
 }
 static BOOL extract_mesh(SceneData *s, IDirect3DRMMesh *mesh, IDirect3DRMFrame *frame,
                          IDirect3DRMTexture *inherited, const D3DVECTOR b[4])
@@ -500,13 +556,19 @@ static BOOL walk_frames(SceneData *s, IDirect3DRMFrame *frame, IDirect3DRMTextur
                     ok = walk_frames(s, nested, inherited, depth + 1, TRUE, b);
             }
             else if (SUCCEEDED(v->lpVtbl->QueryInterface(v, &IID_IDirect3DRMMesh, (void **)&m)))
-                ok = extract_mesh(s, m, frame, inherited, b);
+                ok = s->cached_geometry ? extract_cached_mesh(s, m, FALSE, frame, inherited, b)
+                                        : extract_mesh(s, m, frame, inherited, b);
             else if (SUCCEEDED(v->lpVtbl->QueryInterface(v, &IID_IDirect3DRMMeshBuilder,
                                                          (void **)&builder)))
             {
-                ok = SUCCEEDED(builder->lpVtbl->CreateMesh(builder, &m));
-                if (ok)
-                    ok = extract_mesh(s, m, frame, inherited, b);
+                if (s->cached_geometry)
+                    ok = extract_cached_mesh(s, builder, TRUE, frame, inherited, b);
+                else
+                {
+                    ok = SUCCEEDED(builder->lpVtbl->CreateMesh(builder, &m));
+                    if (ok)
+                        ok = extract_mesh(s, m, frame, inherited, b);
+                }
             }
             else if (SUCCEEDED(
                          v->lpVtbl->QueryInterface(v, &IID_IDirect3DRMFrame, (void **)&nested)))
@@ -568,9 +630,11 @@ void sqz_scene_free(SceneData *s)
     free(s->visited);
     memset(s, 0, sizeof(*s));
 }
-BOOL sqz_scene_extract(SceneData *s, IDirect3DRMViewport *viewport, IDirect3DRMFrame *root)
+static BOOL extract_scene(SceneData *s, IDirect3DRMViewport *viewport, IDirect3DRMFrame *root,
+                          BOOL cached)
 {
     memset(s, 0, sizeof(*s));
+    s->cached_geometry = cached;
     s->viewport = viewport;
     if (FAILED(viewport->lpVtbl->GetCamera(viewport, &s->camera)) || !s->camera)
         return scene_error(s, "viewport camera missing");
@@ -594,4 +658,12 @@ BOOL sqz_scene_extract(SceneData *s, IDirect3DRMViewport *viewport, IDirect3DRMF
     s->visited_count = 0;
     s->frames = 0;
     return walk_frames(s, root, NULL, 0, FALSE, NULL);
+}
+BOOL sqz_scene_extract(SceneData *s, IDirect3DRMViewport *viewport, IDirect3DRMFrame *root)
+{
+    return extract_scene(s, viewport, root, FALSE);
+}
+BOOL sqz_scene_extract_cached(SceneData *s, IDirect3DRMViewport *viewport, IDirect3DRMFrame *root)
+{
+    return extract_scene(s, viewport, root, TRUE);
 }

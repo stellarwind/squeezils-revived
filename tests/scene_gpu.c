@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include "cached_geometry.h"
 void sqz_log(const char *format, ...)
 {
     (void)format;
@@ -182,11 +184,20 @@ int main(void)
     puts("PASS: warm/shared texture reuse and in-place palette, pixel, color-key and transparency "
          "updates");
     sqz_scene_free(&scene);
+    cached_matches(&viewport, root, target, 1, 1);
+    cached_matches(&viewport, root, target, 0, 0);
+    assert(SUCCEEDED(model->lpVtbl->SetPosition(model, root, .25f, .1f, 4)));
+    cached_matches(&viewport, root, target, 0, 0);
+    assert(SUCCEEDED(model->lpVtbl->SetPosition(model, root, 0, 0, 4)));
+    assert(SUCCEEDED(camera->lpVtbl->SetPosition(camera, root, .1f, 0, 0)));
+    cached_matches(&viewport, root, target, 0, 0);
+    assert(SUCCEEDED(camera->lpVtbl->SetPosition(camera, root, 0, 0, 0)));
     vertices[0].position.x = -1;
     assert(SUCCEEDED(mesh->lpVtbl->SetVertices(mesh, group, 0, 3, vertices)));
     assert(sqz_scene_extract(&scene, &viewport, root));
     assert(fabsf(scene.vertices[0].clip[0] + 1) < 0.001f);
     sqz_scene_free(&scene);
+    cached_matches(&viewport, root, target, 1, 1); /* In-place morph vertex edit. */
     /* Lights are attached after the model: collection must finish before shading. */
     IDirect3DRMFrame *sun_frame;
     IDirect3DRMLight *ambient, *sun;
@@ -214,12 +225,14 @@ int main(void)
     printf("Gouraud pixels left=%u right=%u\n", left_red, right_red);
     assert(left_red > right_red + 20 && left_red < 204 && right_red >= 51);
     sqz_scene_free(&scene);
+    cached_matches(&viewport, root, target, 1, 1);
     /* Changing the retained light frame changes illumination on the next frame. */
     assert(SUCCEEDED(sun_frame->lpVtbl->SetOrientation(sun_frame, root, 0, 0, -1, 0, 1, 0)));
     assert(sqz_scene_extract(&scene, &viewport, root));
     assert(fabsf(scene.vertices[0].color[0] - .2f) < .01f);
     assert(fabsf(scene.vertices[1].color[0] - .8f) < .01f);
     sqz_scene_free(&scene);
+    cached_matches(&viewport, root, target, 0, 0); /* Light moves; mesh stays uploaded. */
     assert(SUCCEEDED(sun_frame->lpVtbl->SetOrientation(sun_frame, root, 0, 0, 1, 0, 1, 0)));
     vertices[0].normal = (D3DVECTOR){.x = 1, .z = -1};
     assert(SUCCEEDED(mesh->lpVtbl->SetVertices(mesh, group, 0, 3, vertices)));
@@ -227,6 +240,24 @@ int main(void)
     assert(sqz_scene_extract(&scene, &viewport, root));
     assert(fabsf(scene.vertices[0].color[0] - (.2f + .6f * .894427f)) < .01f);
     sqz_scene_free(&scene);
+    cached_matches(&viewport, root, target, 1, 1); /* Changed normal, nonuniform scale. */
+    IDirect3DRMLight *point;
+    assert(SUCCEEDED(rm->lpVtbl->CreateLightRGB(rm, D3DRMLIGHT_POINT, .3f, .4f, .2f, &point)));
+    assert(SUCCEEDED(point->lpVtbl->SetConstantAttenuation(point, 1)));
+    assert(SUCCEEDED(point->lpVtbl->SetLinearAttenuation(point, .1f)));
+    assert(SUCCEEDED(point->lpVtbl->SetRange(point, 10)));
+    assert(SUCCEEDED(sun_frame->lpVtbl->AddLight(sun_frame, point)));
+    cached_matches(&viewport, root, target, 0, 0);
+    assert(SUCCEEDED(point->lpVtbl->SetEnableFrame(point, leaves)));
+    cached_matches(&viewport, root, target, 0, 0); /* Scoped light excludes model. */
+    assert(SUCCEEDED(sun_frame->lpVtbl->DeleteLight(sun_frame, point)));
+    point->lpVtbl->Release(point);
+    assert(SUCCEEDED(mesh->lpVtbl->SetGroupQuality(mesh, group, D3DRMRENDER_FLAT)));
+    cached_matches(&viewport, root, target, 1, 1);
+    assert(SUCCEEDED(mesh->lpVtbl->SetGroupQuality(mesh, group, D3DRMRENDER_GOURAUD)));
+    cached_matches(&viewport, root, target, 1, 1);
+    puts("PASS: cached/static mesh uploads, moving transforms, morphs, Gouraud/flat, point/scoped "
+         "lights");
     /* The same sprite resource can have two distinct placements. */
     IDirect3DRMFrame *second;
     assert(SUCCEEDED(rm->lpVtbl->CreateFrame(rm, root, &second)));

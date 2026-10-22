@@ -1,10 +1,15 @@
-#include "runtime.h"
+#include "scene_gpu.h"
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 static int destroyed, moved;
+static void (*cache_hook)(void *, const char *);
+static void cache_install(void *object, BOOL builder)
+{
+    cache_hook(object, builder ? "IDirect3DRMMeshBuilder" : "IDirect3DRMMesh");
+}
 static IDirect3DRMFrame *expected;
 static void __cdecl on_destroy(IDirect3DRMObject *object, void *ctx)
 {
@@ -21,7 +26,8 @@ static void __cdecl on_move(IDirect3DRMFrame *frame, void *ctx, D3DVALUE dt)
 static DWORD WINAPI references(void *arg)
 {
     IDirect3DRMFrame *frame = arg;
-    for (unsigned i = 0; i < 64; ++i) {
+    for (unsigned i = 0; i < 64; ++i)
+    {
         IDirect3DRMFrame_AddRef(frame);
         IDirect3DRMFrame_Release(frame);
     }
@@ -29,10 +35,10 @@ static DWORD WINAPI references(void *arg)
 }
 int main(void)
 {
-    HRESULT (WINAPI *create_rm)(IDirect3DRM **);
-    D3DCOLOR (WINAPI *color)(D3DVALUE, D3DVALUE, D3DVALUE);
-    D3DVALUE (WINAPI *modulus)(D3DVECTOR *);
-    int (__cdecl *sdl_version)(void);
+    HRESULT(WINAPI * create_rm)(IDirect3DRM **);
+    D3DCOLOR(WINAPI * color)(D3DVALUE, D3DVALUE, D3DVALUE);
+    D3DVALUE(WINAPI * modulus)(D3DVECTOR *);
+    int(__cdecl * sdl_version)(void);
     HMODULE dll = LoadLibraryA("d3drm.dll"), sdl;
     IDirectDraw *dd;
     IDirectDrawSurface *surface;
@@ -46,11 +52,12 @@ int main(void)
     IDirect3DRMMaterial *material;
     IUnknown *identity1, *identity2;
     DDSURFACEDESC desc = {0}, locked = {0};
-    D3DVECTOR position, vector = {.x=3, .y=4, .z=0};
+    D3DVECTOR position, vector = {.x = 3, .y = 4, .z = 0};
     HANDLE threads[2];
     assert(dll);
     create_rm = (void *)GetProcAddress(dll, "Direct3DRMCreate");
-    if (getenv("SQZ_DROPIN_PROBE")) create_rm = Direct3DRMCreate;
+    if (getenv("SQZ_DROPIN_PROBE"))
+        create_rm = Direct3DRMCreate;
     color = (void *)GetProcAddress(dll, "D3DRMCreateColorRGB");
     modulus = (void *)GetProcAddress(dll, "D3DRMVectorModulus");
     assert(create_rm && color && modulus);
@@ -69,20 +76,27 @@ int main(void)
     assert(SUCCEEDED(IDirectDrawSurface_Lock(surface, NULL, &locked, DDLOCK_WAIT, NULL)));
     assert(locked.lpSurface && locked.lPitch);
     assert(SUCCEEDED(IDirectDrawSurface_Unlock(surface, locked.lpSurface)));
-    DDCOLORKEY key = {0xf81f,0xf81f};
-    assert(SUCCEEDED(IDirectDrawSurface_SetColorKey(surface,DDCKEY_SRCBLT,&key)));
+    DDCOLORKEY key = {0xf81f, 0xf81f};
+    assert(SUCCEEDED(IDirectDrawSurface_SetColorKey(surface, DDCKEY_SRCBLT, &key)));
     IDirectDrawSurface_Release(surface);
     IDirectDraw_Release(dd);
     assert(SUCCEEDED(create_rm(&rm)));
     BYTE pixels[256] = {0};
-    D3DRMPALETTEENTRY palette[256] = {{255,0,255,0}};
-    D3DRMIMAGE image = {.width=16,.height=16,.aspectx=1,.aspecty=1,.depth=8,
-                        .bytes_per_line=16,.buffer1=pixels,.palette_size=256,.palette=palette};
+    D3DRMPALETTEENTRY palette[256] = {{255, 0, 255, 0}};
+    D3DRMIMAGE image = {.width = 16,
+                        .height = 16,
+                        .aspectx = 1,
+                        .aspecty = 1,
+                        .depth = 8,
+                        .bytes_per_line = 16,
+                        .buffer1 = pixels,
+                        .palette_size = 256,
+                        .palette = palette};
     IDirect3DRMTexture *texture;
-    assert(SUCCEEDED(IDirect3DRM_CreateTexture(rm,&image,&texture)));
+    assert(SUCCEEDED(IDirect3DRM_CreateTexture(rm, &image, &texture)));
     assert(IDirect3DRMTexture_GetImage(texture));
-    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparency(texture,TRUE)));
-    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparentColor(texture,0xffff00ff)));
+    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparency(texture, TRUE)));
+    assert(SUCCEEDED(IDirect3DRMTexture_SetDecalTransparentColor(texture, 0xffff00ff)));
     assert(IDirect3DRMTexture_GetDecalTransparency(texture));
     assert(texture->lpVtbl->GetDecalTransparentColor(texture) == 0xffff00ff);
     IDirect3DRMTexture_Release(texture);
@@ -99,15 +113,18 @@ int main(void)
     assert(SUCCEEDED(IDirect3DRMFrame_QueryInterface(frame, &IID_IUnknown, (void **)&identity1)));
     assert(SUCCEEDED(IUnknown_QueryInterface(identity1, &IID_IUnknown, (void **)&identity2)));
     assert(identity1 == identity2);
-    IUnknown_Release(identity1); IUnknown_Release(identity2);
+    IUnknown_Release(identity1);
+    IUnknown_Release(identity2);
     assert(SUCCEEDED(IDirect3DRMFrame_GetChildren(root, &children)));
     assert(IDirect3DRMFrameArray_GetSize(children) == 1);
     assert(SUCCEEDED(IDirect3DRMFrameArray_GetElement(children, 0, &element)));
     assert(SUCCEEDED(IDirect3DRMFrame_QueryInterface(element, &IID_IUnknown, (void **)&identity1)));
     assert(SUCCEEDED(IDirect3DRMFrame_QueryInterface(frame, &IID_IUnknown, (void **)&identity2)));
     assert(identity1 == identity2);
-    IUnknown_Release(identity1); IUnknown_Release(identity2);
-    IDirect3DRMFrame_Release(element); IDirect3DRMFrameArray_Release(children);
+    IUnknown_Release(identity1);
+    IUnknown_Release(identity2);
+    IDirect3DRMFrame_Release(element);
+    IDirect3DRMFrameArray_Release(children);
     assert(SUCCEEDED(IDirect3DRM_CreateMaterial(rm, 17.5f, &material)));
     assert(IDirect3DRMMaterial_GetPower(material) == 17.5f);
     IDirect3DRMMaterial_Release(material);
@@ -122,19 +139,65 @@ int main(void)
     assert(SUCCEEDED(IDirect3DRMFace_AddVertexAndNormalIndexed(face, 2, 0)));
     IDirect3DRMFace_Release(face);
     assert(SUCCEEDED(IDirect3DRMMeshBuilder_CreateMesh(builder, &mesh)));
+    HMODULE runtime = GetModuleHandleA("sqz-runtime.dll");
+    if (runtime)
+    {
+        IDirect3DRMMesh *(*cached_mesh)(void *, BOOL) =
+            (void *)GetProcAddress(runtime, "sqz_geometry_mesh");
+        SceneGeometry *(*cached_group)(void *, unsigned, D3DRMRENDERQUALITY, BOOL *) =
+            (void *)GetProcAddress(runtime, "sqz_geometry_group");
+        void (*clear_cache)(void) = (void *)GetProcAddress(runtime, "sqz_scene_cache_clear");
+        void (**install_cache)(void *, BOOL) =
+            (void *)GetProcAddress(runtime, "sqz_geometry_install");
+        cache_hook = (void *)GetProcAddress(runtime, "sqz_hook");
+        assert(cached_mesh && cached_group && clear_cache && install_cache && cache_hook);
+        void (*prior_install)(void *, BOOL) = *install_cache;
+        *install_cache = cache_install;
+        BOOL rebuilt;
+        assert(cached_mesh(mesh, FALSE));
+        SceneGeometry *geometry = cached_group(mesh, 0, D3DRMRENDER_GOURAUD, &rebuilt);
+        assert(geometry && rebuilt);
+        uint64_t revision = geometry->revision;
+        assert(cached_group(mesh, 0, D3DRMRENDER_GOURAUD, &rebuilt) == geometry && !rebuilt);
+        D3DRMVERTEX changed[3];
+        assert(SUCCEEDED(IDirect3DRMMesh_GetVertices(mesh, 0, 0, 3, changed)));
+        changed[0].position.x += .25f;
+        assert(SUCCEEDED(IDirect3DRMMesh_SetVertices(mesh, 0, 0, 3, changed)));
+        assert(cached_mesh(mesh, FALSE));
+        assert(cached_group(mesh, 0, D3DRMRENDER_GOURAUD, &rebuilt) == geometry && rebuilt);
+        assert(geometry->revision > revision);
+        assert(fabsf(geometry->vertices[0].clip[0] - changed[0].position.x) < .0001f);
+        assert(cached_mesh(builder, TRUE));
+        geometry = cached_group(builder, 0, D3DRMRENDER_GOURAUD, &rebuilt);
+        assert(geometry && rebuilt);
+        revision = geometry->revision;
+        assert(SUCCEEDED(IDirect3DRMMeshBuilder_SetVertex(builder, 0, .5f, 0, 0)));
+        assert(cached_mesh(builder, TRUE));
+        assert(cached_group(builder, 0, D3DRMRENDER_GOURAUD, &rebuilt) == geometry && rebuilt);
+        assert(geometry->revision > revision);
+        clear_cache();
+        *install_cache = prior_install;
+        puts("PASS: real mesh/builder observer invalidation and warm geometry reuse");
+    }
     assert(SUCCEEDED(IDirect3DRMFrame_AddVisual(frame, (IDirect3DRMVisual *)mesh)));
-    IDirect3DRMMesh_Release(mesh); IDirect3DRMMeshBuilder_Release(builder);
+    IDirect3DRMMesh_Release(mesh);
+    IDirect3DRMMeshBuilder_Release(builder);
     threads[0] = CreateThread(NULL, 0, references, frame, 0, NULL);
     threads[1] = CreateThread(NULL, 0, references, frame, 0, NULL);
     WaitForMultipleObjects(2, threads, TRUE, INFINITE);
-    CloseHandle(threads[0]); CloseHandle(threads[1]);
+    CloseHandle(threads[0]);
+    CloseHandle(threads[1]);
     assert(SUCCEEDED(IDirect3DRMFrame_DeleteChild(root, frame)));
     IDirect3DRMFrame_Release(frame);
     assert(destroyed == 1);
-    IDirect3DRMFrame_Release(root); IDirect3DRM_Release(rm);
-    sdl = LoadLibraryA("SDL3.dll"); assert(sdl);
-    sdl_version = (void *)GetProcAddress(sdl, "SDL_GetVersion"); assert(sdl_version);
+    IDirect3DRMFrame_Release(root);
+    IDirect3DRM_Release(rm);
+    sdl = LoadLibraryA("SDL3.dll");
+    assert(sdl);
+    sdl_version = (void *)GetProcAddress(sdl, "SDL_GetVersion");
+    assert(sdl_version);
     assert(sdl_version() == 3004018);
-    puts("PASS: DD surface lock, D3D QI, RM graph/mesh/face/float results, callbacks, identity, concurrent refs, SDL 3.4.18 x86");
+    puts("PASS: DD surface lock, D3D QI, RM graph/mesh/face/float results, callbacks, identity, "
+         "concurrent refs, SDL 3.4.18 x86");
     return 0;
 }

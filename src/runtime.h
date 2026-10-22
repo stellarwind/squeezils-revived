@@ -36,6 +36,7 @@ void sqz_forget(void *self);
 HRESULT WINAPI sqz_create_rm(IDirect3DRM **out);
 FARPROC __cdecl sqz_resolve(unsigned library, const char *name);
 void sqz_platform_install(void);
+void sqz_scene_geometry_changed(void *);
 BOOL sqz_platform_window(HWND hwnd);
 void sqz_platform_gpu_title(void);
 HRESULT sqz_surface_blt(const IDirectDrawSurfaceVtbl *, IDirectDrawSurface *, RECT *,

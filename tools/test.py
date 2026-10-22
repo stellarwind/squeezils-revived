@@ -7,7 +7,7 @@ from build import ROOT, BUILD, STAGE
 
 gcc = shutil.which('gcc')
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
-                '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/frame_pixels.c'),
+                '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/frame_pixels.c'), str(ROOT / 'src/scene_cache.c'),
                 '-ldxguid', '-lgdi32', '-o', str(BUILD / 'frame_pixels.exe')], check=True)
 subprocess.run([str(BUILD / 'frame_pixels.exe')], check=True, timeout=10)
 save_probe = BUILD / 'save-compat-test'
@@ -57,14 +57,20 @@ print('CONTROL:', baseline.stdout, baseline.stderr, 'exit=', baseline.returncode
 assert baseline.returncode == 0
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra',
                 '-I', str(ROOT / 'src'), '-I', str(BUILD / 'sdl-headers/include'),
-                str(ROOT / 'tests/scene_gpu.c'), str(ROOT / 'src/scene_extract.c'), str(ROOT / 'src/gpu_render.c'),
+                str(ROOT / 'tests/scene_gpu.c'), str(ROOT / 'src/scene_cache.c'), str(ROOT / 'src/scene_extract.c'), str(ROOT / 'src/gpu_render.c'),
                 '-lddraw', '-ld3drm', '-ldxguid', '-lgdi32', '-o', str(control / 'scene_gpu.exe')], check=True)
 subprocess.run([str(control / 'scene_gpu.exe')], cwd=control, check=True, timeout=30)
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra',
                 '-I', str(ROOT / 'src'), '-I', str(BUILD / 'sdl-headers/include'),
-                str(ROOT / 'tests/native_shading.c'), str(ROOT / 'src/scene_extract.c'), str(ROOT / 'src/gpu_render.c'),
+                str(ROOT / 'tests/native_shading.c'), str(ROOT / 'src/scene_cache.c'), str(ROOT / 'src/scene_extract.c'), str(ROOT / 'src/gpu_render.c'),
                 '-lddraw', '-ld3drm', '-ldxguid', '-lgdi32', '-o', str(control / 'native_shading.exe')], check=True)
 subprocess.run([str(control / 'native_shading.exe')], cwd=control, check=True, timeout=30)
+subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-DSQZ_CACHED_ORACLE',
+                '-I', str(ROOT / 'src'), '-I', str(BUILD / 'sdl-headers/include'),
+                str(ROOT / 'tests/native_shading.c'), str(ROOT / 'src/scene_cache.c'),
+                str(ROOT / 'src/scene_extract.c'), str(ROOT / 'src/gpu_render.c'),
+                '-lddraw', '-ld3drm', '-ldxguid', '-lgdi32', '-o', str(control / 'cached_shading.exe')], check=True)
+subprocess.run([str(control / 'cached_shading.exe')], cwd=control, check=True, timeout=30)
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-DSQZ_FIX_16BPP_WARP_BRIDGE',
                 '-I', str(ROOT / 'src'), str(ROOT / 'tests/warp_compat.c'),
                 str(ROOT / 'src/warp_compat.c'), '-lddraw', '-lgdi32', '-o', str(control / 'warp_compat.exe')], check=True)

@@ -10,6 +10,10 @@ typedef struct DeviceTarget
     IDirectDrawSurface *surface;
 } DeviceTarget;
 static DeviceTarget targets[8];
+static void install_geometry_tracking(void *object, BOOL builder)
+{
+    sqz_hook(object, builder ? "IDirect3DRMMeshBuilder" : "IDirect3DRMMesh");
+}
 static void report(BOOL ok, const SceneData *scene, const char *detail)
 {
     char path[MAX_PATH];
@@ -30,7 +34,8 @@ static void report(BOOL ok, const SceneData *scene, const char *detail)
             "SDL3 GPU scene renderer\nresult=%s\nframes=%u meshes=%u decals=%u triangles=%lu "
             "lights=%lu\n%s\n",
             ok ? "rendered" : "failed", scene->frames, scene->meshes, scene->decals,
-            (unsigned long)scene->count / 3, (unsigned long)scene->light_count, detail);
+            (unsigned long)(scene->count + scene->cached_vertices) / 3,
+            (unsigned long)scene->light_count, detail);
     fclose(file);
 }
 BOOL sqz_gpu_enabled(void)
@@ -89,7 +94,8 @@ HRESULT sqz_gpu_render(const IDirect3DRMViewportVtbl *native, IDirect3DRMViewpor
     if (surface)
     {
         LONGLONG extraction_start = sqz_gpu_profile_clock();
-        ok = sqz_scene_extract(&scene, viewport, root);
+        sqz_geometry_install = install_geometry_tracking;
+        ok = sqz_scene_extract_cached(&scene, viewport, root);
         scene.profile_tick = extraction_start;
         sqz_gpu_profile_mark(&scene, PROFILE_EXTRACT);
         if (!ok)
@@ -103,7 +109,8 @@ HRESULT sqz_gpu_render(const IDirect3DRMViewportVtbl *native, IDirect3DRMViewpor
     {
         sqz_log("DIAG SDL_GPU first scene frames=%u meshes=%u decals=%u triangles=%lu (native RM "
                 "Render bypassed)",
-                scene.frames, scene.meshes, scene.decals, (unsigned long)scene.count / 3);
+                scene.frames, scene.meshes, scene.decals,
+                (unsigned long)(scene.count + scene.cached_vertices) / 3);
         sqz_platform_gpu_title();
         report(TRUE, &scene,
                "Original RM objects retained; native Viewport::Render bypassed. Gouraud "

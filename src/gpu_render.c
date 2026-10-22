@@ -4,6 +4,7 @@
  * That preserves the original CPU warp and the HUD/GDI composition order. */
 #define SDL_MAIN_HANDLED
 #include "scene_gpu.h"
+#include "scene_shader.h"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <d3dcompiler.h>
@@ -18,22 +19,30 @@
     X(SDL_QuitSubSystem)                                                                           \
     X(SDL_SetMainReady)                                                                            \
     X(SDL_CreateGPUDevice)                                                                         \
-    X(SDL_DestroyGPUDevice) X(SDL_GetGPUDeviceDriver) X(SDL_GetError) X(SDL_CreateGPUShader)       \
-        X(SDL_ReleaseGPUShader) X(SDL_CreateGPUGraphicsPipeline) X(SDL_ReleaseGPUGraphicsPipeline) \
-            X(SDL_CreateGPUTexture) X(SDL_ReleaseGPUTexture) X(SDL_CreateGPUSampler)               \
-                X(SDL_ReleaseGPUSampler) X(SDL_CreateGPUBuffer) X(SDL_ReleaseGPUBuffer) X(         \
-                    SDL_CreateGPUTransferBuffer) X(SDL_ReleaseGPUTransferBuffer)                   \
-                    X(SDL_MapGPUTransferBuffer) X(SDL_UnmapGPUTransferBuffer) X(                   \
-                        SDL_AcquireGPUCommandBuffer) X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass) \
-                        X(SDL_UploadToGPUTexture) X(SDL_UploadToGPUBuffer)                         \
-                            X(SDL_DownloadFromGPUTexture) X(SDL_SubmitGPUCommandBuffer) X(         \
-                                SDL_SubmitGPUCommandBufferAndAcquireFence) X(SDL_WaitForGPUFences) \
-                                X(SDL_ReleaseGPUFence) X(SDL_BeginGPURenderPass)                   \
-                                    X(SDL_EndGPURenderPass) X(SDL_BindGPUGraphicsPipeline)         \
-                                        X(SDL_BindGPUVertexBuffers) X(SDL_BindGPUFragmentSamplers) \
-                                            X(SDL_DrawGPUPrimitives) X(SDL_SetGPUViewport)         \
-                                                X(SDL_CancelGPUCommandBuffer)
+    X(SDL_DestroyGPUDevice)                                                                        \
+    X(SDL_GetGPUDeviceDriver)                                                                      \
+    X(SDL_GetError)                                                                                \
+    X(SDL_CreateGPUShader)                                                                         \
+    X(SDL_ReleaseGPUShader)                                                                        \
+    X(SDL_CreateGPUGraphicsPipeline) X(SDL_ReleaseGPUGraphicsPipeline) X(SDL_CreateGPUTexture)     \
+        X(SDL_ReleaseGPUTexture) X(SDL_CreateGPUSampler) X(SDL_ReleaseGPUSampler)                  \
+            X(SDL_CreateGPUBuffer) X(SDL_ReleaseGPUBuffer) X(SDL_CreateGPUTransferBuffer)          \
+                X(SDL_ReleaseGPUTransferBuffer) X(SDL_MapGPUTransferBuffer)                        \
+                    X(SDL_UnmapGPUTransferBuffer) X(SDL_AcquireGPUCommandBuffer)                   \
+                        X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass) X(SDL_UploadToGPUTexture)    \
+                            X(SDL_UploadToGPUBuffer) X(SDL_DownloadFromGPUTexture)                 \
+                                X(SDL_SubmitGPUCommandBuffer)                                      \
+                                    X(SDL_SubmitGPUCommandBufferAndAcquireFence)                   \
+                                        X(SDL_WaitForGPUFences) X(SDL_ReleaseGPUFence)             \
+                                            X(SDL_BeginGPURenderPass) X(SDL_EndGPURenderPass)      \
+                                                X(SDL_BindGPUGraphicsPipeline)                     \
+                                                    X(SDL_BindGPUVertexBuffers)                    \
+                                                        X(SDL_BindGPUFragmentSamplers)             \
+                                                            X(SDL_DrawGPUPrimitives)               \
+                                                                X(SDL_SetGPUViewport)              \
+                                                                    X(SDL_CancelGPUCommandBuffer)
 #define DECLARE(name) static __typeof__(&name) p_##name;
+DECLARE(SDL_PushGPUVertexUniformData)
 GPU_FUNCTIONS(DECLARE)
 /* Keep native source snapshots as well as GPU textures. A fast byte comparison
  * detects mutable pixels/palettes before conversion; each texture/decal pair is
@@ -63,6 +72,32 @@ static unsigned texture_count;
 static uint64_t texture_frame;
 static char last_error[512];
 static BOOL own_video;
+typedef struct GeometryBuffer
+{
+    SceneGeometry *geometry;
+    SDL_GPUBuffer *buffer;
+    Uint32 size;
+    uint64_t revision;
+    BOOL pending;
+    Uint32 upload_offset;
+    struct GeometryBuffer *next;
+} GeometryBuffer;
+static GeometryBuffer *geometry_buffers;
+typedef struct DrawUniform
+{
+    float basis[4][4], normals[3][4], color[4];
+    unsigned mode[4], enabled[8];
+} DrawUniform;
+typedef struct LightUniform
+{
+    float vector[4], color[4], attenuation[4];
+} LightUniform;
+typedef struct ViewUniform
+{
+    float scale[4], offset[4];
+    unsigned control[4];
+    LightUniform lights[256];
+} ViewUniform;
 
 /* Opt-in CPU stage profiling. Aggregate in memory for process seconds 15..25;
  * write one report afterward, with no per-frame logging or GPU synchronization
@@ -73,6 +108,7 @@ static struct
     LONGLONG frequency, start, end, totals[PROFILE_STAGE_COUNT];
     unsigned frames;
     double vertices, batches, texture_checks, texture_conversions, texture_reuses;
+    double geometry_builds, geometry_uploads, dynamic_vertices;
 } profile;
 static const char *profile_names[PROFILE_STAGE_COUNT] = {"extract",
                                                          "initialize",
@@ -107,10 +143,14 @@ static void profile_report(void)
             "  \"batches_per_frame\": %.1f,\n"
             "  \"texture_checks_per_frame\": %.2f,\n"
             "  \"texture_conversions_per_frame\": %.2f,\n"
-            "  \"texture_reuses_per_frame\": %.2f,\n  \"cpu_ms_per_frame\": {\n",
+            "  \"texture_reuses_per_frame\": %.2f,\n"
+            "  \"geometry_builds_per_frame\": %.2f,\n"
+            "  \"geometry_uploads_per_frame\": %.2f,\n"
+            "  \"dynamic_vertices_per_frame\": %.2f,\n  \"cpu_ms_per_frame\": {\n",
             profile.frames, profile.vertices / profile.frames, profile.batches / profile.frames,
             profile.texture_checks / profile.frames, profile.texture_conversions / profile.frames,
-            profile.texture_reuses / profile.frames);
+            profile.texture_reuses / profile.frames, profile.geometry_builds / profile.frames,
+            profile.geometry_uploads / profile.frames, profile.dynamic_vertices / profile.frames);
     for (unsigned i = 0; i < PROFILE_STAGE_COUNT; ++i)
         fprintf(file, "    \"%s\": %.6f%s\n", profile_names[i],
                 1000.0 * profile.totals[i] / profile.frequency / profile.frames,
@@ -173,11 +213,14 @@ void sqz_gpu_profile_finish(const SceneData *scene)
     for (unsigned i = 0; i < PROFILE_STAGE_COUNT; ++i)
         profile.totals[i] += scene->profile_ticks[i];
     ++profile.frames;
-    profile.vertices += scene->count;
+    profile.vertices += scene->count + scene->cached_vertices;
     profile.batches += scene->batch_count;
     profile.texture_checks += scene->texture_checks;
     profile.texture_conversions += scene->texture_conversions;
     profile.texture_reuses += scene->texture_reuses;
+    profile.geometry_builds += scene->geometry_builds;
+    profile.geometry_uploads += scene->geometry_uploads;
+    profile.dynamic_vertices += scene->count;
 }
 static BOOL gpu_error(const char *label)
 {
@@ -218,7 +261,9 @@ static SDL_GPUShader *compile_shader(const char *source, const char *profile,
                                     .entrypoint = "main",
                                     .format = SDL_GPU_SHADERFORMAT_DXBC,
                                     .stage = stage,
-                                    .num_samplers = stage == SDL_GPU_SHADERSTAGE_FRAGMENT ? 1 : 0};
+                                    .num_samplers = stage == SDL_GPU_SHADERSTAGE_FRAGMENT ? 1 : 0,
+                                    .num_uniform_buffers =
+                                        stage == SDL_GPU_SHADERSTAGE_VERTEX ? 2 : 0};
     SDL_GPUShader *result = p_SDL_CreateGPUShader(gpu, &desc);
     code->lpVtbl->Release(code);
     if (messages)
@@ -283,6 +328,7 @@ static BOOL initialize_gpu(void)
     if (!p_##name)                                                                                 \
         return gpu_error(#name);
     GPU_FUNCTIONS(LOAD)
+    LOAD(SDL_PushGPUVertexUniformData)
 #undef LOAD
     if (!(p_SDL_WasInit(SDL_INIT_VIDEO) & SDL_INIT_VIDEO))
     {
@@ -294,19 +340,16 @@ static BOOL initialize_gpu(void)
     gpu = p_SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_DXBC, FALSE, "direct3d12");
     if (!gpu)
         return gpu_error("SDL GPU Direct3D12 device creation");
-    /* Positions are already projected; color contains CPU ambient/diffuse lighting.
-     * Smooth, perspective-correct color interpolation supplies Gouraud shading.
-     * SDL's DXBC fragment resources occupy register space 2, sampler/texture slot 0. */
-    const char *vs =
-        "struct In { float4 pos:TEXCOORD0; float2 uv:TEXCOORD1; float4 color:TEXCOORD2; };"
-        "struct Out { float4 pos:SV_Position; float2 uv:TEXCOORD0; float4 color:TEXCOORD1; };"
-        "Out main(In v) { Out o; o.pos=v.pos; o.uv=v.uv; o.color=v.color; return o; }";
+    /* Mesh buffers retain local positions/normals. Vertex uniforms carry current
+     * placement, normal transforms and lights for per-vertex Gouraud shading.
+     * Decals and the CPU oracle use the projected passthrough branch. */
     const char *ps =
         "Texture2D tex:register(t0,space2); SamplerState smp:register(s0,space2);"
         "float4 main(float4 pos:SV_Position,float2 uv:TEXCOORD0,float4 color:TEXCOORD1):SV_Target0"
         "{ float4 t=tex.Sample(smp,uv); t.rgb/=max(t.a,0.000001); float4 c=t*color; clip(c.a-0.5); "
         "return c; }";
-    SDL_GPUShader *vertex = compile_shader(vs, "vs_5_1", SDL_GPU_SHADERSTAGE_VERTEX);
+    SDL_GPUShader *vertex =
+        compile_shader(scene_vertex_shader, "vs_5_1", SDL_GPU_SHADERSTAGE_VERTEX);
     SDL_GPUShader *fragment = compile_shader(ps, "ps_5_1", SDL_GPU_SHADERSTAGE_FRAGMENT);
     if (!vertex || !fragment)
     {
@@ -318,7 +361,7 @@ static BOOL initialize_gpu(void)
     }
     SDL_GPUVertexBufferDescription buffer = {
         .slot = 0, .pitch = sizeof(SceneVertex), .input_rate = SDL_GPU_VERTEXINPUTRATE_VERTEX};
-    SDL_GPUVertexAttribute attrs[3] = {{.location = 0,
+    SDL_GPUVertexAttribute attrs[4] = {{.location = 0,
                                         .buffer_slot = 0,
                                         .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
                                         .offset = 0},
@@ -329,7 +372,11 @@ static BOOL initialize_gpu(void)
                                        {.location = 2,
                                         .buffer_slot = 0,
                                         .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
-                                        .offset = 24}};
+                                        .offset = 24},
+                                       {.location = 3,
+                                        .buffer_slot = 0,
+                                        .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
+                                        .offset = 40}};
     SDL_GPUColorTargetDescription color = {.format = SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM};
     SDL_GPUGraphicsPipelineCreateInfo info = {
         .vertex_shader = vertex,
@@ -337,7 +384,7 @@ static BOOL initialize_gpu(void)
         .vertex_input_state = {.vertex_buffer_descriptions = &buffer,
                                .num_vertex_buffers = 1,
                                .vertex_attributes = attrs,
-                               .num_vertex_attributes = 3},
+                               .num_vertex_attributes = 4},
         .primitive_type = SDL_GPU_PRIMITIVETYPE_TRIANGLELIST,
         .rasterizer_state = {.fill_mode = SDL_GPU_FILLMODE_FILL,
                              .cull_mode = SDL_GPU_CULLMODE_BACK,
@@ -570,12 +617,54 @@ static SDL_GPUTexture *resolve_rm_texture(SceneData *scene, IDirect3DRMTexture *
     return ok ? record->gpu : NULL;
 }
 
+static SDL_GPUBuffer *geometry_buffer(SceneGeometry *geometry)
+{
+    GeometryBuffer *record;
+    for (record = geometry_buffers; record && record->geometry != geometry; record = record->next)
+        ;
+    if (!record)
+    {
+        record = calloc(1, sizeof(*record));
+        if (!record)
+            return NULL;
+        record->geometry = geometry;
+        record->next = geometry_buffers;
+        geometry_buffers = record;
+    }
+    Uint32 bytes = geometry->count * sizeof(SceneVertex);
+    if (!record->buffer || record->size < bytes)
+    {
+        if (record->buffer)
+            p_SDL_ReleaseGPUBuffer(gpu, record->buffer);
+        SDL_GPUBufferCreateInfo info = {.usage = SDL_GPU_BUFFERUSAGE_VERTEX, .size = bytes};
+        record->buffer = p_SDL_CreateGPUBuffer(gpu, &info);
+        record->size = bytes;
+        record->revision = 0;
+    }
+    if (!record->buffer)
+        return NULL;
+    record->pending = record->revision != geometry->revision;
+    return record->buffer;
+}
+
 /* Called after the last retained device releases its target. Release our RM
  * references before destroying SDL; never shut down video owned by platform.c. */
 void sqz_gpu_shutdown(void)
 {
     if (!gpu)
+    {
+        sqz_scene_cache_clear();
         return;
+    }
+    while (geometry_buffers)
+    {
+        GeometryBuffer *record = geometry_buffers;
+        geometry_buffers = record->next;
+        if (record->buffer)
+            p_SDL_ReleaseGPUBuffer(gpu, record->buffer);
+        free(record);
+    }
+    sqz_scene_cache_clear();
     for (unsigned i = 0; i < texture_count; ++i)
     {
         free(textures[i].source);
@@ -711,6 +800,7 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
         ++texture_frame;
     }
     scene->texture_checks = scene->texture_conversions = scene->texture_reuses = 0;
+    scene->geometry_uploads = 0;
     sqz_gpu_profile_mark(scene, PROFILE_INITIALIZE);
     unsigned w, h;
     BYTE *background = NULL;
@@ -750,7 +840,21 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
             return FALSE;
         }
     sqz_gpu_profile_mark(scene, PROFILE_TEXTURES);
+    for (size_t i = 0; i < scene->batch_count; ++i)
+        if (scene->batches[i].geometry &&
+            !(scene->batches[i].gpu_geometry = geometry_buffer(scene->batches[i].geometry)))
+        {
+            free(bindings);
+            return gpu_error("cached geometry upload");
+        }
     Uint32 vertex_bytes = (Uint32)(scene->count * sizeof(SceneVertex));
+    Uint32 upload_bytes = vertex_bytes;
+    for (GeometryBuffer *record = geometry_buffers; record; record = record->next)
+        if (record->pending)
+        {
+            record->upload_offset = upload_bytes;
+            upload_bytes += record->geometry->count * sizeof(SceneVertex);
+        }
     if (!vertex_buffer || buffer_size < vertex_bytes)
     {
         if (vertex_buffer)
@@ -759,9 +863,10 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
         SDL_GPUBufferCreateInfo info = {.usage = SDL_GPU_BUFFERUSAGE_VERTEX, .size = buffer_size};
         vertex_buffer = p_SDL_CreateGPUBuffer(gpu, &info);
     }
-    /* Upload this frame's mutable vertices; retain reusable device buffers. */
+    /* Pack changed mesh groups and billboard vertices into one transfer buffer
+     * and one copy pass. Static groups retain their previous GPU contents. */
     SDL_GPUTransferBufferCreateInfo upload_desc = {.usage = SDL_GPU_TRANSFERBUFFERUSAGE_UPLOAD,
-                                                   .size = vertex_bytes ? vertex_bytes
+                                                   .size = upload_bytes ? upload_bytes
                                                                         : sizeof(SceneVertex)};
     SDL_GPUTransferBufferCreateInfo download_desc = {.usage = SDL_GPU_TRANSFERBUFFERUSAGE_DOWNLOAD,
                                                      .size = (Uint32)pixels};
@@ -786,6 +891,10 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     }
     if (vertex_bytes)
         memcpy(mapped, scene->vertices, vertex_bytes);
+    for (GeometryBuffer *record = geometry_buffers; record; record = record->next)
+        if (record->pending)
+            memcpy((BYTE *)mapped + record->upload_offset, record->geometry->vertices,
+                   record->geometry->count * sizeof(SceneVertex));
     p_SDL_UnmapGPUTransferBuffer(gpu, upload);
     SDL_GPUCommandBuffer *command = p_SDL_AcquireGPUCommandBuffer(gpu);
     if (!command)
@@ -800,6 +909,18 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
     SDL_GPUBufferRegion region = {.buffer = vertex_buffer, .size = vertex_bytes};
     if (vertex_bytes)
         p_SDL_UploadToGPUBuffer(copy, &from, &region, FALSE);
+    for (GeometryBuffer *record = geometry_buffers; record; record = record->next)
+        if (record->pending)
+        {
+            SDL_GPUTransferBufferLocation mesh_from = {.transfer_buffer = upload,
+                                                       .offset = record->upload_offset};
+            SDL_GPUBufferRegion mesh_to = {.buffer = record->buffer,
+                                           .size = record->geometry->count * sizeof(SceneVertex)};
+            p_SDL_UploadToGPUBuffer(copy, &mesh_from, &mesh_to, FALSE);
+            record->revision = record->geometry->revision;
+            record->pending = FALSE;
+            ++scene->geometry_uploads;
+        }
     p_SDL_EndGPUCopyPass(copy);
     sqz_gpu_profile_mark(scene, PROFILE_VERTEX_SETUP);
     /* Preserve the uploaded sky, clear only depth, then draw meshes and cutouts. */
@@ -811,6 +932,28 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
                                            .store_op = SDL_GPU_STOREOP_DONT_CARE,
                                            .stencil_load_op = SDL_GPU_LOADOP_DONT_CARE,
                                            .stencil_store_op = SDL_GPU_STOREOP_DONT_CARE};
+    ViewUniform view = {0};
+    view.scale[0] = 2 * scene->front / (scene->right - scene->left);
+    view.scale[1] = 2 * scene->front / (scene->top - scene->bottom);
+    view.scale[2] = scene->back / (scene->back - scene->front);
+    view.offset[0] = -(scene->right + scene->left) / (scene->right - scene->left);
+    view.offset[1] = -(scene->top + scene->bottom) / (scene->top - scene->bottom);
+    view.offset[2] = -scene->front * scene->back / (scene->back - scene->front);
+    view.control[0] = (unsigned)scene->light_count;
+    for (size_t i = 0; i < scene->light_count; ++i)
+    {
+        const SceneLight *light = &scene->lights[i];
+        D3DVECTOR vector =
+            light->type == D3DRMLIGHT_DIRECTIONAL ? light->direction : light->position;
+        memcpy(view.lights[i].vector, &vector, sizeof(vector));
+        memcpy(view.lights[i].color, light->color, sizeof(light->color));
+        view.lights[i].color[3] = light->type == D3DRMLIGHT_AMBIENT       ? 0
+                                  : light->type == D3DRMLIGHT_DIRECTIONAL ? 1
+                                                                          : 2;
+        memcpy(view.lights[i].attenuation, light->attenuation, sizeof(light->attenuation));
+        view.lights[i].attenuation[3] = light->range;
+    }
+    p_SDL_PushGPUVertexUniformData(command, 1, &view, sizeof(view));
     SDL_GPURenderPass *pass = p_SDL_BeginGPURenderPass(command, &color, 1, &depth);
     p_SDL_BindGPUGraphicsPipeline(pass, pipeline);
     SDL_GPUViewport viewport = {.x = (float)scene->viewport->lpVtbl->GetX(scene->viewport),
@@ -820,10 +963,25 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
                                 .min_depth = 0,
                                 .max_depth = 1};
     p_SDL_SetGPUViewport(pass, &viewport);
-    SDL_GPUBufferBinding vertex_binding = {.buffer = vertex_buffer};
-    p_SDL_BindGPUVertexBuffers(pass, 0, &vertex_binding, 1);
     for (size_t i = 0; i < scene->batch_count; ++i)
     {
+        SceneBatch *batch = &scene->batches[i];
+        DrawUniform draw = {0};
+        if (batch->geometry)
+        {
+            for (unsigned axis = 0; axis < 4; ++axis)
+                memcpy(draw.basis[axis], &batch->basis[axis], sizeof(D3DVECTOR));
+            for (unsigned axis = 0; axis < 3; ++axis)
+                memcpy(draw.normals[axis], &batch->normals[axis], sizeof(D3DVECTOR));
+            memcpy(draw.color, batch->group_color, sizeof(draw.color));
+            memcpy(draw.enabled, batch->light_mask, sizeof(draw.enabled));
+            draw.mode[0] = 1;
+            draw.mode[1] = batch->lit;
+        }
+        p_SDL_PushGPUVertexUniformData(command, 0, &draw, sizeof(draw));
+        SDL_GPUBufferBinding vertex_binding = {.buffer = batch->geometry ? batch->gpu_geometry
+                                                                         : vertex_buffer};
+        p_SDL_BindGPUVertexBuffers(pass, 0, &vertex_binding, 1);
         p_SDL_BindGPUGraphicsPipeline(pass, scene->batches[i].decal ? decal_pipeline : pipeline);
         SDL_GPUTextureSamplerBinding binding = {.texture = bindings[i], .sampler = sampler};
         p_SDL_BindGPUFragmentSamplers(pass, 0, &binding, 1);

@@ -1,5 +1,8 @@
 /* Native RM is the oracle for color-source and Gouraud behavior. No window or input. */
 #include "scene_gpu.h"
+#ifdef SQZ_CACHED_ORACLE
+#define sqz_scene_extract sqz_scene_extract_cached
+#endif
 #include <assert.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -290,10 +293,11 @@ int main(void)
     assert(SUCCEEDED(
         target->lpVtbl->Blt(target, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &black)));
     assert(sqz_gpu_draw(&builder_scene, target, message, sizeof(message)));
+    float *builder_color = builder_scene.cached_geometry ? builder_scene.batches[0].group_color
+                                                         : builder_scene.vertices[0].color;
     printf("builder native ink=%u GPU ink=%u groups=%lu color=%g,%g,%g,%g\n", builder_native,
-           ink_count(target), (unsigned long)builder_scene.batch_count,
-           builder_scene.vertices[0].color[0], builder_scene.vertices[0].color[1],
-           builder_scene.vertices[0].color[2], builder_scene.vertices[0].color[3]);
+           ink_count(target), (unsigned long)builder_scene.batch_count, builder_color[0],
+           builder_color[1], builder_color[2], builder_color[3]);
     assert(builder_native > 0 && ink_count(target) > 0);
     sqz_scene_free(&builder_scene);
     builder_face->lpVtbl->Release(builder_face);

@@ -101,6 +101,11 @@ def generate(sdk, output, system_ddraw, legacy_rm):
             if name == 'IDirectDraw' and method == 'CreateSurface':
                 code += ['    sqz_diag_desc("requested", self, sqz_arg_0);']
             code += [f'    {ret} result = {invocation};']
+            if name in ('IDirect3DRMMesh', 'IDirect3DRMMeshBuilder', 'IDirect3DRMFace') and method != 'AddRef' and ret in ('HRESULT', 'int') and (
+                    method.startswith(('Set', 'Add', 'Delete')) or
+                    method in ('Scale', 'Translate', 'Load', 'GenerateNormals', 'Optimize', 'Empty')):
+                owner = 'NULL' if name == 'IDirect3DRMFace' else 'self'
+                code += [f'    if (SUCCEEDED(result)) sqz_scene_geometry_changed({owner});']
             if name == 'IDirect3DDevice' and method == 'Execute':
                 code += ['    sqz_capture_execute(sqz_arg_0, TRUE);']
             if name == 'IDirect3DRM' and method == 'CreateDeviceFromSurface':

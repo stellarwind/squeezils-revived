@@ -67,9 +67,9 @@ continues. Texture sampling is bilinear with premultiplied cutout filtering.
 
 Lights are collected from native RM frames before geometry extraction. Ambient
 colors and directional frame +Z directions are evaluated in camera coordinates.
-Vertex normals use the inverse-transpose frame transform. CPU Lambert diffuse
-lighting multiplies group color; the vertex color attribute carries the
-result to the GPU, which smoothly interpolates it for Gouraud shading. Point
+Vertex normals use the inverse-transpose frame transform. The vertex shader
+evaluates Lambert diffuse lighting and multiplies group color; the rasterizer
+smoothly interpolates the result for Gouraud shading. Point
 lights support range/attenuation; enable-frame scope and unlit/flat/Gouraud group
 quality are respected. Decals remain unlit. Specular, fog, material inheritance,
 translucent sorting and exact RM render-quality equivalence remain unimplemented.
@@ -199,3 +199,26 @@ and uncommon 32-bit masks use the generic conversion fallback with BGRA channel
 ordering. Sampled material textures remain RGBA8; the GPU handles target channel
 layout. The frame-pixel fixture verifies primary colors, padding preservation and
 negative pitch in all four formats; the native/GPU oracle checks actual draws.
+
+Local geometry caching: mesh groups retain triangulated positions, UVs and
+normals in persistent CPU/GPU buffers. Per-frame traversal reads current frame,
+camera, light and group state; per-draw vertex uniforms carry object-to-camera
+and normal transforms, group color and a 256-light scope mask. A shared view
+uniform carries projection and ambient/directional/point lights. Moving props
+therefore update transforms without rebuilding or uploading their meshes.
+
+Successful native mesh/builder mutation observers invalidate cached owners.
+Builder face edits conservatively invalidate cached builders. Changed groups,
+including Squeezil morphs, rebuild and upload; unchanged groups keep their GPU
+contents. All changed groups and CPU billboard quads share one transfer buffer
+and one copy pass per frame. Cache owners retain native references; cache data
+and GPU buffers are released with the last bound retained device. Unhooked
+oracle fixtures compare source geometry to detect edits without observers.
+
+The CPU projected-vertex path remains a test reference. Regression fixtures
+compare cached draws for camera/prop movement, morph vertices/normals, flat and
+Gouraud shading, scaled normals, moving lights and point-light scope. The stock
+RM oracle runs against both paths, including original nut/spit assets and
+builder geometry. DLL integration tests verify real observer invalidation for
+mesh SetVertices and builder SetVertex. Scene traversal and decal quad generation
+remain per-frame; spatial culling is not part of this change.

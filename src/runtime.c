@@ -232,7 +232,7 @@ done:
     SetLastError(saved);
 }
 
-void sqz_hook(void *self, const char *name)
+__declspec(dllexport) void sqz_hook(void *self, const char *name)
 {
     size_t i;
     for (i = 0; i < sqz_interface_count; ++i)

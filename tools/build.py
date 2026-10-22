@@ -55,7 +55,7 @@ def main():
     flags = ['-m32', '-static-libgcc', '-std=c11', '-O2', '-g', '-Wall', '-Wextra', '-Werror=incompatible-pointer-types', '-I', ROOT / 'src', '-I', headers]
     color_fixes = ['-DSQZ_FIX_16BPP_RGB_INDEX_REMAP', '-DSQZ_FIX_16BPP_DESKTOP_GATE', '-DSQZ_FIX_16BPP_COLORKEY_MASK', '-DSQZ_FIX_16BPP_WARP_BRIDGE']
     run(gcc, *flags, *color_fixes, '-shared', ROOT / 'src/runtime.c', ROOT / 'src/platform.c', ROOT / 'src/color_compat.c', ROOT / 'src/warp_compat.c',
-        ROOT / 'src/save_compat.c', ROOT / 'src/scene_extract.c', ROOT / 'src/gpu_bridge.c', ROOT / 'src/gpu_render.c', ROOT / 'src/shading_capture.c', BUILD / 'generated/observers.c',
+        ROOT / 'src/save_compat.c', ROOT / 'src/scene_cache.c', ROOT / 'src/scene_extract.c', ROOT / 'src/gpu_bridge.c', ROOT / 'src/gpu_render.c', ROOT / 'src/shading_capture.c', BUILD / 'generated/observers.c',
         '-o', BUILD / 'sqz-runtime.dll', '-Wl,--out-implib,' + str(BUILD / 'libsqz-runtime.a'), '-ldxguid', '-lole32', '-luser32', '-lgdi32')
     for label in ('ddraw', 'd3drm'):
         run(gcc, '-m32', '-shared', BUILD / ('generated/' + label + '.S'),
