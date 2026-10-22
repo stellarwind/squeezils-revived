@@ -17,13 +17,14 @@
     X(SDL_WasInit)                                                                                 \
     X(SDL_QuitSubSystem)                                                                           \
     X(SDL_SetMainReady)                                                                            \
-    X(SDL_CreateGPUDevice) X(SDL_DestroyGPUDevice) X(SDL_GetGPUDeviceDriver) X(SDL_GetError) X(    \
-        SDL_CreateGPUShader) X(SDL_ReleaseGPUShader) X(SDL_CreateGPUGraphicsPipeline)              \
-        X(SDL_ReleaseGPUGraphicsPipeline) X(SDL_CreateGPUTexture) X(SDL_ReleaseGPUTexture) X(      \
-            SDL_CreateGPUSampler) X(SDL_ReleaseGPUSampler) X(SDL_CreateGPUBuffer)                  \
-            X(SDL_ReleaseGPUBuffer) X(SDL_CreateGPUTransferBuffer) X(SDL_ReleaseGPUTransferBuffer) \
-                X(SDL_MapGPUTransferBuffer) X(SDL_UnmapGPUTransferBuffer)                          \
-                    X(SDL_AcquireGPUCommandBuffer) X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass)   \
+    X(SDL_CreateGPUDevice)                                                                         \
+    X(SDL_DestroyGPUDevice) X(SDL_GetGPUDeviceDriver) X(SDL_GetError) X(SDL_CreateGPUShader)       \
+        X(SDL_ReleaseGPUShader) X(SDL_CreateGPUGraphicsPipeline) X(SDL_ReleaseGPUGraphicsPipeline) \
+            X(SDL_CreateGPUTexture) X(SDL_ReleaseGPUTexture) X(SDL_CreateGPUSampler)               \
+                X(SDL_ReleaseGPUSampler) X(SDL_CreateGPUBuffer) X(SDL_ReleaseGPUBuffer) X(         \
+                    SDL_CreateGPUTransferBuffer) X(SDL_ReleaseGPUTransferBuffer)                   \
+                    X(SDL_MapGPUTransferBuffer) X(SDL_UnmapGPUTransferBuffer) X(                   \
+                        SDL_AcquireGPUCommandBuffer) X(SDL_BeginGPUCopyPass) X(SDL_EndGPUCopyPass) \
                         X(SDL_UploadToGPUTexture) X(SDL_UploadToGPUBuffer)                         \
                             X(SDL_DownloadFromGPUTexture) X(SDL_SubmitGPUCommandBuffer) X(         \
                                 SDL_SubmitGPUCommandBufferAndAcquireFence) X(SDL_WaitForGPUFences) \
@@ -329,7 +330,7 @@ static BOOL initialize_gpu(void)
                                         .buffer_slot = 0,
                                         .format = SDL_GPU_VERTEXELEMENTFORMAT_FLOAT4,
                                         .offset = 24}};
-    SDL_GPUColorTargetDescription color = {.format = SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM};
+    SDL_GPUColorTargetDescription color = {.format = SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM};
     SDL_GPUGraphicsPipelineCreateInfo info = {
         .vertex_shader = vertex,
         .fragment_shader = fragment,
@@ -615,8 +616,16 @@ void sqz_gpu_shutdown(void)
     }
 }
 
-/* Read the existing warp/background before replacing native Viewport::Render. */
-static BOOL read_background(IDirectDrawSurface *target, BYTE **rgba, unsigned *width,
+static BOOL native_bgra(const DDPIXELFORMAT *format)
+{
+    return format->dwRGBBitCount == 32 && format->dwRBitMask == 0xff0000 &&
+           format->dwGBitMask == 0xff00 && format->dwBBitMask == 0xff && !format->dwRGBAlphaBitMask;
+}
+
+/* The ordinary 32-bit DD layout already matches a BGRA GPU target. Copy rows
+ * directly, including the CPU-generated warp; retain conversion for other masks
+ * and 16-bit surfaces. The unused X byte has no DirectDraw alpha semantics. */
+static BOOL read_background(IDirectDrawSurface *target, BYTE **bgra, unsigned *width,
                             unsigned *height)
 {
     DDSURFACEDESC desc = {.dwSize = sizeof(desc)};
@@ -635,41 +644,57 @@ static BOOL read_background(IDirectDrawSurface *target, BYTE **rgba, unsigned *w
         target->lpVtbl->Unlock(target, desc.lpSurface);
         return gpu_error("background allocation");
     }
-    for (unsigned y = 0; y < h; ++y)
-        for (unsigned x = 0; x < w; ++x)
-        {
-            DWORD v = 0;
-            memcpy(&v, (BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch + x * bytes, bytes);
-            BYTE *out = background + ((size_t)y * w + x) * 4;
-            out[0] = unpack_channel(v, desc.ddpfPixelFormat.dwRBitMask);
-            out[1] = unpack_channel(v, desc.ddpfPixelFormat.dwGBitMask);
-            out[2] = unpack_channel(v, desc.ddpfPixelFormat.dwBBitMask);
-            out[3] = 255;
-        }
+    if (native_bgra(&desc.ddpfPixelFormat))
+    {
+        for (unsigned y = 0; y < h; ++y)
+            memcpy(background + (size_t)y * w * 4,
+                   (BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch, (size_t)w * 4);
+    }
+    else
+        for (unsigned y = 0; y < h; ++y)
+            for (unsigned x = 0; x < w; ++x)
+            {
+                DWORD v = 0;
+                memcpy(&v, (BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch + x * bytes, bytes);
+                BYTE *out = background + ((size_t)y * w + x) * 4;
+                out[0] = unpack_channel(v, desc.ddpfPixelFormat.dwBBitMask);
+                out[1] = unpack_channel(v, desc.ddpfPixelFormat.dwGBitMask);
+                out[2] = unpack_channel(v, desc.ddpfPixelFormat.dwRBitMask);
+                out[3] = 255;
+            }
     target->lpVtbl->Unlock(target, desc.lpSurface);
-    *rgba = background;
+    *bgra = background;
     *width = w;
     *height = h;
     return TRUE;
 }
 
-/* Copy back only RGB, respecting DirectDraw pitch and the actual 16/32-bit masks. */
-static BOOL write_frame(IDirectDrawSurface *target, const BYTE *rgba, unsigned width,
+/* Return the BGRA readback directly to matching DD rows. Fallback conversion
+ * preserves the existing RGB555/RGB565 and uncommon 32-bit mask paths. */
+static BOOL write_frame(IDirectDrawSurface *target, const BYTE *bgra, unsigned width,
                         unsigned height)
 {
     DDSURFACEDESC desc = {.dwSize = sizeof(desc)};
     if (FAILED(target->lpVtbl->Lock(target, NULL, &desc, DDLOCK_WAIT, NULL)))
         return gpu_error("frame surface lock");
     unsigned bytes = desc.ddpfPixelFormat.dwRGBBitCount / 8;
-    for (unsigned y = 0; y < height; ++y)
-        for (unsigned x = 0; x < width; ++x)
-        {
-            const BYTE *in = rgba + ((size_t)y * width + x) * 4;
-            DWORD value = pack_channel(in[0], desc.ddpfPixelFormat.dwRBitMask) |
-                          pack_channel(in[1], desc.ddpfPixelFormat.dwGBitMask) |
-                          pack_channel(in[2], desc.ddpfPixelFormat.dwBBitMask);
-            memcpy((BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch + x * bytes, &value, bytes);
-        }
+    if (native_bgra(&desc.ddpfPixelFormat))
+    {
+        for (unsigned y = 0; y < height; ++y)
+            memcpy((BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch,
+                   bgra + (size_t)y * width * 4, (size_t)width * 4);
+    }
+    else
+        for (unsigned y = 0; y < height; ++y)
+            for (unsigned x = 0; x < width; ++x)
+            {
+                const BYTE *in = bgra + ((size_t)y * width + x) * 4;
+                DWORD value = pack_channel(in[2], desc.ddpfPixelFormat.dwRBitMask) |
+                              pack_channel(in[1], desc.ddpfPixelFormat.dwGBitMask) |
+                              pack_channel(in[0], desc.ddpfPixelFormat.dwBBitMask);
+                memcpy((BYTE *)desc.lpSurface + (ptrdiff_t)y * desc.lPitch + x * bytes, &value,
+                       bytes);
+            }
     return SUCCEEDED(target->lpVtbl->Unlock(target, desc.lpSurface))
                ? TRUE
                : gpu_error("frame surface unlock");
@@ -700,7 +725,7 @@ static BOOL render_frame(SceneData *scene, IDirectDrawSurface *target)
         if (depth_target)
             p_SDL_ReleaseGPUTexture(gpu, depth_target);
         color_target =
-            create_texture(w, h, SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM,
+            create_texture(w, h, SDL_GPU_TEXTUREFORMAT_B8G8R8A8_UNORM,
                            SDL_GPU_TEXTUREUSAGE_COLOR_TARGET | SDL_GPU_TEXTUREUSAGE_SAMPLER);
         depth_target = create_texture(w, h, SDL_GPU_TEXTUREFORMAT_D32_FLOAT,
                                       SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET);

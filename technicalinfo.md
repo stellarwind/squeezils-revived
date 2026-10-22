@@ -190,3 +190,12 @@ this does not yet rely on dirty notifications. Snapshots and native references
 are released with the GPU cache. Profiler reports include source-check,
 conversion and reuse counts. Tests cover warm/shared bindings and live pixel,
 palette, color-key and transparency edits through the native RM image.
+
+The scene color target and its pipelines use BGRA8. Standard 32-bit DirectDraw
+RGB masks (00ff0000/0000ff00/000000ff, unused alpha byte) already have that byte
+layout, so background upload preparation and readback writeback use pitched row
+copies. The original CPU warp and GDI HUD ordering are retained. RGB555, RGB565
+and uncommon 32-bit masks use the generic conversion fallback with BGRA channel
+ordering. Sampled material textures remain RGBA8; the GPU handles target channel
+layout. The frame-pixel fixture verifies primary colors, padding preservation and
+negative pitch in all four formats; the native/GPU oracle checks actual draws.

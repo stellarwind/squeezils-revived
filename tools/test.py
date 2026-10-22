@@ -6,6 +6,10 @@ import subprocess
 from build import ROOT, BUILD, STAGE
 
 gcc = shutil.which('gcc')
+subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
+                '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/frame_pixels.c'),
+                '-ldxguid', '-lgdi32', '-o', str(BUILD / 'frame_pixels.exe')], check=True)
+subprocess.run([str(BUILD / 'frame_pixels.exe')], check=True, timeout=10)
 save_probe = BUILD / 'save-compat-test'
 save_probe.mkdir(exist_ok=True)
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
