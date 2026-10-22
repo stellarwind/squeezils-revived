@@ -159,3 +159,14 @@ ShowWindow(SW_SHOWNORMAL) becomes SW_SHOW when already maximized. SDL and Window
 continue to handle user resizing and title-bar actions directly; the logical
 render canvas still follows the game's display-mode dimensions. Other windows
 and SDL-disabled runs retain their native API behavior.
+
+Overworld placement precision: recovering camera axes by subtracting transformed
+unit points rounded their components at large camera translations. Multiplying
+those axes by distant object coordinates amplified the error near the camera.
+Extraction now composes root/camera parent matrices and inverts the camera's
+linear matrix in double precision, keeping translation separate from directions.
+The original retained transforms and simulation are unchanged. The scene fixture
+uses coordinates around (522, 89, 547), small camera movements and a transformed
+scene root; its maximum position error against direct native point transforms is
+below 0.0002 world units (observed 0.0000551). The initial reproduction with the
+old unit-point method measured 0.02861691 world units on the X axis alone.

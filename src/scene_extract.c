@@ -37,24 +37,65 @@ static void color_to_rgba(D3DCOLOR color, float out[4])
     out[2] = (color & 255) / 255.f;
     out[3] = ((color >> 24) & 255) / 255.f;
 }
+/* Multiply local matrices along the real parent chain, without probing unit
+ * points in world space. At overworld distances those translated float points
+ * lose low bits; subtracting them to recover axes makes nearby objects jitter. */
+static BOOL world_matrix(SceneData *s, IDirect3DRMFrame *frame, double out[4][4])
+{
+    memset(out, 0, 16 * sizeof(double));
+    for (unsigned i = 0; i < 4; ++i)
+        out[i][i] = 1;
+    frame->lpVtbl->AddRef(frame);
+    for (unsigned depth = 0; frame; ++depth)
+    {
+        D3DRMMATRIX4D local;
+        IDirect3DRMFrame *parent = NULL;
+        if (depth >= 128 || FAILED(frame->lpVtbl->GetTransform(frame, local)) ||
+            FAILED(frame->lpVtbl->GetParent(frame, &parent)))
+        {
+            frame->lpVtbl->Release(frame);
+            if (parent)
+                parent->lpVtbl->Release(parent);
+            return scene_error(s, "frame parent matrix read failed");
+        }
+        double product[4][4] = {{0}};
+        for (unsigned i = 0; i < 4; ++i)
+            for (unsigned j = 0; j < 4; ++j)
+                for (unsigned k = 0; k < 4; ++k)
+                    product[i][j] += out[i][k] * local[k][j];
+        memcpy(out, product, sizeof(product));
+        frame->lpVtbl->Release(frame);
+        frame = parent;
+    }
+    return TRUE;
+}
 static BOOL camera_basis(SceneData *s, IDirect3DRMFrame *frame, D3DVECTOR out[4])
 {
-    D3DVECTOR points[4] = {{.x = 0, .y = 0, .z = 0},
-                           {.x = 1, .y = 0, .z = 0},
-                           {.x = 0, .y = 1, .z = 0},
-                           {.x = 0, .y = 0, .z = 1}};
+    double world[4][4], camera[4][4], inverse[3][3];
+    if (!world_matrix(s, frame, world) || !world_matrix(s, s->camera, camera))
+        return FALSE;
+    /* Cofactors of the camera's linear transform. Unlike a transpose, this also
+     * handles scaled camera ancestors. Keep translation separate until after
+     * subtracting camera position, and retain double precision until output. */
+    for (unsigned i = 0; i < 3; ++i)
+        for (unsigned j = 0; j < 3; ++j)
+            inverse[j][i] = camera[(i + 1) % 3][(j + 1) % 3] * camera[(i + 2) % 3][(j + 2) % 3] -
+                            camera[(i + 1) % 3][(j + 2) % 3] * camera[(i + 2) % 3][(j + 1) % 3];
+    double determinant = 0;
+    for (unsigned i = 0; i < 3; ++i)
+        determinant += camera[0][i] * inverse[i][0];
+    if (!isfinite(determinant) || fabs(determinant) < 1e-20)
+        return scene_error(s, "singular camera transform");
     for (unsigned i = 0; i < 4; ++i)
     {
-        D3DVECTOR world;
-        if (FAILED(frame->lpVtbl->Transform(frame, &world, &points[i])) ||
-            FAILED(s->camera->lpVtbl->InverseTransform(s->camera, &out[i], &world)))
-            return scene_error(s, "frame/camera transform read failed");
-    }
-    for (unsigned i = 1; i < 4; ++i)
-    {
-        out[i].x -= out[0].x;
-        out[i].y -= out[0].y;
-        out[i].z -= out[0].z;
+        double transformed[3] = {0};
+        unsigned row = i ? i - 1 : 3;
+        for (unsigned j = 0; j < 3; ++j)
+            for (unsigned k = 0; k < 3; ++k)
+                transformed[j] +=
+                    (world[row][k] - (i ? 0 : camera[3][k])) * inverse[k][j] / determinant;
+        out[i] = (D3DVECTOR){
+            .x = (float)transformed[0], .y = (float)transformed[1], .z = (float)transformed[2]};
     }
     return TRUE;
 }

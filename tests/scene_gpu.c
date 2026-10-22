@@ -207,6 +207,36 @@ int main(void)
     second->lpVtbl->Release(second);
     sprite->lpVtbl->Release(sprite);
     puts("PASS: unrendered sprite resource frames and two shared-resource placements");
+    /* Overworld coordinates are hundreds of units from the origin, while the
+     * camera can be less than one unit from the character. Compare extraction
+     * against transforming the vertex directly, without reconstructing axes by
+     * subtracting translated unit points. */
+    assert(SUCCEEDED(model->lpVtbl->SetPosition(model, root, 522.2f, 89.1f, 547.3f)));
+    assert(SUCCEEDED(camera->lpVtbl->SetOrientation(camera, root, .3f, .2f, 1, 0, 1, 0)));
+    float max_position_error = 0;
+    for (unsigned step = 0; step < 24; ++step)
+    {
+        if (step == 12)
+        {
+            assert(SUCCEEDED(root->lpVtbl->AddRotation(root, D3DRMCOMBINE_BEFORE, 0, 1, 0, .35f)));
+            assert(SUCCEEDED(root->lpVtbl->SetPosition(root, NULL, 31, -14, 25)));
+        }
+        assert(SUCCEEDED(
+            camera->lpVtbl->SetPosition(camera, root, 522.2f + step * .0001f, 89.1f, 545.3f)));
+        assert(sqz_scene_extract(&scene, &viewport, root));
+        D3DVECTOR world, expected;
+        assert(SUCCEEDED(model->lpVtbl->Transform(model, &world, &vertices[0].position)));
+        assert(SUCCEEDED(camera->lpVtbl->InverseTransform(camera, &expected, &world)));
+        float error = fmaxf(fabsf(scene.vertices[0].clip[0] - expected.x),
+                            fmaxf(fabsf(scene.vertices[0].clip[1] - expected.y),
+                                  fabsf(scene.vertices[0].clip[3] - expected.z)));
+        if (error > max_position_error)
+            max_position_error = error;
+        sqz_scene_free(&scene);
+    }
+    printf("Overworld camera maximum position error: %.8f\n", max_position_error);
+    fflush(stdout);
+    assert(max_position_error < .0002f);
     sqz_gpu_shutdown();
     sun->lpVtbl->Release(sun);
     ambient->lpVtbl->Release(ambient);
