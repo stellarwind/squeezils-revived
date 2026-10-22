@@ -11,4 +11,5 @@ __pycache__/
 *.pdb
 *.ilk
 *.map
+*.log
 # Original game and Ghidra databases stay outside this worktree.
