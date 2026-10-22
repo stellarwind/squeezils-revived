@@ -65,7 +65,10 @@ def generate(game, output, install):
             level_file = place_ini.parent / level.get('Defaults', 'LevelFile')
             if not level_file.is_file():
                 raise ValueError(f'Level data missing: {level_file}')
-            entries.append(dict(name=f'T{region:02d}L{destination:02d}', region=region,
+            save_name = f'{region_dir.name.title()}{destination}'
+            if not save_name.isascii() or not save_name.isalnum() or len(save_name) > 10:
+                raise ValueError(f'Save name exceeds the original dialog limits: {save_name}')
+            entries.append(dict(name=save_name, region=region,
                                 location=location, place=destination,
                                 region_name=region_dir.name, kind='level entrance',
                                 definition=str(place_ini.relative_to(sqz)),
@@ -85,8 +88,8 @@ def generate(game, output, install):
     (output / 'manifest.json').write_text(json.dumps(entries, indent=2) + '\n')
     (output / 'README.txt').write_text(
         'Squeezils testing saves\n\n'
-        'T01L01 = region 1, level 1 entrance.\n'
-        'Use F1 / Load-Save and choose a T-prefixed save, then enter the level.\n'
+        'Names identify the region and level: River1, Jungle3, Tomb1, etc.\n'
+        'Use F1 / Load-Save and choose the level name, then enter the level.\n'
         'The original save loader always resumes the overworld, not mid-level.\n'
         'All six sets of region keys/completion flags are unlocked for testing.\n'
         'Objectives and collectible inventory start fresh; these are synthetic profiles.\n'

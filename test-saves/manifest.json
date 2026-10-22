@@ -1,6 +1,6 @@
 [
   {
-    "name": "T01L01",
+    "name": "River1",
     "region": 1,
     "location": 1,
     "place": 1,
@@ -10,7 +10,7 @@
     "level_file": "regions\\river\\PLACE01\\place.lvl"
   },
   {
-    "name": "T01L02",
+    "name": "River2",
     "region": 1,
     "location": 2,
     "place": 2,
@@ -20,7 +20,7 @@
     "level_file": "regions\\river\\PLACE02\\place.lvl"
   },
   {
-    "name": "T01L03",
+    "name": "River3",
     "region": 1,
     "location": 3,
     "place": 3,
@@ -30,7 +30,7 @@
     "level_file": "regions\\river\\PLACE03\\place.lvl"
   },
   {
-    "name": "T01L04",
+    "name": "River4",
     "region": 1,
     "location": 4,
     "place": 4,
@@ -40,7 +40,7 @@
     "level_file": "regions\\river\\PLACE04\\place.lvl"
   },
   {
-    "name": "T01L05",
+    "name": "River5",
     "region": 1,
     "location": 5,
     "place": 5,
@@ -50,7 +50,7 @@
     "level_file": "regions\\river\\PLACE05\\place.lvl"
   },
   {
-    "name": "T01L06",
+    "name": "River6",
     "region": 1,
     "location": 6,
     "place": 6,
@@ -60,7 +60,7 @@
     "level_file": "regions\\river\\PLACE06\\place.lvl"
   },
   {
-    "name": "T01L07",
+    "name": "River7",
     "region": 1,
     "location": 7,
     "place": 7,
@@ -70,7 +70,7 @@
     "level_file": "regions\\river\\PLACE07\\place.lvl"
   },
   {
-    "name": "T01L08",
+    "name": "River8",
     "region": 1,
     "location": 8,
     "place": 8,
@@ -80,7 +80,7 @@
     "level_file": "regions\\river\\PLACE08\\place.lvl"
   },
   {
-    "name": "T02L01",
+    "name": "Coast1",
     "region": 2,
     "location": 1,
     "place": 1,
@@ -90,7 +90,7 @@
     "level_file": "regions\\coast\\PLACE01\\place.lvl"
   },
   {
-    "name": "T02L02",
+    "name": "Coast2",
     "region": 2,
     "location": 2,
     "place": 2,
@@ -100,7 +100,7 @@
     "level_file": "regions\\coast\\PLACE02\\place.lvl"
   },
   {
-    "name": "T02L03",
+    "name": "Coast3",
     "region": 2,
     "location": 3,
     "place": 3,
@@ -110,7 +110,7 @@
     "level_file": "regions\\coast\\PLACE03\\place.lvl"
   },
   {
-    "name": "T02L04",
+    "name": "Coast4",
     "region": 2,
     "location": 4,
     "place": 4,
@@ -120,7 +120,7 @@
     "level_file": "regions\\coast\\PLACE04\\place.lvl"
   },
   {
-    "name": "T02L05",
+    "name": "Coast5",
     "region": 2,
     "location": 5,
     "place": 5,
@@ -130,7 +130,7 @@
     "level_file": "regions\\coast\\PLACE05\\place.lvl"
   },
   {
-    "name": "T03L01",
+    "name": "Desert1",
     "region": 3,
     "location": 1,
     "place": 1,
@@ -140,7 +140,7 @@
     "level_file": "regions\\desert\\PLACE01\\place.lvl"
   },
   {
-    "name": "T03L02",
+    "name": "Desert2",
     "region": 3,
     "location": 2,
     "place": 2,
@@ -150,7 +150,7 @@
     "level_file": "regions\\desert\\PLACE02\\place.lvl"
   },
   {
-    "name": "T03L03",
+    "name": "Desert3",
     "region": 3,
     "location": 3,
     "place": 3,
@@ -160,7 +160,7 @@
     "level_file": "regions\\desert\\PLACE03\\place.lvl"
   },
   {
-    "name": "T03L04",
+    "name": "Desert4",
     "region": 3,
     "location": 4,
     "place": 4,
@@ -170,7 +170,7 @@
     "level_file": "regions\\desert\\PLACE04\\place.lvl"
   },
   {
-    "name": "T03L05",
+    "name": "Desert5",
     "region": 3,
     "location": 5,
     "place": 5,
@@ -180,7 +180,7 @@
     "level_file": "regions\\desert\\PLACE05\\place.lvl"
   },
   {
-    "name": "T04L01",
+    "name": "Jungle1",
     "region": 4,
     "location": 1,
     "place": 1,
@@ -190,7 +190,7 @@
     "level_file": "regions\\jungle\\PLACE01\\place.lvl"
   },
   {
-    "name": "T04L02",
+    "name": "Jungle2",
     "region": 4,
     "location": 2,
     "place": 2,
@@ -200,7 +200,7 @@
     "level_file": "regions\\jungle\\PLACE02\\place.lvl"
   },
   {
-    "name": "T04L03",
+    "name": "Jungle3",
     "region": 4,
     "location": 3,
     "place": 3,
@@ -210,7 +210,7 @@
     "level_file": "regions\\jungle\\PLACE03\\place.lvl"
   },
   {
-    "name": "T04L04",
+    "name": "Jungle4",
     "region": 4,
     "location": 4,
     "place": 4,
@@ -220,7 +220,7 @@
     "level_file": "regions\\jungle\\PLACE04\\place.lvl"
   },
   {
-    "name": "T04L05",
+    "name": "Jungle5",
     "region": 4,
     "location": 5,
     "place": 5,
@@ -230,7 +230,7 @@
     "level_file": "regions\\jungle\\PLACE05\\place.lvl"
   },
   {
-    "name": "T05L01",
+    "name": "Pine1",
     "region": 5,
     "location": 1,
     "place": 1,
@@ -240,7 +240,7 @@
     "level_file": "regions\\pine\\PLACE01\\place.lvl"
   },
   {
-    "name": "T05L02",
+    "name": "Pine2",
     "region": 5,
     "location": 2,
     "place": 2,
@@ -250,7 +250,7 @@
     "level_file": "regions\\pine\\PLACE02\\place.lvl"
   },
   {
-    "name": "T05L03",
+    "name": "Pine3",
     "region": 5,
     "location": 3,
     "place": 3,
@@ -260,7 +260,7 @@
     "level_file": "regions\\pine\\PLACE03\\place.lvl"
   },
   {
-    "name": "T05L04",
+    "name": "Pine4",
     "region": 5,
     "location": 4,
     "place": 4,
@@ -270,7 +270,7 @@
     "level_file": "regions\\pine\\PLACE04\\place.lvl"
   },
   {
-    "name": "T05L05",
+    "name": "Pine5",
     "region": 5,
     "location": 5,
     "place": 5,
@@ -280,7 +280,7 @@
     "level_file": "regions\\pine\\PLACE05\\place.lvl"
   },
   {
-    "name": "T06L01",
+    "name": "Tomb1",
     "region": 6,
     "location": 1,
     "place": 1,
@@ -290,7 +290,7 @@
     "level_file": "regions\\tomb\\PLACE01\\place.lvl"
   },
   {
-    "name": "T06L02",
+    "name": "Tomb2",
     "region": 6,
     "location": 2,
     "place": 2,
@@ -300,7 +300,7 @@
     "level_file": "regions\\tomb\\PLACE02\\place.lvl"
   },
   {
-    "name": "T06L03",
+    "name": "Tomb3",
     "region": 6,
     "location": 3,
     "place": 3,
@@ -310,7 +310,7 @@
     "level_file": "regions\\tomb\\PLACE03\\place.lvl"
   },
   {
-    "name": "T06L04",
+    "name": "Tomb4",
     "region": 6,
     "location": 4,
     "place": 4,
@@ -320,7 +320,7 @@
     "level_file": "regions\\tomb\\PLACE04\\place.lvl"
   },
   {
-    "name": "T06L05",
+    "name": "Tomb5",
     "region": 6,
     "location": 5,
     "place": 5,
@@ -330,7 +330,7 @@
     "level_file": "regions\\tomb\\PLACE05\\place.lvl"
   },
   {
-    "name": "T07L01",
+    "name": "Nutscape1",
     "region": 7,
     "location": 1,
     "place": 1,
@@ -340,7 +340,7 @@
     "level_file": "regions\\nutscape\\PLACE01\\place.lvl"
   },
   {
-    "name": "T07L02",
+    "name": "Nutscape2",
     "region": 7,
     "location": 2,
     "place": 2,
@@ -350,7 +350,7 @@
     "level_file": "regions\\nutscape\\PLACE02\\place.lvl"
   },
   {
-    "name": "T07L03",
+    "name": "Nutscape3",
     "region": 7,
     "location": 3,
     "place": 3,
@@ -360,7 +360,7 @@
     "level_file": "regions\\nutscape\\PLACE03\\place.lvl"
   },
   {
-    "name": "T07L04",
+    "name": "Nutscape4",
     "region": 7,
     "location": 4,
     "place": 4,
@@ -370,7 +370,7 @@
     "level_file": "regions\\nutscape\\PLACE04\\place.lvl"
   },
   {
-    "name": "T07L05",
+    "name": "Nutscape5",
     "region": 7,
     "location": 5,
     "place": 5,

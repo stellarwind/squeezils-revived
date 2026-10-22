@@ -1,7 +1,7 @@
 Squeezils testing saves
 
-T01L01 = region 1, level 1 entrance.
-Use F1 / Load-Save and choose a T-prefixed save, then enter the level.
+Names identify the region and level: River1, Jungle3, Tomb1, etc.
+Use F1 / Load-Save and choose the level name, then enter the level.
 The original save loader always resumes the overworld, not mid-level.
 All six sets of region keys/completion flags are unlocked for testing.
 Objectives and collectible inventory start fresh; these are synthetic profiles.
