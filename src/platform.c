@@ -288,10 +288,12 @@ void sqz_platform_install(void)
     IMAGE_NT_HEADERS32 *nt;
     IMAGE_IMPORT_DESCRIPTOR *imports;
     GetEnvironmentVariableA("SQZ_SDL_WINDOW", value, sizeof(value));
-    enabled = !strcmp(value, "1");
-    if (!enabled || !base || dos->e_magic != IMAGE_DOS_SIGNATURE) return;
-    dispatch_tls = TlsAlloc();
-    if (dispatch_tls == TLS_OUT_OF_INDEXES) { enabled = FALSE; return; }
+    enabled = strcmp(value, "0") != 0;
+    if (!base || dos->e_magic != IMAGE_DOS_SIGNATURE) return;
+    if (enabled) {
+        dispatch_tls = TlsAlloc();
+        if (dispatch_tls == TLS_OUT_OF_INDEXES) enabled = FALSE;
+    }
     nt = (void *)(base + dos->e_lfanew);
     if (nt->Signature != IMAGE_NT_SIGNATURE || nt->FileHeader.Machine != IMAGE_FILE_MACHINE_I386) return;
     imports = (void *)(base + nt->OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT].VirtualAddress);
@@ -306,6 +308,9 @@ void sqz_platform_install(void)
             if (IMAGE_SNAP_BY_ORDINAL32(names->u1.Ordinal)) continue;
             const char *name = (char *)((IMAGE_IMPORT_BY_NAME *)(base + names->u1.AddressOfData))->Name;
 #define ROUTE(api, hook, save) if (!strcmp(name, api)) { replacement = hook; original = (void **)&save; }
+            static void *native_rm_factory;
+            ROUTE("Direct3DRMCreate", sqz_create_rm, native_rm_factory)
+            if (enabled) {
             ROUTE("CreateWindowExA", window_create, native_create)
             ROUTE("DestroyWindow", window_destroy, native_destroy)
             ROUTE("DefWindowProcA", window_default, native_default)
@@ -318,6 +323,7 @@ void sqz_platform_install(void)
             ROUTE("SetCursor", window_set_cursor, native_set_cursor)
             ROUTE("GetDC", window_get_dc, native_get_dc)
             ROUTE("ReleaseDC", window_release_dc, native_release_dc)
+            }
             if (!replacement) continue;
             if (!VirtualProtect(&slots->u1.Function, sizeof(DWORD), PAGE_READWRITE, &old)) continue;
             *original = (void *)(uintptr_t)slots->u1.Function;
@@ -389,6 +395,22 @@ HRESULT sqz_create_surface(const IDirectDrawVtbl *original, IDirectDraw *ddraw,
     }
     *out = virtual_primary;
     sqz_log("SDL CANVAS virtual=%p native=%p size=%dx%d", virtual_primary, native_primary, initial_width, initial_height);
+    return hr;
+}
+
+HRESULT sqz_get_caps(const IDirectDrawVtbl *original, IDirectDraw *self,
+                     DDCAPS *driver, DDCAPS *software)
+{
+    HRESULT hr = original->GetCaps(self,driver,software);
+    /* The game's depth selection cannot handle an empty legacy bit-depth mask.
+     * This replaces the supplied compatibility wrapper's 16-bit Z-buffer fix. */
+    DDCAPS *caps[] = {driver,software};
+    if (SUCCEEDED(hr) && enabled) for (unsigned i=0; i<2; ++i)
+        if (caps[i] && caps[i]->dwSize >= offsetof(DDCAPS,dwZBufferBitDepths)+sizeof(DWORD)
+            && !caps[i]->dwZBufferBitDepths) {
+            caps[i]->dwZBufferBitDepths = DDBD_16;
+            sqz_log("COMPAT GetCaps reports 16-bit Z buffer");
+        }
     return hr;
 }
 

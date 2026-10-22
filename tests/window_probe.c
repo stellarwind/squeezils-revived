@@ -70,6 +70,9 @@ int main(void)
     actual.dwSize = sizeof(actual);
     assert(SUCCEEDED(IDirectDrawSurface_GetSurfaceDesc(primary,&actual)));
     assert(actual.dwWidth == 640 && actual.dwHeight == 480);
+    DDCAPS driver = {.dwSize=sizeof(driver)}, software = {.dwSize=sizeof(software)};
+    assert(SUCCEEDED(IDirectDraw_GetCaps(dd,&driver,&software)));
+    assert(driver.dwZBufferBitDepths && software.dwZBufferBitDepths);
     fill.dwSize = sizeof(fill);
     assert(SUCCEEDED(IDirectDrawSurface_Blt(primary,NULL,NULL,NULL,DDBLT_COLORFILL|DDBLT_WAIT,&fill)));
     fill.dwFillColor = 0xff;

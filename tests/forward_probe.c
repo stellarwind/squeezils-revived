@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 static int destroyed, moved;
 static IDirect3DRMFrame *expected;
@@ -49,6 +50,7 @@ int main(void)
     HANDLE threads[2];
     assert(dll);
     create_rm = (void *)GetProcAddress(dll, "Direct3DRMCreate");
+    if (getenv("SQZ_DROPIN_PROBE")) create_rm = Direct3DRMCreate;
     color = (void *)GetProcAddress(dll, "D3DRMCreateColorRGB");
     modulus = (void *)GetProcAddress(dll, "D3DRMVectorModulus");
     assert(create_rm && color && modulus);

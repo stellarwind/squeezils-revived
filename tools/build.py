@@ -72,10 +72,8 @@ def main():
                 if not target.exists():
                     target.write_bytes(z.read(item))
         assert sha(STAGE / 'SQZ.EXE') == '801931afc6ca09fdfffafb9c2f7223b2417b5c3895f57005091a817f3ec15194'
-        (STAGE / 'legacy').mkdir(exist_ok=True)
-        shutil.copy2(legacy, STAGE / 'legacy/d3drm.dll')
-        shutil.copy2(WORKSPACE / 'SqueezilsGameFiles/ddraw.dll', STAGE / 'legacy/ddraw.dll')
-        for label in ('ddraw', 'd3drm', 'sqz-runtime'):
+        shutil.copy2(legacy, STAGE / 'd3drm.dll')
+        for label in ('ddraw', 'sqz-runtime'):
             shutil.copy2(BUILD / (label + '.dll'), STAGE / (label + '.dll'))
     if args.sdl:
         archive = BUILD / 'SDL3-3.4.18-win32-x86.zip'
@@ -95,6 +93,17 @@ def main():
                   'headers_archive_sha256': '78d84602ae616cfe26b33a73b7d3b9b6b56e8a6650e53d92c9c6ca938f747acd'}
         (ROOT / 'third_party/SDL3').mkdir(parents=True, exist_ok=True)
         (ROOT / 'third_party/SDL3/source.json').write_text(json.dumps(record, indent=2) + '\n')
+    if (BUILD / 'SDL3.dll').exists():
+        patch = BUILD / 'patch'
+        patch.mkdir(exist_ok=True)
+        files = {'ddraw.dll': 'ddraw.dll', 'sqz-runtime.dll': 'sqz-runtime.dll',
+                 'SDL3.dll': 'SDL3.dll', 'LICENSE.txt': 'SDL3-LICENSE.txt'}
+        with zipfile.ZipFile(BUILD / 'squeezils-patch.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+            for source, target in files.items():
+                shutil.copy2(BUILD / source, patch / target)
+                archive.write(patch / target, target)
+            shutil.copy2(legacy, patch / 'd3drm.dll')
+            archive.write(patch / 'd3drm.dll', 'd3drm.dll')
     print(json.dumps({'interfaces': len(manifest), 'methods': sum(map(len, manifest.values())),
                       'build': str(BUILD), 'stage': str(STAGE) if args.stage else None}, indent=2))
 

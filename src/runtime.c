@@ -160,15 +160,16 @@ static BOOL CALLBACK load_real(PINIT_ONCE once, PVOID arg, PVOID *ctx)
     (void)once; (void)ctx;
     InitOnceExecuteOnce(&init_once, initialize, NULL, NULL);
     if (library == 0) {
-        char backend[16] = "";
-        GetEnvironmentVariableA("SQZ_DDRAW_BACKEND", backend, sizeof(backend));
-        snprintf(path, sizeof(path), "%slegacy\\ddraw.dll", directory);
-        if (!strcmp(backend, "system") || GetFileAttributesA(path) == INVALID_FILE_ATTRIBUTES) {
-            UINT length = GetSystemDirectoryA(path, sizeof(path));
-            if (!length || length + 11 >= sizeof(path)) return FALSE;
-            strcat(path, "\\ddraw.dll");
-        }
-    } else snprintf(path, sizeof(path), "%slegacy\\d3drm.dll", directory);
+        UINT length = GetSystemDirectoryA(path, sizeof(path));
+        if (!length || length + 11 >= sizeof(path)) return FALSE;
+        strcat(path, "\\ddraw.dll");
+    } else {
+        /* Normal deployment leaves the game's original RM DLL untouched. The
+         * legacy path is retained solely for the standalone export-shim tests. */
+        snprintf(path, sizeof(path), "%slegacy\\d3drm.dll", directory);
+        if (GetFileAttributesA(path) == INVALID_FILE_ATTRIBUTES)
+            snprintf(path, sizeof(path), "%sd3drm.dll", directory);
+    }
     real_modules[library] = LoadLibraryExA(path, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
     sqz_log("LOAD %s module=%p error=%lu", path, real_modules[library],
             real_modules[library] ? 0 : GetLastError());
@@ -202,7 +203,7 @@ static HRESULT WINAPI create_clipper(DWORD flags, IDirectDrawClipper **out, IUnk
     if (SUCCEEDED(hr) && out) sqz_hook(*out, "IDirectDrawClipper");
     return hr;
 }
-static HRESULT WINAPI create_rm(IDirect3DRM **out)
+HRESULT WINAPI sqz_create_rm(IDirect3DRM **out)
 {
     typedef HRESULT (WINAPI *Function)(IDirect3DRM **);
     HRESULT hr = ((Function)original_export(1, "Direct3DRMCreate"))(out);
@@ -216,7 +217,7 @@ __declspec(dllexport) FARPROC __cdecl sqz_resolve(unsigned library, const char *
     sqz_log("ROUTE %s!%s", library ? "d3drm" : "ddraw", name);
     if (!library && !strcmp(name, "DirectDrawCreate")) return (FARPROC)create_dd;
     if (!library && !strcmp(name, "DirectDrawCreateClipper")) return (FARPROC)create_clipper;
-    if (library && !strcmp(name, "Direct3DRMCreate")) return (FARPROC)create_rm;
+    if (library && !strcmp(name, "Direct3DRMCreate")) return (FARPROC)sqz_create_rm;
     return original_export(library, name);
 }
 

@@ -78,6 +78,8 @@ def generate(sdk, output, system_ddraw, legacy_rm):
                 invocation = f'sqz_cooperative(original, {actual})'
             if name == 'IDirectDraw' and method == 'SetDisplayMode':
                 invocation = f'sqz_display_mode(original, {actual})'
+            if name == 'IDirectDraw' and method == 'GetCaps':
+                invocation = f'sqz_get_caps(original, {actual})'
             if name == 'IDirectDraw' and method == 'CreateSurface':
                 invocation = f'sqz_create_surface(original, {actual})'
             if name == 'IDirectDrawSurface' and method == 'ReleaseDC':

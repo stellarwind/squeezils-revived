@@ -1,8 +1,9 @@
 # Squeezil forwarding runtime
 
-32-bit `ddraw.dll` and `d3drm.dll` entry points route through `sqz-runtime.dll`
-and log calls while the original DirectDraw/Direct3DRM implementations render.
-The optional SDL3 platform path owns a resizable native window and presents a
+The 32-bit `ddraw.dll` shim routes through `sqz-runtime.dll`, which also intercepts
+the game's imported `Direct3DRMCreate` factory. The game's original `d3drm.dll`
+stays in place. Original DirectDraw/Direct3DRM implementations still render.
+The default SDL3 platform path owns a resizable native window and presents a
 fixed-resolution virtual game primary with aspect-correct scaling.
 
 This is an experimental forwarding checkpoint, not a modern GPU renderer.
@@ -21,11 +22,20 @@ under `build/forward` and are not committed. The build pins official SDL 3.4.18
 x86 archives and verifies published SHA-256 digests. Provenance is recorded in
 `third_party/SDL3/source.json`; its license is staged beside SDL3.dll.
 
-`tools/play.ps1 -OriginalWindow` retains original window creation. Both modes
-preserve the supplied DirectDraw compatibility wrapper behind our shim; tests
-select the system DirectDraw backend explicitly. The launch script scopes the
-16-bit-color compatibility setting to the child process. No persistent system
-compatibility settings or original executable bytes are changed.
+`build/forward/squeezils-patch.zip` contains only `ddraw.dll`, `sqz-runtime.dll`,
+`SDL3.dll`, SDL's license and the native `d3drm.dll` dependency. Extract it beside
+the executable. Windows DirectDraw is loaded by absolute system path. The runtime
+reports a 16-bit Z-buffer when its legacy GetCaps depth mask is empty, replacing
+the old compatibility wrapper's depth-initialization fix.
+The separately built `d3drm.dll` proxy and `legacy` directory are used only by
+export-shim tests and are not part of the patch package.
+
+SDL is enabled when `SQZ_SDL_WINDOW` is unset; `SQZ_SDL_WINDOW=0` opts out.
+`tools/play.ps1 -OriginalWindow` also retains original window creation. The launch
+script scopes 16-bit-color compatibility to its child process for development.
+For ordinary launch, users enable Reduced color mode / 16-bit color in the
+executable's Windows Compatibility settings. The runtime does not restart the
+game or change compatibility settings. Original executable bytes stay unchanged.
 
 The source build instruments native vtable entries inside the test process,
 preserving object/vtable addresses, COM identity and original callbacks. There
@@ -48,5 +58,5 @@ Manual gameplay, focus changes and fullscreen transitions need playtesting.
 
 Project evidence and current limitations live in the workspace's
 `../META/FORWARDING_SDL_2026-10-22.md`. Do not replace DLLs while the test game is
-running. The files in `legacy` are private test dependencies, not redistributable
+running. The files in test `legacy` folders are private dependencies, not redistributable
 source artifacts. Detailed per-call tracing has substantial debug overhead.
