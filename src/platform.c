@@ -394,6 +394,7 @@ HRESULT sqz_create_surface(const IDirectDrawVtbl *original, IDirectDraw *ddraw,
 
 static HRESULT present_canvas(void)
 {
+    static BOOL reported_gdi;
     RECT destination, client, source = {0, 0, initial_width, initial_height};
     POINT origin = {0,0};
     DDBLTFX fill = {0};
@@ -407,6 +408,46 @@ static HRESULT present_canvas(void)
     OffsetRect(&destination, origin.x, origin.y);
     OffsetRect(&client, origin.x, origin.y);
     original = sqz_original(native_primary);
+    /* DirectDraw's 16BITCOLOR compatibility stretch becomes very expensive at
+     * desktop resolutions. Keep rendering into the same native canvas, but let
+     * GDI scale its DC directly into the SDL HWND. These are runtime imports,
+     * deliberately bypassing the game's redirected GetDC/ReleaseDC pair. */
+    const IDirectDrawSurfaceVtbl *canvas = sqz_original(virtual_primary);
+    HDC source_dc = NULL, target_dc = NULL;
+    presenting = TRUE;
+    hr = canvas->GetDC(virtual_primary,&source_dc);
+    if (SUCCEEDED(hr)) target_dc = GetDC(game_hwnd);
+    if (target_dc) {
+        RECT fitted = content_rect(), local = {0};
+        GetClientRect(game_hwnd,&local);
+        SetStretchBltMode(target_dc,COLORONCOLOR);
+        BOOL copied = StretchBlt(target_dc,fitted.left,fitted.top,
+                                fitted.right-fitted.left,fitted.bottom-fitted.top,
+                                source_dc,0,0,initial_width,initial_height,SRCCOPY);
+        if (copied) {
+            RECT bars[] = {{0,0,local.right,fitted.top},
+                           {0,fitted.bottom,local.right,local.bottom},
+                           {0,fitted.top,fitted.left,fitted.bottom},
+                           {fitted.right,fitted.top,local.right,fitted.bottom}};
+            for (unsigned i=0; i<sizeof(bars)/sizeof(bars[0]); ++i)
+                if (bars[i].right>bars[i].left && bars[i].bottom>bars[i].top)
+                    FillRect(target_dc,&bars[i],GetStockObject(BLACK_BRUSH));
+        }
+        ReleaseDC(game_hwnd,target_dc);
+        hr = canvas->ReleaseDC(virtual_primary,source_dc);
+        presenting = FALSE;
+        if (copied && SUCCEEDED(hr)) {
+            if (!reported_gdi) {
+                sqz_log("SDL PRESENT backend=GDI (native canvas; DirectDraw fallback)");
+                reported_gdi = TRUE;
+            }
+            return DD_OK;
+        }
+    } else {
+        if (source_dc) canvas->ReleaseDC(virtual_primary,source_dc);
+        presenting = FALSE;
+    }
+    sqz_log("SDL PRESENT GDI unavailable; falling back to DirectDraw");
     if (refresh_clipping) {
         IDirectDrawClipper *clipper;
         if (SUCCEEDED(original->GetClipper(native_primary,&clipper))) {

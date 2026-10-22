@@ -61,7 +61,8 @@ window_trace = window_logs[-1].read_text()
 assert 'GDI CANVAS acquire' in window_trace and 'depth=2' in window_trace
 assert window_trace.count('SDL REPAINT hr=00000000') >= 3
 assert window_trace.index('GDI CANVAS release', window_trace.index('depth=2')) < window_trace.index('SDL REPAINT')
-assert 'SDL CLIPPER refresh=00000000' in window_trace
+assert 'SDL PRESENT backend=GDI' in window_trace
+assert 'SDL PRESENT GDI unavailable' not in window_trace
 result = {'probe_exit': probe.returncode, 'log': str(logs[-1]), 'lines': len(text.splitlines()),
           'control_exit': baseline.returncode, 'window_probe_exit': window.returncode,
           'required_methods': required, 'coverage_gaps': 0, 'export_names_and_ordinals_match': True,
