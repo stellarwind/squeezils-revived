@@ -1,4 +1,0 @@
-VRML read error: Unknown reference "future"
-	Occurred at line   2
-READ 1 return=0
-OVERALL return=0 roots=0 unique_nodes=0

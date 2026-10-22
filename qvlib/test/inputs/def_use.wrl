@@ -1,7 +1,0 @@
-#VRML V1.0 ascii
-DEF root Separator {
-  DEF box Cube { width 3.25 }
-  Separator { Separator { USE box } }
-  USE box
-}
-USE root

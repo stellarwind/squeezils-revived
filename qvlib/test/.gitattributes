@@ -1,3 +1,0 @@
-inputs/sgi/*.wrl -text -whitespace
-golden/*.txt text eol=lf
-*.sh text eol=lf

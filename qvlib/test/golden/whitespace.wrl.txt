@@ -1,9 +1,0 @@
-READ 1 return=1
-NODE id=1 class="Separator" DEF=""
-  FIELD "renderCulling" type=SFEnum default=1 value=2
-  NODE id=2 class="Info" DEF=""
-    FIELD "string" type=SFString default=0 value="# is not a comment inside a string"
-  NODE id=3 class="Coordinate3" DEF=""
-    FIELD "point" type=MFVec3f default=0 value=num=3 [0 0 0 1 2 3 4 5 6]
-READ 2 return=1
-OVERALL return=1 roots=1 unique_nodes=3

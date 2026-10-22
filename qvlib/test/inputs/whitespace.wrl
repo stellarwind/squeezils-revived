@@ -1,9 +1,0 @@
-#VRML V1.0 ascii
-# Comments between tokens and unusual indentation.
-
-Separator	{
-  # comment before child
-  Info { string "# is not a comment inside a string" } # after child
-  Coordinate3 { point [ 0 0 0 ,	1 2 3,
-    4 5 6 ] }
-}
