@@ -141,3 +141,13 @@ inventory. The loader 0x439b70 creates RegionSimulation (0x416e50), even when
 loading a save written inside a level: no mid-level position is serialized.
 The generator enumerates LocationList place definitions and validates each
 Destination's PLACE.INI/LevelFile before writing short alphanumeric filenames.
+
+Save creation: the original dialog's helper 0x406dc0 calls CreateFileA with
+CREATE_NEW and handles overwrite confirmation itself; it never creates the save
+directory. Staging now preserves empty archive directories, including SQZ/SAVE.
+The EXE's CreateFileA import also retries a failed save creation after creating
+that exact directory beside the executable, only for ERROR_PATH_NOT_FOUND.
+Existing-file and access-denied errors retain the original behavior. The runtime
+does not redirect saves or modify their format. The save compatibility fixture
+checks creation from a missing directory, saved contents, existing-file protection,
+and an unrelated missing path.

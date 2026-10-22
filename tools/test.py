@@ -6,6 +6,12 @@ import subprocess
 from build import ROOT, BUILD, STAGE
 
 gcc = shutil.which('gcc')
+save_probe = BUILD / 'save-compat-test'
+save_probe.mkdir(exist_ok=True)
+subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
+                str(ROOT / 'tests/save_compat.c'), str(ROOT / 'src/save_compat.c'),
+                '-o', str(save_probe / 'save_compat.exe')], check=True)
+subprocess.run([str(save_probe / 'save_compat.exe')], check=True, timeout=10)
 for fixed in (False, True):
     executable = BUILD / ('color-compat-fixed.exe' if fixed else 'color-compat-original.exe')
     flags = ['-DSQZ_FIX_16BPP_RGB_INDEX_REMAP', '-DSQZ_FIX_16BPP_DESKTOP_GATE', '-DSQZ_FIX_16BPP_COLORKEY_MASK'] if fixed else []
@@ -18,11 +24,11 @@ subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(RO
 subprocess.run([str(BUILD / 'geometry.exe')], check=True, timeout=10)
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
                 '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/surface_recovery.c'),
-                str(ROOT / 'src/platform.c'), '-luser32', '-lgdi32', '-o', str(BUILD / 'surface_recovery.exe')], check=True)
+                str(ROOT / 'src/platform.c'), str(ROOT / 'src/save_compat.c'), '-luser32', '-lgdi32', '-o', str(BUILD / 'surface_recovery.exe')], check=True)
 subprocess.run([str(BUILD / 'surface_recovery.exe')], check=True, timeout=10)
 subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
                 '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/canvas_dpi.c'),
-                '-luser32', '-lgdi32', '-o', str(BUILD / 'canvas_dpi.exe')], check=True)
+                str(ROOT / 'src/save_compat.c'), '-luser32', '-lgdi32', '-o', str(BUILD / 'canvas_dpi.exe')], check=True)
 subprocess.run([str(BUILD / 'canvas_dpi.exe')], check=True, timeout=10)
 PROBE = BUILD / 'probe'
 PROBE.mkdir(exist_ok=True)

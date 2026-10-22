@@ -2,6 +2,7 @@
 #define SDL_MAIN_HANDLED
 #include "runtime.h"
 #include "geometry.h"
+#include "save_compat.h"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <string.h>
@@ -435,7 +436,9 @@ void sqz_platform_install(void)
         original = (void **)&save;                                                                 \
     }
             static void *native_rm_factory;
+            static void *native_file_create;
             ROUTE("Direct3DRMCreate", sqz_create_rm, native_rm_factory)
+            ROUTE("CreateFileA", sqz_save_create_file, native_file_create)
             if (enabled)
             {
                 ROUTE("CreateWindowExA", window_create, native_create)
