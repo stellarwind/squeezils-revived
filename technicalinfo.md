@@ -151,3 +151,11 @@ Existing-file and access-denied errors retain the original behavior. The runtime
 does not redirect saves or modify their format. The save compatibility fixture
 checks creation from a missing directory, saved contents, existing-file protection,
 and an unrelated missing path.
+
+Level transitions: renderer helpers 0x4764c0/0x4765d0 rewrite window styles and
+call SetWindowPos to center/resize the original window. SDL-window EXE imports
+preserve the native position/size and minimize/maximize style bits instead.
+ShowWindow(SW_SHOWNORMAL) becomes SW_SHOW when already maximized. SDL and Windows
+continue to handle user resizing and title-bar actions directly; the logical
+render canvas still follows the game's display-mode dimensions. Other windows
+and SDL-disabled runs retain their native API behavior.

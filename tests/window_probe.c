@@ -60,6 +60,9 @@ int main(void)
     hwnd = CreateWindowExA(0,"Squeezils","Hidden SDL forwarding test",WS_OVERLAPPEDWINDOW,
                            0,0,640,480,NULL,NULL,instance,NULL);
     assert(hwnd);
+    BOOL (WINAPI *user_position)(HWND, HWND, int, int, int, int, UINT) =
+        (void *)GetProcAddress(GetModuleHandleA("user32.dll"), "SetWindowPos");
+    assert(user_position);
     SetCursor(NULL);
     assert(GetCursor() == LoadCursorA(NULL,IDC_ARROW));
     assert(GetWindowLongA(hwnd,GWL_STYLE) & WS_THICKFRAME);
@@ -117,10 +120,22 @@ int main(void)
     unsigned ink = timer_ink(primary);
     assert(ink > 0);
     messages();
-    assert(SetWindowPos(hwnd,NULL,0,0,900,700,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
+    assert(user_position(hwnd,NULL,0,0,900,700,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
     messages();
     assert(GetClientRect(hwnd,&rect) && rect.right == 640 && rect.bottom == 480);
     assert(GetWindowRect(hwnd,&rect) && rect.right-rect.left == 900 && rect.bottom-rect.top == 700);
+    RECT placement = rect;
+    /* Original renderer 0x4764c0/0x4765d0 repeats this at level changes. */
+    LONG style = GetWindowLongA(hwnd,GWL_STYLE);
+    SetWindowLongA(hwnd,GWL_STYLE,style & ~WS_OVERLAPPEDWINDOW);
+    assert(SetWindowPos(hwnd,NULL,0,0,640,480,SWP_NOZORDER|SWP_FRAMECHANGED));
+    assert(GetWindowRect(hwnd,&rect) && EqualRect(&rect,&placement));
+    /* Exercise maximize-state preservation without showing the fixture. */
+    SetWindowLongW(hwnd,GWL_STYLE,style | WS_MAXIMIZE);
+    assert(IsZoomed(hwnd));
+    SetWindowLongA(hwnd,GWL_STYLE,style);
+    assert(IsZoomed(hwnd));
+    SetWindowLongW(hwnd,GWL_STYLE,style);
     assert(SUCCEEDED(IDirectDrawSurface_GetSurfaceDesc(primary,&actual)));
     assert(actual.dwWidth == 640 && actual.dwHeight == 480);
     assert(pixel(primary,20,20) == 0xff && pixel(primary,0,0) == 0);
@@ -137,7 +152,7 @@ int main(void)
                 assert(GetMonitorInfoA(MonitorFromWindow(hwnd,MONITOR_DEFAULTTONEAREST),&monitor));
                 bounds = monitor.rcMonitor;
             } else AdjustWindowRect(&bounds,GetWindowLongA(hwnd,GWL_STYLE),FALSE);
-            assert(SetWindowPos(hwnd,NULL,0,0,bounds.right-bounds.left,bounds.bottom-bounds.top,
+            assert(user_position(hwnd,NULL,0,0,bounds.right-bounds.left,bounds.bottom-bounds.top,
                                 SWP_NOZORDER|SWP_NOACTIVATE));
             messages();
             QueryPerformanceCounter(&start);
@@ -167,7 +182,7 @@ int main(void)
             assert(native_release(hwnd,display_dc));
         }
     }
-    assert(SetWindowPos(hwnd,NULL,0,0,640,480,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
+    assert(user_position(hwnd,NULL,0,0,640,480,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
     messages();
     assert(timer_ink(primary) == ink);
     assert(InvalidateRect(hwnd,NULL,FALSE));

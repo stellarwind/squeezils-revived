@@ -32,6 +32,8 @@ static BOOL(WINAPI *native_destroy)(HWND);
 static LRESULT(WINAPI *native_default)(HWND, UINT, WPARAM, LPARAM);
 static BOOL(WINAPI *native_peek)(MSG *, HWND, UINT, UINT, UINT);
 static LONG(WINAPI *native_style)(HWND, int, LONG);
+static BOOL(WINAPI *native_position)(HWND, HWND, int, int, int, int, UINT);
+static BOOL(WINAPI *native_show)(HWND, int);
 static BOOL(WINAPI *native_client_rect)(HWND, RECT *);
 static BOOL(WINAPI *native_to_screen)(HWND, POINT *);
 static BOOL(WINAPI *native_to_client)(HWND, POINT *);
@@ -372,8 +374,31 @@ static BOOL WINAPI window_destroy(HWND hwnd)
 static LONG WINAPI window_style(HWND hwnd, int index, LONG value)
 {
     if (sqz_platform_window(hwnd) && index == GWL_STYLE)
+    {
         value = (value & ~WS_POPUP) | WS_OVERLAPPEDWINDOW;
+        /* Renderer setup rewrites its old fullscreen style on every level.
+         * Minimize/maximize belong to the user's native window placement. */
+        const LONG placement = WS_MAXIMIZE | WS_MINIMIZE;
+        value = (value & ~placement) | (GetWindowLongA(hwnd, GWL_STYLE) & placement);
+    }
     return native_style(hwnd, index, value);
+}
+
+static BOOL WINAPI window_position(HWND hwnd, HWND after, int x, int y, int width, int height,
+                                   UINT flags)
+{
+    /* Only the EXE import is routed here. SDL and Windows still position and
+     * resize the window directly in response to border/title-bar actions. */
+    if (sqz_platform_window(hwnd))
+        flags |= SWP_NOMOVE | SWP_NOSIZE;
+    return native_position(hwnd, after, x, y, width, height, flags);
+}
+
+static BOOL WINAPI window_show(HWND hwnd, int command)
+{
+    if (sqz_platform_window(hwnd) && command == SW_SHOWNORMAL && IsZoomed(hwnd))
+        command = SW_SHOW;
+    return native_show(hwnd, command);
 }
 
 static BOOL WINAPI window_peek(MSG *message, HWND hwnd, UINT low, UINT high, UINT flags)
@@ -446,6 +471,8 @@ void sqz_platform_install(void)
                 ROUTE("DefWindowProcA", window_default, native_default)
                 ROUTE("PeekMessageA", window_peek, native_peek)
                 ROUTE("SetWindowLongA", window_style, native_style)
+                ROUTE("SetWindowPos", window_position, native_position)
+                ROUTE("ShowWindow", window_show, native_show)
                 ROUTE("GetClientRect", window_client_rect, native_client_rect)
                 ROUTE("ClientToScreen", window_to_screen, native_to_screen)
                 ROUTE("ScreenToClient", window_to_client, native_to_client)

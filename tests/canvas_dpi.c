@@ -23,6 +23,13 @@ HRESULT WINAPI sqz_create_rm(IDirect3DRM **out)
 }
 
 static int host_dpi;
+static int show_command;
+static BOOL WINAPI host_show(HWND hwnd, int command)
+{
+    (void)hwnd;
+    show_command = command;
+    return FALSE;
+}
 static int WINAPI host_caps(HDC dc, int index)
 {
     (void)dc;
@@ -40,6 +47,18 @@ int main(void)
     game_hwnd =
         CreateWindowExA(0, "STATIC", "DPI test", WS_POPUP, 0, 0, 64, 64, NULL, NULL, NULL, NULL);
     assert(game_hwnd);
+    native_show = host_show;
+    LONG original_style = GetWindowLongA(game_hwnd, GWL_STYLE);
+    SetWindowLongW(game_hwnd, GWL_STYLE, original_style | WS_MAXIMIZE);
+    window_show(game_hwnd, SW_SHOWNORMAL);
+    assert(show_command == SW_SHOW);
+    window_show(NULL, SW_SHOWNORMAL);
+    assert(show_command == SW_SHOWNORMAL);
+    window_show(game_hwnd, SW_HIDE);
+    assert(show_command == SW_HIDE);
+    SetWindowLongW(game_hwnd, GWL_STYLE, original_style);
+    window_show(game_hwnd, SW_SHOWNORMAL);
+    assert(show_command == SW_SHOWNORMAL);
     HDC early_window_dc = GetDC(game_hwnd);
     assert(early_window_dc);
     SIZE baseline = {0};
