@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import tempfile
 import zipfile
 from build_config import (ROOT, BUILD, GAME_ARCHIVE, add_game_files_argument, require_files,
                           toolchain, system_ddraw)
@@ -54,6 +55,11 @@ def main():
                   + [BUILD / 'patch' / name for name in ('ddraw.dll', 'sqz-runtime.dll', 'SDL3.dll', 'd3drm.dll')],
                   'Build the patch first: python tools/build.py --game-files "' + str(game_files) + '"')
     original_exe, nut_model, spit_model = prepare_assets(game_files)
+    input_probe = Path(tempfile.mkdtemp(prefix='input-config-test-', dir=BUILD))
+    subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
+                    str(ROOT / 'tests/input_config.c'), str(ROOT / 'src/input_config.c'),
+                    '-o', str(input_probe / 'input_config.exe')], check=True)
+    subprocess.run([str(input_probe / 'input_config.exe'), str(original_exe)], check=True, timeout=10)
     subprocess.run([gcc, '-m32', '-std=c11', '-O2', '-Wall', '-Wextra', '-I', str(ROOT / 'src'),
                     '-I', str(BUILD / 'sdl-headers/include'), str(ROOT / 'tests/frame_pixels.c'), str(ROOT / 'src/scene_cache.c'),
                     '-ldxguid', '-lgdi32', '-o', str(BUILD / 'frame_pixels.exe')], check=True)

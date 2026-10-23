@@ -240,6 +240,7 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
         module = instance;
         /* Memory-only verified code edits, before WinMain's desktop-depth gate. */
         sqz_color_install();
+        sqz_input_install();
         sqz_platform_install();
     }
     return TRUE;

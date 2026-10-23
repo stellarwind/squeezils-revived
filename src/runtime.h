@@ -19,6 +19,7 @@ extern const SqzInterface sqz_interfaces[];
 extern const size_t sqz_interface_count;
 int sqz_color_patch_image(BYTE *, size_t, BOOL, BOOL);
 void sqz_color_install(void);
+void sqz_input_install(void);
 int sqz_warp_patch_image(BYTE *, size_t);
 HRESULT sqz_warp_create_surface(const IDirectDrawVtbl *, IDirectDraw *, DDSURFACEDESC *,
                                 IDirectDrawSurface **, IUnknown *, void *);
