@@ -8,12 +8,16 @@ fixed-resolution virtual game primary with aspect-correct scaling.
 
 The retained scene is rendered by SDL3 GPU / Direct3D12 by default.
 
-Requirements: Windows, Python 3, and i686-w64-mingw32 GCC on PATH. Put the supplied
-game ZIP and original DLLs in `../SqueezilsGameFiles` relative to this checkout.
+Requirements: Windows, Python 3.9+, and i686-w64-mingw32 GCC with DirectX headers
+on PATH. Put the native `d3drm.dll` in `../SqueezilsGameFiles` relative to this
+checkout. For tests and staging, also supply the original
+`Squeezils_Win_EN_v042b_updated.zip` there. Both Python commands accept
+`--game-files PATH` for a different input directory. Tests do not require staging.
 
 ```powershell
-python tools/build.py --stage --sdl
+python tools/build.py
 python tools/test.py
+python tools/build.py --stage
 pwsh -File tools/play.ps1
 ```
 

@@ -85,8 +85,9 @@ static unsigned ink_count(IDirectDrawSurface *surface)
                 ++ink;
     return ink;
 }
-int main(void)
+int main(int argc, char **argv)
 {
+    assert(argc == 3); /* Original nut and spit model paths supplied by test.py. */
     IDirectDraw *dd;
     IDirectDrawSurface *target;
     IDirect3DRM *rm;
@@ -232,7 +233,7 @@ int main(void)
     back_mesh->lpVtbl->Release(back_mesh);
 
     assert(SUCCEEDED(model->lpVtbl->DeleteVisual(model, (IDirect3DRMVisual *)back_mesh)));
-    const char *assets[] = {"../game/SQZ/GOODIES/NUT1.SQG", "../game/SQZ/GOODIES/SPIT.SQG"};
+    const char *assets[] = {argv[1], argv[2]};
     for (unsigned i = 0; i < 2; ++i)
     {
         IDirect3DRMMesh *goodie = load_goodie(rm, assets[i]);
