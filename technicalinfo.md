@@ -23,7 +23,7 @@ x86 archives and verifies published SHA-256 digests. Provenance is recorded in
 `third_party/SDL3/source.json`; its license is staged beside SDL3.dll.
 
 `build/forward/squeezils-patch.zip` contains only `ddraw.dll`, `sqz-runtime.dll`,
-`SDL3.dll`, SDL's license and the native `d3drm.dll` dependency. Extract it beside
+`SDL3.dll`, SDL's license, the native `d3drm.dll` dependency and `play-native.bat`. Extract it beside
 the executable. Windows DirectDraw is loaded by absolute system path. The runtime
 reports a 16-bit Z-buffer when its legacy GetCaps depth mask is empty, replacing
 the old compatibility wrapper's depth-initialization fix.

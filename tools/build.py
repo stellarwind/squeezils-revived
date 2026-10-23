@@ -80,6 +80,7 @@ def main():
         shutil.copy2(legacy, STAGE / 'd3drm.dll')
         for label in ('ddraw', 'sqz-runtime'):
             shutil.copy2(BUILD / (label + '.dll'), STAGE / (label + '.dll'))
+        shutil.copy2(ROOT / 'tools/play-native.bat', STAGE / 'play-native.bat')
     if args.sdl:
         archive = BUILD / 'SDL3-3.4.18-win32-x86.zip'
         if not archive.exists():
@@ -109,6 +110,8 @@ def main():
                 archive.write(patch / target, target)
             shutil.copy2(legacy, patch / 'd3drm.dll')
             archive.write(patch / 'd3drm.dll', 'd3drm.dll')
+            shutil.copy2(ROOT / 'tools/play-native.bat', patch / 'play-native.bat')
+            archive.write(patch / 'play-native.bat', 'play-native.bat')
         with zipfile.ZipFile(BUILD / 'squeezils-diagnostic-patch.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
             for path in [*(patch / target for target in files.values()), patch / 'd3drm.dll']:
                 archive.write(path, path.name)
