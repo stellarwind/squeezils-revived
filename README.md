@@ -23,9 +23,6 @@ aligned mouse input and fixes for HUD text.
 
 Game supports internal rendering via SDL3 GPU or native D3D2 and Retained Mode paths.
 
-Build instructions, DLL routing and test details are in
-[technicalinfo.md](technicalinfo.md).
-
 ## Screenshots
 
 <table>
@@ -101,8 +98,7 @@ python tools/build.py --stage  # Also prepare build/forward/game/
 Tests can alternatively read an extracted `SQZ.EXE` and `SQZ/GOODIES/` from the
 input directory. Both scripts accept `--game-files "C:\path\to\game-files"`
 to use a different location. Staging keeps existing game files and saves while
-updating the patch DLLs. See [technicalinfo.md](technicalinfo.md) for runtime
-options and test coverage.
+updating the patch DLLs.
 
 ## Control mappings
 
