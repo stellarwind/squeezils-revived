@@ -110,8 +110,6 @@ def main():
                 archive.write(patch / target, target)
             shutil.copy2(legacy, patch / 'd3drm.dll')
             archive.write(patch / 'd3drm.dll', 'd3drm.dll')
-            shutil.copy2(ROOT / 'tools/play-native.bat', patch / 'play-native.bat')
-            archive.write(patch / 'play-native.bat', 'play-native.bat')
         with zipfile.ZipFile(BUILD / 'squeezils-diagnostic-patch.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
             for path in [*(patch / target for target in files.values()), patch / 'd3drm.dll']:
                 archive.write(path, path.name)
@@ -120,7 +118,6 @@ def main():
         with zipfile.ZipFile(BUILD / 'squeezils-sdlgpu-experiment.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
             for path in [*(patch / target for target in files.values()), patch / 'd3drm.dll']:
                 archive.write(path, path.name)
-            archive.write(ROOT / 'tools/play-gpu.cmd', 'play-gpu.cmd')
     print(json.dumps({'interfaces': len(manifest), 'methods': sum(map(len, manifest.values())),
                       'build': str(BUILD), 'stage': str(STAGE) if args.stage else None}, indent=2))
 

@@ -14,30 +14,6 @@ static void install_geometry_tracking(void *object, BOOL builder)
 {
     sqz_hook(object, builder ? "IDirect3DRMMeshBuilder" : "IDirect3DRMMesh");
 }
-static void report(BOOL ok, const SceneData *scene, const char *detail)
-{
-    char path[MAX_PATH];
-    HMODULE module = NULL;
-    if (!GetModuleHandleExA(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS |
-                                GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-                            (LPCSTR)sqz_gpu_render, &module))
-        return;
-    GetModuleFileNameA(module, path, sizeof(path));
-    char *slash = strrchr(path, '\\');
-    if (!slash)
-        return;
-    snprintf(slash + 1, sizeof(path) - (size_t)(slash + 1 - path), "squeezils-sdlgpu-result.txt");
-    FILE *file = fopen(path, "w");
-    if (!file)
-        return;
-    fprintf(file,
-            "SDL3 GPU scene renderer\nresult=%s\nframes=%u meshes=%u decals=%u triangles=%lu "
-            "lights=%lu\n%s\n",
-            ok ? "rendered" : "failed", scene->frames, scene->meshes, scene->decals,
-            (unsigned long)(scene->count + scene->cached_vertices) / 3,
-            (unsigned long)scene->light_count, detail);
-    fclose(file);
-}
 BOOL sqz_gpu_enabled(void)
 {
     char value[32] = "";
@@ -112,14 +88,10 @@ HRESULT sqz_gpu_render(const IDirect3DRMViewportVtbl *native, IDirect3DRMViewpor
                 scene.frames, scene.meshes, scene.decals,
                 (unsigned long)(scene.count + scene.cached_vertices) / 3);
         sqz_platform_gpu_title();
-        report(TRUE, &scene,
-               "Original RM objects retained; native Viewport::Render bypassed. Gouraud "
-               "ambient/diffuse lighting; synchronous GPU readback.");
         marked = TRUE;
     }
     if (!ok && !shown)
     {
-        report(FALSE, &scene, error);
         MessageBoxA(NULL, error, "SDL3 GPU renderer failed", MB_OK | MB_ICONERROR);
         shown = TRUE;
     }
