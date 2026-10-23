@@ -7,7 +7,6 @@
 #include <string.h>
 #include <stdint.h>
 
-void sqz_log(const char *format, ...) { (void)format; }
 int sqz_warp_patch_image(BYTE *base,size_t size) { (void)base; (void)size; return 0; }
 static int depth;
 static DWORD pixel;

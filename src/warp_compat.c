@@ -79,8 +79,6 @@ HRESULT sqz_warp_create_surface(const IDirectDrawVtbl *original, IDirectDraw *dd
     if (warp && SUCCEEDED(result) && out)
     {
         warp_surface = *out;
-        sqz_log("DIAG WARP rgb565 surface=%p size=%lux%lu", warp_surface, desc->dwWidth,
-                desc->dwHeight);
     }
     return result;
 }

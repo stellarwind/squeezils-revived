@@ -17,7 +17,7 @@ python tools/test.py
 pwsh -File tools/play.ps1
 ```
 
-Build output, downloaded binaries, extracted assets and per-process traces are
+Build output, downloaded binaries and extracted assets are
 under `build/forward` and are not committed. The build pins official SDL 3.4.18
 x86 archives and verifies published SHA-256 digests. Provenance is recorded in
 `third_party/SDL3/source.json`; its license is staged beside SDL3.dll.
@@ -39,8 +39,7 @@ The runtime does not restart the game. The original executable on disk stays unc
 
 The source build instruments native vtable entries inside the test process,
 preserving object/vtable addresses, COM identity and original callbacks. There
-is no GPU swapchain. Unknown interfaces and failed
-surface recovery remain visible in the trace rather than silently succeeding.
+is no GPU swapchain. Failed surface recovery returns the native error.
 
 Two narrowly scoped color fixes are enabled at build time with
 `SQZ_FIX_16BPP_RGB_INDEX_REMAP` and `SQZ_FIX_16BPP_DESKTOP_GATE`. Whole-function
@@ -50,7 +49,6 @@ path only for indexed 8bpp images. The desktop gate accepts depths up to 32
 without falsifying GetDeviceCaps/GetDisplayMode or the actual surface formats.
 Set `SQZ_FIX_RGB_REMAP=0` to compare with the original remapping while retaining
 32bpp startup acceptance; `SQZ_ALLOW_32BPP=0` preserves the original depth gate.
-Diagnostic logs report installation status and actual image/surface formats.
 
 The 32bpp build also enables `SQZ_FIX_16BPP_COLORKEY_MASK` for the original
 HUD key helper's shift-by-32 bug, and `SQZ_FIX_16BPP_WARP_BRIDGE` for the CPU
@@ -75,9 +73,7 @@ quality are respected. Decals remain unlit. Specular, fog, material inheritance,
 translucent sorting and exact RM render-quality equivalence remain unimplemented.
 
 Run `tools/play.ps1` locally or launch the patched SQZ.EXE directly. A usable SDL
-Direct3D12 backend and Windows d3dcompiler_47.dll are required. A small first-scene
-result file distinguishes successful replacement from initialization/extraction
-failure. Unsupported visuals fail explicitly. The Windows 11 scene test has been
+Direct3D12 backend and Windows d3dcompiler_47.dll are required. Unsupported visuals and renderer initialization/extraction failures are reported explicitly. The Windows 11 scene test has been
 confirmed by the user; complete game coverage remains to be tested.
 
 Tests cover native forwarding vs original DLLs, export names/ordinals, scene and
@@ -89,16 +85,12 @@ events schedule cached redraws without requiring another gameplay/UI action.
 The completed canvas is scaled through GDI into the SDL HWND to avoid the slow
 DirectDraw fullscreen stretch under 16-bit compatibility. Native DD/RM still
 render the canvas; the DirectDraw presentation path remains a failure fallback.
-Set `SQZ_PRESENT_BENCH=1` with the same launch environment to run the optional
-visible size-comparison benchmark in `build/forward/probe/window_probe.exe`
-after compiling it with `tools/test.py`.
 Manual gameplay, focus changes and fullscreen transitions need playtesting.
 
 Project evidence and current limitations live in the workspace's
 `../META/FORWARDING_SDL_2026-10-22.md`. Do not replace DLLs while the test game is
 running. The files in test `legacy` folders are private dependencies, not redistributable
-source artifacts. Normal launches do not create logs. Set `SQZ_TRACE=1` only
-when diagnosing a problem; detailed per-call tracing has substantial overhead.
+source artifacts. Normal launches do not create logs.
 
 Native color-source verification: the original RM DLL ignores per-vertex source
 colors when rendering these Mesh groups and uses SetGroupColor instead. The GPU
@@ -171,15 +163,6 @@ scene root; its maximum position error against direct native point transforms is
 below 0.0002 world units (observed 0.0000551). The initial reproduction with the
 old unit-point method measured 0.02861691 world units on the X axis alone.
 
-Optional CPU stage profiling: launch with SQZ_GPU_PROFILE=1 to aggregate Render
-stages during process seconds 15 through 25. The runtime writes one
-gpu-profile-PID.json beside the EXE after that interval. Normal launches disable
-the profiler. Stages separate extraction, CPU background conversion/upload,
-texture resolution, vertex setup, draw/download command encoding, submission,
-existing fence wait, readback mapping and CPU output conversion. Command encoding
-is CPU time; fence wait includes outstanding GPU work and is not a GPU timestamp.
-The original HUD drawn after Viewport::Render is outside these profiler stages.
-
 Texture caching compares packed source rows and indexed palettes with retained
 byte snapshots before allocating/converting RGBA. Format masks, dimensions,
 color-key and transparency changes invalidate the cache too. Each texture/decal
@@ -187,8 +170,7 @@ pair is resolved once per draw, so repeated batches reuse its binding. Unchanged
 textures retain their GPU allocation without conversion or upload. The source
 scan remains necessary because native image buffers can be edited directly;
 this does not yet rely on dirty notifications. Snapshots and native references
-are released with the GPU cache. Profiler reports include source-check,
-conversion and reuse counts. Tests cover warm/shared bindings and live pixel,
+are released with the GPU cache. Tests cover warm/shared bindings and live pixel,
 palette, color-key and transparency edits through the native RM image.
 
 The scene color target and its pipelines use BGRA8. Standard 32-bit DirectDraw

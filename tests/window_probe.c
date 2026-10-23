@@ -140,48 +140,6 @@ int main(void)
     assert(actual.dwWidth == 640 && actual.dwHeight == 480);
     assert(pixel(primary,20,20) == 0xff && pixel(primary,0,0) == 0);
     assert(timer_ink(primary) == ink);
-    /* Optional visible benchmark: hidden windows do not exercise screen copies. */
-    if (getenv("SQZ_PRESENT_BENCH")) {
-        LARGE_INTEGER frequency, start, end;
-        QueryPerformanceFrequency(&frequency);
-        ShowWindow(hwnd,SW_SHOWNOACTIVATE);
-        for (unsigned size=0; size<2; ++size) {
-            RECT bounds = {0,0,640,480};
-            if (size) {
-                MONITORINFO monitor = {.cbSize=sizeof(monitor)};
-                assert(GetMonitorInfoA(MonitorFromWindow(hwnd,MONITOR_DEFAULTTONEAREST),&monitor));
-                bounds = monitor.rcMonitor;
-            } else AdjustWindowRect(&bounds,GetWindowLongA(hwnd,GWL_STYLE),FALSE);
-            assert(user_position(hwnd,NULL,0,0,bounds.right-bounds.left,bounds.bottom-bounds.top,
-                                SWP_NOZORDER|SWP_NOACTIVATE));
-            messages();
-            QueryPerformanceCounter(&start);
-            for (unsigned frame=0; frame<60; ++frame) {
-                assert(SUCCEEDED(IDirectDrawSurface_Blt(primary,&patch,NULL,NULL,DDBLT_COLORFILL|DDBLT_WAIT,&fill)));
-                messages();
-            }
-            QueryPerformanceCounter(&end);
-            printf("BENCH %s: %.3f ms/frame\n",size ? "monitor-size" : "640x480",
-                   1000.0*(end.QuadPart-start.QuadPart)/frequency.QuadPart/60);
-            /* Check actual displayed pixels, using unredirected HWND APIs. */
-            HMODULE user = GetModuleHandleA("user32.dll");
-            HDC (WINAPI *native_dc)(HWND) = (void *)GetProcAddress(user,"GetDC");
-            int (WINAPI *native_release)(HWND,HDC) = (void *)GetProcAddress(user,"ReleaseDC");
-            BOOL (WINAPI *native_rect)(HWND,RECT *) = (void *)GetProcAddress(user,"GetClientRect");
-            RECT physical;
-            assert(native_rect(hwnd,&physical));
-            RECT fitted = sqz_fit(physical.right,physical.bottom,640,480);
-            POINT point = sqz_to_native((POINT){20,20},fitted,640,480);
-            HDC canvas_dc, display_dc = native_dc(hwnd);
-            assert(display_dc);
-            assert(SUCCEEDED(IDirectDrawSurface_GetDC(primary,&canvas_dc)));
-            COLORREF expected = GetPixel(canvas_dc,20,20);
-            assert(expected != CLR_INVALID);
-            assert(GetPixel(display_dc,point.x,point.y) == expected);
-            assert(SUCCEEDED(IDirectDrawSurface_ReleaseDC(primary,canvas_dc)));
-            assert(native_release(hwnd,display_dc));
-        }
-    }
     assert(user_position(hwnd,NULL,0,0,640,480,SWP_NOMOVE|SWP_NOZORDER|SWP_NOACTIVATE));
     messages();
     assert(timer_ink(primary) == ink);

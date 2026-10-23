@@ -5,8 +5,6 @@
 
 static void *remap_continue __attribute__((used));
 static void *remap_skip __attribute__((used));
-static int color_status;
-static int warp_status;
 
 /* At 0x415569: ESI is D3DRMIMAGE*, EDI is the optional transparent RGB.
  * Keep all registers/stack intact. Only indexed 8bpp needs index swapping. */
@@ -118,17 +116,7 @@ void sqz_color_install(void)
         return;
     GetEnvironmentVariableA("SQZ_FIX_RGB_REMAP", rgb, sizeof(rgb));
     GetEnvironmentVariableA("SQZ_ALLOW_32BPP", desktop, sizeof(desktop));
-    color_status = sqz_color_patch_image(base, nt->OptionalHeader.SizeOfImage,
+    sqz_color_patch_image(base, nt->OptionalHeader.SizeOfImage,
                                          strcmp(rgb, "0") != 0, strcmp(desktop, "0") != 0);
-    warp_status = sqz_warp_patch_image(base, nt->OptionalHeader.SizeOfImage);
-}
-
-void sqz_color_log(void)
-{
-    sqz_log("DIAG WARP_PATCH status=%d", warp_status);
-    sqz_log("DIAG COLOR_PATCH status=%d rgb_remap_guard=%d desktop_32bpp=%d hud_key=%d "
-            "(negative=unsupported-image-or-write-failure)",
-            color_status, color_status >= 0 && (color_status & 1) != 0,
-            color_status >= 0 && (color_status & 2) != 0,
-            color_status >= 0 && (color_status & 4) != 0);
+    sqz_warp_patch_image(base, nt->OptionalHeader.SizeOfImage);
 }

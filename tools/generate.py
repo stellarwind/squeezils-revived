@@ -87,46 +87,15 @@ def generate(sdk, output, system_ddraw, legacy_rm):
             if name == 'IDirectDrawSurface' and method == 'ReleaseDC':
                 invocation = f'sqz_release_dc(original, {actual})'
             code += [f'static {ret} WINAPI hook_{name}_{method}({declarations}) {{',
-                     f'    const {name}Vtbl *original = sqz_original(self);',
-                     f'    sqz_log("CALL {name}.{method} self=%p", self);']
-            if name == 'IDirect3DDevice' and method == 'Execute':
-                code += ['    sqz_capture_execute(sqz_arg_0, FALSE);']
-            # Capture supplied values as well as HRESULTs. No render state is changed.
-            if name.startswith('IDirect3DRMTexture') and method in ('SetDecalTransparency', 'SetDecalTransparentColor'):
-                code += [f'    sqz_log("DIAG DECAL {name}.{method} self=%p value=%08lx", self, (unsigned long)sqz_arg_0);']
-            if method == 'LoadTexture' and name == 'IDirect3DRM':
-                code += ['    sqz_log("DIAG TEXTURE LoadTexture owner=%p filename=%s", self, sqz_arg_0 ? sqz_arg_0 : "(null)");']
-            if name == 'IDirectDrawSurface' and method == 'SetColorKey':
-                code += ['    sqz_log("DIAG KEY self=%p flags=%08lx present=%d low=%08lx high=%08lx", self, sqz_arg_0, sqz_arg_1 != NULL, sqz_arg_1 ? sqz_arg_1->dwColorSpaceLowValue : 0, sqz_arg_1 ? sqz_arg_1->dwColorSpaceHighValue : 0);']
-            if name == 'IDirectDraw' and method == 'CreateSurface':
-                code += ['    sqz_diag_desc("requested", self, sqz_arg_0);']
+                     f'    const {name}Vtbl *original = sqz_original(self);']
             code += [f'    {ret} result = {invocation};']
             if name in ('IDirect3DRMMesh', 'IDirect3DRMMeshBuilder', 'IDirect3DRMFace') and method != 'AddRef' and ret in ('HRESULT', 'int') and (
                     method.startswith(('Set', 'Add', 'Delete')) or
                     method in ('Scale', 'Translate', 'Load', 'GenerateNormals', 'Optimize', 'Empty')):
                 owner = 'NULL' if name == 'IDirect3DRMFace' else 'self'
                 code += [f'    if (SUCCEEDED(result)) sqz_scene_geometry_changed({owner});']
-            if name == 'IDirect3DDevice' and method == 'Execute':
-                code += ['    sqz_capture_execute(sqz_arg_0, TRUE);']
             if name == 'IDirect3DRM' and method == 'CreateDeviceFromSurface':
                 code += ['    if (SUCCEEDED(result) && sqz_arg_3) sqz_gpu_bind_device(*sqz_arg_3, sqz_arg_2);']
-            if name == 'IDirectDraw' and method == 'CreateSurface':
-                code += ['    if (SUCCEEDED(result) && sqz_arg_1 && *sqz_arg_1) {',
-                         '        DDSURFACEDESC actual = {0}; actual.dwSize = sizeof(actual);',
-                         '        HRESULT query = IDirectDrawSurface_GetSurfaceDesc(*sqz_arg_1, &actual);',
-                         '        sqz_log("DIAG CREATED surface=%p hr=%08lx query=%08lx", *sqz_arg_1, result, query);',
-                         '        if (SUCCEEDED(query)) sqz_diag_desc("actual", *sqz_arg_1, &actual);', '    }']
-            if name == 'IDirectDraw' and method == 'GetDisplayMode':
-                code += ['    if (SUCCEEDED(result)) sqz_diag_desc("display-mode", self, sqz_arg_0);']
-            if name.startswith('IDirect3DRMTexture') and method == 'GetImage' and ret == 'D3DRMIMAGE *':
-                code += ['    sqz_diag_image("GetImage", self, result);']
-            if name == 'IDirect3DRM' and method == 'LoadTexture':
-                code += ['    sqz_log("DIAG TEXTURE loaded filename=%s texture=%p hr=%08lx", sqz_arg_0 ? sqz_arg_0 : "(null)", SUCCEEDED(result) && sqz_arg_1 ? *sqz_arg_1 : NULL, result);']
-            if name == 'IDirect3DRM' and method == 'CreateTexture':
-                code += ['    sqz_diag_image("CreateTexture", SUCCEEDED(result) && sqz_arg_1 ? *sqz_arg_1 : NULL, sqz_arg_0);']
-            if ((name.startswith('IDirect3DRMTexture') and method in ('SetDecalTransparency', 'SetDecalTransparentColor'))
-                    or (name == 'IDirectDrawSurface' and method == 'SetColorKey')):
-                code += [f'    sqz_log("DIAG RESULT {name}.{method} self=%p hr=%08lx", self, result);']
             if ret == 'HRESULT':
                 code += ['    if (SUCCEEDED(result)) {']
                 iid = next((arg for typ, arg in args if typ == 'REFIID'), None)
@@ -146,8 +115,6 @@ def generate(sdk, output, system_ddraw, legacy_rm):
                     code += ['    sqz_warp_surface_released(self, result);']
                 code += ['    sqz_surface_released(self, result);']
                 code += ['    if (!result) sqz_forget(self);']
-            if ret in ('HRESULT', 'ULONG', 'DWORD'):
-                code += [f'    sqz_log("RETURN {name}.{method} self=%p value=%08lx", self, (unsigned long)result);']
             code += ['    return result;', '}']
         code += [f'static const {name}Vtbl table_{name} = {{' + ','.join(f'hook_{name}_{m}' for _, m, _ in methods) + '};',
                  f'_Static_assert(sizeof({name}Vtbl) == {len(methods)} * sizeof(void *), "{name} slots");']

@@ -6,9 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void (*sqz_inspect_group)(IDirect3DRMFrame *, IDirect3DRMMesh *, unsigned, const D3DRMVERTEX *,
-                          unsigned, D3DRMRENDERQUALITY);
-
 static BOOL scene_error(SceneData *s, const char *message)
 {
     snprintf(s->error, sizeof(s->error), "%s", message);
@@ -392,8 +389,6 @@ static BOOL extract_mesh(SceneData *s, IDirect3DRMMesh *mesh, IDirect3DRMFrame *
         D3DRMRENDERQUALITY quality = mesh->lpVtbl->GetGroupQuality(mesh, g);
         if (!quality)
             quality = s->default_quality;
-        if (ok && sqz_inspect_group)
-            sqz_inspect_group(frame, mesh, g, vertices, nv, quality);
         BOOL lit = (quality & D3DRMLIGHT_MASK) != D3DRMLIGHT_OFF;
         size_t cursor = 0;
         for (unsigned face = 0; ok && face < nf; ++face)

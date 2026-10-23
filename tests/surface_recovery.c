@@ -17,7 +17,6 @@ static HRESULT WINAPI restore(IDirectDrawSurface *self)
     return surface->fail_restore ? DDERR_WRONGMODE : DD_OK;
 }
 static HRESULT WINAPI lost(IDirectDrawSurface *self) { (void)self; return DDERR_SURFACELOST; }
-void sqz_log(const char *format, ...) { (void)format; }
 void *sqz_original(void *self) { return *(void **)self; }
 void sqz_hook(void *self, const char *name) { (void)self; (void)name; }
 HRESULT WINAPI sqz_create_rm(IDirect3DRM **out) { (void)out; return E_NOTIMPL; }

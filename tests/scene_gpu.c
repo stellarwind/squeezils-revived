@@ -6,10 +6,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "cached_geometry.h"
-void sqz_log(const char *format, ...)
-{
-    (void)format;
-}
 static IDirect3DRMFrame *camera;
 static HRESULT WINAPI get_camera(IDirect3DRMViewport *v, IDirect3DRMFrame **out)
 {

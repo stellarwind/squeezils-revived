@@ -40,23 +40,6 @@ typedef struct SceneVisit
     D3DVECTOR basis[4];
 } SceneVisit;
 
-enum SceneProfileStage
-{
-    PROFILE_EXTRACT,
-    PROFILE_INITIALIZE,
-    PROFILE_BACKGROUND_READ,
-    PROFILE_BACKGROUND_UPLOAD,
-    PROFILE_TEXTURES,
-    PROFILE_VERTEX_SETUP,
-    PROFILE_DRAW_ENCODE,
-    PROFILE_SUBMIT,
-    PROFILE_FENCE_WAIT,
-    PROFILE_READBACK_MAP,
-    PROFILE_WRITEBACK,
-    PROFILE_CLEANUP,
-    PROFILE_STAGE_COUNT
-};
-
 typedef struct SceneData
 {
     SceneVertex *vertices;
@@ -73,7 +56,6 @@ typedef struct SceneData
     IDirect3DRMViewport *viewport;
     IDirect3DRMFrame *camera;
     float left, right, bottom, top, front, back;
-    LONGLONG profile_tick, profile_ticks[PROFILE_STAGE_COUNT];
     unsigned texture_checks, texture_conversions, texture_reuses;
     BOOL cached_geometry;
     unsigned cached_vertices, geometry_builds, geometry_uploads;
@@ -83,16 +65,6 @@ IDirect3DRMMesh *sqz_geometry_mesh(void *, BOOL);
 SceneGeometry *sqz_geometry_group(void *, unsigned, D3DRMRENDERQUALITY, BOOL *);
 void sqz_scene_geometry_changed(void *);
 void sqz_scene_cache_clear(void);
-LONGLONG sqz_gpu_profile_clock(void);
-void sqz_gpu_profile_mark(SceneData *, enum SceneProfileStage);
-void sqz_gpu_profile_finish(const SceneData *);
-/* Optional single-frame inspection callback; NULL during normal play. */
-extern void (*sqz_inspect_group)(IDirect3DRMFrame *, IDirect3DRMMesh *, unsigned,
-                                 const D3DRMVERTEX *, unsigned, D3DRMRENDERQUALITY);
-BOOL sqz_capture_requested(void);
-void sqz_capture_execute(IDirect3DExecuteBuffer *buffer, BOOL after);
-HRESULT sqz_capture_render(const IDirect3DRMViewportVtbl *, IDirect3DRMViewport *,
-                           IDirect3DRMFrame *, IDirectDrawSurface *);
 BOOL sqz_scene_extract(SceneData *, IDirect3DRMViewport *, IDirect3DRMFrame *);
 BOOL sqz_scene_extract_cached(SceneData *, IDirect3DRMViewport *, IDirect3DRMFrame *);
 void sqz_scene_free(SceneData *);

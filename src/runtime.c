@@ -1,6 +1,5 @@
 #include "runtime.h"
 #include <stdio.h>
-#include <stdarg.h>
 #include <string.h>
 #include <stdint.h>
 
@@ -20,18 +19,13 @@ typedef struct Record
 static Record *records[BUCKETS];
 static INIT_ONCE init_once = INIT_ONCE_STATIC_INIT;
 static CRITICAL_SECTION lock;
-static HANDLE log_file = INVALID_HANDLE_VALUE;
-static HANDLE diagnostic_file = INVALID_HANDLE_VALUE;
-static BOOL trace_enabled;
 static HMODULE module;
-static LONG sequence;
 static char directory[MAX_PATH];
 static INIT_ONCE real_once[2] = {INIT_ONCE_STATIC_INIT, INIT_ONCE_STATIC_INIT};
 static HMODULE real_modules[2];
 
 static BOOL CALLBACK initialize(PINIT_ONCE once, PVOID arg, PVOID *ctx)
 {
-    char path[MAX_PATH + 64];
     char *slash;
     (void)once;
     (void)arg;
@@ -41,111 +35,7 @@ static BOOL CALLBACK initialize(PINIT_ONCE once, PVOID arg, PVOID *ctx)
     slash = strrchr(directory, '\\');
     if (slash)
         slash[1] = 0;
-    char trace[8] = "";
-    GetEnvironmentVariableA("SQZ_TRACE", trace, sizeof(trace));
-    trace_enabled = !strcmp(trace, "1");
-    if (!trace_enabled)
-        return TRUE;
-    snprintf(path, sizeof(path), "%ssqz-forward-%lu.log", directory, GetCurrentProcessId());
-    log_file = CreateFileA(path, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                           CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-    snprintf(path, sizeof(path), "%ssqz-diagnostic-%lu.log", directory, GetCurrentProcessId());
-    diagnostic_file = CreateFileA(path, GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                                  CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
     return TRUE;
-}
-
-void sqz_log(const char *format, ...)
-{
-    DWORD saved = GetLastError(), written;
-    char line[1400];
-    int n, tail;
-    va_list args;
-    InitOnceExecuteOnce(&init_once, initialize, NULL, NULL);
-    if (!trace_enabled)
-    {
-        SetLastError(saved);
-        return;
-    }
-    EnterCriticalSection(&lock);
-    n = snprintf(line, sizeof(line), "%ld tid=%lu ", ++sequence, GetCurrentThreadId());
-    va_start(args, format);
-    tail = vsnprintf(line + n, sizeof(line) - n - 2, format, args);
-    va_end(args);
-    if (tail < 0)
-        tail = 0;
-    n += tail < (int)sizeof(line) - n - 2 ? tail : (int)sizeof(line) - n - 2;
-    line[n++] = '\n';
-    if (log_file != INVALID_HANDLE_VALUE)
-        WriteFile(log_file, line, (DWORD)n, &written, NULL);
-    if ((!strncmp(format, "DIAG ", 5) || !strncmp(format, "GAP ", 4) ||
-         !strncmp(format, "FATAL ", 6) || !strncmp(format, "LOAD ", 5)) &&
-        diagnostic_file != INVALID_HANDLE_VALUE)
-        WriteFile(diagnostic_file, line, (DWORD)n, &written, NULL);
-    LeaveCriticalSection(&lock);
-    SetLastError(saved);
-}
-
-void sqz_diag_desc(const char *label, const void *object, const DDSURFACEDESC *d)
-{
-    if (!trace_enabled || !d)
-        return;
-    sqz_log("DIAG SURFACE %s object=%p flags=%08lx caps=%08lx size=%lux%lu pitch=%ld "
-            "pf_flags=%08lx bpp=%lu rgba=%08lx/%08lx/%08lx/%08lx src_key=%08lx..%08lx",
-            label, object, d->dwFlags, d->ddsCaps.dwCaps, d->dwWidth, d->dwHeight, d->lPitch,
-            d->ddpfPixelFormat.dwFlags, d->ddpfPixelFormat.dwRGBBitCount,
-            d->ddpfPixelFormat.dwRBitMask, d->ddpfPixelFormat.dwGBitMask,
-            d->ddpfPixelFormat.dwBBitMask, d->ddpfPixelFormat.dwRGBAlphaBitMask,
-            d->ddckCKSrcBlt.dwColorSpaceLowValue, d->ddckCKSrcBlt.dwColorSpaceHighValue);
-}
-
-void sqz_diag_image(const char *label, const void *object, const D3DRMIMAGE *image)
-{
-    if (!trace_enabled || !image)
-        return;
-    sqz_log("DIAG IMAGE %s object=%p size=%dx%d depth=%d rgb=%d pitch=%d "
-            "rgba=%08lx/%08lx/%08lx/%08lx palette=%d",
-            label, object, image->width, image->height, image->depth, image->rgb,
-            image->bytes_per_line, image->red_mask, image->green_mask, image->blue_mask,
-            image->alpha_mask, image->palette_size);
-    if (image->palette && image->palette_size > 0 && image->palette_size <= 256)
-        for (int i = 0; i < image->palette_size; ++i)
-        {
-            const D3DRMPALETTEENTRY *p = &image->palette[i];
-            if ((p->red > 200 && p->green < 64 && p->blue > 200) || i == 0)
-                sqz_log("DIAG PALETTE object=%p index=%d rgb=%02x%02x%02x flags=%02x", object, i,
-                        p->red, p->green, p->blue, p->flags);
-        }
-}
-
-static void diagnostic_environment(void)
-{
-    static LONG recorded;
-    char compat[256] = "";
-    OSVERSIONINFOW version = {0};
-    typedef LONG(WINAPI * VersionFn)(OSVERSIONINFOW *);
-    VersionFn get_version =
-        (VersionFn)GetProcAddress(GetModuleHandleA("ntdll.dll"), "RtlGetVersion");
-    HDC dc;
-    DWORD saved = GetLastError();
-    if (InterlockedExchange(&recorded, 1))
-        return;
-    version.dwOSVersionInfoSize = sizeof(version);
-    if (get_version)
-        get_version(&version);
-    GetEnvironmentVariableA("__COMPAT_LAYER", compat, sizeof(compat));
-    sqz_log("DIAG BUILD transparency-dpi-v1 compiled=%s %s os=%lu.%lu build=%lu compat=%s",
-            __DATE__, __TIME__, version.dwMajorVersion, version.dwMinorVersion,
-            version.dwBuildNumber, compat);
-    dc = GetDC(NULL);
-    if (dc)
-    {
-        sqz_log("DIAG DESKTOP size=%dx%d bpp=%d dpi=%dx%d", GetDeviceCaps(dc, HORZRES),
-                GetDeviceCaps(dc, VERTRES), GetDeviceCaps(dc, BITSPIXEL),
-                GetDeviceCaps(dc, LOGPIXELSX), GetDeviceCaps(dc, LOGPIXELSY));
-        ReleaseDC(NULL, dc);
-    }
-    SetLastError(saved);
 }
 
 static unsigned bucket(void *self)
@@ -173,7 +63,6 @@ void *sqz_original(void *self)
     SetLastError(saved);
     if (!result)
     {
-        sqz_log("FATAL missing original self=%p", self);
         abort();
     }
     return result;
@@ -223,10 +112,8 @@ static void install(void *self, const SqzInterface *type)
     for (size_t i = 0; i < type->slots; ++i)
         InterlockedExchangePointer((void *volatile *)&table[i], ((void *const *)type->hooks)[i]);
     VirtualProtect(table, type->slots * sizeof(void *), old, &unused);
-    sqz_log("HOOK %s self=%p slots=%u", type->name, self, (unsigned)type->slots);
     goto done;
 failed:
-    sqz_log("GAP cannot instrument %s self=%p error=%lu", type->name, self, GetLastError());
 done:
     LeaveCriticalSection(&lock);
     SetLastError(saved);
@@ -241,7 +128,6 @@ __declspec(dllexport) void sqz_hook(void *self, const char *name)
             install(self, &sqz_interfaces[i]);
             return;
         }
-    sqz_log("GAP interface=%s self=%p", name, self);
 }
 
 void sqz_hook_iid(void *self, REFIID iid)
@@ -262,8 +148,6 @@ void sqz_hook_iid(void *self, REFIID iid)
             install(self, &sqz_interfaces[i]);
             return;
         }
-    sqz_log("GAP IID=%08lx-%04x-%04x self=%p (native pointer preserved)", iid->Data1, iid->Data2,
-            iid->Data3, self);
 }
 
 void sqz_forget(void *self)
@@ -273,8 +157,8 @@ void sqz_forget(void *self)
 
 static BOOL CALLBACK load_real(PINIT_ONCE once, PVOID arg, PVOID *ctx)
 {
-    unsigned library = (unsigned)(uintptr_t)arg;
     char path[MAX_PATH + 64];
+    unsigned library = (unsigned)(uintptr_t)arg;
     (void)once;
     (void)ctx;
     InitOnceExecuteOnce(&init_once, initialize, NULL, NULL);
@@ -294,8 +178,6 @@ static BOOL CALLBACK load_real(PINIT_ONCE once, PVOID arg, PVOID *ctx)
             snprintf(path, sizeof(path), "%sd3drm.dll", directory);
     }
     real_modules[library] = LoadLibraryExA(path, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
-    sqz_log("LOAD %s module=%p error=%lu", path, real_modules[library],
-            real_modules[library] ? 0 : GetLastError());
     return real_modules[library] != NULL;
 }
 
@@ -304,13 +186,11 @@ static FARPROC original_export(unsigned library, const char *name)
     FARPROC function;
     if (!InitOnceExecuteOnce(&real_once[library], load_real, (void *)(uintptr_t)library, NULL))
     {
-        sqz_log("FATAL load %u %s", library, name);
         abort();
     }
     function = GetProcAddress(real_modules[library], name);
     if (!function)
     {
-        sqz_log("FATAL missing export %u %s", library, name);
         abort();
     }
     return function;
@@ -319,10 +199,7 @@ static FARPROC original_export(unsigned library, const char *name)
 static HRESULT WINAPI create_dd(GUID *guid, IDirectDraw **out, IUnknown *outer)
 {
     typedef HRESULT(WINAPI * Function)(GUID *, IDirectDraw **, IUnknown *);
-    diagnostic_environment();
-    sqz_color_log();
     HRESULT hr = ((Function)original_export(0, "DirectDrawCreate"))(guid, out, outer);
-    sqz_log("EXPORT DirectDrawCreate hr=%08lx self=%p", hr, SUCCEEDED(hr) && out ? *out : NULL);
     if (SUCCEEDED(hr) && out)
         sqz_hook(*out, "IDirectDraw");
     return hr;
@@ -331,7 +208,6 @@ static HRESULT WINAPI create_clipper(DWORD flags, IDirectDrawClipper **out, IUnk
 {
     typedef HRESULT(WINAPI * Function)(DWORD, IDirectDrawClipper **, IUnknown *);
     HRESULT hr = ((Function)original_export(0, "DirectDrawCreateClipper"))(flags, out, outer);
-    sqz_log("EXPORT DirectDrawCreateClipper hr=%08lx", hr);
     if (SUCCEEDED(hr) && out)
         sqz_hook(*out, "IDirectDrawClipper");
     return hr;
@@ -340,7 +216,6 @@ HRESULT WINAPI sqz_create_rm(IDirect3DRM **out)
 {
     typedef HRESULT(WINAPI * Function)(IDirect3DRM **);
     HRESULT hr = ((Function)original_export(1, "Direct3DRMCreate"))(out);
-    sqz_log("EXPORT Direct3DRMCreate hr=%08lx self=%p", hr, SUCCEEDED(hr) && out ? *out : NULL);
     if (SUCCEEDED(hr) && out)
         sqz_hook(*out, "IDirect3DRM");
     return hr;
@@ -348,7 +223,6 @@ HRESULT WINAPI sqz_create_rm(IDirect3DRM **out)
 
 __declspec(dllexport) FARPROC __cdecl sqz_resolve(unsigned library, const char *name)
 {
-    sqz_log("ROUTE %s!%s", library ? "d3drm" : "ddraw", name);
     if (!library && !strcmp(name, "DirectDrawCreate"))
         return (FARPROC)create_dd;
     if (!library && !strcmp(name, "DirectDrawCreateClipper"))

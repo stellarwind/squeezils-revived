@@ -17,12 +17,8 @@ typedef struct SqzInterface
 } SqzInterface;
 extern const SqzInterface sqz_interfaces[];
 extern const size_t sqz_interface_count;
-void sqz_log(const char *format, ...);
-void sqz_diag_desc(const char *, const void *, const DDSURFACEDESC *);
-void sqz_diag_image(const char *, const void *, const D3DRMIMAGE *);
 int sqz_color_patch_image(BYTE *, size_t, BOOL, BOOL);
 void sqz_color_install(void);
-void sqz_color_log(void);
 int sqz_warp_patch_image(BYTE *, size_t);
 HRESULT sqz_warp_create_surface(const IDirectDrawVtbl *, IDirectDraw *, DDSURFACEDESC *,
                                 IDirectDrawSurface **, IUnknown *, void *);

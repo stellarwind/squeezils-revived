@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-void sqz_log(const char *format,...) { (void)format; }
 HRESULT sqz_create_surface(const IDirectDrawVtbl *v,IDirectDraw *dd,DDSURFACEDESC *d,IDirectDrawSurface **out,IUnknown *outer)
 { return v->CreateSurface(dd,d,out,outer); }
 HRESULT sqz_surface_blt(const IDirectDrawSurfaceVtbl *v,IDirectDrawSurface *dst,RECT *d,IDirectDrawSurface *src,RECT *s,DWORD flags,DDBLTFX *fx)

@@ -3,10 +3,6 @@
 #include <assert.h>
 #include <stdarg.h>
 
-void sqz_log(const char *format, ...)
-{
-    (void)format;
-}
 void *sqz_original(void *self)
 {
     return *(void **)self;

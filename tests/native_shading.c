@@ -9,10 +9,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
-void sqz_log(const char *f, ...)
-{
-    (void)f;
-}
 static DWORD pixel(IDirectDrawSurface *s, unsigned x, unsigned y)
 {
     DDSURFACEDESC d = {.dwSize = sizeof(d)};

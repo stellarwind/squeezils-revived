@@ -37,7 +37,7 @@ static void __cdecl device_destroy(IDirect3DRMObject *object, void *ctx)
 }
 void sqz_gpu_bind_device(IDirect3DRMDevice *device, IDirectDrawSurface *surface)
 {
-    if ((!sqz_gpu_enabled() && !sqz_capture_requested()) || !device || !surface)
+    if (!sqz_gpu_enabled() || !device || !surface)
         return;
     for (unsigned i = 0; i < 8; ++i)
         if (!targets[i].device)
@@ -63,30 +63,21 @@ HRESULT sqz_gpu_render(const IDirect3DRMViewportVtbl *native, IDirect3DRMViewpor
         device->lpVtbl->Release(device);
     }
     if (!sqz_gpu_enabled())
-        return sqz_capture_render(native, viewport, root, surface);
+        return native->Render(viewport, root);
     SceneData scene = {0};
     BOOL ok = FALSE;
     char error[512] = "RM render target was not captured";
     if (surface)
     {
-        LONGLONG extraction_start = sqz_gpu_profile_clock();
         sqz_geometry_install = install_geometry_tracking;
         ok = sqz_scene_extract_cached(&scene, viewport, root);
-        scene.profile_tick = extraction_start;
-        sqz_gpu_profile_mark(&scene, PROFILE_EXTRACT);
         if (!ok)
             snprintf(error, sizeof(error), "Scene extraction: %s", scene.error);
         else
             ok = sqz_gpu_draw(&scene, surface, error, sizeof(error));
-        if (ok)
-            sqz_gpu_profile_finish(&scene);
     }
     if (ok && !marked)
     {
-        sqz_log("DIAG SDL_GPU first scene frames=%u meshes=%u decals=%u triangles=%lu (native RM "
-                "Render bypassed)",
-                scene.frames, scene.meshes, scene.decals,
-                (unsigned long)(scene.count + scene.cached_vertices) / 3);
         sqz_platform_gpu_title();
         marked = TRUE;
     }

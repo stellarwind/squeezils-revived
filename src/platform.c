@@ -42,7 +42,6 @@ static HCURSOR(WINAPI *native_set_cursor)(HCURSOR);
 static HDC(WINAPI *native_get_dc)(HWND);
 static int(WINAPI *native_release_dc)(HWND, HDC);
 static int(WINAPI *native_device_caps)(HDC, int);
-static HFONT(WINAPI *native_font_indirect)(const LOGFONTA *);
 static HDC canvas_dc;
 static IDirectDrawSurface *dc_surface;
 static unsigned dc_depth;
@@ -59,18 +58,7 @@ static int WINAPI canvas_device_caps(HDC dc, int index)
     BOOL game_dc = dc && (dc == canvas_dc || (game_hwnd && WindowFromDC(dc) == game_hwnd));
     if (game_dc && (index == LOGPIXELSX || index == LOGPIXELSY))
         value = 96;
-    if (index == LOGPIXELSX || index == LOGPIXELSY || index == BITSPIXEL)
-        sqz_log("DIAG GAME_CAPS dc=%p canvas=%d index=%d value=%d native=%d", dc, dc == canvas_dc,
-                index, value, native_value);
     return value;
-}
-static HFONT WINAPI diagnostic_font_indirect(const LOGFONTA *font)
-{
-    HFONT result = native_font_indirect(font);
-    if (font)
-        sqz_log("DIAG FONT font=%p face=%.32s height=%ld width=%ld weight=%ld charset=%u", result,
-                font->lfFaceName, font->lfHeight, font->lfWidth, font->lfWeight, font->lfCharSet);
-    return result;
 }
 #define SQZ_REPAINT (WM_APP + 0x351)
 static HRESULT present_canvas(void);
@@ -101,7 +89,6 @@ static HDC WINAPI window_get_dc(HWND hwnd)
         hr = IDirectDrawSurface_GetDC(dc_surface, &canvas_dc);
         if (FAILED(hr))
         {
-            sqz_log("GDI CANVAS GetDC failed=%08lx", hr);
             IDirectDrawSurface_Release(dc_surface);
             dc_surface = NULL;
             return NULL;
@@ -120,7 +107,6 @@ static HDC WINAPI window_get_dc(HWND hwnd)
         return NULL;
     }
     dc_states[dc_depth++] = state;
-    sqz_log("GDI CANVAS acquire hwnd=%p dc=%p depth=%u", hwnd, canvas_dc, dc_depth);
     return canvas_dc;
 }
 
@@ -131,7 +117,6 @@ static int WINAPI window_release_dc(HWND hwnd, HDC dc)
     if (!sqz_platform_window(hwnd) || !dc_depth || dc != canvas_dc)
         return native_release_dc(hwnd, dc);
     RestoreDC(dc, dc_states[--dc_depth]);
-    sqz_log("GDI CANVAS release dc=%p depth=%u", dc, dc_depth);
     if (dc_depth)
         return 1;
     surface = dc_surface;
@@ -233,8 +218,7 @@ static LRESULT CALLBACK window_dispatch(HWND hwnd, UINT msg, WPARAM wp, LPARAM l
         if (repaint_pending && !dc_depth && virtual_primary)
         {
             repaint_pending = FALSE;
-            HRESULT hr = present_canvas();
-            sqz_log("SDL REPAINT hr=%08lx", hr);
+            present_canvas();
         }
         return 0;
     }
@@ -263,8 +247,6 @@ static LRESULT CALLBACK window_dispatch(HWND hwnd, UINT msg, WPARAM wp, LPARAM l
     TlsSetValue(dispatch_tls, &frame);
     result = CallWindowProcA(game_proc, hwnd, msg, wp, lp);
     TlsSetValue(dispatch_tls, frame.previous);
-    if (msg == WM_SIZE || msg == WM_ACTIVATEAPP || msg == WM_DISPLAYCHANGE)
-        sqz_log("WINDOW message=%04x wparam=%08lx lparam=%08lx", msg, (DWORD)wp, (DWORD)lp);
     if (msg == WM_SIZE || msg == WM_WINDOWPOSCHANGED || msg == WM_DISPLAYCHANGE ||
         msg == WM_PAINT || msg == WM_EXITSIZEMOVE || (msg == WM_ACTIVATEAPP && wp))
     {
@@ -294,7 +276,6 @@ static BOOL load_sdl(void)
     library = LoadLibraryExA(path, NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
     if (!library)
     {
-        sqz_log("SDL load failed error=%lu", GetLastError());
         return FALSE;
     }
 #define LOAD(name)                                                                                 \
@@ -306,7 +287,6 @@ static BOOL load_sdl(void)
     p_SDL_SetHint(SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP, "0");
     if (!p_SDL_Init(SDL_INIT_VIDEO))
     {
-        sqz_log("SDL init failed: %s", p_SDL_GetError());
         return FALSE;
     }
     return TRUE;
@@ -338,7 +318,6 @@ static HWND WINAPI window_create(DWORD exstyle, LPCSTR cls, LPCSTR title, DWORD 
     creating = FALSE;
     if (!sdl_window)
     {
-        sqz_log("SDL create failed: %s", p_SDL_GetError());
         return NULL;
     }
     game_hwnd = p_SDL_GetPointerProperty(p_SDL_GetWindowProperties(sdl_window),
@@ -351,8 +330,6 @@ static HWND WINAPI window_create(DWORD exstyle, LPCSTR cls, LPCSTR title, DWORD 
     }
     game_proc = original.lpfnWndProc;
     sdl_proc = (WNDPROC)SetWindowLongPtrA(game_hwnd, GWLP_WNDPROC, (LONG_PTR)window_dispatch);
-    sqz_log("SDL WINDOW created sdl=%p hwnd=%p client=%dx%d gameproc=%p sdlproc=%p", sdl_window,
-            game_hwnd, initial_width, initial_height, game_proc, sdl_proc);
     return game_hwnd;
 }
 
@@ -362,7 +339,6 @@ static BOOL WINAPI window_destroy(HWND hwnd)
     {
         SDL_Window *window = sdl_window;
         sdl_window = NULL;
-        sqz_log("SDL WINDOW destroy hwnd=%p", hwnd);
         p_SDL_DestroyWindow(window);
         game_hwnd = NULL;
         PostQuitMessage(0);
@@ -481,7 +457,6 @@ void sqz_platform_install(void)
                 ROUTE("GetDC", window_get_dc, native_get_dc)
                 ROUTE("ReleaseDC", window_release_dc, native_release_dc)
                 ROUTE("GetDeviceCaps", canvas_device_caps, native_device_caps)
-                ROUTE("CreateFontIndirectA", diagnostic_font_indirect, native_font_indirect)
             }
             if (!replacement)
                 continue;
@@ -498,7 +473,6 @@ HRESULT sqz_cooperative(const IDirectDrawVtbl *original, IDirectDraw *self, HWND
 {
     if (sqz_platform_window(hwnd))
     {
-        sqz_log("SDL COOPERATIVE requested=%08lx effective=DDSCL_NORMAL hwnd=%p", flags, hwnd);
         flags = DDSCL_NORMAL;
     }
     return original->SetCooperativeLevel(self, hwnd, flags);
@@ -511,9 +485,6 @@ HRESULT sqz_display_mode(const IDirectDrawVtbl *original, IDirectDraw *self, DWO
     {
         initial_width = (int)width;
         initial_height = (int)height;
-        sqz_log("SDL DISPLAY virtual=%lux%lu bpp=%lu (desktop mode preserved)", width, height, bpp);
-        sqz_log("DIAG DISPLAY requested=%lux%lu bpp=%lu physical_change=suppressed", width, height,
-                bpp);
         return DD_OK;
     }
     return original->SetDisplayMode(self, width, height, bpp);
@@ -535,7 +506,6 @@ void sqz_surface_created(IDirectDraw *ddraw, IDirectDrawSurface *surface)
             hr = IDirectDrawSurface_SetClipper(surface, clipper);
         IDirectDrawClipper_Release(clipper);
     }
-    sqz_log("SDL CLIPPER primary=%p hwnd=%p hr=%08lx", surface, game_hwnd, hr);
 }
 
 HRESULT sqz_create_surface(const IDirectDrawVtbl *original, IDirectDraw *ddraw, DDSURFACEDESC *desc,
@@ -566,8 +536,6 @@ HRESULT sqz_create_surface(const IDirectDrawVtbl *original, IDirectDraw *ddraw, 
         return hr;
     }
     *out = virtual_primary;
-    sqz_log("SDL CANVAS virtual=%p native=%p size=%dx%d", virtual_primary, native_primary,
-            initial_width, initial_height);
     return hr;
 }
 
@@ -585,14 +553,12 @@ HRESULT sqz_get_caps(const IDirectDrawVtbl *original, IDirectDraw *self, DDCAPS 
                 !caps[i]->dwZBufferBitDepths)
             {
                 caps[i]->dwZBufferBitDepths = DDBD_16;
-                sqz_log("COMPAT GetCaps reports 16-bit Z buffer");
             }
     return hr;
 }
 
 static HRESULT present_canvas(void)
 {
-    static BOOL reported_gdi;
     RECT destination, client, source = {0, 0, initial_width, initial_height};
     POINT origin = {0, 0};
     DDBLTFX fill = {0};
@@ -642,11 +608,6 @@ static HRESULT present_canvas(void)
         presenting = FALSE;
         if (copied && SUCCEEDED(hr))
         {
-            if (!reported_gdi)
-            {
-                sqz_log("SDL PRESENT backend=GDI (native canvas; DirectDraw fallback)");
-                reported_gdi = TRUE;
-            }
             return DD_OK;
         }
     }
@@ -656,14 +617,12 @@ static HRESULT present_canvas(void)
             canvas->ReleaseDC(virtual_primary, source_dc);
         presenting = FALSE;
     }
-    sqz_log("SDL PRESENT GDI unavailable; falling back to DirectDraw");
     if (refresh_clipping)
     {
         IDirectDrawClipper *clipper;
         if (SUCCEEDED(original->GetClipper(native_primary, &clipper)))
         {
             HRESULT clip_hr = IDirectDrawClipper_SetHWnd(clipper, 0, game_hwnd);
-            sqz_log("SDL CLIPPER refresh=%08lx", clip_hr);
             IDirectDrawClipper_Release(clipper);
             if (SUCCEEDED(clip_hr))
                 refresh_clipping = FALSE;
@@ -672,7 +631,6 @@ static HRESULT present_canvas(void)
     if (original->IsLost(native_primary) == DDERR_SURFACELOST)
     {
         hr = original->Restore(native_primary);
-        sqz_log("SDL PRESENT restore=%08lx", hr);
         if (FAILED(hr))
             return hr;
     }
@@ -689,8 +647,6 @@ static HRESULT present_canvas(void)
                           &fill);
     hr = original->Blt(native_primary, &destination, virtual_primary, &source, DDBLT_WAIT, NULL);
     presenting = FALSE;
-    if (FAILED(hr))
-        sqz_log("SDL PRESENT failed=%08lx", hr);
     return hr;
 }
 
@@ -726,11 +682,8 @@ HRESULT sqz_surface_blt(const IDirectDrawSurfaceVtbl *original, IDirectDrawSurfa
         HRESULT restore = original->Restore(self), source_restore = DD_OK;
         if (source && IDirectDrawSurface_IsLost(source) == DDERR_SURFACELOST)
             source_restore = IDirectDrawSurface_Restore(source);
-        sqz_log("SURFACE LOST blt dst=%p src=%p restore=%08lx source_restore=%08lx flags=%08lx",
-                self, source, restore, source_restore, flags);
         if (SUCCEEDED(restore) && SUCCEEDED(source_restore))
             hr = original->Blt(self, destination, source, source_rect, flags, effects);
-        sqz_log("SURFACE RETRY blt hr=%08lx", hr);
     }
     if (SUCCEEDED(hr) && self == virtual_primary)
         request_repaint();

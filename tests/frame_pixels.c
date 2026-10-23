@@ -4,11 +4,6 @@
 #include <assert.h>
 #include <stdarg.h>
 
-void sqz_log(const char *format, ...)
-{
-    (void)format;
-}
-
 typedef struct PixelSurface
 {
     IDirectDrawSurface iface;
